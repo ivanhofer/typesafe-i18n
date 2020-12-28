@@ -4,5 +4,15 @@
    "description": "lightweight localization engine for JavaScript and TypeScript projects",
    "author": "ivanhofer",
    "license": "MIT",
-   "scripts": {}
+   "main": "lib/index.js",
+   "types": "lib/index.d.ts",
+   "files": [
+      "/lib"
+   ],
+   "scripts": {
+      "build": "tsc"
+   },
+   "devDependencies": {
+      "typescript": "^4.1.3"
+   }
 }
