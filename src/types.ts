@@ -30,10 +30,11 @@ export type Config<T extends Formatters = Formatters> = {
 // formatters ---------------------------------------------------------------------------------------------------------
 
 export type Formatters = {
-	[formatter: string]: FormatterFn
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	[formatter: string]: FormatterFn<any>
 }
 
-export type FormatterFn = (value: unknown) => string
+export type FormatterFn<T> = (value: T) => string
 
 // parts --------------------------------------------------------------------------------------------------------------
 
