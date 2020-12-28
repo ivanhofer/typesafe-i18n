@@ -1,0 +1,47 @@
+name: Update version & publish to npm
+
+on:
+   push:
+      branches:
+         - 'master'
+
+jobs:
+   publish:
+      runs-on: ubuntu-latest
+      steps:
+         - uses: actions/checkout@v2
+
+         - name: install node
+           uses: actions/setup-node@v1
+           with:
+              node-version: 10
+
+         - run: npm install
+
+         # - name: run test
+         #   run: npm test
+
+         # - run: npm run coverage
+
+         # - name: output test coverage
+         #   run: npm run coverage:output-report
+
+         # - uses: actions/upload-artifact@v2
+         #   with:
+         #      name: coverage-report
+         #      path: coverage-report.txt
+
+         - name: build package
+           run: npm run build
+
+         - name: bump version and create tag
+           uses: 'phips28/gh-action-bump-version@master'
+           env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           with:
+              minor-wording: 'feat,feature'
+
+         - name: publish to npm
+           uses: JS-DevTools/npm-publish@v1
+           with:
+              token: ${{ secrets.NPM_TOKEN }}
