@@ -33,7 +33,7 @@ const applyValues = (textParts: Part[], formatters: Formatters, args: Args) => {
 			const { k: key = '0', f: formatterKeys = [] } = part as InjectorPart
 			const { s: singular = '', p: plural } = part as SingularPluralPart
 			if (plural) {
-				return args[key] === '1' ? singular : plural
+				return args[key] == '1' ? singular : plural
 			}
 
 			const value = args[key]
