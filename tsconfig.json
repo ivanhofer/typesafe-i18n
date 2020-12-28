@@ -31,6 +31,6 @@
 		"compilerOptions": {
 			"module": "commonjs"
 		},
-		"include": ["src/**/*.test.*"]
+		"include": ["tests"]
 	}
 }
