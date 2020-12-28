@@ -1,8 +1,17 @@
 {
    "name": "langauge",
    "version": "0.0.0",
-   "description": "lightweight localization engine for JavaScript and TypeScript projects",
+   "description": "A lightweight localization engine for JavaScript and TypeScript projects",
+   "homepage": "https://github.com/ivanhofer/langauge",
    "author": "ivanhofer",
+   "keywords": [
+      "lightweight",
+      "localization",
+      "localization engine",
+      "typescript",
+      "i10n",
+      "i18n"
+   ],
    "license": "MIT",
    "main": "lib/index.js",
    "types": "lib/index.d.ts",
