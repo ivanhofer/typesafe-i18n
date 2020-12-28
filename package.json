@@ -1,0 +1,8 @@
+{
+   "name": "langauge",
+   "version": "0.0.0",
+   "description": "lightweight localization engine for JavaScript and TypeScript projects",
+   "author": "ivanhofer",
+   "license": "MIT",
+   "scripts": {}
+}
