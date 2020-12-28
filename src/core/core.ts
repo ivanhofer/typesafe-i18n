@@ -38,7 +38,9 @@ const applyValues = (textParts: Part[], formatters: Formatters, args: Args) => {
 
 			const value = args[key]
 
-			return formatterKeys.length ? applyFormatters(formatters, formatterKeys, value) : value
+			const formattedValue = formatterKeys.length ? applyFormatters(formatters, formatterKeys, value) : value
+
+			return ('' + (formattedValue ?? '')).trim()
 		})
 		.join('')
 }

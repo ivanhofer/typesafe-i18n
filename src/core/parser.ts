@@ -7,18 +7,22 @@ const parseTextPart = (text: string): TextPart => text
 const parseInjectorPart = (text: string): InjectorPart => {
 	const [key = '', ...formatterKeys] = text.split('|')
 
-	return removeEmptyValues({ k: key, f: formatterKeys })
+	return removeEmptyValues({ k: key.trim(), f: formatterKeys })
 }
 
 const parseSingularPluralPart = (text: string, lastAcessor: string): Partial<SingularPluralPart> => {
 	const content = text.substring(1, text.length - 1)
-	const [key = lastAcessor, values = key] = content.split(':') as [string, string?]
+	let [key, values] = content.split(':') as [string, string?]
+	if (!values) {
+		values = key
+		key = lastAcessor
+	}
 
-	const [s, p] = values.split('|')
+	const [s, p] = values.split('|') as [string, string?]
 	const singular = p ? s : ''
 	const plural = p || s
 
-	return removeEmptyValues({ k: key, s: singular, p: plural })
+	return removeEmptyValues({ k: key.trim(), s: singular.trim(), p: plural.trim() })
 }
 
 export const parseRawText = (rawText: string): Part[] => {
@@ -38,7 +42,8 @@ export const parseRawText = (rawText: string): Part[] => {
 			}
 
 			const parsedPart = parseInjectorPart(content)
-			lastKey = parsedPart.k
+
+			lastKey = parsedPart.k || lastKey
 
 			return parsedPart
 		})
