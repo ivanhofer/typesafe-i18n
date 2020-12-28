@@ -1,6 +1,6 @@
 {
    "name": "langauge",
-   "version": "0.0.0",
+   "version": "0.0.1",
    "description": "lightweight localization engine for JavaScript and TypeScript projects",
    "author": "ivanhofer",
    "license": "MIT",
