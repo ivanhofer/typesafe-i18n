@@ -22,7 +22,7 @@ const formatters = {
 	lowercase,
 	censorNumbers: replace(/[0-9]/g, '*'),
 	dateEN: date('en'),
-	dateDE: date('de'),
+	dateDE: date('de-DE'),
 	noSpaces: (value: string) => value.replace(/\s/g, ''),
 }
 

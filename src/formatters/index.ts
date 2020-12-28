@@ -1,3 +1,4 @@
+import { defaultLocale } from '../constants'
 import type { FormatterFn } from '../types'
 
 export const uppercase: FormatterFn<string> = (value: string): string => value?.toUpperCase()
@@ -9,8 +10,8 @@ export const replace = (searchValue: string | RegExp, replaceValue: string): For
 }
 
 export const date = (
-	language?: string,
-	options?: Intl.DateTimeFormatOptions,
+	language: string = defaultLocale,
+	options: Intl.DateTimeFormatOptions = {},
 ): FormatterFn<number | Date | undefined> => {
 	const formatter = new Intl.DateTimeFormat(language, options)
 	return (value) => formatter.format(value as Date)
