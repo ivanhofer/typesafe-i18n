@@ -6,7 +6,7 @@
 		"declaration": true,
 		"sourceMap": true,
 		// "declarationMap": true,
-		"outDir": "./lib",
+		"outDir": "./lib/esm",
 		"rootDir": "./src",
 		"strict": true,
 		"noImplicitAny": true,
@@ -26,5 +26,11 @@
 		"forceConsistentCasingInFileNames": true
 	},
 	"include": ["src/**/*"],
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules"],
+	"ts-node": {
+		"compilerOptions": {
+			"module": "commonjs"
+		},
+		"include": ["src/**/*.test.*"]
+	}
 }

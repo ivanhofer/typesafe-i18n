@@ -9,6 +9,7 @@
 		"prettier"
 	],
 	"rules": {
+		"indent": ["warn", "tab"],
 		"no-console": "error",
 		"prettier/prettier": [
 			"error",
