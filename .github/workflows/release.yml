@@ -18,13 +18,8 @@ jobs:
 
          - run: npm install
 
-         - name: add locales support
-           run: npm install full-icu --no-save
-
          - name: run test
            run: npm test
-           env:
-              NODE_ICU_DATA: node_modules/full-icu
 
          # - run: npm run coverage
 

@@ -12,7 +12,7 @@ const translation = {
 	LOWERCASE: 'This should be {0|lowercase}.',
 	CENSOR_NUMBERS: 'Your PIN is {0|censorNumbers}',
 	DATE_EN: 'The date is {0|dateEN}.',
-	DATE_DE: 'The date is {0|dateDE}.',
+	DATE_CUSTOM: 'The date is {0|dateCUSTOM}.',
 	NO_SPACES: '{0|noSpaces}',
 }
 
@@ -21,8 +21,8 @@ const formatters = {
 	manualUppercase: (value: string) => value.toUpperCase(),
 	lowercase,
 	censorNumbers: replace(/[0-9]/g, '*'),
-	dateEN: date('en'),
-	dateDE: date('de'),
+	dateEN: date(),
+	dateCUSTOM: date('en', { day: 'numeric', month: 'long', year: '2-digit' }),
 	noSpaces: (value: string) => value.replace(/\s/g, ''),
 }
 
@@ -40,7 +40,7 @@ test('censor numbers', () => assert.is(LLL.CENSOR_NUMBERS('1234'), 'Your PIN is 
 
 test('date en', () => assert.is(LLL.DATE_EN(someDate), 'The date is 3/13/2020.'))
 
-test('date de', () => assert.is(LLL.DATE_DE(someDate), 'The date is 2020-3-13.'))
+test('date custom', () => assert.is(LLL.DATE_CUSTOM(someDate), 'The date is March 13, 20.'))
 
 test('no spaces', () => assert.is(LLL.NO_SPACES('some text with no spaces'), 'sometextwithnospaces'))
 
