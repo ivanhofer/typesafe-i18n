@@ -21,6 +21,8 @@ jobs:
          - name: add locales support
            run: npm install full-icu --no-save
 
+         - run: npm rebuild
+
          - name: run test
            run: npm test
            env:
