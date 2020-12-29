@@ -1,11 +1,14 @@
 import { isObject, not } from 'typesafe-utils'
+import { DEFAULT_LOCALE } from '../constants'
 import { parseRawText } from '../core/parser'
 import type { InjectorPart, Part, SingularPluralPart, LangaugeBaseTranslation } from '../types'
 import { updateTypesIfContainsChanges } from './file-utils'
 
 type GenerateTypesConfig = {
-	file?: string
-	path?: string
+	outputPath?: string
+	outputFile?: string
+	baseLocale?: string
+	locales?: string[]
 }
 
 type IsSingularPluralPart<T> = T extends SingularPluralPart ? T : never
@@ -29,14 +32,30 @@ const parseTanslationObject = ([key, text]: [string, string]) => {
 	return [key, args, formatters]
 }
 
-const wrapType = (array: unknown[], callback: () => string) =>
+const wrapObjectType = (array: unknown[], callback: () => string) =>
 	!array.length
-		? `{ }`
+		? `null`
 		: `{${callback()}
 }`
 
-const createKeysType = (keys: string[]) =>
-	`export type LangaugeTranslation = ${wrapType(keys, () =>
+const wrapEnumType = (array: unknown[], callback: () => string) => (!array.length ? ' null' : `${callback()}`)
+
+const createEnumType = (locales: string[]) =>
+	locales
+		.map(
+			(locale) => `
+	| '${locale}'`,
+		)
+		.join('')
+
+const createLocalesType = (locales: string[]) =>
+	`export type LangaugeLocales =${wrapEnumType(locales, () => createEnumType(locales))}`
+
+const createTranslationKeysType = (keys: string[]) =>
+	`export type LangaugeTranslationKeys =${wrapEnumType(keys, () => createEnumType(keys))}`
+
+const createTranslationType = (keys: string[]) =>
+	`export type LangaugeTranslation = ${wrapObjectType(keys, () =>
 		keys
 			.map(
 				(key) =>
@@ -47,7 +66,7 @@ const createKeysType = (keys: string[]) =>
 	)}`
 
 const createFormatterType = (formatterKeys: string[]) =>
-	`export type LangaugeFormatters = ${wrapType(formatterKeys, () =>
+	`export type LangaugeFormatters = ${wrapObjectType(formatterKeys, () =>
 		formatterKeys
 			.map(
 				(key) =>
@@ -57,18 +76,18 @@ const createFormatterType = (formatterKeys: string[]) =>
 			.join(''),
 	)}`
 
-const createTranslationsType = (translations: [key: string, args: string[]][]) =>
-	`export type LangaugeTranslationArgs = ${wrapType(translations, () =>
+const createTranslationArgsType = (translations: [key: string, args: string[]][]) =>
+	`export type LangaugeTranslationArgs = ${wrapObjectType(translations, () =>
 		translations
 			.map(
 				(translation) =>
 					`
-	${createTranslationType(translation)}`,
+	${createTranslationArgssType(translation)}`,
 			)
 			.join(''),
 	)}`
 
-const createTranslationType = ([key, args]: [key: string, args: string[]]) =>
+const createTranslationArgssType = ([key, args]: [key: string, args: string[]]) =>
 	`${key}: (${mapTranslationArgs(args)}) => string`
 
 const mapTranslationArgs = (args: string[]) => {
@@ -86,11 +105,18 @@ const mapTranslationArgs = (args: string[]) => {
 	return prefix + args.map((arg) => `${argPrefix}${arg}: unknown`).join(', ') + postfix
 }
 
-const getTypes = (translationObject: LangaugeBaseTranslation) => {
-	const result = Object.entries(translationObject).map(parseTanslationObject)
+const getTypes = (translationObject: LangaugeBaseTranslation, baseLocale: string, locales: string[]) => {
+	const result = (isObject(translationObject) && Object.entries(translationObject).map(parseTanslationObject)) || []
+
+	const baseLocaleType = `export type LangaugeBaseLocale = '${baseLocale}'`
+
+	const localesType = createLocalesType(locales)
 
 	const keys = result.map(([k]) => k as string)
-	const keysType = createKeysType(keys)
+
+	const translationKeysType = createTranslationKeysType(keys)
+
+	const translationType = createTranslationType(keys)
 
 	const formatters = result
 		.flatMap(([_k, _a, f]) => f as string[])
@@ -98,12 +124,18 @@ const getTypes = (translationObject: LangaugeBaseTranslation) => {
 	const formatterType = createFormatterType(formatters)
 
 	const translations = result.map(([k, a, _f]) => [k, a as string[]] as [string, string[]])
-	const translationsType = createTranslationsType(translations)
+	const translationsType = createTranslationArgsType(translations)
 
 	return `import type { Config } from 'langauge'
 export type { LangaugeBaseTranslation } from 'langauge'
 
-${keysType}
+${baseLocaleType}
+
+${localesType}
+
+${translationKeysType}
+
+${translationType}
 
 ${translationsType}
 
@@ -117,9 +149,14 @@ export const generateTypes = async (
 	translationObject: LangaugeBaseTranslation,
 	config: GenerateTypesConfig = {} as GenerateTypesConfig,
 ): Promise<void> => {
-	const { path = './src/langauge/', file = 'generatedTypes.ts' } = config
+	const {
+		outputPath = './src/langauge/',
+		outputFile = 'langauge-types.ts',
+		baseLocale = DEFAULT_LOCALE,
+		locales = [],
+	} = config
 
-	const types = getTypes(translationObject)
+	const types = getTypes(translationObject, baseLocale, locales)
 
-	await updateTypesIfContainsChanges(path, file, types)
+	await updateTypesIfContainsChanges(outputPath, outputFile, types)
 }
