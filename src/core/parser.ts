@@ -4,13 +4,14 @@ import { removeEmptyValues } from '../utils'
 
 const parseTextPart = (text: string): TextPart => text
 
-const parseInjectorPart = (text: string): InjectorPart => {
+const parseInjectorPart = (text: string, optimize: boolean): InjectorPart => {
 	const [key = '', ...formatterKeys] = text.split('|')
 
-	return removeEmptyValues({ k: key.trim(), f: formatterKeys })
+	const part = { k: key.trim(), f: formatterKeys }
+	return optimize ? removeEmptyValues(part) : part
 }
 
-const parseSingularPluralPart = (text: string, lastAcessor: string): SingularPluralPart => {
+const parseSingularPluralPart = (text: string, lastAcessor: string, optimize: boolean): SingularPluralPart => {
 	const content = text.substring(1, text.length - 1)
 	let [key, values] = content.split(':') as [string, string?]
 	if (!values) {
@@ -22,10 +23,11 @@ const parseSingularPluralPart = (text: string, lastAcessor: string): SingularPlu
 	const singular = p ? s : ''
 	const plural = p || s
 
-	return removeEmptyValues({ k: key.trim(), s: singular.trim(), p: plural.trim() })
+	const part = { k: key.trim(), s: singular.trim(), p: plural.trim() }
+	return optimize ? removeEmptyValues(part) : part
 }
 
-export const parseRawText = (rawText: string): Part[] => {
+export const parseRawText = (rawText: string, optimize = true): Part[] => {
 	let lastKey = '0'
 
 	return rawText
@@ -38,10 +40,10 @@ export const parseRawText = (rawText: string): Part[] => {
 
 			const content = part.substring(1, part.length - 1)
 			if (content.match(REGEX_BRACKETS_SPLIT)) {
-				return parseSingularPluralPart(content, lastKey)
+				return parseSingularPluralPart(content, lastKey, optimize)
 			}
 
-			const parsedPart = parseInjectorPart(content)
+			const parsedPart = parseInjectorPart(content, optimize)
 
 			lastKey = parsedPart.k || lastKey
 

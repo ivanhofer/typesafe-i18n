@@ -50,15 +50,15 @@ wrapTest('withParams', {
 // keyedParams --------------------------------------------------------------------------------------------------------
 
 wrapTest('keyedParams', {
-	PARAM: '{nrOfApples} apple{{s}}',
-	PARAMS: '{nrOfApples} apple{{s}} and {nrOfBananas} banana{{s}}',
+	KEYED_PARAM: '{nrOfApples} apple{{s}}',
+	KEYED_PARAMS: '{nrOfApples} apple{{s}} and {nrOfBananas} banana{{s}}',
 })
 
 // withFormatters ---------------------------------------------------------------------------------------------------------
 
 wrapTest('withFormatters', {
-	PARAM: '{0|timesTen} apple{{s}}',
-	PARAMS: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
+	FORMATTER_1: '{0|timesTen} apple{{s}}',
+	FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
 })
 
 test.run()

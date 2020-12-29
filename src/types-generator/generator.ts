@@ -17,7 +17,7 @@ const parseTanslationObject = ([key, text]: [string, string]) => {
 	const args: string[] = []
 	const formatters: string[] = []
 
-	parseRawText(text)
+	parseRawText(text, false)
 		.filter(isObject)
 		.filter(not<InjectorPart>(isSingularPluralPart))
 		.forEach((injectorPart) => {

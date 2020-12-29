@@ -7,8 +7,8 @@ export type LangaugeTranslation = {
 }
 
 export type LangaugeTranslationArgs = {
-	PARAM: () => string
-	PARAMS: (arg1: unknown) => string
+	PARAM: (arg0: unknown) => string
+	PARAMS: (arg0: unknown, arg1: unknown) => string
 }
 
 export type LangaugeFormatters = never

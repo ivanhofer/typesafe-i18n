@@ -2,13 +2,13 @@ import type { Config } from 'langauge'
 export type { LangaugeBaseTranslation } from 'langauge'
 
 export type LangaugeTranslation = {
-	PARAM: string
-	PARAMS: string
+	KEYED_PARAM: string
+	KEYED_PARAMS: string
 }
 
 export type LangaugeTranslationArgs = {
-	PARAM: (arg: { nrOfApples: unknown }) => string
-	PARAMS: (arg: { nrOfApples: unknown, nrOfBananas: unknown }) => string
+	KEYED_PARAM: (arg: { nrOfApples: unknown }) => string
+	KEYED_PARAMS: (arg: { nrOfApples: unknown, nrOfBananas: unknown }) => string
 }
 
 export type LangaugeFormatters = never
