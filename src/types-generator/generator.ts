@@ -1,6 +1,6 @@
 import { isObject, not } from 'typesafe-utils'
 import { parseRawText } from '../core/parser'
-import type { InjectorPart, Part, SingularPluralPart, TranslationObject } from '../types'
+import type { InjectorPart, Part, SingularPluralPart, LangaugeBaseTranslation } from '../types'
 import { updateTypesIfContainsChanges } from './file-utils'
 
 type GenerateTypesConfig = {
@@ -36,7 +36,7 @@ const wrapType = (array: unknown[], callback: () => string) =>
 }`
 
 const createKeysType = (keys: string[]) =>
-	`export type LLLTranlsationKeys = ${wrapType(keys, () =>
+	`export type LangaugeTranslation = ${wrapType(keys, () =>
 		keys
 			.map(
 				(key) =>
@@ -47,7 +47,7 @@ const createKeysType = (keys: string[]) =>
 	)}`
 
 const createFormatterType = (formatterKeys: string[]) =>
-	`export type LLLFormatters = ${wrapType(formatterKeys, () =>
+	`export type LangaugeFormatters = ${wrapType(formatterKeys, () =>
 		formatterKeys
 			.map(
 				(key) =>
@@ -58,7 +58,7 @@ const createFormatterType = (formatterKeys: string[]) =>
 	)}`
 
 const createTranslationsType = (translations: [key: string, args: string[]][]) =>
-	`export type LLLTranslationsObject = ${wrapType(translations, () =>
+	`export type LangaugeTranslationArgs = ${wrapType(translations, () =>
 		translations
 			.map(
 				(translation) =>
@@ -86,7 +86,7 @@ const mapTranslationArgs = (args: string[]) => {
 	return prefix + args.map((arg) => `${argPrefix}${arg}: unknown`).join(', ') + postfix
 }
 
-const getTypes = (translationObject: TranslationObject) => {
+const getTypes = (translationObject: LangaugeBaseTranslation) => {
 	const result = Object.entries(translationObject).map(parseTanslationObject)
 
 	const keys = result.map(([k]) => k as string)
@@ -101,23 +101,20 @@ const getTypes = (translationObject: TranslationObject) => {
 	const translationsType = createTranslationsType(translations)
 
 	return `import type { Config } from 'langauge'
-
-export type LLLConfig = Config<LLLFormatters>
-
-export type LLLTranslationKeyBase = {
-	[key: string]: string
-}
+export type { LangaugeBaseTranslation } from 'langauge'
 
 ${keysType}
 
 ${translationsType}
 
 ${formatterType}
+
+export type LangaugeConfig = Config<LangaugeFormatters>
 `
 }
 
 export const generateTypes = async (
-	translationObject: TranslationObject,
+	translationObject: LangaugeBaseTranslation,
 	config: GenerateTypesConfig = {} as GenerateTypesConfig,
 ): Promise<void> => {
 	const { path = './src/langauge/', file = 'generatedTypes.ts' } = config

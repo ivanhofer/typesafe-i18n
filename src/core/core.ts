@@ -1,12 +1,12 @@
 import { isPrimitiveObject, isString } from 'typesafe-utils'
 import {
-	TranslationObject,
-	TranslationKey,
+	LangaugeBaseTranslation,
+	LangaugeTranslationKey,
 	InjectorPart,
 	SingularPluralPart,
 	Part,
 	Formatters,
-	Args,
+	LangaugeBaseTranslationArgs,
 	TranslationParts,
 	Config,
 	TranslatorFn,
@@ -14,8 +14,10 @@ import {
 } from '../types'
 import { parseRawText } from './parser'
 
-const getTextFromTranslationKey = <T extends TranslationObject>(translationObject: T, key: TranslationKey<T>): string =>
-	translationObject[key] || (key as string)
+const getTextFromTranslationKey = <T extends LangaugeBaseTranslation>(
+	translationObject: T,
+	key: LangaugeTranslationKey<T>,
+): string => translationObject[key] || (key as string)
 
 const applyFormatters = (formatters: Formatters, formatterKeys: string[], value: unknown) =>
 	formatterKeys.reduce((prev, formatterKey) => {
@@ -23,7 +25,7 @@ const applyFormatters = (formatters: Formatters, formatterKeys: string[], value:
 		return formatter ? formatter(prev) : prev
 	}, value)
 
-const applyValues = (textParts: Part[], formatters: Formatters, args: Args) => {
+const applyValues = (textParts: Part[], formatters: Formatters, args: LangaugeBaseTranslationArgs) => {
 	return textParts
 		.map((part) => {
 			if (isString(part)) {
@@ -45,10 +47,10 @@ const applyValues = (textParts: Part[], formatters: Formatters, args: Args) => {
 		.join('')
 }
 
-const getTextParts = <T extends TranslationObject>(
+const getTextParts = <T extends LangaugeBaseTranslation>(
 	cache: Cache<T>,
 	translationObject: T,
-	key: TranslationKey<T>,
+	key: LangaugeTranslationKey<T>,
 ): Part[] => {
 	const cached = cache && cache[key]
 	if (cached) return cached
@@ -60,22 +62,24 @@ const getTextParts = <T extends TranslationObject>(
 	return textInfo
 }
 
-const wrapTranslateFunction = <T extends TranslationObject>(
+const wrapTranslateFunction = <T extends LangaugeBaseTranslation>(
 	translationObject: T,
 	{ formatters = {}, useCache = true }: Config,
 ) => {
 	const cache: Cache<T> = (useCache && ({} as TranslationParts<T>)) || null
-	return (key: TranslationKey<T>, ...args: unknown[]) => {
+	return (key: LangaugeTranslationKey<T>, ...args: unknown[]) => {
 		const textInfo = getTextParts(cache, translationObject, key)
 
-		const transformedArgs = ((args.length === 1 && isPrimitiveObject(args[0]) ? args[0] : args) as unknown) as Args
+		const transformedArgs = ((args.length === 1 && isPrimitiveObject(args[0])
+			? args[0]
+			: args) as unknown) as LangaugeBaseTranslationArgs
 
 		return applyValues(textInfo, formatters, transformedArgs)
 	}
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const langauge = <TO extends TranslationObject, TF extends object = TranslatorFn<TO>>(
+export const langauge = <TO extends LangaugeBaseTranslation, TF extends object = TranslatorFn<TO>>(
 	translationObject: TO,
 	config: Config = {},
 ): TF => {

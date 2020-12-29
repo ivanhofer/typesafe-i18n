@@ -1,9 +1,9 @@
 import { promises } from 'fs'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import type { TranslationObject } from '../src/types'
 
-import { generateTypes } from '../src/types-generator'
+import type { LangaugeBaseTranslation } from '../src'
+import { generateTypes } from '../src'
 
 const { readFile } = promises
 
@@ -24,7 +24,7 @@ const check = async (prefix: string) => {
 	assert.match(removeWhitespace(expected), removeWhitespace(actual))
 }
 
-const wrapTest = async (prefix: string, translation: TranslationObject) =>
+const wrapTest = async (prefix: string, translation: LangaugeBaseTranslation) =>
 	test(`types ${prefix}`, async () => {
 		await generateTypes(translation, createConfig(prefix))
 		await check(prefix)

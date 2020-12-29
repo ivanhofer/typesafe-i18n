@@ -1,13 +1,10 @@
 import type { Config } from 'langauge'
+export type { LangaugeBaseTranslation } from 'langauge'
 
-export type LLLConfig = Config<LLLFormatters>
+export type LangaugeTranslation = never
 
-export type LLLTranslationKeyBase = {
-	[key: string]: string
-}
+export type LangaugeTranslationArgs = never
 
-export type LLLTranlsationKeys = never
+export type LangaugeFormatters = never
 
-export type LLLTranslationsObject = never
-
-export type LLLFormatters = never
+export type LangaugeConfig = Config<LangaugeFormatters>

@@ -1,5 +1,5 @@
-export type { Config } from './types'
+export type { Config, LangaugeBaseTranslation } from './types'
 
 export { langauge } from './core/core'
 
-export { generateTypes } from './types-generator'
+export { generateTypes } from './types-generator/generator'

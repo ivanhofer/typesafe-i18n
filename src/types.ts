@@ -2,13 +2,13 @@
 
 export type Cache<T> = TranslationParts<T> | null
 
-export type TranslationKey<T> = keyof T
+export type LangaugeTranslationKey<T> = keyof T
 
-export type TranslationObject = {
+export type LangaugeBaseTranslation = {
 	[key: string]: string
 }
 
-export type Args = {
+export type LangaugeBaseTranslationArgs = {
 	[key in string]: unknown
 }
 
