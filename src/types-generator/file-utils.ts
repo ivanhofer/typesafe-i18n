@@ -1,4 +1,5 @@
 import { promises as fsPromises } from 'fs'
+import { join } from 'path'
 
 const { readFile, writeFile, mkdir, stat } = fsPromises
 
@@ -25,16 +26,14 @@ export const writeNewFile = async (path: string, file: string, content: string):
 		mkdir(path, { recursive: true })
 	}
 
-	writeFile(path + file, content, { encoding: 'utf-8' })
+	writeFile(join(path + file), content, { encoding: 'utf-8' })
 
 	// eslint-disable-next-line no-console
 	console.info('[LANGAUGE] generated types')
 }
 
 export const updateTypesIfContainsChanges = async (path: string, file: string, types: string): Promise<void> => {
-	const fullPath = path + file
-
-	const oldTypes = await readPrevousFile(fullPath)
+	const oldTypes = await readPrevousFile(join(path + file))
 	if (oldTypes === types) return
 
 	await writeNewFile(path, file, types)
