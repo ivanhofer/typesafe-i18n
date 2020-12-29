@@ -11,6 +11,6 @@ export type LangaugeTranslationArgs = {
 	KEYED_PARAMS: (arg: { nrOfApples: unknown, nrOfBananas: unknown }) => string
 }
 
-export type LangaugeFormatters = never
+export type LangaugeFormatters = { }
 
 export type LangaugeConfig = Config<LangaugeFormatters>

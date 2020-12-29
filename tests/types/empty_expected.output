@@ -1,10 +1,10 @@
 import type { Config } from 'langauge'
 export type { LangaugeBaseTranslation } from 'langauge'
 
-export type LangaugeTranslation = never
+export type LangaugeTranslation = { }
 
-export type LangaugeTranslationArgs = never
+export type LangaugeTranslationArgs = { }
 
-export type LangaugeFormatters = never
+export type LangaugeFormatters = { }
 
 export type LangaugeConfig = Config<LangaugeFormatters>
