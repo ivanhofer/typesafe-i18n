@@ -11,6 +11,7 @@ import {
 	Config,
 	TranslatorFn,
 	Cache,
+	ConfigWithFormatters,
 } from '../types'
 import { parseRawText } from './parser'
 
@@ -64,7 +65,7 @@ const getTextParts = <T extends LangaugeBaseTranslation>(
 
 const wrapTranslateFunction = <T extends LangaugeBaseTranslation>(
 	translationObject: T,
-	{ formatters = {}, useCache = true }: Config,
+	{ formatters = {}, useCache = true }: Config = {},
 ) => {
 	const cache: Cache<T> = (useCache && ({} as TranslationParts<T>)) || null
 	return (key: LangaugeTranslationKey<T>, ...args: unknown[]) => {
@@ -78,18 +79,27 @@ const wrapTranslateFunction = <T extends LangaugeBaseTranslation>(
 	}
 }
 
-export const langauge = <
+export function langauge<
 	TO extends LangaugeBaseTranslation,
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	TF extends object = TranslatorFn<TO>,
 	F extends Formatters = Formatters
->(
-	translationObject: TO,
-	config: Config<F> = {},
-): TF => {
+>(translationObject: TO, config: ConfigWithFormatters<F>): TF
+
+export function langauge<
+	TO extends LangaugeBaseTranslation,
+	// eslint-disable-next-line @typescript-eslint/ban-types
+	TF extends object = TranslatorFn<TO>
+>(translationObject: TO, config?: Config): TF
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+export function langauge(translationObject: any, config: any): any {
 	const translateFunction = wrapTranslateFunction(translationObject, config)
 
-	return new Proxy<TF>({} as TF, {
-		get: (_target, name: string) => translateFunction.bind(null, name),
-	})
+	return new Proxy(
+		{},
+		{
+			get: (_target, name: string) => translateFunction.bind(null, name),
+		},
+	)
 }

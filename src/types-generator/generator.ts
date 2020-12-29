@@ -31,7 +31,7 @@ const parseTanslationObject = ([key, text]: [string, string]) => {
 
 const wrapType = (array: unknown[], callback: () => string) =>
 	!array.length
-		? `never`
+		? `{ }`
 		: `{${callback()}
 }`
 

@@ -22,10 +22,17 @@ export type TranslationParts<T> = {
 
 // config -------------------------------------------------------------------------------------------------------------
 
-export type Config<T extends Formatters = Formatters> = {
+export type ConfigWithoutFormatters = {
 	useCache?: boolean
-	formatters?: T
+	formatters?: never
 }
+
+export type ConfigWithFormatters<T extends Formatters = Formatters> = {
+	useCache?: boolean
+	formatters: T
+}
+
+export type Config<T extends Formatters = Formatters> = ConfigWithoutFormatters | ConfigWithFormatters<T>
 
 // formatters ---------------------------------------------------------------------------------------------------------
 
