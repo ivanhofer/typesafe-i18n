@@ -1,0 +1,17 @@
+import type { Config } from 'langauge'
+
+export type LLLConfig = Config<LLLFormatters>
+
+export type LLLTranslationKeyBase = {
+	[key: string]: string
+}
+
+export type LLLTranlsationKeys = {
+	TEST: string
+}
+
+export type LLLTranslationsObject = {
+	TEST: () => string
+}
+
+export type LLLFormatters = never
