@@ -18,7 +18,7 @@ import { parseRawText } from './parser'
 const getTextFromTranslationKey = <T extends LangaugeBaseTranslation>(
 	translationObject: T,
 	key: LangaugeTranslationKey<T>,
-): string => translationObject[key] || (key as string)
+): string => translationObject[key] ?? (key as string)
 
 const applyFormatters = (formatters: Formatters, formatterKeys: string[], value: unknown) =>
 	formatterKeys.reduce((prev, formatterKey) => {

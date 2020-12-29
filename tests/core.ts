@@ -14,11 +14,18 @@ const translation = {
 	SINGULAR_PLURAL: '{0} {{Apfel|Äpfel}}',
 	MULTIPLE_PARAMS: '{0} {1}',
 	MULTIPLE_PARAMS_PLURAL: '{0} banana{{s}} and {1} apple{{s}}',
+	EMPTY: '',
 }
 
 const LLL = langauge(translation)
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
+test('wrong key', () => assert.is(LLL.WRONG_KEY(), 'WRONG_KEY'))
+
 test('no param', () => assert.is(LLL.NO_PARAM(), translation.NO_PARAM))
+
+test('empty', () => assert.is(LLL.EMPTY(), ''))
 
 test('trim key', () => assert.is(LLL.TRIM_KEY('test'), 'test'))
 test('trim param', () => assert.is(LLL.TRIM_PARAM(' Ho '), 'HeyHo'))
