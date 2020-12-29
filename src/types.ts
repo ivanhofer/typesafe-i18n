@@ -29,12 +29,12 @@ export type Config<T extends Formatters = Formatters> = {
 
 // formatters ---------------------------------------------------------------------------------------------------------
 
+export type FormatterFn<T> = (value: T) => string
+
 export type Formatters = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[formatter: string]: FormatterFn<any>
 }
-
-export type FormatterFn<T> = (value: T) => string
 
 // parts --------------------------------------------------------------------------------------------------------------
 
@@ -51,4 +51,4 @@ export type SingularPluralPart = {
 	p: string // plural
 }
 
-export type Part = Partial<TextPart | InjectorPart | SingularPluralPart>
+export type Part = TextPart | InjectorPart | SingularPluralPart

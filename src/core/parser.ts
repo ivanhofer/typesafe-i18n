@@ -10,7 +10,7 @@ const parseInjectorPart = (text: string): InjectorPart => {
 	return removeEmptyValues({ k: key.trim(), f: formatterKeys })
 }
 
-const parseSingularPluralPart = (text: string, lastAcessor: string): Partial<SingularPluralPart> => {
+const parseSingularPluralPart = (text: string, lastAcessor: string): SingularPluralPart => {
 	const content = text.substring(1, text.length - 1)
 	let [key, values] = content.split(':') as [string, string?]
 	if (!values) {
