@@ -78,10 +78,14 @@ const wrapTranslateFunction = <T extends LangaugeBaseTranslation>(
 	}
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const langauge = <TO extends LangaugeBaseTranslation, TF extends object = TranslatorFn<TO>>(
+export const langauge = <
+	TO extends LangaugeBaseTranslation,
+	// eslint-disable-next-line @typescript-eslint/ban-types
+	TF extends object = TranslatorFn<TO>,
+	F extends Formatters = Formatters
+>(
 	translationObject: TO,
-	config: Config = {},
+	config: Config<F> = {},
 ): TF => {
 	const translateFunction = wrapTranslateFunction(translationObject, config)
 
