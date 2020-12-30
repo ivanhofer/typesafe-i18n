@@ -1,6 +1,6 @@
 {
 	"name": "langauge",
-	"version": "0.6.6",
+	"version": "0.7.0",
 	"description": "A lightweight localization engine for JavaScript and TypeScript projects",
 	"homepage": "https://github.com/ivanhofer/langauge",
 	"author": "ivanhofer",
