@@ -33,6 +33,9 @@
 		"test": "uvu -r ts-node/register tests",
 		"test:watch": "watchlist src tests -- npm test"
 	},
+	"dependencies": {
+		"typesafe-utils": "^1.8.0"
+	},
 	"devDependencies": {
 		"@rollup/plugin-node-resolve": "^11.0.1",
 		"@rollup/plugin-typescript": "^8.1.0",
@@ -46,7 +49,6 @@
 		"rollup": "^2.35.1",
 		"rollup-plugin-terser": "^7.0.2",
 		"ts-node": "^9.1.1",
-		"typesafe-utils": "^1.8.0",
 		"typescript": "^4.1.3",
 		"uvu": "^0.5.1",
 		"watchlist": "^0.2.3"
