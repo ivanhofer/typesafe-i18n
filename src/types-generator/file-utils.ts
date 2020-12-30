@@ -1,11 +1,11 @@
 import { promises as fsPromises } from 'fs'
 import { join, resolve } from 'path'
 
-const { readFile, readdir, writeFile, mkdir, stat, copyFile: cp, unlink } = fsPromises
+const { readFile: read, readdir, writeFile, mkdir, stat, copyFile: cp, rmdir } = fsPromises
 
-const readPrevousFile = async (file: string): Promise<string> => {
+export const readFile = async (file: string): Promise<string> => {
 	try {
-		return (await readFile(file))?.toString()
+		return (await read(file))?.toString()
 	} catch (_e) {
 		return ''
 	}
@@ -36,9 +36,9 @@ export const copyFile = async (fromPath: string, toPath: string): Promise<boolea
 	}
 }
 
-export const deleteFile = async (path: string): Promise<boolean> => {
+export const deleteFolderRecursive = async (path: string): Promise<boolean> => {
 	try {
-		await unlink(path)
+		await rmdir(path, { recursive: true })
 		return true
 	} catch (_e) {
 		return false
@@ -55,7 +55,7 @@ export const writeNewFile = async (path: string, file: string, content: string):
 }
 
 export const updateTypesIfContainsChanges = async (path: string, file: string, types: string): Promise<void> => {
-	const oldTypes = await readPrevousFile(join(path, file))
+	const oldTypes = await readFile(join(path, file))
 	if (oldTypes === types) return
 
 	await writeNewFile(path, file, types)
@@ -83,5 +83,12 @@ export const getFiles = async (path: string, depth = 0): Promise<GetFilesType[]>
 	return files
 }
 
-export const importFile = async <T = unknown>(file: string): Promise<T> =>
-	(await import(file).catch(() => null))?.default
+export const importFile = async <T = unknown>(file: string, outputError = true): Promise<T> => {
+	return (
+		await import(file).catch((e) => {
+			// eslint-disable-next-line no-console
+			outputError && console.error('[LANGAUGE] ERROR: import failed ', e)
+			return null
+		})
+	)?.default
+}
