@@ -14,8 +14,8 @@ export type WatcherConfig = {
 	tempPath?: string
 }
 
-const BASE_PATH = './src/langauge'
-const TEMP_PATH = './node_modules/langauge/temp-output'
+const BASE_PATH = './src/langauge/'
+const TEMP_PATH = './node_modules/langauge/temp-output/'
 const DEBOUNCE_TIME = 100
 
 const getAllLanguages = async (path: string) => {

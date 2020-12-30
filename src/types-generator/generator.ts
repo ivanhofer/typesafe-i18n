@@ -129,8 +129,7 @@ const getTypes = (translationObject: LangaugeBaseTranslation, baseLocale: string
 	return `// This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-import type { Config, LangaugeBaseTranslation } from 'langauge'
-export type { LangaugeBaseTranslation }
+import type { Config } from 'langauge'
 
 ${baseLocaleType}
 
