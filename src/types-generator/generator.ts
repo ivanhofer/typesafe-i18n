@@ -29,7 +29,7 @@ const parseTanslationObject = ([key, text]: [string, string]) => {
 			f && formatters.push(...f)
 		})
 
-	return [key, args, formatters]
+	return [key, text, args, formatters]
 }
 
 const wrapObjectType = (array: unknown[], callback: () => string) =>
@@ -76,7 +76,7 @@ const createFormatterType = (formatterKeys: string[]) =>
 			.join(''),
 	)}`
 
-const createTranslationArgsType = (translations: [key: string, args: string[]][]) =>
+const createTranslationArgsType = (translations: [key: string, text: string, args: string[]][]) =>
 	`export type LangaugeTranslationArgs = ${wrapObjectType(translations, () =>
 		translations
 			.map(
@@ -87,8 +87,11 @@ const createTranslationArgsType = (translations: [key: string, args: string[]][]
 			.join(''),
 	)}`
 
-const createTranslationArgssType = ([key, args]: [key: string, args: string[]]) =>
-	`'${key}': (${mapTranslationArgs(args)}) => string`
+const createTranslationArgssType = ([key, text, args]: [key: string, text: string, args: string[]]) =>
+	`/**
+	 * ${text}
+	 */
+	'${key}': (${mapTranslationArgs(args)}) => string`
 
 const mapTranslationArgs = (args: string[]) => {
 	if (!args.length) {
@@ -119,11 +122,11 @@ const getTypes = (translationObject: LangaugeBaseTranslation, baseLocale: string
 	const translationType = createTranslationType(keys)
 
 	const formatters = result
-		.flatMap(([_k, _a, f]) => f as string[])
+		.flatMap(([_k, _t, _a, f]) => f as string[])
 		.reduce((prev, act) => [...prev, act], [] as string[])
 	const formatterType = createFormatterType(formatters)
 
-	const translations = result.map(([k, a, _f]) => [k, a as string[]] as [string, string[]])
+	const translations = result.map(([k, t, a, _f]) => [k, t, a as string[]] as [string, string, string[]])
 	const translationArgsType = createTranslationArgsType(translations)
 
 	return `// This types were auto-generated. Any manual changes will be overwritten.
