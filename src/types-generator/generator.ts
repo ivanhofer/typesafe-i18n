@@ -1,7 +1,7 @@
 import { isObject, not } from 'typesafe-utils'
-import { DEFAULT_LOCALE } from '../constants'
+import { DEFAULT_LOCALE } from '../constants/constants'
 import { parseRawText } from '../core/parser'
-import type { InjectorPart, Part, SingularPluralPart, LangaugeBaseTranslation } from '../types'
+import type { InjectorPart, Part, SingularPluralPart, LangaugeBaseTranslation } from '../types/types'
 import { updateTypesIfContainsChanges } from './file-utils'
 
 export type GenerateTypesConfig = {
@@ -126,7 +126,9 @@ const getTypes = (translationObject: LangaugeBaseTranslation, baseLocale: string
 	const translations = result.map(([k, a, _f]) => [k, a as string[]] as [string, string[]])
 	const translationArgsType = createTranslationArgsType(translations)
 
-	return `import type { Config, LangaugeBaseTranslation } from 'langauge'
+	return `// This types were auto-generated. Any manual changes will be overwritten.
+
+import type { Config, LangaugeBaseTranslation } from 'langauge'
 export type { LangaugeBaseTranslation }
 
 ${baseLocaleType}

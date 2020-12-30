@@ -1,3 +1,5 @@
+// This types were auto-generated. Any manual changes will be overwritten.
+
 import type { Config, LangaugeBaseTranslation } from 'langauge'
 export type { LangaugeBaseTranslation }
 

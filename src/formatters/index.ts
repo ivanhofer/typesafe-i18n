@@ -1,5 +1,5 @@
-import { DEFAULT_LOCALE } from '../constants'
-import type { FormatterFn } from '../types'
+import { DEFAULT_LOCALE } from '../constants/constants'
+import type { FormatterFn } from '../types/types'
 
 export const uppercase: FormatterFn<string> = (value: string): string => value?.toUpperCase()
 

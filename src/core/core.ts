@@ -12,7 +12,7 @@ import {
 	TranslatorFn,
 	Cache,
 	ConfigWithFormatters,
-} from '../types'
+} from '../types/types'
 import { parseRawText } from './parser'
 
 const getTextFromTranslationKey = <T extends LangaugeBaseTranslation>(
