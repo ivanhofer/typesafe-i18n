@@ -55,12 +55,12 @@ const createTranslationKeysType = (keys: string[]) =>
 	`export type LangaugeTranslationKeys =${wrapEnumType(keys, () => createEnumType(keys))}`
 
 const createTranslationType = (keys: string[]) =>
-	`export type LangaugeTranslation = LangaugeBaseTranslation | ${wrapObjectType(keys, () =>
+	`export type LangaugeTranslation = ${wrapObjectType(keys, () =>
 		keys
 			.map(
 				(key) =>
 					`
-	${key}: string`,
+	'${key}': string`,
 			)
 			.join(''),
 	)}`
@@ -88,7 +88,7 @@ const createTranslationArgsType = (translations: [key: string, args: string[]][]
 	)}`
 
 const createTranslationArgssType = ([key, args]: [key: string, args: string[]]) =>
-	`${key}: (${mapTranslationArgs(args)}) => string`
+	`'${key}': (${mapTranslationArgs(args)}) => string`
 
 const mapTranslationArgs = (args: string[]) => {
 	if (!args.length) {
@@ -127,6 +127,7 @@ const getTypes = (translationObject: LangaugeBaseTranslation, baseLocale: string
 	const translationArgsType = createTranslationArgsType(translations)
 
 	return `// This types were auto-generated. Any manual changes will be overwritten.
+/* eslint-disable */
 
 import type { Config, LangaugeBaseTranslation } from 'langauge'
 export type { LangaugeBaseTranslation }

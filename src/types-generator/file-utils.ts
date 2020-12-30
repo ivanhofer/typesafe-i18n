@@ -6,7 +6,9 @@ const { readFile: read, readdir, writeFile, mkdir, stat, copyFile: cp, rmdir } =
 export const readFile = async (file: string): Promise<string> => {
 	try {
 		return (await read(file))?.toString()
-	} catch (_e) {
+	} catch (e) {
+		// eslint-disable-next-line no-console
+		console.error(`[LANGAUGE] ERROR readFile: ${file}`, e)
 		return ''
 	}
 }
@@ -20,10 +22,21 @@ const doesPathExist = async (path: string): Promise<boolean> => {
 	}
 }
 
+const createPath = async (path: string): Promise<boolean> => {
+	try {
+		await mkdir(path, { recursive: true })
+		return true
+	} catch (e) {
+		// eslint-disable-next-line no-console
+		console.error(`[LANGAUGE] ERROR createPath: ${path}`, e)
+		return false
+	}
+}
+
 export const createPathIfNotExits = async (path: string): Promise<void> => {
 	const pathExists = await doesPathExist(path)
 	if (!pathExists) {
-		mkdir(path, { recursive: true })
+		await createPath(path)
 	}
 }
 
@@ -31,7 +44,9 @@ export const copyFile = async (fromPath: string, toPath: string): Promise<boolea
 	try {
 		await cp(fromPath, toPath)
 		return true
-	} catch (_e) {
+	} catch (e) {
+		// eslint-disable-next-line no-console
+		console.error(`[LANGAUGE] ERROR copyFile: ${fromPath} - ${toPath}`, e)
 		return false
 	}
 }
@@ -40,7 +55,9 @@ export const deleteFolderRecursive = async (path: string): Promise<boolean> => {
 	try {
 		await rmdir(path, { recursive: true })
 		return true
-	} catch (_e) {
+	} catch (e) {
+		// eslint-disable-next-line no-console
+		console.error(`[LANGAUGE] ERROR deleteFolderRecursive: ${path}`, e)
 		return false
 	}
 }

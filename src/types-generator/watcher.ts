@@ -23,16 +23,12 @@ const getAllLanguages = async (path: string) => {
 	return files.filter(({ folder, name }) => folder && name === 'index.ts').map(({ folder }) => folder)
 }
 
-const transpileTypescriptAndPrepareImportFile = async (
-	languageFilePath: string,
-	tempPath: string,
-	locale: string,
-): Promise<string> => {
+const transpileTypescriptAndPrepareImportFile = async (languageFilePath: string, tempPath: string): Promise<string> => {
 	const program = createProgram([languageFilePath], { outDir: tempPath })
 	program.emit()
 
-	const compiledPath = resolve(tempPath, locale, 'index.js')
-	const copyPath = resolve(tempPath, locale, `langauge-temp-${debounceIndex}.js`)
+	const compiledPath = resolve(tempPath, 'index.js')
+	const copyPath = resolve(tempPath, `langauge-temp-${debounceIndex}.js`)
 
 	const copySuccess = await copyFile(compiledPath, copyPath)
 	if (!copySuccess) {
@@ -53,7 +49,10 @@ const getLanguageFile = async (
 
 	await createPathIfNotExits(tempPath)
 
-	const importPath = await transpileTypescriptAndPrepareImportFile(originalPath, tempPath, locale)
+	const importPath = await transpileTypescriptAndPrepareImportFile(originalPath, tempPath)
+	if (!importPath) {
+		return null
+	}
 
 	const languageImport = await importFile<LangaugeBaseTranslation>(importPath)
 
