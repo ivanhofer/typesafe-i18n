@@ -4,7 +4,7 @@ import { parseRawText } from '../core/parser'
 import type { InjectorPart, Part, SingularPluralPart, LangaugeBaseTranslation } from '../types'
 import { updateTypesIfContainsChanges } from './file-utils'
 
-type GenerateTypesConfig = {
+export type GenerateTypesConfig = {
 	outputPath?: string
 	outputFile?: string
 	baseLocale?: string
@@ -32,9 +32,9 @@ const parseTanslationObject = ([key, text]: [string, string]) => {
 	return [key, args, formatters]
 }
 
-const wrapObjectType = (array: unknown[], callback: () => string) =>
+const wrapObjectType = (array: unknown[], callback: () => string, emptyType = 'null') =>
 	!array.length
-		? `null`
+		? emptyType
 		: `{${callback()}
 }`
 
@@ -55,7 +55,7 @@ const createTranslationKeysType = (keys: string[]) =>
 	`export type LangaugeTranslationKeys =${wrapEnumType(keys, () => createEnumType(keys))}`
 
 const createTranslationType = (keys: string[]) =>
-	`export type LangaugeTranslation = ${wrapObjectType(keys, () =>
+	`export type LangaugeTranslation = LangaugeBaseTranslation | ${wrapObjectType(keys, () =>
 		keys
 			.map(
 				(key) =>
@@ -77,14 +77,17 @@ const createFormatterType = (formatterKeys: string[]) =>
 	)}`
 
 const createTranslationArgsType = (translations: [key: string, args: string[]][]) =>
-	`export type LangaugeTranslationArgs = ${wrapObjectType(translations, () =>
-		translations
-			.map(
-				(translation) =>
-					`
+	`export type LangaugeTranslationArgs = ${wrapObjectType(
+		translations,
+		() =>
+			translations
+				.map(
+					(translation) =>
+						`
 	${createTranslationArgssType(translation)}`,
-			)
-			.join(''),
+				)
+				.join(''),
+		'{}',
 	)}`
 
 const createTranslationArgssType = ([key, args]: [key: string, args: string[]]) =>
@@ -124,10 +127,10 @@ const getTypes = (translationObject: LangaugeBaseTranslation, baseLocale: string
 	const formatterType = createFormatterType(formatters)
 
 	const translations = result.map(([k, a, _f]) => [k, a as string[]] as [string, string[]])
-	const translationsType = createTranslationArgsType(translations)
+	const translationArgsType = createTranslationArgsType(translations)
 
-	return `import type { Config } from 'langauge'
-export type { LangaugeBaseTranslation } from 'langauge'
+	return `import type { Config, LangaugeBaseTranslation } from 'langauge'
+export type { LangaugeBaseTranslation }
 
 ${baseLocaleType}
 
@@ -137,7 +140,7 @@ ${translationKeysType}
 
 ${translationType}
 
-${translationsType}
+${translationArgsType}
 
 ${formatterType}
 

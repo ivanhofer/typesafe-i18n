@@ -3,17 +3,18 @@ import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
 import type { LangaugeBaseTranslation } from '../src'
+import type { GenerateTypesConfig } from '../src/types-generator/generator'
 import { generateTypes } from '../src'
 
 const { readFile } = promises
 
 const test = suite('types')
 
-const path = 'tests/types/'
+const outputPath = 'tests/types/'
 
-const createConfig = (prefix: string) => ({ path, file: prefix + '_actual.output' })
+const createConfig = (prefix: string): GenerateTypesConfig => ({ outputPath, outputFile: prefix + '_actual.output' })
 
-const getPathOfOutputFile = (prefix: string, type: 'actual' | 'expected') => `${path}${prefix}_${type}.output`
+const getPathOfOutputFile = (prefix: string, type: 'actual' | 'expected') => `${outputPath}${prefix}_${type}.output`
 
 const REGEX_WHITESPACE = /[\s]+/g
 const removeWhitespace = (text: string) => text.replace(REGEX_WHITESPACE, '')

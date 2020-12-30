@@ -1,7 +1,15 @@
-import type { Config } from 'langauge'
-export type { LangaugeBaseTranslation } from 'langauge'
+import type { Config, LangaugeBaseTranslation } from 'langauge'
+export type { LangaugeBaseTranslation }
 
-export type LangaugeTranslation = {
+export type LangaugeBaseLocale = 'en'
+
+export type LangaugeLocales = null
+
+export type LangaugeTranslationKeys =
+	| 'FORMATTER_1'
+	| 'FORMATTER_2'
+
+export type LangaugeTranslation = LangaugeBaseTranslation | {
 	FORMATTER_1: string
 	FORMATTER_2: string
 }

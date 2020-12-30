@@ -1,10 +1,16 @@
-import type { Config } from 'langauge'
-export type { LangaugeBaseTranslation } from 'langauge'
+import type { Config, LangaugeBaseTranslation } from 'langauge'
+export type { LangaugeBaseTranslation }
 
-export type LangaugeTranslation = { }
+export type LangaugeBaseLocale = 'en'
 
-export type LangaugeTranslationArgs = { }
+export type LangaugeLocales = null
 
-export type LangaugeFormatters = { }
+export type LangaugeTranslationKeys = null
+
+export type LangaugeTranslation = LangaugeBaseTranslation | null
+
+export type LangaugeTranslationArgs = {}
+
+export type LangaugeFormatters = null
 
 export type LangaugeConfig = Config<LangaugeFormatters>
