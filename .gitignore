@@ -1,4 +1,6 @@
 node_modules
 dist
 lib
+rollup
 tests/types/*_actual.output
+langauge-*.tgz
