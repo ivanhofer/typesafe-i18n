@@ -3,7 +3,8 @@ export type { LangaugeBaseTranslation }
 
 export type LangaugeBaseLocale = 'en'
 
-export type LangaugeLocales = null
+export type LangaugeLocales =
+	| 'en'
 
 export type LangaugeTranslationKeys =
 	| 'FORMATTER_1'

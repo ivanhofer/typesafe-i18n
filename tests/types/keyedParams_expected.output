@@ -3,7 +3,8 @@ export type { LangaugeBaseTranslation }
 
 export type LangaugeBaseLocale = 'en'
 
-export type LangaugeLocales = null
+export type LangaugeLocales =
+	| 'en'
 
 export type LangaugeTranslationKeys =
 	| 'KEYED_PARAM'
@@ -19,6 +20,6 @@ export type LangaugeTranslationArgs = {
 	KEYED_PARAMS: (arg: { nrOfApples: unknown, nrOfBananas: unknown }) => string
 }
 
-export type LangaugeFormatters = null
+export type LangaugeFormatters = {}
 
 export type LangaugeConfig = Config<LangaugeFormatters>

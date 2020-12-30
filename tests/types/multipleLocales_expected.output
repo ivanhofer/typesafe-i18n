@@ -4,18 +4,15 @@ export type { LangaugeBaseTranslation }
 export type LangaugeBaseLocale = 'en'
 
 export type LangaugeLocales =
+	| 'de'
 	| 'en'
+	| 'it'
 
-export type LangaugeTranslationKeys =
-	| 'TEST'
+export type LangaugeTranslationKeys = never
 
-export type LangaugeTranslation = LangaugeBaseTranslation | {
-	TEST: string
-}
+export type LangaugeTranslation = LangaugeBaseTranslation | {}
 
-export type LangaugeTranslationArgs = {
-	TEST: () => string
-}
+export type LangaugeTranslationArgs = {}
 
 export type LangaugeFormatters = {}
 

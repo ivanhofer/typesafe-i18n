@@ -12,7 +12,11 @@ const test = suite('types')
 
 const outputPath = 'tests/types/'
 
-const createConfig = (prefix: string): GenerateTypesConfig => ({ outputPath, outputFile: prefix + '_actual.output' })
+const createConfig = (prefix: string, config?: Partial<GenerateTypesConfig>): GenerateTypesConfig => ({
+	...config,
+	outputPath,
+	outputFile: prefix + '_actual.output',
+})
 
 const getPathOfOutputFile = (prefix: string, type: 'actual' | 'expected') => `${outputPath}${prefix}_${type}.output`
 
@@ -25,9 +29,9 @@ const check = async (prefix: string) => {
 	assert.match(removeWhitespace(expected), removeWhitespace(actual))
 }
 
-const wrapTest = async (prefix: string, translation: LangaugeBaseTranslation) =>
+const wrapTest = async (prefix: string, translation: LangaugeBaseTranslation, config?: Partial<GenerateTypesConfig>) =>
 	test(`types ${prefix}`, async () => {
-		await generateTypes(translation, createConfig(prefix))
+		await generateTypes(translation, createConfig(prefix, config))
 		await check(prefix)
 	})
 
@@ -55,11 +59,21 @@ wrapTest('keyedParams', {
 	KEYED_PARAMS: '{nrOfApples} apple{{s}} and {nrOfBananas} banana{{s}}',
 })
 
-// withFormatters ---------------------------------------------------------------------------------------------------------
+// withFormatters -----------------------------------------------------------------------------------------------------
 
 wrapTest('withFormatters', {
 	FORMATTER_1: '{0|timesTen} apple{{s}}',
 	FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
 })
+
+test.run()
+
+// deLocales ----------------------------------------------------------------------------------------------------------
+
+wrapTest('deLocale', {}, { baseLocale: 'de' })
+
+// multipleLocales ----------------------------------------------------------------------------------------------------
+
+wrapTest('multipleLocales', {}, { locales: ['de', 'en', 'it'] })
 
 test.run()

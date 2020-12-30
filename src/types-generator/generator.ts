@@ -32,13 +32,13 @@ const parseTanslationObject = ([key, text]: [string, string]) => {
 	return [key, args, formatters]
 }
 
-const wrapObjectType = (array: unknown[], callback: () => string, emptyType = 'null') =>
+const wrapObjectType = (array: unknown[], callback: () => string) =>
 	!array.length
-		? emptyType
+		? '{}'
 		: `{${callback()}
 }`
 
-const wrapEnumType = (array: unknown[], callback: () => string) => (!array.length ? ' null' : `${callback()}`)
+const wrapEnumType = (array: unknown[], callback: () => string) => (!array.length ? ' never' : `${callback()}`)
 
 const createEnumType = (locales: string[]) =>
 	locales
@@ -77,17 +77,14 @@ const createFormatterType = (formatterKeys: string[]) =>
 	)}`
 
 const createTranslationArgsType = (translations: [key: string, args: string[]][]) =>
-	`export type LangaugeTranslationArgs = ${wrapObjectType(
-		translations,
-		() =>
-			translations
-				.map(
-					(translation) =>
-						`
+	`export type LangaugeTranslationArgs = ${wrapObjectType(translations, () =>
+		translations
+			.map(
+				(translation) =>
+					`
 	${createTranslationArgssType(translation)}`,
-				)
-				.join(''),
-		'{}',
+			)
+			.join(''),
 	)}`
 
 const createTranslationArgssType = ([key, args]: [key: string, args: string[]]) =>
@@ -113,7 +110,7 @@ const getTypes = (translationObject: LangaugeBaseTranslation, baseLocale: string
 
 	const baseLocaleType = `export type LangaugeBaseLocale = '${baseLocale}'`
 
-	const localesType = createLocalesType(locales)
+	const localesType = createLocalesType(locales?.length ? locales : [baseLocale])
 
 	const keys = result.map(([k]) => k as string)
 
