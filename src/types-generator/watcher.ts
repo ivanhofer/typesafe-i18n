@@ -8,8 +8,9 @@ import * as typescript from 'typescript'
 const { createProgram } = typescript
 
 export type WatcherConfig = {
-	outputFile?: string
 	outputPath?: string
+	typesFile?: string
+	utilFile?: string
 	baseLocale?: string
 	tempPath?: string
 }
@@ -67,15 +68,28 @@ const getLanguageFile = async (
 	return languageImport
 }
 
-const generate = async (outputPath: string, outputFile: string | undefined, baseLanguage: string, tempPath: string) => {
+const generate = async ({
+	outputPath,
+	typesFile,
+	utilFile,
+	baseLocale,
+	tempPath,
+}: {
+	outputPath: string
+	typesFile: string | undefined
+	utilFile: string | undefined
+	baseLocale: string
+	tempPath: string
+}) => {
 	const locales = await getAllLanguages(outputPath)
-	const locale = locales.find((l) => l === baseLanguage) || locales[0]
+	const locale = locales.find((l) => l === baseLocale) || locales[0]
 
 	const languageFile = (locale && (await getLanguageFile(outputPath, locale, tempPath))) || {}
 
 	await generateTypes(languageFile, {
 		outputPath,
-		outputFile,
+		typesFile,
+		utilFile,
 		baseLocale: locale,
 		locales,
 	})
@@ -95,19 +109,13 @@ const debonce = (callback: () => void) => {
 }
 
 export const startWatcher = async (config: WatcherConfig): Promise<void> => {
-	const { outputPath = BASE_PATH, outputFile, baseLocale = DEFAULT_LOCALE, tempPath = TEMP_PATH } = config
+	const { outputPath = BASE_PATH, typesFile, utilFile, baseLocale = DEFAULT_LOCALE, tempPath = TEMP_PATH } = config
 
-	const onChange = generate.bind(null, outputPath, outputFile, baseLocale, tempPath)
+	const onChange = generate.bind(null, { outputPath, typesFile, utilFile, baseLocale, tempPath })
 
 	await createPathIfNotExits(outputPath)
 
-	fs.watch(outputPath, { recursive: true }, (_event, filename) => {
-		if (filename.includes('temp')) {
-			return
-		}
-
-		debonce(onChange)
-	})
+	fs.watch(outputPath, { recursive: true }, () => debonce(onChange))
 
 	// eslint-disable-next-line no-console
 	console.info(`[LANGAUGE] watcher started in: '${outputPath}'`)

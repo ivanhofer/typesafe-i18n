@@ -2,11 +2,12 @@ import { isObject, not } from 'typesafe-utils'
 import { DEFAULT_LOCALE } from '../constants/constants'
 import { parseRawText } from '../core/parser'
 import type { InjectorPart, Part, SingularPluralPart, LangaugeBaseTranslation } from '../types/types'
-import { updateTypesIfContainsChanges } from './file-utils'
+import { writeFileIfContainsChanges } from './file-utils'
 
 export type GenerateTypesConfig = {
 	outputPath?: string
-	outputFile?: string
+	typesFile?: string
+	utilFile?: string
 	baseLocale?: string
 	locales?: string[]
 }
@@ -150,18 +151,60 @@ export type LangaugeConfig = Config<LangaugeFormatters>
 `
 }
 
+export const getUtil = (baseLocale: string, locales: string[]): string => {
+	baseLocale
+	const localesImports = locales
+		.map(
+			(locale) => `
+import ${locale.replace('-', '_')} from './${locale}'`,
+		)
+		.join('')
+
+	const localesTranslations = locales
+		.map(
+			(locale) => `
+	${locale}${locale === baseLocale ? `: ${locale} as LangaugeTranslation` : ''},`,
+		)
+		.join('')
+
+	return `// This types were auto-generated. Any manual changes will be overwritten.
+/* eslint-disable */
+
+import type { ConfigWithFormatters, LocaleTranslations } from 'langauge'
+import type {
+	LangaugeTranslation,
+	LangaugeTranslationArgs,
+	LangaugeFormatters,
+	LangaugeLocales,
+} from './langauge-types'
+import { getLangaugeInstance, initLangauge } from 'langauge'
+${localesImports}
+
+const localeTranlslations: LocaleTranslations<LangaugeLocales, LangaugeTranslation> = {${localesTranslations}
+}
+
+export const getLangauge = (config: ConfigWithFormatters<LangaugeFormatters>) => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranlslations, config)
+
+export const getLangaugeForLocale = (locale: LangaugeLocales,
+	config: ConfigWithFormatters<LangaugeFormatters>,) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranlslations, locale, config)
+`
+}
+
 export const generateTypes = async (
 	translationObject: LangaugeBaseTranslation,
 	config: GenerateTypesConfig = {} as GenerateTypesConfig,
 ): Promise<void> => {
 	const {
 		outputPath = './src/langauge/',
-		outputFile = 'langauge-types.ts',
+		typesFile = 'langauge-types.ts',
+		utilFile = 'langauge-util.ts',
 		baseLocale = DEFAULT_LOCALE,
 		locales = [],
 	} = config
 
 	const types = getTypes(translationObject, baseLocale, locales)
+	await writeFileIfContainsChanges(outputPath, typesFile, types)
 
-	await updateTypesIfContainsChanges(outputPath, outputFile, types)
+	const util = getUtil(baseLocale, locales)
+	await writeFileIfContainsChanges(outputPath, utilFile, util)
 }

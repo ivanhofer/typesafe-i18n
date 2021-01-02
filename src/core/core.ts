@@ -80,17 +80,17 @@ const wrapTranslateFunction = <T extends LangaugeBaseTranslation>(
 }
 
 export function langauge<
-	TO extends LangaugeBaseTranslation,
+	T extends LangaugeBaseTranslation,
 	// eslint-disable-next-line @typescript-eslint/ban-types
-	TF extends object = TranslatorFn<TO>,
+	A extends object = TranslatorFn<T>,
 	F extends Formatters = Formatters
->(translationObject: TO, config: ConfigWithFormatters<F>): TF
+>(translationObject: T, config: ConfigWithFormatters<F>): A
 
 export function langauge<
-	TO extends LangaugeBaseTranslation,
+	T extends LangaugeBaseTranslation,
 	// eslint-disable-next-line @typescript-eslint/ban-types
-	TF extends object = TranslatorFn<TO>
->(translationObject: TO, config?: Config): TF
+	A extends object = TranslatorFn<T>
+>(translationObject: T, config?: Config): A
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 export function langauge(translationObject: any, config: any): any {

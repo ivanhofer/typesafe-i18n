@@ -71,7 +71,7 @@ export const writeNewFile = async (path: string, file: string, content: string):
 	console.info('[LANGAUGE] generated types')
 }
 
-export const updateTypesIfContainsChanges = async (path: string, file: string, types: string): Promise<void> => {
+export const writeFileIfContainsChanges = async (path: string, file: string, types: string): Promise<void> => {
 	const oldTypes = await readFile(join(path, file))
 	if (oldTypes === types) return
 
