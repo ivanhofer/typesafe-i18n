@@ -21,7 +21,7 @@ const formatters = {
 	manualUppercase: (value: string) => value.toUpperCase(),
 	lowercase,
 	censorNumbers: replace(/[0-9]/g, '*'),
-	dateEN: date(),
+	dateEN: date('en'),
 	dateCUSTOM: date('en', { day: 'numeric', month: 'long', year: '2-digit' }),
 	noSpaces: (value: string) => value.replace(/\s/g, ''),
 }
