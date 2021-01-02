@@ -1,5 +1,7 @@
 // internal -----------------------------------------------------------------------------------------------------------
 
+import { FormatterFn } from '../formatters/_types'
+
 export type Cache<T> = TranslationParts<T> | null
 
 export type LangaugeTranslationKey<T> = keyof T
@@ -35,8 +37,6 @@ export type ConfigWithFormatters<T extends Formatters = Formatters> = {
 export type Config<T extends Formatters = Formatters> = ConfigWithoutFormatters | ConfigWithFormatters<T>
 
 // formatters ---------------------------------------------------------------------------------------------------------
-
-export type FormatterFn<T> = (value: T) => string
 
 export type Formatters = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -2,8 +2,6 @@ import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 import { terser } from 'rollup-plugin-terser'
 
-const ts = typescript()
-
 const config = [
 	{
 		input: './src/browser.ts',
@@ -14,7 +12,7 @@ const config = [
 				sourcemap: true,
 			},
 		],
-		plugins: [resolve(), ts],
+		plugins: [resolve(), typescript()],
 	},
 	{
 		input: './src/browser.ts',
@@ -24,7 +22,7 @@ const config = [
 				format: 'iife',
 			},
 		],
-		plugins: [resolve(), ts, terser()],
+		plugins: [resolve(), typescript(), terser()],
 	},
 ]
 

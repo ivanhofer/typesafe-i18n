@@ -1,0 +1,9 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"module": "ESNext",
+		"outDir": "./",
+		"emitDeclarationOnly": true
+	},
+	"include": ["./src/formatters/index.ts"]
+}

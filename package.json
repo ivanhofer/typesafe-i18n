@@ -21,14 +21,16 @@
 		"/cjs",
 		"/dist",
 		"/esm",
+		"/formatters",
 		"/node",
 		"/rollup"
 	],
 	"scripts": {
-		"build": "npm run build:browser && npm run build:cjs && npm run build:esm && npm run build:plugin && npm run build:watcher",
+		"build": "npm run build:browser && npm run build:cjs && npm run build:esm && npm run build:formatters && npm run build:plugin && npm run build:watcher",
 		"build:browser": "rollup -c rollup-browser.config.ts",
 		"build:cjs": "tsc -p tsconfig-cjs.json",
-		"build:esm": "tsc  -p tsconfig-esm.json",
+		"build:esm": "tsc -p tsconfig-esm.json",
+		"build:formatters": "tsc -p tsconfig-formatters.json && rollup -c rollup-formatters.config.ts",
 		"build:plugin": "tsc -p tsconfig-plugin.json && rollup -c rollup-plugin.config.ts",
 		"build:watcher": "rollup -c rollup-watcher.config.ts",
 		"lint": "eslint src",
