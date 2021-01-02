@@ -1,0 +1,7 @@
+{
+	"outputPath": "./src/langauge/",
+	"typesFile": "langauge-types.ts",
+	"utilFile": "langauge-util.ts",
+	"baseLocale": "en",
+	"tempPath": "./node_modules/langauge/temp-output/"
+}

@@ -2,6 +2,7 @@
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
 		"module": "CommonJS",
-		"outDir": "./lib/cjs"
-	}
+		"outDir": "./cjs"
+	},
+	"exclude": ["./src/formatters", "./src/node-watcher.ts", "./src/rollup-plugin-langauge.ts"]
 }

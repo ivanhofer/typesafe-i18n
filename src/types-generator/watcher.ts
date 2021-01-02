@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { resolve } from 'path'
-import { DEFAULT_LOCALE } from '../constants/constants'
+import { BASE_PATH, DEFAULT_LOCALE, TEMP_PATH } from '../constants/constants'
 import { LangaugeBaseTranslation } from '../types/types'
 import { copyFile, createPathIfNotExits, deleteFolderRecursive, getFiles, importFile } from './file-utils'
 import { generate } from './generator'
@@ -15,8 +15,6 @@ export type WatcherConfig = {
 	tempPath?: string
 }
 
-const BASE_PATH = './src/langauge/'
-const TEMP_PATH = './node_modules/langauge/temp-output/'
 const DEBOUNCE_TIME = 100
 
 const getAllLanguages = async (path: string) => {

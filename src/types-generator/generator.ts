@@ -1,5 +1,5 @@
-import { LangaugeBaseTranslation } from '../types/types'
-import { DEFAULT_LOCALE } from '../constants/constants'
+import type { LangaugeBaseTranslation } from '../types/types'
+import { BASE_PATH, TYPES_FILE, UTIL_FILE, DEFAULT_LOCALE } from '../constants/constants'
 import { generateTypes } from './generate-types'
 import { generateUtil } from './generate-util'
 
@@ -16,9 +16,9 @@ export const generate = async (
 	config: GenerateTypesConfig = {} as GenerateTypesConfig,
 ): Promise<void> => {
 	const {
-		outputPath = './src/langauge/',
-		typesFile = 'langauge-types.ts',
-		utilFile = 'langauge-util.ts',
+		outputPath = BASE_PATH,
+		typesFile = TYPES_FILE,
+		utilFile = UTIL_FILE,
 		baseLocale = DEFAULT_LOCALE,
 		locales = [baseLocale],
 	} = config

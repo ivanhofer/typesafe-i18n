@@ -1,6 +1,8 @@
 node_modules
+cjs
 dist
-lib
+esm
+node
 rollup
 tests/generated/*.actual.output
 langauge-*.tgz

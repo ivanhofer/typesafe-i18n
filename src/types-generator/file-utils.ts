@@ -6,9 +6,8 @@ const { readFile: read, readdir, writeFile, mkdir, stat, copyFile: cp, rmdir } =
 export const readFile = async (file: string): Promise<string> => {
 	try {
 		return (await read(file))?.toString()
-	} catch (e) {
+	} catch (_e) {
 		// eslint-disable-next-line no-console
-		console.error(`[LANGAUGE] ERROR readFile: ${file}`, e)
 		return ''
 	}
 }

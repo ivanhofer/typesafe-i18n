@@ -1,6 +1,7 @@
-import { REGEX_BRACKETS_SPLIT } from '../constants/constants'
-import { TextPart, InjectorPart, SingularPluralPart, Part } from '../types/types'
+import type { TextPart, InjectorPart, SingularPluralPart, Part } from '../types/types'
 import { removeEmptyValues } from './core-utils'
+
+const REGEX_BRACKETS_SPLIT = /({?{[^\\}]+}}?)/g
 
 const parseTextPart = (text: string): TextPart => text
 

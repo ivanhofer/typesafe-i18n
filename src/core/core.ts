@@ -1,5 +1,5 @@
 import { isPrimitiveObject, isString } from 'typesafe-utils'
-import {
+import type {
 	LangaugeBaseTranslation,
 	LangaugeTranslationKey,
 	InjectorPart,
