@@ -2,7 +2,8 @@
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
 		"module": "CommonJS",
-		"outDir": "./rollup"
+		"outDir": "./rollup",
+		"emitDeclarationOnly": true
 	},
 	"include": ["./src/rollup-plugin-langauge.ts"]
 }

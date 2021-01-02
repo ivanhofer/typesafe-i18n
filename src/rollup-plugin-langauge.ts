@@ -16,6 +16,6 @@ const plugin = (config: WatcherConfig = {}): Plugin => {
 }
 
 export const onwarn = (warning: RollupWarning, defaultHandler?: (warning: string | RollupWarning) => void): unknown =>
-	warning.id?.includes('langauge\node_modules\typescript') && defaultHandler && defaultHandler(warning)
+	!warning.id?.includes('langauge') && defaultHandler && defaultHandler(warning)
 
 export default plugin
