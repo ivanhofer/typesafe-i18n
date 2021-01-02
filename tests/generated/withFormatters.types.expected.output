@@ -1,7 +1,7 @@
 // This types were auto-generated. Any manual changes will be overwritten.
+/* eslint-disable */
 
-import type { Config, LangaugeBaseTranslation } from 'langauge'
-export type { LangaugeBaseTranslation }
+import type { Config } from 'langauge'
 
 export type LangaugeBaseLocale = 'en'
 
@@ -12,14 +12,20 @@ export type LangaugeTranslationKeys =
 	| 'FORMATTER_1'
 	| 'FORMATTER_2'
 
-export type LangaugeTranslation = LangaugeBaseTranslation | {
-	FORMATTER_1: string
-	FORMATTER_2: string
+export type LangaugeTranslation = {
+	'FORMATTER_1': string
+	'FORMATTER_2': string
 }
 
 export type LangaugeTranslationArgs = {
-	FORMATTER_1: (arg0: unknown) => string
-	FORMATTER_2: (arg0: unknown, arg1: unknown) => string
+	/**
+	 * {0|timesTen} apple{{s}}
+	 */
+	'FORMATTER_1': (arg0: unknown) => string
+	/**
+	 * {0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}
+	 */
+	'FORMATTER_2': (arg0: unknown, arg1: unknown) => string
 }
 
 export type LangaugeFormatters = {

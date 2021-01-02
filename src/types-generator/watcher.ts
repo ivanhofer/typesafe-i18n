@@ -3,8 +3,8 @@ import { resolve } from 'path'
 import { DEFAULT_LOCALE } from '../constants/constants'
 import { LangaugeBaseTranslation } from '../types/types'
 import { copyFile, createPathIfNotExits, deleteFolderRecursive, getFiles, importFile } from './file-utils'
-import { generateTypes } from './generator'
-import * as typescript from 'typescript'
+import { generate } from './generator'
+import typescript from 'typescript'
 const { createProgram } = typescript
 
 export type WatcherConfig = {
@@ -68,7 +68,7 @@ const getLanguageFile = async (
 	return languageImport
 }
 
-const generate = async ({
+const parseAndGenerate = async ({
 	outputPath,
 	typesFile,
 	utilFile,
@@ -86,7 +86,7 @@ const generate = async ({
 
 	const languageFile = (locale && (await getLanguageFile(outputPath, locale, tempPath))) || {}
 
-	await generateTypes(languageFile, {
+	await generate(languageFile, {
 		outputPath,
 		typesFile,
 		utilFile,
@@ -96,6 +96,7 @@ const generate = async ({
 }
 
 let debounceIndex = 0
+
 const debonce = (callback: () => void) => {
 	setTimeout(
 		(i) => {
@@ -111,7 +112,7 @@ const debonce = (callback: () => void) => {
 export const startWatcher = async (config: WatcherConfig): Promise<void> => {
 	const { outputPath = BASE_PATH, typesFile, utilFile, baseLocale = DEFAULT_LOCALE, tempPath = TEMP_PATH } = config
 
-	const onChange = generate.bind(null, { outputPath, typesFile, utilFile, baseLocale, tempPath })
+	const onChange = parseAndGenerate.bind(null, { outputPath, typesFile, utilFile, baseLocale, tempPath })
 
 	await createPathIfNotExits(outputPath)
 

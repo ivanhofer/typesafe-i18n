@@ -2,5 +2,5 @@ node_modules
 dist
 lib
 rollup
-tests/types/*_actual.output
+tests/generated/*.actual.output
 langauge-*.tgz
