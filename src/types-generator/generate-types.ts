@@ -3,6 +3,7 @@ import { parseRawText } from '../core/parser'
 import type { LangaugeBaseTranslation } from '../core/core'
 import type { InjectorPart, Part, SingularPluralPart } from '../core/parser'
 import { writeFileIfContainsChanges } from './file-utils'
+import { TYPES_FILE } from '../constants/constants'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -189,7 +190,7 @@ export type LangaugeConfig = Config<LangaugeFormatters>
 export const generateTypes = async (
 	translationObject: LangaugeBaseTranslation,
 	outputPath: string,
-	typesFile: string,
+	typesFile: string | undefined = TYPES_FILE,
 	locales: string[],
 	baseLocale: string,
 ): Promise<void> => {

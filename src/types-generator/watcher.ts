@@ -17,6 +17,7 @@ export type WatcherConfig = {
 	utilFile?: string
 	baseLocale?: string
 	tempPath?: string
+	svelte?: boolean | string
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -80,12 +81,14 @@ const parseAndGenerate = async ({
 	utilFile,
 	baseLocale,
 	tempPath,
+	svelte,
 }: {
 	outputPath: string
 	typesFile: string | undefined
 	utilFile: string | undefined
 	baseLocale: string
 	tempPath: string
+	svelte: boolean | string | undefined
 }) => {
 	const locales = await getAllLanguages(outputPath)
 	const locale = locales.find((l) => l === baseLocale) || locales[0]
@@ -98,6 +101,7 @@ const parseAndGenerate = async ({
 		utilFile,
 		baseLocale: locale,
 		locales,
+		svelte,
 	})
 }
 
@@ -116,9 +120,16 @@ const debonce = (callback: () => void) => {
 }
 
 export const startWatcher = async (config: WatcherConfig): Promise<void> => {
-	const { outputPath = BASE_PATH, typesFile, utilFile, baseLocale = DEFAULT_LOCALE, tempPath = TEMP_PATH } = config
+	const {
+		outputPath = BASE_PATH,
+		typesFile,
+		utilFile,
+		baseLocale = DEFAULT_LOCALE,
+		tempPath = TEMP_PATH,
+		svelte,
+	} = config
 
-	const onChange = parseAndGenerate.bind(null, { outputPath, typesFile, utilFile, baseLocale, tempPath })
+	const onChange = parseAndGenerate.bind(null, { outputPath, typesFile, utilFile, baseLocale, tempPath, svelte })
 
 	await createPathIfNotExits(outputPath)
 

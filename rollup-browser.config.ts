@@ -4,6 +4,17 @@ import { terser } from 'rollup-plugin-terser'
 
 const config = [
 	{
+		input: './src/index.ts',
+		output: [
+			{
+				file: 'dist/index.js',
+				format: 'esm',
+				sourcemap: true,
+			},
+		],
+		plugins: [resolve(), typescript()],
+	},
+	{
 		input: './src/browser.ts',
 		output: [
 			{

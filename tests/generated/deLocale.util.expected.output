@@ -12,11 +12,11 @@ import { getLangaugeInstance, initLangauge } from 'langauge'
 
 import de from './de'
 
-const localeTranlslations: LocaleTranslations<LangaugeLocales, LangaugeTranslation> = {
+export const localeTranslations: LocaleTranslations<LangaugeLocales, LangaugeTranslation> = {
 	de: de as LangaugeTranslation,
 }
 
-export const getLangauge = (config: ConfigWithFormatters<LangaugeFormatters>) => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranlslations, config)
+export const getLangauge = (config: ConfigWithFormatters<LangaugeFormatters>) => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, config)
 
 export const getLangaugeForLocale = (locale: LangaugeLocales,
-	config: ConfigWithFormatters<LangaugeFormatters>,) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranlslations, locale, config)
+	config: ConfigWithFormatters<LangaugeFormatters>,) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, locale, config)

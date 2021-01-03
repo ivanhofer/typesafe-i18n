@@ -1,7 +1,8 @@
 import type { LangaugeBaseTranslation } from '../core/core'
-import { BASE_PATH, TYPES_FILE, UTIL_FILE, DEFAULT_LOCALE } from '../constants/constants'
+import { BASE_PATH, DEFAULT_LOCALE } from '../constants/constants'
 import { generateTypes } from './generate-types'
 import { generateUtil } from './generate-util'
+import { generateSvelte } from './generate-svelte'
 
 export type GenerateTypesConfig = {
 	outputPath?: string
@@ -9,6 +10,7 @@ export type GenerateTypesConfig = {
 	utilFile?: string
 	baseLocale?: string
 	locales?: string[]
+	svelte?: boolean | string
 }
 
 export const generate = async (
@@ -17,13 +19,18 @@ export const generate = async (
 ): Promise<void> => {
 	const {
 		outputPath = BASE_PATH,
-		typesFile = TYPES_FILE,
-		utilFile = UTIL_FILE,
+		typesFile,
+		utilFile,
 		baseLocale = DEFAULT_LOCALE,
 		locales = [baseLocale],
+		svelte,
 	} = config
 
 	await generateTypes(translationObject, outputPath, typesFile, locales, baseLocale)
 
 	await generateUtil(outputPath, utilFile, locales, baseLocale)
+
+	if (svelte) {
+		await generateSvelte(outputPath, svelte, baseLocale)
+	}
 }

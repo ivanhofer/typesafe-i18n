@@ -1,6 +1,7 @@
+import { UTIL_FILE } from '../constants/constants'
 import { writeFileIfContainsChanges } from './file-utils'
 
-export const getUtil = (baseLocale: string, locales: string[]): string => {
+const getUtil = (baseLocale: string, locales: string[]): string => {
 	const localesImports = locales
 		.map(
 			(locale) => `
@@ -28,19 +29,19 @@ import type {
 import { getLangaugeInstance, initLangauge } from 'langauge'
 ${localesImports}
 
-const localeTranlslations: LocaleTranslations<LangaugeLocales, LangaugeTranslation> = {${localesTranslations}
+export const localeTranslations: LocaleTranslations<LangaugeLocales, LangaugeTranslation> = {${localesTranslations}
 }
 
-export const getLangauge = (config: ConfigWithFormatters<LangaugeFormatters>) => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranlslations, config)
+export const getLangauge = (config: ConfigWithFormatters<LangaugeFormatters>) => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, config)
 
 export const getLangaugeForLocale = (locale: LangaugeLocales,
-	config: ConfigWithFormatters<LangaugeFormatters>,) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranlslations, locale, config)
+	config: ConfigWithFormatters<LangaugeFormatters>,) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, locale, config)
 `
 }
 
 export const generateUtil = async (
 	outputPath: string,
-	utilFile: string,
+	utilFile: string | undefined = UTIL_FILE,
 	locales: string[],
 	baseLocale: string,
 ): Promise<void> => {
