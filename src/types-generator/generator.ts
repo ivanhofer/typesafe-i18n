@@ -1,4 +1,4 @@
-import type { LangaugeBaseTranslation } from '../types/types'
+import type { LangaugeBaseTranslation } from '../core/core'
 import { BASE_PATH, TYPES_FILE, UTIL_FILE, DEFAULT_LOCALE } from '../constants/constants'
 import { generateTypes } from './generate-types'
 import { generateUtil } from './generate-util'

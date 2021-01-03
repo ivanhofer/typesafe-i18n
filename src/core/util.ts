@@ -1,14 +1,23 @@
+import type { Formatters, LangaugeBaseTranslation, TranslatorFn } from './core'
+import type { ConfigWithFormatters } from '../core/core'
 import { langauge } from './core'
-import type { ConfigWithFormatters, Formatters, LangaugeBaseTranslation, TranslatorFn } from '../types/types'
 
-export type LocaleTranslations<L extends string, T = unknown> = {
-	[key in L]: T
-}
+// --------------------------------------------------------------------------------------------------------------------
+// types --------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 // eslint-disable-next-line @typescript-eslint/ban-types, @typescript-eslint/no-explicit-any
 type LocaleTranslationFns<L extends string = any, A extends object = any> = {
 	[key in L]: A
 }
+
+export type LocaleTranslations<L extends string, T = unknown> = {
+	[key in L]: T
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+// implementation -----------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 const langaugeInstancesCache: LocaleTranslationFns = {} as LocaleTranslationFns
 

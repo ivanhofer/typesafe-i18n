@@ -2,10 +2,14 @@ import * as typescript from 'typescript'
 import fs from 'fs'
 import { resolve } from 'path'
 import { BASE_PATH, DEFAULT_LOCALE, TEMP_PATH } from '../constants/constants'
-import { LangaugeBaseTranslation } from '../types/types'
+import { LangaugeBaseTranslation } from '../core/core'
 import { copyFile, createPathIfNotExits, deleteFolderRecursive, getFiles, importFile } from './file-utils'
 import { generate } from './generator'
 const { createProgram } = typescript
+
+// --------------------------------------------------------------------------------------------------------------------
+// types --------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 export type WatcherConfig = {
 	outputPath?: string
@@ -14,6 +18,10 @@ export type WatcherConfig = {
 	baseLocale?: string
 	tempPath?: string
 }
+
+// --------------------------------------------------------------------------------------------------------------------
+// implementation -----------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 const DEBOUNCE_TIME = 100
 

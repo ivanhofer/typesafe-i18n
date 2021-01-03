@@ -3,6 +3,16 @@ import { join, resolve } from 'path'
 
 const { readFile: read, readdir, writeFile, mkdir, stat, copyFile: cp, rmdir } = fsPromises
 
+// --------------------------------------------------------------------------------------------------------------------
+// types --------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+
+type GetFilesType = { name: string; folder: string }
+
+// --------------------------------------------------------------------------------------------------------------------
+// implementation -----------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+
 export const readFile = async (file: string): Promise<string> => {
 	try {
 		return (await read(file))?.toString()
@@ -76,8 +86,6 @@ export const writeFileIfContainsChanges = async (path: string, file: string, typ
 
 	await writeNewFile(path, file, types)
 }
-
-type GetFilesType = { name: string; folder: string }
 
 export const getFiles = async (path: string, depth = 0): Promise<GetFilesType[]> => {
 	const entries = await readdir(path, { withFileTypes: true })

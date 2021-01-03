@@ -3,8 +3,7 @@ import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
 import type { LangaugeBaseTranslation } from '../src'
-import type { GenerateTypesConfig } from '../src/types-generator/generator'
-import { generate } from '../src'
+import { generate, GenerateTypesConfig } from '../src/types-generator/generator'
 
 const { readFile } = promises
 

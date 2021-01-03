@@ -1,17 +1,52 @@
 import { isPrimitiveObject, isString } from 'typesafe-utils'
-import type {
-	LangaugeBaseTranslation,
-	LangaugeTranslationKey,
-	Formatters,
-	LangaugeBaseTranslationArgs,
-	TranslationParts,
-	Config,
-	TranslatorFn,
-	Cache,
-	ConfigWithFormatters,
-} from '../types/types'
+import type { FormatterFn } from '../formatters/_types'
 import type { InjectorPart, Part, SingularPluralPart } from './parser'
 import { parseRawText } from './parser'
+
+// --------------------------------------------------------------------------------------------------------------------
+// types --------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+
+type TranslationParts<T> = {
+	[key in keyof T]: Part[]
+}
+
+type Cache<T> = TranslationParts<T> | null
+
+type LangaugeTranslationKey<T> = keyof T
+
+type LangaugeBaseTranslationArgs = {
+	[key in string]: unknown
+}
+
+type ConfigWithoutFormatters = {
+	useCache?: boolean
+	formatters?: never
+}
+
+export type ConfigWithFormatters<T extends Formatters = Formatters> = {
+	useCache?: boolean
+	formatters: T
+}
+
+export type Config<T extends Formatters = Formatters> = ConfigWithoutFormatters | ConfigWithFormatters<T>
+
+export type TranslatorFn<T> = {
+	[key in keyof T]: (...args: unknown[]) => string
+}
+
+export type LangaugeBaseTranslation = {
+	[key: string]: string
+}
+
+export type Formatters = {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	[formatter: string]: FormatterFn<any>
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+// implementation -----------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 const getTextFromTranslationKey = <T extends LangaugeBaseTranslation>(
 	translationObject: T,

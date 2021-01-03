@@ -1,16 +1,25 @@
 import { isObject, isTruthy, not } from 'typesafe-utils'
 import { parseRawText } from '../core/parser'
-import type { LangaugeBaseTranslation } from '../types/types'
+import type { LangaugeBaseTranslation } from '../core/core'
 import type { InjectorPart, Part, SingularPluralPart } from '../core/parser'
 import { writeFileIfContainsChanges } from './file-utils'
 
+// --------------------------------------------------------------------------------------------------------------------
+// types --------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+
 type IsSingularPluralPart<T> = T extends SingularPluralPart ? T : never
+
+type Arg = { key: string; type: string | undefined }
+
+type FormatterFunctionKey = { formatterKey: string[]; type: string | undefined }
+
+// --------------------------------------------------------------------------------------------------------------------
+// implementation -----------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 const isSingularPluralPart = <T extends Part>(part: T): part is IsSingularPluralPart<T> =>
 	!!(<SingularPluralPart>part).p
-
-type Arg = { key: string; type: string | undefined }
-type FormatterFunctionKey = { formatterKey: string[]; type: string | undefined }
 
 const parseTanslationObject = ([key, text]: [string, string]): {
 	key: string
