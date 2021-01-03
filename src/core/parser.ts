@@ -1,14 +1,30 @@
-import type { TextPart, InjectorPart, SingularPluralPart, Part } from '../types/types'
 import { removeEmptyValues } from './core-utils'
+
+export type TextPart = string
+
+export type InjectorPart = {
+	k: string // key
+	t?: string // type
+	f?: string[] // formatterFunctionKey
+}
+
+export type SingularPluralPart = {
+	k: string // key
+	s: string // singular
+	p: string // plural
+}
+
+export type Part = TextPart | InjectorPart | SingularPluralPart
 
 const REGEX_BRACKETS_SPLIT = /({?{[^\\}]+}}?)/g
 
 const parseTextPart = (text: string): TextPart => text
 
 const parseInjectorPart = (text: string, optimize: boolean): InjectorPart => {
-	const [key = '', ...formatterKeys] = text.split('|')
+	const [keyPart = '', ...formatterKeys] = text.split('|')
+	const [key = '', type] = keyPart.split(':')
 
-	const part = { k: key.trim(), f: formatterKeys }
+	const part: InjectorPart = { k: key.trim(), t: type?.trim(), f: formatterKeys.map((f) => f.trim()) }
 	return optimize ? removeEmptyValues(part) : part
 }
 
@@ -24,7 +40,7 @@ const parseSingularPluralPart = (text: string, lastAcessor: string, optimize: bo
 	const singular = p ? s : ''
 	const plural = p || s
 
-	const part = { k: key.trim(), s: singular.trim(), p: plural.trim() }
+	const part: SingularPluralPart = { k: key.trim(), s: singular.trim(), p: plural.trim() }
 	return optimize ? removeEmptyValues(part) : part
 }
 

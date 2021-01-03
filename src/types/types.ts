@@ -1,5 +1,6 @@
 // internal -----------------------------------------------------------------------------------------------------------
 
+import { Part } from '../core/parser'
 import { FormatterFn } from '../formatters/_types'
 
 export type Cache<T> = TranslationParts<T> | null
@@ -42,20 +43,3 @@ export type Formatters = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[formatter: string]: FormatterFn<any>
 }
-
-// parts --------------------------------------------------------------------------------------------------------------
-
-export type TextPart = string
-
-export type InjectorPart = {
-	k: string // key
-	f?: string[] // formatterFunctionKey
-}
-
-export type SingularPluralPart = {
-	k: string // key
-	s: string // singular
-	p: string // plural
-}
-
-export type Part = TextPart | InjectorPart | SingularPluralPart

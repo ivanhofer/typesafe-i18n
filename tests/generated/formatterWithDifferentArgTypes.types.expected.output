@@ -1,0 +1,35 @@
+// This types were auto-generated. Any manual changes will be overwritten.
+/* eslint-disable */
+
+import type { Config } from 'langauge'
+
+export type LangaugeBaseLocale = 'en'
+
+export type LangaugeLocales =
+	| 'en'
+
+export type LangaugeTranslationKeys =
+	| 'A'
+	| 'B'
+
+export type LangaugeTranslation = {
+	'A': string
+	'B': string
+}
+
+export type LangaugeTranslationArgs = {
+	/**
+	 * {0:number|calculate}!
+	 */
+	'A': (arg 0: number ) => string
+	/**
+	 * {0:Date|calculate}
+	 */
+	'B': (arg 0: Date ) => string
+} 
+
+export type LangaugeFormatters = {
+	calculate: (value: number) => string
+}
+
+export type LangaugeConfig = Config<LangaugeFormatters>

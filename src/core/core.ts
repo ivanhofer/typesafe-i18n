@@ -2,9 +2,6 @@ import { isPrimitiveObject, isString } from 'typesafe-utils'
 import type {
 	LangaugeBaseTranslation,
 	LangaugeTranslationKey,
-	InjectorPart,
-	SingularPluralPart,
-	Part,
 	Formatters,
 	LangaugeBaseTranslationArgs,
 	TranslationParts,
@@ -13,6 +10,7 @@ import type {
 	Cache,
 	ConfigWithFormatters,
 } from '../types/types'
+import type { InjectorPart, Part, SingularPluralPart } from './parser'
 import { parseRawText } from './parser'
 
 const getTextFromTranslationKey = <T extends LangaugeBaseTranslation>(

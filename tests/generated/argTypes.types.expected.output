@@ -1,0 +1,33 @@
+// This types were auto-generated. Any manual changes will be overwritten.
+/* eslint-disable */
+
+import type { Config } from 'langauge'
+
+export type LangaugeBaseLocale = 'en'
+
+export type LangaugeLocales =
+	| 'en'
+
+export type LangaugeTranslationKeys =
+	| 'STRING_TYPE'
+	| 'NUMBER_TYPE'
+
+export type LangaugeTranslation = {
+	'STRING_TYPE': string
+	'NUMBER_TYPE': string
+}
+
+export type LangaugeTranslationArgs = {
+	/**
+	 * Hi {name:string}!
+	 */
+	'STRING_TYPE': (arg: {  name: string  }) => string
+	/**
+	 * {0:number} apple{{s}}
+	 */
+	'NUMBER_TYPE': (arg 0: number ) => string
+} 
+
+export type LangaugeFormatters = {}
+
+export type LangaugeConfig = Config<LangaugeFormatters>

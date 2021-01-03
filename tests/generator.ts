@@ -79,4 +79,16 @@ wrapTest('deLocale', {}, { baseLocale: 'de' })
 
 wrapTest('multipleLocales', {}, { locales: ['de', 'en', 'it'] })
 
+// argTypes -----------------------------------------------------------------------------------------------------------
+
+wrapTest('argTypes', { STRING_TYPE: 'Hi {name:string}!', NUMBER_TYPE: '{0:number} apple{{s}}' })
+
+// formatterWithDifferentArgTypes -------------------------------------------------------------------------------------
+
+wrapTest('formatterWithDifferentArgTypes', { A: '{0:number|calculate}!', B: '{0:Date|calculate}' })
+
+// argTypesWithExternalType -------------------------------------------------------------------------------------------
+
+wrapTest('argTypesWithExternalType', { EXTERNAL_TYPE: 'The result is {0:Result|calculate}!' })
+
 test.run()
