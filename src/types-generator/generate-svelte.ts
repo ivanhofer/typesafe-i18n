@@ -3,7 +3,10 @@ import { SVELTE_FILE } from '../constants/constants'
 import { writeFileIfContainsChanges } from './file-utils'
 
 const getSvelteStore = (baseLocale: string) => {
-	return `import { langauge } from 'langauge';
+	return `// This types were auto-generated. Any manual changes will be overwritten.
+/* eslint-disable */
+
+import { langauge } from 'langauge';
 import { derived, Writable, writable } from 'svelte/store';
 import type { LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs } from './langauge-types'
 import { localeTranslations } from './langauge-util'
