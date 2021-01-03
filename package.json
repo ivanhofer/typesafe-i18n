@@ -14,7 +14,13 @@
 	],
 	"license": "MIT",
 	"module": "esm/index.js",
-	"exports": "./esm/index.js",
+	"exports": {
+		"./package.json": "./package.json",
+		"./formatters": "./formatters/index.js",
+		"./formatters/*": "./formatters/*.js",
+		"./": "./esm/index.js",
+		"./*": "./*"
+	},
 	"browser": "dist/langauge.js",
 	"main": "cjs/index.js",
 	"types": "cjs/index.d.ts",
