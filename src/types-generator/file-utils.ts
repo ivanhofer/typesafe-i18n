@@ -1,5 +1,5 @@
 import { promises as fsPromises } from 'fs'
-import { join, resolve } from 'path'
+import { join, resolve, dirname } from 'path'
 
 const { readFile: read, readdir, writeFile, mkdir, stat, copyFile: cp, rmdir } = fsPromises
 
@@ -13,12 +13,14 @@ type GetFilesType = { name: string; folder: string }
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-export const readFile = async (file: string): Promise<string> => {
+export const readFile = async (file: string, createPath = false): Promise<string> => {
 	try {
+		if (createPath) {
+			await createPathIfNotExits(resolve(dirname(file)))
+		}
 		return (await read(file))?.toString()
 	} catch (_e) {
-		// eslint-disable-next-line no-console
-		return ''
+		return createPath ? '' : readFile(file, true)
 	}
 }
 
@@ -80,11 +82,17 @@ export const writeNewFile = async (path: string, file: string, content: string):
 	console.info('[LANGAUGE] generated types')
 }
 
-export const writeFileIfContainsChanges = async (path: string, file: string, types: string): Promise<void> => {
-	const oldTypes = await readFile(join(path, file))
-	if (oldTypes === types) return
+export const writeFileIfContainsChanges = async (path: string, file: string, content: string): Promise<void> => {
+	const oldContent = await readFile(join(path, file))
+	if (oldContent === content) return
 
-	await writeNewFile(path, file, types)
+	await writeNewFile(path, file, content)
+}
+
+export const writeFileIfNotExists = async (path: string, file: string, content: string): Promise<void> => {
+	if (await doesPathExist(join(path, file))) return
+
+	await writeNewFile(path, file, content)
 }
 
 export const getFiles = async (path: string, depth = 0): Promise<GetFilesType[]> => {

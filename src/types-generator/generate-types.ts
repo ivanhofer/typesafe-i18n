@@ -166,10 +166,11 @@ const getTypes = (translationObject: LangaugeBaseTranslation, baseLocale: string
 	const translations = result.map(({ key, text, args }) => ({ key, text, args }))
 	const translationArgsType = createTranslationArgsType(translations)
 
-	return `// This types were auto-generated. Any manual changes will be overwritten.
+	return [
+		`// This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-import type { Config } from 'langauge'
+import type { ConfigWithFormatters } from 'langauge'
 ${typeImports}
 ${baseLocaleType}
 
@@ -183,8 +184,12 @@ ${translationArgsType}
 
 ${formatterType}
 
-export type LangaugeConfig = Config<LangaugeFormatters>
-`
+export type LangaugeConfig = ConfigWithFormatters<LangaugeFormatters>
+
+export type LangaugeConfigInitializer = (locale: LangaugeLocales) => LangaugeConfig
+`,
+		!!typeImports,
+	] as [string, boolean]
 }
 
 export const generateTypes = async (
@@ -193,7 +198,9 @@ export const generateTypes = async (
 	typesFile: string | undefined = TYPES_FILE,
 	locales: string[],
 	baseLocale: string,
-): Promise<void> => {
-	const types = getTypes(translationObject, baseLocale, locales)
+): Promise<boolean> => {
+	const [types, hasCustomTypes] = getTypes(translationObject, baseLocale, locales)
 	await writeFileIfContainsChanges(outputPath, typesFile, types)
+
+	return hasCustomTypes
 }

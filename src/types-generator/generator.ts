@@ -3,6 +3,8 @@ import { BASE_PATH, DEFAULT_LOCALE } from '../constants/constants'
 import { generateTypes } from './generate-types'
 import { generateUtil } from './generate-util'
 import { generateSvelte } from './generate-svelte'
+import { generateConfigTemplate } from './generate-template-config'
+import { generateCustomTypesTemplate } from './generate-template-types'
 
 export type GenerateTypesConfig = {
 	outputPath?: string
@@ -11,6 +13,8 @@ export type GenerateTypesConfig = {
 	baseLocale?: string
 	locales?: string[]
 	svelte?: boolean | string
+	configTemplatePath?: string
+	typesTemplatePath?: string
 }
 
 export const generate = async (
@@ -24,9 +28,17 @@ export const generate = async (
 		baseLocale = DEFAULT_LOCALE,
 		locales = [baseLocale],
 		svelte,
+		configTemplatePath,
+		typesTemplatePath,
 	} = config
 
-	await generateTypes(translationObject, outputPath, typesFile, locales, baseLocale)
+	const hasCustomTypes = await generateTypes(translationObject, outputPath, typesFile, locales, baseLocale)
+
+	await generateConfigTemplate(outputPath, configTemplatePath)
+
+	if (hasCustomTypes) {
+		await generateCustomTypesTemplate(outputPath, typesTemplatePath)
+	}
 
 	await generateUtil(outputPath, utilFile, locales, baseLocale)
 

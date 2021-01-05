@@ -19,23 +19,24 @@ import ${locale.replace('-', '_')} from './${locale}'`,
 	return `// This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-import type { ConfigWithFormatters, LocaleTranslations } from 'langauge'
+import type { LocaleTranslations } from 'langauge'
 import type {
 	LangaugeTranslation,
 	LangaugeTranslationArgs,
 	LangaugeFormatters,
 	LangaugeLocales,
+	LangaugeConfigInitializer
 } from './langauge-types'
 import { getLangaugeInstance, initLangauge } from 'langauge'
+import { initConfig } from './config'
 ${localesImports}
 
 export const localeTranslations: LocaleTranslations<LangaugeLocales, LangaugeTranslation> = {${localesTranslations}
 }
 
-export const getLangauge = (config: ConfigWithFormatters<LangaugeFormatters>) => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, config)
+export const getLangauge = (configInitializer: LangaugeConfigInitializer = initConfig) => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, configInitializer)
 
-export const getLangaugeForLocale = (locale: LangaugeLocales,
-	config: ConfigWithFormatters<LangaugeFormatters>,) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, locale, config)
+export const getLangaugeForLocale = (locale: LangaugeLocales, configInitializer: LangaugeConfigInitializer = initConfig) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, locale, configInitializer)
 `
 }
 
