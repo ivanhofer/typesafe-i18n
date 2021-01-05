@@ -1,0 +1,22 @@
+// This types were auto-generated. Any manual changes will be overwritten.
+/* eslint-disable */
+
+import { langauge } from 'langauge';
+import { derived, Writable, writable } from 'svelte/store';
+import type { LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs } from './langauge-types'
+import { localeTranslations } from './langauge-util'
+import { initConfig } from './config'
+
+const currentLocale = writable<LangaugeLocales>('en')
+
+export const setLocale = (locale: LangaugeLocales) => currentLocale.set(locale)
+
+export const selectedLocale = derived<Writable<LangaugeLocales>, LangaugeLocales>(currentLocale, (locale) => locale)
+
+export const LLL = derived<Writable<LangaugeLocales>, LangaugeTranslationArgs>(currentLocale, (locale: LangaugeLocales, set: (value: LangaugeTranslationArgs) => void) => {
+	const langaugeTranslation: LangaugeTranslation = localeTranslations[locale] as LangaugeTranslation
+	const langaugeObject = langauge(langaugeTranslation, initConfig(locale))
+	set(langaugeObject)
+}, new Proxy({} as LangaugeTranslationArgs, { get: () => () => '' }))
+
+export default LLL

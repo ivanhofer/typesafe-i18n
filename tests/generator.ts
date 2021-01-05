@@ -13,28 +13,40 @@ const outputPath = 'tests/generated/'
 
 const createConfig = (prefix: string, config?: Partial<GenerateTypesConfig>): GenerateTypesConfig => ({
 	outputPath,
-	typesFile: prefix + '.types.actual.output',
-	utilFile: prefix + '.util.actual.output',
+	typesFile: prefix + '/types.actual.output',
+	utilFile: prefix + '/util.actual.output',
+	configTemplatePath: prefix + '/config-template.actual.output',
+	typesTemplatePath: prefix + '/types-template.actual.output',
 	...config,
 })
 
-const getPathOfOutputFile = (prefix: string, file: 'types' | 'util', type: 'actual' | 'expected') =>
-	`${outputPath}${prefix}.${file}.${type}.output`
+type FileToCheck = 'types' | 'util' | 'config-template' | 'types-template'
+
+const getPathOfOutputFile = (prefix: string, file: FileToCheck, type: 'actual' | 'expected') =>
+	`${outputPath}${prefix}/${file}.${type}.output`
 
 const REGEX_WHITESPACE = /[\s]+/g
 const removeWhitespace = (text: string) => text.replace(REGEX_WHITESPACE, '')
 
-const check = async (prefix: string, file: 'types' | 'util') => {
+const check = async (prefix: string, file: FileToCheck) => {
 	const expected = (await readFile(getPathOfOutputFile(prefix, file, 'expected'))).toString()
 	const actual = (await readFile(getPathOfOutputFile(prefix, file, 'actual'))).toString()
 	assert.match(removeWhitespace(expected), removeWhitespace(actual))
 }
 
-const wrapTest = async (prefix: string, translation: LangaugeBaseTranslation, config?: Partial<GenerateTypesConfig>) =>
+const wrapTest = async (
+	prefix: string,
+	translation: LangaugeBaseTranslation,
+	config?: Partial<GenerateTypesConfig>,
+	checkConfigTemplate = false,
+	checkTypesTemplate = false,
+) =>
 	test(`types ${prefix}`, async () => {
 		await generate(translation, createConfig(prefix, config))
 		await check(prefix, 'types')
 		await check(prefix, 'util')
+		checkConfigTemplate && (await check(prefix, 'config-template'))
+		checkTypesTemplate && (await check(prefix, 'types-template'))
 	})
 
 // empty --------------------------------------------------------------------------------------------------------------
@@ -68,8 +80,6 @@ wrapTest('withFormatters', {
 	FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
 })
 
-test.run()
-
 // deLocales ----------------------------------------------------------------------------------------------------------
 
 wrapTest('deLocale', {}, { baseLocale: 'de' })
@@ -89,5 +99,9 @@ wrapTest('formatterWithDifferentArgTypes', { A: '{0:number|calculate}!', B: '{0:
 // argTypesWithExternalType -------------------------------------------------------------------------------------------
 
 wrapTest('argTypesWithExternalType', { EXTERNAL_TYPE: 'The result is {0:Result|calculate}!' })
+
+// svelte -------------------------------------------------------------------------------------------------------------
+
+wrapTest('svelte', { HELLO_SVELTE: 'Hi {0}' }, { svelte: 'svelte/svelte.actual.output' })
 
 test.run()

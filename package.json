@@ -42,8 +42,9 @@
 		"build:watcher": "rollup -c rollup-watcher.config.ts",
 		"lint": "eslint src",
 		"lint:fix": "eslint src --fix",
-		"test": "uvu -r ts-node/register tests",
-		"test:watch": "watchlist src tests -- npm test"
+		"test": "uvu -r ts-node/register -i update.ts tests",
+		"test:watch": "watchlist src tests -- npm test",
+		"test:update-generated-files": "ts-node tests/generated/update.ts"
 	},
 	"dependencies": {
 		"typesafe-utils": "^1.8.0"
@@ -62,6 +63,7 @@
 		"rollup": "^2.35.1",
 		"rollup-plugin-node-externals": "^2.2.0",
 		"rollup-plugin-terser": "^7.0.2",
+		"tiny-glob": "^0.2.8",
 		"ts-node": "^9.1.1",
 		"typescript": "^4.1.3",
 		"uvu": "^0.5.1",

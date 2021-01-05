@@ -1,7 +1,7 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-import type { Config } from 'langauge'
+import type { ConfigWithFormatters } from 'langauge'
 
 export type LangaugeBaseLocale = 'en'
 
@@ -21,13 +21,15 @@ export type LangaugeTranslationArgs = {
 	/**
 	 * {0} apple{{s}}
 	 */
-	'PARAM': (arg0: unknown) => string
+	'PARAM': (arg0: unknown ) => string
 	/**
 	 * {0} apple{{s}} and {1} banana{{s}}
 	 */
-	'PARAMS': (arg0: unknown, arg1: unknown) => string
-}
+	'PARAMS': (arg0: unknown , arg1: unknown ) => string
+} 
 
 export type LangaugeFormatters = {}
 
-export type LangaugeConfig = Config<LangaugeFormatters>
+export type LangaugeConfig = ConfigWithFormatters<LangaugeFormatters>
+
+export type LangaugeConfigInitializer = (locale: LangaugeLocales) => LangaugeConfig

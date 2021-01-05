@@ -1,0 +1,23 @@
+// This types were auto-generated. Any manual changes will be overwritten.
+/* eslint-disable */
+
+import type { LocaleTranslations } from 'langauge'
+import type {
+	LangaugeTranslation,
+	LangaugeTranslationArgs,
+	LangaugeFormatters,
+	LangaugeLocales,
+	LangaugeConfigInitializer
+} from './langauge-types'
+import { getLangaugeInstance, initLangauge } from 'langauge'
+import { initConfig } from './config'
+
+import de from './de'
+
+export const localeTranslations: LocaleTranslations<LangaugeLocales, LangaugeTranslation> = {
+	de: de as LangaugeTranslation,
+}
+
+export const getLangauge = (configInitializer: LangaugeConfigInitializer = initConfig) => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, configInitializer)
+
+export const getLangaugeForLocale = (locale: LangaugeLocales, configInitializer: LangaugeConfigInitializer = initConfig) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, locale, configInitializer)
