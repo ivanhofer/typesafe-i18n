@@ -7,3 +7,5 @@ export const date = (
 	const formatter = new Intl.DateTimeFormat(language, options)
 	return (value) => formatter.format(value as Date)
 }
+
+export const time = date

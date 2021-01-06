@@ -132,7 +132,7 @@ const mapTranslationArgs = (args: Arg[]) => {
 	return prefix + args.map(({ key, type }) => `${argPrefix}${key}: ${type || 'unknown'}`).join(', ') + postfix
 }
 
-const BASE_TYPES = ['boolean', 'number', 'string', 'Date']
+const BASE_TYPES = ['boolean', 'number', 'bigint', 'string', 'Date']
 
 const createTypeImportsType = (args: Arg[]): string => {
 	const types = new Set(args.flatMap(({ type }) => type).filter(isTruthy))
