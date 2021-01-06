@@ -21,11 +21,11 @@ export type LangaugeTranslationArgs = {
 	/**
 	 * {nrOfApples} apple{{s}}
 	 */
-	'KEYED_PARAM': (arg: { nrOfApples: unknown  }) => string
+	'KEYED_PARAM': (arg: { nrOfApples: unknown }) => string
 	/**
 	 * {nrOfApples} apple{{s}} and {nrOfBananas} banana{{s}}
 	 */
-	'KEYED_PARAMS': (arg: { nrOfApples: unknown , nrOfBananas: unknown  }) => string
+	'KEYED_PARAMS': (arg: { nrOfApples: unknown, nrOfBananas: unknown }) => string
 } 
 
 export type LangaugeFormatters = {}

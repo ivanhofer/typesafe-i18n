@@ -21,11 +21,11 @@ export type LangaugeTranslationArgs = {
 	/**
 	 * {0:number|calculate}!
 	 */
-	'A': (arg0: number ) => string
+	'A': (arg0: number) => string
 	/**
 	 * {0:Date|calculate}
 	 */
-	'B': (arg0: Date ) => string
+	'B': (arg0: Date) => string
 } 
 
 export type LangaugeFormatters = {

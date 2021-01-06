@@ -1,6 +1,6 @@
 import { isPrimitiveObject, isString } from 'typesafe-utils'
 import type { FormatterFn } from '../formatters/_types'
-import type { InjectorPart, Part, SingularPluralPart } from './parser'
+import type { InjectorPart, Part, PluralPart } from './parser'
 import { parseRawText } from './parser'
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -59,7 +59,29 @@ const applyFormatters = (formatters: Formatters, formatterKeys: string[], value:
 		return formatter ? formatter(prev) : prev
 	}, value)
 
-const applyValues = (textParts: Part[], formatters: Formatters, args: LangaugeBaseTranslationArgs) => {
+const getPlural = (pluraRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPart, value: number) => {
+	switch (pluraRules.select(value)) {
+		case 'zero':
+			return z
+		case 'one':
+			return o
+		case 'two':
+			return t
+		case 'few':
+			return f
+		case 'many':
+			return m
+		default:
+			return r
+	}
+}
+
+const applyValues = (
+	textParts: Part[],
+	pluralRules: Intl.PluralRules,
+	formatters: Formatters,
+	args: LangaugeBaseTranslationArgs,
+) => {
 	return textParts
 		.map((part) => {
 			if (isString(part)) {
@@ -67,9 +89,9 @@ const applyValues = (textParts: Part[], formatters: Formatters, args: LangaugeBa
 			}
 
 			const { k: key = '0', f: formatterKeys = [] } = part as InjectorPart
-			const { s: singular = '', p: plural } = part as SingularPluralPart
-			if (plural) {
-				return args[key] == '1' ? singular : plural
+			const { r: other } = part as PluralPart
+			if (other) {
+				return getPlural(pluralRules, part as PluralPart, <number>args[key]) || ''
 			}
 
 			const value = args[key]
@@ -96,11 +118,13 @@ const getTextParts = <T extends LangaugeBaseTranslation>(
 	return textInfo
 }
 
-const wrapTranslateFunction = <T extends LangaugeBaseTranslation>(
+const wrapTranslateFunction = <L extends string, T extends LangaugeBaseTranslation>(
+	locale: L,
 	translationObject: T,
 	{ formatters = {}, useCache = true }: Config = {},
 ) => {
 	const cache: Cache<T> = (useCache && ({} as TranslationParts<T>)) || null
+	const pluralRules = new Intl.PluralRules(locale)
 	return (key: LangaugeTranslationKey<T>, ...args: unknown[]) => {
 		const textInfo = getTextParts(cache, translationObject, key)
 
@@ -108,26 +132,28 @@ const wrapTranslateFunction = <T extends LangaugeBaseTranslation>(
 			? args[0]
 			: args) as unknown) as LangaugeBaseTranslationArgs
 
-		return applyValues(textInfo, formatters, transformedArgs)
+		return applyValues(textInfo, pluralRules, formatters, transformedArgs)
 	}
 }
 
 export function langauge<
+	L extends string,
 	T extends LangaugeBaseTranslation,
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	A extends object = TranslatorFn<T>,
 	F extends Formatters = Formatters
->(translationObject: T, config: ConfigWithFormatters<F>): A
+>(locale: L, translationObject: T, config: ConfigWithFormatters<F>): A
 
 export function langauge<
+	L extends string,
 	T extends LangaugeBaseTranslation,
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	A extends object = TranslatorFn<T>
->(translationObject: T, config?: Config): A
+>(locale: L, translationObject: T, config?: Config): A
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-export function langauge(translationObject: any, config: any): any {
-	const translateFunction = wrapTranslateFunction(translationObject, config)
+export function langauge(locale: any, translationObject: any, config: any): any {
+	const translateFunction = wrapTranslateFunction(locale, translationObject, config)
 
 	return new Proxy(
 		{},

@@ -20,7 +20,7 @@ export const selectedLocale = derived<Writable<LangaugeLocales>, LangaugeLocales
 
 export const LLL = derived<Writable<LangaugeLocales>, LangaugeTranslationArgs>(currentLocale, (locale: LangaugeLocales, set: (value: LangaugeTranslationArgs) => void) => {
 	const langaugeTranslation: LangaugeTranslation = localeTranslations[locale] as LangaugeTranslation
-	const langaugeObject = langauge(langaugeTranslation, initConfig(locale))
+	const langaugeObject = langauge(locale, langaugeTranslation, initConfig(locale))
 	set(langaugeObject)
 }, new Proxy({} as LangaugeTranslationArgs, { get: () => () => '' }))
 

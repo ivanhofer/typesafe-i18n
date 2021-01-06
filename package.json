@@ -19,7 +19,8 @@
 		"./formatters": "./formatters/index.js",
 		"./formatters/*": "./formatters/*.js",
 		"./": "./esm/index.js",
-		"./*": "./*"
+		"./*": "./*",
+		".": "./esm/index.js"
 	},
 	"browser": "dist/index.js",
 	"main": "cjs/index.js",
@@ -47,7 +48,7 @@
 		"test:update-generated-files": "ts-node tests/generated/update.ts"
 	},
 	"dependencies": {
-		"typesafe-utils": "^1.10.0"
+		"typesafe-utils": "^1.10.1"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^17.0.0",

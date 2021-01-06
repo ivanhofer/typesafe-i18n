@@ -21,11 +21,11 @@ export type LangaugeTranslationArgs = {
 	/**
 	 * Hi {name:string}!
 	 */
-	'STRING_TYPE': (arg: { name: string  }) => string
+	'STRING_TYPE': (arg: { name: string }) => string
 	/**
 	 * {0:number} apple{{s}}
 	 */
-	'NUMBER_TYPE': (arg0: number ) => string
+	'NUMBER_TYPE': (arg0: number) => string
 } 
 
 export type LangaugeFormatters = {}

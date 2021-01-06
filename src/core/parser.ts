@@ -1,4 +1,4 @@
-import { removeEmptyValues } from './core-utils'
+import { trimAllValues, removeEmptyValues } from './core-utils'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -8,17 +8,21 @@ export type TextPart = string
 
 export type InjectorPart = {
 	k: string // key
-	t?: string // type
+	i?: string // type
 	f?: string[] // formatterFunctionKey
 }
 
-export type SingularPluralPart = {
+export type PluralPart = {
 	k: string // key
-	s: string // singular
-	p: string // plural
+	z?: string // zero
+	o: string // one
+	t?: string // two
+	f?: string // few
+	m?: string // many
+	r: string // other
 }
 
-export type Part = TextPart | InjectorPart | SingularPluralPart
+export type Part = TextPart | InjectorPart | PluralPart
 
 // --------------------------------------------------------------------------------------------------------------------
 // implementation -----------------------------------------------------------------------------------------------------
@@ -26,29 +30,31 @@ export type Part = TextPart | InjectorPart | SingularPluralPart
 
 const REGEX_BRACKETS_SPLIT = /({?{[^\\}]+}}?)/g
 
-const parseTextPart = (text: string): TextPart => text
-
 const parseInjectorPart = (text: string, optimize: boolean): InjectorPart => {
 	const [keyPart = '', ...formatterKeys] = text.split('|')
 	const [key = '', type] = keyPart.split(':')
 
-	const part: InjectorPart = { k: key.trim(), t: type?.trim(), f: formatterKeys.map((f) => f.trim()) }
+	const part: InjectorPart = trimAllValues({ k: key, i: type, f: formatterKeys })
 	return optimize ? removeEmptyValues(part) : part
 }
 
-const parseSingularPluralPart = (text: string, lastAcessor: string, optimize: boolean): SingularPluralPart => {
-	const content = text.substring(1, text.length - 1)
+const parseSingularPluralPart = (content: string, lastAcessor: string, optimize: boolean): PluralPart => {
 	let [key, values] = content.split(':') as [string, string?]
 	if (!values) {
 		values = key
 		key = lastAcessor
 	}
 
-	const [s, p] = values.split('|') as [string, string?]
-	const singular = p ? s : ''
-	const plural = p || s
+	const [z, o, t, f, m, r] = values.split('|') as [string, string?, string?, string?, string?, string?]
+	const zero = (r && z) || ''
+	const one = (r ? o : o && z) || ''
+	const two = (r && t) || ''
+	const few = (r && f) || ''
+	const many = (r && m) || ''
+	const other = r || o || z
 
-	const part: SingularPluralPart = { k: key.trim(), s: singular.trim(), p: plural.trim() }
+	const part: PluralPart = trimAllValues({ k: key, z: zero, o: one, t: two, f: few, m: many, r: other })
+
 	return optimize ? removeEmptyValues(part) : part
 }
 
@@ -60,12 +66,12 @@ export const parseRawText = (rawText: string, optimize = true): Part[] => {
 		.filter(Boolean)
 		.map((part) => {
 			if (!part.match(REGEX_BRACKETS_SPLIT)) {
-				return parseTextPart(part)
+				return part
 			}
 
 			const content = part.substring(1, part.length - 1)
 			if (content.match(REGEX_BRACKETS_SPLIT)) {
-				return parseSingularPluralPart(content, lastKey, optimize)
+				return parseSingularPluralPart(content.substring(1, content.length - 1), lastKey, optimize)
 			}
 
 			const parsedPart = parseInjectorPart(content, optimize)

@@ -10,6 +10,7 @@ const translation = {
 	PARAM: '{0}',
 	TRIM_KEY: '{ 0 }',
 	TRIM_PARAM: 'Hey{0}',
+	TRIM_PLURAL: '{{ key : 1 | 2 }}',
 	PLURAL: 'apple{{s}}',
 	SINGULAR_PLURAL: '{0} {{Apfel|Äpfel}}',
 	MULTIPLE_PARAMS: '{0} {1}',
@@ -17,7 +18,7 @@ const translation = {
 	EMPTY: '',
 }
 
-const LLL = langauge(translation)
+const LLL = langauge('en', translation)
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
@@ -29,6 +30,9 @@ test('empty', () => assert.is(LLL.EMPTY(), ''))
 
 test('trim key', () => assert.is(LLL.TRIM_KEY('test'), 'test'))
 test('trim param', () => assert.is(LLL.TRIM_PARAM(' Ho '), 'HeyHo'))
+
+test('trim plural one', () => assert.is(LLL.TRIM_PLURAL({ key: 1 }), '1'))
+test('trim plural other', () => assert.is(LLL.TRIM_PLURAL({ key: 2 }), '2'))
 
 test('param', () => assert.is(LLL.PARAM('hi'), 'hi'))
 
@@ -45,5 +49,16 @@ test('singular-plural 2', () => assert.is(LLL.SINGULAR_PLURAL(2), '2 Äpfel'))
 test('multiple params', () => assert.is(LLL.MULTIPLE_PARAMS(1, 2), '1 2'))
 
 test('multiple params plural', () => assert.is(LLL.MULTIPLE_PARAMS_PLURAL(1, 2), '1 banana and 2 apples'))
+
+const LLL2 = langauge('ar-EG', {
+	ADVANCED_PLURAL: '{{zero|one|two|few|many|other}}',
+})
+
+test('advanced plural rule 0', () => assert.is(LLL2.ADVANCED_PLURAL(0), 'zero'))
+test('advanced plural rule 1', () => assert.is(LLL2.ADVANCED_PLURAL(1), 'one'))
+test('advanced plural rule 2', () => assert.is(LLL2.ADVANCED_PLURAL(2), 'two'))
+test('advanced plural rule 6', () => assert.is(LLL2.ADVANCED_PLURAL(6), 'few'))
+test('advanced plural rule 18', () => assert.is(LLL2.ADVANCED_PLURAL(18), 'many'))
+test(`advanced plural rule 'test'`, () => assert.is(LLL2.ADVANCED_PLURAL('test'), 'other'))
 
 test.run()

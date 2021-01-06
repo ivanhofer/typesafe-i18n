@@ -21,11 +21,11 @@ export type LangaugeTranslationArgs = {
 	/**
 	 * {0|timesTen} apple{{s}}
 	 */
-	'FORMATTER_1': (arg0: unknown ) => string
+	'FORMATTER_1': (arg0: unknown) => string
 	/**
 	 * {0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}
 	 */
-	'FORMATTER_2': (arg0: unknown , arg1: unknown ) => string
+	'FORMATTER_2': (arg0: unknown, arg1: unknown) => string
 } 
 
 export type LangaugeFormatters = {

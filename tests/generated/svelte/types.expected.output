@@ -19,7 +19,7 @@ export type LangaugeTranslationArgs = {
 	/**
 	 * Hi {0}
 	 */
-	'HELLO_SVELTE': (arg0: unknown ) => string
+	'HELLO_SVELTE': (arg0: unknown) => string
 } 
 
 export type LangaugeFormatters = {}

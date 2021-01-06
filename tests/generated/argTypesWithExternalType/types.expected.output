@@ -21,7 +21,7 @@ export type LangaugeTranslationArgs = {
 	/**
 	 * The result is {0:Result|calculate}!
 	 */
-	'EXTERNAL_TYPE': (arg0: Result ) => string
+	'EXTERNAL_TYPE': (arg0: Result) => string
 } 
 
 export type LangaugeFormatters = {

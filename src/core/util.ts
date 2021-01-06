@@ -30,8 +30,8 @@ export const getLangaugeInstance = <
 	A extends object = TranslatorFn<T>,
 	F extends Formatters = Formatters
 >(
-	localeTranslations: LocaleTranslations<L, T>,
 	locale: L,
+	localeTranslations: LocaleTranslations<L, T>,
 	configInitializer: LangaugeConfigInitializer<L, F>,
 ): A => {
 	if (langaugeInstancesCache[locale]) {
@@ -43,7 +43,7 @@ export const getLangaugeInstance = <
 		throw new Error(`[LANGAUGE] ERROR: could not find locale '${locale}'`)
 	}
 
-	const lang = langauge<T, A, F>(foundTranslation, configInitializer(locale))
+	const lang = langauge<L, T, A, F>(locale, foundTranslation, configInitializer(locale))
 	langaugeInstancesCache[locale] = lang
 
 	return lang as A
@@ -61,6 +61,6 @@ export const initLangauge = <
 ): LocaleTranslationFns<L, A> => {
 	return new Proxy<LocaleTranslationFns<L, A>>({} as LocaleTranslationFns<L, A>, {
 		get: (_target, locale: L): A | null =>
-			getLangaugeInstance<L, T, A, F>(localeTranslations, locale, configInitializer),
+			getLangaugeInstance<L, T, A, F>(locale, localeTranslations, configInitializer),
 	})
 }

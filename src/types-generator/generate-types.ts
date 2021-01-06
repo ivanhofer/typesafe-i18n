@@ -1,7 +1,7 @@
 import { isObject, isTruthy, not } from 'typesafe-utils'
 import { parseRawText } from '../core/parser'
 import type { LangaugeBaseTranslation } from '../core/core'
-import type { InjectorPart, Part, SingularPluralPart } from '../core/parser'
+import type { InjectorPart, Part, PluralPart } from '../core/parser'
 import { writeFileIfContainsChanges } from './file-utils'
 import { TYPES_FILE } from '../constants/constants'
 
@@ -9,7 +9,7 @@ import { TYPES_FILE } from '../constants/constants'
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-type IsSingularPluralPart<T> = T extends SingularPluralPart ? T : never
+type IsPluralPart<T> = T extends PluralPart ? T : never
 
 type Arg = { key: string; type: string | undefined }
 
@@ -19,8 +19,7 @@ type FormatterFunctionKey = { formatterKey: string[]; type: string | undefined }
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-const isSingularPluralPart = <T extends Part>(part: T): part is IsSingularPluralPart<T> =>
-	!!(<SingularPluralPart>part).p
+const isPluralPart = <T extends Part>(part: T): part is IsPluralPart<T> => !!(<PluralPart>part).r
 
 const parseTanslationObject = ([key, text]: [string, string]): {
 	key: string
@@ -33,11 +32,12 @@ const parseTanslationObject = ([key, text]: [string, string]): {
 
 	parseRawText(text, false)
 		.filter(isObject)
-		.filter(not<InjectorPart>(isSingularPluralPart))
+		.filter(not<InjectorPart | PluralPart, InjectorPart>(isPluralPart))
 		.forEach((injectorPart) => {
-			const { k, t, f } = injectorPart
-			k && args.push({ key: k, type: t })
-			f && formatterFunctionKeys.push({ formatterKey: f, type: t })
+			const { k, i, f } = injectorPart
+
+			k && args.push({ key: k, type: i })
+			f && formatterFunctionKeys.push({ formatterKey: f, type: i })
 		})
 
 	return { key, text, args, formatterFunctionKeys }
@@ -79,7 +79,7 @@ const createTranslationType = (keys: string[]) =>
 const createFormatterType = (formatterKeys: FormatterFunctionKey[]) => {
 	const map: { [key: string]: string } = {}
 	formatterKeys
-		.flatMap(({ formatterKey: f, type: t }) => f.map((ff) => [ff, t || 'any'] as [string, string]))
+		.flatMap(({ formatterKey, type }) => formatterKey.map((ff) => [ff, type || 'any'] as [string, string]))
 		.forEach(([key, type]) => {
 			const foundType = map[key]
 			// TODO: check if  different types exist for a formatterKey
@@ -129,7 +129,7 @@ const mapTranslationArgs = (args: Arg[]) => {
 	const postfix = (isKeyed && ' }') || ''
 	const argPrefix = (!isKeyed && 'arg') || ''
 
-	return prefix + args.map(({ key: k, type: t }) => `${argPrefix}${k}: ${t || 'unknown'} `).join(', ') + postfix
+	return prefix + args.map(({ key, type }) => `${argPrefix}${key}: ${type || 'unknown'}`).join(', ') + postfix
 }
 
 const BASE_TYPES = ['boolean', 'number', 'string', 'Date']
