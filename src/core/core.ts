@@ -11,7 +11,7 @@ type TranslationParts<T> = {
 	[key in keyof T]: Part[]
 }
 
-type Cache<T> = TranslationParts<T> | null
+type Cache<T> = TranslationParts<T>
 
 type LangaugeTranslationKey<T> = keyof T
 
@@ -20,12 +20,10 @@ type LangaugeBaseTranslationArgs = {
 }
 
 type ConfigWithoutFormatters = {
-	useCache?: boolean
 	formatters?: never
 }
 
 export type ConfigWithFormatters<T extends Formatters = Formatters> = {
-	useCache?: boolean
 	formatters: T
 }
 
@@ -108,22 +106,22 @@ const getTextParts = <T extends LangaugeBaseTranslation>(
 	translationObject: T,
 	key: LangaugeTranslationKey<T>,
 ): Part[] => {
-	const cached = cache && cache[key]
+	const cached = cache[key]
 	if (cached) return cached
 
 	const rawText = getTextFromTranslationKey(translationObject, key)
 	const textInfo = parseRawText(rawText)
 
-	cache && (cache[key] = textInfo)
+	cache[key] = textInfo
 	return textInfo
 }
 
 const wrapTranslateFunction = <L extends string, T extends LangaugeBaseTranslation>(
 	locale: L,
 	translationObject: T,
-	{ formatters = {}, useCache = true }: Config = {},
+	{ formatters = {} }: Config = {},
 ) => {
-	const cache: Cache<T> = (useCache && ({} as TranslationParts<T>)) || null
+	const cache: Cache<T> = {} as TranslationParts<T>
 	const pluralRules = new Intl.PluralRules(locale)
 	return (key: LangaugeTranslationKey<T>, ...args: unknown[]) => {
 		const textInfo = getTextParts(cache, translationObject, key)

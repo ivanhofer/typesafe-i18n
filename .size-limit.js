@@ -1,10 +1,10 @@
 module.exports = [
 	{
 		path: 'dist/langauge.min.js',
-		limit: '798 b',
+		limit: '777 b',
 	},
 	{
 		path: 'dist/index.min.js',
-		limit: '926 b',
+		limit: '901 b',
 	},
 ]
