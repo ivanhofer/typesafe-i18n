@@ -7,7 +7,6 @@ import type {
 	LangaugeTranslationArgs,
 	LangaugeFormatters,
 	LangaugeLocales,
-	LangaugeFormattersInitializer
 } from './langauge-types'
 import { getLangaugeInstance, initLangauge } from 'langauge'
 import { initFormatters } from './formatters'
@@ -22,6 +21,6 @@ export const localeTranslations: LocaleTranslations<LangaugeLocales, LangaugeTra
 	it,
 }
 
-export const getLangauge = (formattersInitializer: LangaugeFormattersInitializer = initFormatters) => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, formattersInitializer)
+export const getLangauge = () => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, initFormatters)
 
-export const getLangaugeForLocale = (locale: LangaugeLocales, formattersInitializer: LangaugeFormattersInitializer = initFormatters) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, localeTranslations, formattersInitializer)
+export const getLangaugeForLocale = (locale: LangaugeLocales) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, localeTranslations, initFormatters)
