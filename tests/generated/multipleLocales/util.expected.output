@@ -24,4 +24,4 @@ export const localeTranslations: LocaleTranslations<LangaugeLocales, LangaugeTra
 
 export const getLangauge = (configInitializer: LangaugeConfigInitializer = initConfig) => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, configInitializer)
 
-export const getLangaugeForLocale = (locale: LangaugeLocales, configInitializer: LangaugeConfigInitializer = initConfig) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, locale, configInitializer)
+export const getLangaugeForLocale = (locale: LangaugeLocales, configInitializer: LangaugeConfigInitializer = initConfig) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, localeTranslations, configInitializer)
