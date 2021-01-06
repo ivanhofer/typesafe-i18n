@@ -1,7 +1,6 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-import type { ConfigWithFormatters } from 'langauge'
 
 import type { Result } from './types'
 
@@ -28,6 +27,4 @@ export type LangaugeFormatters = {
 	calculate: (value: Result) => string
 }
 
-export type LangaugeConfig = ConfigWithFormatters<LangaugeFormatters>
-
-export type LangaugeConfigInitializer = (locale: LangaugeLocales) => LangaugeConfig
+export type LangaugeFormattersInitializer = (locale: LangaugeLocales) => LangaugeFormatters

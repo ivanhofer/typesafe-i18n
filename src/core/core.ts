@@ -19,16 +19,6 @@ type LangaugeBaseTranslationArgs = {
 	[key in string]: unknown
 }
 
-type ConfigWithoutFormatters = {
-	formatters?: never
-}
-
-export type ConfigWithFormatters<T extends Formatters = Formatters> = {
-	formatters: T
-}
-
-export type Config<T extends Formatters = Formatters> = ConfigWithoutFormatters | ConfigWithFormatters<T>
-
 export type TranslatorFn<T> = {
 	[key in keyof T]: (...args: unknown[]) => string
 }
@@ -116,10 +106,10 @@ const getTextParts = <T extends LangaugeBaseTranslation>(
 	return textInfo
 }
 
-const wrapTranslateFunction = <L extends string, T extends LangaugeBaseTranslation>(
+const wrapTranslateFunction = <L extends string, T extends LangaugeBaseTranslation, F extends Formatters>(
 	locale: L,
 	translationObject: T,
-	{ formatters = {} }: Config = {},
+	formatters: F,
 ) => {
 	const cache: Cache<T> = {} as TranslationParts<T>
 	const pluralRules = new Intl.PluralRules(locale)
@@ -140,18 +130,18 @@ export function langauge<
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	A extends object = TranslatorFn<T>,
 	F extends Formatters = Formatters
->(locale: L, translationObject: T, config: ConfigWithFormatters<F>): A
+>(locale: L, translationObject: T, formatters: F): A
 
 export function langauge<
 	L extends string,
 	T extends LangaugeBaseTranslation,
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	A extends object = TranslatorFn<T>
->(locale: L, translationObject: T, config?: Config): A
+>(locale: L, translationObject: T): A
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-export function langauge(locale: any, translationObject: any, config: any): any {
-	const translateFunction = wrapTranslateFunction(locale, translationObject, config)
+export function langauge(locale: any, translationObject: any, formatters: any = {}): any {
+	const translateFunction = wrapTranslateFunction(locale, translationObject, formatters)
 
 	return new Proxy(
 		{},

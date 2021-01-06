@@ -3,7 +3,7 @@ import { BASE_PATH, DEFAULT_LOCALE } from '../constants/constants'
 import { generateTypes } from './generate-types'
 import { generateUtil } from './generate-util'
 import { generateSvelte } from './generate-svelte'
-import { generateConfigTemplate } from './generate-template-config'
+import { generateFormattersTemplate } from './generate-template-formatters'
 import { generateCustomTypesTemplate } from './generate-template-types'
 
 export type GenerateTypesConfig = {
@@ -34,7 +34,7 @@ export const generate = async (
 
 	const hasCustomTypes = await generateTypes(translationObject, outputPath, typesFile, locales, baseLocale)
 
-	await generateConfigTemplate(outputPath, configTemplatePath)
+	await generateFormattersTemplate(outputPath, configTemplatePath)
 
 	if (hasCustomTypes) {
 		await generateCustomTypesTemplate(outputPath, typesTemplatePath)

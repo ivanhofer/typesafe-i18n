@@ -170,7 +170,6 @@ const getTypes = (translationObject: LangaugeBaseTranslation, baseLocale: string
 		`// This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-import type { ConfigWithFormatters } from 'langauge'
 ${typeImports}
 ${baseLocaleType}
 
@@ -184,9 +183,7 @@ ${translationArgsType}
 
 ${formatterType}
 
-export type LangaugeConfig = ConfigWithFormatters<LangaugeFormatters>
-
-export type LangaugeConfigInitializer = (locale: LangaugeLocales) => LangaugeConfig
+export type LangaugeFormattersInitializer = (locale: LangaugeLocales) => LangaugeFormatters
 `,
 		!!typeImports,
 	] as [string, boolean]

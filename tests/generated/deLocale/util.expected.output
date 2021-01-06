@@ -7,10 +7,10 @@ import type {
 	LangaugeTranslationArgs,
 	LangaugeFormatters,
 	LangaugeLocales,
-	LangaugeConfigInitializer
+	LangaugeFormattersInitializer
 } from './langauge-types'
 import { getLangaugeInstance, initLangauge } from 'langauge'
-import { initConfig } from './config'
+import { initFormatters } from './formatters'
 
 import de from './de'
 
@@ -18,6 +18,6 @@ export const localeTranslations: LocaleTranslations<LangaugeLocales, LangaugeTra
 	de: de as LangaugeTranslation,
 }
 
-export const getLangauge = (configInitializer: LangaugeConfigInitializer = initConfig) => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, configInitializer)
+export const getLangauge = (formattersInitializer: LangaugeFormattersInitializer = initFormatters) => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, formattersInitializer)
 
-export const getLangaugeForLocale = (locale: LangaugeLocales, configInitializer: LangaugeConfigInitializer = initConfig) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, localeTranslations, configInitializer)
+export const getLangaugeForLocale = (locale: LangaugeLocales, formattersInitializer: LangaugeFormattersInitializer = initFormatters) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, localeTranslations, formattersInitializer)

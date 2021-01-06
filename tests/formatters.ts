@@ -26,7 +26,7 @@ const formatters = {
 	noSpaces: (value: string) => value.replace(/\s/g, ''),
 }
 
-const LLL = langauge('en', translation, { formatters })
+const LLL = langauge('en', translation, formatters)
 
 const someDate = new Date('2020-03-13')
 

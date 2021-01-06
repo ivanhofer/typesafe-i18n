@@ -10,7 +10,7 @@ import { langauge } from 'langauge';
 import { derived, Writable, writable } from 'svelte/store';
 import type { LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs } from './langauge-types'
 import { localeTranslations } from './langauge-util'
-import { initConfig } from './config'
+import { initFormatters } from './formatters'
 
 const currentLocale = writable<LangaugeLocales>('${baseLocale}')
 
@@ -20,7 +20,7 @@ export const selectedLocale = derived<Writable<LangaugeLocales>, LangaugeLocales
 
 export const LLL = derived<Writable<LangaugeLocales>, LangaugeTranslationArgs>(currentLocale, (locale: LangaugeLocales, set: (value: LangaugeTranslationArgs) => void) => {
 	const langaugeTranslation: LangaugeTranslation = localeTranslations[locale] as LangaugeTranslation
-	const langaugeObject = langauge(locale, langaugeTranslation, initConfig(locale))
+	const langaugeObject = langauge(locale, langaugeTranslation, initFormatters(locale))
 	set(langaugeObject)
 }, new Proxy({} as LangaugeTranslationArgs, { get: () => () => '' }))
 

@@ -1,5 +1,4 @@
 import type { Formatters, LangaugeBaseTranslation, TranslatorFn } from './core'
-import type { ConfigWithFormatters } from '../core/core'
 import { langauge } from './core'
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,7 +14,7 @@ export type LocaleTranslations<L extends string, T = unknown> = {
 	[key in L]: T
 }
 
-type LangaugeConfigInitializer<L extends string, F extends Formatters> = (locale: L) => ConfigWithFormatters<F>
+type LangaugeFormatterInitializer<L extends string, F extends Formatters> = (locale: L) => F
 
 // --------------------------------------------------------------------------------------------------------------------
 // implementation -----------------------------------------------------------------------------------------------------
@@ -32,7 +31,7 @@ export const getLangaugeInstance = <
 >(
 	locale: L,
 	localeTranslations: LocaleTranslations<L, T>,
-	configInitializer: LangaugeConfigInitializer<L, F>,
+	formattersInitializer: LangaugeFormatterInitializer<L, F>,
 ): A => {
 	if (langaugeInstancesCache[locale]) {
 		return langaugeInstancesCache[locale]
@@ -43,7 +42,7 @@ export const getLangaugeInstance = <
 		throw new Error(`[LANGAUGE] ERROR: could not find locale '${locale}'`)
 	}
 
-	const lang = langauge<L, T, A, F>(locale, foundTranslation, configInitializer(locale))
+	const lang = langauge<L, T, A, F>(locale, foundTranslation, formattersInitializer(locale))
 	langaugeInstancesCache[locale] = lang
 
 	return lang as A
@@ -57,10 +56,10 @@ export const initLangauge = <
 	F extends Formatters = Formatters
 >(
 	localeTranslations: LocaleTranslations<L, T>,
-	configInitializer: LangaugeConfigInitializer<L, F>,
+	formattersInitializer: LangaugeFormatterInitializer<L, F>,
 ): LocaleTranslationFns<L, A> => {
 	return new Proxy<LocaleTranslationFns<L, A>>({} as LocaleTranslationFns<L, A>, {
 		get: (_target, locale: L): A | null =>
-			getLangaugeInstance<L, T, A, F>(locale, localeTranslations, configInitializer),
+			getLangaugeInstance<L, T, A, F>(locale, localeTranslations, formattersInitializer),
 	})
 }

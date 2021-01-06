@@ -1,4 +1,4 @@
-export type { Config, ConfigWithFormatters, LangaugeBaseTranslation } from './core/core'
+export type { LangaugeBaseTranslation } from './core/core'
 
 export type { LocaleTranslations } from './core/util'
 
