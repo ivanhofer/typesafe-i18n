@@ -12,12 +12,17 @@ const { createProgram } = typescript
 // --------------------------------------------------------------------------------------------------------------------
 
 export type WatcherConfig = {
+	baseLocale?: string
+
+	tempPath?: string
 	outputPath?: string
 	typesFile?: string
 	utilFile?: string
-	baseLocale?: string
-	tempPath?: string
+	configTemplatePath?: string
+	typesTemplatePath?: string
+
 	svelte?: boolean | string
+	lazyLoad?: boolean
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -82,6 +87,7 @@ const parseAndGenerate = async ({
 	baseLocale,
 	tempPath,
 	svelte,
+	lazyLoad,
 }: {
 	outputPath: string
 	typesFile: string | undefined
@@ -89,6 +95,7 @@ const parseAndGenerate = async ({
 	baseLocale: string
 	tempPath: string
 	svelte: boolean | string | undefined
+	lazyLoad: boolean | undefined
 }) => {
 	const locales = await getAllLanguages(outputPath)
 	const locale = locales.find((l) => l === baseLocale) || locales[0]
@@ -102,6 +109,7 @@ const parseAndGenerate = async ({
 		baseLocale: locale,
 		locales,
 		svelte,
+		lazyLoad,
 	})
 }
 
@@ -127,9 +135,18 @@ export const startWatcher = async (config: WatcherConfig): Promise<void> => {
 		baseLocale = DEFAULT_LOCALE,
 		tempPath = TEMP_PATH,
 		svelte,
+		lazyLoad,
 	} = config
 
-	const onChange = parseAndGenerate.bind(null, { outputPath, typesFile, utilFile, baseLocale, tempPath, svelte })
+	const onChange = parseAndGenerate.bind(null, {
+		baseLocale,
+		outputPath,
+		typesFile,
+		utilFile,
+		tempPath,
+		svelte,
+		lazyLoad,
+	})
 
 	await createPathIfNotExits(outputPath)
 

@@ -16,6 +16,13 @@ import ${locale.replace('-', '_')} from './${locale}'`,
 		)
 		.join('')
 
+	const localesTranslationLoaders = locales
+		.map(
+			(locale) => `
+	${locale}: () => import('./${locale}'),`,
+		)
+		.join('')
+
 	return `// This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
@@ -32,6 +39,13 @@ ${localesImports}
 
 export const localeTranslations: LocaleTranslations<LangaugeLocales, LangaugeTranslation> = {${localesTranslations}
 }
+
+export const getLocaleTranslations = (locale: LangaugeLocales) => localeTranslations[locale]
+
+export const localeTranslationLoaders = {${localesTranslationLoaders}
+}
+
+export const loadLocaleTranslations = async (locale: LangaugeLocales) => (await localeTranslationLoaders[locale]()).default as LangaugeTranslation
 
 export const getLangauge = () => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, initFormatters)
 

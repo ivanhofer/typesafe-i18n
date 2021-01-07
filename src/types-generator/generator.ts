@@ -5,16 +5,10 @@ import { generateUtil } from './generate-util'
 import { generateSvelte } from './generate-svelte'
 import { generateFormattersTemplate } from './generate-template-formatters'
 import { generateCustomTypesTemplate } from './generate-template-types'
+import { WatcherConfig } from './watcher'
 
-export type GenerateTypesConfig = {
-	outputPath?: string
-	typesFile?: string
-	utilFile?: string
-	baseLocale?: string
+export type GenerateTypesConfig = WatcherConfig & {
 	locales?: string[]
-	svelte?: boolean | string
-	configTemplatePath?: string
-	typesTemplatePath?: string
 }
 
 export const generate = async (
@@ -30,6 +24,7 @@ export const generate = async (
 		svelte,
 		configTemplatePath,
 		typesTemplatePath,
+		lazyLoad = false,
 	} = config
 
 	const hasCustomTypes = await generateTypes(translationObject, outputPath, typesFile, locales, baseLocale)
@@ -43,6 +38,6 @@ export const generate = async (
 	await generateUtil(outputPath, utilFile, locales, baseLocale)
 
 	if (svelte) {
-		await generateSvelte(outputPath, svelte, baseLocale)
+		await generateSvelte(outputPath, lazyLoad, svelte, baseLocale)
 	}
 }
