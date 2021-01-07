@@ -1,0 +1,31 @@
+name: Update version & publish to npm
+
+on:
+   pull_request:
+      branches:
+         - 'master'
+
+jobs:
+   publish:
+      runs-on: ubuntu-latest
+      steps:
+         - uses: actions/checkout@v2
+
+         - name: install node
+           uses: actions/setup-node@v1
+           with:
+              node-version: 12
+
+         - run: npm install
+
+         - name: run test
+           run: npm test
+
+         - name: build package
+           run: npm run build
+
+         - name: check output size
+           uses: andresz1/size-limit-action@v1
+           with:
+              github_token: ${{ secrets.GITHUB_TOKEN }}
+              build_script: build:browser
