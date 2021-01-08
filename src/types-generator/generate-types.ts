@@ -3,7 +3,6 @@ import { parseRawText } from '../core/parser'
 import type { LangaugeBaseTranslation } from '../core/core'
 import type { InjectorPart, Part, PluralPart } from '../core/parser'
 import { writeFileIfContainsChanges } from './file-utils'
-import { TYPES_FILE } from '../constants/constants'
 import { GeneratorConfigWithDefaultValues } from './generator'
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -61,7 +60,7 @@ const createEnumType = (locales: string[]) =>
 		.join('')
 
 const createLocalesType = (locales: string[]) =>
-	`export type LangaugeLocales =${wrapEnumType(locales, () => createEnumType(locales))}`
+	`export type LangaugeLocale =${wrapEnumType(locales, () => createEnumType(locales))}`
 
 const createTranslationKeysType = (keys: string[]) =>
 	`export type LangaugeTranslationKeys =${wrapEnumType(keys, () => createEnumType(keys))}`
@@ -135,17 +134,17 @@ const mapTranslationArgs = (args: Arg[]) => {
 
 const BASE_TYPES = ['boolean', 'number', 'bigint', 'string', 'Date']
 
-const createTypeImportsType = (args: Arg[]): string => {
+const createTypeImportsType = (args: Arg[], typesTemplatePath: string): string => {
 	const types = new Set(args.flatMap(({ type }) => type).filter(isTruthy))
 	const externalTypes = Array.from(types).filter((type) => !BASE_TYPES.includes(type))
 	return !externalTypes.length
 		? ''
 		: `
-import type { ${externalTypes.join(', ')} } from './types'
+import type { ${externalTypes.join(', ')} } from './${typesTemplatePath.replace('.ts', '')}'
 `
 }
 
-const getTypes = (translationObject: LangaugeBaseTranslation, baseLocale: string, locales: string[]) => {
+const getTypes = ({ translationObject, baseLocale, locales, typesTemplateFileName }: GenerateTypesType) => {
 	const result = (isObject(translationObject) && Object.entries(translationObject).map(parseTanslationObject)) || []
 
 	const baseLocaleType = `export type LangaugeBaseLocale = '${baseLocale}'`
@@ -159,7 +158,7 @@ const getTypes = (translationObject: LangaugeBaseTranslation, baseLocale: string
 	const translationType = createTranslationType(keys)
 
 	const args = result.flatMap(({ args }) => args)
-	const typeImports = createTypeImportsType(args)
+	const typeImports = createTypeImportsType(args, typesTemplateFileName)
 
 	const formatterFunctionKeys = result.flatMap(({ formatterFunctionKeys }) => formatterFunctionKeys)
 	const formatterType = createFormatterType(formatterFunctionKeys)
@@ -184,29 +183,22 @@ ${translationArgsType}
 
 ${formatterType}
 
-export type LangaugeFormattersInitializer = (locale: LangaugeLocales) => LangaugeFormatters
+export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters
 `,
 		!!typeImports,
 	] as [string, boolean]
 }
 
-type GenerateTypesType = Pick<
-	GeneratorConfigWithDefaultValues,
-	'outputPath' | 'typesFile' | 'baseLocale' | 'locales'
-> & {
+type GenerateTypesType = GeneratorConfigWithDefaultValues & {
 	translationObject: LangaugeBaseTranslation
 }
 
-export const generateTypes = async ({
-	translationObject,
-	outputPath,
-	typesFile = TYPES_FILE,
-	baseLocale,
-	locales,
-}: GenerateTypesType): Promise<boolean> => {
-	const [types, hasCustomTypes] = getTypes(translationObject, baseLocale, locales)
+export const generateTypes = async (config: GenerateTypesType): Promise<boolean> => {
+	const { outputPath, typesFileName } = config
 
-	await writeFileIfContainsChanges(outputPath, typesFile, types)
+	const [types, hasCustomTypes] = getTypes(config)
+
+	await writeFileIfContainsChanges(outputPath, typesFileName, types)
 
 	return hasCustomTypes
 }

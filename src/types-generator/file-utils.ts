@@ -1,5 +1,5 @@
 import { promises as fsPromises } from 'fs'
-import { join, resolve, dirname } from 'path'
+import { join, resolve, dirname, extname } from 'path'
 
 const { readFile: read, readdir, writeFile, mkdir, stat, copyFile: cp, rmdir } = fsPromises
 
@@ -73,17 +73,22 @@ export const deleteFolderRecursive = async (path: string): Promise<boolean> => {
 	}
 }
 
+const getFileName = (path: string, file: string) => {
+	const ext = extname(file) ? '' : '.ts'
+	return join(path, file + ext)
+}
+
 export const writeNewFile = async (path: string, file: string, content: string): Promise<void> => {
 	await createPathIfNotExits(path)
 
-	writeFile(join(path, file), content, { encoding: 'utf-8' })
+	writeFile(getFileName(path, file), content, { encoding: 'utf-8' })
 
 	// eslint-disable-next-line no-console
 	console.info('[LANGAUGE] generated types')
 }
 
 export const writeFileIfContainsChanges = async (path: string, file: string, content: string): Promise<void> => {
-	const oldContent = await readFile(join(path, file))
+	const oldContent = await readFile(getFileName(path, file))
 	if (oldContent === content) return
 
 	await writeNewFile(path, file, content)

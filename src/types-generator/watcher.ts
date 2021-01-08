@@ -58,17 +58,18 @@ const parseLanguageFile = async (
 const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues) => {
 	const { baseLocale, locales: localesToUse, tempPath, outputPath } = config
 
-	const locales = (await getAllLanguages(outputPath)).filter((locale) => localesToUse.includes(locale))
-	const locale = locales.find((l) => l === baseLocale) || locales[0]
+	const locales = (await getAllLanguages(outputPath)).filter(
+		(locale) => !localesToUse.length || localesToUse.includes(locale),
+	)
+	const locale = locales.find((l) => l === baseLocale) || locales[0] || ''
 
 	// TODO: display warning if no locale is defined or one of the `localesToUse` is missing
 
 	const languageFile = (locale && (await parseLanguageFile(outputPath, locale, tempPath))) || {}
 
-	await generate(languageFile, { ...config, baseLocale, locales })
+	await generate(languageFile, { ...config, baseLocale: locale, locales })
 }
 
-const DEBOUNCE_TIME = 100
 let debounceIndex = 0
 
 const debonce = (callback: () => void) =>
@@ -78,7 +79,7 @@ const debonce = (callback: () => void) =>
 				callback()
 			}
 		},
-		DEBOUNCE_TIME,
+		100,
 		++debounceIndex,
 	)
 

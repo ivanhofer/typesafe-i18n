@@ -1,9 +1,8 @@
-import { FORMATTERS_TEMPLATE_FILE } from '../constants/constants'
 import { writeFileIfNotExists } from './file-utils'
 import { GeneratorConfigWithDefaultValues } from './generator'
 
-const getFormattersTemplate = () => {
-	return `import type { LangaugeFormatters, LangaugeFormattersInitializer } from './langauge-types'
+const getFormattersTemplate = ({ typesFileName: typesFile }: GeneratorConfigWithDefaultValues) => {
+	return `import type { LangaugeFormatters, LangaugeFormattersInitializer } from './${typesFile}'
 
 export const initFormatters: LangaugeFormattersInitializer = (locale) => {
 	const formatters: LangaugeFormatters = {
@@ -15,13 +14,10 @@ export const initFormatters: LangaugeFormattersInitializer = (locale) => {
 `
 }
 
-type GenerateFormattersTemplateType = Pick<GeneratorConfigWithDefaultValues, 'outputPath' | 'formattersTemplatePath'>
+export const generateFormattersTemplate = async (config: GeneratorConfigWithDefaultValues): Promise<void> => {
+	const { outputPath, formattersTemplateFileName: formattersTemplatePath } = config
 
-export const generateFormattersTemplate = async ({
-	outputPath,
-	formattersTemplatePath = FORMATTERS_TEMPLATE_FILE,
-}: GenerateFormattersTemplateType): Promise<void> => {
-	const configTemplate = getFormattersTemplate()
+	const configTemplate = getFormattersTemplate(config)
 
 	await writeFileIfNotExists(outputPath, formattersTemplatePath, configTemplate)
 }
