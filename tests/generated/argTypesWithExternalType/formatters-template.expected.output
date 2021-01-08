@@ -1,0 +1,9 @@
+import type { LangaugeFormatters, LangaugeFormattersInitializer } from './langauge-types'
+
+export const initFormatters: LangaugeFormattersInitializer = (locale) => {
+	const formatters: LangaugeFormatters = {
+		// add your formatter functions here
+	}
+
+	return formatters
+}

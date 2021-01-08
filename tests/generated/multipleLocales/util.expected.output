@@ -21,6 +21,16 @@ export const localeTranslations: LocaleTranslations<LangaugeLocales, LangaugeTra
 	it,
 }
 
+export const getLocaleTranslations = (locale: LangaugeLocales) => localeTranslations[locale]
+
+export const localeTranslationLoaders = {
+	de: () => import('./de'),
+	en: () => import('./en'),
+	it: () => import('./it'),
+}
+
+export const loadLocaleTranslations = async (locale: LangaugeLocales) => (await localeTranslationLoaders[locale]()).default as LangaugeTranslation
+
 export const getLangauge = () => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, initFormatters)
 
 export const getLangaugeForLocale = (locale: LangaugeLocales) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, localeTranslations, initFormatters)

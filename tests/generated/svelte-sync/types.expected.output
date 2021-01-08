@@ -1,0 +1,26 @@
+// This types were auto-generated. Any manual changes will be overwritten.
+/* eslint-disable */
+
+
+export type LangaugeBaseLocale = 'en'
+
+export type LangaugeLocales =
+	| 'en'
+
+export type LangaugeTranslationKeys =
+	| 'HELLO_SVELTE'
+
+export type LangaugeTranslation = {
+	'HELLO_SVELTE': string
+}
+
+export type LangaugeTranslationArgs = {
+	/**
+	 * Hi {0}
+	 */
+	'HELLO_SVELTE': (arg0: unknown) => string
+} 
+
+export type LangaugeFormatters = {}
+
+export type LangaugeFormattersInitializer = (locale: LangaugeLocales) => LangaugeFormatters
