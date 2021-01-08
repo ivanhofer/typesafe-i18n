@@ -2,26 +2,26 @@
 /* eslint-disable */
 
 import type { LocaleTranslations } from 'langauge'
+import { getLangaugeInstance, initLangauge } from 'langauge'
 import type {
 	LangaugeTranslation,
 	LangaugeTranslationArgs,
 	LangaugeFormatters,
-	LangaugeLocales,
-} from './langauge-types'
-import { getLangaugeInstance, initLangauge } from 'langauge'
-import { initFormatters } from './formatters'
+	LangaugeLocale,
+} from './multipleLocales/types.actual.output'
+import { initFormatters } from './multipleLocales/formatters-template.actual.output'
 
 import de from './de'
 import en from './en'
 import it from './it'
 
-export const localeTranslations: LocaleTranslations<LangaugeLocales, LangaugeTranslation> = {
+export const localeTranslations: LocaleTranslations<LangaugeLocale, LangaugeTranslation> = {
 	de,
 	en: en as LangaugeTranslation,
 	it,
 }
 
-export const getLocaleTranslations = (locale: LangaugeLocales) => localeTranslations[locale]
+export const getLocaleTranslations = (locale: LangaugeLocale) => localeTranslations[locale]
 
 export const localeTranslationLoaders = {
 	de: () => import('./de'),
@@ -29,8 +29,8 @@ export const localeTranslationLoaders = {
 	it: () => import('./it'),
 }
 
-export const loadLocaleTranslations = async (locale: LangaugeLocales) => (await localeTranslationLoaders[locale]()).default as LangaugeTranslation
+export const loadLocaleTranslations = async (locale: LangaugeLocale) => (await localeTranslationLoaders[locale]()).default as LangaugeTranslation
 
-export const getLangauge = () => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, initFormatters)
+export const getLangauge = () => initLangauge<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, initFormatters)
 
-export const getLangaugeForLocale = (locale: LangaugeLocales) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, localeTranslations, initFormatters)
+export const getLangaugeForLocale = (locale: LangaugeLocale) => getLangaugeInstance<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, localeTranslations, initFormatters)

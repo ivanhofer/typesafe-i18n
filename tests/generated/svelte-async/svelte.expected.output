@@ -3,27 +3,26 @@
 
 import { langauge } from 'langauge';
 import { derived, Writable, writable } from 'svelte/store';
-import type { LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs } from './langauge-types'
-import { loadLocaleTranslations } from './langauge-util'
+import type { LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs } from './svelte-async/types.actual.output'
+import { loadLocaleTranslations } from './svelte-async/util.actual.output'
+import { initFormatters } from './svelte-async/formatters-template.actual.output'
 
-import { initFormatters } from './formatters'
-
-const currentLocale = writable<LangaugeLocales>(null)
+const currentLocale = writable<LangaugeLocale>(null)
 
 const isLoading = writable<boolean>(true)
 
-export const init = (locale: LangaugeLocales = 'en') => setLocale(locale)
+export const init = (locale: LangaugeLocale = 'en') => setLocale(locale)
 
-export const setLocale = (locale: LangaugeLocales) => {
+export const setLocale = (locale: LangaugeLocale) => {
 	isLoading.set(true)
 	currentLocale.set(locale)
 }
 
-export const selectedLocale = derived<Writable<LangaugeLocales>, LangaugeLocales>(currentLocale, (locale) => locale)
+export const selectedLocale = derived<Writable<LangaugeLocale>, LangaugeLocale>(currentLocale, (locale) => locale)
 
 export const localeLoading = derived<Writable<boolean>, boolean>(isLoading, (loading) => loading)
 
-export const LLL = derived<Writable<LangaugeLocales>, LangaugeTranslationArgs>(currentLocale, (locale: LangaugeLocales, set: (value: LangaugeTranslationArgs) => void) => {
+export const LLL = derived<Writable<LangaugeLocale>, LangaugeTranslationArgs>(currentLocale, (locale: LangaugeLocale, set: (value: LangaugeTranslationArgs) => void) => {
 	const setStoreValue = async () => {
 		const langaugeTranslation: LangaugeTranslation = await loadLocaleTranslations(locale)
 		const langaugeObject = langauge(locale, langaugeTranslation, initFormatters(locale))
