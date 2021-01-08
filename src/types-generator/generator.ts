@@ -1,43 +1,80 @@
 import type { LangaugeBaseTranslation } from '../core/core'
-import { BASE_PATH, DEFAULT_LOCALE } from '../constants/constants'
+import { BASE_PATH, DEFAULT_LOCALE, TEMP_PATH } from '../constants/constants'
 import { generateTypes } from './generate-types'
 import { generateUtil } from './generate-util'
 import { generateSvelte } from './generate-svelte'
 import { generateFormattersTemplate } from './generate-template-formatters'
 import { generateCustomTypesTemplate } from './generate-template-types'
-import { WatcherConfig } from './watcher'
 
-export type GenerateTypesConfig = WatcherConfig & {
+// --------------------------------------------------------------------------------------------------------------------
+// types --------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+
+export type GeneratorConfig = {
+	baseLocale?: string
 	locales?: string[]
+
+	tempPath?: string
+	outputPath?: string
+	typesFile?: string
+	utilFile?: string
+	formattersTemplatePath?: string
+	typesTemplatePath?: string
+
+	svelte?: boolean | string
+	lazyLoad?: boolean
 }
+
+export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
+	baseLocale: string
+	locales: string[]
+	tempPath: string
+	outputPath: string
+	lazyLoad: boolean
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+// implementation -----------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+
+export const setDefaultConfigValuesIfMissing = (config: GeneratorConfig): GeneratorConfigWithDefaultValues => ({
+	...config,
+	baseLocale: config.baseLocale ?? DEFAULT_LOCALE,
+	locales: config.locales ?? [config.baseLocale ?? DEFAULT_LOCALE],
+	tempPath: config.tempPath ?? TEMP_PATH,
+	outputPath: config.outputPath ?? BASE_PATH,
+	lazyLoad: true,
+})
 
 export const generate = async (
 	translationObject: LangaugeBaseTranslation,
-	config: GenerateTypesConfig = {} as GenerateTypesConfig,
+	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
 ): Promise<void> => {
 	const {
-		outputPath = BASE_PATH,
+		baseLocale,
+		locales,
+
+		outputPath,
 		typesFile,
 		utilFile,
-		baseLocale = DEFAULT_LOCALE,
-		locales = [baseLocale],
-		svelte,
-		configTemplatePath,
+		formattersTemplatePath,
 		typesTemplatePath,
-		lazyLoad = false,
+
+		svelte,
+		lazyLoad,
 	} = config
 
-	const hasCustomTypes = await generateTypes(translationObject, outputPath, typesFile, locales, baseLocale)
+	const hasCustomTypes = await generateTypes({ translationObject, outputPath, typesFile, baseLocale, locales })
 
-	await generateFormattersTemplate(outputPath, configTemplatePath)
+	await generateFormattersTemplate({ outputPath, formattersTemplatePath })
 
 	if (hasCustomTypes) {
-		await generateCustomTypesTemplate(outputPath, typesTemplatePath)
+		await generateCustomTypesTemplate({ outputPath, typesTemplatePath })
 	}
 
-	await generateUtil(outputPath, utilFile, locales, baseLocale)
+	await generateUtil({ outputPath, utilFile, baseLocale, locales })
 
 	if (svelte) {
-		await generateSvelte(outputPath, lazyLoad, svelte, baseLocale)
+		await generateSvelte({ outputPath, svelte, baseLocale, lazyLoad })
 	}
 }

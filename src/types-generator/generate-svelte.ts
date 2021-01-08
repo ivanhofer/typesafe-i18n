@@ -3,6 +3,7 @@
 import { isBoolean } from 'typesafe-utils'
 import { SVELTE_FILE } from '../constants/constants'
 import { writeFileIfContainsChanges } from './file-utils'
+import { GeneratorConfigWithDefaultValues } from './generator'
 
 const getSvelteStore = (lazyLoad: boolean, baseLocale: string) => {
 	return `// This types were auto-generated. Any manual changes will be overwritten.
@@ -57,14 +58,16 @@ export default LLL
 `
 }
 
-export const generateSvelte = async (
-	outputPath: string,
-	lazyLoad: boolean,
-	svelteFile: boolean | string,
-	baseLocale: string,
-): Promise<void> => {
-	const svelte = getSvelteStore(lazyLoad, baseLocale)
+type GenerateSvelteType = Pick<GeneratorConfigWithDefaultValues, 'outputPath' | 'svelte' | 'baseLocale' | 'lazyLoad'>
 
-	const path = isBoolean(svelteFile) ? SVELTE_FILE : svelteFile
-	await writeFileIfContainsChanges(outputPath, path, svelte)
+export const generateSvelte = async ({
+	outputPath,
+	svelte,
+	baseLocale,
+	lazyLoad
+}: GenerateSvelteType): Promise<void> => {
+	const svelteStore = getSvelteStore(lazyLoad, baseLocale)
+
+	const path = (!isBoolean(svelte) && svelte) || SVELTE_FILE
+	await writeFileIfContainsChanges(outputPath, path, svelteStore)
 }

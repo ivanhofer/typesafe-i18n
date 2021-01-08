@@ -1,35 +1,10 @@
-import * as typescript from 'typescript'
+import * as ts from 'typescript'
 import fs from 'fs'
 import { resolve } from 'path'
-import { BASE_PATH, DEFAULT_LOCALE, TEMP_PATH } from '../constants/constants'
-import { LangaugeBaseTranslation } from '../core/core'
+import type { LangaugeBaseTranslation } from '../core/core'
+import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './generator'
 import { copyFile, createPathIfNotExits, deleteFolderRecursive, getFiles, importFile } from './file-utils'
-import { generate } from './generator'
-const { createProgram } = typescript
-
-// --------------------------------------------------------------------------------------------------------------------
-// types --------------------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------------------------------------
-
-export type WatcherConfig = {
-	baseLocale?: string
-
-	tempPath?: string
-	outputPath?: string
-	typesFile?: string
-	utilFile?: string
-	configTemplatePath?: string
-	typesTemplatePath?: string
-
-	svelte?: boolean | string
-	lazyLoad?: boolean
-}
-
-// --------------------------------------------------------------------------------------------------------------------
-// implementation -----------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------------------------------------
-
-const DEBOUNCE_TIME = 100
+import { generate, setDefaultConfigValuesIfMissing } from './generator'
 
 const getAllLanguages = async (path: string) => {
 	const files = await getFiles(path, 1)
@@ -37,7 +12,7 @@ const getAllLanguages = async (path: string) => {
 }
 
 const transpileTypescriptAndPrepareImportFile = async (languageFilePath: string, tempPath: string): Promise<string> => {
-	const program = createProgram([languageFilePath], { outDir: tempPath })
+	const program = ts.createProgram([languageFilePath], { outDir: tempPath })
 	program.emit()
 
 	const compiledPath = resolve(tempPath, 'index.js')
@@ -53,7 +28,7 @@ const transpileTypescriptAndPrepareImportFile = async (languageFilePath: string,
 	return copyPath
 }
 
-const getLanguageFile = async (
+const parseLanguageFile = async (
 	outputPath: string,
 	locale: string,
 	tempPath: string,
@@ -80,42 +55,23 @@ const getLanguageFile = async (
 	return languageImport
 }
 
-const parseAndGenerate = async ({
-	outputPath,
-	typesFile,
-	utilFile,
-	baseLocale,
-	tempPath,
-	svelte,
-	lazyLoad,
-}: {
-	outputPath: string
-	typesFile: string | undefined
-	utilFile: string | undefined
-	baseLocale: string
-	tempPath: string
-	svelte: boolean | string | undefined
-	lazyLoad: boolean | undefined
-}) => {
-	const locales = await getAllLanguages(outputPath)
+const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues) => {
+	const { baseLocale, locales: localesToUse, tempPath, outputPath } = config
+
+	const locales = (await getAllLanguages(outputPath)).filter((locale) => localesToUse.includes(locale))
 	const locale = locales.find((l) => l === baseLocale) || locales[0]
 
-	const languageFile = (locale && (await getLanguageFile(outputPath, locale, tempPath))) || {}
+	// TODO: display warning if no locale is defined or one of the `localesToUse` is missing
 
-	await generate(languageFile, {
-		outputPath,
-		typesFile,
-		utilFile,
-		baseLocale: locale,
-		locales,
-		svelte,
-		lazyLoad,
-	})
+	const languageFile = (locale && (await parseLanguageFile(outputPath, locale, tempPath))) || {}
+
+	await generate(languageFile, { ...config, baseLocale, locales })
 }
 
+const DEBOUNCE_TIME = 100
 let debounceIndex = 0
 
-const debonce = (callback: () => void) => {
+const debonce = (callback: () => void) =>
 	setTimeout(
 		(i) => {
 			if (i === debounceIndex) {
@@ -125,28 +81,12 @@ const debonce = (callback: () => void) => {
 		DEBOUNCE_TIME,
 		++debounceIndex,
 	)
-}
 
-export const startWatcher = async (config: WatcherConfig): Promise<void> => {
-	const {
-		outputPath = BASE_PATH,
-		typesFile,
-		utilFile,
-		baseLocale = DEFAULT_LOCALE,
-		tempPath = TEMP_PATH,
-		svelte,
-		lazyLoad,
-	} = config
+export const startWatcher = async (config: GeneratorConfig): Promise<void> => {
+	const configWithDefaultValues = setDefaultConfigValuesIfMissing(config)
+	const { outputPath } = configWithDefaultValues
 
-	const onChange = parseAndGenerate.bind(null, {
-		baseLocale,
-		outputPath,
-		typesFile,
-		utilFile,
-		tempPath,
-		svelte,
-		lazyLoad,
-	})
+	const onChange = parseAndGenerate.bind(null, configWithDefaultValues)
 
 	await createPathIfNotExits(outputPath)
 

@@ -4,6 +4,7 @@ import type { LangaugeBaseTranslation } from '../core/core'
 import type { InjectorPart, Part, PluralPart } from '../core/parser'
 import { writeFileIfContainsChanges } from './file-utils'
 import { TYPES_FILE } from '../constants/constants'
+import { GeneratorConfigWithDefaultValues } from './generator'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -189,14 +190,22 @@ export type LangaugeFormattersInitializer = (locale: LangaugeLocales) => Langaug
 	] as [string, boolean]
 }
 
-export const generateTypes = async (
-	translationObject: LangaugeBaseTranslation,
-	outputPath: string,
-	typesFile: string | undefined = TYPES_FILE,
-	locales: string[],
-	baseLocale: string,
-): Promise<boolean> => {
+type GenerateTypesType = Pick<
+	GeneratorConfigWithDefaultValues,
+	'outputPath' | 'typesFile' | 'baseLocale' | 'locales'
+> & {
+	translationObject: LangaugeBaseTranslation
+}
+
+export const generateTypes = async ({
+	translationObject,
+	outputPath,
+	typesFile = TYPES_FILE,
+	baseLocale,
+	locales,
+}: GenerateTypesType): Promise<boolean> => {
 	const [types, hasCustomTypes] = getTypes(translationObject, baseLocale, locales)
+
 	await writeFileIfContainsChanges(outputPath, typesFile, types)
 
 	return hasCustomTypes

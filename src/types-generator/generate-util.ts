@@ -1,5 +1,6 @@
 import { UTIL_FILE } from '../constants/constants'
 import { writeFileIfContainsChanges } from './file-utils'
+import { GeneratorConfigWithDefaultValues } from './generator'
 
 const getUtil = (baseLocale: string, locales: string[]): string => {
 	const localesImports = locales
@@ -53,12 +54,14 @@ export const getLangaugeForLocale = (locale: LangaugeLocales) => getLangaugeInst
 `
 }
 
-export const generateUtil = async (
-	outputPath: string,
-	utilFile: string | undefined = UTIL_FILE,
-	locales: string[],
-	baseLocale: string,
-): Promise<void> => {
+type GenerateUtilType = Pick<GeneratorConfigWithDefaultValues, 'outputPath' | 'utilFile' | 'baseLocale' | 'locales'>
+
+export const generateUtil = async ({
+	outputPath,
+	utilFile = UTIL_FILE,
+	baseLocale,
+	locales,
+}: GenerateUtilType): Promise<void> => {
 	const util = getUtil(baseLocale, locales)
 	await writeFileIfContainsChanges(outputPath, utilFile, util)
 }
