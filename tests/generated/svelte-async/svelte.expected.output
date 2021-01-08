@@ -1,0 +1,36 @@
+// This types were auto-generated. Any manual changes will be overwritten.
+/* eslint-disable */
+
+import { langauge } from 'langauge';
+import { derived, Writable, writable } from 'svelte/store';
+import type { LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs } from './svelte-async/types.actual.output'
+import { loadLocaleTranslations } from './svelte-async/util.actual.output'
+import { initFormatters } from './svelte-async/formatters-template.actual.output'
+
+const currentLocale = writable<LangaugeLocale>(null)
+
+const isLoading = writable<boolean>(true)
+
+export const init = (locale: LangaugeLocale = 'en') => setLocale(locale)
+
+export const setLocale = (locale: LangaugeLocale) => {
+	isLoading.set(true)
+	currentLocale.set(locale)
+}
+
+export const selectedLocale = derived<Writable<LangaugeLocale>, LangaugeLocale>(currentLocale, (locale) => locale)
+
+export const localeLoading = derived<Writable<boolean>, boolean>(isLoading, (loading) => loading)
+
+export const LLL = derived<Writable<LangaugeLocale>, LangaugeTranslationArgs>(currentLocale, (locale: LangaugeLocale, set: (value: LangaugeTranslationArgs) => void) => {
+	const setStoreValue = async () => {
+		const langaugeTranslation: LangaugeTranslation = await loadLocaleTranslations(locale)
+		const langaugeObject = langauge(locale, langaugeTranslation, initFormatters(locale))
+		set(langaugeObject)
+		isLoading.set(false)
+	}
+
+	setStoreValue()
+}, new Proxy({} as LangaugeTranslationArgs, { get: () => () => '' }))
+
+export default LLL

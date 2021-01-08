@@ -8,23 +8,17 @@ export type LangaugeLocale =
 	| 'en'
 
 export type LangaugeTranslationKeys =
-	| 'PARAM'
-	| 'PARAMS'
+	| 'HELLO_SVELTE'
 
 export type LangaugeTranslation = {
-	'PARAM': string
-	'PARAMS': string
+	'HELLO_SVELTE': string
 }
 
 export type LangaugeTranslationArgs = {
 	/**
-	 * {0} apple{{s}}
+	 * Hi {0}
 	 */
-	'PARAM': (arg0: unknown) => string
-	/**
-	 * {0} apple{{s}} and {1} banana{{s}}
-	 */
-	'PARAMS': (arg0: unknown, arg1: unknown) => string
+	'HELLO_SVELTE': (arg0: unknown) => string
 } 
 
 export type LangaugeFormatters = {}

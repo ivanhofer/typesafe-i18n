@@ -1,15 +1,14 @@
-import { TYPES_TEMPLATE_FILE } from '../constants/constants'
 import { writeFileIfNotExists } from './file-utils'
+import { GeneratorConfigWithDefaultValues } from './generator'
 
-const getCustomTypesTemplate = () => {
-	return `// use this file to export your custom types; these types will be imported by './langauge-types.ts'`
+const getCustomTypesTemplate = ({ typesFileName: typesFile }: GeneratorConfigWithDefaultValues) => {
+	return `// use this file to export your custom types; these types will be imported by './${typesFile}.ts'`
 }
 
-export const generateCustomTypesTemplate = async (
-	outputPath: string,
-	typesTemplateFile: string | undefined = TYPES_TEMPLATE_FILE,
-): Promise<void> => {
-	const configTemplate = getCustomTypesTemplate()
+export const generateCustomTypesTemplate = async (config: GeneratorConfigWithDefaultValues): Promise<void> => {
+	const { outputPath, typesTemplateFileName: typesTemplatePath } = config
 
-	await writeFileIfNotExists(outputPath, typesTemplateFile, configTemplate)
+	const customTypesTemplate = getCustomTypesTemplate(config)
+
+	await writeFileIfNotExists(outputPath, typesTemplatePath, customTypesTemplate)
 }

@@ -5,5 +5,5 @@
 		"outDir": "./rollup",
 		"emitDeclarationOnly": true
 	},
-	"include": ["./src/rollup-plugin-langauge.ts"]
+	"include": ["./src/rollup-watcher.ts"]
 }

@@ -2,11 +2,11 @@
 /* eslint-disable */
 
 
-import type { Result } from './types'
+import type { Result } from './argTypesWithExternalType/types-template.actual.output'
 
 export type LangaugeBaseLocale = 'en'
 
-export type LangaugeLocales =
+export type LangaugeLocale =
 	| 'en'
 
 export type LangaugeTranslationKeys =
@@ -27,4 +27,4 @@ export type LangaugeFormatters = {
 	calculate: (value: Result) => string
 }
 
-export type LangaugeFormattersInitializer = (locale: LangaugeLocales) => LangaugeFormatters
+export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters

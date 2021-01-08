@@ -1,7 +1,12 @@
-import { UTIL_FILE } from '../constants/constants'
 import { writeFileIfContainsChanges } from './file-utils'
+import { GeneratorConfigWithDefaultValues } from './generator'
 
-const getUtil = (baseLocale: string, locales: string[]): string => {
+const getUtil = ({
+	baseLocale,
+	locales,
+	typesFileName: typesFile,
+	formattersTemplateFileName: formattersTemplatePath,
+}: GeneratorConfigWithDefaultValues): string => {
 	const localesImports = locales
 		.map(
 			(locale) => `
@@ -16,35 +21,46 @@ import ${locale.replace('-', '_')} from './${locale}'`,
 		)
 		.join('')
 
+	const localesTranslationLoaders = locales
+		.map(
+			(locale) => `
+	${locale}: () => import('./${locale}'),`,
+		)
+		.join('')
+
 	return `// This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
 import type { LocaleTranslations } from 'langauge'
+import { getLangaugeInstance, initLangauge } from 'langauge'
 import type {
 	LangaugeTranslation,
 	LangaugeTranslationArgs,
 	LangaugeFormatters,
-	LangaugeLocales,
-} from './langauge-types'
-import { getLangaugeInstance, initLangauge } from 'langauge'
-import { initFormatters } from './formatters'
+	LangaugeLocale,
+} from './${typesFile}'
+import { initFormatters } from './${formattersTemplatePath}'
 ${localesImports}
 
-export const localeTranslations: LocaleTranslations<LangaugeLocales, LangaugeTranslation> = {${localesTranslations}
+export const localeTranslations: LocaleTranslations<LangaugeLocale, LangaugeTranslation> = {${localesTranslations}
 }
 
-export const getLangauge = () => initLangauge<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, initFormatters)
+export const getLocaleTranslations = (locale: LangaugeLocale) => localeTranslations[locale]
 
-export const getLangaugeForLocale = (locale: LangaugeLocales) => getLangaugeInstance<LangaugeLocales, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, localeTranslations, initFormatters)
+export const localeTranslationLoaders = {${localesTranslationLoaders}
+}
+
+export const loadLocaleTranslations = async (locale: LangaugeLocale) => (await localeTranslationLoaders[locale]()).default as LangaugeTranslation
+
+export const getLangauge = () => initLangauge<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, initFormatters)
+
+export const getLangaugeForLocale = (locale: LangaugeLocale) => getLangaugeInstance<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, localeTranslations, initFormatters)
 `
 }
 
-export const generateUtil = async (
-	outputPath: string,
-	utilFile: string | undefined = UTIL_FILE,
-	locales: string[],
-	baseLocale: string,
-): Promise<void> => {
-	const util = getUtil(baseLocale, locales)
+export const generateUtil = async (config: GeneratorConfigWithDefaultValues): Promise<void> => {
+	const { outputPath, utilFileName: utilFile } = config
+
+	const util = getUtil(config)
 	await writeFileIfContainsChanges(outputPath, utilFile, util)
 }

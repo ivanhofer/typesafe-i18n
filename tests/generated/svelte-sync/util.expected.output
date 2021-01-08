@@ -8,8 +8,8 @@ import type {
 	LangaugeTranslationArgs,
 	LangaugeFormatters,
 	LangaugeLocale,
-} from './withParams/types.actual.output'
-import { initFormatters } from './withParams/formatters-template.actual.output'
+} from './svelte-sync/types.actual.output'
+import { initFormatters } from './svelte-sync/formatters-template.actual.output'
 
 import en from './en'
 

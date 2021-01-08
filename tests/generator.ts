@@ -3,7 +3,9 @@ import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
 import type { LangaugeBaseTranslation } from '../src'
-import { generate, GenerateTypesConfig } from '../src/types-generator/generator'
+import { DEFAULT_LOCALE } from '../src/constants/constants'
+import { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../src/types-generator/generator'
+import { generate, setDefaultConfigValuesIfMissing } from '../src/types-generator/generator'
 
 const { readFile } = promises
 
@@ -11,14 +13,22 @@ const test = suite('types')
 
 const outputPath = 'tests/generated/'
 
-const createConfig = (prefix: string, config?: Partial<GenerateTypesConfig>): GenerateTypesConfig => ({
-	outputPath,
-	typesFile: prefix + '/types.actual.output',
-	utilFile: prefix + '/util.actual.output',
-	configTemplatePath: prefix + '/config-template.actual.output',
-	typesTemplatePath: prefix + '/types-template.actual.output',
-	...config,
-})
+const actualPostfix = '.actual.output'
+
+const getFileName = (prefix: string, name: string) => prefix + '/' + name + actualPostfix
+
+const createConfig = (prefix: string, config?: GeneratorConfig): GeneratorConfigWithDefaultValues =>
+	setDefaultConfigValuesIfMissing({
+		outputPath,
+
+		typesFileName: getFileName(prefix, 'types'),
+		utilFileName: getFileName(prefix, 'util'),
+		formattersTemplateFileName: getFileName(prefix, 'formatters-template'),
+		typesTemplateFileName: getFileName(prefix, 'types-template'),
+
+		...config,
+		locales: config?.locales?.length ? config?.locales : [config?.baseLocale || DEFAULT_LOCALE],
+	})
 
 type FileToCheck = 'types' | 'util' | 'config-template' | 'types-template'
 
@@ -37,7 +47,7 @@ const check = async (prefix: string, file: FileToCheck) => {
 const wrapTest = async (
 	prefix: string,
 	translation: LangaugeBaseTranslation,
-	config?: Partial<GenerateTypesConfig>,
+	config: GeneratorConfig = {},
 	checkConfigTemplate = false,
 	checkTypesTemplate = false,
 ) =>
@@ -100,8 +110,12 @@ wrapTest('formatterWithDifferentArgTypes', { A: '{0:number|calculate}!', B: '{0:
 
 wrapTest('argTypesWithExternalType', { EXTERNAL_TYPE: 'The result is {0:Result|calculate}!' })
 
-// svelte -------------------------------------------------------------------------------------------------------------
+// svelte async -------------------------------------------------------------------------------------------------------
 
-wrapTest('svelte', { HELLO_SVELTE: 'Hi {0}' }, { svelte: 'svelte/svelte.actual.output' })
+wrapTest('svelte-async', { HELLO_SVELTE: 'Hi {0}' }, { svelte: getFileName('svelte-async', 'svelte') })
+
+// svelte sync --------------------------------------------------------------------------------------------------------
+
+wrapTest('svelte-sync', { HELLO_SVELTE: 'Hi {0}' }, { svelte: getFileName('svelte-sync', 'svelte'), lazyLoad: false })
 
 test.run()

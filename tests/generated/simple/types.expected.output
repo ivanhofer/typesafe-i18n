@@ -4,7 +4,7 @@
 
 export type LangaugeBaseLocale = 'en'
 
-export type LangaugeLocales =
+export type LangaugeLocale =
 	| 'en'
 
 export type LangaugeTranslationKeys =
@@ -23,4 +23,4 @@ export type LangaugeTranslationArgs = {
 
 export type LangaugeFormatters = {}
 
-export type LangaugeFormattersInitializer = (locale: LangaugeLocales) => LangaugeFormatters
+export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters

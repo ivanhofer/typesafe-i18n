@@ -1,4 +1,4 @@
-name: Update version & publish to npm
+name: run tests
 
 on:
    pull_request:
