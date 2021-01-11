@@ -5,12 +5,12 @@
 	"homepage": "https://github.com/ivanhofer/langauge",
 	"author": "ivanhofer",
 	"keywords": [
+		"l10n",
+		"i18n",
 		"lightweight",
 		"localization",
 		"localization engine",
-		"typescript",
-		"l10n",
-		"i18n"
+		"typescript"
 	],
 	"license": "MIT",
 	"module": "esm/index.js",
@@ -18,8 +18,8 @@
 		"./package.json": "./package.json",
 		"./formatters": "./formatters/index.js",
 		"./formatters/*": "./formatters/*.js",
-		"./": "./esm/index.js",
-		"./*": "./*",
+		"./rollup/rollup-plugin-langauge-watcher": "./rollup/rollup-plugin-langauge-watcher.js",
+		"./*": "./esm/*",
 		".": "./esm/index.js"
 	},
 	"browser": "dist/index.js",
