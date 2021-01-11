@@ -30,7 +30,7 @@ const createConfig = (prefix: string, config?: GeneratorConfig): GeneratorConfig
 		locales: config?.locales?.length ? config?.locales : [config?.baseLocale || DEFAULT_LOCALE],
 	})
 
-type FileToCheck = 'types' | 'util' | 'config-template' | 'types-template'
+type FileToCheck = 'types' | 'util' | 'formatters-template' | 'types-template' | 'svelte'
 
 const getPathOfOutputFile = (prefix: string, file: FileToCheck, type: 'actual' | 'expected') =>
 	`${outputPath}${prefix}/${file}.${type}.output`
@@ -39,24 +39,28 @@ const REGEX_WHITESPACE = /[\s]+/g
 const removeWhitespace = (text: string) => text.replace(REGEX_WHITESPACE, '')
 
 const check = async (prefix: string, file: FileToCheck) => {
-	const expected = (await readFile(getPathOfOutputFile(prefix, file, 'expected'))).toString()
-	const actual = (await readFile(getPathOfOutputFile(prefix, file, 'actual'))).toString()
-	assert.match(removeWhitespace(expected), removeWhitespace(actual))
+	let expected = ''
+	let actual = ''
+
+	try {
+		expected = (await readFile(getPathOfOutputFile(prefix, file, 'expected'))).toString()
+		actual = (await readFile(getPathOfOutputFile(prefix, file, 'actual'))).toString()
+		// eslint-disable-next-line no-empty
+	} catch { }
+
+	if (expected && actual) {
+		assert.match(removeWhitespace(expected), removeWhitespace(actual))
+	}
 }
 
-const wrapTest = async (
-	prefix: string,
-	translation: LangaugeBaseTranslation,
-	config: GeneratorConfig = {},
-	checkConfigTemplate = false,
-	checkTypesTemplate = false,
-) =>
+const wrapTest = async (prefix: string, translation: LangaugeBaseTranslation, config: GeneratorConfig = {}) =>
 	test(`types ${prefix}`, async () => {
 		await generate(translation, createConfig(prefix, config))
 		await check(prefix, 'types')
 		await check(prefix, 'util')
-		checkConfigTemplate && (await check(prefix, 'config-template'))
-		checkTypesTemplate && (await check(prefix, 'types-template'))
+		await check(prefix, 'formatters-template')
+		await check(prefix, 'types-template')
+		await check(prefix, 'svelte')
 	})
 
 // empty --------------------------------------------------------------------------------------------------------------
