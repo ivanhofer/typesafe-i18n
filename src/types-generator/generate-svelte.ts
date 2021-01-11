@@ -28,7 +28,7 @@ export const setLocale = (locale: LangaugeLocale) => {
 
 export const selectedLocale = derived<Writable<LangaugeLocale>, LangaugeLocale>(currentLocale, (locale) => locale)
 
-export const localeLoading = derived<Writable<boolean>, boolean>(isLoading, (loading) => loading)
+export const localeLoading = derived<Writable<boolean>, boolean>(isLoading, (loading: boolean, set: (value: boolean) => void) => set(loading))
 ${lazyLoad
 			? `
 export const LLL = derived<Writable<LangaugeLocale>, LangaugeTranslationArgs>(currentLocale, (locale: LangaugeLocale, set: (value: LangaugeTranslationArgs) => void) => {
