@@ -22,6 +22,36 @@ type LangaugeFormatterInitializer<L extends string, F extends Formatters> = (loc
 
 const langaugeInstancesCache: LocaleTranslationFns = {} as LocaleTranslationFns
 
+// async --------------------------------------------------------------------------------------------------------------
+
+export const getLangaugeInstanceAsync = async <
+	L extends string,
+	T extends LangaugeBaseTranslation,
+	// eslint-disable-next-line @typescript-eslint/ban-types
+	A extends object = TranslatorFn<T>,
+	F extends Formatters = Formatters
+>(
+	locale: L,
+	getTranslationFromLocale: (locale: L) => Promise<T>,
+	formattersInitializer: LangaugeFormatterInitializer<L, F>,
+): Promise<A> => {
+	if (langaugeInstancesCache[locale]) {
+		return langaugeInstancesCache[locale]
+	}
+
+	const foundTranslation = await getTranslationFromLocale(locale)
+	if (!foundTranslation) {
+		throw new Error(`[LANGAUGE] ERROR: could not find locale '${locale}'`)
+	}
+
+	const lang = langauge<L, T, A, F>(locale, foundTranslation, formattersInitializer(locale))
+	langaugeInstancesCache[locale] = lang
+
+	return lang as A
+}
+
+// sync ---------------------------------------------------------------------------------------------------------------
+
 export const getLangaugeInstance = <
 	L extends string,
 	T extends LangaugeBaseTranslation,
@@ -30,14 +60,14 @@ export const getLangaugeInstance = <
 	F extends Formatters = Formatters
 >(
 	locale: L,
-	localeTranslations: LocaleTranslations<L, T>,
+	getTranslationFromLocale: (locale: L) => T,
 	formattersInitializer: LangaugeFormatterInitializer<L, F>,
 ): A => {
 	if (langaugeInstancesCache[locale]) {
 		return langaugeInstancesCache[locale]
 	}
 
-	const foundTranslation = localeTranslations[locale]
+	const foundTranslation = getTranslationFromLocale(locale)
 	if (!foundTranslation) {
 		throw new Error(`[LANGAUGE] ERROR: could not find locale '${locale}'`)
 	}
@@ -55,11 +85,11 @@ export const initLangauge = <
 	A extends object = TranslatorFn<T>,
 	F extends Formatters = Formatters
 >(
-	localeTranslations: LocaleTranslations<L, T>,
+	getTranslationFromLocale: (locale: L) => T,
 	formattersInitializer: LangaugeFormatterInitializer<L, F>,
 ): LocaleTranslationFns<L, A> => {
 	return new Proxy<LocaleTranslationFns<L, A>>({} as LocaleTranslationFns<L, A>, {
 		get: (_target, locale: L): A | null =>
-			getLangaugeInstance<L, T, A, F>(locale, localeTranslations, formattersInitializer),
+			getLangaugeInstance<L, T, A, F>(locale, getTranslationFromLocale, formattersInitializer),
 	})
 }

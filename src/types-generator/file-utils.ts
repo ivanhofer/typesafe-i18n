@@ -89,13 +89,14 @@ export const writeNewFile = async (path: string, file: string, content: string):
 
 export const writeFileIfContainsChanges = async (path: string, file: string, content: string): Promise<void> => {
 	const oldContent = await readFile(getFileName(path, file))
+
 	if (oldContent === content) return
 
 	await writeNewFile(path, file, content)
 }
 
 export const writeFileIfNotExists = async (path: string, file: string, content: string): Promise<void> => {
-	if (await doesPathExist(join(path, file))) return
+	if (await doesPathExist(getFileName(path, file))) return
 
 	await writeNewFile(path, file, content)
 }

@@ -13,18 +13,12 @@ import { initFormatters } from './svelte-sync/formatters-template.actual.output'
 
 import en from './en'
 
-export const localeTranslations: LocaleTranslations<LangaugeLocale, LangaugeTranslation> = {
+const localeTranslations: LocaleTranslations<LangaugeLocale, LangaugeTranslation> = {
 	en: en as LangaugeTranslation,
 }
 
-export const getLocaleTranslations = (locale: LangaugeLocale) => localeTranslations[locale]
+export const getTranslationFromLocale = (locale: LangaugeLocale) => localeTranslations[locale]
 
-export const localeTranslationLoaders = {
-	en: () => import('./en'),
-}
+export const getLangauge = () => initLangauge<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(getTranslationFromLocale, initFormatters)
 
-export const loadLocaleTranslations = async (locale: LangaugeLocale) => (await localeTranslationLoaders[locale]()).default as LangaugeTranslation
-
-export const getLangauge = () => initLangauge<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, initFormatters)
-
-export const getLangaugeForLocale = (locale: LangaugeLocale) => getLangaugeInstance<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, localeTranslations, initFormatters)
+export const getLangaugeForLocale = (locale: LangaugeLocale) => getLangaugeInstance<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, getTranslationFromLocale, initFormatters)

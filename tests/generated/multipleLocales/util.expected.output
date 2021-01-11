@@ -1,8 +1,7 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-import type { LocaleTranslations } from 'langauge'
-import { getLangaugeInstance, initLangauge } from 'langauge'
+import { getLangaugeInstanceAsync } from 'langauge'
 import type {
 	LangaugeTranslation,
 	LangaugeTranslationArgs,
@@ -11,26 +10,12 @@ import type {
 } from './multipleLocales/types.actual.output'
 import { initFormatters } from './multipleLocales/formatters-template.actual.output'
 
-import de from './de'
-import en from './en'
-import it from './it'
-
-export const localeTranslations: LocaleTranslations<LangaugeLocale, LangaugeTranslation> = {
-	de,
-	en: en as LangaugeTranslation,
-	it,
-}
-
-export const getLocaleTranslations = (locale: LangaugeLocale) => localeTranslations[locale]
-
-export const localeTranslationLoaders = {
+const localeTranslationLoaders = {
 	de: () => import('./de'),
 	en: () => import('./en'),
 	it: () => import('./it'),
 }
 
-export const loadLocaleTranslations = async (locale: LangaugeLocale) => (await localeTranslationLoaders[locale]()).default as LangaugeTranslation
+export const getTranslationFromLocale = async (locale: LangaugeLocale) => (await localeTranslationLoaders[locale]()).default as LangaugeTranslation
 
-export const getLangauge = () => initLangauge<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(localeTranslations, initFormatters)
-
-export const getLangaugeForLocale = (locale: LangaugeLocale) => getLangaugeInstance<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, localeTranslations, initFormatters)
+export const getLangaugeForLocale = (locale: LangaugeLocale) => getLangaugeInstanceAsync<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, getTranslationFromLocale, initFormatters)

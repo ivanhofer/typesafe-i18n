@@ -7,6 +7,6 @@ module.exports = [
 	{
 		name: 'langauge-util',
 		path: 'dist/index.min.js',
-		limit: '889 b',
+		limit: '920 b',
 	},
 ]

@@ -4,7 +4,7 @@
 import { langauge } from 'langauge';
 import { derived, Writable, writable } from 'svelte/store';
 import type { LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs } from './svelte-sync/types.actual.output'
-import { loadLocaleTranslations } from './svelte-sync/util.actual.output'
+import { getTranslationFromLocale } from './svelte-sync/util.actual.output'
 import { initFormatters } from './svelte-sync/formatters-template.actual.output'
 
 const currentLocale = writable<LangaugeLocale>(null)
@@ -23,14 +23,10 @@ export const selectedLocale = derived<Writable<LangaugeLocale>, LangaugeLocale>(
 export const localeLoading = derived<Writable<boolean>, boolean>(isLoading, (loading) => loading)
 
 export const LLL = derived<Writable<LangaugeLocale>, LangaugeTranslationArgs>(currentLocale, (locale: LangaugeLocale, set: (value: LangaugeTranslationArgs) => void) => {
-	const setStoreValue = async () => {
-		const langaugeTranslation: LangaugeTranslation = await loadLocaleTranslations(locale)
-		const langaugeObject = langauge(locale, langaugeTranslation, initFormatters(locale))
-		set(langaugeObject)
-		isLoading.set(false)
-	}
-
-	setStoreValue()
+	const langaugeTranslation: LangaugeTranslation = getTranslationFromLocale(locale)
+	const langaugeObject = langauge(locale, langaugeTranslation, initFormatters(locale))
+	set(langaugeObject)
+	isLoading.set(false)
 }, new Proxy({} as LangaugeTranslationArgs, { get: () => () => '' }))
 
 export default LLL
