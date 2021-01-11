@@ -33,6 +33,8 @@ ${lazyLoad
 			? `
 export const LLL = derived<Writable<LangaugeLocale>, LangaugeTranslationArgs>(currentLocale, (locale: LangaugeLocale, set: (value: LangaugeTranslationArgs) => void) => {
 	const setStoreValue = async () => {
+		if (!locale) return
+
 		const langaugeTranslation: LangaugeTranslation = await getTranslationFromLocale(locale)
 		const langaugeObject = langauge(locale, langaugeTranslation, initFormatters(locale))
 		set(langaugeObject)
@@ -43,6 +45,8 @@ export const LLL = derived<Writable<LangaugeLocale>, LangaugeTranslationArgs>(cu
 }, new Proxy({} as LangaugeTranslationArgs, { get: () => () => '' }))`
 			: `
 export const LLL = derived<Writable<LangaugeLocale>, LangaugeTranslationArgs>(currentLocale, (locale: LangaugeLocale, set: (value: LangaugeTranslationArgs) => void) => {
+	if (!locale) return
+
 	const langaugeTranslation: LangaugeTranslation = getTranslationFromLocale(locale)
 	const langaugeObject = langauge(locale, langaugeTranslation, initFormatters(locale))
 	set(langaugeObject)
