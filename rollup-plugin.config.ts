@@ -5,7 +5,7 @@ import commonjs from '@rollup/plugin-commonjs'
 
 const config = [
 	{
-		input: './src/rollup-watcher.ts',
+		input: './src/rollup-plugin-langauge-watcher.ts',
 		output: [
 			{
 				file: 'rollup/rollup-plugin-langauge-watcher.js',

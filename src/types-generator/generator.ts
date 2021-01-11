@@ -50,16 +50,16 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 // --------------------------------------------------------------------------------------------------------------------
 
 export const setDefaultConfigValuesIfMissing = (config: GeneratorConfig): GeneratorConfigWithDefaultValues => ({
-	...config,
-	baseLocale: config.baseLocale ?? DEFAULT_LOCALE,
-	locales: config.locales ?? [],
-	tempPath: config.tempPath ?? TEMP_PATH,
-	outputPath: config.outputPath ?? BASE_PATH,
-	typesFileName: config.typesFileName ?? TYPES_FILENAME,
-	utilFileName: config.utilFileName ?? UTIL_FILENAME,
-	formattersTemplateFileName: config.formattersTemplateFileName ?? FORMATTERS_TEMPLATE_FILENAME,
-	typesTemplateFileName: config.typesTemplateFileName ?? TYPES_TEMPLATE_FILENAME,
+	baseLocale: DEFAULT_LOCALE,
+	locales: [],
+	tempPath: TEMP_PATH,
+	outputPath: BASE_PATH,
+	typesFileName: TYPES_FILENAME,
+	utilFileName: UTIL_FILENAME,
+	formattersTemplateFileName: FORMATTERS_TEMPLATE_FILENAME,
+	typesTemplateFileName: TYPES_TEMPLATE_FILENAME,
 	lazyLoad: true,
+	...config,
 })
 
 export const generate = async (

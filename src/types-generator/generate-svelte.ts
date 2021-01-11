@@ -12,7 +12,7 @@ const getSvelteStore = ({ lazyLoad, baseLocale, formattersTemplateFileName: form
 import { langauge } from 'langauge';
 import { derived, Writable, writable } from 'svelte/store';
 import type { LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs } from './${typesFile}'
-import { ${lazyLoad ? 'loadLocaleTranslations' : 'getLocaleTranslations'} } from './${utilFile}'
+import { getTranslationFromLocale } from './${utilFile}'
 import { initFormatters } from './${formattersTemplatePath}'
 
 const currentLocale = writable<LangaugeLocale>(null)
@@ -33,7 +33,7 @@ ${lazyLoad
 			? `
 export const LLL = derived<Writable<LangaugeLocale>, LangaugeTranslationArgs>(currentLocale, (locale: LangaugeLocale, set: (value: LangaugeTranslationArgs) => void) => {
 	const setStoreValue = async () => {
-		const langaugeTranslation: LangaugeTranslation = await loadLocaleTranslations(locale)
+		const langaugeTranslation: LangaugeTranslation = await getTranslationFromLocale(locale)
 		const langaugeObject = langauge(locale, langaugeTranslation, initFormatters(locale))
 		set(langaugeObject)
 		isLoading.set(false)
@@ -43,7 +43,7 @@ export const LLL = derived<Writable<LangaugeLocale>, LangaugeTranslationArgs>(cu
 }, new Proxy({} as LangaugeTranslationArgs, { get: () => () => '' }))`
 			: `
 export const LLL = derived<Writable<LangaugeLocale>, LangaugeTranslationArgs>(currentLocale, (locale: LangaugeLocale, set: (value: LangaugeTranslationArgs) => void) => {
-	const langaugeTranslation: LangaugeTranslation = getLocaleTranslations(locale)
+	const langaugeTranslation: LangaugeTranslation = getTranslationFromLocale(locale)
 	const langaugeObject = langauge(locale, langaugeTranslation, initFormatters(locale))
 	set(langaugeObject)
 	isLoading.set(false)
