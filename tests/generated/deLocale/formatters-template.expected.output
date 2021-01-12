@@ -1,4 +1,4 @@
-import type { LangaugeFormatters, LangaugeFormattersInitializer } from './langauge-types'
+import type { LangaugeFormatters, LangaugeFormattersInitializer } from './deLocale/types.actual.output'
 
 export const initFormatters: LangaugeFormattersInitializer = (locale) => {
 	const formatters: LangaugeFormatters = {
