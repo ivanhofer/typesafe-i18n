@@ -65,13 +65,13 @@ const createLocalesType = (locales: string[]) =>
 const createTranslationKeysType = (keys: string[]) =>
 	`export type LangaugeTranslationKeys =${wrapEnumType(keys, () => createEnumType(keys))}`
 
-const createTranslationType = (keys: string[]) =>
-	`export type LangaugeTranslation = ${wrapObjectType(keys, () =>
-		keys
+const createTranslationType = (result: { text: string; key: string }[]) =>
+	`export type LangaugeTranslation = ${wrapObjectType(result, () =>
+		result
 			.map(
-				(key) =>
+				({ text, key }) =>
 					`
-	'${key}': string`,
+	${createJsDocs(text)}'${key}': string`,
 			)
 			.join(''),
 	)}`
@@ -109,13 +109,15 @@ const createTranslationArgsType = (translations: { key: string; text: string; ar
 	${createTranslationArgssType(translation)}`,
 			)
 			.join(''),
-	)} `
+	)}`
 
-const createTranslationArgssType = ({ key, text, args }: { key: string; text: string; args: Arg[] }) =>
-	`/**
+const createJsDocs = (text: string) => `/**
 	 * ${text}
 	 */
-	'${key}': (${mapTranslationArgs(args)}) => string`
+	`
+
+const createTranslationArgssType = ({ key, text, args }: { key: string; text: string; args: Arg[] }) =>
+	`${createJsDocs(text)}'${key}': (${mapTranslationArgs(args)}) => string`
 
 const mapTranslationArgs = (args: Arg[]) => {
 	if (!args.length) {
@@ -155,7 +157,7 @@ const getTypes = ({ translationObject, baseLocale, locales, typesTemplateFileNam
 
 	const translationKeysType = createTranslationKeysType(keys)
 
-	const translationType = createTranslationType(keys)
+	const translationType = createTranslationType(result.map(({ text, key }) => ({ text, key })))
 
 	const args = result.flatMap(({ args }) => args)
 	const typeImports = createTypeImportsType(args, typesTemplateFileName)
@@ -169,7 +171,6 @@ const getTypes = ({ translationObject, baseLocale, locales, typesTemplateFileNam
 	return [
 		`// This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
-
 ${typeImports}
 ${baseLocaleType}
 
