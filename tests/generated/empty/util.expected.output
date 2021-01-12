@@ -10,6 +10,10 @@ import type {
 } from './empty/types.actual.output'
 import { initFormatters } from './empty/formatters-template.actual.output'
 
+export const locales = [
+	'en'
+]
+
 const localeTranslationLoaders = {
 	en: () => import('./en'),
 }

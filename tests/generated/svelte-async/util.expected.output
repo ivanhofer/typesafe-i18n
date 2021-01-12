@@ -10,6 +10,10 @@ import type {
 } from './svelte-async/types.actual.output'
 import { initFormatters } from './svelte-async/formatters-template.actual.output'
 
+export const locales = [
+	'en'
+]
+
 const localeTranslationLoaders = {
 	en: () => import('./en'),
 }

@@ -1,7 +1,6 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-
 import type { Result } from './argTypesWithExternalType/types-template.actual.output'
 
 export type LangaugeBaseLocale = 'en'
@@ -13,6 +12,9 @@ export type LangaugeTranslationKeys =
 	| 'EXTERNAL_TYPE'
 
 export type LangaugeTranslation = {
+	/**
+	 * The result is {0:Result|calculate}!
+	 */
 	'EXTERNAL_TYPE': string
 }
 
@@ -21,7 +23,7 @@ export type LangaugeTranslationArgs = {
 	 * The result is {0:Result|calculate}!
 	 */
 	'EXTERNAL_TYPE': (arg0: Result) => string
-} 
+}
 
 export type LangaugeFormatters = {
 	calculate: (value: Result) => string

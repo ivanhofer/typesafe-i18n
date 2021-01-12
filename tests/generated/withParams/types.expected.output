@@ -1,7 +1,6 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-
 export type LangaugeBaseLocale = 'en'
 
 export type LangaugeLocale =
@@ -12,7 +11,13 @@ export type LangaugeTranslationKeys =
 	| 'PARAMS'
 
 export type LangaugeTranslation = {
+	/**
+	 * {0} apple{{s}}
+	 */
 	'PARAM': string
+	/**
+	 * {0} apple{{s}} and {1} banana{{s}}
+	 */
 	'PARAMS': string
 }
 
@@ -25,7 +30,7 @@ export type LangaugeTranslationArgs = {
 	 * {0} apple{{s}} and {1} banana{{s}}
 	 */
 	'PARAMS': (arg0: unknown, arg1: unknown) => string
-} 
+}
 
 export type LangaugeFormatters = {}
 

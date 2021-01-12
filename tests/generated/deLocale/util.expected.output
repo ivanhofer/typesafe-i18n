@@ -10,6 +10,10 @@ import type {
 } from './deLocale/types.actual.output'
 import { initFormatters } from './deLocale/formatters-template.actual.output'
 
+export const locales = [
+	'de'
+]
+
 const localeTranslationLoaders = {
 	de: () => import('./de'),
 }
