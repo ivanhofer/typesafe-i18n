@@ -56,6 +56,12 @@ import { getLangaugeInstance, initLangauge } from 'langauge'`
 
 	const dynamicCode = lazyLoad ? getAsyncCode(config) : getSyncCode(config)
 
+	const localesEnum = `export const locales = [${config.locales.map(
+		(locale) => `
+	'${locale}'`,
+	)}
+]`
+
 	return `// This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
@@ -67,6 +73,8 @@ import type {
 	LangaugeLocale,
 } from './${typesFile}'
 import { initFormatters } from './${formattersTemplatePath}'
+
+${localesEnum}
 ${dynamicCode}`
 }
 
