@@ -13,7 +13,6 @@
 		"typescript"
 	],
 	"license": "MIT",
-	"module": "esm/index.js",
 	"exports": {
 		"./package.json": "./package.json",
 		"./formatters": "./formatters/index.js",
