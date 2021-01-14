@@ -1,7 +1,14 @@
 {
-	"outputPath": "./src/langauge/",
-	"typesFile": "langauge-types.ts",
-	"utilFile": "langauge-util.ts",
 	"baseLocale": "en",
-	"tempPath": "./node_modules/langauge/temp-output/"
+	"locales": ["en"],
+
+	"tempPath": "./node_modules/langauge/temp-output/",
+	"outputPath": "./src/langauge/",
+	"typesFileName": "langauge-types",
+	"utilFileName": "langauge-util",
+	"formattersTemplateFileName": "formatters",
+	"typesTemplateFileName": "custom-types",
+
+	"svelte": "false",
+	"lazyLoad": "true"
 }
