@@ -12,25 +12,25 @@ const getSvelteStore = ({ lazyLoad, baseLocale, formattersTemplateFileName: form
 import { langauge } from 'langauge';
 import type { Writable } from 'svelte/store';
 import { derived, writable } from 'svelte/store';
-import type { LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs } from './${typesFile}'
+import type { LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeTranslationKeys } from './${typesFile}'
 import { getTranslationFromLocale } from './${utilFile}'
 import { initFormatters } from './${formattersTemplatePath}'
-
-const dummyLangaugeInstance = new Proxy({} as LangaugeTranslationArgs, { get: () => () => '' })
 
 const currentLocale = writable<LangaugeLocale>(null)
 
 const isLoading = writable<boolean>(true)
 
-const langaugeInstance = writable<LangaugeTranslationArgs>(dummyLangaugeInstance)
+export let LLLL = new Proxy({} as LangaugeTranslationArgs, { get: (_target, key: LangaugeTranslationKeys) => () => key as string })
+
+const langaugeInstance = writable<LangaugeTranslationArgs>(LLLL)
 ${lazyLoad
 			? `
 const setLangaugeInstance = async (locale: LangaugeLocale) => {
 	if (!locale) return
 
 	const langaugeTranslation: LangaugeTranslation = await getTranslationFromLocale(locale)
-	const langaugeObject = langauge(locale, langaugeTranslation, initFormatters(locale))
-	langaugeInstance.set(langaugeObject)
+	LLLL = langauge(locale, langaugeTranslation, initFormatters(locale))
+	langaugeInstance.set(LLLL)
 	isLoading.set(false)
 }`
 			: `
@@ -38,8 +38,8 @@ const setLangaugeInstance = (locale: LangaugeLocale) => {
 	if (!locale) return
 
 	const langaugeTranslation: LangaugeTranslation = getTranslationFromLocale(locale)
-	const langaugeObject = langauge(locale, langaugeTranslation, initFormatters(locale))
-	langaugeInstance.set(langaugeObject)
+	LLLL = langauge(locale, langaugeTranslation, initFormatters(locale))
+	langaugeInstance.set(LLLL)
 	isLoading.set(false)
 }`}
 
@@ -61,7 +61,7 @@ export const selectedLocale = derived<Writable<LangaugeLocale>, LangaugeLocale>(
 
 export const localeLoading = derived<Writable<boolean>, boolean>(isLoading, (loading: boolean, set: (value: boolean) => void) => set(loading))
 
-export const LLL = derived<Writable<LangaugeTranslationArgs>, LangaugeTranslationArgs>(langaugeInstance, (instance, set) => set(instance), dummyLangaugeInstance)
+export const LLL = derived<Writable<LangaugeTranslationArgs>, LangaugeTranslationArgs>(langaugeInstance, (instance, set) => set(instance), LLLL)
 
 export default LLL
 `
