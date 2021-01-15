@@ -1,4 +1,4 @@
-import { isPrimitiveObject, isString } from 'typesafe-utils'
+import { isBoolean, isPrimitiveObject, isString } from 'typesafe-utils'
 import type { FormatterFn } from '../formatters/_types'
 import type { InjectorPart, Part, PluralPart } from './parser'
 import { parseRawText } from './parser'
@@ -77,12 +77,16 @@ const applyValues = (
 			}
 
 			const { k: key = '0', f: formatterKeys = [] } = part as InjectorPart
+			const value = args[key]
+
 			const { r: other } = part as PluralPart
 			if (other) {
-				return getPlural(pluralRules, part as PluralPart, <number>args[key]) || ''
+				return isBoolean(value)
+					? value
+						? (part as PluralPart).o
+						: other
+					: getPlural(pluralRules, part as PluralPart, <number>value) || ''
 			}
-
-			const value = args[key]
 
 			const formattedValue = formatterKeys.length ? applyFormatters(formatters, formatterKeys, value) : value
 
