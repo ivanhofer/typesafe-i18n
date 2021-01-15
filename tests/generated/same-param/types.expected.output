@@ -1,0 +1,28 @@
+// This types were auto-generated. Any manual changes will be overwritten.
+/* eslint-disable */
+
+export type LangaugeBaseLocale = 'en'
+
+export type LangaugeLocale =
+	| 'en'
+
+export type LangaugeTranslationKeys =
+	| 'SAME_PARAM'
+
+export type LangaugeTranslation = {
+	/**
+	 * {0} {0} {0}
+	 */
+	'SAME_PARAM': string
+}
+
+export type LangaugeTranslationArgs = {
+	/**
+	 * {0} {0} {0}
+	 */
+	'SAME_PARAM': (arg0: unknown) => string
+}
+
+export type LangaugeFormatters = {}
+
+export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters

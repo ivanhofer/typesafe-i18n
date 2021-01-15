@@ -16,6 +16,8 @@ const translation = {
 	MULTIPLE_PARAMS: '{0} {1}',
 	MULTIPLE_PARAMS_PLURAL: '{0} banana{{s}} and {1} apple{{s}}',
 	EMPTY: '',
+	SAME_PARAM: '{0} {0} {0}',
+	SAME_KEYED_PARAM: '{name} {name} {name}',
 }
 
 const LLL = langauge('en', translation)
@@ -33,6 +35,11 @@ test('trim param', () => assert.is(LLL.TRIM_PARAM(' Ho '), 'HeyHo'))
 
 test('trim plural one', () => assert.is(LLL.TRIM_PLURAL({ key: 1 }), '1'))
 test('trim plural other', () => assert.is(LLL.TRIM_PLURAL({ key: 2 }), '2'))
+
+test('same param', () => assert.is(LLL.SAME_PARAM(1), '1 1 1'))
+test('same keyed param', () => assert.is(LLL.SAME_KEYED_PARAM({ name: 'test' }), 'test test test'))
+
+test('AAAA', () => assert.is(LLL.SAME_PARAM('1'), '1 1 1'))
 
 test('param', () => assert.is(LLL.PARAM('hi'), 'hi'))
 

@@ -122,4 +122,12 @@ wrapTest('svelte-async', { HELLO_SVELTE: 'Hi {0}' }, { svelte: getFileName('svel
 
 wrapTest('svelte-sync', { HELLO_SVELTE: 'Hi {0}' }, { svelte: getFileName('svelte-sync', 'svelte'), lazyLoad: false })
 
+// same param ---------------------------------------------------------------------------------------------------------
+
+wrapTest('same-param', { SAME_PARAM: '{0} {0} {0}' })
+
+// same keyed param ---------------------------------------------------------------------------------------------------
+
+wrapTest('same-keyed-param', { SAME_KEYED_PARAM: '{name} {name} {name}' })
+
 test.run()
