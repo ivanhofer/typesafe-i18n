@@ -7,29 +7,29 @@ export type LangaugeLocale =
 	| 'en'
 
 export type LangaugeTranslationKeys =
-	| 'KEYED_PARAM'
-	| 'KEYED_PARAMS'
+	| 'ONLY_PLURAL'
+	| 'ONLY_SINGULAR_PLURAL'
 
 export type LangaugeTranslation = {
 	/**
-	 * {nrOfApples} apple{{s}}
+	 * apple{{s}}
 	 */
-	'KEYED_PARAM': string
+	'ONLY_PLURAL': string
 	/**
-	 * {nrOfApples} apple{{s}} and {nrOfBananas} banana{{s}}
+	 * {{Afpel|Äpfel}}
 	 */
-	'KEYED_PARAMS': string
+	'ONLY_SINGULAR_PLURAL': string
 }
 
 export type LangaugeTranslationArgs = {
 	/**
-	 * {nrOfApples} apple{{s}}
+	 * apple{{s}}
 	 */
-	'KEYED_PARAM': (arg: { nrOfApples: string | number | boolean }) => string
+	'ONLY_PLURAL': (arg0: string | number | boolean) => string
 	/**
-	 * {nrOfApples} apple{{s}} and {nrOfBananas} banana{{s}}
+	 * {{Afpel|Äpfel}}
 	 */
-	'KEYED_PARAMS': (arg: { nrOfApples: string | number | boolean, nrOfBananas: string | number | boolean }) => string
+	'ONLY_SINGULAR_PLURAL': (arg0: string | number | boolean) => string
 }
 
 export type LangaugeFormatters = {}

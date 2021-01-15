@@ -130,4 +130,8 @@ wrapTest('same-param', { SAME_PARAM: '{0} {0} {0}' })
 
 wrapTest('same-keyed-param', { SAME_KEYED_PARAM: '{name} {name} {name}' })
 
+// only plural rules --------------------------------------------------------------------------------------------------
+
+wrapTest('only-plural-rules', { ONLY_PLURAL: 'apple{{s}}', ONLY_SINGULAR_PLURAL: '{{Afpel|Äpfel}}' })
+
 test.run()

@@ -1,4 +1,4 @@
-import { filterDuplicatesByKey, isObject, isTruthy, not } from 'typesafe-utils'
+import { filterDuplicates, isObject, isTruthy, not } from 'typesafe-utils'
 import { parseRawText } from '../core/parser'
 import type { LangaugeBaseTranslation } from '../core/core'
 import type { InjectorPart, Part, PluralPart } from '../core/parser'
@@ -11,7 +11,7 @@ import { GeneratorConfigWithDefaultValues } from './generator'
 
 type IsPluralPart<T> = T extends PluralPart ? T : never
 
-type Arg = { key: string; type: string | undefined }
+type Arg = { key: string; types: string[] | undefined }
 
 type FormatterFunctionKey = { formatterKey: string[]; type: string | undefined }
 
@@ -20,6 +20,17 @@ type FormatterFunctionKey = { formatterKey: string[]; type: string | undefined }
 // --------------------------------------------------------------------------------------------------------------------
 
 const isPluralPart = <T extends Part>(part: T): part is IsPluralPart<T> => !!(<PluralPart>part).r
+
+const mergeArgs = (args: Arg[]) => {
+	const map = new Map<string, string[]>()
+	args.forEach(({ key, types }) => {
+		const item = map.get(key) || []
+		types && item.push(...types)
+		map.set(key, item)
+	})
+
+	return Array.from(map.entries()).map(([key, types]) => ({ key, types: types.filter(filterDuplicates) }))
+}
 
 const parseTanslationObject = ([key, text]: [string, string]): {
 	key: string
@@ -30,17 +41,25 @@ const parseTanslationObject = ([key, text]: [string, string]): {
 	const args: Arg[] = []
 	const formatterFunctionKeys: FormatterFunctionKey[] = []
 
-	parseRawText(text, false)
-		.filter(isObject)
-		.filter(not<InjectorPart | PluralPart, InjectorPart>(isPluralPart))
-		.forEach((injectorPart) => {
-			const { k, i, f } = injectorPart
+	const parsedObjects = parseRawText(text, false).filter(isObject)
 
-			k && args.push({ key: k, type: i })
-			f && formatterFunctionKeys.push({ formatterKey: f, type: i })
-		})
+	parsedObjects.filter(not<InjectorPart | PluralPart, InjectorPart>(isPluralPart)).forEach((injectorPart) => {
+		const { k, i, f } = injectorPart
 
-	return { key, text, args, formatterFunctionKeys }
+		k && args.push({ key: k, types: (i && [i]) || undefined })
+		f && formatterFunctionKeys.push({ formatterKey: f, type: i })
+	})
+
+	parsedObjects.filter(isPluralPart).forEach((pluralPart) => {
+		const found = args.find(({ key }) => key === pluralPart.k)
+		if (!found || !found.types) {
+			args.push({ key: pluralPart.k, types: ['string', 'number', 'boolean'] })
+		}
+	})
+
+	const mergedArgs = mergeArgs(args)
+
+	return { key, text, args: mergedArgs, formatterFunctionKeys }
 }
 
 const wrapObjectType = (array: unknown[], callback: () => string) =>
@@ -133,10 +152,7 @@ const mapTranslationArgs = (args: Arg[]) => {
 
 	return (
 		prefix +
-		args
-			.filter(filterDuplicatesByKey('key'))
-			.map(({ key, type }) => `${argPrefix}${key}: ${type || 'unknown'}`)
-			.join(', ') +
+		args.map(({ key, types }) => `${argPrefix}${key}: ${(types && types.join(' | ')) || 'unknown'}`).join(', ') +
 		postfix
 	)
 }
@@ -144,7 +160,7 @@ const mapTranslationArgs = (args: Arg[]) => {
 const BASE_TYPES = ['boolean', 'number', 'bigint', 'string', 'Date']
 
 const createTypeImportsType = (args: Arg[], typesTemplatePath: string): string => {
-	const types = new Set(args.flatMap(({ type }) => type).filter(isTruthy))
+	const types = new Set(args.flatMap(({ types }) => types).filter(isTruthy))
 	const externalTypes = Array.from(types).filter((type) => !BASE_TYPES.includes(type))
 	return !externalTypes.length
 		? ''
