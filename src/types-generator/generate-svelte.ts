@@ -10,7 +10,7 @@ const getSvelteStore = ({ lazyLoad, baseLocale, formattersTemplateFileName: form
 /* eslint-disable */
 
 import { langauge } from 'langauge';
-import type { Writable } from 'svelte/store';
+import type { Readable, Writable } from 'svelte/store';
 import { derived, writable } from 'svelte/store';
 import type { LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeTranslationKeys } from './${typesFile}'
 import { getTranslationFromLocale } from './${utilFile}'
@@ -20,48 +20,35 @@ const currentLocale = writable<LangaugeLocale>(null)
 
 const isLoading = writable<boolean>(true)
 
-export let LLLL = new Proxy({} as LangaugeTranslationArgs, { get: (_target, key: LangaugeTranslationKeys) => () => key as string })
+let langaugeInstance = new Proxy({} as LangaugeTranslationArgs, { get: (_target, key: LangaugeTranslationKeys) => () => key as string })
 
-const langaugeInstance = writable<LangaugeTranslationArgs>(LLLL)
-${lazyLoad
-			? `
-const setLangaugeInstance = async (locale: LangaugeLocale) => {
-	if (!locale) return
-
-	const langaugeTranslation: LangaugeTranslation = await getTranslationFromLocale(locale)
-	LLLL = langauge(locale, langaugeTranslation, initFormatters(locale))
-	langaugeInstance.set(LLLL)
-	isLoading.set(false)
-}`
-			: `
-const setLangaugeInstance = (locale: LangaugeLocale) => {
-	if (!locale) return
-
-	const langaugeTranslation: LangaugeTranslation = getTranslationFromLocale(locale)
-	LLLL = langauge(locale, langaugeTranslation, initFormatters(locale))
-	langaugeInstance.set(LLLL)
-	isLoading.set(false)
-}`}
+const langaugeInstanceStore = writable<LangaugeTranslationArgs>(langaugeInstance)
 
 export const init = (locale: LangaugeLocale = '${baseLocale}') => setLocale(locale)
-${lazyLoad
-			? `
-export const setLocale = async (locale: LangaugeLocale) => {
+
+export const setLocale = ${lazyLoad ? 'async ' : ''}(locale: LangaugeLocale) => {
+	if (!locale) return
+
 	isLoading.set(true)
+
+	const langaugeTranslation: LangaugeTranslation = ${lazyLoad ? 'await ' : ''}getTranslationFromLocale(locale)
+	langaugeInstance = langauge(locale, langaugeTranslation, initFormatters(locale))
+	langaugeInstanceStore.set(langaugeInstance)
+
 	currentLocale.set(locale)
-	await setLangaugeInstance(locale)
-}` : `
-export const setLocale = (locale: LangaugeLocale) => {
-	isLoading.set(true)
-	currentLocale.set(locale)
-	setLangaugeInstance(locale)
-}`}
+
+	isLoading.set(false)
+}
 
 export const selectedLocale = derived<Writable<LangaugeLocale>, LangaugeLocale>(currentLocale, (locale) => locale)
 
 export const localeLoading = derived<Writable<boolean>, boolean>(isLoading, (loading: boolean, set: (value: boolean) => void) => set(loading))
 
-export const LLL = derived<Writable<LangaugeTranslationArgs>, LangaugeTranslationArgs>(langaugeInstance, (instance, set) => set(instance), LLLL)
+export const LLL = new Proxy({} as Readable<LangaugeTranslationArgs> & LangaugeTranslationArgs, {
+	get: (_target, key: LangaugeTranslationKeys & 'subscribe') => key === 'subscribe'
+		? langaugeInstanceStore.subscribe
+		: langaugeInstance[key]
+})
 
 export default LLL
 `
