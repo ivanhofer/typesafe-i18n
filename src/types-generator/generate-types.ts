@@ -1,4 +1,4 @@
-import { isObject, isTruthy, not } from 'typesafe-utils'
+import { filterDuplicatesByKey, isObject, isTruthy, not } from 'typesafe-utils'
 import { parseRawText } from '../core/parser'
 import type { LangaugeBaseTranslation } from '../core/core'
 import type { InjectorPart, Part, PluralPart } from '../core/parser'
@@ -131,7 +131,14 @@ const mapTranslationArgs = (args: Arg[]) => {
 	const postfix = (isKeyed && ' }') || ''
 	const argPrefix = (!isKeyed && 'arg') || ''
 
-	return prefix + args.map(({ key, type }) => `${argPrefix}${key}: ${type || 'unknown'}`).join(', ') + postfix
+	return (
+		prefix +
+		args
+			.filter(filterDuplicatesByKey('key'))
+			.map(({ key, type }) => `${argPrefix}${key}: ${type || 'unknown'}`)
+			.join(', ') +
+		postfix
+	)
 }
 
 const BASE_TYPES = ['boolean', 'number', 'bigint', 'string', 'Date']
