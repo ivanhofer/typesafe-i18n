@@ -8,10 +8,10 @@ const plugin = (config: GeneratorConfig = {}): Plugin => {
 	return {
 		name: 'rollup-plugin-langauge-watcher',
 		buildStart() {
-			if (!started) {
-				startWatcher(config)
-				started = true
-			}
+			if (started) return
+
+			startWatcher(config)
+			started = true
 		},
 	}
 }
