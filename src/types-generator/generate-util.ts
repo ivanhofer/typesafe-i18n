@@ -15,7 +15,7 @@ const localeTranslationLoaders = {${localesTranslationLoaders}
 
 export const getTranslationFromLocale = async (locale: LangaugeLocale) => (await localeTranslationLoaders[locale]()).default as LangaugeTranslation
 
-export const getLangaugeForLocale = (locale: LangaugeLocale) => getLangaugeInstanceAsync<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, getTranslationFromLocale, initFormatters)
+export const getLangaugeForLocale = (locale: LangaugeLocale) => langaugeLoaderAsync<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, getTranslationFromLocale, initFormatters)
 `
 }
 
@@ -40,9 +40,9 @@ const localeTranslations: LocaleTranslations<LangaugeLocale, LangaugeTranslation
 
 export const getTranslationFromLocale = (locale: LangaugeLocale) => localeTranslations[locale]
 
-export const getLangauge = () => initLangauge<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(getTranslationFromLocale, initFormatters)
+export const getLangauge = () => langauge<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(getTranslationFromLocale, initFormatters)
 
-export const getLangaugeForLocale = (locale: LangaugeLocale) => getLangaugeInstance<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, getTranslationFromLocale, initFormatters)
+export const getLangaugeForLocale = (locale: LangaugeLocale) => langaugeLoader<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, getTranslationFromLocale, initFormatters)
 `
 }
 
@@ -50,9 +50,9 @@ const getUtil = (config: GeneratorConfigWithDefaultValues): string => {
 	const { typesFileName: typesFile, formattersTemplateFileName: formattersTemplatePath, lazyLoad } = config
 
 	const dynamicImports = lazyLoad
-		? `import { getLangaugeInstanceAsync } from 'langauge'`
+		? `import { langaugeLoaderAsync } from 'langauge'`
 		: `import type { LocaleTranslations } from 'langauge'
-import { getLangaugeInstance, initLangauge } from 'langauge'`
+import { langaugeLoader, langauge } from 'langauge'`
 
 	const dynamicCode = lazyLoad ? getAsyncCode(config) : getSyncCode(config)
 

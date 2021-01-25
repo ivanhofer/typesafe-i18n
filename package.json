@@ -28,7 +28,7 @@
 			"require": "./cjs/index.js"
 		}
 	},
-	"browser": "dist/index.js",
+	"browser": "dist/langauge.min.js",
 	"main": "cjs/index.js",
 	"types": "cjs/index.d.ts",
 	"files": [

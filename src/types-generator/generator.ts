@@ -63,10 +63,10 @@ export const setDefaultConfigValuesIfMissing = (config: GeneratorConfig): Genera
 })
 
 export const generate = async (
-	translationObject: LangaugeBaseTranslation,
+	translations: LangaugeBaseTranslation,
 	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
 ): Promise<void> => {
-	const hasCustomTypes = await generateTypes({ ...config, translationObject })
+	const hasCustomTypes = await generateTypes({ ...config, translations })
 
 	await generateFormattersTemplate(config)
 

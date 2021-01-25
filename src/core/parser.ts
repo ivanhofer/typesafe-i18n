@@ -1,4 +1,4 @@
-import { isNotUndefined } from 'typesafe-utils'
+import { isNotUndefined, isString } from 'typesafe-utils'
 import { trimAllValues, removeEmptyValues } from './core-utils'
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,7 +7,7 @@ import { trimAllValues, removeEmptyValues } from './core-utils'
 
 export type TextPart = string
 
-export type InjectorPart = {
+export type ArgumentPart = {
 	k: string // key
 	i?: string // type
 	f?: string[] // formatterFunctionKey
@@ -23,7 +23,7 @@ export type PluralPart = {
 	r: string // other
 }
 
-export type Part = TextPart | InjectorPart | PluralPart
+export type Part = TextPart | ArgumentPart | PluralPart
 
 // --------------------------------------------------------------------------------------------------------------------
 // implementation -----------------------------------------------------------------------------------------------------
@@ -31,15 +31,14 @@ export type Part = TextPart | InjectorPart | PluralPart
 
 const REGEX_BRACKETS_SPLIT = /({?{[^\\}]+}}?)/g
 
-const parseInjectorPart = (text: string, optimize: boolean): InjectorPart => {
+const parseArgumentPart = (text: string): ArgumentPart => {
 	const [keyPart = '', ...formatterKeys] = text.split('|')
 	const [key = '', type] = keyPart.split(':')
 
-	const part: InjectorPart = trimAllValues({ k: key, i: type, f: formatterKeys })
-	return optimize ? removeEmptyValues(part) : part
+	return { k: key, i: type, f: formatterKeys } as ArgumentPart
 }
 
-const parseSingularPluralPart = (content: string, lastAcessor: string, optimize: boolean): PluralPart => {
+const parsePluralPart = (content: string, lastAcessor: string): PluralPart => {
 	let [key, values] = content.split(':') as [string, string?]
 	if (!values) {
 		values = key
@@ -47,22 +46,18 @@ const parseSingularPluralPart = (content: string, lastAcessor: string, optimize:
 	}
 
 	const [zero, one, two, few, many, rest] = values.split('|')
-	const o = (isNotUndefined(rest) ? one : isNotUndefined(one) ? zero : one) || ''
 	const z = (isNotUndefined(rest) && zero) || ''
 	const t = (isNotUndefined(rest) && two) || ''
 	const f = (isNotUndefined(rest) && few) || ''
 	const m = (isNotUndefined(rest) && many) || ''
+	const o = (isNotUndefined(rest) ? one : isNotUndefined(one) ? zero : one) || ''
 	const r = (isNotUndefined(rest) ? rest : o ? one : zero) || ''
 
-	const part: PluralPart = trimAllValues({ k: key, z, o, t, f, m, r })
-
-	return optimize ? removeEmptyValues(part) : part
+	return { k: key, z, o, t, f, m, r } as PluralPart
 }
 
-export const parseRawText = (rawText: string, optimize = true): Part[] => {
-	let lastKey = '0'
-
-	return rawText
+export const parseRawText = (rawText: string, optimize = true, lastKey = '0'): Part[] =>
+	rawText
 		.split(REGEX_BRACKETS_SPLIT)
 		.filter(Boolean)
 		.map((part) => {
@@ -72,13 +67,18 @@ export const parseRawText = (rawText: string, optimize = true): Part[] => {
 
 			const content = part.substring(1, part.length - 1)
 			if (content.match(REGEX_BRACKETS_SPLIT)) {
-				return parseSingularPluralPart(content.substring(1, content.length - 1), lastKey, optimize)
+				return parsePluralPart(content.substring(1, content.length - 1), lastKey)
 			}
 
-			const parsedPart = parseInjectorPart(content, optimize)
+			const parsedPart = parseArgumentPart(content)
 
 			lastKey = parsedPart.k || lastKey
 
 			return parsedPart
 		})
-}
+		.map((part) => {
+			if (isString(part)) return part
+
+			const trimmed = trimAllValues(part)
+			return optimize ? removeEmptyValues(trimmed) : trimmed
+		})

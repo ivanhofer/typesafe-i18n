@@ -1,7 +1,7 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-import { getLangaugeInstanceAsync } from 'langauge'
+import { langaugeLoaderAsync } from 'langauge'
 import type {
 	LangaugeTranslation,
 	LangaugeTranslationArgs,
@@ -20,4 +20,4 @@ const localeTranslationLoaders = {
 
 export const getTranslationFromLocale = async (locale: LangaugeLocale) => (await localeTranslationLoaders[locale]()).default as LangaugeTranslation
 
-export const getLangaugeForLocale = (locale: LangaugeLocale) => getLangaugeInstanceAsync<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, getTranslationFromLocale, initFormatters)
+export const getLangaugeForLocale = (locale: LangaugeLocale) => langaugeLoaderAsync<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, getTranslationFromLocale, initFormatters)

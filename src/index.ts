@@ -1,7 +1,10 @@
 export type { LangaugeBaseTranslation } from './core/core'
 
-export type { LocaleTranslations } from './core/util'
+export type { LocaleTranslations } from './core/util.loader'
 
-export { langaugeObjectWrapper, langaugeStringWrapper } from './core/core'
+export { langaugeStringWrapper } from './core/util.string'
+export { langaugeObjectWrapper } from './core/util.object'
 
-export { getLangaugeInstanceAsync, getLangaugeInstance, initLangauge } from './core/util'
+export { langaugeLoader, langaugeLoaderAsync } from './core/util.loader'
+
+export { langauge } from './core/util.instance'

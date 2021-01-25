@@ -1,7 +1,7 @@
 import { filterDuplicates, isObject, isTruthy, not } from 'typesafe-utils'
 import { parseRawText } from '../core/parser'
 import { isPluralPart, LangaugeBaseTranslation } from '../core/core'
-import type { InjectorPart, PluralPart } from '../core/parser'
+import type { ArgumentPart, PluralPart } from '../core/parser'
 import { writeFileIfContainsChanges } from './file-utils'
 import { GeneratorConfigWithDefaultValues } from './generator'
 
@@ -39,7 +39,7 @@ const parseTanslationObject = ([key, text]: [string, string]): {
 
 	const parsedObjects = parseRawText(text, false).filter(isObject)
 
-	parsedObjects.filter(not<InjectorPart | PluralPart, InjectorPart>(isPluralPart)).forEach((injectorPart) => {
+	parsedObjects.filter(not<ArgumentPart | PluralPart, ArgumentPart>(isPluralPart)).forEach((injectorPart) => {
 		const { k, i, f } = injectorPart
 
 		k && args.push({ key: k, types: (i && [i]) || undefined })
@@ -165,8 +165,8 @@ import type { ${externalTypes.join(', ')} } from './${typesTemplatePath.replace(
 `
 }
 
-const getTypes = ({ translationObject, baseLocale, locales, typesTemplateFileName }: GenerateTypesType) => {
-	const result = (isObject(translationObject) && Object.entries(translationObject).map(parseTanslationObject)) || []
+const getTypes = ({ translations: translations, baseLocale, locales, typesTemplateFileName }: GenerateTypesType) => {
+	const result = (isObject(translations) && Object.entries(translations).map(parseTanslationObject)) || []
 
 	const baseLocaleType = `export type LangaugeBaseLocale = '${baseLocale}'`
 
@@ -184,8 +184,7 @@ const getTypes = ({ translationObject, baseLocale, locales, typesTemplateFileNam
 	const formatterFunctionKeys = result.flatMap(({ formatterFunctionKeys }) => formatterFunctionKeys)
 	const formatterType = createFormatterType(formatterFunctionKeys)
 
-	const translations = result.map(({ key, text, args }) => ({ key, text, args }))
-	const translationArgsType = createTranslationArgsType(translations)
+	const translationArgsType = createTranslationArgsType(result)
 
 	return [
 		`// This types were auto-generated. Any manual changes will be overwritten.
@@ -210,7 +209,7 @@ export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => Langauge
 }
 
 type GenerateTypesType = GeneratorConfigWithDefaultValues & {
-	translationObject: LangaugeBaseTranslation
+	translations: LangaugeBaseTranslation
 }
 
 export const generateTypes = async (config: GenerateTypesType): Promise<boolean> => {
