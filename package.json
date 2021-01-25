@@ -45,7 +45,7 @@
 		"build:cjs": "tsc -p tsconfig-cjs.json",
 		"build:esm": "tsc -p tsconfig-esm.json",
 		"build:formatters": "tsc -p tsconfig-formatters.json && rollup -c rollup-formatters.config.ts",
-		"build:plugin": "tsc -p tsconfig-plugin.json && rollup -c rollup-plugin.config.ts",
+		"build:plugin": "tsc -p tsconfig-plugin.json",
 		"build:watcher": "rollup -c rollup-watcher.config.ts",
 		"lint": "eslint src",
 		"lint:fix": "eslint src --fix",
