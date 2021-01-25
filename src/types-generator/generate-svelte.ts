@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 
 import { isBoolean } from 'typesafe-utils'
-import { SVELTE_FILENAME } from '../constants/constants'
 import { writeFileIfContainsChanges } from './file-utils'
 import { GeneratorConfigWithDefaultValues } from './generator'
 
@@ -59,6 +58,6 @@ export const generateSvelte = async (config: GeneratorConfigWithDefaultValues): 
 
 	const svelteStore = getSvelteStore(config)
 
-	const path = (!isBoolean(svelte) && svelte) || SVELTE_FILENAME
+	const path = (!isBoolean(svelte) && svelte) || 'langauge-svelte'
 	await writeFileIfContainsChanges(outputPath, path, svelteStore)
 }

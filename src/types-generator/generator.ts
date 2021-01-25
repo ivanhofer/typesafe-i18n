@@ -1,13 +1,4 @@
 import type { LangaugeBaseTranslation } from '../core/core'
-import {
-	BASE_PATH,
-	DEFAULT_LOCALE,
-	FORMATTERS_TEMPLATE_FILENAME,
-	TEMP_PATH,
-	TYPES_FILENAME,
-	TYPES_TEMPLATE_FILENAME,
-	UTIL_FILENAME,
-} from '../constants/constants'
 import { generateTypes } from './generate-types'
 import { generateUtil } from './generate-util'
 import { generateSvelte } from './generate-svelte'
@@ -50,14 +41,14 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 // --------------------------------------------------------------------------------------------------------------------
 
 export const setDefaultConfigValuesIfMissing = (config: GeneratorConfig): GeneratorConfigWithDefaultValues => ({
-	baseLocale: DEFAULT_LOCALE,
+	baseLocale: 'en',
 	locales: [],
-	tempPath: TEMP_PATH,
-	outputPath: BASE_PATH,
-	typesFileName: TYPES_FILENAME,
-	utilFileName: UTIL_FILENAME,
-	formattersTemplateFileName: FORMATTERS_TEMPLATE_FILENAME,
-	typesTemplateFileName: TYPES_TEMPLATE_FILENAME,
+	tempPath: './node_modules/langauge/temp-output/',
+	outputPath: './src/langauge/',
+	typesFileName: 'langauge-types',
+	utilFileName: 'langauge-util',
+	formattersTemplateFileName: 'formatters',
+	typesTemplateFileName: 'custom-types',
 	lazyLoad: true,
 	...config,
 })
