@@ -1,15 +1,13 @@
 import { filterDuplicates, isObject, isTruthy, not } from 'typesafe-utils'
 import { parseRawText } from '../core/parser'
-import type { LangaugeBaseTranslation } from '../core/core'
-import type { InjectorPart, Part, PluralPart } from '../core/parser'
+import { isPluralPart, LangaugeBaseTranslation } from '../core/core'
+import type { InjectorPart, PluralPart } from '../core/parser'
 import { writeFileIfContainsChanges } from './file-utils'
 import { GeneratorConfigWithDefaultValues } from './generator'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
-
-type IsPluralPart<T> = T extends PluralPart ? T : never
 
 type Arg = { key: string; types: string[] | undefined }
 
@@ -18,8 +16,6 @@ type FormatterFunctionKey = { formatterKey: string[]; type: string | undefined }
 // --------------------------------------------------------------------------------------------------------------------
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
-
-const isPluralPart = <T extends Part>(part: T): part is IsPluralPart<T> => !!(<PluralPart>part).r
 
 const mergeArgs = (args: Arg[]) => {
 	const map = new Map<string, string[]>()

@@ -1,5 +1,5 @@
 import type { Formatters, LangaugeBaseTranslation, TranslatorFn } from './core'
-import { langauge } from './core'
+import { langaugeObjectWrapper } from './core'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ export const getLangaugeInstanceAsync = async <
 		throw new Error(`[LANGAUGE] ERROR: could not find locale '${locale}'`)
 	}
 
-	const lang = langauge<L, T, A, F>(locale, foundTranslation, formattersInitializer(locale))
+	const lang = langaugeObjectWrapper<L, T, A, F>(locale, foundTranslation, formattersInitializer(locale))
 	langaugeInstancesCache[locale] = lang
 
 	return lang as A
@@ -72,7 +72,7 @@ export const getLangaugeInstance = <
 		throw new Error(`[LANGAUGE] ERROR: could not find locale '${locale}'`)
 	}
 
-	const lang = langauge<L, T, A, F>(locale, foundTranslation, formattersInitializer(locale))
+	const lang = langaugeObjectWrapper<L, T, A, F>(locale, foundTranslation, formattersInitializer(locale))
 	langaugeInstancesCache[locale] = lang
 
 	return lang as A

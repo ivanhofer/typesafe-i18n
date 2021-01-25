@@ -1,3 +1,4 @@
+import { isNotUndefined } from 'typesafe-utils'
 import { trimAllValues, removeEmptyValues } from './core-utils'
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -45,15 +46,15 @@ const parseSingularPluralPart = (content: string, lastAcessor: string, optimize:
 		key = lastAcessor
 	}
 
-	const [z, o, t, f, m, r] = values.split('|') as [string, string?, string?, string?, string?, string?]
-	const zero = (r && z) || ''
-	const one = (r ? o : o && z) || ''
-	const two = (r && t) || ''
-	const few = (r && f) || ''
-	const many = (r && m) || ''
-	const other = r || o || z
+	const [zero, one, two, few, many, rest] = values.split('|')
+	const o = (isNotUndefined(rest) ? one : isNotUndefined(one) ? zero : one) || ''
+	const z = (isNotUndefined(rest) && zero) || ''
+	const t = (isNotUndefined(rest) && two) || ''
+	const f = (isNotUndefined(rest) && few) || ''
+	const m = (isNotUndefined(rest) && many) || ''
+	const r = (isNotUndefined(rest) ? rest : o ? one : zero) || ''
 
-	const part: PluralPart = trimAllValues({ k: key, z: zero, o: one, t: two, f: few, m: many, r: other })
+	const part: PluralPart = trimAllValues({ k: key, z, o, t, f, m, r })
 
 	return optimize ? removeEmptyValues(part) : part
 }

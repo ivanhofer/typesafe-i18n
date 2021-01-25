@@ -1,7 +1,7 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
-import { langauge } from '../src/index'
+import { langaugeObjectWrapper } from '../src/index'
 import { uppercase, lowercase, replace, date } from '../src/formatters'
 
 const test = suite('formatters')
@@ -26,7 +26,7 @@ const formatters = {
 	noSpaces: (value: string) => value.replace(/\s/g, ''),
 }
 
-const LLL = langauge('en', translation, formatters)
+const LLL = langaugeObjectWrapper('en', translation, formatters)
 
 const someDate = new Date('2020-03-13')
 

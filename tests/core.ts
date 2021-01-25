@@ -1,9 +1,21 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
-import { langauge } from '../src/index'
+import { langaugeObjectWrapper, langaugeStringWrapper } from '../src/index'
 
 const test = suite('core')
+
+const LL = langaugeStringWrapper('en')
+
+test('string hi', () => assert.is(LL('Welcome'), 'Welcome'))
+
+test('string with param', () => assert.is(LL('Hi {0}', 'John'), 'Hi John'))
+
+test('string with keyed param', () => assert.is(LL('Hi {name}', { name: 'John' }), 'Hi John'))
+
+test('string plural 0', () => assert.is(LL('{0} apple{{s}}', 0), '0 apples'))
+test('string plural 1', () => assert.is(LL('{0} apple{{s}}', 1), '1 apple'))
+test('string plural 5', () => assert.is(LL('{0} apple{{s}}', 5), '5 apples'))
 
 const translation = {
 	NO_PARAM: 'This is a test.',
@@ -20,9 +32,10 @@ const translation = {
 	SAME_KEYED_PARAM: '{name} {name} {name}',
 	ONLY_PLURAL: '{{plural}}',
 	ONLY_SINGULAR_PLURAL: '{{singular|plural}}',
+	ONLY_SINGULAR: '{{singular|}}',
 }
 
-const LLL = langauge('en', translation)
+const LLL = langaugeObjectWrapper('en', translation)
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
@@ -65,7 +78,10 @@ test('only plural false', () => assert.is(LLL.ONLY_PLURAL(false), 'plural'))
 test('only singular plural true', () => assert.is(LLL.ONLY_SINGULAR_PLURAL(true), 'singular'))
 test('only singular plural false', () => assert.is(LLL.ONLY_SINGULAR_PLURAL(false), 'plural'))
 
-const LLL2 = langauge('ar-EG', {
+test('only singular true', () => assert.is(LLL.ONLY_SINGULAR(true), 'singular'))
+test('only singular false', () => assert.is(LLL.ONLY_SINGULAR(false), ''))
+
+const LLL2 = langaugeObjectWrapper('ar-EG', {
 	ADVANCED_PLURAL: '{{zero|one|two|few|many|other}}',
 })
 
@@ -74,6 +90,6 @@ test('advanced plural rule 1', () => assert.is(LLL2.ADVANCED_PLURAL(1), 'one'))
 test('advanced plural rule 2', () => assert.is(LLL2.ADVANCED_PLURAL(2), 'two'))
 test('advanced plural rule 6', () => assert.is(LLL2.ADVANCED_PLURAL(6), 'few'))
 test('advanced plural rule 18', () => assert.is(LLL2.ADVANCED_PLURAL(18), 'many'))
-test(`advanced plural rule 'test'`, () => assert.is(LLL2.ADVANCED_PLURAL('test'), 'other'))
+test('advanced plural rule "test"', () => assert.is(LLL2.ADVANCED_PLURAL('test'), 'other'))
 
 test.run()
