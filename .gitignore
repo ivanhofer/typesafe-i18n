@@ -6,4 +6,6 @@ node_modules
 /node
 /rollup
 /tests/generated/**/*.actual.output
+/tests/generated/**/de
+/tests/generated/**/en
 /langauge-*.tgz

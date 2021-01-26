@@ -3,7 +3,6 @@ import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
 import type { LangaugeBaseTranslation } from '../src'
-import { DEFAULT_LOCALE } from '../src/constants/constants'
 import { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../src/types-generator/generator'
 import { generate, setDefaultConfigValuesIfMissing } from '../src/types-generator/generator'
 
@@ -27,7 +26,7 @@ const createConfig = (prefix: string, config?: GeneratorConfig): GeneratorConfig
 		typesTemplateFileName: getFileName(prefix, 'types-template'),
 
 		...config,
-		locales: config?.locales?.length ? config?.locales : [config?.baseLocale || DEFAULT_LOCALE],
+		locales: config?.locales?.length ? config?.locales : [config?.baseLocale || 'en'],
 	})
 
 type FileToCheck = 'types' | 'util' | 'formatters-template' | 'types-template' | 'svelte'

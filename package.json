@@ -50,7 +50,7 @@
 		"build:watcher": "rollup -c rollup-watcher.config.ts",
 		"lint": "eslint src",
 		"lint:fix": "eslint src --fix",
-		"test": "uvu -r ts-node/register -i update.ts tests",
+		"test": "uvu -r ts-node/register -i update.ts -i index.ts tests",
 		"test:watch": "watchlist src tests -- npm test",
 		"test:update-generated-files": "ts-node tests/generated/update.ts",
 		"test:size": "size-limit"
