@@ -28,7 +28,7 @@
 			"require": "./cjs/index.js"
 		}
 	},
-	"browser": "dist/langauge.min.js",
+	"browser": "dist/index.min.js",
 	"main": "cjs/index.js",
 	"types": "cjs/index.d.ts",
 	"files": [
@@ -40,6 +40,7 @@
 		"/rollup"
 	],
 	"scripts": {
+		"dev": "tsc -p tsconfig-plugin.json -w",
 		"build": "npm run build:browser && npm run build:cjs && npm run build:esm && npm run build:formatters && npm run build:plugin && npm run build:watcher",
 		"build:browser": "rollup -c rollup-browser.config.ts",
 		"build:cjs": "tsc -p tsconfig-cjs.json",
