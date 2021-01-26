@@ -84,7 +84,7 @@ export const writeNewFile = async (path: string, file: string, content: string):
 	writeFile(getFileName(path, file), content, { encoding: 'utf-8' })
 
 	// eslint-disable-next-line no-console
-	console.info('[LANGAUGE] generated types')
+	console.info(`[LANGAUGE] generated file: ${file}`)
 }
 
 export const writeFileIfContainsChanges = async (path: string, file: string, content: string): Promise<void> => {

@@ -1,6 +1,6 @@
 import * as ts from 'typescript'
 import fs from 'fs'
-import { resolve } from 'path'
+import { join, resolve } from 'path'
 import type { LangaugeBaseTranslation } from '../core/core'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './generator'
 import { copyFile, createPathIfNotExits, deleteFolderRecursive, getFiles, importFile } from './file-utils'
@@ -16,7 +16,7 @@ const transpileTypescriptAndPrepareImportFile = async (languageFilePath: string,
 	program.emit()
 
 	const compiledPath = resolve(tempPath, 'index.js')
-	const copyPath = resolve(tempPath, `langauge-temp-${debounceIndex}.js`)
+	const copyPath = resolve(tempPath, `langauge-temp-${debounceCounter}.js`)
 
 	const copySuccess = await copyFile(compiledPath, copyPath)
 	if (!copySuccess) {
@@ -56,31 +56,34 @@ const parseLanguageFile = async (
 }
 
 const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues) => {
+	// eslint-disable-next-line no-console
+	console.info(`[LANGAUGE] watcher detected changes`)
+
 	const { baseLocale, locales: localesToUse, tempPath, outputPath } = config
 
 	const locales = (await getAllLanguages(outputPath)).filter(
 		(locale) => !localesToUse.length || localesToUse.includes(locale),
 	)
-	const locale = locales.find((l) => l === baseLocale) || locales[0] || ''
+	const locale = locales.find((l) => l === baseLocale) || locales[0] || baseLocale
 
-	// TODO: display warning if no locale is defined or one of the `localesToUse` is missing
+	if (!locales.length) {
+		locales.push(baseLocale)
+	}
 
 	const languageFile = (locale && (await parseLanguageFile(outputPath, locale, tempPath))) || {}
 
 	await generate(languageFile, { ...config, baseLocale: locale, locales })
 }
 
-let debounceIndex = 0
+let debounceCounter = 0
 
 const debonce = (callback: () => void) =>
 	setTimeout(
 		(i) => {
-			if (i === debounceIndex) {
-				callback()
-			}
+			i === debounceCounter && callback()
 		},
 		100,
-		++debounceIndex,
+		++debounceCounter,
 	)
 
 export const startWatcher = async (config: GeneratorConfig): Promise<void> => {
@@ -91,10 +94,12 @@ export const startWatcher = async (config: GeneratorConfig): Promise<void> => {
 
 	await createPathIfNotExits(outputPath)
 
-	fs.watch(outputPath, { recursive: true }, () => debonce(onChange))
+	const baseLocalePath = join(outputPath, configWithDefaultValues.baseLocale)
+
+	fs.watch(baseLocalePath, { recursive: true }, () => debonce(onChange))
 
 	// eslint-disable-next-line no-console
-	console.info(`[LANGAUGE] watcher started in: '${outputPath}'`)
+	console.info(`[LANGAUGE] watcher started in: '${baseLocalePath}'`)
 
 	onChange()
 }
