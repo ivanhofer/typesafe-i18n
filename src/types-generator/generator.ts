@@ -4,6 +4,7 @@ import { generateUtil } from './generate-util'
 import { generateSvelte } from './generate-svelte'
 import { generateFormattersTemplate } from './generate-template-formatters'
 import { generateCustomTypesTemplate } from './generate-template-types'
+import { generateBaseLocaleTemplate } from './generate-template-baseLocale'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -57,6 +58,8 @@ export const generate = async (
 	translations: LangaugeBaseTranslation,
 	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
 ): Promise<void> => {
+	await generateBaseLocaleTemplate(config)
+
 	const hasCustomTypes = await generateTypes({ ...config, translations })
 
 	await generateFormattersTemplate(config)

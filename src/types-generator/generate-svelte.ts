@@ -8,7 +8,7 @@ const getSvelteStore = ({ lazyLoad, baseLocale, formattersTemplateFileName: form
 	return `// This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-import { langauge } from 'langauge';
+import { langaugeObjectWrapper } from 'langauge';
 import type { Readable, Writable } from 'svelte/store';
 import { derived, writable } from 'svelte/store';
 import type { LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeTranslationKeys } from './${typesFile}'
@@ -31,7 +31,7 @@ export const setLocale = ${lazyLoad ? 'async ' : ''}(locale: LangaugeLocale) => 
 	isLoading.set(true)
 
 	const langaugeTranslation: LangaugeTranslation = ${lazyLoad ? 'await ' : ''}getTranslationFromLocale(locale)
-	langaugeInstance = langauge(locale, langaugeTranslation, initFormatters(locale))
+	langaugeInstance = langaugeObjectWrapper(locale, langaugeTranslation, initFormatters(locale))
 	langaugeInstanceStore.set(langaugeInstance)
 
 	currentLocale.set(locale)
