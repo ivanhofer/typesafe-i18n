@@ -1,9 +1,9 @@
 import { filterDuplicates, isObject, isTruthy, not } from 'typesafe-utils'
-import { parseRawText } from '../core/parser'
-import { isPluralPart, LangaugeBaseTranslation } from '../core/core'
-import type { ArgumentPart, PluralPart } from '../core/parser'
-import { writeFileIfContainsChanges } from './file-utils'
-import { GeneratorConfigWithDefaultValues } from './generator'
+import { parseRawText } from '../../core/parser'
+import { isPluralPart, LangaugeBaseTranslation } from '../../core/core'
+import type { ArgumentPart, PluralPart } from '../../core/parser'
+import { writeFileIfContainsChanges } from '../file-utils'
+import { GeneratorConfigWithDefaultValues } from '../generator'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------

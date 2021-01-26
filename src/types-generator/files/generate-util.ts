@@ -1,5 +1,5 @@
-import { writeFileIfContainsChanges } from './file-utils'
-import { GeneratorConfigWithDefaultValues } from './generator'
+import { writeFileIfContainsChanges } from '../file-utils'
+import { GeneratorConfigWithDefaultValues } from '../generator'
 
 const getAsyncCode = ({ locales }: GeneratorConfigWithDefaultValues) => {
 	const localesTranslationLoaders = locales

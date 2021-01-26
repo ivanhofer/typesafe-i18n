@@ -1,10 +1,10 @@
 import type { LangaugeBaseTranslation } from '../core/core'
-import { generateTypes } from './generate-types'
-import { generateUtil } from './generate-util'
-import { generateSvelte } from './generate-svelte'
-import { generateFormattersTemplate } from './generate-template-formatters'
-import { generateCustomTypesTemplate } from './generate-template-types'
-import { generateBaseLocaleTemplate } from './generate-template-baseLocale'
+import { generateTypes } from './files/generate-types'
+import { generateUtil } from './files/generate-util'
+import { generateSvelte } from './files/generate-svelte'
+import { generateFormattersTemplate } from './files/generate-template-formatters'
+import { generateCustomTypesTemplate } from './files/generate-template-types'
+import { generateBaseLocaleTemplate } from './files/generate-template-baseLocale'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 
 import { isBoolean } from 'typesafe-utils'
-import { writeFileIfContainsChanges } from './file-utils'
-import { GeneratorConfigWithDefaultValues } from './generator'
+import { writeFileIfContainsChanges } from '../file-utils'
+import { GeneratorConfigWithDefaultValues } from '../generator'
 
 const getSvelteStore = ({ lazyLoad, baseLocale, formattersTemplateFileName: formattersTemplatePath, typesFileName: typesFile, utilFileName: utilFile }: GeneratorConfigWithDefaultValues) => {
 	return `// This types were auto-generated. Any manual changes will be overwritten.

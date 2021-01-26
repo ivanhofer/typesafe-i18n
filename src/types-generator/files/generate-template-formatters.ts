@@ -1,5 +1,5 @@
-import { writeFileIfNotExists } from './file-utils'
-import { GeneratorConfigWithDefaultValues } from './generator'
+import { writeFileIfNotExists } from '../file-utils'
+import { GeneratorConfigWithDefaultValues } from '../generator'
 
 const getFormattersTemplate = ({ typesFileName: typesFile }: GeneratorConfigWithDefaultValues) => {
 	return `import type { LangaugeFormatters, LangaugeFormattersInitializer } from './${typesFile}'

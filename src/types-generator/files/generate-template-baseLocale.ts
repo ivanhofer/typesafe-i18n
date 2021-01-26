@@ -1,6 +1,6 @@
 import { join } from 'path'
-import { writeFileIfNotExists } from './file-utils'
-import { GeneratorConfigWithDefaultValues } from './generator'
+import { writeFileIfNotExists } from '../file-utils'
+import { GeneratorConfigWithDefaultValues } from '../generator'
 
 const getBaseLocaleTemplate = (baseLocale: string) => {
 	return `import type { LangaugeBaseTranslation } from 'langauge'
