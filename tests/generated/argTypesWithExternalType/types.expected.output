@@ -13,7 +13,7 @@ export type LangaugeTranslationKeys =
 
 export type LangaugeTranslation = {
 	/**
-	 * The result is {0:Result|calculate}!
+	 * The result is {0|calculate}!
 	 * @param {Result} 0
 	 */
 	'EXTERNAL_TYPE': string
@@ -21,7 +21,7 @@ export type LangaugeTranslation = {
 
 export type LangaugeTranslationArgs = {
 	/**
-	 * The result is {0:Result|calculate}!
+	 * The result is {0|calculate}!
 	 */
 	'EXTERNAL_TYPE': (arg0: Result) => string
 }

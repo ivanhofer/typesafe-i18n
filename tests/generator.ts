@@ -93,43 +93,30 @@ wrapTest('withFormatters', {
 	FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
 })
 
-// deLocales ----------------------------------------------------------------------------------------------------------
-
 wrapTest('deLocale', {}, { baseLocale: 'de' })
-
-// multipleLocales ----------------------------------------------------------------------------------------------------
 
 wrapTest('multipleLocales', {}, { locales: ['de', 'en', 'it'] })
 
-// argTypes -----------------------------------------------------------------------------------------------------------
-
 wrapTest('argTypes', { STRING_TYPE: 'Hi {name:string}!', NUMBER_TYPE: '{0:number} apple{{s}}' })
 
-// formatterWithDifferentArgTypes -------------------------------------------------------------------------------------
+wrapTest('argOrder', {
+	ORDER_INDEX: '{1} {0} {2} {0}',
+	ORDER_KEYED: '{b} {z} {a}',
+	ORDER_FORMATTER: '{0|z} {1|a}',
+	ORDER_TYPES: '{0:B} {1:A}',
+})
 
 wrapTest('formatterWithDifferentArgTypes', { A: '{0:number|calculate}!', B: '{0:Date|calculate}' })
 
-// argTypesWithExternalType -------------------------------------------------------------------------------------------
-
 wrapTest('argTypesWithExternalType', { EXTERNAL_TYPE: 'The result is {0:Result|calculate}!' })
-
-// svelte async -------------------------------------------------------------------------------------------------------
 
 wrapTest('svelte-async', { HELLO_SVELTE: 'Hi {0}' }, { svelte: getFileName('svelte-async', 'svelte') })
 
-// svelte sync --------------------------------------------------------------------------------------------------------
-
 wrapTest('svelte-sync', { HELLO_SVELTE: 'Hi {0}' }, { svelte: getFileName('svelte-sync', 'svelte'), lazyLoad: false })
-
-// same param ---------------------------------------------------------------------------------------------------------
 
 wrapTest('same-param', { SAME_PARAM: '{0} {0} {0}' })
 
-// same keyed param ---------------------------------------------------------------------------------------------------
-
 wrapTest('same-keyed-param', { SAME_KEYED_PARAM: '{name} {name} {name}' })
-
-// only plural rules --------------------------------------------------------------------------------------------------
 
 wrapTest('only-plural-rules', { ONLY_PLURAL: 'apple{{s}}', ONLY_SINGULAR_PLURAL: '{{Afpel|Äpfel}}' })
 

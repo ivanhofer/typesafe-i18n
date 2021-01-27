@@ -1,0 +1,70 @@
+// This types were auto-generated. Any manual changes will be overwritten.
+/* eslint-disable */
+
+import type { A, B } from './argOrder/types-template.actual.output'
+
+export type LangaugeBaseLocale = 'en'
+
+export type LangaugeLocale =
+	| 'en'
+
+export type LangaugeTranslationKeys =
+	| 'ORDER_INDEX'
+	| 'ORDER_KEYED'
+	| 'ORDER_FORMATTER'
+	| 'ORDER_TYPES'
+
+export type LangaugeTranslation = {
+	/**
+	 * {1} {0} {2} {0}
+	 * @param {unknown} 0
+	 * @param {unknown} 1
+	 * @param {unknown} 2
+	 */
+	'ORDER_INDEX': string
+	/**
+	 * {b} {z} {a}
+	 * @param {unknown} a
+	 * @param {unknown} b
+	 * @param {unknown} z
+	 */
+	'ORDER_KEYED': string
+	/**
+	 * {0|z} {1|a}
+	 * @param {unknown} 0
+	 * @param {unknown} 1
+	 */
+	'ORDER_FORMATTER': string
+	/**
+	 * {0} {1}
+	 * @param {B} 0
+	 * @param {A} 1
+	 */
+	'ORDER_TYPES': string
+}
+
+export type LangaugeTranslationArgs = {
+	/**
+	 * {1} {0} {2} {0}
+	 */
+	'ORDER_INDEX': (arg0: unknown, arg1: unknown, arg2: unknown) => string
+	/**
+	 * {b} {z} {a}
+	 */
+	'ORDER_KEYED': (arg: { a: unknown, b: unknown, z: unknown }) => string
+	/**
+	 * {0|z} {1|a}
+	 */
+	'ORDER_FORMATTER': (arg0: unknown, arg1: unknown) => string
+	/**
+	 * {0} {1}
+	 */
+	'ORDER_TYPES': (arg0: B, arg1: A) => string
+}
+
+export type LangaugeFormatters = {
+	a: (value: unknown) => string
+	z: (value: unknown) => string
+}
+
+export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters

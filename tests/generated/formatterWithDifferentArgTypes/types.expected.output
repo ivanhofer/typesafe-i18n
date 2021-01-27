@@ -12,12 +12,12 @@ export type LangaugeTranslationKeys =
 
 export type LangaugeTranslation = {
 	/**
-	 * {0:number|calculate}!
+	 * {0|calculate}!
 	 * @param {number} 0
 	 */
 	'A': string
 	/**
-	 * {0:Date|calculate}
+	 * {0|calculate}
 	 * @param {Date} 0
 	 */
 	'B': string
@@ -25,11 +25,11 @@ export type LangaugeTranslation = {
 
 export type LangaugeTranslationArgs = {
 	/**
-	 * {0:number|calculate}!
+	 * {0|calculate}!
 	 */
 	'A': (arg0: number) => string
 	/**
-	 * {0:Date|calculate}
+	 * {0|calculate}
 	 */
 	'B': (arg0: Date) => string
 }

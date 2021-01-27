@@ -1,10 +1,18 @@
-import { filterDuplicates, filterDuplicatesByKey, isNotUndefined, isObject, not } from 'typesafe-utils'
+import {
+	filterDuplicates,
+	filterDuplicatesByKey,
+	isNotUndefined,
+	isObject,
+	not,
+	sortStringASC,
+	sortStringPropertyASC,
+} from 'typesafe-utils'
 import { parseRawText } from '../../core/parser'
 import { isPluralPart, LangaugeBaseTranslation } from '../../core/core'
 import type { ArgumentPart } from '../../core/parser'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generator'
-import { removeEmptyValues, removeTypesFromString } from '../../core/core-utils'
+import { removeEmptyValues, asStringWithoutTypes } from '../../core/core-utils'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -31,6 +39,7 @@ type JsDocInfo = {
 type ParsedResult = {
 	key: string
 	text: string
+	textWithoutTypes: string
 	args: Arg[]
 	types: Types
 }
@@ -61,7 +70,10 @@ const parseTranslations = (translations: LangaugeBaseTranslation) =>
 	isObject(translations) ? Object.entries(translations).map(parseTanslationEntry) : []
 
 const parseTanslationEntry = ([key, text]: [string, string]): ParsedResult => {
-	const parsedObjects = parseRawText(text, false).filter(isObject)
+	const parsedParts = parseRawText(text, false)
+	const textWithoutTypes = asStringWithoutTypes(parsedParts)
+
+	const parsedObjects = parsedParts.filter(isObject)
 	const argumentParts = parsedObjects.filter<ArgumentPart>(not(isPluralPart))
 	const pluralParts = parsedObjects.filter(isPluralPart)
 
@@ -84,13 +96,16 @@ const parseTanslationEntry = ([key, text]: [string, string]): ParsedResult => {
 		}
 	})
 
+	// add 'unknown' if argument has no type
 	Object.keys(types).forEach((key) => {
 		if (!types[key]?.length) {
 			types[key] = ['unknown']
 		}
 	})
 
-	return removeEmptyValues({ key, text, args, types })
+	args.sort(sortStringPropertyASC('key'))
+
+	return removeEmptyValues({ key, text, textWithoutTypes, args, types })
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -114,8 +129,13 @@ const BASE_TYPES = [
 	'unknown',
 ].flatMap((t: string) => [t, `${t}[]`])
 
-const createTypeImportsType = (types: string[], typesTemplatePath: string): string => {
-	const externalTypes = Array.from(types).filter((type) => !BASE_TYPES.includes(type))
+const createTypeImportsType = (parsedTranslations: ParsedResult[], typesTemplatePath: string): string => {
+	const types = parsedTranslations.flatMap(({ types }) => Object.values(types).flat()).filter(filterDuplicates)
+
+	const externalTypes = Array.from(types)
+		.filter((type) => !BASE_TYPES.includes(type))
+		.sort(sortStringASC)
+
 	return !externalTypes.length
 		? ''
 		: `
@@ -125,15 +145,19 @@ import type { ${externalTypes.join(', ')} } from './${typesTemplatePath.replace(
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const createTranslationKeysType = (keys: string[]) => `export type LangaugeTranslationKeys =${wrapUnionType(keys)}`
+const createTranslationKeysType = (parsedTranslations: ParsedResult[]) => {
+	const keys = parsedTranslations.map(({ key }) => key)
+
+	return `export type LangaugeTranslationKeys =${wrapUnionType(keys)}`
+}
 
 // --------------------------------------------------------------------------------------------------------------------
 
 const createJsDocsMapping = (parsedTranslations: ParsedResult[]) => {
 	const map = {} as JsDocInfos
-	parsedTranslations.forEach(({ key, text, types }) => {
+	parsedTranslations.forEach(({ key, textWithoutTypes, types }) => {
 		map[key] = {
-			text: removeTypesFromString(text),
+			text: textWithoutTypes,
 			types,
 		}
 	})
@@ -144,6 +168,7 @@ const createJsDocsMapping = (parsedTranslations: ParsedResult[]) => {
 const createJsDocsString = ({ text, types }: JsDocInfo, renderTypes = false) => {
 	const renderedTypes = renderTypes
 		? `${Object.entries(types || {})
+			.sort(sortStringPropertyASC('0'))
 			.map(createJsDocsParamString)
 			.join('')}`
 		: ''
@@ -212,7 +237,7 @@ const getUniqueFormatters = (parsedTranslations: ParsedResult[]): [string, strin
 		),
 	)
 
-	return Object.entries(map)
+	return Object.entries(map).sort(sortStringPropertyASC('0'))
 }
 
 const createFormatterType = (parsedTranslations: ParsedResult[]) => {
@@ -234,14 +259,11 @@ const createFormatterType = (parsedTranslations: ParsedResult[]) => {
 const getTypes = ({ translations, baseLocale, locales, typesTemplateFileName }: GenerateTypesType) => {
 	const parsedTranslations = parseTranslations(translations)
 
-	const keys = parsedTranslations.map(({ key }) => key)
-	const types = parsedTranslations.flatMap(({ types }) => Object.values(types).flat()).filter(filterDuplicates)
-
-	const typeImports = createTypeImportsType(types, typesTemplateFileName)
+	const typeImports = createTypeImportsType(parsedTranslations, typesTemplateFileName)
 
 	const localesType = createLocalesType(locales, baseLocale)
 
-	const translationKeysType = createTranslationKeysType(keys)
+	const translationKeysType = createTranslationKeysType(parsedTranslations)
 
 	const jsDocsInfo = createJsDocsMapping(parsedTranslations)
 
