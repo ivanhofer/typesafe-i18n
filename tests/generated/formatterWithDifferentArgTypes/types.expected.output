@@ -13,10 +13,12 @@ export type LangaugeTranslationKeys =
 export type LangaugeTranslation = {
 	/**
 	 * {0:number|calculate}!
+	 * @param {number} 0
 	 */
 	'A': string
 	/**
 	 * {0:Date|calculate}
+	 * @param {Date} 0
 	 */
 	'B': string
 }
@@ -33,7 +35,7 @@ export type LangaugeTranslationArgs = {
 }
 
 export type LangaugeFormatters = {
-	calculate: (value: number) => string
+	calculate: (value: number | Date) => string
 }
 
 export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters

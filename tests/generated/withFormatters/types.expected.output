@@ -13,10 +13,13 @@ export type LangaugeTranslationKeys =
 export type LangaugeTranslation = {
 	/**
 	 * {0|timesTen} apple{{s}}
+	 * @param {string | number | boolean} 0
 	 */
 	'FORMATTER_1': string
 	/**
 	 * {0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}
+	 * @param {string | number | boolean} 0
+	 * @param {string | number | boolean} 1
 	 */
 	'FORMATTER_2': string
 }
@@ -33,8 +36,8 @@ export type LangaugeTranslationArgs = {
 }
 
 export type LangaugeFormatters = {
-	timesTen: (value: any) => string
-	wrapWithHtmlSpan: (value: any) => string
+	timesTen: (value: string | number | boolean) => string
+	wrapWithHtmlSpan: (value: string | number | boolean) => string
 }
 
 export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters

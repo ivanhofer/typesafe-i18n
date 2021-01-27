@@ -41,6 +41,7 @@
 	],
 	"scripts": {
 		"dev": "tsc -p tsconfig-plugin.json -w",
+		"dev:watcher": "rollup -c rollup-watcher.config.ts -w",
 		"build": "npm run build:browser && npm run build:cjs && npm run build:esm && npm run build:formatters && npm run build:plugin && npm run build:watcher",
 		"build:browser": "rollup -c rollup-browser.config.ts",
 		"build:cjs": "tsc -p tsconfig-cjs.json",
@@ -56,7 +57,7 @@
 		"test:size": "size-limit"
 	},
 	"dependencies": {
-		"typesafe-utils": "^1.10.1"
+		"typesafe-utils": "^1.11.1"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^17.0.0",

@@ -13,10 +13,13 @@ export type LangaugeTranslationKeys =
 export type LangaugeTranslation = {
 	/**
 	 * {nrOfApples} apple{{s}}
+	 * @param {string | number | boolean} nrOfApples
 	 */
 	'KEYED_PARAM': string
 	/**
 	 * {nrOfApples} apple{{s}} and {nrOfBananas} banana{{s}}
+	 * @param {string | number | boolean} nrOfApples
+	 * @param {string | number | boolean} nrOfBananas
 	 */
 	'KEYED_PARAMS': string
 }

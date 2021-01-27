@@ -12,6 +12,7 @@ export type LangaugeTranslationKeys =
 export type LangaugeTranslation = {
 	/**
 	 * Hi {0}
+	 * @param {unknown} 0
 	 */
 	'HELLO_SVELTE': string
 }

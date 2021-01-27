@@ -22,3 +22,6 @@ export const trimAllValues = <T extends ArgumentPart | PluralPart>(part: T): T =
 
 	return trimmedObject
 }
+
+export const removeTypesFromString = (text: string): string => text
+// TODO: remove types from text

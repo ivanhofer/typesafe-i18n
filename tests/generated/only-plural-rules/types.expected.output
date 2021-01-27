@@ -13,10 +13,12 @@ export type LangaugeTranslationKeys =
 export type LangaugeTranslation = {
 	/**
 	 * apple{{s}}
+	 * @param {string | number | boolean} 0
 	 */
 	'ONLY_PLURAL': string
 	/**
 	 * {{Afpel|Äpfel}}
+	 * @param {string | number | boolean} 0
 	 */
 	'ONLY_SINGULAR_PLURAL': string
 }

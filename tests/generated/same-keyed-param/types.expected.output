@@ -12,6 +12,7 @@ export type LangaugeTranslationKeys =
 export type LangaugeTranslation = {
 	/**
 	 * {name} {name} {name}
+	 * @param {unknown} name
 	 */
 	'SAME_KEYED_PARAM': string
 }

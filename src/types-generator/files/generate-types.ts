@@ -1,62 +1,43 @@
-import { filterDuplicates, isObject, isTruthy, not } from 'typesafe-utils'
+import { filterDuplicates, filterDuplicatesByKey, isNotUndefined, isObject, not } from 'typesafe-utils'
 import { parseRawText } from '../../core/parser'
 import { isPluralPart, LangaugeBaseTranslation } from '../../core/core'
-import type { ArgumentPart, PluralPart } from '../../core/parser'
+import type { ArgumentPart } from '../../core/parser'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generator'
+import { removeEmptyValues, removeTypesFromString } from '../../core/core-utils'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-type Arg = { key: string; types: string[] | undefined }
+type Arg = {
+	key: string
+	formatters?: string[]
+}
 
-type FormatterFunctionKey = { formatterKey: string[]; type: string | undefined }
+type Types = {
+	[key: string]: string[]
+}
+
+type JsDocInfos = {
+	[key: string]: JsDocInfo
+}
+
+type JsDocInfo = {
+	text: string
+	types: Types
+}
+
+type ParsedResult = {
+	key: string
+	text: string
+	args: Arg[]
+	types: Types
+}
 
 // --------------------------------------------------------------------------------------------------------------------
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
-
-const mergeArgs = (args: Arg[]) => {
-	const map = new Map<string, string[]>()
-	args.forEach(({ key, types }) => {
-		const item = map.get(key) || []
-		types && item.push(...types)
-		map.set(key, item)
-	})
-
-	return Array.from(map.entries()).map(([key, types]) => ({ key, types: types.filter(filterDuplicates) }))
-}
-
-const parseTanslationObject = ([key, text]: [string, string]): {
-	key: string
-	text: string
-	args: Arg[]
-	formatterFunctionKeys: FormatterFunctionKey[]
-} => {
-	const args: Arg[] = []
-	const formatterFunctionKeys: FormatterFunctionKey[] = []
-
-	const parsedObjects = parseRawText(text, false).filter(isObject)
-
-	parsedObjects.filter(not<ArgumentPart | PluralPart, ArgumentPart>(isPluralPart)).forEach((injectorPart) => {
-		const { k, i, f } = injectorPart
-
-		k && args.push({ key: k, types: (i && [i]) || undefined })
-		f && formatterFunctionKeys.push({ formatterKey: f, type: i })
-	})
-
-	parsedObjects.filter(isPluralPart).forEach((pluralPart) => {
-		const found = args.find(({ key }) => key === pluralPart.k)
-		if (!found || !found.types) {
-			args.push({ key: pluralPart.k, types: ['string', 'number', 'boolean'] })
-		}
-	})
-
-	const mergedArgs = mergeArgs(args)
-
-	return { key, text, args: mergedArgs, formatterFunctionKeys }
-}
 
 const wrapObjectType = (array: unknown[], callback: () => string) =>
 	!array.length
@@ -64,99 +45,76 @@ const wrapObjectType = (array: unknown[], callback: () => string) =>
 		: `{${callback()}
 }`
 
-const wrapEnumType = (array: unknown[], callback: () => string) => (!array.length ? ' never' : `${callback()}`)
+const wrapUnionType = (array: string[]) => (!array.length ? ' never' : `${createUnionType(array)}`)
 
-const createEnumType = (locales: string[]) =>
-	locales
+const createUnionType = (entries: string[]) =>
+	entries
 		.map(
 			(locale) => `
 	| '${locale}'`,
 		)
 		.join('')
 
-const createLocalesType = (locales: string[]) =>
-	`export type LangaugeLocale =${wrapEnumType(locales, () => createEnumType(locales))}`
+// --------------------------------------------------------------------------------------------------------------------
 
-const createTranslationKeysType = (keys: string[]) =>
-	`export type LangaugeTranslationKeys =${wrapEnumType(keys, () => createEnumType(keys))}`
+const parseTranslations = (translations: LangaugeBaseTranslation) =>
+	isObject(translations) ? Object.entries(translations).map(parseTanslationEntry) : []
 
-const createTranslationType = (result: { text: string; key: string }[]) =>
-	`export type LangaugeTranslation = ${wrapObjectType(result, () =>
-		result
-			.map(
-				({ text, key }) =>
-					`
-	${createJsDocs(text)}'${key}': string`,
-			)
-			.join(''),
-	)}`
+const parseTanslationEntry = ([key, text]: [string, string]): ParsedResult => {
+	const parsedObjects = parseRawText(text, false).filter(isObject)
+	const argumentParts = parsedObjects.filter<ArgumentPart>(not(isPluralPart))
+	const pluralParts = parsedObjects.filter(isPluralPart)
 
-const createFormatterType = (formatterKeys: FormatterFunctionKey[]) => {
-	const map: { [key: string]: string } = {}
-	formatterKeys
-		.flatMap(({ formatterKey, type }) => formatterKey.map((ff) => [ff, type || 'any'] as [string, string]))
-		.forEach(([key, type]) => {
-			const foundType = map[key]
-			// TODO: check if  different types exist for a formatterKey
-			if (!foundType || foundType === 'any') {
-				map[key] = type
+	const args: Arg[] = []
+	const types: Types = {}
+
+	argumentParts.forEach(({ k, i, f }) => {
+		args.push({ key: k, formatters: f })
+		types[k] = Array.from(new Set([...(types[k] || []), i])).filter(isNotUndefined)
+	})
+
+	pluralParts.forEach(({ k }) => {
+		if (!types[k]?.length) {
+			// if key has no types => add types that are valid for a PluralPart
+			types[k] = ['string', 'number', 'boolean']
+			if (!args.find(({ key }) => key === k)) {
+				// if only pluralpart exists => add it as argument
+				args.push({ key: k, formatters: [] })
 			}
-		})
+		}
+	})
 
-	const entries = Object.entries(map)
-	return `export type LangaugeFormatters = ${wrapObjectType(entries, () =>
-		entries
-			.map(
-				([key, type]) =>
-					`
-	${key}: (value: ${type}) => string`,
-			)
-			.join(''),
-	)}`
+	Object.keys(types).forEach((key) => {
+		if (!types[key]?.length) {
+			types[key] = ['unknown']
+		}
+	})
+
+	return removeEmptyValues({ key, text, args, types })
 }
 
-const createTranslationArgsType = (translations: { key: string; text: string; args: Arg[] }[]) =>
-	`export type LangaugeTranslationArgs = ${wrapObjectType(translations, () =>
-		translations
-			.map(
-				(translation) =>
-					`
-	${createTranslationArgssType(translation)}`,
-			)
-			.join(''),
-	)}`
+// --------------------------------------------------------------------------------------------------------------------
 
-const createJsDocs = (text: string) => `/**
-	 * ${text}
-	 */
-	`
-
-const createTranslationArgssType = ({ key, text, args }: { key: string; text: string; args: Arg[] }) =>
-	`${createJsDocs(text)}'${key}': (${mapTranslationArgs(args)}) => string`
-
-const mapTranslationArgs = (args: Arg[]) => {
-	if (!args.length) {
-		return ''
-	}
-
-	const arg = args[0]?.key as string
-
-	const isKeyed = isNaN(+arg)
-	const prefix = (isKeyed && 'arg: { ') || ''
-	const postfix = (isKeyed && ' }') || ''
-	const argPrefix = (!isKeyed && 'arg') || ''
-
-	return (
-		prefix +
-		args.map(({ key, types }) => `${argPrefix}${key}: ${(types && types.join(' | ')) || 'unknown'}`).join(', ') +
-		postfix
-	)
+const createLocalesType = (locales: string[], baseLocale: string) => {
+	const usedLocales = locales?.length ? locales : [baseLocale]
+	return `export type LangaugeLocale =${wrapUnionType(usedLocales)}`
 }
 
-const BASE_TYPES = ['boolean', 'number', 'bigint', 'string', 'Date']
+// --------------------------------------------------------------------------------------------------------------------
 
-const createTypeImportsType = (args: Arg[], typesTemplatePath: string): string => {
-	const types = new Set(args.flatMap(({ types }) => types).filter(isTruthy))
+const BASE_TYPES = [
+	'boolean',
+	'number',
+	'bigint',
+	'string',
+	'Date',
+	'object',
+	'undefined',
+	'null',
+	'unknown',
+].flatMap((t: string) => [t, `${t}[]`])
+
+const createTypeImportsType = (types: string[], typesTemplatePath: string): string => {
 	const externalTypes = Array.from(types).filter((type) => !BASE_TYPES.includes(type))
 	return !externalTypes.length
 		? ''
@@ -165,32 +123,139 @@ import type { ${externalTypes.join(', ')} } from './${typesTemplatePath.replace(
 `
 }
 
-const getTypes = ({ translations: translations, baseLocale, locales, typesTemplateFileName }: GenerateTypesType) => {
-	const result = (isObject(translations) && Object.entries(translations).map(parseTanslationObject)) || []
+// --------------------------------------------------------------------------------------------------------------------
 
-	const baseLocaleType = `export type LangaugeBaseLocale = '${baseLocale}'`
+const createTranslationKeysType = (keys: string[]) => `export type LangaugeTranslationKeys =${wrapUnionType(keys)}`
 
-	const localesType = createLocalesType(locales?.length ? locales : [baseLocale])
+// --------------------------------------------------------------------------------------------------------------------
 
-	const keys = result.map(({ key }) => key)
+const createJsDocsMapping = (parsedTranslations: ParsedResult[]) => {
+	const map = {} as JsDocInfos
+	parsedTranslations.forEach(({ key, text, types }) => {
+		map[key] = {
+			text: removeTypesFromString(text),
+			types,
+		}
+	})
+
+	return map
+}
+
+const createJsDocsString = ({ text, types }: JsDocInfo, renderTypes = false) => {
+	const renderedTypes = renderTypes
+		? `${Object.entries(types || {})
+			.map(createJsDocsParamString)
+			.join('')}`
+		: ''
+
+	return `/**
+	 * ${text}${renderedTypes}
+	 */
+	`
+}
+
+const createJsDocsParamString = ([paramName, types]: [string, string[]]) => `
+	 * @param {${types.join(' | ')}} ${paramName}`
+
+// --------------------------------------------------------------------------------------------------------------------
+
+const createTranslationType = (parsedTranslations: ParsedResult[], jsDocInfo: JsDocInfos) =>
+	`export type LangaugeTranslation = ${wrapObjectType(parsedTranslations, () =>
+		parsedTranslations
+			.map(
+				({ key }) =>
+					`
+	${createJsDocsString(jsDocInfo[key] as JsDocInfo, true)}'${key}': string`,
+			)
+			.join(''),
+	)}`
+
+const createTranslationArgsType = (parsedTranslations: ParsedResult[], jsDocInfo: JsDocInfos) =>
+	`export type LangaugeTranslationArgs = ${wrapObjectType(parsedTranslations, () =>
+		parsedTranslations
+			.map(
+				(translation) =>
+					`
+	${createTranslationArgssType(translation, jsDocInfo)}`,
+			)
+			.join(''),
+	)}`
+
+const createTranslationArgssType = ({ key, args, types }: ParsedResult, jsDocInfo: JsDocInfos) =>
+	`${createJsDocsString(jsDocInfo[key] as JsDocInfo)}'${key}': (${mapTranslationArgs(args, types)}) => string`
+
+const mapTranslationArgs = (args: Arg[], types: Types) => {
+	if (!args.length) {
+		return ''
+	}
+
+	const uniqueArgs = args.filter(filterDuplicatesByKey('key'))
+	const arg = uniqueArgs[0]?.key as string
+
+	const isKeyed = isNaN(+arg)
+	const prefix = (isKeyed && 'arg: { ') || ''
+	const postfix = (isKeyed && ' }') || ''
+	const argPrefix = (!isKeyed && 'arg') || ''
+
+	return prefix + uniqueArgs.map(({ key }) => `${argPrefix}${key}: ${types[key]?.join(' | ')}`).join(', ') + postfix
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+const getUniqueFormatters = (parsedTranslations: ParsedResult[]): [string, string[]][] => {
+	const map = {} as Types
+	parsedTranslations.forEach(({ types, args }) =>
+		args.forEach(({ key, formatters }) =>
+			(formatters || []).forEach(
+				(formatter) => (map[formatter] = [...(map[formatter] || []), ...(types[key] || [])]),
+			),
+		),
+	)
+
+	return Object.entries(map)
+}
+
+const createFormatterType = (parsedTranslations: ParsedResult[]) => {
+	const formatters = getUniqueFormatters(parsedTranslations)
+
+	return `export type LangaugeFormatters = ${wrapObjectType(formatters, () =>
+		formatters
+			.map(
+				([key, types]) =>
+					`
+	${key}: (value: ${types?.join(' | ')}) => string`,
+			)
+			.join(''),
+	)}`
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+const getTypes = ({ translations, baseLocale, locales, typesTemplateFileName }: GenerateTypesType) => {
+	const parsedTranslations = parseTranslations(translations)
+
+	const keys = parsedTranslations.map(({ key }) => key)
+	const types = parsedTranslations.flatMap(({ types }) => Object.values(types).flat()).filter(filterDuplicates)
+
+	const typeImports = createTypeImportsType(types, typesTemplateFileName)
+
+	const localesType = createLocalesType(locales, baseLocale)
 
 	const translationKeysType = createTranslationKeysType(keys)
 
-	const translationType = createTranslationType(result.map(({ text, key }) => ({ text, key })))
+	const jsDocsInfo = createJsDocsMapping(parsedTranslations)
 
-	const args = result.flatMap(({ args }) => args)
-	const typeImports = createTypeImportsType(args, typesTemplateFileName)
+	const translationType = createTranslationType(parsedTranslations, jsDocsInfo)
 
-	const formatterFunctionKeys = result.flatMap(({ formatterFunctionKeys }) => formatterFunctionKeys)
-	const formatterType = createFormatterType(formatterFunctionKeys)
+	const translationArgsType = createTranslationArgsType(parsedTranslations, jsDocsInfo)
 
-	const translationArgsType = createTranslationArgsType(result)
+	const formattersType = createFormatterType(parsedTranslations)
 
 	return [
 		`// This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 ${typeImports}
-${baseLocaleType}
+export type LangaugeBaseLocale = '${baseLocale}'
 
 ${localesType}
 
@@ -200,7 +265,7 @@ ${translationType}
 
 ${translationArgsType}
 
-${formatterType}
+${formattersType}
 
 export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters
 `,

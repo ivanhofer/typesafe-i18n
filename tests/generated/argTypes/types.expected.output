@@ -13,10 +13,12 @@ export type LangaugeTranslationKeys =
 export type LangaugeTranslation = {
 	/**
 	 * Hi {name:string}!
+	 * @param {string} name
 	 */
 	'STRING_TYPE': string
 	/**
 	 * {0:number} apple{{s}}
+	 * @param {number} 0
 	 */
 	'NUMBER_TYPE': string
 }
