@@ -1,5 +1,6 @@
-import { isArray } from 'typesafe-utils'
-import type { ArgumentPart, PluralPart } from './parser'
+import { isArray, isNotEmpty, isString } from 'typesafe-utils'
+import { isPluralPart } from './core'
+import type { ArgumentPart, Part, PluralPart } from './parser'
 
 export const removeEmptyValues = <T>(object: T): T =>
 	Object.fromEntries(
@@ -23,5 +24,17 @@ export const trimAllValues = <T extends ArgumentPart | PluralPart>(part: T): T =
 	return trimmedObject
 }
 
-export const removeTypesFromString = (text: string): string => text
-// TODO: remove types from text
+export const asStringWithoutTypes = (parts: Part[]): string =>
+	parts
+		.map((part) => {
+			if (isString(part)) {
+				return part
+			}
+
+			if (isPluralPart(part)) {
+				return `{{${[part.z, part.o, part.t, part.f, part.m, part.r].filter(isNotEmpty).join('|')}}}`
+			}
+
+			return `{${part.k}${part.f?.length ? `|${part.f.join('|')}` : ''}}`
+		})
+		.join('')
