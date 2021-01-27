@@ -2,8 +2,10 @@ import {
 	filterDuplicates,
 	filterDuplicatesByKey,
 	isNotUndefined,
+	isNotZero,
 	isObject,
 	not,
+	sortNumberASC,
 	sortStringASC,
 	sortStringPropertyASC,
 } from 'typesafe-utils'
@@ -12,7 +14,8 @@ import { isPluralPart, LangaugeBaseTranslation } from '../../core/core'
 import type { ArgumentPart } from '../../core/parser'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generator'
-import { removeEmptyValues, asStringWithoutTypes } from '../../core/core-utils'
+import { removeEmptyValues, partsAsStringWithoutTypes, partAsStringWithoutTypes } from '../../core/core-utils'
+import { getPermutations } from '../generator-util'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -71,7 +74,7 @@ const parseTranslations = (translations: LangaugeBaseTranslation) =>
 
 const parseTanslationEntry = ([key, text]: [string, string]): ParsedResult => {
 	const parsedParts = parseRawText(text, false)
-	const textWithoutTypes = asStringWithoutTypes(parsedParts)
+	const textWithoutTypes = partsAsStringWithoutTypes(parsedParts)
 
 	const parsedObjects = parsedParts.filter(isObject)
 	const argumentParts = parsedObjects.filter<ArgumentPart>(not(isPluralPart))
@@ -184,17 +187,94 @@ const createJsDocsParamString = ([paramName, types]: [string, string[]]) => `
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const createTranslationType = (parsedTranslations: ParsedResult[], jsDocInfo: JsDocInfos) =>
+const createTranslationType = (
+	parsedTranslations: ParsedResult[],
+	jsDocInfo: JsDocInfos,
+	paramTypesToGenerate: number[],
+) =>
 	`export type LangaugeTranslation = ${wrapObjectType(parsedTranslations, () =>
 		parsedTranslations
 			.map(
-				({ key }) =>
+				({ key, args }) =>
 					`
-	${createJsDocsString(jsDocInfo[key] as JsDocInfo, true)}'${key}': string`,
+	${createJsDocsString(jsDocInfo[key] as JsDocInfo, true)}'${key}': ${generateTranslationType(
+						paramTypesToGenerate,
+						args,
+					)}`,
 			)
 			.join(''),
 	)}`
 
+const REGEX_BRACKETS = /[{}]/g
+
+const generateTranslationType = (paramTypesToGenerate: number[], args: Arg[]) => {
+	const argStrings = args.map(({ key, formatters }) =>
+		partAsStringWithoutTypes({ k: key, f: formatters }).replace(REGEX_BRACKETS, ''),
+	)
+
+	const nrOfArgs = argStrings.length
+	paramTypesToGenerate.push(nrOfArgs)
+
+	return nrOfArgs ? `RequiredParams${nrOfArgs}<${argStrings.map((arg) => `'${arg}'`).join(', ')}>` : 'string'
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+const generateParamsType = (paramTypesToGenerate: number[]) => {
+	const filteredParamTypes = paramTypesToGenerate.filter(filterDuplicates).filter(isNotZero).sort(sortNumberASC)
+
+	if (filteredParamTypes.length === 0) {
+		return ''
+	}
+
+	const result = filteredParamTypes.map(generateParamType)
+
+	const baseTypes = result.map(([baseType]) => baseType)
+	const permutationTypes = result.map(([_, permutationTypes]) => permutationTypes)
+
+	return `
+type Param<P extends string> = \`{\${P}}\`
+${baseTypes?.join(`
+`)}
+${permutationTypes?.join(`
+`)}
+`
+}
+
+const generateParamType = (nrOfParams: number): [string, string] => {
+	const args = new Array(nrOfParams).fill(0).map((_, i) => i + 1)
+
+	const baseType = generateBaseType(args)
+	const permutationType = generatePermutationType(args)
+
+	return [baseType, permutationType]
+}
+
+const generateBaseType = (args: number[]) => {
+	const generics = args.map((i) => `P${i} extends string`).join(', ')
+	const params = args.map((i) => `\${Param<P${i}>}`).join(`\${string}`)
+
+	return `
+type Params${args.length}<${generics}> =
+	\`\${string}${params}\${string}\``
+}
+
+const generatePermutationType = (args: number[]) => {
+	const l = args.length
+	const generics = args.map((i) => `P${i} extends string`).join(', ')
+
+	const permutations = getPermutations(args)
+
+	return `
+type RequiredParams${l}<${generics}> =${permutations
+			.map(
+				(permutation) => `
+	 | Params${l}<${permutation.map((p) => `P${p}`).join(', ')}>`,
+			)
+			.join('')}`
+}
+
+// --------------------------------------------------------------------------------------------------------------------
 const createTranslationArgsType = (parsedTranslations: ParsedResult[], jsDocInfo: JsDocInfos) =>
 	`export type LangaugeTranslationArgs = ${wrapObjectType(parsedTranslations, () =>
 		parsedTranslations
@@ -267,7 +347,10 @@ const getTypes = ({ translations, baseLocale, locales, typesTemplateFileName }: 
 
 	const jsDocsInfo = createJsDocsMapping(parsedTranslations)
 
-	const translationType = createTranslationType(parsedTranslations, jsDocsInfo)
+	const paramTypesToGenerate: number[] = []
+	const translationType = createTranslationType(parsedTranslations, jsDocsInfo, paramTypesToGenerate)
+
+	const paramsType = generateParamsType(paramTypesToGenerate)
 
 	const translationArgsType = createTranslationArgsType(parsedTranslations, jsDocsInfo)
 
@@ -290,7 +373,7 @@ ${translationArgsType}
 ${formattersType}
 
 export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters
-`,
+${paramsType}`,
 		!!typeImports,
 	] as [string, boolean]
 }

@@ -16,7 +16,7 @@ export type LangaugeTranslation = {
 	 * The result is {0|calculate}!
 	 * @param {Result} 0
 	 */
-	'EXTERNAL_TYPE': string
+	'EXTERNAL_TYPE': RequiredParams1<'0|calculate'>
 }
 
 export type LangaugeTranslationArgs = {
@@ -31,3 +31,11 @@ export type LangaugeFormatters = {
 }
 
 export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters
+
+type Param<P extends string> = `{${P}}`
+
+type Params1<P1 extends string> =
+	`${string}${Param<P1>}${string}`
+
+type RequiredParams1<P1 extends string> =
+	 | Params1<P1>

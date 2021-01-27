@@ -14,7 +14,7 @@ export type LangaugeTranslation = {
 	 * Hi {0}
 	 * @param {unknown} 0
 	 */
-	'HELLO_SVELTE': string
+	'HELLO_SVELTE': RequiredParams1<'0'>
 }
 
 export type LangaugeTranslationArgs = {
@@ -27,3 +27,11 @@ export type LangaugeTranslationArgs = {
 export type LangaugeFormatters = {}
 
 export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters
+
+type Param<P extends string> = `{${P}}`
+
+type Params1<P1 extends string> =
+	`${string}${Param<P1>}${string}`
+
+type RequiredParams1<P1 extends string> =
+	 | Params1<P1>

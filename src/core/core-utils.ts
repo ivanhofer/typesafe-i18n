@@ -24,17 +24,16 @@ export const trimAllValues = <T extends ArgumentPart | PluralPart>(part: T): T =
 	return trimmedObject
 }
 
-export const asStringWithoutTypes = (parts: Part[]): string =>
-	parts
-		.map((part) => {
-			if (isString(part)) {
-				return part
-			}
+export const partsAsStringWithoutTypes = (parts: Part[]): string => parts.map(partAsStringWithoutTypes).join('')
 
-			if (isPluralPart(part)) {
-				return `{{${[part.z, part.o, part.t, part.f, part.m, part.r].filter(isNotEmpty).join('|')}}}`
-			}
+export const partAsStringWithoutTypes = (part: Part): string => {
+	if (isString(part)) {
+		return part
+	}
 
-			return `{${part.k}${part.f?.length ? `|${part.f.join('|')}` : ''}}`
-		})
-		.join('')
+	if (isPluralPart(part)) {
+		return `{{${[part.z, part.o, part.t, part.f, part.m, part.r].filter(isNotEmpty).join('|')}}}`
+	}
+
+	return `{${part.k}${part.f?.length ? `|${part.f.join('|')}` : ''}}`
+}
