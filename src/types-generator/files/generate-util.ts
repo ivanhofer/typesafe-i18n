@@ -46,17 +46,17 @@ export const getLangaugeForLocale = (locale: LangaugeLocale) => langaugeLoader<L
 `
 }
 
-const getUtil = (config: GeneratorConfigWithDefaultValues): string => {
-	const { typesFileName: typesFile, formattersTemplateFileName: formattersTemplatePath, lazyLoad } = config
+const getUtil = (config: GeneratorConfigWithDefaultValues, importType: string): string => {
+	const { typesFileName: typesFile, formattersTemplateFileName: formattersTemplatePath, lazyLoad, locales } = config
 
 	const dynamicImports = lazyLoad
 		? `import { langaugeLoaderAsync } from 'langauge'`
-		: `import type { LocaleTranslations } from 'langauge'
+		: `import${importType} { LocaleTranslations } from 'langauge'
 import { langaugeLoader, langauge } from 'langauge'`
 
 	const dynamicCode = lazyLoad ? getAsyncCode(config) : getSyncCode(config)
 
-	const localesEnum = `export const locales = [${config.locales.map(
+	const localesEnum = `export const locales = [${locales.map(
 		(locale) => `
 	'${locale}'`,
 	)}
@@ -66,7 +66,7 @@ import { langaugeLoader, langauge } from 'langauge'`
 /* eslint-disable */
 
 ${dynamicImports}
-import type {
+import${importType} {
 	LangaugeTranslation,
 	LangaugeTranslationArgs,
 	LangaugeFormatters,
@@ -78,9 +78,9 @@ ${localesEnum}
 ${dynamicCode}`
 }
 
-export const generateUtil = async (config: GeneratorConfigWithDefaultValues): Promise<void> => {
+export const generateUtil = async (config: GeneratorConfigWithDefaultValues, importType: string): Promise<void> => {
 	const { outputPath, utilFileName: utilFile } = config
 
-	const util = getUtil(config)
+	const util = getUtil(config, importType)
 	await writeFileIfContainsChanges(outputPath, utilFile, util)
 }

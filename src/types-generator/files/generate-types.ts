@@ -132,7 +132,11 @@ const BASE_TYPES = [
 	'unknown',
 ].flatMap((t: string) => [t, `${t}[]`])
 
-const createTypeImportsType = (parsedTranslations: ParsedResult[], typesTemplatePath: string): string => {
+const createTypeImportsType = (
+	parsedTranslations: ParsedResult[],
+	typesTemplatePath: string,
+	importType: string,
+): string => {
 	const types = parsedTranslations.flatMap(({ types }) => Object.values(types).flat()).filter(filterDuplicates)
 
 	const externalTypes = Array.from(types)
@@ -142,7 +146,7 @@ const createTypeImportsType = (parsedTranslations: ParsedResult[], typesTemplate
 	return !externalTypes.length
 		? ''
 		: `
-import type { ${externalTypes.join(', ')} } from './${typesTemplatePath.replace('.ts', '')}'
+import${importType} { ${externalTypes.join(', ')} } from './${typesTemplatePath.replace('.ts', '')}'
 `
 }
 
@@ -344,10 +348,13 @@ const createFormatterType = (parsedTranslations: ParsedResult[]) => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const getTypes = ({ translations, baseLocale, locales, typesTemplateFileName, tsVersion }: GenerateTypesType) => {
+const getTypes = (
+	{ translations, baseLocale, locales, typesTemplateFileName, tsVersion }: GenerateTypesType,
+	importType: string,
+) => {
 	const parsedTranslations = parseTranslations(translations)
 
-	const typeImports = createTypeImportsType(parsedTranslations, typesTemplateFileName)
+	const typeImports = createTypeImportsType(parsedTranslations, typesTemplateFileName, importType)
 
 	const localesType = createLocalesType(locales, baseLocale)
 
@@ -396,10 +403,10 @@ type GenerateTypesType = GeneratorConfigWithDefaultValues & {
 	translations: LangaugeBaseTranslation
 }
 
-export const generateTypes = async (config: GenerateTypesType): Promise<boolean> => {
+export const generateTypes = async (config: GenerateTypesType, importType: string): Promise<boolean> => {
 	const { outputPath, typesFileName } = config
 
-	const [types, hasCustomTypes] = getTypes(config)
+	const [types, hasCustomTypes] = getTypes(config, importType)
 
 	await writeFileIfContainsChanges(outputPath, typesFileName, types)
 

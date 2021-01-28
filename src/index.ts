@@ -1,6 +1,6 @@
-export type { LangaugeBaseTranslation } from './core/core'
+export { LangaugeBaseTranslation } from './core/core'
 
-export type { LocaleTranslations } from './core/util.loader'
+export { LocaleTranslations } from './core/util.loader'
 
 export { langaugeStringWrapper } from './core/util.string'
 export { langaugeObjectWrapper } from './core/util.object'

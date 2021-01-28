@@ -5,23 +5,16 @@ import { generateSvelte } from './files/generate-svelte'
 import { generateFormattersTemplate } from './files/generate-template-formatters'
 import { generateCustomTypesTemplate } from './files/generate-template-types'
 import { generateBaseLocaleTemplate } from './files/generate-template-baseLocale'
+import { supportsImportType } from './generator-util'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-// const parseVersion = (version: TsVersion): TsVersionInfo => {
-// 	const [major, minor] = version.split('.').map((nr) => parseInt(nr)) as [number, number]
-
-// 	return {
-// 		major,
-// 		minor,
-// 	}
-// }
-
 export enum TsVersion {
-	'>=3.0',
-	'>=4.1',
+	'>=3.0', // baseline support
+	'>=3.8', // supports import type
+	'>=4.1', // supports template literal types
 }
 
 // export type TsVersion =
@@ -78,19 +71,21 @@ export const generate = async (
 	translations: LangaugeBaseTranslation,
 	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
 ): Promise<void> => {
-	await generateBaseLocaleTemplate(config)
+	const importType = supportsImportType(config.tsVersion) ? 'type ' : ''
 
-	const hasCustomTypes = await generateTypes({ ...config, translations })
+	await generateBaseLocaleTemplate(config, importType)
 
-	await generateFormattersTemplate(config)
+	const hasCustomTypes = await generateTypes({ ...config, translations }, importType)
+
+	await generateFormattersTemplate(config, importType)
 
 	if (hasCustomTypes) {
 		await generateCustomTypesTemplate(config)
 	}
 
-	await generateUtil(config)
+	await generateUtil(config, importType)
 
 	if (config.svelte) {
-		await generateSvelte(config)
+		await generateSvelte(config, importType)
 	}
 }

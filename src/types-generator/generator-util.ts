@@ -16,3 +16,6 @@ export const getPermutations = <T>(rest: T[], permutatedArray: T[] = []): T[][] 
 
 export const supportsTemplateLiteralTypes = (tsVersion: TsVersion): boolean =>
 	((TsVersion[tsVersion] as unknown) as TsVersion) >= TsVersion['>=4.1']
+
+export const supportsImportType = (tsVersion: TsVersion): boolean =>
+	((TsVersion[tsVersion] as unknown) as TsVersion) >= TsVersion['>=3.8']

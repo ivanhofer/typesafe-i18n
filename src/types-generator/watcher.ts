@@ -96,6 +96,8 @@ export const startWatcher = async (config: GeneratorConfig): Promise<void> => {
 
 	const baseLocalePath = join(outputPath, configWithDefaultValues.baseLocale)
 
+	await createPathIfNotExits(baseLocalePath)
+
 	fs.watch(baseLocalePath, { recursive: true }, () => debonce(onChange))
 
 	// eslint-disable-next-line no-console

@@ -4,14 +4,23 @@ import { isBoolean } from 'typesafe-utils'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generator'
 
-const getSvelteStore = ({ lazyLoad, baseLocale, formattersTemplateFileName: formattersTemplatePath, typesFileName: typesFile, utilFileName: utilFile }: GeneratorConfigWithDefaultValues) => {
+const getSvelteStore = (
+	{
+		lazyLoad,
+		baseLocale,
+		formattersTemplateFileName: formattersTemplatePath,
+		typesFileName: typesFile,
+		utilFileName: utilFile
+	}: GeneratorConfigWithDefaultValues,
+	importType: string
+) => {
 	return `// This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
 import { langaugeObjectWrapper } from 'langauge';
-import type { Readable, Writable } from 'svelte/store';
+import${importType} { Readable, Writable } from 'svelte/store';
 import { derived, writable } from 'svelte/store';
-import type { LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeTranslationKeys } from './${typesFile}'
+import${importType} { LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeTranslationKeys } from './${typesFile}'
 import { getTranslationFromLocale } from './${utilFile}'
 import { initFormatters } from './${formattersTemplatePath}'
 
@@ -53,10 +62,10 @@ export default LLL
 `
 }
 
-export const generateSvelte = async (config: GeneratorConfigWithDefaultValues): Promise<void> => {
+export const generateSvelte = async (config: GeneratorConfigWithDefaultValues, importType: string): Promise<void> => {
 	const { outputPath, svelte } = config
 
-	const svelteStore = getSvelteStore(config)
+	const svelteStore = getSvelteStore(config, importType)
 
 	const path = (!isBoolean(svelte) && svelte) || 'langauge-svelte'
 	await writeFileIfContainsChanges(outputPath, path, svelteStore)
