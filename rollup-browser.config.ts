@@ -32,7 +32,7 @@ const esmConfig = (minify = false) => ({
 		{
 			file: `dist/index${minify ? '.min' : ''}.js`,
 			format: 'esm',
-			sourcemap: true,
+			sourcemap: !minify,
 		},
 	],
 	plugins: getPlugins(minify),
