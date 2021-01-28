@@ -5,7 +5,6 @@ import * as assert from 'uvu/assert'
 import type { LangaugeBaseTranslation } from '../src'
 import { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../src/types-generator/generator'
 import { generate, setDefaultConfigValuesIfMissing } from '../src/types-generator/generator'
-import { TsVersion } from '../src/types-generator/generator-util'
 
 const { readFile } = promises
 
@@ -53,8 +52,12 @@ const check = async (prefix: string, file: FileToCheck) => {
 	}
 }
 
-const wrapTest = async (prefix: string, translation: LangaugeBaseTranslation, config: GeneratorConfig = {}) =>
-	test(`types ${prefix}`, async () => {
+const testGeneratedOutput = async (
+	prefix: string,
+	translation: LangaugeBaseTranslation,
+	config: GeneratorConfig = {},
+) =>
+	test(`generate ${prefix}`, async () => {
 		await generate(translation, createConfig(prefix, config))
 		await check(prefix, 'types')
 		await check(prefix, 'util')
@@ -63,68 +66,133 @@ const wrapTest = async (prefix: string, translation: LangaugeBaseTranslation, co
 		await check(prefix, 'svelte')
 	})
 
-// empty --------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
-wrapTest('empty', {})
+type ConsoleOutputs = {
+	info: string[]
+	warn: string[]
+	error: string[]
+}
 
-// simple -------------------------------------------------------------------------------------------------------------
+const mockLogger = () => {
+	const outputs: ConsoleOutputs = {
+		info: [],
+		warn: [],
+		error: [],
+	}
 
-wrapTest('simple', {
+	const logger = (type: 'info' | 'warn' | 'error', ...messages: string[]) => outputs[type].push(messages.join(' '))
+
+	return {
+		get logger() {
+			return {
+				info: logger.bind(null, 'info'),
+				warn: logger.bind(null, 'warn'),
+				error: logger.bind(null, 'error'),
+			}
+		},
+		get outputs() {
+			return outputs
+		},
+	}
+}
+const testGeneratedConsoleOutput = async (
+	prefix: string,
+	translation: LangaugeBaseTranslation,
+	callback: (outputs: ConsoleOutputs) => Promise<void>,
+) =>
+	test(`console ${prefix}`, async () => {
+		const loggerWrapper = mockLogger()
+
+		await generate(translation, createConfig(prefix, {}), loggerWrapper.logger)
+
+		await callback(loggerWrapper.outputs)
+	})
+
+// --------------------------------------------------------------------------------------------------------------------
+
+testGeneratedOutput('empty', {})
+
+testGeneratedOutput('simple', {
 	TEST: 'This is a test',
 })
 
-// withParams ---------------------------------------------------------------------------------------------------------
-
-wrapTest('withParams', {
+testGeneratedOutput('withParams', {
 	PARAM: '{0} apple{{s}}',
 	PARAMS: '{0} apple{{s}} and {1} banana{{s}}',
 })
 
-// keyedParams --------------------------------------------------------------------------------------------------------
-
-wrapTest('keyedParams', {
+testGeneratedOutput('keyedParams', {
 	KEYED_PARAM: '{nrOfApples} apple{{s}}',
 	KEYED_PARAMS: '{nrOfApples} apple{{s}} and {nrOfBananas} banana{{s}}',
 })
 
-// withFormatters -----------------------------------------------------------------------------------------------------
-
-wrapTest('withFormatters', {
+testGeneratedOutput('withFormatters', {
 	FORMATTER_1: '{0|timesTen} apple{{s}}',
 	FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
 })
 
-wrapTest('deLocale', {}, { baseLocale: 'de' })
+testGeneratedOutput('deLocale', {}, { baseLocale: 'de' })
 
-wrapTest('multipleLocales', {}, { locales: ['de', 'en', 'it'] })
+testGeneratedOutput('multipleLocales', {}, { locales: ['de', 'en', 'it'] })
 
-wrapTest('argTypes', { STRING_TYPE: 'Hi {name:string}!', NUMBER_TYPE: '{0:number} apple{{s}}' })
+testGeneratedOutput('argTypes', { STRING_TYPE: 'Hi {name:string}!', NUMBER_TYPE: '{0:number} apple{{s}}' })
 
-wrapTest('argOrder', {
+testGeneratedOutput('argOrder', {
 	ORDER_INDEX: '{1} {0} {2} {0}',
 	ORDER_KEYED: '{b} {z} {a}',
 	ORDER_FORMATTER: '{0|z} {1|a}',
 	ORDER_TYPES: '{0:B} {1:A}',
 })
 
-wrapTest('formatterWithDifferentArgTypes', { A: '{0:number|calculate}!', B: '{0:Date|calculate}' })
+testGeneratedOutput('formatterWithDifferentArgTypes', { A: '{0:number|calculate}!', B: '{0:Date|calculate}' })
 
-wrapTest('argTypesWithExternalType', { EXTERNAL_TYPE: 'The result is {0:Result|calculate}!' })
+testGeneratedOutput('argTypesWithExternalType', { EXTERNAL_TYPE: 'The result is {0:Result|calculate}!' })
 
-wrapTest('svelte-async', { HELLO_SVELTE: 'Hi {0}' }, { svelte: getFileName('svelte-async', 'svelte') })
+testGeneratedOutput('svelte-async', { HELLO_SVELTE: 'Hi {0}' }, { svelte: getFileName('svelte-async', 'svelte') })
 
-wrapTest('svelte-sync', { HELLO_SVELTE: 'Hi {0}' }, { svelte: getFileName('svelte-sync', 'svelte'), lazyLoad: false })
+testGeneratedOutput(
+	'svelte-sync',
+	{ HELLO_SVELTE: 'Hi {0}' },
+	{ svelte: getFileName('svelte-sync', 'svelte'), lazyLoad: false },
+)
 
-wrapTest('same-param', { SAME_PARAM: '{0} {0} {0}' })
+testGeneratedOutput('same-param', { SAME_PARAM: '{0} {0} {0}' })
 
-wrapTest('same-keyed-param', { SAME_KEYED_PARAM: '{name} {name} {name}' })
+testGeneratedOutput('same-keyed-param', { SAME_KEYED_PARAM: '{name} {name} {name}' })
 
-wrapTest('only-plural-rules', { ONLY_PLURAL: 'apple{{s}}', ONLY_SINGULAR_PLURAL: '{{Afpel|Äpfel}}' })
+testGeneratedOutput('only-plural-rules', { ONLY_PLURAL: 'apple{{s}}', ONLY_SINGULAR_PLURAL: '{{Afpel|Äpfel}}' })
+
+// --------------------------------------------------------------------------------------------------------------------
 
 const tsTestTranslation = { TEST: 'Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}' }
 
-wrapTest('typescript3.0', tsTestTranslation, { tsVersion: TsVersion['>=3.0'] })
-wrapTest('typescript3.8', tsTestTranslation, { tsVersion: TsVersion['>=3.8'] })
-wrapTest('typescript4.1', tsTestTranslation, { tsVersion: TsVersion['>=4.1'] })
+testGeneratedOutput('typescript3.0', tsTestTranslation, { tsVersion: '>=3.0' })
+testGeneratedOutput('typescript3.8', tsTestTranslation, { tsVersion: '>=3.8' })
+testGeneratedOutput('typescript4.1', tsTestTranslation, { tsVersion: '>=4.1' })
+
+// --------------------------------------------------------------------------------------------------------------------
+
+testGeneratedConsoleOutput('consoleNoTranslations', {}, async (outputs) => {
+	assert.is(outputs.info.length, 0)
+	assert.is(outputs.error.length, 0)
+	assert.is(outputs.warn.length, 0)
+})
+
+testGeneratedConsoleOutput('consoleWrongIndex', { TEST: '{0} {2}' }, async (outputs) => {
+	assert.is(outputs.info.length, 0)
+	assert.is(outputs.error.length, 0)
+	assert.is(outputs.warn.length, 2)
+	assert.is(outputs.warn[0], "translation 'TEST' => argument {1} expected, but {2} found")
+	assert.is(outputs.warn[1], "translation 'TEST' => make sure to not skip an index")
+})
+
+testGeneratedConsoleOutput('consoleKeyedAndIndexBasedKeys', { TEST: '{hi} {0}' }, async (outputs) => {
+	assert.is(outputs.info.length, 0)
+	assert.is(outputs.error.length, 0)
+	assert.is(outputs.warn.length, 2)
+	assert.is(outputs.warn[0], "translation 'TEST' => argument {1} expected, but {hi} found")
+	assert.is(outputs.warn[1], "translation 'TEST' => you can't mix keyed and index-based args")
+})
 
 test.run()

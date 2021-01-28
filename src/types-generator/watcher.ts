@@ -5,7 +5,7 @@ import type { LangaugeBaseTranslation } from '../core/core'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './generator'
 import { copyFile, createPathIfNotExits, deleteFolderRecursive, getFiles, importFile } from './file-utils'
 import { generate, setDefaultConfigValuesIfMissing } from './generator'
-import { error, info } from './generator-util'
+import { logger } from './generator-util'
 
 const getAllLanguages = async (path: string) => {
 	const files = await getFiles(path, 1)
@@ -21,7 +21,7 @@ const transpileTypescriptAndPrepareImportFile = async (languageFilePath: string,
 
 	const copySuccess = await copyFile(compiledPath, copyPath)
 	if (!copySuccess) {
-		error('something went wrong')
+		logger.error('something went wrong')
 		return ''
 	}
 
@@ -47,7 +47,7 @@ const parseLanguageFile = async (
 	await deleteFolderRecursive(tempPath)
 
 	if (!languageImport) {
-		error(`could not read default export from language file '${locale}'`)
+		logger.error(`could not read default export from language file '${locale}'`)
 		return null
 	}
 
@@ -55,7 +55,7 @@ const parseLanguageFile = async (
 }
 
 const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues) => {
-	info(`watcher detected changes in baseLocale file`)
+	logger.info(`watcher detected changes in baseLocale file`)
 
 	const { baseLocale, locales: localesToUse, tempPath, outputPath } = config
 
@@ -70,7 +70,7 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues) => {
 
 	const languageFile = (locale && (await parseLanguageFile(outputPath, locale, tempPath))) || {}
 
-	await generate(languageFile, { ...config, baseLocale: locale, locales })
+	await generate(languageFile, { ...config, baseLocale: locale, locales }, logger)
 }
 
 let debounceCounter = 0
@@ -98,8 +98,8 @@ export const startWatcher = async (config: GeneratorConfig): Promise<void> => {
 
 	fs.watch(baseLocalePath, { recursive: true }, () => debonce(onChange))
 
-	info(`generating files for typescript version: '${tsVersion}.x'`)
-	info(`watcher started in: '${baseLocalePath}'`)
+	logger.info(`generating files for typescript version: '${tsVersion}.x'`)
+	logger.info(`watcher started in: '${baseLocalePath}'`)
 
 	onChange()
 }

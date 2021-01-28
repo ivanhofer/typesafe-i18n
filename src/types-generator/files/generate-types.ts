@@ -16,7 +16,7 @@ import type { ArgumentPart } from '../../core/parser'
 import { writeFileIfContainsChanges } from '../file-utils'
 import type { GeneratorConfigWithDefaultValues } from '../generator'
 import { removeEmptyValues, partsAsStringWithoutTypes, partAsStringWithoutTypes } from '../../core/core-utils'
-import { getPermutations, supportsTemplateLiteralTypes, warn } from '../generator-util'
+import { getPermutations, Logger, supportsTemplateLiteralTypes } from '../generator-util'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -70,10 +70,12 @@ const createUnionType = (entries: string[]) =>
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const parseTranslations = (translations: LangaugeBaseTranslation) =>
-	isObject(translations) ? Object.entries(translations).map(parseTanslationEntry) : []
+const parseTranslations = (translations: LangaugeBaseTranslation, logger: Logger) =>
+	isObject(translations)
+		? Object.entries(translations).map((translation) => parseTanslationEntry(translation, logger))
+		: []
 
-const parseTanslationEntry = ([key, text]: [string, string]): ParsedResult => {
+const parseTanslationEntry = ([key, text]: [string, string], logger: Logger): ParsedResult => {
 	const parsedParts = parseRawText(text)
 	const textWithoutTypes = partsAsStringWithoutTypes(parsedParts)
 
@@ -109,7 +111,7 @@ const parseTanslationEntry = ([key, text]: [string, string]): ParsedResult => {
 
 	args.sort(sortStringPropertyASC('key'))
 
-	checkForMissingArgs(key, types)
+	checkForMissingArgs(key, types, logger)
 
 	return removeEmptyValues({ key, text, textWithoutTypes, args, types })
 }
@@ -117,7 +119,7 @@ const parseTanslationEntry = ([key, text]: [string, string]): ParsedResult => {
 // display warning when wrong key found in translation
 //  - if keyed and index-based args are mixed together
 //  - index-based args have a missing index
-const checkForMissingArgs = (key: string, types: Types) => {
+const checkForMissingArgs = (key: string, types: Types, logger: Logger) => {
 	const base = `translation '${key}' =>`
 
 	const argKeys = Object.keys(types).sort(sortStringASC)
@@ -125,11 +127,11 @@ const checkForMissingArgs = (key: string, types: Types) => {
 		let expectedKey = '0'
 		argKeys.forEach((argKey) => {
 			if (argKey !== expectedKey) {
-				warn(`${base} argument {${expectedKey}} expected, but {${argKey}} found`)
+				logger.warn(`${base} argument {${expectedKey}} expected, but {${argKey}} found`)
 				if (isNaN(+argKey)) {
-					warn(`${base} you can't mix keyed and index-based args`)
+					logger.warn(`${base} you can't mix keyed and index-based args`)
 				} else {
-					warn(`${base} make sure to not skip an index`)
+					logger.warn(`${base} make sure to not skip an index`)
 				}
 			}
 			expectedKey = (+argKey + 1).toString()
@@ -376,8 +378,9 @@ const createFormatterType = (parsedTranslations: ParsedResult[]) => {
 const getTypes = (
 	{ translations, baseLocale, locales, typesTemplateFileName, tsVersion }: GenerateTypesType,
 	importType: string,
+	logger: Logger,
 ) => {
-	const parsedTranslations = parseTranslations(translations)
+	const parsedTranslations = parseTranslations(translations, logger)
 
 	const typeImports = createTypeImportsType(parsedTranslations, typesTemplateFileName, importType)
 
@@ -428,10 +431,14 @@ type GenerateTypesType = GeneratorConfigWithDefaultValues & {
 	translations: LangaugeBaseTranslation
 }
 
-export const generateTypes = async (config: GenerateTypesType, importType: string): Promise<boolean> => {
+export const generateTypes = async (
+	config: GenerateTypesType,
+	importType: string,
+	logger: Logger,
+): Promise<boolean> => {
 	const { outputPath, typesFileName } = config
 
-	const [types, hasCustomTypes] = getTypes(config, importType)
+	const [types, hasCustomTypes] = getTypes(config, importType, logger)
 
 	await writeFileIfContainsChanges(outputPath, typesFileName, types)
 

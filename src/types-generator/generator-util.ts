@@ -30,11 +30,21 @@ export const supportsImportType = (tsVersion: TsVersion): boolean =>
 
 // --------------------------------------------------------------------------------------------------------------------
 
-// eslint-disable-next-line no-console
-const logger = (type: 'info' | 'warn' | 'error', ...messages: string[]) => console[type]('[LANGAUGE]', ...messages)
+export type Logger = {
+	info: (...messages: string[]) => void
+	warn: (...messages: string[]) => void
+	error: (...messages: string[]) => void
+}
 
-export const info = logger.bind(null, 'info')
+const log = (console: Console, type: 'info' | 'warn' | 'error', ...messages: string[]) =>
+	console[type]('[LANGAUGE]', ...messages)
 
-export const warn = logger.bind(null, 'warn', 'WARNING:')
+export const createLogger = (console: Console): Logger => {
+	return {
+		info: log.bind(null, console, 'info'),
+		warn: log.bind(null, console, 'warn', 'WARNING:'),
+		error: log.bind(null, console, 'error', 'ERROR:'),
+	}
+}
 
-export const error = logger.bind(null, 'error', 'ERROR:')
+export const logger = createLogger(console)

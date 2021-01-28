@@ -5,7 +5,7 @@ import { generateSvelte } from './files/generate-svelte'
 import { generateFormattersTemplate } from './files/generate-template-formatters'
 import { generateCustomTypesTemplate } from './files/generate-template-types'
 import { generateBaseLocaleTemplate } from './files/generate-template-baseLocale'
-import { supportsImportType, TsVersion } from './generator-util'
+import { logger as defaultLogger, Logger, supportsImportType, TsVersion } from './generator-util'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -64,12 +64,13 @@ export const setDefaultConfigValuesIfMissing = (config: GeneratorConfig): Genera
 export const generate = async (
 	translations: LangaugeBaseTranslation,
 	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
+	logger: Logger = defaultLogger,
 ): Promise<void> => {
 	const importType = supportsImportType(config.tsVersion) ? ' type' : ''
 
 	await generateBaseLocaleTemplate(config, importType)
 
-	const hasCustomTypes = await generateTypes({ ...config, translations }, importType)
+	const hasCustomTypes = await generateTypes({ ...config, translations }, importType, logger)
 
 	await generateFormattersTemplate(config, importType)
 
