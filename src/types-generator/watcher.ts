@@ -5,6 +5,7 @@ import type { LangaugeBaseTranslation } from '../core/core'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './generator'
 import { copyFile, createPathIfNotExits, deleteFolderRecursive, getFiles, importFile } from './file-utils'
 import { generate, setDefaultConfigValuesIfMissing } from './generator'
+import { TsVersion } from './generator-util'
 
 const getAllLanguages = async (path: string) => {
 	const files = await getFiles(path, 1)
@@ -101,7 +102,7 @@ export const startWatcher = async (config: GeneratorConfig): Promise<void> => {
 	fs.watch(baseLocalePath, { recursive: true }, () => debonce(onChange))
 
 	// eslint-disable-next-line no-console
-	console.info(`[LANGAUGE] generating files for typescript version: '${tsVersion}.x'`)
+	console.info(`[LANGAUGE] generating files for typescript version: '${TsVersion[tsVersion]}.x'`)
 	// eslint-disable-next-line no-console
 	console.info(`[LANGAUGE] watcher started in: '${baseLocalePath}'`)
 

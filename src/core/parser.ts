@@ -35,7 +35,9 @@ const parseArgumentPart = (text: string): ArgumentPart => {
 	const [keyPart = '', ...formatterKeys] = text.split('|')
 
 	/* optimize-start */
-	return { k: keyPart, f: formatterKeys } as ArgumentPart
+	if (process.env.npm_lifecycle_event !== 'test') {
+		return { k: keyPart, f: formatterKeys } as ArgumentPart
+	}
 	/* optimize-end */
 
 	const [key = '', type] = keyPart.split(':')
@@ -84,7 +86,9 @@ export const parseRawText = (rawText: string, lastKey = '0'): Part[] =>
 			if (isString(part)) return part
 
 			/* optimize-start */
-			return removeEmptyValues(trimAllValues(part))
+			if (process.env.npm_lifecycle_event !== 'test') {
+				return removeEmptyValues(trimAllValues(part))
+			}
 			/* optimize-end */
 
 			//@ts-ignore

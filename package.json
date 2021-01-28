@@ -15,7 +15,6 @@
 	"license": "MIT",
 	"module": "esm/index.js",
 	"exports": {
-		"./package.json": "./package.json",
 		"./formatters": "./formatters/index.js",
 		"./formatters/*": "./formatters/*.js",
 		"./rollup/rollup-plugin-langauge-watcher": "./rollup/rollup-plugin-langauge-watcher.js",
@@ -26,11 +25,12 @@
 		".": {
 			"import": "./esm/index.js",
 			"require": "./cjs/index.js"
-		}
+		},
+		"./package.json": "./package.json"
 	},
 	"browser": "dist/index.min.js",
 	"main": "cjs/index.js",
-	"types": "cjs/index.d.ts",
+	"types": "esm/index.d.ts",
 	"files": [
 		"/cjs",
 		"/dist",
@@ -62,6 +62,7 @@
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^17.0.0",
 		"@rollup/plugin-node-resolve": "^11.1.0",
+		"@rollup/plugin-replace": "^2.3.4",
 		"@rollup/plugin-typescript": "^8.1.0",
 		"@size-limit/preset-small-lib": "^4.9.1",
 		"@types/node": "^14.14.22",

@@ -5,6 +5,7 @@ import * as assert from 'uvu/assert'
 import type { LangaugeBaseTranslation } from '../src'
 import { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../src/types-generator/generator'
 import { generate, setDefaultConfigValuesIfMissing } from '../src/types-generator/generator'
+import { TsVersion } from '../src/types-generator/generator-util'
 
 const { readFile } = promises
 
@@ -119,5 +120,11 @@ wrapTest('same-param', { SAME_PARAM: '{0} {0} {0}' })
 wrapTest('same-keyed-param', { SAME_KEYED_PARAM: '{name} {name} {name}' })
 
 wrapTest('only-plural-rules', { ONLY_PLURAL: 'apple{{s}}', ONLY_SINGULAR_PLURAL: '{{Afpel|Äpfel}}' })
+
+const tsTestTranslation = { TEST: 'Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}' }
+
+wrapTest('typescript3.0', tsTestTranslation, { tsVersion: TsVersion['>=3.0'] })
+wrapTest('typescript3.8', tsTestTranslation, { tsVersion: TsVersion['>=3.8'] })
+wrapTest('typescript4.1', tsTestTranslation, { tsVersion: TsVersion['>=4.1'] })
 
 test.run()

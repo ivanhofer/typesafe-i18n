@@ -1,0 +1,30 @@
+// This types were auto-generated. Any manual changes will be overwritten.
+/* eslint-disable */
+
+export type LangaugeBaseLocale = 'en'
+
+export type LangaugeLocale =
+	| 'en'
+
+export type LangaugeTranslationKeys =
+	| 'TEST'
+
+export type LangaugeTranslation = {
+	/**
+	 * Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}
+	 * @param {unknown} name
+	 * @param {string | number | boolean} nrOfApples
+	 */
+	'TEST': string
+}
+
+export type LangaugeTranslationArgs = {
+	/**
+	 * Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}
+	 */
+	'TEST': (arg: { name: unknown, nrOfApples: string | number | boolean }) => string
+}
+
+export type LangaugeFormatters = {}
+
+export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters

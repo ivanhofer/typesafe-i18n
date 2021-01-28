@@ -18,8 +18,6 @@ export enum TsVersion {
 	'>=4.1', // supports template literal types
 }
 
-export const supportsTemplateLiteralTypes = (tsVersion: TsVersion): boolean =>
-	((TsVersion[tsVersion] as unknown) as TsVersion) >= TsVersion['>=4.1']
+export const supportsTemplateLiteralTypes = (tsVersion: TsVersion): boolean => tsVersion >= TsVersion['>=4.1']
 
-export const supportsImportType = (tsVersion: TsVersion): boolean =>
-	((TsVersion[tsVersion] as unknown) as TsVersion) >= TsVersion['>=3.8']
+export const supportsImportType = (tsVersion: TsVersion): boolean => tsVersion >= TsVersion['>=3.8']

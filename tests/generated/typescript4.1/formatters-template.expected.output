@@ -1,0 +1,9 @@
+import type { LangaugeFormatters, LangaugeFormattersInitializer } from './typescript4.1/types.actual.output'
+
+export const initFormatters: LangaugeFormattersInitializer = (locale) => {
+	const formatters: LangaugeFormatters = {
+		// add your formatter functions here
+	}
+
+	return formatters
+}

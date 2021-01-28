@@ -1,10 +1,16 @@
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
+import replace from '@rollup/plugin-replace'
 import { terser } from 'rollup-plugin-terser'
 
 const wrap = (type) => (type ? `.${type}` : '')
 
-const getPlugins = (minify) => [resolve(), typescript(), minify && terser()]
+const getPlugins = (minify) => [
+	replace({ 'process.env.npm_lifecycle_event': "'build'" }),
+	resolve(),
+	typescript(),
+	minify && terser(),
+]
 
 const iifeConfig = (type, minify = false) => ({
 	input: `./src/browser${wrap(type)}.ts`,
@@ -12,7 +18,7 @@ const iifeConfig = (type, minify = false) => ({
 		{
 			file: `dist/langauge${wrap(type)}${minify ? '.min' : ''}.js`,
 			format: 'iife',
-			sourcemap: true,
+			sourcemap: !minify,
 		},
 	],
 	plugins: getPlugins(minify),
