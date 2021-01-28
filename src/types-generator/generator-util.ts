@@ -1,3 +1,5 @@
+import { TsVersion } from './generator'
+
 export const getPermutations = <T>(rest: T[], permutatedArray: T[] = []): T[][] => {
 	if (rest.length === 0) {
 		return [permutatedArray]
@@ -11,3 +13,6 @@ export const getPermutations = <T>(rest: T[], permutatedArray: T[] = []): T[][] 
 		})
 		.flat()
 }
+
+export const supportsTemplateLiteralTypes = (tsVersion: TsVersion): boolean =>
+	((TsVersion[tsVersion] as unknown) as TsVersion) >= TsVersion['>=4.1']

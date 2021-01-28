@@ -10,6 +10,22 @@ import { generateBaseLocaleTemplate } from './files/generate-template-baseLocale
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
+// const parseVersion = (version: TsVersion): TsVersionInfo => {
+// 	const [major, minor] = version.split('.').map((nr) => parseInt(nr)) as [number, number]
+
+// 	return {
+// 		major,
+// 		minor,
+// 	}
+// }
+
+export enum TsVersion {
+	'>=3.0',
+	'>=4.1',
+}
+
+// export type TsVersion =
+
 export type GeneratorConfig = {
 	baseLocale?: string
 	locales?: string[]
@@ -23,6 +39,8 @@ export type GeneratorConfig = {
 
 	svelte?: boolean | string
 	lazyLoad?: boolean
+
+	tsVersion?: TsVersion
 }
 
 export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
@@ -35,6 +53,7 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 	formattersTemplateFileName: string
 	typesTemplateFileName: string
 	lazyLoad: boolean
+	tsVersion: TsVersion
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -51,6 +70,7 @@ export const setDefaultConfigValuesIfMissing = (config: GeneratorConfig): Genera
 	formattersTemplateFileName: 'formatters',
 	typesTemplateFileName: 'custom-types',
 	lazyLoad: true,
+	tsVersion: TsVersion['>=4.1'],
 	...config,
 })
 

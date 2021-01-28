@@ -13,9 +13,9 @@ import { parseRawText } from '../../core/parser'
 import { isPluralPart, LangaugeBaseTranslation } from '../../core/core'
 import type { ArgumentPart } from '../../core/parser'
 import { writeFileIfContainsChanges } from '../file-utils'
-import { GeneratorConfigWithDefaultValues } from '../generator'
+import type { GeneratorConfigWithDefaultValues } from '../generator'
 import { removeEmptyValues, partsAsStringWithoutTypes, partAsStringWithoutTypes } from '../../core/core-utils'
-import { getPermutations } from '../generator-util'
+import { getPermutations, supportsTemplateLiteralTypes } from '../generator-util'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -191,6 +191,7 @@ const createTranslationType = (
 	parsedTranslations: ParsedResult[],
 	jsDocInfo: JsDocInfos,
 	paramTypesToGenerate: number[],
+	generateTemplateLiteralTypes: boolean,
 ) =>
 	`export type LangaugeTranslation = ${wrapObjectType(parsedTranslations, () =>
 		parsedTranslations
@@ -200,6 +201,7 @@ const createTranslationType = (
 	${createJsDocsString(jsDocInfo[key] as JsDocInfo, true)}'${key}': ${generateTranslationType(
 						paramTypesToGenerate,
 						args,
+						generateTemplateLiteralTypes,
 					)}`,
 			)
 			.join(''),
@@ -207,7 +209,11 @@ const createTranslationType = (
 
 const REGEX_BRACKETS = /[{}]/g
 
-const generateTranslationType = (paramTypesToGenerate: number[], args: Arg[]) => {
+const generateTranslationType = (
+	paramTypesToGenerate: number[],
+	args: Arg[],
+	generateTemplateLiteralTypes: boolean,
+) => {
 	const argStrings = args.map(({ key, formatters }) =>
 		partAsStringWithoutTypes({ k: key, f: formatters }).replace(REGEX_BRACKETS, ''),
 	)
@@ -215,7 +221,9 @@ const generateTranslationType = (paramTypesToGenerate: number[], args: Arg[]) =>
 	const nrOfArgs = argStrings.length
 	paramTypesToGenerate.push(nrOfArgs)
 
-	return nrOfArgs ? `RequiredParams${nrOfArgs}<${argStrings.map((arg) => `'${arg}'`).join(', ')}>` : 'string'
+	return generateTemplateLiteralTypes && nrOfArgs
+		? `RequiredParams${nrOfArgs}<${argStrings.map((arg) => `'${arg}'`).join(', ')}>`
+		: 'string'
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -336,7 +344,7 @@ const createFormatterType = (parsedTranslations: ParsedResult[]) => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const getTypes = ({ translations, baseLocale, locales, typesTemplateFileName }: GenerateTypesType) => {
+const getTypes = ({ translations, baseLocale, locales, typesTemplateFileName, tsVersion }: GenerateTypesType) => {
 	const parsedTranslations = parseTranslations(translations)
 
 	const typeImports = createTypeImportsType(parsedTranslations, typesTemplateFileName)
@@ -348,9 +356,15 @@ const getTypes = ({ translations, baseLocale, locales, typesTemplateFileName }: 
 	const jsDocsInfo = createJsDocsMapping(parsedTranslations)
 
 	const paramTypesToGenerate: number[] = []
-	const translationType = createTranslationType(parsedTranslations, jsDocsInfo, paramTypesToGenerate)
+	const generateTemplateLiteralTypes = supportsTemplateLiteralTypes(tsVersion)
+	const translationType = createTranslationType(
+		parsedTranslations,
+		jsDocsInfo,
+		paramTypesToGenerate,
+		generateTemplateLiteralTypes,
+	)
 
-	const paramsType = generateParamsType(paramTypesToGenerate)
+	const paramsType = generateTemplateLiteralTypes ? generateParamsType(paramTypesToGenerate) : ''
 
 	const translationArgsType = createTranslationArgsType(parsedTranslations, jsDocsInfo)
 

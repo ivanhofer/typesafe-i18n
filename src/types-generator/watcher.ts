@@ -57,7 +57,7 @@ const parseLanguageFile = async (
 
 const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues) => {
 	// eslint-disable-next-line no-console
-	console.info(`[LANGAUGE] watcher detected changes`)
+	console.info(`[LANGAUGE] watcher detected changes in baseLocale file`)
 
 	const { baseLocale, locales: localesToUse, tempPath, outputPath } = config
 
@@ -88,7 +88,7 @@ const debonce = (callback: () => void) =>
 
 export const startWatcher = async (config: GeneratorConfig): Promise<void> => {
 	const configWithDefaultValues = setDefaultConfigValuesIfMissing(config)
-	const { outputPath } = configWithDefaultValues
+	const { outputPath, tsVersion } = configWithDefaultValues
 
 	const onChange = parseAndGenerate.bind(null, configWithDefaultValues)
 
@@ -98,6 +98,8 @@ export const startWatcher = async (config: GeneratorConfig): Promise<void> => {
 
 	fs.watch(baseLocalePath, { recursive: true }, () => debonce(onChange))
 
+	// eslint-disable-next-line no-console
+	console.info(`[LANGAUGE] generating files for typescript version: '${tsVersion}.x'`)
 	// eslint-disable-next-line no-console
 	console.info(`[LANGAUGE] watcher started in: '${baseLocalePath}'`)
 
