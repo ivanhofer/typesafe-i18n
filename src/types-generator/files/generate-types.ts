@@ -1,6 +1,7 @@
 import {
 	filterDuplicates,
 	filterDuplicatesByKey,
+	isArrayNotEmpty,
 	isNotUndefined,
 	isNotZero,
 	isObject,
@@ -15,7 +16,7 @@ import type { ArgumentPart } from '../../core/parser'
 import { writeFileIfContainsChanges } from '../file-utils'
 import type { GeneratorConfigWithDefaultValues } from '../generator'
 import { removeEmptyValues, partsAsStringWithoutTypes, partAsStringWithoutTypes } from '../../core/core-utils'
-import { getPermutations, supportsTemplateLiteralTypes } from '../generator-util'
+import { getPermutations, supportsTemplateLiteralTypes, warn } from '../generator-util'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -108,9 +109,33 @@ const parseTanslationEntry = ([key, text]: [string, string]): ParsedResult => {
 
 	args.sort(sortStringPropertyASC('key'))
 
+	checkForMissingArgs(key, types)
+
 	return removeEmptyValues({ key, text, textWithoutTypes, args, types })
 }
 
+// display warning when wrong key found in translation
+//  - if keyed and index-based args are mixed together
+//  - index-based args have a missing index
+const checkForMissingArgs = (key: string, types: Types) => {
+	const base = `translation '${key}' =>`
+
+	const argKeys = Object.keys(types).sort(sortStringASC)
+	if (isArrayNotEmpty(argKeys) && !isNaN(+argKeys[0])) {
+		let expectedKey = '0'
+		argKeys.forEach((argKey) => {
+			if (argKey !== expectedKey) {
+				warn(`${base} argument {${expectedKey}} expected, but {${argKey}} found`)
+				if (isNaN(+argKey)) {
+					warn(`${base} you can't mix keyed and index-based args`)
+				} else {
+					warn(`${base} make sure to not skip an index`)
+				}
+			}
+			expectedKey = (+argKey + 1).toString()
+		})
+	}
+}
 // --------------------------------------------------------------------------------------------------------------------
 
 const createLocalesType = (locales: string[], baseLocale: string) => {

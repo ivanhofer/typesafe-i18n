@@ -5,7 +5,7 @@ import type { LangaugeBaseTranslation } from '../core/core'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './generator'
 import { copyFile, createPathIfNotExits, deleteFolderRecursive, getFiles, importFile } from './file-utils'
 import { generate, setDefaultConfigValuesIfMissing } from './generator'
-import { TsVersion } from './generator-util'
+import { error, info } from './generator-util'
 
 const getAllLanguages = async (path: string) => {
 	const files = await getFiles(path, 1)
@@ -21,8 +21,7 @@ const transpileTypescriptAndPrepareImportFile = async (languageFilePath: string,
 
 	const copySuccess = await copyFile(compiledPath, copyPath)
 	if (!copySuccess) {
-		// eslint-disable-next-line no-console
-		console.error(`[LANGAUGE] ERROR: something went wrong`)
+		error('something went wrong')
 		return ''
 	}
 
@@ -48,8 +47,7 @@ const parseLanguageFile = async (
 	await deleteFolderRecursive(tempPath)
 
 	if (!languageImport) {
-		// eslint-disable-next-line no-console
-		console.error(`[LANGAUGE] ERROR: could not read default export from language file '${locale}'`)
+		error(`could not read default export from language file '${locale}'`)
 		return null
 	}
 
@@ -57,8 +55,7 @@ const parseLanguageFile = async (
 }
 
 const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues) => {
-	// eslint-disable-next-line no-console
-	console.info(`[LANGAUGE] watcher detected changes in baseLocale file`)
+	info(`watcher detected changes in baseLocale file`)
 
 	const { baseLocale, locales: localesToUse, tempPath, outputPath } = config
 
@@ -101,10 +98,8 @@ export const startWatcher = async (config: GeneratorConfig): Promise<void> => {
 
 	fs.watch(baseLocalePath, { recursive: true }, () => debonce(onChange))
 
-	// eslint-disable-next-line no-console
-	console.info(`[LANGAUGE] generating files for typescript version: '${TsVersion[tsVersion]}.x'`)
-	// eslint-disable-next-line no-console
-	console.info(`[LANGAUGE] watcher started in: '${baseLocalePath}'`)
+	info(`generating files for typescript version: '${tsVersion}.x'`)
+	info(`watcher started in: '${baseLocalePath}'`)
 
 	onChange()
 }

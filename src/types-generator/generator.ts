@@ -57,7 +57,7 @@ export const setDefaultConfigValuesIfMissing = (config: GeneratorConfig): Genera
 	formattersTemplateFileName: 'formatters',
 	typesTemplateFileName: 'custom-types',
 	lazyLoad: true,
-	tsVersion: TsVersion['>=4.1'],
+	tsVersion: '>=4.1',
 	...config,
 })
 
