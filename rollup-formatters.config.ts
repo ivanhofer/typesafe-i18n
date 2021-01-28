@@ -19,7 +19,7 @@ const config = files
 		plugins: [
 			resolve(),
 			typescript({
-				tsconfig: 'tsconfig-formatters.json',
+				tsconfig: './tsconfig-formatters.json',
 				declaration: true,
 			}),
 			terser(),

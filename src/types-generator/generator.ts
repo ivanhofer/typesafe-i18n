@@ -5,17 +5,11 @@ import { generateSvelte } from './files/generate-svelte'
 import { generateFormattersTemplate } from './files/generate-template-formatters'
 import { generateCustomTypesTemplate } from './files/generate-template-types'
 import { generateBaseLocaleTemplate } from './files/generate-template-baseLocale'
-import { supportsImportType } from './generator-util'
+import { supportsImportType, TsVersion } from './generator-util'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
-
-export enum TsVersion {
-	'>=3.0', // baseline support
-	'>=3.8', // supports import type
-	'>=4.1', // supports template literal types
-}
 
 // export type TsVersion =
 
@@ -71,7 +65,7 @@ export const generate = async (
 	translations: LangaugeBaseTranslation,
 	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
 ): Promise<void> => {
-	const importType = supportsImportType(config.tsVersion) ? 'type ' : ''
+	const importType = supportsImportType(config.tsVersion) ? ' type' : ''
 
 	await generateBaseLocaleTemplate(config, importType)
 

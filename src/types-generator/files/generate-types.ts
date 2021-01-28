@@ -73,7 +73,7 @@ const parseTranslations = (translations: LangaugeBaseTranslation) =>
 	isObject(translations) ? Object.entries(translations).map(parseTanslationEntry) : []
 
 const parseTanslationEntry = ([key, text]: [string, string]): ParsedResult => {
-	const parsedParts = parseRawText(text, false)
+	const parsedParts = parseRawText(text)
 	const textWithoutTypes = partsAsStringWithoutTypes(parsedParts)
 
 	const parsedObjects = parsedParts.filter(isObject)

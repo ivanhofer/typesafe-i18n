@@ -6,12 +6,13 @@ import stripCode from 'rollup-plugin-strip-code'
 
 const config = [
 	{
-		input: './src/node-watcher.ts',
+		input: './src/rollup-plugin-langauge-watcher.ts',
 		output: [
 			{
-				file: 'node/watcher.js',
+				file: 'rollup/rollup-plugin-langauge-watcher.js',
 				format: 'cjs',
 				sourcemap: true,
+				exports: 'named',
 			},
 		],
 		plugins: [
@@ -19,8 +20,8 @@ const config = [
 				start_comment: 'optimize-start',
 				end_comment: 'optimize-end',
 			}),
-			resolve({ preferBuiltins: true }),
 			commonjs(),
+			resolve({ preferBuiltins: true }),
 			externals(),
 			typescript(),
 		],

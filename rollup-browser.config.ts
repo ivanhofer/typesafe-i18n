@@ -4,6 +4,8 @@ import { terser } from 'rollup-plugin-terser'
 
 const wrap = (type) => (type ? `.${type}` : '')
 
+const getPlugins = (minify) => [resolve(), typescript(), minify && terser()]
+
 const iifeConfig = (type, minify = false) => ({
 	input: `./src/browser${wrap(type)}.ts`,
 	output: [
@@ -13,7 +15,7 @@ const iifeConfig = (type, minify = false) => ({
 			sourcemap: true,
 		},
 	],
-	plugins: [resolve(), typescript(), minify && terser()],
+	plugins: getPlugins(minify),
 })
 
 const getIifeConfigs = (type) => [iifeConfig(type), iifeConfig(type, true)]
@@ -27,7 +29,7 @@ const esmConfig = (minify = false) => ({
 			sourcemap: true,
 		},
 	],
-	plugins: [resolve(), typescript(), minify && terser()],
+	plugins: getPlugins(minify),
 })
 
 export default [
