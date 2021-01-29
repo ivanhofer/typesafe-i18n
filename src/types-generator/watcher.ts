@@ -1,6 +1,6 @@
 import * as ts from 'typescript'
 import fs from 'fs'
-import { join, resolve } from 'path'
+import path, { join, resolve } from 'path'
 import type { LangaugeBaseTranslation } from '../core/core'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './generator'
 import { copyFile, createPathIfNotExits, deleteFolderRecursive, getFiles, importFile } from './file-utils'
@@ -84,7 +84,11 @@ const debonce = (callback: () => void) =>
 		++debounceCounter,
 	)
 
-export const startWatcher = async (config: GeneratorConfig): Promise<void> => {
+export const startWatcher = async (config?: GeneratorConfig): Promise<void> => {
+	if (!config) {
+		config = (await importFile<GeneratorConfig>(path.resolve('.langauge.json'), false)) || {}
+	}
+
 	const configWithDefaultValues = setDefaultConfigValuesIfMissing(config)
 	const { outputPath, tsVersion } = configWithDefaultValues
 

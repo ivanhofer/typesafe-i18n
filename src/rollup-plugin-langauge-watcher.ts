@@ -4,7 +4,7 @@ import type { GeneratorConfig } from './types-generator/generator'
 
 let started = false
 
-const plugin = (config: GeneratorConfig = {}): Plugin => {
+const plugin = (config?: GeneratorConfig): Plugin => {
 	return {
 		name: 'rollup-plugin-langauge-watcher',
 		buildStart() {
