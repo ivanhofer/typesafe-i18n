@@ -32,14 +32,14 @@ export const langaugeLoaderAsync = async <
 	F extends Formatters = Formatters
 >(
 	locale: L,
-	getTranslationFromLocale: (locale: L) => Promise<T>,
+	getTranslationForLocale: (locale: L) => Promise<T>,
 	formattersInitializer: LangaugeFormatterInitializer<L, F>,
 ): Promise<A> => {
 	if (langaugeInstancesCache[locale]) {
 		return langaugeInstancesCache[locale]
 	}
 
-	const foundTranslation = await getTranslationFromLocale(locale)
+	const foundTranslation = await getTranslationForLocale(locale)
 	if (!foundTranslation) {
 		throw new Error(`[LANGAUGE] ERROR: could not find locale '${locale}'`)
 	}
@@ -60,14 +60,14 @@ export const langaugeLoader = <
 	F extends Formatters = Formatters
 >(
 	locale: L,
-	getTranslationFromLocale: (locale: L) => T,
+	getTranslationForLocale: (locale: L) => T,
 	formattersInitializer: LangaugeFormatterInitializer<L, F>,
 ): A => {
 	if (langaugeInstancesCache[locale]) {
 		return langaugeInstancesCache[locale]
 	}
 
-	const foundTranslation = getTranslationFromLocale(locale)
+	const foundTranslation = getTranslationForLocale(locale)
 	if (!foundTranslation) {
 		throw new Error(`[LANGAUGE] ERROR: could not find locale '${locale}'`)
 	}

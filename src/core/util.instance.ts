@@ -9,11 +9,11 @@ export const langauge = <
 	A extends object = TranslatorFn<T>,
 	F extends Formatters = Formatters
 >(
-	getTranslationFromLocale: (locale: L) => T,
+	getTranslationForLocale: (locale: L) => T,
 	formattersInitializer: LangaugeFormatterInitializer<L, F>,
 ): LocaleTranslationFns<L, A> => {
 	return new Proxy<LocaleTranslationFns<L, A>>({} as LocaleTranslationFns<L, A>, {
 		get: (_target, locale: L): A | null =>
-			langaugeLoader<L, T, A, F>(locale, getTranslationFromLocale, formattersInitializer),
+			langaugeLoader<L, T, A, F>(locale, getTranslationForLocale, formattersInitializer),
 	})
 }

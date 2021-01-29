@@ -26,26 +26,26 @@ const formatters = {
 	noSpaces: (value: string) => value.replace(/\s/g, ''),
 }
 
-const LL = langaugeStringWrapper('en', formatters)
+const LLL = langaugeStringWrapper('en', formatters)
 
-test('LL uppercase', () => assert.is(LL('This is a {0|uppercase}', 'test'), 'This is a TEST'))
+test('LLL uppercase', () => assert.is(LLL('This is a {0|uppercase}', 'test'), 'This is a TEST'))
 
-const LLL = langaugeObjectWrapper('en', translation, formatters)
+const LL = langaugeObjectWrapper('en', translation, formatters)
 
 const someDate = new Date('2020-03-13')
 
-test('uppercase', () => assert.is(LLL.UPPERCASE('test'), 'This is a TEST.'))
+test('uppercase', () => assert.is(LL.UPPERCASE('test'), 'This is a TEST.'))
 
-test('manual uppercase', () => assert.is(LLL.MANUAL_UPPERCASE('big'), 'I AM BIG.'))
+test('manual uppercase', () => assert.is(LL.MANUAL_UPPERCASE('big'), 'I AM BIG.'))
 
-test('lowercase', () => assert.is(LLL.LOWERCASE('SMALL'), 'This should be small.'))
+test('lowercase', () => assert.is(LL.LOWERCASE('SMALL'), 'This should be small.'))
 
-test('censor numbers', () => assert.is(LLL.CENSOR_NUMBERS('1234'), 'Your PIN is ****'))
+test('censor numbers', () => assert.is(LL.CENSOR_NUMBERS('1234'), 'Your PIN is ****'))
 
-test('date en', () => assert.is(LLL.DATE_EN(someDate), 'The date is 3/13/2020.'))
+test('date en', () => assert.is(LL.DATE_EN(someDate), 'The date is 3/13/2020.'))
 
-test('date custom', () => assert.is(LLL.DATE_CUSTOM(someDate), 'The date is March 13, 20.'))
+test('date custom', () => assert.is(LL.DATE_CUSTOM(someDate), 'The date is March 13, 20.'))
 
-test('no spaces', () => assert.is(LLL.NO_SPACES('some text with no spaces'), 'sometextwithnospaces'))
+test('no spaces', () => assert.is(LL.NO_SPACES('some text with no spaces'), 'sometextwithnospaces'))
 
 test.run()

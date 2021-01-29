@@ -6,8 +6,8 @@ import { langaugeLoader, langaugeLoaderAsync } from './core/util.loader'
 //@ts-ignore
 window.langauge = {
 	init: langauge,
-	initlangaugeStringWrapper: langaugeStringWrapper,
-	initlangaugeObjectWrapper: langaugeObjectWrapper,
-	initLangaugeLoader: langaugeLoader,
-	initLangaugeLoaderAsync: langaugeLoaderAsync,
+	initStringWrapper: langaugeStringWrapper,
+	initObjectWrapper: langaugeObjectWrapper,
+	initLoader: langaugeLoader,
+	initLoaderAsync: langaugeLoaderAsync,
 }

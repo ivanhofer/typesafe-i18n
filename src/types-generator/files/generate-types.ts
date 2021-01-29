@@ -159,7 +159,7 @@ const BASE_TYPES = [
 	'unknown',
 ].flatMap((t: string) => [t, `${t}[]`])
 
-const createTypeImportsType = (
+const createTypeImports = (
 	parsedTranslations: ParsedResult[],
 	typesTemplatePath: string,
 	importType: string,
@@ -259,7 +259,7 @@ const generateTranslationType = (
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const generateParamsType = (paramTypesToGenerate: number[]) => {
+const createParamsType = (paramTypesToGenerate: number[]) => {
 	const filteredParamTypes = paramTypesToGenerate.filter(filterDuplicates).filter(isNotZero).sort(sortNumberASC)
 
 	if (filteredParamTypes.length === 0) {
@@ -359,7 +359,7 @@ const getUniqueFormatters = (parsedTranslations: ParsedResult[]): [string, strin
 	return Object.entries(map).sort(sortStringPropertyASC('0'))
 }
 
-const createFormatterType = (parsedTranslations: ParsedResult[]) => {
+const createFormattersType = (parsedTranslations: ParsedResult[]) => {
 	const formatters = getUniqueFormatters(parsedTranslations)
 
 	return `export type LangaugeFormatters = ${wrapObjectType(formatters, () =>
@@ -382,7 +382,7 @@ const getTypes = (
 ) => {
 	const parsedTranslations = parseTranslations(translations, logger)
 
-	const typeImports = createTypeImportsType(parsedTranslations, typesTemplateFileName, importType)
+	const typeImports = createTypeImports(parsedTranslations, typesTemplateFileName, importType)
 
 	const localesType = createLocalesType(locales, baseLocale)
 
@@ -390,8 +390,9 @@ const getTypes = (
 
 	const jsDocsInfo = createJsDocsMapping(parsedTranslations)
 
-	const paramTypesToGenerate: number[] = []
 	const generateTemplateLiteralTypes = supportsTemplateLiteralTypes(tsVersion)
+
+	const paramTypesToGenerate: number[] = []
 	const translationType = createTranslationType(
 		parsedTranslations,
 		jsDocsInfo,
@@ -399,14 +400,13 @@ const getTypes = (
 		generateTemplateLiteralTypes,
 	)
 
-	const paramsType = generateTemplateLiteralTypes ? generateParamsType(paramTypesToGenerate) : ''
+	const paramsType = generateTemplateLiteralTypes ? createParamsType(paramTypesToGenerate) : ''
 
 	const translationArgsType = createTranslationArgsType(parsedTranslations, jsDocsInfo)
 
-	const formattersType = createFormatterType(parsedTranslations)
+	const formattersType = createFormattersType(parsedTranslations)
 
-	return [
-		`// This types were auto-generated. Any manual changes will be overwritten.
+	const type = `// This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 ${typeImports}
 export type LangaugeBaseLocale = '${baseLocale}'
@@ -422,9 +422,9 @@ ${translationArgsType}
 ${formattersType}
 
 export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters
-${paramsType}`,
-		!!typeImports,
-	] as [string, boolean]
+${paramsType}`
+
+	return [type, !!typeImports] as [string, boolean]
 }
 
 type GenerateTypesType = GeneratorConfigWithDefaultValues & {

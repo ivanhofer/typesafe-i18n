@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-
 import { isBoolean } from 'typesafe-utils'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generator'
@@ -10,9 +8,9 @@ const getSvelteStore = (
 		baseLocale,
 		formattersTemplateFileName: formattersTemplatePath,
 		typesFileName: typesFile,
-		utilFileName: utilFile
+		utilFileName: utilFile,
 	}: GeneratorConfigWithDefaultValues,
-	importType: string
+	importType: string,
 ) => {
 	return `// This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
@@ -21,10 +19,10 @@ import { langaugeObjectWrapper } from 'langauge';
 import${importType} { Readable, Writable } from 'svelte/store';
 import { derived, writable } from 'svelte/store';
 import${importType} { LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeTranslationKeys } from './${typesFile}'
-import { getTranslationFromLocale } from './${utilFile}'
+import { getTranslationForLocale } from './${utilFile}'
 import { initFormatters } from './${formattersTemplatePath}'
 
-const currentLocale = writable<LangaugeLocale>(null)
+const currentLocale = writable<LangaugeLocale>('' as LangaugeLocale)
 
 const isLoading = writable<boolean>(true)
 
@@ -32,33 +30,33 @@ let langaugeInstance = new Proxy({} as LangaugeTranslationArgs, { get: (_target,
 
 const langaugeInstanceStore = writable<LangaugeTranslationArgs>(langaugeInstance)
 
-export const init = (locale: LangaugeLocale = '${baseLocale}') => setLocale(locale)
+export const initLangauge = (newlocale: LangaugeLocale = '${baseLocale}') => setLocale(newlocale)
 
-export const setLocale = ${lazyLoad ? 'async ' : ''}(locale: LangaugeLocale) => {
-	if (!locale) return
+export const setLocale = ${lazyLoad ? 'async ' : ''}(newlocale: LangaugeLocale) => {
+	if (!newlocale) return
 
 	isLoading.set(true)
 
-	const langaugeTranslation: LangaugeTranslation = ${lazyLoad ? 'await ' : ''}getTranslationFromLocale(locale)
-	langaugeInstance = langaugeObjectWrapper(locale, langaugeTranslation, initFormatters(locale))
+	const langaugeTranslation: LangaugeTranslation = ${lazyLoad ? 'await ' : ''}getTranslationForLocale(newlocale)
+	langaugeInstance = langaugeObjectWrapper(newlocale, langaugeTranslation, initFormatters(newlocale))
 	langaugeInstanceStore.set(langaugeInstance)
 
-	currentLocale.set(locale)
+	currentLocale.set(newlocale)
 
 	isLoading.set(false)
 }
 
-export const selectedLocale = derived<Writable<LangaugeLocale>, LangaugeLocale>(currentLocale, (locale) => locale)
+export const locale = derived<Writable<LangaugeLocale>, LangaugeLocale>(currentLocale, (newlocale) => newlocale)
 
-export const localeLoading = derived<Writable<boolean>, boolean>(isLoading, (loading: boolean, set: (value: boolean) => void) => set(loading))
+export const isLoadingLocale = derived<Writable<boolean>, boolean>(isLoading, (loading: boolean, set: (value: boolean) => void) => set(loading))
 
-export const LLL = new Proxy({} as Readable<LangaugeTranslationArgs> & LangaugeTranslationArgs, {
+export const LL = new Proxy({} as Readable<LangaugeTranslationArgs> & LangaugeTranslationArgs, {
 	get: (_target, key: LangaugeTranslationKeys & 'subscribe') => key === 'subscribe'
 		? langaugeInstanceStore.subscribe
 		: langaugeInstance[key]
 })
 
-export default LLL
+export default LL
 `
 }
 

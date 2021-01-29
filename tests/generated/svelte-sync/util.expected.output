@@ -21,8 +21,8 @@ const localeTranslations: LocaleTranslations<LangaugeLocale, LangaugeTranslation
 	en: en as LangaugeTranslation,
 }
 
-export const getTranslationFromLocale = (locale: LangaugeLocale) => localeTranslations[locale]
+export const getTranslationForLocale = (locale: LangaugeLocale) => localeTranslations[locale]
 
-export const getLangauge = () => langauge<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(getTranslationFromLocale, initFormatters)
+export const initLangaugeForLocale = (locale: LangaugeLocale) => langaugeLoader<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, getTranslationForLocale, initFormatters)
 
-export const getLangaugeForLocale = (locale: LangaugeLocale) => langaugeLoader<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, getTranslationFromLocale, initFormatters)
+export const initLangauge = () => langauge<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(getTranslationForLocale, initFormatters)

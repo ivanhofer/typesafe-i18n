@@ -5,10 +5,10 @@ import { langaugeObjectWrapper } from 'langauge';
 import type { Readable, Writable } from 'svelte/store';
 import { derived, writable } from 'svelte/store';
 import type { LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeTranslationKeys } from './svelte-async/types.actual.output'
-import { getTranslationFromLocale } from './svelte-async/util.actual.output'
+import { getTranslationForLocale } from './svelte-async/util.actual.output'
 import { initFormatters } from './svelte-async/formatters-template.actual.output'
 
-const currentLocale = writable<LangaugeLocale>(null)
+const currentLocale = writable<LangaugeLocale>('' as LangaugeLocale)
 
 const isLoading = writable<boolean>(true)
 
@@ -16,30 +16,30 @@ let langaugeInstance = new Proxy({} as LangaugeTranslationArgs, { get: (_target,
 
 const langaugeInstanceStore = writable<LangaugeTranslationArgs>(langaugeInstance)
 
-export const init = (locale: LangaugeLocale = 'en') => setLocale(locale)
+export const initLangauge = (newlocale: LangaugeLocale = 'en') => setLocale(newlocale)
 
-export const setLocale = async (locale: LangaugeLocale) => {
-	if (!locale) return
+export const setLocale = async (newlocale: LangaugeLocale) => {
+	if (!newlocale) return
 
 	isLoading.set(true)
 
-	const langaugeTranslation: LangaugeTranslation = await getTranslationFromLocale(locale)
-	langaugeInstance = langaugeObjectWrapper(locale, langaugeTranslation, initFormatters(locale))
+	const langaugeTranslation: LangaugeTranslation = await getTranslationForLocale(newlocale)
+	langaugeInstance = langaugeObjectWrapper(newlocale, langaugeTranslation, initFormatters(newlocale))
 	langaugeInstanceStore.set(langaugeInstance)
 
-	currentLocale.set(locale)
+	currentLocale.set(newlocale)
 
 	isLoading.set(false)
 }
 
-export const selectedLocale = derived<Writable<LangaugeLocale>, LangaugeLocale>(currentLocale, (locale) => locale)
+export const locale = derived<Writable<LangaugeLocale>, LangaugeLocale>(currentLocale, (newlocale) => newlocale)
 
-export const localeLoading = derived<Writable<boolean>, boolean>(isLoading, (loading: boolean, set: (value: boolean) => void) => set(loading))
+export const isLoadingLocale = derived<Writable<boolean>, boolean>(isLoading, (loading: boolean, set: (value: boolean) => void) => set(loading))
 
-export const LLL = new Proxy({} as Readable<LangaugeTranslationArgs> & LangaugeTranslationArgs, {
+export const LL = new Proxy({} as Readable<LangaugeTranslationArgs> & LangaugeTranslationArgs, {
 	get: (_target, key: LangaugeTranslationKeys & 'subscribe') => key === 'subscribe'
 		? langaugeInstanceStore.subscribe
 		: langaugeInstance[key]
 })
 
-export default LLL
+export default LL
