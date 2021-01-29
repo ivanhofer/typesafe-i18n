@@ -15,9 +15,16 @@
 	"license": "MIT",
 	"module": "esm/index.js",
 	"exports": {
-		"./formatters": "./formatters/index.js",
-		"./formatters/*": "./formatters/*.js",
-		"./rollup/rollup-plugin-langauge-watcher": "./rollup/rollup-plugin-langauge-watcher.js",
+		"./formatters": {
+			"import": "./esm/formatters/index.js",
+			"require": "./cjs/formatters/index.js"
+		},
+		"./formatters/*": {
+			"import": "./esm/formatters/*.js",
+			"require": "./cjs/formatters/*.js"
+		},
+		"./rollup-plugin-langauge-watcher": "./rollup/rollup-plugin-langauge-watcher.js",
+		"./package.json": "./package.json",
 		"./*": {
 			"import": "./esm/*",
 			"require": "./cjs/*"
@@ -25,8 +32,7 @@
 		".": {
 			"import": "./esm/index.js",
 			"require": "./cjs/index.js"
-		},
-		"./package.json": "./package.json"
+		}
 	},
 	"browser": "dist/index.min.js",
 	"main": "cjs/index.js",
