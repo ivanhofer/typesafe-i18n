@@ -34,12 +34,6 @@ const REGEX_BRACKETS_SPLIT = /({?{[^\\}]+}}?)/g
 const parseArgumentPart = (text: string): ArgumentPart => {
 	const [keyPart = '', ...formatterKeys] = text.split('|')
 
-	/* optimize-start */
-	if (process.env.npm_lifecycle_event !== 'test') {
-		return { k: keyPart, f: formatterKeys } as ArgumentPart
-	}
-	/* optimize-end */
-
 	const [key = '', type] = keyPart.split(':')
 	return { k: key, i: type, f: formatterKeys } as ArgumentPart
 }
@@ -62,7 +56,7 @@ const parsePluralPart = (content: string, lastAcessor: string): PluralPart => {
 	return { k: key, z, o, t, f, m, r } as PluralPart
 }
 
-export const parseRawText = (rawText: string, lastKey = '0'): Part[] =>
+export const parseRawText = (rawText: string, optimize = true, lastKey = '0'): Part[] =>
 	rawText
 		.split(REGEX_BRACKETS_SPLIT)
 		.filter(Boolean)
@@ -85,12 +79,6 @@ export const parseRawText = (rawText: string, lastKey = '0'): Part[] =>
 		.map((part) => {
 			if (isString(part)) return part
 
-			/* optimize-start */
-			if (process.env.npm_lifecycle_event !== 'test') {
-				return removeEmptyValues(trimAllValues(part))
-			}
-			/* optimize-end */
-
-			//@ts-ignore
-			return trimAllValues(part)
+			const trimmed = trimAllValues(part)
+			return optimize ? removeEmptyValues(trimmed) : trimmed
 		})

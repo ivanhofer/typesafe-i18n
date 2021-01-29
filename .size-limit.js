@@ -2,26 +2,26 @@ module.exports = [
 	{
 		name: 'langauge-string',
 		path: 'dist/langauge.string.min.js',
-		limit: '748 b',
+		limit: '761 b',
 	},
 	{
 		name: 'langauge-object',
 		path: 'dist/langauge.object.min.js',
-		limit: '806 b',
+		limit: '817 b',
 	},
 	{
 		name: 'langauge-loader',
 		path: 'dist/langauge.loader.min.js',
-		limit: '902 b',
+		limit: '911 b',
 	},
 	{
 		name: 'langauge-loader-async',
 		path: 'dist/langauge.loader.async.min.js',
-		limit: '909 b',
+		limit: '919 b',
 	},
 	{
 		name: 'langauge',
 		path: 'dist/langauge.min.js',
-		limit: '1006 b',
+		limit: '1011 b',
 	},
 ]

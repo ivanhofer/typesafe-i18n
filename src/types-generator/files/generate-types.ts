@@ -76,7 +76,7 @@ const parseTranslations = (translations: LangaugeBaseTranslation, logger: Logger
 		: []
 
 const parseTanslationEntry = ([key, text]: [string, string], logger: Logger): ParsedResult => {
-	const parsedParts = parseRawText(text)
+	const parsedParts = parseRawText(text, false)
 	const textWithoutTypes = partsAsStringWithoutTypes(parsedParts)
 
 	const parsedObjects = parsedParts.filter(isObject)
