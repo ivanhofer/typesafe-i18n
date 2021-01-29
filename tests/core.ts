@@ -17,6 +17,17 @@ test('string plural 0', () => assert.is(LL('{0} apple{{s}}', 0), '0 apples'))
 test('string plural 1', () => assert.is(LL('{0} apple{{s}}', 1), '1 apple'))
 test('string plural 5', () => assert.is(LL('{0} apple{{s}}', 5), '5 apples'))
 
+test('trim plural 1', () => assert.is(LL('{{ singular | plural }}', 1), 'singular'))
+test('trim plural 2', () => assert.is(LL('{{ singular | plural }}', 2), 'plural'))
+
+test('trim plural only 1', () => assert.is(LL('{{ this is plural }}', 1), ''))
+test('trim plural only 2', () => assert.is(LL('{{ this is plural }}', 2), 'this is plural'))
+
+test('trim singular only 1', () => assert.is(LL('{{ this is singular | }}', 1), 'this is singular'))
+test('trim singular only 2', () => assert.is(LL('{{ this is singular | }}', 2), ''))
+
+// --------------------------------------------------------------------------------------------------------------------
+
 const translation = {
 	NO_PARAM: 'This is a test.',
 	PARAM: '{0}',
@@ -37,7 +48,6 @@ const translation = {
 
 const LLL = langaugeObjectWrapper('en', translation)
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 test('wrong key', () => assert.is(LLL.WRONG_KEY(), 'WRONG_KEY'))
 
@@ -48,17 +58,19 @@ test('empty', () => assert.is(LLL.EMPTY(), ''))
 test('trim key', () => assert.is(LLL.TRIM_KEY('test'), 'test'))
 test('trim param', () => assert.is(LLL.TRIM_PARAM(' Ho '), 'HeyHo'))
 
-test('trim plural one', () => assert.is(LLL.TRIM_PLURAL({ key: 1 }), '1'))
-test('trim plural other', () => assert.is(LLL.TRIM_PLURAL({ key: 2 }), '2'))
-
-test('same param', () => assert.is(LLL.SAME_PARAM(1), '1 1 1'))
+test('same param number', () => assert.is(LLL.SAME_PARAM(1), '1 1 1'))
+test('same param string', () => assert.is(LLL.SAME_PARAM('1'), '1 1 1'))
 test('same keyed param', () => assert.is(LLL.SAME_KEYED_PARAM({ name: 'test' }), 'test test test'))
-
-test('AAAA', () => assert.is(LLL.SAME_PARAM('1'), '1 1 1'))
 
 test('param', () => assert.is(LLL.PARAM('hi'), 'hi'))
 
 test('param but empty', () => assert.is(LLL.PARAM(), ''))
+test('param but empty multiple', () => assert.is(LLL.SAME_PARAM(), '  '))
+
+// --------------------------------------------------------------------------------------------------------------------
+
+test('trim plural one', () => assert.is(LLL.TRIM_PLURAL({ key: 1 }), '1'))
+test('trim plural other', () => assert.is(LLL.TRIM_PLURAL({ key: 2 }), '2'))
 
 test('plural 0', () => assert.is(LLL.PLURAL(0), 'apples'))
 test('plural 1', () => assert.is(LLL.PLURAL(1), 'apple'))
@@ -80,6 +92,8 @@ test('only singular plural false', () => assert.is(LLL.ONLY_SINGULAR_PLURAL(fals
 
 test('only singular true', () => assert.is(LLL.ONLY_SINGULAR(true), 'singular'))
 test('only singular false', () => assert.is(LLL.ONLY_SINGULAR(false), ''))
+
+// --------------------------------------------------------------------------------------------------------------------
 
 const LLL2 = langaugeObjectWrapper('ar-EG', {
 	ADVANCED_PLURAL: '{{zero|one|two|few|many|other}}',
