@@ -1,5 +1,6 @@
-
-![image - 'langauge logo'](https://github.com/ivanhofer/langauge/raw/master/assets/logo.svg "image - 'langauge logo'")
+<p align="center">
+	<img src="https://github.com/ivanhofer/langauge/raw/master/assets/logo.svg" alt="langauge logo"/>
+</p>
 
 A opinionated, lightweight localization library for your next JavaScript and TypeScript projects with no external dependencies.
 
@@ -169,7 +170,7 @@ For information about the `LL` object, read the [usage](#Usage) section.
 
 ```typescript
 const translation = {
-	HI: 'Hello {0}'
+   HI: 'Hello {0}'
 }
 
 LL.HI() // => ERROR: Expected 1 arguments, but got 0.
@@ -185,10 +186,11 @@ LL.HI('John') => 'Hi John'
 
 ```typescript
 const translation = {
-	HI: 'Hello {name:string}'
+   HI: 'Hello {name:string}'
 }
 
-LL.HI('John') // => ERROR: Argument of type 'string' is not assignable to parameter of type '{ name: string; }'.
+LL.HI('John')
+// => ERROR: Argument of type 'string' is not assignable to parameter of type '{ name: string; }'.
 LL.HI({ name: 'John' }) => 'Hi John'
 ```
 
@@ -243,7 +245,7 @@ import { langaugeStringWrapper } from 'langauge'
 
 const locale = 'en'
 const formatters = {
-	uppercase: (value) => value.toUpperCase()
+   uppercase: (value) => value.toUpperCase()
 }
 
 const LLL = langaugeStringWrapper(locale, formatters)
@@ -261,9 +263,9 @@ import { langaugeStringWrapper } from 'langauge'
 
 const locale = 'en'
 const translations = {
-	HI: "Hello {name}!",
-	RESET_PASSWORD: "reset password"
-	...
+   HI: "Hello {name}!",
+   RESET_PASSWORD: "reset password"
+   ...
 }
 const formatters = { ... }
 
@@ -283,19 +285,19 @@ You will get an object back (`L`) that can be used to access all your locaLes an
 import { langaugeStringWrapper } from 'langauge'
 
 const localeTranslations = {
-	en: { TODAY: "Today is {date|weekday}" },
-	de: { TODAY: "Heute ist {date|weekday}" },
-	it: { TODAY: "Oggi è {date|weekday}" },
+   en: { TODAY: "Today is {date|weekday}" },
+   de: { TODAY: "Heute ist {date|weekday}" },
+   it: { TODAY: "Oggi è {date|weekday}" },
 }
 
 const loadLocale = (locale) => localeTranslations(locale)
 
 const initFormatters = (locale) => {
-	const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
+   const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
 
-	return {
-		date: (value) => dateFormatter.format(value)
-	}
+   return {
+      date: (value) => dateFormatter.format(value)
+   }
 }
 
 const L = langauge(loadLocale, initFormatters)
@@ -313,10 +315,10 @@ A good usecase for this object could be inside your API, when your locale is dyn
 ```typescript
 function doSomething(session) {
 
-	...
+   ...
 
-	const locale = session.language
-	return L[locale].SUCCESS_MESSAGE()
+   const locale = session.language
+   return L[locale].SUCCESS_MESSAGE()
 }
 
 ```
@@ -357,23 +359,22 @@ function doSomething(session) {
 	import LL, { initLangauge } from 'langauge/svelte/svelte-store'
 
 	const localeTranslations = {
-		en: { TODAY: "Today is {date|weekday}" },
-		de: { TODAY: "Heute ist {date|weekday}" },
-		it: { TODAY: "Oggi è {date|weekday}" },
+	   en: { TODAY: "Today is {date|weekday}" },
+	   de: { TODAY: "Heute ist {date|weekday}" },
+	   it: { TODAY: "Oggi è {date|weekday}" },
 	}
 
 	const loadLocale = (locale) => localeTranslations(locale)
 
 	const initFormatters = (locale) => {
-		const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
+	   const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
 
-		return {
-			date: (value) => dateFormatter.format(value)
-		}
+	   return {
+	      date: (value) => dateFormatter.format(value)
+	   }
 	}
 
 	initLangauge('en', loadLocale, initFormatters)
-
 
 	$LL.TODAY(new Date()) // => 'Today is friday'
 	```
@@ -389,9 +390,9 @@ Call it inside your root svelte component:
 
 ```html
 <script>
-	import { initLangauge } from './langauge/langauge-svelte'
+   import { initLangauge } from './langauge/langauge-svelte'
 
-	initLangauge('en')
+   initLangauge('en')
 </script>
 ```
 
@@ -401,11 +402,11 @@ The default export of the generated file will be the store you can use to transl
 
 ```html
 <script>
-	import LL from './langauge/langauge-svelte'
+   import LL from './langauge/langauge-svelte'
 
-	const showMessage = () => {
-		alert(LL.SOME_MESSAGE())
-	}
+   const showMessage = () => {
+      alert(LL.SOME_MESSAGE())
+   }
 </script>
 
 {$LL.HELLO({ name: 'world' })}
@@ -420,11 +421,11 @@ This svelte store will contain the current selected locale.
 
 ```html
 <script>
-	import { locale } from './langauge/langauge-svelte'
+   import { locale } from './langauge/langauge-svelte'
 </script>
 
 <div>
-	your language is: {$locale}
+   your language is: {$locale}
 </div>
 ```
 
@@ -434,24 +435,24 @@ If you want to change the locale, you need to call `setLocale` with the desited 
 
 ```html
 <script>
-	import { setLocale } from './langauge/langauge-svelte'
+   import { setLocale } from './langauge/langauge-svelte'
 </script>
 
 <div id="language-picker">
 
-	Choose language:
+   Choose language:
 
-	<button on:click={() => setLocale('en')}>
-		english
-	</button>
+   <button on:click={() => setLocale('en')}>
+      english
+   </button>
 
-	<button on:click={() => setLocale('de')}>
-		deutsch
-	</button>
+   <button on:click={() => setLocale('de')}>
+      deutsch
+   </button>
 
-	<button on:click={() => setLocale('it')}>
-		italiano
-	</button>
+   <button on:click={() => setLocale('it')}>
+      italiano
+   </button>
 
 </div>
 ```
@@ -462,14 +463,14 @@ Svelte store that returns a `boolean`. It can be used to wait for the locale to 
 
 ```html
 <script>
-	import { isLocaleLoading } from './langauge/langauge-svelte'
+   import { isLocaleLoading } from './langauge/langauge-svelte'
 </script>
 
 {#if $isLocaleLoading}
-	loading...
+   loading...
 {:else}
 
-	<!-- your app code goes here  -->
+   <!-- your app code goes here  -->
 
 {/if}
 ```
@@ -482,11 +483,11 @@ For your Sapper projects, you should call the `initLangauge` function inside `pr
 
 ```html
 <script context="module">
-	import { initLangauge } from '../langauge/langauge-svelte'
+   import { initLangauge } from '../langauge/langauge-svelte'
 
-	export async function preload(page, session) {
-		await initLangauge(session.locale)
-	}
+   export async function preload(page, session) {
+      await initLangauge(session.locale)
+   }
 </script>
 ```
 
@@ -509,9 +510,9 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
   	<script src="https://unpkg.com/langauge/dist/langauge.string.min.js"></script>
 
 	<script>
-		const LLL = langauge( /* langaugeStringWrapper parameters */ )
+	   const LLL = langauge( /* langaugeStringWrapper parameters */ )
 
-		LLL('Hi {0}', 'John')
+	   LLL('Hi {0}', 'John')
 	</script>
   	```
 
@@ -520,9 +521,9 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
   	<script src="https://unpkg.com/langauge/dist/langauge.object.min.js"></script>
 
 	<script>
-		const LL = langauge( /* langaugeObjectWrapper parameters */ )
+	   const LL = langauge( /* langaugeObjectWrapper parameters */ )
 
-		LL.HI('John')
+	   LL.HI('John')
 	</script>
   	```
 
@@ -532,9 +533,9 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
   	<script src="https://unpkg.com/langauge/dist/langauge.instance.min.js"></script>
 
 	<script>
-		const L = langauge( /* langauge parameters */ )
+	   const L = langauge( /* langauge parameters */ )
 
-		L.en.HI('John')
+	   L.en.HI('John')
 	</script>
   	```
 
@@ -543,9 +544,9 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
   	<script src="https://unpkg.com/langauge/dist/langauge.min.js"></script>
 
 	<script>
-		const LLL = langauge.initStringWrapper( ... )
-		const LL = langauge.initObjectWrapper( ... )
-		const L = langauge.init( ... )
+	   const LLL = langauge.initStringWrapper( ... )
+	   const LL = langauge.initObjectWrapper( ... )
+	   const L = langauge.init( ... )
 	</script>
   	```
 
@@ -592,16 +593,16 @@ import langaugeWatcher from 'langauge/rollup-plugin-langauge-watcher'
 const isDev = !!process.env.ROLLUP_WATCH
 
 export default {
-  input: ...,
-  output: ...,
-  plugins: {
-	...
-	typescript(),
+   input: ...,
+   output: ...,
+   plugins: {
+      ...
+      typescript(),
 
-	// only running in development mode
-	// looks for changes in your base locale file
-	isDev && langaugeWatcher({ /* options go here */ })
-  }
+      // only running in development mode
+      // looks for changes in your base locale file
+      isDev && langaugeWatcher({ /* options go here */ })
+   }
 }
 ```
 
@@ -621,13 +622,13 @@ When running the watcher for the first time, a few files will be generated:
 
 ```
 src/
-  langauge/
-    en/
-	   index.ts
-	 formatters.ts
-	 langauge-types.ts
-	 langauge-util.ts
-	 custom-types.ts
+   langauge/
+      en/
+	      index.ts
+      formatters.ts
+      langauge-types.ts
+      langauge-util.ts
+      custom-types.ts
 ```
 
  > Some files are auto-generated, please don't make manual changes to them, since they will be overwritten.
@@ -655,7 +656,7 @@ Locales must follow a specific file pattern. For each locale, you have to create
 import type { LangaugeTranslation } from '../langauge-types';
 
 const de: LangaugeTranslation = {
-	... // your translations go here
+   ... // your translations go here
 }
 
 export default de
@@ -668,9 +669,9 @@ You can specify your own formatters, that take an argument as an input and retur
 
 ```typescript
 const formatters = {
-	roiCalculator: (value) => {
-		return (value * 4.2) - 7
-	}
+   roiCalculator: (value) => {
+   return (value * 4.2) - 7
+   }
 }
 
 LLL('Invest ${0} and get ${0|roiCalculator} in return', 100)
@@ -685,7 +686,7 @@ You can also use a few builtin formatters:
 	import { date } from 'langauge/formatters'
 
 	const formatters = {
-		weekday: date({ weekday: 'long' })
+	   weekday: date({ weekday: 'long' })
 	}
 
 	LLL('Today is {0|weekday}', new Date()) // => 'Today is friday'
@@ -696,7 +697,7 @@ You can also use a few builtin formatters:
 	import { time } from 'langauge/formatters'
 
 	const formatters = {
-		timeShort: time('en', { timeStyle: 'short' })
+	   timeShort: time('en', { timeStyle: 'short' })
 	}
 
 	LLL('Next meeting: {0|timeShort}', meetingTime) // => 'Next meeting: 8:00 AM'
@@ -707,7 +708,7 @@ You can also use a few builtin formatters:
 	import { number } from 'langauge/formatters'
 
 	const formatters = {
-		currency: number('en', { style: 'currency', currency: 'EUR' })
+	   currency: number('en', { style: 'currency', currency: 'EUR' })
 	}
 
 	LLL('your balance is {0|currency}', 12345) // => 'your balance is €12,345.00'
@@ -718,7 +719,7 @@ You can also use a few builtin formatters:
 	import { replace } from 'langauge/formatters'
 
 	const formatters = {
-		noSpaces: replace(' ', '-')
+	   noSpaces: replace(' ', '-')
 	}
 
 	LLL('The link is: https://www.xyz.com/{0|noSpaces}', 'super cool product')
@@ -728,25 +729,24 @@ You can also use a few builtin formatters:
  - uppercase\
  	A wrapper for [String.prototype.toUpperCase](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase)
 	```typescript
-		import { uppercase } from 'langauge/formatters'
+	import { uppercase } from 'langauge/formatters'
 
-		const formatters = {
-			upper: uppercase
-		}
+	const formatters = {
+	   upper: uppercase
+	}
 
-		LLL('I sayed: {0|upper}', 'hello') // => 'I sayed: HELLO'
+	LLL('I sayed: {0|upper}', 'hello') // => 'I sayed: HELLO'
 	```
  - lowercase\
   	A wrapper for [String.prototype.toLowerCase](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase)
 	```typescript
-		import { lowercase } from 'langauge/formatters'
+	import { lowercase } from 'langauge/formatters'
 
-		const formatters = {
-			lower: lowercase
-		}
+	const formatters = {
+	   lower: lowercase
+	}
 
-		LLL('He sayed: {0|lower}', 'SOMETHING') // => 'He sayed: something'
-
+	LLL('He sayed: {0|lower}', 'SOMETHING') // => 'He sayed: something'
 	```
 
 #### custom types
@@ -757,7 +757,7 @@ If you have a translation with e.g. the type `Sum`,
 
 ```javascript
 const translations: LangaugeBaseTranslation = {
-	RESULT: 'The result is: {0:Sum|calculate}'
+   RESULT: 'The result is: {0:Sum|calculate}'
 }
 ```
 
@@ -765,9 +765,9 @@ you need to export `Sum` as a type in your `custom-types.ts` file
 
 ```javascript
 export type Sum = {
-	n1: number
-	n2: number
-	n2: number
+   n1: number
+   n2: number
+   n2: number
 }
 ```
 
