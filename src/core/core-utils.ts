@@ -1,5 +1,6 @@
-import { isArray } from 'typesafe-utils'
-import { InjectorPart, PluralPart } from './parser'
+import { isArray, isNotEmpty, isString } from 'typesafe-utils'
+import { isPluralPart } from './core'
+import type { ArgumentPart, Part, PluralPart } from './parser'
 
 export const removeEmptyValues = <T>(object: T): T =>
 	Object.fromEntries(
@@ -8,7 +9,7 @@ export const removeEmptyValues = <T>(object: T): T =>
 			.filter(Boolean),
 	) as T
 
-export const trimAllValues = <T extends InjectorPart | PluralPart>(part: T): T => {
+export const trimAllValues = <T extends ArgumentPart | PluralPart>(part: T): T => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const trimmedObject: any = {} as T
 	Object.keys(part).forEach((key) => {
@@ -21,4 +22,18 @@ export const trimAllValues = <T extends InjectorPart | PluralPart>(part: T): T =
 	})
 
 	return trimmedObject
+}
+
+export const partsAsStringWithoutTypes = (parts: Part[]): string => parts.map(partAsStringWithoutTypes).join('')
+
+export const partAsStringWithoutTypes = (part: Part): string => {
+	if (isString(part)) {
+		return part
+	}
+
+	if (isPluralPart(part)) {
+		return `{{${[part.z, part.o, part.t, part.f, part.m, part.r].filter(isNotEmpty).join('|')}}}`
+	}
+
+	return `{${part.k}${part.f?.length ? `|${part.f.join('|')}` : ''}}`
 }

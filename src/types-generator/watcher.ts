@@ -1,10 +1,11 @@
 import * as ts from 'typescript'
 import fs from 'fs'
-import { resolve } from 'path'
+import path, { join, resolve } from 'path'
 import type { LangaugeBaseTranslation } from '../core/core'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './generator'
 import { copyFile, createPathIfNotExits, deleteFolderRecursive, getFiles, importFile } from './file-utils'
 import { generate, setDefaultConfigValuesIfMissing } from './generator'
+import { logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
 
 const getAllLanguages = async (path: string) => {
 	const files = await getFiles(path, 1)
@@ -16,12 +17,11 @@ const transpileTypescriptAndPrepareImportFile = async (languageFilePath: string,
 	program.emit()
 
 	const compiledPath = resolve(tempPath, 'index.js')
-	const copyPath = resolve(tempPath, `langauge-temp-${debounceIndex}.js`)
+	const copyPath = resolve(tempPath, `langauge-temp-${debounceCounter}.js`)
 
 	const copySuccess = await copyFile(compiledPath, copyPath)
 	if (!copySuccess) {
-		// eslint-disable-next-line no-console
-		console.error(`[LANGAUGE] ERROR: something went wrong`)
+		logger.error('something went wrong')
 		return ''
 	}
 
@@ -47,54 +47,65 @@ const parseLanguageFile = async (
 	await deleteFolderRecursive(tempPath)
 
 	if (!languageImport) {
-		// eslint-disable-next-line no-console
-		console.error(`[LANGAUGE] ERROR: could not read default export from language file '${locale}'`)
+		logger.error(`could not read default export from language file '${locale}'`)
 		return null
 	}
 
 	return languageImport
 }
 
-const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues) => {
+const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, version: TypescriptVersion) => {
+	logger.info(`watcher detected changes in baseLocale file`)
+
 	const { baseLocale, locales: localesToUse, tempPath, outputPath } = config
 
 	const locales = (await getAllLanguages(outputPath)).filter(
 		(locale) => !localesToUse.length || localesToUse.includes(locale),
 	)
-	const locale = locales.find((l) => l === baseLocale) || locales[0] || ''
+	const locale = locales.find((l) => l === baseLocale) || locales[0] || baseLocale
 
-	// TODO: display warning if no locale is defined or one of the `localesToUse` is missing
+	if (!locales.length) {
+		locales.push(baseLocale)
+	}
 
 	const languageFile = (locale && (await parseLanguageFile(outputPath, locale, tempPath))) || {}
 
-	await generate(languageFile, { ...config, baseLocale: locale, locales })
+	await generate(languageFile, { ...config, baseLocale: locale, locales }, version, logger)
 }
 
-let debounceIndex = 0
+let debounceCounter = 0
 
 const debonce = (callback: () => void) =>
 	setTimeout(
 		(i) => {
-			if (i === debounceIndex) {
-				callback()
-			}
+			i === debounceCounter && callback()
 		},
 		100,
-		++debounceIndex,
+		++debounceCounter,
 	)
 
-export const startWatcher = async (config: GeneratorConfig): Promise<void> => {
+export const startWatcher = async (config?: GeneratorConfig): Promise<void> => {
+	if (!config) {
+		config = (await importFile<GeneratorConfig>(path.resolve('.langauge.json'), false)) || {}
+	}
+
 	const configWithDefaultValues = setDefaultConfigValuesIfMissing(config)
 	const { outputPath } = configWithDefaultValues
 
-	const onChange = parseAndGenerate.bind(null, configWithDefaultValues)
+	const version = parseTypescriptVersion(ts.versionMajorMinor)
+
+	const onChange = parseAndGenerate.bind(null, configWithDefaultValues, version)
 
 	await createPathIfNotExits(outputPath)
 
-	fs.watch(outputPath, { recursive: true }, () => debonce(onChange))
+	const baseLocalePath = join(outputPath, configWithDefaultValues.baseLocale)
 
-	// eslint-disable-next-line no-console
-	console.info(`[LANGAUGE] watcher started in: '${outputPath}'`)
+	await createPathIfNotExits(baseLocalePath)
+
+	fs.watch(baseLocalePath, { recursive: true }, () => debonce(onChange))
+
+	logger.info(`generating files for typescript version: '${ts.versionMajorMinor}.x'`)
+	logger.info(`watcher started in: '${baseLocalePath}'`)
 
 	onChange()
 }

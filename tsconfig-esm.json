@@ -4,5 +4,5 @@
 		"module": "ES2020",
 		"outDir": "./esm"
 	},
-	"exclude": ["./src/formatters", "./src/node-watcher.ts", "./src/rollup-plugin-langauge.ts"]
+	"exclude": ["./src/node-watcher.ts", "./src/rollup-plugin-langauge.ts"]
 }

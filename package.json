@@ -3,6 +3,10 @@
 	"version": "0.20.0",
 	"description": "A lightweight localization engine for JavaScript and TypeScript projects",
 	"homepage": "https://github.com/ivanhofer/langauge",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ivanhofer/langauge"
+	},
 	"author": "ivanhofer",
 	"keywords": [
 		"l10n",
@@ -15,10 +19,17 @@
 	"license": "MIT",
 	"module": "esm/index.js",
 	"exports": {
+		"./formatters": {
+			"import": "./esm/formatters/index.js",
+			"require": "./cjs/formatters/index.js"
+		},
+		"./formatters/*": {
+			"import": "./esm/formatters/*.js",
+			"require": "./cjs/formatters/*.js"
+		},
+		"./svelte": "./svelte/svelte-store.js",
+		"./rollup-plugin-langauge-watcher": "./rollup/rollup-plugin-langauge-watcher.js",
 		"./package.json": "./package.json",
-		"./formatters": "./formatters/index.js",
-		"./formatters/*": "./formatters/*.js",
-		"./rollup/rollup-plugin-langauge-watcher": "./rollup/rollup-plugin-langauge-watcher.js",
 		"./*": {
 			"import": "./esm/*",
 			"require": "./cjs/*"
@@ -28,9 +39,9 @@
 			"require": "./cjs/index.js"
 		}
 	},
-	"browser": "dist/index.js",
+	"browser": "dist/index.min.js",
 	"main": "cjs/index.js",
-	"types": "cjs/index.d.ts",
+	"types": "esm/index.d.ts",
 	"files": [
 		"/cjs",
 		"/dist",
@@ -40,39 +51,44 @@
 		"/rollup"
 	],
 	"scripts": {
-		"build": "npm run build:browser && npm run build:cjs && npm run build:esm && npm run build:formatters && npm run build:plugin && npm run build:watcher",
+		"dev": "tsc -p tsconfig-rollup.json -w",
+		"dev:watcher": "rollup -c rollup-watcher.config.ts -w",
+		"build": "npm run build:browser && npm run build:cjs && npm run build:esm && npm run build:svelte && npm run build:formatters && npm run build:rollup && npm run build:watcher",
 		"build:browser": "rollup -c rollup-browser.config.ts",
 		"build:cjs": "tsc -p tsconfig-cjs.json",
 		"build:esm": "tsc -p tsconfig-esm.json",
+		"build:svelte": "npx tsc -p tsconfig-svelte.json",
 		"build:formatters": "tsc -p tsconfig-formatters.json && rollup -c rollup-formatters.config.ts",
-		"build:plugin": "tsc -p tsconfig-plugin.json && rollup -c rollup-plugin.config.ts",
+		"build:rollup": "rollup -c rollup-rollup.config.ts && tsc -p tsconfig-rollup.json --emitDeclarationOnly",
 		"build:watcher": "rollup -c rollup-watcher.config.ts",
 		"lint": "eslint src",
 		"lint:fix": "eslint src --fix",
-		"test": "uvu -r ts-node/register -i update.ts tests",
+		"test": "uvu -r ts-node/register -i update.ts -i index.ts tests",
 		"test:watch": "watchlist src tests -- npm test",
 		"test:update-generated-files": "ts-node tests/generated/update.ts",
 		"test:size": "size-limit"
 	},
 	"dependencies": {
-		"typesafe-utils": "^1.10.1"
+		"typesafe-utils": "^1.11.1"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^17.0.0",
-		"@rollup/plugin-node-resolve": "^11.0.1",
+		"@rollup/plugin-node-resolve": "^11.1.0",
+		"@rollup/plugin-replace": "^2.3.4",
 		"@rollup/plugin-typescript": "^8.1.0",
 		"@size-limit/preset-small-lib": "^4.9.1",
-		"@types/node": "^14.14.20",
-		"@typescript-eslint/eslint-plugin": "^4.12.0",
-		"@typescript-eslint/parser": "^4.12.0",
-		"eslint": "^7.17.0",
-		"eslint-config-prettier": "^7.1.0",
+		"@types/node": "^14.14.22",
+		"@typescript-eslint/eslint-plugin": "^4.14.1",
+		"@typescript-eslint/parser": "^4.14.1",
+		"eslint": "^7.18.0",
+		"eslint-config-prettier": "^7.2.0",
 		"eslint-plugin-prettier": "^3.3.1",
 		"prettier": "^2.2.1",
-		"rollup": "^2.36.0",
+		"rollup": "^2.38.0",
 		"rollup-plugin-node-externals": "^2.2.0",
 		"rollup-plugin-terser": "^7.0.2",
 		"size-limit": "^4.9.1",
+		"svelte": "^3.32.1",
 		"tiny-glob": "^0.2.8",
 		"ts-node": "^9.1.1",
 		"typescript": "^4.1.3",

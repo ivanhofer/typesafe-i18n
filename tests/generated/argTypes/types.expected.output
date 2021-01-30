@@ -12,22 +12,24 @@ export type LangaugeTranslationKeys =
 
 export type LangaugeTranslation = {
 	/**
-	 * Hi {name:string}!
+	 * Hi {name}!
+	 * @param {string} name
 	 */
-	'STRING_TYPE': string
+	'STRING_TYPE': RequiredParams1<'name'>
 	/**
-	 * {0:number} apple{{s}}
+	 * {0} apple{{s}}
+	 * @param {number} 0
 	 */
-	'NUMBER_TYPE': string
+	'NUMBER_TYPE': RequiredParams1<'0'>
 }
 
 export type LangaugeTranslationArgs = {
 	/**
-	 * Hi {name:string}!
+	 * Hi {name}!
 	 */
 	'STRING_TYPE': (arg: { name: string }) => string
 	/**
-	 * {0:number} apple{{s}}
+	 * {0} apple{{s}}
 	 */
 	'NUMBER_TYPE': (arg0: number) => string
 }
@@ -35,3 +37,11 @@ export type LangaugeTranslationArgs = {
 export type LangaugeFormatters = {}
 
 export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters
+
+type Param<P extends string> = `{${P}}`
+
+type Params1<P1 extends string> =
+	`${string}${Param<P1>}${string}`
+
+type RequiredParams1<P1 extends string> =
+	 | Params1<P1>

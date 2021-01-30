@@ -1,18 +1,11 @@
 import type { LangaugeBaseTranslation } from '../core/core'
-import {
-	BASE_PATH,
-	DEFAULT_LOCALE,
-	FORMATTERS_TEMPLATE_FILENAME,
-	TEMP_PATH,
-	TYPES_FILENAME,
-	TYPES_TEMPLATE_FILENAME,
-	UTIL_FILENAME,
-} from '../constants/constants'
-import { generateTypes } from './generate-types'
-import { generateUtil } from './generate-util'
-import { generateSvelte } from './generate-svelte'
-import { generateFormattersTemplate } from './generate-template-formatters'
-import { generateCustomTypesTemplate } from './generate-template-types'
+import { generateTypes } from './files/generate-types'
+import { generateUtil } from './files/generate-util'
+import { generateSvelte } from './files/generate-svelte'
+import { generateFormattersTemplate } from './files/generate-template-formatters'
+import { generateCustomTypesTemplate } from './files/generate-template-types'
+import { generateBaseLocaleTemplate } from './files/generate-template-baseLocale'
+import { logger as defaultLogger, Logger, supportsImportType, TypescriptVersion } from './generator-util'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -50,33 +43,39 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 // --------------------------------------------------------------------------------------------------------------------
 
 export const setDefaultConfigValuesIfMissing = (config: GeneratorConfig): GeneratorConfigWithDefaultValues => ({
-	baseLocale: DEFAULT_LOCALE,
+	baseLocale: 'en',
 	locales: [],
-	tempPath: TEMP_PATH,
-	outputPath: BASE_PATH,
-	typesFileName: TYPES_FILENAME,
-	utilFileName: UTIL_FILENAME,
-	formattersTemplateFileName: FORMATTERS_TEMPLATE_FILENAME,
-	typesTemplateFileName: TYPES_TEMPLATE_FILENAME,
+	tempPath: './node_modules/langauge/temp-output/',
+	outputPath: './src/langauge/',
+	typesFileName: 'langauge-types',
+	utilFileName: 'langauge-util',
+	formattersTemplateFileName: 'formatters',
+	typesTemplateFileName: 'custom-types',
 	lazyLoad: true,
 	...config,
 })
 
 export const generate = async (
-	translationObject: LangaugeBaseTranslation,
+	translations: LangaugeBaseTranslation,
 	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
+	version: TypescriptVersion,
+	logger: Logger = defaultLogger,
 ): Promise<void> => {
-	const hasCustomTypes = await generateTypes({ ...config, translationObject })
+	const importType = supportsImportType(version) ? ' type' : ''
 
-	await generateFormattersTemplate(config)
+	await generateBaseLocaleTemplate(config, importType)
+
+	const hasCustomTypes = await generateTypes({ ...config, translations }, importType, version, logger)
+
+	await generateFormattersTemplate(config, importType)
 
 	if (hasCustomTypes) {
 		await generateCustomTypesTemplate(config)
 	}
 
-	await generateUtil(config)
+	await generateUtil(config, importType)
 
 	if (config.svelte) {
-		await generateSvelte(config)
+		await generateSvelte(config, importType)
 	}
 }

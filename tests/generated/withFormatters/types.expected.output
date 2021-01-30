@@ -13,12 +13,15 @@ export type LangaugeTranslationKeys =
 export type LangaugeTranslation = {
 	/**
 	 * {0|timesTen} apple{{s}}
+	 * @param {string | number | boolean} 0
 	 */
-	'FORMATTER_1': string
+	'FORMATTER_1': RequiredParams1<'0|timesTen'>
 	/**
 	 * {0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}
+	 * @param {string | number | boolean} 0
+	 * @param {string | number | boolean} 1
 	 */
-	'FORMATTER_2': string
+	'FORMATTER_2': RequiredParams2<'0', '1|wrapWithHtmlSpan'>
 }
 
 export type LangaugeTranslationArgs = {
@@ -33,8 +36,23 @@ export type LangaugeTranslationArgs = {
 }
 
 export type LangaugeFormatters = {
-	timesTen: (value: any) => string
-	wrapWithHtmlSpan: (value: any) => string
+	timesTen: (value: string | number | boolean) => string
+	wrapWithHtmlSpan: (value: string | number | boolean) => string
 }
 
 export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters
+
+type Param<P extends string> = `{${P}}`
+
+type Params1<P1 extends string> =
+	`${string}${Param<P1>}${string}`
+
+type Params2<P1 extends string, P2 extends string> =
+	`${string}${Param<P1>}${string}${Param<P2>}${string}`
+
+type RequiredParams1<P1 extends string> =
+	 | Params1<P1>
+
+type RequiredParams2<P1 extends string, P2 extends string> =
+	 | Params2<P1, P2>
+	 | Params2<P2, P1>

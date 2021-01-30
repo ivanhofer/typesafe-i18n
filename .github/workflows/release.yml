@@ -40,6 +40,7 @@ jobs:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
            with:
               minor-wording: 'feat,feature'
+              major-wording: 'major'
 
          - name: publish to npm
            uses: JS-DevTools/npm-publish@v1

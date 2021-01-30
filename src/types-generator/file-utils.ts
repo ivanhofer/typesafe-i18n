@@ -1,5 +1,6 @@
 import { promises as fsPromises } from 'fs'
 import { join, resolve, dirname, extname } from 'path'
+import { logger } from './generator-util'
 
 const { readFile: read, readdir, writeFile, mkdir, stat, copyFile: cp, rmdir } = fsPromises
 
@@ -38,8 +39,7 @@ const createPath = async (path: string): Promise<boolean> => {
 		await mkdir(path, { recursive: true })
 		return true
 	} catch (e) {
-		// eslint-disable-next-line no-console
-		console.error(`[LANGAUGE] ERROR createPath: ${path}`, e)
+		logger.error(`createPath: ${path}`, e)
 		return false
 	}
 }
@@ -56,8 +56,7 @@ export const copyFile = async (fromPath: string, toPath: string): Promise<boolea
 		await cp(fromPath, toPath)
 		return true
 	} catch (e) {
-		// eslint-disable-next-line no-console
-		console.error(`[LANGAUGE] ERROR copyFile: ${fromPath} - ${toPath}`, e)
+		logger.error(`copyFile: ${fromPath} - ${toPath}`, e)
 		return false
 	}
 }
@@ -67,8 +66,7 @@ export const deleteFolderRecursive = async (path: string): Promise<boolean> => {
 		await rmdir(path, { recursive: true })
 		return true
 	} catch (e) {
-		// eslint-disable-next-line no-console
-		console.error(`[LANGAUGE] ERROR deleteFolderRecursive: ${path}`, e)
+		logger.error(`deleteFolderRecursive: ${path}`, e)
 		return false
 	}
 }
@@ -83,8 +81,7 @@ export const writeNewFile = async (path: string, file: string, content: string):
 
 	writeFile(getFileName(path, file), content, { encoding: 'utf-8' })
 
-	// eslint-disable-next-line no-console
-	console.info('[LANGAUGE] generated types')
+	logger.info(`generated file: ${file}`)
 }
 
 export const writeFileIfContainsChanges = async (path: string, file: string, content: string): Promise<void> => {
@@ -124,8 +121,7 @@ export const getFiles = async (path: string, depth = 0): Promise<GetFilesType[]>
 export const importFile = async <T = unknown>(file: string, outputError = true): Promise<T> => {
 	return (
 		await import(file).catch((e) => {
-			// eslint-disable-next-line no-console
-			outputError && console.error('[LANGAUGE] ERROR: import failed ', e)
+			outputError && logger.error('import failed ', e)
 			return null
 		})
 	)?.default

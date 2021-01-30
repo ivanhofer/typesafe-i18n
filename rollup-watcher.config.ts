@@ -13,7 +13,8 @@ const config = [
 				sourcemap: true,
 			},
 		],
-		plugins: [commonjs(), externals(), resolve(), typescript()],
+		external: ['typescript'],
+		plugins: [resolve({ preferBuiltins: true }), commonjs(), externals(), typescript()],
 	},
 ]
 

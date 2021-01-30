@@ -1,1 +1,1 @@
-export type FormatterFn<T> = (value: T) => string
+export type FormatterFn<T> = (value: T) => unknown

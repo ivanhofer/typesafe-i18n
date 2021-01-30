@@ -2,8 +2,7 @@
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
 		"module": "CommonJS",
-		"outDir": "./rollup",
-		"emitDeclarationOnly": true
+		"outDir": "./rollup"
 	},
 	"include": ["./src/rollup-plugin-langauge-watcher.ts"]
 }
