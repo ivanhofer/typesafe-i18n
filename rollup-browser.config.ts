@@ -42,8 +42,9 @@ export default [
 	...getIifeConfigs(''),
 	...getIifeConfigs('string'),
 	...getIifeConfigs('object'),
-	...getIifeConfigs('loader'),
-	...getIifeConfigs('loader.async'),
+	...getIifeConfigs('instance'),
+	// ...getIifeConfigs('loader'),
+	// ...getIifeConfigs('loader.async'),
 	esmConfig(),
 	esmConfig(true),
 ]
