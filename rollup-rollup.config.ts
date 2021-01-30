@@ -14,6 +14,7 @@ const config = [
 				exports: 'named',
 			},
 		],
+		external: ['typescript'],
 		plugins: [commonjs(), resolve({ preferBuiltins: true }), externals(), typescript()],
 	},
 ]

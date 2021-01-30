@@ -16,7 +16,7 @@ import type { ArgumentPart } from '../../core/parser'
 import { writeFileIfContainsChanges } from '../file-utils'
 import type { GeneratorConfigWithDefaultValues } from '../generator'
 import { removeEmptyValues, partsAsStringWithoutTypes, partAsStringWithoutTypes } from '../../core/core-utils'
-import { getPermutations, Logger, supportsTemplateLiteralTypes } from '../generator-util'
+import { getPermutations, Logger, supportsTemplateLiteralTypes, TypescriptVersion } from '../generator-util'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -376,8 +376,9 @@ const createFormattersType = (parsedTranslations: ParsedResult[]) => {
 // --------------------------------------------------------------------------------------------------------------------
 
 const getTypes = (
-	{ translations, baseLocale, locales, typesTemplateFileName, tsVersion }: GenerateTypesType,
+	{ translations, baseLocale, locales, typesTemplateFileName }: GenerateTypesType,
 	importType: string,
+	version: TypescriptVersion,
 	logger: Logger,
 ) => {
 	const parsedTranslations = parseTranslations(translations, logger)
@@ -390,7 +391,7 @@ const getTypes = (
 
 	const jsDocsInfo = createJsDocsMapping(parsedTranslations)
 
-	const generateTemplateLiteralTypes = supportsTemplateLiteralTypes(tsVersion)
+	const generateTemplateLiteralTypes = supportsTemplateLiteralTypes(version)
 
 	const paramTypesToGenerate: number[] = []
 	const translationType = createTranslationType(
@@ -434,11 +435,12 @@ type GenerateTypesType = GeneratorConfigWithDefaultValues & {
 export const generateTypes = async (
 	config: GenerateTypesType,
 	importType: string,
+	version: TypescriptVersion,
 	logger: Logger,
 ): Promise<boolean> => {
 	const { outputPath, typesFileName } = config
 
-	const [types, hasCustomTypes] = getTypes(config, importType, logger)
+	const [types, hasCustomTypes] = getTypes(config, importType, version, logger)
 
 	await writeFileIfContainsChanges(outputPath, typesFileName, types)
 

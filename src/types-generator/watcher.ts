@@ -5,7 +5,7 @@ import type { LangaugeBaseTranslation } from '../core/core'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './generator'
 import { copyFile, createPathIfNotExits, deleteFolderRecursive, getFiles, importFile } from './file-utils'
 import { generate, setDefaultConfigValuesIfMissing } from './generator'
-import { logger } from './generator-util'
+import { logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
 
 const getAllLanguages = async (path: string) => {
 	const files = await getFiles(path, 1)
@@ -54,7 +54,7 @@ const parseLanguageFile = async (
 	return languageImport
 }
 
-const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues) => {
+const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, version: TypescriptVersion) => {
 	logger.info(`watcher detected changes in baseLocale file`)
 
 	const { baseLocale, locales: localesToUse, tempPath, outputPath } = config
@@ -70,7 +70,7 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues) => {
 
 	const languageFile = (locale && (await parseLanguageFile(outputPath, locale, tempPath))) || {}
 
-	await generate(languageFile, { ...config, baseLocale: locale, locales }, logger)
+	await generate(languageFile, { ...config, baseLocale: locale, locales }, version, logger)
 }
 
 let debounceCounter = 0
@@ -90,9 +90,11 @@ export const startWatcher = async (config?: GeneratorConfig): Promise<void> => {
 	}
 
 	const configWithDefaultValues = setDefaultConfigValuesIfMissing(config)
-	const { outputPath, tsVersion } = configWithDefaultValues
+	const { outputPath } = configWithDefaultValues
 
-	const onChange = parseAndGenerate.bind(null, configWithDefaultValues)
+	const version = parseTypescriptVersion(ts.versionMajorMinor)
+
+	const onChange = parseAndGenerate.bind(null, configWithDefaultValues, version)
 
 	await createPathIfNotExits(outputPath)
 
@@ -102,7 +104,7 @@ export const startWatcher = async (config?: GeneratorConfig): Promise<void> => {
 
 	fs.watch(baseLocalePath, { recursive: true }, () => debonce(onChange))
 
-	logger.info(`generating files for typescript version: '${tsVersion}.x'`)
+	logger.info(`generating files for typescript version: '${ts.versionMajorMinor}.x'`)
 	logger.info(`watcher started in: '${baseLocalePath}'`)
 
 	onChange()

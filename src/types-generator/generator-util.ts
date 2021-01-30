@@ -14,19 +14,25 @@ export const getPermutations = <T>(rest: T[], permutatedArray: T[] = []): T[][] 
 
 // --------------------------------------------------------------------------------------------------------------------
 
-enum TsVersionEnum {
-	'>=3.0', // baseline support
-	'>=3.8', // supports import type
-	'>=4.1', // supports template literal types
+export type TypescriptVersion = {
+	major: number
+	minor: number
 }
 
-export type TsVersion = '>=3.0' | '>=3.8' | '>=4.1'
+export const parseTypescriptVersion = (versionMajorMinor: `${number}.${number}`): TypescriptVersion => {
+	const [major, minor] = versionMajorMinor.split('.').map((item) => +item) as [number, number]
 
-export const supportsTemplateLiteralTypes = (tsVersion: TsVersion): boolean =>
-	((TsVersionEnum[tsVersion] as unknown) as TsVersionEnum) >= TsVersionEnum['>=4.1']
+	return {
+		major,
+		minor,
+	}
+}
 
-export const supportsImportType = (tsVersion: TsVersion): boolean =>
-	((TsVersionEnum[tsVersion] as unknown) as TsVersionEnum) >= TsVersionEnum['>=3.8']
+export const supportsTemplateLiteralTypes = ({ major, minor }: TypescriptVersion): boolean =>
+	(major === 4 && minor >= 1) || major >= 5
+
+export const supportsImportType = ({ major, minor }: TypescriptVersion): boolean =>
+	(major === 3 && minor >= 8) || major >= 4
 
 // --------------------------------------------------------------------------------------------------------------------
 

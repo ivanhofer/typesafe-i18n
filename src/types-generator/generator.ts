@@ -5,13 +5,11 @@ import { generateSvelte } from './files/generate-svelte'
 import { generateFormattersTemplate } from './files/generate-template-formatters'
 import { generateCustomTypesTemplate } from './files/generate-template-types'
 import { generateBaseLocaleTemplate } from './files/generate-template-baseLocale'
-import { logger as defaultLogger, Logger, supportsImportType, TsVersion } from './generator-util'
+import { logger as defaultLogger, Logger, supportsImportType, TypescriptVersion } from './generator-util'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
-
-// export type TsVersion =
 
 export type GeneratorConfig = {
 	baseLocale?: string
@@ -26,8 +24,6 @@ export type GeneratorConfig = {
 
 	svelte?: boolean | string
 	lazyLoad?: boolean
-
-	tsVersion?: TsVersion
 }
 
 export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
@@ -40,7 +36,6 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 	formattersTemplateFileName: string
 	typesTemplateFileName: string
 	lazyLoad: boolean
-	tsVersion: TsVersion
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -57,20 +52,20 @@ export const setDefaultConfigValuesIfMissing = (config: GeneratorConfig): Genera
 	formattersTemplateFileName: 'formatters',
 	typesTemplateFileName: 'custom-types',
 	lazyLoad: true,
-	tsVersion: '>=4.1',
 	...config,
 })
 
 export const generate = async (
 	translations: LangaugeBaseTranslation,
 	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
+	version: TypescriptVersion,
 	logger: Logger = defaultLogger,
 ): Promise<void> => {
-	const importType = supportsImportType(config.tsVersion) ? ' type' : ''
+	const importType = supportsImportType(version) ? ' type' : ''
 
 	await generateBaseLocaleTemplate(config, importType)
 
-	const hasCustomTypes = await generateTypes({ ...config, translations }, importType, logger)
+	const hasCustomTypes = await generateTypes({ ...config, translations }, importType, version, logger)
 
 	await generateFormattersTemplate(config, importType)
 

@@ -5,6 +5,7 @@ import * as assert from 'uvu/assert'
 import type { LangaugeBaseTranslation } from '../src'
 import { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../src/types-generator/generator'
 import { generate, setDefaultConfigValuesIfMissing } from '../src/types-generator/generator'
+import { parseTypescriptVersion, TypescriptVersion } from '../src/types-generator/generator-util'
 
 const { readFile } = promises
 
@@ -13,6 +14,8 @@ const test = suite('types')
 const outputPath = 'tests/generated/'
 
 const actualPostfix = '.actual.output'
+
+const defaultVersion = parseTypescriptVersion('4.1')
 
 const getFileName = (prefix: string, name: string) => prefix + '/' + name + actualPostfix
 
@@ -56,9 +59,10 @@ const testGeneratedOutput = async (
 	prefix: string,
 	translation: LangaugeBaseTranslation,
 	config: GeneratorConfig = {},
+	version: TypescriptVersion = defaultVersion,
 ) =>
 	test(`generate ${prefix}`, async () => {
-		await generate(translation, createConfig(prefix, config))
+		await generate(translation, createConfig(prefix, config), version)
 		await check(prefix, 'types')
 		await check(prefix, 'util')
 		await check(prefix, 'formatters-template')
@@ -96,6 +100,7 @@ const mockLogger = () => {
 		},
 	}
 }
+
 const testGeneratedConsoleOutput = async (
 	prefix: string,
 	translation: LangaugeBaseTranslation,
@@ -104,7 +109,7 @@ const testGeneratedConsoleOutput = async (
 	test(`console ${prefix}`, async () => {
 		const loggerWrapper = mockLogger()
 
-		await generate(translation, createConfig(prefix, {}), loggerWrapper.logger)
+		await generate(translation, createConfig(prefix, {}), defaultVersion, loggerWrapper.logger)
 
 		await callback(loggerWrapper.outputs)
 	})
@@ -167,9 +172,9 @@ testGeneratedOutput('only-plural-rules', { ONLY_PLURAL: 'apple{{s}}', ONLY_SINGU
 
 const tsTestTranslation = { TEST: 'Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}' }
 
-testGeneratedOutput('typescript3.0', tsTestTranslation, { tsVersion: '>=3.0' })
-testGeneratedOutput('typescript3.8', tsTestTranslation, { tsVersion: '>=3.8' })
-testGeneratedOutput('typescript4.1', tsTestTranslation, { tsVersion: '>=4.1' })
+testGeneratedOutput('typescript3.0', tsTestTranslation, {}, parseTypescriptVersion('3.0'))
+testGeneratedOutput('typescript3.8', tsTestTranslation, {}, parseTypescriptVersion('3.8'))
+testGeneratedOutput('typescript4.1', tsTestTranslation, {}, parseTypescriptVersion('4.1'))
 
 // --------------------------------------------------------------------------------------------------------------------
 
