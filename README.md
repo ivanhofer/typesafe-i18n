@@ -624,7 +624,7 @@ When running the watcher for the first time, a few files will be generated:
 src/
    langauge/
       en/
-	      index.ts
+         index.ts
       formatters.ts
       langauge-types.ts
       langauge-util.ts
@@ -670,7 +670,7 @@ You can specify your own formatters, that take an argument as an input and retur
 ```typescript
 const formatters = {
    roiCalculator: (value) => {
-   return (value * 4.2) - 7
+      return (value * 4.2) - 7
    }
 }
 
