@@ -23,6 +23,7 @@
 			"import": "./esm/formatters/*.js",
 			"require": "./cjs/formatters/*.js"
 		},
+		"./svelte": "./svelte/svelte-store.js",
 		"./rollup-plugin-langauge-watcher": "./rollup/rollup-plugin-langauge-watcher.js",
 		"./package.json": "./package.json",
 		"./*": {
@@ -48,10 +49,11 @@
 	"scripts": {
 		"dev": "tsc -p tsconfig-rollup.json -w",
 		"dev:watcher": "rollup -c rollup-watcher.config.ts -w",
-		"build": "npm run build:browser && npm run build:cjs && npm run build:esm && npm run build:formatters && npm run build:rollup && npm run build:watcher",
+		"build": "npm run build:browser && npm run build:cjs && npm run build:esm && npm run build:svelte && npm run build:formatters && npm run build:rollup && npm run build:watcher",
 		"build:browser": "rollup -c rollup-browser.config.ts",
 		"build:cjs": "tsc -p tsconfig-cjs.json",
 		"build:esm": "tsc -p tsconfig-esm.json",
+		"build:svelte": "npx tsc -p tsconfig-svelte.json",
 		"build:formatters": "tsc -p tsconfig-formatters.json && rollup -c rollup-formatters.config.ts",
 		"build:rollup": "rollup -c rollup-rollup.config.ts && tsc -p tsconfig-rollup.json --emitDeclarationOnly",
 		"build:watcher": "rollup -c rollup-watcher.config.ts",
@@ -82,6 +84,7 @@
 		"rollup-plugin-node-externals": "^2.2.0",
 		"rollup-plugin-terser": "^7.0.2",
 		"size-limit": "^4.9.1",
+		"svelte": "^3.32.1",
 		"tiny-glob": "^0.2.8",
 		"ts-node": "^9.1.1",
 		"typescript": "^4.1.3",

@@ -52,7 +52,7 @@ const getUtil = (config: GeneratorConfigWithDefaultValues, importType: string): 
 	const dynamicImports = lazyLoad
 		? `import { langaugeLoaderAsync } from 'langauge'`
 		: `import${importType} { LocaleTranslations } from 'langauge'
-import { langaugeLoader, langauge } from 'langauge'`
+import { langaugeLoader, langauge, langaugeStringWrapper } from 'langauge'`
 
 	const dynamicCode = lazyLoad ? getAsyncCode(config) : getSyncCode(config)
 
@@ -75,7 +75,9 @@ import${importType} {
 import { initFormatters } from './${formattersTemplatePath}'
 
 ${localesEnum}
-${dynamicCode}`
+${dynamicCode}
+export const initLangaugeStringWrapper = (locale: LangaugeLocale) => langaugeStringWrapper(locale, initFormatters(locale))
+`
 }
 
 export const generateUtil = async (config: GeneratorConfigWithDefaultValues, importType: string): Promise<void> => {

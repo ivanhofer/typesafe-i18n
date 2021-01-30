@@ -26,7 +26,7 @@ const currentLocale = writable<LangaugeLocale>('' as LangaugeLocale)
 
 const isLoading = writable<boolean>(true)
 
-let langaugeInstance = new Proxy({} as LangaugeTranslationArgs, { get: (_target, key: LangaugeTranslationKeys) => () => key as string })
+let langaugeInstance = new Proxy({} as LangaugeTranslationArgs, { get: (_target, key: LangaugeTranslationKeys) => () => key })
 
 const langaugeInstanceStore = writable<LangaugeTranslationArgs>(langaugeInstance)
 

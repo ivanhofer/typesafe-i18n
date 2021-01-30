@@ -1,4 +1,10 @@
-import type { Cache, Formatters, TranslatorFn, LangaugeBaseTranslation, LangaugeTranslationKey } from './core'
+import type {
+	Cache,
+	LangaugeBaseFormatters,
+	TranslatorFn,
+	LangaugeBaseTranslation,
+	LangaugeTranslationKey,
+} from './core'
 import { translate } from './core'
 import { getPartsFromString } from './util.string'
 
@@ -9,7 +15,7 @@ const getTextFromTranslationKey = <T extends LangaugeBaseTranslation>(
 	key: LangaugeTranslationKey<T>,
 ): string => translations[key] ?? (key as string)
 
-const getTranslateInstance = <L extends string, T extends LangaugeBaseTranslation, F extends Formatters>(
+const getTranslateInstance = <L extends string, T extends LangaugeBaseTranslation, F extends LangaugeBaseFormatters>(
 	locale: L,
 	translations: T,
 	formatters: F,
@@ -25,7 +31,7 @@ export function langaugeObjectWrapper<
 	T extends LangaugeBaseTranslation,
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	A extends object = TranslatorFn<T>,
-	F extends Formatters = Formatters
+	F extends LangaugeBaseFormatters = LangaugeBaseFormatters
 >(locale: L, translations: T, formatters: F): A
 
 export function langaugeObjectWrapper<

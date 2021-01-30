@@ -5,6 +5,7 @@ node_modules
 /formatters
 /node
 /rollup
+/svelte
 /tests/generated/**/*.actual.output
 /tests/generated/de
 /tests/generated/en

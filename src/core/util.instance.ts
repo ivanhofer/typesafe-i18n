@@ -1,5 +1,5 @@
 import { LangaugeBaseTranslation } from '..'
-import { TranslatorFn, Formatters } from './core'
+import { TranslatorFn, LangaugeBaseFormatters } from './core'
 import { LangaugeFormatterInitializer, langaugeLoader, LocaleTranslationFns } from './util.loader'
 
 export const langauge = <
@@ -7,7 +7,7 @@ export const langauge = <
 	T extends LangaugeBaseTranslation,
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	A extends object = TranslatorFn<T>,
-	F extends Formatters = Formatters
+	F extends LangaugeBaseFormatters = LangaugeBaseFormatters
 >(
 	getTranslationForLocale: (locale: L) => T,
 	formattersInitializer: LangaugeFormatterInitializer<L, F>,

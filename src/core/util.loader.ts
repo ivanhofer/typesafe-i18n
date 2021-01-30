@@ -1,4 +1,4 @@
-import type { Formatters, LangaugeBaseTranslation, TranslatorFn } from './core'
+import type { LangaugeBaseFormatters, LangaugeBaseTranslation, TranslatorFn } from './core'
 import { langaugeObjectWrapper } from './util.object'
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ export type LocaleTranslations<L extends string, T = unknown> = {
 	[key in L]: T
 }
 
-export type LangaugeFormatterInitializer<L extends string, F extends Formatters> = (locale: L) => F
+export type LangaugeFormatterInitializer<L extends string, F extends LangaugeBaseFormatters> = (locale: L) => F
 
 // --------------------------------------------------------------------------------------------------------------------
 // implementation -----------------------------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ export const langaugeLoaderAsync = async <
 	T extends LangaugeBaseTranslation,
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	A extends object = TranslatorFn<T>,
-	F extends Formatters = Formatters
+	F extends LangaugeBaseFormatters = LangaugeBaseFormatters
 >(
 	locale: L,
 	getTranslationForLocale: (locale: L) => Promise<T>,
@@ -57,7 +57,7 @@ export const langaugeLoader = <
 	T extends LangaugeBaseTranslation,
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	A extends object = TranslatorFn<T>,
-	F extends Formatters = Formatters
+	F extends LangaugeBaseFormatters = LangaugeBaseFormatters
 >(
 	locale: L,
 	getTranslationForLocale: (locale: L) => T,

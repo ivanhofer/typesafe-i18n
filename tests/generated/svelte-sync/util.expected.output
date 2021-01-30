@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 import type { LocaleTranslations } from 'langauge'
-import { langaugeLoader, langauge } from 'langauge'
+import { langaugeLoader, langauge, langaugeStringWrapper } from 'langauge'
 import type {
 	LangaugeTranslation,
 	LangaugeTranslationArgs,
@@ -26,3 +26,5 @@ export const getTranslationForLocale = (locale: LangaugeLocale) => localeTransla
 export const initLangaugeForLocale = (locale: LangaugeLocale) => langaugeLoader<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, getTranslationForLocale, initFormatters)
 
 export const initLangauge = () => langauge<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(getTranslationForLocale, initFormatters)
+
+export const initLangaugeStringWrapper = (locale: LangaugeLocale) => langaugeStringWrapper(locale, initFormatters(locale))

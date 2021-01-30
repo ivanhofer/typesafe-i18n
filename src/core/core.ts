@@ -24,11 +24,11 @@ export type LangaugeBaseTranslation = {
 	[key: string]: string
 }
 
-type LangaugeBaseTranslationArgs = {
-	[key in keyof LangaugeBaseTranslation]: unknown
+export type LangaugeBaseTranslationArgs = {
+	[key in keyof LangaugeBaseTranslation]: (...args: unknown[]) => string
 }
 
-export type Formatters = {
+export type LangaugeBaseFormatters = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[formatter: string]: FormatterFn<any>
 }
@@ -41,11 +41,11 @@ type IsPluralPart<T> = T extends PluralPart ? T : never
 
 export const isPluralPart = (part: Part): part is IsPluralPart<Part> => !!((<PluralPart>part).o || (<PluralPart>part).r)
 
-const applyFormatters = (formatters: Formatters, formatterKeys: string[], value: unknown) =>
+const applyFormatters = (formatters: LangaugeBaseFormatters, formatterKeys: string[], value: unknown) =>
 	formatterKeys.reduce((prev, formatterKey) => formatters[formatterKey]?.(prev) || prev, value)
 
-const getPlural = (pluraRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPart, value: number) => {
-	switch (pluraRules.select(value)) {
+const getPlural = (pluraRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPart, value: unknown) => {
+	switch (pluraRules.select(value as number)) {
 		case 'zero':
 			return z
 		case 'one':
@@ -64,8 +64,8 @@ const getPlural = (pluraRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPar
 const applyArguments = (
 	textParts: Part[],
 	pluralRules: Intl.PluralRules,
-	formatters: Formatters,
-	args: LangaugeBaseTranslationArgs,
+	formatters: LangaugeBaseFormatters,
+	args: unknown[],
 ) =>
 	textParts
 		.map((part) => {
@@ -74,7 +74,7 @@ const applyArguments = (
 			}
 
 			const { k: key = '0', f: formatterKeys = [] } = part as ArgumentPart
-			const value = args[key] as number | boolean
+			const value = args[(key as unknown) as number] as unknown
 
 			if (isPluralPart(part)) {
 				return isBoolean(value) ? (value ? part.o : part.r) : getPlural(pluralRules, part, value) || ''
@@ -89,12 +89,10 @@ const applyArguments = (
 export const translate = (
 	textParts: Part[],
 	pluralRules: Intl.PluralRules,
-	formatters: Formatters,
+	formatters: LangaugeBaseFormatters,
 	args: unknown[],
 ): string => {
-	const transformedArgs = ((args.length === 1 && isPrimitiveObject(args[0])
-		? args[0]
-		: args) as unknown) as LangaugeBaseTranslationArgs
+	const transformedArgs = (args.length === 1 && isPrimitiveObject(args[0]) ? args[0] : args) as unknown[]
 
 	return applyArguments(textParts, pluralRules, formatters, transformedArgs)
 }
