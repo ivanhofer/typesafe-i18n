@@ -3,6 +3,10 @@
 	"version": "0.20.0",
 	"description": "A lightweight localization engine for JavaScript and TypeScript projects",
 	"homepage": "https://github.com/ivanhofer/langauge",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ivanhofer/langauge"
+	},
 	"author": "ivanhofer",
 	"keywords": [
 		"l10n",
