@@ -21,6 +21,7 @@ const config = files
 			typescript({
 				tsconfig: './tsconfig-formatters.json',
 				declaration: true,
+				sourceMap: false,
 			}),
 			terser(),
 		],

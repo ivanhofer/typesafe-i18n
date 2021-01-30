@@ -8,7 +8,7 @@ const wrap = (type) => (type ? `.${type}` : '')
 const getPlugins = (minify) => [
 	replace({ 'process.env.npm_lifecycle_event': "'build'" }),
 	resolve(),
-	typescript(),
+	typescript({ sourceMap: !minify }),
 	minify && terser(),
 ]
 
