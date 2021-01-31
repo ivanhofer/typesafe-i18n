@@ -651,12 +651,15 @@ src/
 
 #### locales
 
-Locales must follow a specific file pattern. For each locale, you have to create a folder with the name of the locale inside your `src/langauge` folder e.g. 'en', 'en-us', 'en-GB'. The name of the folder is also the name of the locale you use inside your code. Each locales folder needs to have an `index.ts` file with a default export. This should look something like:
+Locales must follow a specific file pattern. For each locale, you have to create a folder with the name of the locale inside your `src/langauge` folder e.g. 'en', 'en-us', 'en-GB'. The name of the folder is also the name of the locale you use inside your code. Each locales folder needs to have an `index.ts` file with a default export. The file should export an object with key-values pairs and should look something like:
+
 ```javascript
 import type { LangaugeTranslation } from '../langauge-types';
 
 const de: LangaugeTranslation = {
+
    ... // your translations go here
+
 }
 
 export default de
@@ -779,18 +782,18 @@ export type Sum = {
 
 You can set options for the [watcher](#typesafety) in order to get optimized output for your specific project. The available options are:
 
-| key                                                       | type               | default value                            |
-| --------------------------------------------------------- | ------------------ | ---------------------------------------- |
-| [baseLocale](#baseLocale)                                 | `string`           | `'en'`                                   |
-| [locales](#locales)                                       | `string[]`         | `[]`                                     |
-| [lazyLoad](#lazyLoad)                                     | `boolean`          | `true`                                   |
-| [svelte](#svelte)                                         | `boolean | string` | `false`                                  |
-| [outputPath](#outputPath)                                 | `string`           | `'./src/langauge/'`                      |
-| [typesFileName](#typesFileName)                           | `string`           | `'langauge-types'`                       |
-| [utilFileName](#utilFileName)                             | `string`           | `'langauge-util'`                        |
-| [formattersTemplateFileName](#formattersTemplateFileName) | `string`           | `'formatters'`                           |
-| [typesTemplateFileName](#typesTemplateFileName)           | `string`           | `'custom-types'`                         |
-| [tempPath](#tempPath)                                     | `string`           | `'./node_modules/langauge/temp-output/'` |
+| key                                                       | type                    | default value                            |
+| --------------------------------------------------------- | ----------------------- | ---------------------------------------- |
+| [baseLocale](#baseLocale)                                 | `string`                | `'en'`                                   |
+| [locales](#locales)                                       | `string[]`              | `[]`                                     |
+| [lazyLoad](#lazyLoad)                                     | `boolean`               | `true`                                   |
+| [svelte](#svelte)                                         | `boolean &#124; string` | `false`                                  |
+| [outputPath](#outputPath)                                 | `string`                | `'./src/langauge/'`                      |
+| [typesFileName](#typesFileName)                           | `string`                | `'langauge-types'`                       |
+| [utilFileName](#utilFileName)                             | `string`                | `'langauge-util'`                        |
+| [formattersTemplateFileName](#formattersTemplateFileName) | `string`                | `'formatters'`                           |
+| [typesTemplateFileName](#typesTemplateFileName)           | `string`                | `'custom-types'`                         |
+| [tempPath](#tempPath)                                     | `string`                | `'./node_modules/langauge/temp-output/'` |
 
 
 ### baseLocale
