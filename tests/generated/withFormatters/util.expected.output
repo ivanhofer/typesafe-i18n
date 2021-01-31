@@ -10,7 +10,7 @@ import type {
 } from './withFormatters/types.actual.output'
 import { initFormatters } from './withFormatters/formatters-template.actual.output'
 
-export const locales = [
+export const locales: LangaugeLocale[] = [
 	'en'
 ]
 

@@ -10,7 +10,7 @@ import {
 } from './typescript3.0/types.actual.output'
 import { initFormatters } from './typescript3.0/formatters-template.actual.output'
 
-export const locales = [
+export const locales: LangaugeLocale[] = [
 	'en'
 ]
 

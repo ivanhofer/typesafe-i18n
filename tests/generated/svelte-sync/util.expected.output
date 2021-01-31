@@ -11,7 +11,7 @@ import type {
 } from './svelte-sync/types.actual.output'
 import { initFormatters } from './svelte-sync/formatters-template.actual.output'
 
-export const locales = [
+export const locales: LangaugeLocale[] = [
 	'en'
 ]
 
