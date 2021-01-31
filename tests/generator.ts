@@ -85,7 +85,7 @@ const mockLogger = () => {
 		error: [],
 	}
 
-	const logger = (type: 'info' | 'warn' | 'error', ...messages: string[]) => outputs[type].push(messages.join(' '))
+	const logger = (type: 'info' | 'warn' | 'error', ...messages: unknown[]) => outputs[type].push(messages.join(' '))
 
 	return {
 		get logger() {
