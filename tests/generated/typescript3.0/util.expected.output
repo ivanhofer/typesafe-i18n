@@ -1,7 +1,7 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-import { langaugeLoaderAsync } from 'langauge'
+import { langaugeLoaderAsync, langaugeStringWrapper } from 'langauge'
 import {
 	LangaugeTranslation,
 	LangaugeTranslationArgs,
