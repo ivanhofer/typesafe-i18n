@@ -25,7 +25,7 @@ export const readFile = async (file: string, createPath = false): Promise<string
 	}
 }
 
-const doesPathExist = async (path: string): Promise<boolean> => {
+export const doesPathExist = async (path: string): Promise<boolean> => {
 	try {
 		await stat(path)
 		return true

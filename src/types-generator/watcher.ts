@@ -3,7 +3,14 @@ import fs from 'fs'
 import path, { join, resolve } from 'path'
 import type { LangaugeBaseTranslation } from '../core/core'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './generator'
-import { copyFile, createPathIfNotExits, deleteFolderRecursive, getFiles, importFile } from './file-utils'
+import {
+	copyFile,
+	createPathIfNotExits,
+	deleteFolderRecursive,
+	doesPathExist,
+	getFiles,
+	importFile,
+} from './file-utils'
 import { generate, setDefaultConfigValuesIfMissing } from './generator'
 import { logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
 
@@ -35,6 +42,11 @@ const parseLanguageFile = async (
 ): Promise<LangaugeBaseTranslation | null> => {
 	const originalPath = resolve(outputPath, locale, 'index.ts')
 
+	if (!(await doesPathExist(originalPath))) {
+		logger.info(`could not load base locale file '${locale}'`)
+		return null
+	}
+
 	await createPathIfNotExits(tempPath)
 
 	const importPath = await transpileTypescriptAndPrepareImportFile(originalPath, tempPath)
@@ -54,8 +66,14 @@ const parseLanguageFile = async (
 	return languageImport
 }
 
+let first = true
+
 const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, version: TypescriptVersion) => {
-	logger.info(`watcher detected changes in baseLocale file`)
+	if (first) {
+		first = false
+	} else {
+		logger.info(`watcher detected changes in baseLocale file`)
+	}
 
 	const { baseLocale, locales: localesToUse, tempPath, outputPath } = config
 
