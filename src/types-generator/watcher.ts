@@ -1,6 +1,6 @@
 import * as ts from 'typescript'
 import fs from 'fs'
-import path, { join, resolve } from 'path'
+import path, { resolve } from 'path'
 import type { LangaugeBaseTranslation } from '../core/core'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './generator'
 import {
@@ -72,7 +72,7 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 	if (first) {
 		first = false
 	} else {
-		logger.info(`watcher detected changes in baseLocale file`)
+		logger.info('files were modified => looking for changes ...')
 	}
 
 	const { baseLocale, locales: localesToUse, tempPath, outputPath } = config
@@ -89,6 +89,8 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 	const languageFile = (locale && (await parseLanguageFile(outputPath, locale, tempPath))) || {}
 
 	await generate(languageFile, { ...config, baseLocale: locale, locales }, version, logger)
+
+	logger.info('... all files are up to date')
 }
 
 let debounceCounter = 0
@@ -116,14 +118,11 @@ export const startWatcher = async (config?: GeneratorConfig): Promise<void> => {
 
 	await createPathIfNotExits(outputPath)
 
-	const baseLocalePath = join(outputPath, configWithDefaultValues.baseLocale)
-
-	await createPathIfNotExits(baseLocalePath)
-
-	fs.watch(baseLocalePath, { recursive: true }, () => debonce(onChange))
+	fs.watch(outputPath, { recursive: true }, () => debonce(onChange))
 
 	logger.info(`generating files for typescript version: '${ts.versionMajorMinor}.x'`)
-	logger.info(`watcher started in: '${baseLocalePath}'`)
+	logger.info(`watcher started in: '${outputPath}'`)
+	logger.info(`options:`, config)
 
 	onChange()
 }

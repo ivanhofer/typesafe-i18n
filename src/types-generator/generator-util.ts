@@ -37,12 +37,12 @@ export const supportsImportType = ({ major, minor }: TypescriptVersion): boolean
 // --------------------------------------------------------------------------------------------------------------------
 
 export type Logger = {
-	info: (...messages: string[]) => void
-	warn: (...messages: string[]) => void
-	error: (...messages: string[]) => void
+	info: (...messages: unknown[]) => void
+	warn: (...messages: unknown[]) => void
+	error: (...messages: unknown[]) => void
 }
 
-const log = (console: Console, type: 'info' | 'warn' | 'error', ...messages: string[]) =>
+const log = (console: Console, type: 'info' | 'warn' | 'error', ...messages: unknown[]) =>
 	console[type]('[LANGAUGE]', ...messages)
 
 export const createLogger = (console: Console): Logger => {
