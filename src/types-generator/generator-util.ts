@@ -43,7 +43,7 @@ export type Logger = {
 }
 
 const log = (console: Console, type: 'info' | 'warn' | 'error', ...messages: unknown[]) =>
-	console[type]('[LANGAUGE]', ...messages)
+	console[type]('[langauge]', ...messages)
 
 export const createLogger = (console: Console): Logger => {
 	return {
