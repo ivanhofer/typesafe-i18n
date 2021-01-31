@@ -50,7 +50,7 @@ const getUtil = (config: GeneratorConfigWithDefaultValues, importType: string): 
 	const { typesFileName: typesFile, formattersTemplateFileName: formattersTemplatePath, lazyLoad, locales } = config
 
 	const dynamicImports = lazyLoad
-		? `import { langaugeLoaderAsync } from 'langauge'`
+		? `import { langaugeLoaderAsync, langaugeStringWrapper } from 'langauge'`
 		: `import${importType} { LocaleTranslations } from 'langauge'
 import { langaugeLoader, langauge, langaugeStringWrapper } from 'langauge'`
 
