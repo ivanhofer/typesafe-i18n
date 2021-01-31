@@ -340,7 +340,7 @@ function doSomething(session) {
   import { ... } from 'langauge'
   ```
 
- <!-- TODO: create example repository -->
+You can take a look at this [demo repository](https://github.com/ivanhofer/langauge-template-nodejs) to see how langauge will work in node projects.
 
 ### Svelte
 
@@ -565,6 +565,8 @@ The langauge package allows us to be 100% typesafe for our tranlsation functions
 
 In order to get get full typesafety for your locales, you can start the watcher during development. The watcher listens for changes you make to your [base locale file](#folder-structure) and generates the corresponding TypeScript types.
 
+ > The watcher will generate a different output depending on your TypeScript version. Older versions don't support all the features langauge need to provide you with the best types. Make sure to use a TypeScript version `> 4.1.x` to benefit from all the typechecking features.
+
 Currently you can choose between two variants to start the watcher:
 
 ### node-process
@@ -581,7 +583,7 @@ You can pass [options](#options) to the watcher by creating a `.langauge.json` f
 
 > You could use a npm-package like `npm-run-all` in order to start the watcher and you development-server in parallel.
 
- <!-- TODO: create example repository -->
+You can take a look at this [demo repository](https://github.com/ivanhofer/langauge-template-nodejs) to see how to run the watcher node process.
 
 ### rollup-plugin
 
