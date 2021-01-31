@@ -56,7 +56,7 @@ import { langaugeLoader, langauge, langaugeStringWrapper } from 'langauge'`
 
 	const dynamicCode = lazyLoad ? getAsyncCode(config) : getSyncCode(config)
 
-	const localesEnum = `export const locales = [${locales.map(
+	const localesEnum = `export const locales: LangaugeLocale[] = [${locales.map(
 		(locale) => `
 	'${locale}'`,
 	)}
