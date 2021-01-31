@@ -36,8 +36,8 @@ export type LangaugeTranslationArgs = {
 }
 
 export type LangaugeFormatters = {
-	timesTen: (value: string | number | boolean) => string
-	wrapWithHtmlSpan: (value: string | number | boolean) => string
+	timesTen: (value: string | number | boolean) => unknown
+	wrapWithHtmlSpan: (value: string | number | boolean) => unknown
 }
 
 export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters

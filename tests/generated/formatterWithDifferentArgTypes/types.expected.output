@@ -35,7 +35,7 @@ export type LangaugeTranslationArgs = {
 }
 
 export type LangaugeFormatters = {
-	calculate: (value: number | Date) => string
+	calculate: (value: number | Date) => unknown
 }
 
 export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters

@@ -63,8 +63,8 @@ export type LangaugeTranslationArgs = {
 }
 
 export type LangaugeFormatters = {
-	a: (value: unknown) => string
-	z: (value: unknown) => string
+	a: (value: unknown) => unknown
+	z: (value: unknown) => unknown
 }
 
 export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters

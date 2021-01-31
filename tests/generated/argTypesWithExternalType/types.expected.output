@@ -27,7 +27,7 @@ export type LangaugeTranslationArgs = {
 }
 
 export type LangaugeFormatters = {
-	calculate: (value: Result) => string
+	calculate: (value: Result) => unknown
 }
 
 export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters
