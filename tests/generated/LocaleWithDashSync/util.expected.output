@@ -1,0 +1,30 @@
+// This types were auto-generated. Any manual changes will be overwritten.
+/* eslint-disable */
+
+import type { LocaleTranslations } from 'langauge'
+import { langaugeLoader, langauge, langaugeStringWrapper } from 'langauge'
+import type {
+	LangaugeTranslation,
+	LangaugeTranslationArgs,
+	LangaugeFormatters,
+	LangaugeLocale,
+} from './LocaleWithDashSync/types.actual.output'
+import { initFormatters } from './LocaleWithDashSync/formatters-template.actual.output'
+
+export const locales: LangaugeLocale[] = [
+	'de-at'
+]
+
+import de_at from './de-at'
+
+const localeTranslations: LocaleTranslations<LangaugeLocale, LangaugeTranslation> = {
+	'de-at': de_at as LangaugeTranslation,
+}
+
+export const getTranslationForLocale = (locale: LangaugeLocale) => localeTranslations[locale]
+
+export const initLangaugeForLocale = (locale: LangaugeLocale) => langaugeLoader<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, getTranslationForLocale, initFormatters)
+
+export const initLangauge = () => langauge<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(getTranslationForLocale, initFormatters)
+
+export const initLangaugeStringWrapper = (locale: LangaugeLocale) => langaugeStringWrapper(locale, initFormatters(locale))
