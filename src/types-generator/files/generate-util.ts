@@ -1,13 +1,19 @@
 import { writeFileIfContainsChanges } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generator'
+import { sanitizeLocale } from '../generator-util'
+
+const getLocalesTranslationRowAsync = (locale: string): string => {
+	const sanitizedLocale = sanitizeLocale(locale)
+	const needsEscaping = locale !== sanitizedLocale
+
+	const wrappedLocale = needsEscaping ? `'${locale}'` : locale
+
+	return `
+	${wrappedLocale}: () => import('./${locale}'),`
+}
 
 const getAsyncCode = ({ locales }: GeneratorConfigWithDefaultValues) => {
-	const localesTranslationLoaders = locales
-		.map(
-			(locale) => `
-	${locale}: () => import('./${locale}'),`,
-		)
-		.join('')
+	const localesTranslationLoaders = locales.map(getLocalesTranslationRowAsync).join('')
 
 	return `
 const localeTranslationLoaders = {${localesTranslationLoaders}
@@ -19,20 +25,32 @@ export const initLangaugeForLocale = (locale: LangaugeLocale) => langaugeLoaderA
 `
 }
 
+const getLocalesTranslationRowSync = (locale: string, baseLocale: string): string => {
+	const sanitizedLocale = sanitizeLocale(locale)
+	const needsEscaping = locale !== sanitizedLocale
+
+	const postfix =
+		locale === baseLocale
+			? `: ${sanitizedLocale} as LangaugeTranslation`
+			: needsEscaping
+				? `: ${sanitizedLocale}`
+				: ''
+
+	const wrappedLocale = needsEscaping ? `'${locale}'` : locale
+
+	return `
+	${wrappedLocale}${postfix},`
+}
+
 const getSyncCode = ({ baseLocale, locales }: GeneratorConfigWithDefaultValues) => {
 	const localesImports = locales
 		.map(
 			(locale) => `
-import ${locale.replace('-', '_')} from './${locale}'`,
+import ${sanitizeLocale(locale)} from './${locale}'`,
 		)
 		.join('')
 
-	const localesTranslations = locales
-		.map(
-			(locale) => `
-	${locale}${locale === baseLocale ? `: ${locale} as LangaugeTranslation` : ''},`,
-		)
-		.join('')
+	const localesTranslations = locales.map((locale) => getLocalesTranslationRowSync(locale, baseLocale)).join('')
 	return `${localesImports}
 
 const localeTranslations: LocaleTranslations<LangaugeLocale, LangaugeTranslation> = {${localesTranslations}

@@ -36,6 +36,10 @@ export const supportsImportType = ({ major, minor }: TypescriptVersion): boolean
 
 // --------------------------------------------------------------------------------------------------------------------
 
+export const sanitizeLocale = (locale: string): string => locale.replace(/-/g, '_')
+
+// --------------------------------------------------------------------------------------------------------------------
+
 export type Logger = {
 	info: (...messages: unknown[]) => void
 	warn: (...messages: unknown[]) => void

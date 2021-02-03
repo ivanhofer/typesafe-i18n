@@ -26,9 +26,11 @@ const transpileTypescriptAndPrepareImportFile = async (languageFilePath: string,
 	const compiledPath = resolve(tempPath, 'index.js')
 	const copyPath = resolve(tempPath, `langauge-temp-${debounceCounter}.js`)
 
-	const copySuccess = await copyFile(compiledPath, copyPath)
+	const copySuccess = await copyFile(compiledPath, copyPath, false)
 	if (!copySuccess) {
-		logger.error('something went wrong')
+		logger.warn(
+			`Make shure to give your base locales default export the type of 'LangaugeBaseTranslation' and don't import anything from outside the base locales directory via relative path.`,
+		)
 		return ''
 	}
 

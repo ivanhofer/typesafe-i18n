@@ -141,6 +141,10 @@ testGeneratedOutput('deLocale', {}, { baseLocale: 'de' })
 
 testGeneratedOutput('multipleLocales', {}, { locales: ['de', 'en', 'it'] })
 
+testGeneratedOutput('LocaleWithDash', {}, { baseLocale: 'de-at' })
+testGeneratedOutput('LocaleWithDashSync', {}, { baseLocale: 'de-at', lazyLoad: false })
+testGeneratedOutput('LocalesWithDash', {}, { locales: ['it-it', 'en-us', 'fr-be'] })
+
 testGeneratedOutput('argTypes', { STRING_TYPE: 'Hi {name:string}!', NUMBER_TYPE: '{0:number} apple{{s}}' })
 
 testGeneratedOutput('argOrder', {

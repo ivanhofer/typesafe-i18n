@@ -51,12 +51,12 @@ export const createPathIfNotExits = async (path: string): Promise<void> => {
 	}
 }
 
-export const copyFile = async (fromPath: string, toPath: string): Promise<boolean> => {
+export const copyFile = async (fromPath: string, toPath: string, showError = true): Promise<boolean> => {
 	try {
 		await cp(fromPath, toPath)
 		return true
 	} catch (e) {
-		logger.error(`copyFile: ${fromPath} - ${toPath}`, e)
+		showError && logger.error(`copyFile: ${fromPath} - ${toPath}`, e)
 		return false
 	}
 }

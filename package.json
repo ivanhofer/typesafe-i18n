@@ -53,7 +53,7 @@
 	"scripts": {
 		"dev": "tsc -p tsconfig-rollup.json -w",
 		"dev:watcher": "rollup -c rollup-watcher.config.ts -w",
-		"build": "npm run build:browser && npm run build:cjs && npm run build:esm && npm run build:svelte && npm run build:formatters && npm run build:rollup && npm run build:watcher",
+		"build": "npm run build:watcher && npm run build:rollup && npm run build:formatters && npm run build:esm && npm run build:cjs && npm run build:browser && npm run build:svelte",
 		"build:browser": "rollup -c rollup-browser.config.ts",
 		"build:cjs": "tsc -p tsconfig-cjs.json",
 		"build:esm": "tsc -p tsconfig-esm.json",
