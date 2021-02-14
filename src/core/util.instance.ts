@@ -5,8 +5,8 @@ import { i18nLoader } from './util.loader'
 export const i18n = <
 	L extends Locale,
 	T extends BaseTranslation,
-	TF extends TranslationFunctions = TranslationFunctions<T>,
-	F extends BaseFormatters = BaseFormatters
+	TF extends TranslationFunctions,
+	F extends BaseFormatters
 >(
 	getTranslationForLocale: (locale: L) => T,
 	formattersInitializer: FormatterInitializer<L, F>,

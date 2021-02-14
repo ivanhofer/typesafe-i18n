@@ -16,7 +16,7 @@ const translateString = <F extends BaseFormatters>(
 	...args: Arguments
 ) => translate(getPartsFromString(cache, text), pluralRules, formatters, args)
 
-export const i18nString = <L extends Locale, F extends BaseFormatters = BaseFormatters>(
+export const i18nString = <L extends Locale, F extends BaseFormatters>(
 	locale: L,
 	formatters: F = {} as F,
 ): TranslateByString => translateString.bind(null, {}, new Intl.PluralRules(locale), formatters)

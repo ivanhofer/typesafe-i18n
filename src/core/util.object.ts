@@ -29,15 +29,14 @@ const getTranslateInstance = <L extends Locale, T extends BaseTranslation, F ext
 export function i18nObject<
 	L extends Locale,
 	T extends BaseTranslation,
-	TF extends TranslationFunctions = TranslationFunctions<T>,
-	F extends BaseFormatters = BaseFormatters
+	TF extends TranslationFunctions,
+	F extends BaseFormatters
 >(locale: L, translations: T, formatters: F): TF
 
-export function i18nObject<
-	L extends Locale,
-	T extends BaseTranslation,
-	TF extends TranslationFunctions = TranslationFunctions<T>
->(locale: L, translations: T): TF
+export function i18nObject<L extends Locale, T extends BaseTranslation, TF extends TranslationFunctions>(
+	locale: L,
+	translations: T,
+): TF
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 export function i18nObject(locale: any, translations: any, formatters: any = {}): any {
