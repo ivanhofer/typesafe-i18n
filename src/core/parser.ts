@@ -29,7 +29,7 @@ export type Part = TextPart | ArgumentPart | PluralPart
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-const REGEX_BRACKETS_SPLIT = /({?{[^\\}]+}}?)/g
+const REGEX_BRACKETS_SPLIT = /({[^\\{\\}]+})|(({{[^\\{\\}]+}}))/g
 
 const parseArgumentPart = (text: string): ArgumentPart => {
 	const [keyPart = '', ...formatterKeys] = text.split('|')
