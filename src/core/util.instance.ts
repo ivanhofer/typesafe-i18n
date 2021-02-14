@@ -1,19 +1,18 @@
-import { LangaugeBaseTranslation } from '..'
-import { TranslatorFn, LangaugeBaseFormatters } from './core'
-import { LangaugeFormatterInitializer, langaugeLoader, LocaleTranslationFns } from './util.loader'
+import type { TranslationFunctions, BaseFormatters, BaseTranslation, Locale } from './core'
+import type { FormatterInitializer, LocaleTranslationFunctions } from './util.loader'
+import { langaugeLoader } from './util.loader'
 
-export const langauge = <
-	L extends string,
-	T extends LangaugeBaseTranslation,
-	// eslint-disable-next-line @typescript-eslint/ban-types
-	A extends object = TranslatorFn<T>,
-	F extends LangaugeBaseFormatters = LangaugeBaseFormatters
+export const i18n = <
+	L extends Locale,
+	T extends BaseTranslation,
+	TF extends TranslationFunctions = TranslationFunctions<T>,
+	F extends BaseFormatters = BaseFormatters
 >(
 	getTranslationForLocale: (locale: L) => T,
-	formattersInitializer: LangaugeFormatterInitializer<L, F>,
-): LocaleTranslationFns<L, A> => {
-	return new Proxy<LocaleTranslationFns<L, A>>({} as LocaleTranslationFns<L, A>, {
-		get: (_target, locale: L): A | null =>
-			langaugeLoader<L, T, A, F>(locale, getTranslationForLocale, formattersInitializer),
+	formattersInitializer: FormatterInitializer<L, F>,
+): LocaleTranslationFunctions<L, TF> => {
+	return new Proxy<LocaleTranslationFunctions<L, TF>>({} as LocaleTranslationFunctions<L, TF>, {
+		get: (_target, locale: L): TF | null =>
+			langaugeLoader<L, T, TF, F>(locale, getTranslationForLocale, formattersInitializer),
 	})
 }

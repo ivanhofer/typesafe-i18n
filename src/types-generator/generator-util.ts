@@ -1,3 +1,5 @@
+import type { Arguments } from '../core/core'
+
 export const getPermutations = <T>(rest: T[], permutatedArray: T[] = []): T[][] => {
 	if (rest.length === 0) {
 		return [permutatedArray]
@@ -41,12 +43,12 @@ export const sanitizeLocale = (locale: string): string => locale.replace(/-/g, '
 // --------------------------------------------------------------------------------------------------------------------
 
 export type Logger = {
-	info: (...messages: unknown[]) => void
-	warn: (...messages: unknown[]) => void
-	error: (...messages: unknown[]) => void
+	info: (...messages: Arguments) => void
+	warn: (...messages: Arguments) => void
+	error: (...messages: Arguments) => void
 }
 
-const log = (console: Console, type: 'info' | 'warn' | 'error', ...messages: unknown[]) =>
+const log = (console: Console, type: 'info' | 'warn' | 'error', ...messages: Arguments) =>
 	console[type]('[langauge]', ...messages)
 
 export const createLogger = (console: Console): Logger => {

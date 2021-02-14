@@ -1,3 +1,3 @@
-import { langaugeObjectWrapper } from './core/util.object'
+import { i18nObject } from './core/util.object'
 //@ts-ignore
-window.langauge = langaugeObjectWrapper
+window.langauge = i18nObject

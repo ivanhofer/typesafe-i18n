@@ -1,3 +1,3 @@
-import { langaugeStringWrapper } from './core/util.string'
+import { i18nString } from './core/util.string'
 //@ts-ignore
-window.langauge = langaugeStringWrapper
+window.langauge = i18nString

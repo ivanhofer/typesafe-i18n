@@ -1,4 +1,4 @@
-import type { LangaugeBaseTranslation } from '../core/core'
+import type { BaseTranslation } from '../core/core'
 import { generateTypes } from './files/generate-types'
 import { generateUtil } from './files/generate-util'
 import { generateSvelte } from './files/generate-svelte'
@@ -56,7 +56,7 @@ export const setDefaultConfigValuesIfMissing = (config: GeneratorConfig): Genera
 })
 
 export const generate = async (
-	translations: LangaugeBaseTranslation,
+	translations: BaseTranslation,
 	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
 	version: TypescriptVersion,
 	logger: Logger = defaultLogger,

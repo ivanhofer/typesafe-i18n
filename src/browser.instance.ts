@@ -1,3 +1,3 @@
-import { langauge } from './core/util.instance'
+import { i18n } from './core/util.instance'
 //@ts-ignore
-window.langauge = langauge
+window.langauge = i18n

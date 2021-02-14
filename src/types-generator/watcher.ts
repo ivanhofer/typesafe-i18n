@@ -1,7 +1,7 @@
 import * as ts from 'typescript'
 import fs from 'fs'
 import path, { resolve } from 'path'
-import type { LangaugeBaseTranslation } from '../core/core'
+import type { BaseTranslation } from '../core/core'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './generator'
 import {
 	copyFile,
@@ -41,7 +41,7 @@ const parseLanguageFile = async (
 	outputPath: string,
 	locale: string,
 	tempPath: string,
-): Promise<LangaugeBaseTranslation | null> => {
+): Promise<BaseTranslation | null> => {
 	const originalPath = resolve(outputPath, locale, 'index.ts')
 
 	if (!(await doesPathExist(originalPath))) {
@@ -56,7 +56,7 @@ const parseLanguageFile = async (
 		return null
 	}
 
-	const languageImport = await importFile<LangaugeBaseTranslation>(importPath)
+	const languageImport = await importFile<BaseTranslation>(importPath)
 
 	await deleteFolderRecursive(tempPath)
 

@@ -1,22 +1,22 @@
-import type { LangaugeBaseFormatters, Cache } from './core'
+import type { Arguments, BaseFormatters, Cache, Locale } from './core'
 import { translate } from './core'
 import type { Part } from './parser'
 import { parseRawText } from './parser'
 
-type TranslateByString = ((text: string) => string) | ((text: string, ...args: unknown[]) => string)
+type TranslateByString = ((text: string) => string) | ((text: string, ...args: Arguments) => string)
 
 export const getPartsFromString = (cache: Cache, text: string): Part[] =>
 	cache[text] || (cache[text] = parseRawText(text))
 
-const translateString = <F extends LangaugeBaseFormatters>(
+const translateString = <F extends BaseFormatters>(
 	cache: Cache,
 	pluralRules: Intl.PluralRules,
 	formatters: F,
 	text: string,
-	...args: unknown[]
+	...args: Arguments
 ) => translate(getPartsFromString(cache, text), pluralRules, formatters, args)
 
-export const langaugeStringWrapper = <L extends string, F extends LangaugeBaseFormatters = LangaugeBaseFormatters>(
+export const i18nString = <L extends Locale, F extends BaseFormatters = BaseFormatters>(
 	locale: L,
 	formatters: F = {} as F,
 ): TranslateByString => translateString.bind(null, {}, new Intl.PluralRules(locale), formatters)
