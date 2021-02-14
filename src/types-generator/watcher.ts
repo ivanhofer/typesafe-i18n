@@ -108,7 +108,7 @@ const debonce = (callback: () => void) =>
 
 export const startWatcher = async (config?: GeneratorConfig): Promise<void> => {
 	if (!config) {
-		config = (await importFile<GeneratorConfig>(path.resolve('.langauge.json'), false)) || {}
+		config = (await importFile<GeneratorConfig>(path.resolve('.typesafe-i18n.json'), false)) || {}
 	}
 
 	const configWithDefaultValues = setDefaultConfigValuesIfMissing(config)

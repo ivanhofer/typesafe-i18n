@@ -576,7 +576,7 @@ Start the watcher node process in your terminal:
 > node ./node_modules/langauge/node/watcher.js
 ```
 
-You can pass [options](#options) to the watcher by creating a `.langauge.json` file in the root of your workspace.
+You can pass [options](#options) to the watcher by creating a `.typesafe-i18n.json` file in the root of your workspace.
 
 > You could use a npm-package like `npm-run-all` in order to start the watcher and you development-server in parallel.
 
@@ -607,7 +607,7 @@ export default {
 
 > Make sure you start the watcher only in your development environment.
 
-You can pass [options](#options) to the watcher by creating a `.langauge.json` file in the root of your workspace, or by passing it as an argument to `langaugeWatcher`.
+You can pass [options](#options) to the watcher by creating a `.typesafe-i18n.json` file in the root of your workspace, or by passing it as an argument to `langaugeWatcher`.
 
 
  <!-- TODO: create example repository -->
