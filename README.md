@@ -586,7 +586,7 @@ You can take a look at this [demo repository](https://github.com/ivanhofer/langa
 Add the `langaugeWatcher` to your `rollup.config.js`.
 
 ```typescript
-import langaugeWatcher from 'langauge/rollup-plugin-langauge-watcher'
+import langaugeWatcher from 'langauge/rollup/rollup-plugin-typesafe-i18n-watcher'
 
 const isDev = !!process.env.ROLLUP_WATCH
 

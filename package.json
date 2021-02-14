@@ -28,7 +28,7 @@
 			"require": "./cjs/formatters/*.js"
 		},
 		"./svelte": "./svelte/svelte-store.js",
-		"./rollup/rollup-plugin-langauge-watcher": "./rollup/rollup-plugin-langauge-watcher.js",
+		"./rollup/rollup-plugin-typesafe-i18n-watcher": "./rollup/rollup-plugin-typesafe-i18n-watcher.js",
 		"./package.json": "./package.json",
 		"./*": {
 			"import": "./esm/*",

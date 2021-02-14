@@ -6,7 +6,7 @@ let started = false
 
 const plugin = (config?: GeneratorConfig): Plugin => {
 	return {
-		name: 'rollup-plugin-langauge-watcher',
+		name: 'rollup-plugin-typesafe-i18n-watcher',
 		buildStart() {
 			if (started) return
 
