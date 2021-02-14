@@ -1,8 +1,8 @@
-import type { BaseFormatters, BaseTranslation, TranslationFunctions } from './../core/core'
+import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../core/core'
 import type { Readable, Writable } from 'svelte/store'
 import { derived, writable } from 'svelte/store'
-import { i18nObject } from './../core/util.object'
-import { FormatterInitializer, TranslationLoader, TranslationLoaderAsync } from './../core/util.loader'
+import { i18nObject } from '../core/util.object'
+import { FormattersInitializer, TranslationLoader, TranslationLoaderAsync } from '../core/util.loader'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -17,12 +17,12 @@ type SvelteStoreInit<
 		initI18n: (
 			newlocale: L,
 			getTranslationForLocaleCallback: TranslationLoaderAsync<L, T>,
-			initFormattersCallback?: FormatterInitializer<L, F>,
+			initFormattersCallback?: FormattersInitializer<L, F>,
 		) => Promise<void>
 		setLocale: (locale: L) => void
 		isLoadingLocale: Readable<boolean>
 		locale: Readable<L>
-		LL: TF
+		LL: Readable<TF> & TF
 	}
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -48,12 +48,12 @@ export const getI18nSvelteStore = <
 	const i18nObjectInstanceStore = writable<TF>(i18nObjectInstance)
 
 	let getTranslationForLocale: TranslationLoader<L, T> | TranslationLoaderAsync<L, T>
-	let initFormatters: FormatterInitializer<L, F>
+	let initFormatters: FormattersInitializer<L, F>
 
 	const initI18n = async (
 		newlocale: L,
 		getTranslationForLocaleCallback: TranslationLoader<L, T> | TranslationLoaderAsync<L, T>,
-		initFormattersCallback?: FormatterInitializer<L, F>,
+		initFormattersCallback?: FormattersInitializer<L, F>,
 	): Promise<void> => {
 		initFormatters = initFormattersCallback || (() => ({} as F))
 		getTranslationForLocale = getTranslationForLocaleCallback
@@ -81,7 +81,7 @@ export const getI18nSvelteStore = <
 		(loading: boolean, set: (value: boolean) => void) => set(loading),
 	)
 
-	const LL = new Proxy({} as TF, {
+	const LL = new Proxy({} as Readable<TF> & TF, {
 		get: (_target, key: keyof TF & 'subscribe') =>
 			key === 'subscribe' ? i18nObjectInstanceStore.subscribe : i18nObjectInstance[key],
 	})

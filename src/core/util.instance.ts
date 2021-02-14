@@ -1,5 +1,5 @@
 import type { TranslationFunctions, BaseFormatters, BaseTranslation, Locale } from './core'
-import type { FormatterInitializer, LocaleTranslationFunctions } from './util.loader'
+import type { FormattersInitializer, LocaleTranslationFunctions } from './util.loader'
 import { i18nLoader } from './util.loader'
 
 export const i18n = <
@@ -9,7 +9,7 @@ export const i18n = <
 	F extends BaseFormatters
 >(
 	getTranslationForLocale: (locale: L) => T,
-	formattersInitializer: FormatterInitializer<L, F>,
+	formattersInitializer: FormattersInitializer<L, F>,
 ): LocaleTranslationFunctions<L, TF> => {
 	return new Proxy<LocaleTranslationFunctions<L, TF>>({} as LocaleTranslationFunctions<L, TF>, {
 		get: (_target, locale: L): TF | null =>

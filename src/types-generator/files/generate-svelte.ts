@@ -15,11 +15,11 @@ const getSvelteStore = (
 /* eslint-disable */
 
 import { getI18nSvelteStore } from 'langauge';
-import${importType} { Locales, Translations, TranslationFunctions, Formatters } from './${typesFile}'
+import${importType} { Locales, Translation, TranslationFunctions, Formatters } from './${typesFile}'
 import { getTranslationForLocale } from './${utilFile}'
 import { initFormatters } from './${formattersTemplatePath}'
 
-const { initI18n: init, setLocale, isLoadingLocale, locale, LL } = getI18nSvelteStore<Locales, Translations, TranslationFunctions, Formatters>()
+const { initI18n: init, setLocale, isLoadingLocale, locale, LL } = getI18nSvelteStore<Locales, Translation, TranslationFunctions, Formatters>()
 
 const initI18n = (locale: Locales = '${baseLocale}') => init(locale, getTranslationForLocale, initFormatters)
 

@@ -2,10 +2,11 @@ import { writeFileIfNotExists } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generator'
 
 const getFormattersTemplate = ({ typesFileName: typesFile }: GeneratorConfigWithDefaultValues, importType: string) => {
-	return `import${importType} { LangaugeFormatters, LangaugeFormattersInitializer } from './${typesFile}'
+	return `import${importType} { FormattersInitializer } from 'langauge'
+import${importType} { Locales, Formatters } from './${typesFile}'
 
-export const initFormatters: LangaugeFormattersInitializer = (locale) => {
-	const formatters: LangaugeFormatters = {
+export const initFormatters: FormattersInitializer<Locales, Formatters> = (locale) => {
+	const formatters: Formatters = {
 		// add your formatter functions here
 	}
 

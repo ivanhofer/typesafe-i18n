@@ -20,7 +20,7 @@ export type TranslationLoader<L extends Locale, T extends BaseTranslation> = (lo
 
 export type TranslationLoaderAsync<L extends Locale, T extends BaseTranslation> = (locale: L) => Promise<T>
 
-export type FormatterInitializer<L extends Locale, F extends BaseFormatters> = (locale: L) => F
+export type FormattersInitializer<L extends Locale, F extends BaseFormatters> = (locale: L) => F
 
 // --------------------------------------------------------------------------------------------------------------------
 // implementation -----------------------------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ export const i18nLoaderAsync = async <
 >(
 	locale: L,
 	getTranslationForLocale: TranslationLoaderAsync<L, T>,
-	formattersInitializer: FormatterInitializer<L, F>,
+	formattersInitializer: FormattersInitializer<L, F>,
 ): Promise<TF> => {
 	if (i18nObjectInstancesCache[locale]) {
 		return i18nObjectInstancesCache[locale]
@@ -70,7 +70,7 @@ export const i18nLoader = <
 >(
 	locale: L,
 	getTranslationForLocale: TranslationLoader<L, T>,
-	formattersInitializer: FormatterInitializer<L, F>,
+	formattersInitializer: FormattersInitializer<L, F>,
 ): TF => {
 	if (i18nObjectInstancesCache[locale]) {
 		return i18nObjectInstancesCache[locale]

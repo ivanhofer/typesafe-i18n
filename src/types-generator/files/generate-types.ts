@@ -142,7 +142,7 @@ const checkForMissingArgs = (key: string, types: Types, logger: Logger) => {
 
 const createLocalesType = (locales: string[], baseLocale: string) => {
 	const usedLocales = locales?.length ? locales : [baseLocale]
-	return `export type LangaugeLocale =${wrapUnionType(usedLocales)}`
+	return `export type Locales =${wrapUnionType(usedLocales)}`
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -182,7 +182,7 @@ import${importType} { ${externalTypes.join(', ')} } from './${typesTemplatePath.
 const createTranslationKeysType = (parsedTranslations: ParsedResult[]) => {
 	const keys = parsedTranslations.map(({ key }) => key)
 
-	return `export type LangaugeTranslationKeys =${wrapUnionType(keys)}`
+	return `export type TranslationKeys =${wrapUnionType(keys)}`
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -224,7 +224,7 @@ const createTranslationType = (
 	paramTypesToGenerate: number[],
 	generateTemplateLiteralTypes: boolean,
 ) =>
-	`export type LangaugeTranslation = ${wrapObjectType(parsedTranslations, () =>
+	`export type Translation = ${wrapObjectType(parsedTranslations, () =>
 		parsedTranslations
 			.map(
 				({ key, args }) =>
@@ -315,7 +315,7 @@ type RequiredParams${l}<${generics}> =${permutations
 
 // --------------------------------------------------------------------------------------------------------------------
 const createTranslationArgsType = (parsedTranslations: ParsedResult[], jsDocInfo: JsDocInfos) =>
-	`export type LangaugeTranslationArgs = ${wrapObjectType(parsedTranslations, () =>
+	`export type TranslationFunctions = ${wrapObjectType(parsedTranslations, () =>
 		parsedTranslations
 			.map(
 				(translation) =>
@@ -362,7 +362,7 @@ const getUniqueFormatters = (parsedTranslations: ParsedResult[]): [string, strin
 const createFormattersType = (parsedTranslations: ParsedResult[]) => {
 	const formatters = getUniqueFormatters(parsedTranslations)
 
-	return `export type LangaugeFormatters = ${wrapObjectType(formatters, () =>
+	return `export type Formatters = ${wrapObjectType(formatters, () =>
 		formatters
 			.map(
 				([key, types]) =>
@@ -410,7 +410,7 @@ const getTypes = (
 	const type = `// This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 ${typeImports}
-export type LangaugeBaseLocale = '${baseLocale}'
+export type BaseLocale = '${baseLocale}'
 
 ${localesType}
 
@@ -422,7 +422,6 @@ ${translationArgsType}
 
 ${formattersType}
 
-export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters
 ${paramsType}`
 
 	return [type, !!typeImports] as [string, boolean]

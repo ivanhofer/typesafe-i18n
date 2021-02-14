@@ -20,9 +20,9 @@ const getAsyncCode = ({ locales }: GeneratorConfigWithDefaultValues) => {
 const localeTranslationLoaders = {${localesTranslationLoaders}
 }
 
-export const getTranslationForLocale = async (locale: LangaugeLocale) => (await localeTranslationLoaders[locale]()).default as LangaugeTranslation
+export const getTranslationForLocale = async (locale: Locales) => (await localeTranslationLoaders[locale]()).default as Translation
 
-export const initLangaugeForLocale = (locale: LangaugeLocale) => langaugeLoaderAsync<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, getTranslationForLocale, initFormatters)
+export const initI18nForLocale = (locale: Locales) => i18nLoaderAsync<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
 `
 }
 
@@ -31,11 +31,7 @@ const getLocalesTranslationRowSync = (locale: Locale, baseLocale: string): strin
 	const needsEscaping = locale !== sanitizedLocale
 
 	const postfix =
-		locale === baseLocale
-			? `: ${sanitizedLocale} as LangaugeTranslation`
-			: needsEscaping
-				? `: ${sanitizedLocale}`
-				: ''
+		locale === baseLocale ? `: ${sanitizedLocale} as Translation` : needsEscaping ? `: ${sanitizedLocale}` : ''
 
 	const wrappedLocale = needsEscaping ? `'${locale}'` : locale
 
@@ -54,14 +50,14 @@ import ${sanitizeLocale(locale)} from './${locale}'`,
 	const localesTranslations = locales.map((locale) => getLocalesTranslationRowSync(locale, baseLocale)).join('')
 	return `${localesImports}
 
-const localeTranslations: LocaleTranslations<LangaugeLocale, LangaugeTranslation> = {${localesTranslations}
+const localeTranslations: LocaleTranslations<Locales, Translation> = {${localesTranslations}
 }
 
-export const getTranslationForLocale = (locale: LangaugeLocale) => localeTranslations[locale]
+export const getTranslationForLocale = (locale: Locales) => localeTranslations[locale]
 
-export const initLangaugeForLocale = (locale: LangaugeLocale) => langaugeLoader<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, getTranslationForLocale, initFormatters)
+export const initI18nForLocale = (locale: Locales) => i18nLoader<Locales, Translation, TranslationsFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
 
-export const initLangauge = () => langauge<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(getTranslationForLocale, initFormatters)
+export const initI18n = () => i18n<Locales, Translation, TranslationFunctions, Formatters>(getTranslationForLocale, initFormatters)
 `
 }
 
@@ -69,13 +65,13 @@ const getUtil = (config: GeneratorConfigWithDefaultValues, importType: string): 
 	const { typesFileName: typesFile, formattersTemplateFileName: formattersTemplatePath, lazyLoad, locales } = config
 
 	const dynamicImports = lazyLoad
-		? `import { langaugeLoaderAsync, langaugeStringWrapper } from 'langauge'`
-		: `import${importType} { LocaleTranslations } from 'langauge'
-import { langaugeLoader, langauge, langaugeStringWrapper } from 'langauge'`
+		? `import { i18nLoaderAsync, i18nString } from 'langauge'`
+		: `import${importType} { TranslationFunctions } from 'langauge'
+import { i18nLoader, i18n, i18nString } from 'langauge'`
 
 	const dynamicCode = lazyLoad ? getAsyncCode(config) : getSyncCode(config)
 
-	const localesEnum = `export const locales: LangaugeLocale[] = [${locales.map(
+	const localesEnum = `export const locales: Locales[] = [${locales.map(
 		(locale) => `
 	'${locale}'`,
 	)}
@@ -86,16 +82,16 @@ import { langaugeLoader, langauge, langaugeStringWrapper } from 'langauge'`
 
 ${dynamicImports}
 import${importType} {
-	LangaugeTranslation,
-	LangaugeTranslationArgs,
-	LangaugeFormatters,
-	LangaugeLocale,
+	Translation,
+	TranslationFunctions,
+	Formatters,
+	Locales,
 } from './${typesFile}'
 import { initFormatters } from './${formattersTemplatePath}'
 
 ${localesEnum}
 ${dynamicCode}
-export const initLangaugeStringWrapper = (locale: LangaugeLocale) => langaugeStringWrapper(locale, initFormatters(locale))
+export const initI18nString = (locale: Locales) => i18nString(locale, initFormatters(locale))
 `
 }
 
