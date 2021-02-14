@@ -220,6 +220,7 @@ You can use langauge in a variety of project-setups:
  - [Svelte](#svelte) applications
  - [Sapper](#sapper) projects
  - [SvelteKit](#sveltekit) projects
+<!-- TODO: create example for react -->
  - [Browser](#browser) projects
  - [other frameworks](#other) like React, VueJS, Angular and others ...
 
@@ -678,6 +679,8 @@ const formatters = {
 LLL('Invest ${0} and get ${0|roiCalculator} in return', 100)
 // => 'Invest $100 and get $413 in return'
 ```
+
+<!-- TODO: create examples for date-fns or other common formatters -->
 
 You can also use a few builtin formatters:
 
