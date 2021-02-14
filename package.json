@@ -1,7 +1,7 @@
 {
 	"name": "langauge",
 	"version": "1.1.0",
-	"description": "A lightweight localization engine for JavaScript and TypeScript projects",
+	"description": "An opinionated, full type-safe, lightweight localization library for TypeScript projects with no external dependencies.",
 	"homepage": "https://github.com/ivanhofer/langauge",
 	"repository": {
 		"type": "git",
@@ -28,7 +28,7 @@
 			"require": "./cjs/formatters/*.js"
 		},
 		"./svelte": "./svelte/svelte-store.js",
-		"./rollup-plugin-langauge-watcher": "./rollup/rollup-plugin-langauge-watcher.js",
+		"./rollup/rollup-plugin-langauge-watcher": "./rollup/rollup-plugin-langauge-watcher.js",
 		"./package.json": "./package.json",
 		"./*": {
 			"import": "./esm/*",

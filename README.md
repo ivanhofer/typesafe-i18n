@@ -1,8 +1,4 @@
-<p align="center">
-	<img src="https://github.com/ivanhofer/langauge/raw/master/assets/logo.svg" alt="langauge logo"/>
-</p>
-
-A opinionated, lightweight localization library for your next JavaScript and TypeScript projects with no external dependencies.
+An opinionated, full type-safe, lightweight localization library for TypeScript projects with no external dependencies.
 
 ## Motivation
 
