@@ -1,8 +1,9 @@
+import type { Locale } from '../../core/core'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generator'
 import { sanitizeLocale } from '../generator-util'
 
-const getLocalesTranslationRowAsync = (locale: string): string => {
+const getLocalesTranslationRowAsync = (locale: Locale): string => {
 	const sanitizedLocale = sanitizeLocale(locale)
 	const needsEscaping = locale !== sanitizedLocale
 
@@ -25,7 +26,7 @@ export const initLangaugeForLocale = (locale: LangaugeLocale) => langaugeLoaderA
 `
 }
 
-const getLocalesTranslationRowSync = (locale: string, baseLocale: string): string => {
+const getLocalesTranslationRowSync = (locale: Locale, baseLocale: string): string => {
 	const sanitizedLocale = sanitizeLocale(locale)
 	const needsEscaping = locale !== sanitizedLocale
 

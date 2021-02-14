@@ -1,4 +1,4 @@
-import type { Arguments } from '../core/core'
+import type { Arguments, Locale } from '../core/core'
 
 export const getPermutations = <T>(rest: T[], permutatedArray: T[] = []): T[][] => {
 	if (rest.length === 0) {
@@ -38,7 +38,7 @@ export const supportsImportType = ({ major, minor }: TypescriptVersion): boolean
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const sanitizeLocale = (locale: string): string => locale.replace(/-/g, '_')
+export const sanitizeLocale = (locale: Locale): Locale => locale.replace(/-/g, '_')
 
 // --------------------------------------------------------------------------------------------------------------------
 
