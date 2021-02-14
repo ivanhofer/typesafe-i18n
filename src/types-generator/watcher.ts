@@ -24,7 +24,7 @@ const transpileTypescriptAndPrepareImportFile = async (languageFilePath: string,
 	program.emit()
 
 	const compiledPath = resolve(tempPath, 'index.js')
-	const copyPath = resolve(tempPath, `langauge-temp-${debounceCounter}.js`)
+	const copyPath = resolve(tempPath, `i18n-temp-${debounceCounter}.js`)
 
 	const copySuccess = await copyFile(compiledPath, copyPath, false)
 	if (!copySuccess) {

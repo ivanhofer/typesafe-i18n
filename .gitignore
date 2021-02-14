@@ -10,4 +10,4 @@ node_modules
 /tests/generated/de
 /tests/generated/en
 /tests/generated/console*
-/langauge-*.tgz
+/typesafe-i18n-*.tgz

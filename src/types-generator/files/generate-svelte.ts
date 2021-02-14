@@ -34,6 +34,6 @@ export const generateSvelte = async (config: GeneratorConfigWithDefaultValues, i
 
 	const svelteStore = getSvelteStore(config, importType)
 
-	const path = (!isBoolean(svelte) && svelte) || 'langauge-svelte'
+	const path = (!isBoolean(svelte) && svelte) || 'i18n-svelte'
 	await writeFileIfContainsChanges(outputPath, path, svelteStore)
 }
