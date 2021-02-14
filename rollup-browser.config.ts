@@ -16,7 +16,7 @@ const iifeConfig = (type, minify = false) => ({
 	input: `./src/browser${wrap(type)}.ts`,
 	output: [
 		{
-			file: `dist/langauge${wrap(type)}${minify ? '.min' : ''}.js`,
+			file: `dist/i18n${wrap(type)}${minify ? '.min' : ''}.js`,
 			format: 'iife',
 			sourcemap: !minify,
 		},
