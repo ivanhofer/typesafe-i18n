@@ -31,11 +31,11 @@ const throwError = (locale: Locale) => {
 
 // async --------------------------------------------------------------------------------------------------------------
 
-export const langaugeLoaderAsync = async <
+export const i18nLoaderAsync = async <
 	L extends Locale,
 	T extends BaseTranslation,
-	TF extends TranslationFunctions = TranslationFunctions<T>,
-	F extends BaseFormatters = BaseFormatters
+	TF extends TranslationFunctions,
+	F extends BaseFormatters
 >(
 	locale: L,
 	getTranslationForLocale: (locale: L) => Promise<T>,
@@ -58,11 +58,11 @@ export const langaugeLoaderAsync = async <
 
 // sync ---------------------------------------------------------------------------------------------------------------
 
-export const langaugeLoader = <
+export const i18nLoader = <
 	L extends Locale,
 	T extends BaseTranslation,
-	TF extends TranslationFunctions = TranslationFunctions<T>,
-	F extends BaseFormatters = BaseFormatters
+	TF extends TranslationFunctions,
+	F extends BaseFormatters
 >(
 	locale: L,
 	getTranslationForLocale: (locale: L) => T,

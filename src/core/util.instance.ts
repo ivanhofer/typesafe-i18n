@@ -1,6 +1,6 @@
 import type { TranslationFunctions, BaseFormatters, BaseTranslation, Locale } from './core'
 import type { FormatterInitializer, LocaleTranslationFunctions } from './util.loader'
-import { langaugeLoader } from './util.loader'
+import { i18nLoader } from './util.loader'
 
 export const i18n = <
 	L extends Locale,
@@ -13,6 +13,6 @@ export const i18n = <
 ): LocaleTranslationFunctions<L, TF> => {
 	return new Proxy<LocaleTranslationFunctions<L, TF>>({} as LocaleTranslationFunctions<L, TF>, {
 		get: (_target, locale: L): TF | null =>
-			langaugeLoader<L, T, TF, F>(locale, getTranslationForLocale, formattersInitializer),
+			i18nLoader<L, T, TF, F>(locale, getTranslationForLocale, formattersInitializer),
 	})
 }
