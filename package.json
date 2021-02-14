@@ -1,6 +1,6 @@
 {
 	"name": "langauge",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "An opinionated, full type-safe, lightweight localization library for TypeScript projects with no external dependencies.",
 	"homepage": "https://github.com/ivanhofer/langauge",
 	"repository": {
