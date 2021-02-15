@@ -1,11 +1,11 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
-import { langaugeObjectWrapper, langaugeStringWrapper } from '../src/index'
+import { i18nObject, i18nString } from '../src/index'
 
 const test = suite('core')
 
-const LLL = langaugeStringWrapper('en')
+const LLL = i18nString('en')
 
 test('string hi', () => assert.is(LLL('Welcome'), 'Welcome'))
 
@@ -46,7 +46,7 @@ const translation = {
 	ONLY_SINGULAR: '{{singular|}}',
 }
 
-const LL = langaugeObjectWrapper('en', translation)
+const LL = i18nObject('en', translation)
 
 //@ts-ignore
 test('wrong key', () => assert.is(LL.WRONG_KEY(), 'WRONG_KEY'))
@@ -95,7 +95,7 @@ test('only singular false', () => assert.is(LL.ONLY_SINGULAR(false), ''))
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const LL2 = langaugeObjectWrapper('ar-EG', {
+const LL2 = i18nObject('ar-EG', {
 	ADVANCED_PLURAL: '{{zero|one|two|few|many|other}}',
 })
 
