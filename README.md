@@ -1,4 +1,19 @@
+
 An opinionated, full type-safe, lightweight localization library for TypeScript projects with no external dependencies.
+
+---
+---
+---
+---
+---
+
+## This package was renamed to `typesafe-i18n`. Please visit the [new package location](https://www.npmjs.com/package/typesafe-i18n).
+
+---
+---
+---
+---
+---
 
 ## Motivation
 
