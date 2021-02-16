@@ -74,12 +74,9 @@ export const getI18nSvelteStore = <
 		isLoading.set(false)
 	}
 
-	const locale = derived<Writable<L>, L>(currentLocale, (newlocale: L) => newlocale)
+	const locale = derived<Writable<L>, L>(currentLocale, (newlocale, set) => set(newlocale))
 
-	const isLoadingLocale = derived<Writable<boolean>, boolean>(
-		isLoading,
-		(loading: boolean, set: (value: boolean) => void) => set(loading),
-	)
+	const isLoadingLocale = derived<Writable<boolean>, boolean>(isLoading, (loading, set) => set(loading))
 
 	const LL = new Proxy({} as Readable<TF> & TF, {
 		get: (_target, key: keyof TF & 'subscribe') =>
