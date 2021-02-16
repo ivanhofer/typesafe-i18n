@@ -1,16 +1,16 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-export type LangaugeBaseLocale = 'en'
+export type BaseLocale = 'en'
 
-export type LangaugeLocale =
+export type Locales =
 	| 'en'
 
-export type LangaugeTranslationKeys =
+export type TranslationKeys =
 	| 'FORMATTER_1'
 	| 'FORMATTER_2'
 
-export type LangaugeTranslation = {
+export type Translation = {
 	/**
 	 * {0|timesTen} apple{{s}}
 	 * @param {string | number | boolean} 0
@@ -24,7 +24,7 @@ export type LangaugeTranslation = {
 	'FORMATTER_2': RequiredParams2<'0', '1|wrapWithHtmlSpan'>
 }
 
-export type LangaugeTranslationArgs = {
+export type TranslationFunctions = {
 	/**
 	 * {0|timesTen} apple{{s}}
 	 */
@@ -35,12 +35,11 @@ export type LangaugeTranslationArgs = {
 	'FORMATTER_2': (arg0: string | number | boolean, arg1: string | number | boolean) => string
 }
 
-export type LangaugeFormatters = {
+export type Formatters = {
 	timesTen: (value: string | number | boolean) => unknown
 	wrapWithHtmlSpan: (value: string | number | boolean) => unknown
 }
 
-export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters
 
 type Param<P extends string> = `{${P}}`
 

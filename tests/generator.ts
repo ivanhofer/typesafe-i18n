@@ -47,8 +47,9 @@ const check = async (prefix: string, file: FileToCheck) => {
 	try {
 		expected = (await readFile(getPathOfOutputFile(prefix, file, 'expected'))).toString()
 		actual = (await readFile(getPathOfOutputFile(prefix, file, 'actual'))).toString()
-		// eslint-disable-next-line no-empty
-	} catch { }
+	} catch {
+		return
+	}
 
 	if (expected && actual) {
 		assert.match(removeWhitespace(expected), removeWhitespace(actual))

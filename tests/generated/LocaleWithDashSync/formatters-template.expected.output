@@ -1,9 +1,0 @@
-import type { LangaugeFormatters, LangaugeFormattersInitializer } from './LocaleWithDashSync/types.actual.output'
-
-export const initFormatters: LangaugeFormattersInitializer = (locale) => {
-	const formatters: LangaugeFormatters = {
-		// add your formatter functions here
-	}
-
-	return formatters
-}

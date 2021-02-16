@@ -1,15 +1,15 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-export type LangaugeBaseLocale = 'en'
+export type BaseLocale = 'en'
 
-export type LangaugeLocale =
+export type Locales =
 	| 'en'
 
-export type LangaugeTranslationKeys =
+export type TranslationKeys =
 	| 'TEST'
 
-export type LangaugeTranslation = {
+export type Translation = {
 	/**
 	 * Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}
 	 * @param {unknown} name
@@ -18,13 +18,12 @@ export type LangaugeTranslation = {
 	'TEST': string
 }
 
-export type LangaugeTranslationArgs = {
+export type TranslationFunctions = {
 	/**
 	 * Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}
 	 */
 	'TEST': (arg: { name: unknown, nrOfApples: string | number | boolean }) => string
 }
 
-export type LangaugeFormatters = {}
+export type Formatters = {}
 
-export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters
