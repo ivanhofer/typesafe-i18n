@@ -26,25 +26,11 @@ const iifeConfig = (type, minify = false) => ({
 
 const getIifeConfigs = (type) => [iifeConfig(type), iifeConfig(type, true)]
 
-const esmConfig = (minify = false) => ({
-	input: './src/index.ts',
-	output: [
-		{
-			file: `dist/index${minify ? '.min' : ''}.js`,
-			format: 'esm',
-			sourcemap: !minify,
-		},
-	],
-	plugins: getPlugins(minify),
-})
-
 export default [
 	...getIifeConfigs(''),
 	...getIifeConfigs('string'),
 	...getIifeConfigs('object'),
-	...getIifeConfigs('instance'),
+	...getIifeConfigs('all'),
 	// ...getIifeConfigs('loader'),
 	// ...getIifeConfigs('loader.async'),
-	esmConfig(),
-	esmConfig(true),
 ]

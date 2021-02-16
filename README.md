@@ -498,7 +498,7 @@ I will update this part as soon as I get my hands on the beta and the syntax. Bu
 
 Load your desired function from the unpkg CDN and inject it into your HTML-code:
 
-  - use [i18nString](#i18nString) (761 bytes gzipped)
+  - use [i18nString](#i18nString) (779 bytes gzipped)
 	```html
   	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.string.min.js"></script>
 
@@ -509,7 +509,7 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
 	</script>
   	```
 
-  - use [i18nObject](#i18nObject) (817 bytes gzipped)
+  - use [i18nObject](#i18nObject) (836 bytes gzipped)
   	```html
   	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.object.min.js"></script>
 
@@ -520,10 +520,10 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
 	</script>
   	```
 
-  - use [i18n](#i18n) (923 bytes gzipped)
+  - use [i18n](#i18n) (941 bytes gzipped)
 
 	```html
-  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.instance.min.js"></script>
+  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.min.js"></script>
 
 	<script>
 	   const L = i18n( /* i18n parameters */ )
@@ -532,9 +532,9 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
 	</script>
   	```
 
-  - all together (978 bytes gzipped)
+  - all together (996 bytes gzipped)
   	```html
-  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.min.js"></script>
+  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.all.min.js"></script>
 
 	<script>
 	   const LLL = i18n.initString( ... )

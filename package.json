@@ -57,7 +57,7 @@
 		"build:browser": "rollup -c rollup-browser.config.ts",
 		"build:cjs": "tsc -p tsconfig-cjs.json",
 		"build:esm": "tsc -p tsconfig-esm.json",
-		"build:svelte": "npx tsc -p tsconfig-svelte.json",
+		"build:svelte": "rollup -c rollup-svelte.config.ts && tsc -p tsconfig-svelte.json --emitDeclarationOnly",
 		"build:formatters": "tsc -p tsconfig-formatters.json && rollup -c rollup-formatters.config.ts",
 		"build:rollup": "rollup -c rollup-rollup.config.ts && tsc -p tsconfig-rollup.json --emitDeclarationOnly",
 		"build:watcher": "rollup -c rollup-watcher.config.ts",
