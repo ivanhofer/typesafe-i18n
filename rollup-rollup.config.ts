@@ -5,10 +5,10 @@ import commonjs from '@rollup/plugin-commonjs'
 
 const config = [
 	{
-		input: './src/rollup-plugin-langauge-watcher.ts',
+		input: './src/rollup-plugin-typesafe-i18n-watcher.ts',
 		output: [
 			{
-				file: 'rollup/rollup-plugin-langauge-watcher.js',
+				file: 'rollup/rollup-plugin-typesafe-i18n-watcher.js',
 				format: 'cjs',
 				sourcemap: true,
 				exports: 'named',

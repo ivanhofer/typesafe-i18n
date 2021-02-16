@@ -1,79 +1,88 @@
-import type { LangaugeBaseFormatters, LangaugeBaseTranslation, TranslatorFn } from './core'
-import { langaugeObjectWrapper } from './util.object'
+import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from './core'
+import { i18nObject } from './util.object'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-// eslint-disable-next-line @typescript-eslint/ban-types, @typescript-eslint/no-explicit-any
-export type LocaleTranslationFns<L extends string = any, A extends object = any> = {
-	[key in L]: A
-}
+export type LocaleTranslationFunctions<
+	L extends Locale = Locale,
+	TF extends TranslationFunctions = TranslationFunctions
+	> = {
+		[key in L]: TF
+	}
 
-export type LocaleTranslations<L extends string, T = unknown> = {
+export type LocaleTranslations<L extends Locale, T = unknown> = {
 	[key in L]: T
 }
 
-export type LangaugeFormatterInitializer<L extends string, F extends LangaugeBaseFormatters> = (locale: L) => F
+export type TranslationLoader<L extends Locale, T extends BaseTranslation> = (locale: L) => T
+
+export type TranslationLoaderAsync<L extends Locale, T extends BaseTranslation> = (locale: L) => Promise<T>
+
+export type FormattersInitializer<L extends Locale, F extends BaseFormatters> = (locale: L) => F
 
 // --------------------------------------------------------------------------------------------------------------------
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-const langaugeInstancesCache: LocaleTranslationFns = {} as LocaleTranslationFns
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const i18nObjectInstancesCache = {} as LocaleTranslationFunctions<Locale, any>
+
+const throwError = (locale: Locale) => {
+	throw new Error(`[typesafe-i18n] ERROR: could not find locale '${locale}'`)
+}
 
 // async --------------------------------------------------------------------------------------------------------------
 
-export const langaugeLoaderAsync = async <
-	L extends string,
-	T extends LangaugeBaseTranslation,
-	// eslint-disable-next-line @typescript-eslint/ban-types
-	A extends object = TranslatorFn<T>,
-	F extends LangaugeBaseFormatters = LangaugeBaseFormatters
+export const i18nLoaderAsync = async <
+	L extends Locale,
+	T extends BaseTranslation,
+	TF extends TranslationFunctions,
+	F extends BaseFormatters
 >(
 	locale: L,
-	getTranslationForLocale: (locale: L) => Promise<T>,
-	formattersInitializer: LangaugeFormatterInitializer<L, F>,
-): Promise<A> => {
-	if (langaugeInstancesCache[locale]) {
-		return langaugeInstancesCache[locale]
+	getTranslationForLocale: TranslationLoaderAsync<L, T>,
+	formattersInitializer: FormattersInitializer<L, F>,
+): Promise<TF> => {
+	if (i18nObjectInstancesCache[locale]) {
+		return i18nObjectInstancesCache[locale]
 	}
 
 	const foundTranslation = await getTranslationForLocale(locale)
 	if (!foundTranslation) {
-		throw new Error(`[LANGAUGE] ERROR: could not find locale '${locale}'`)
+		throwError(locale)
 	}
 
-	const lang = langaugeObjectWrapper<L, T, A, F>(locale, foundTranslation, formattersInitializer(locale))
-	langaugeInstancesCache[locale] = lang
+	const i18nObjectInstance = i18nObject<L, T, TF, F>(locale, foundTranslation, formattersInitializer(locale))
+	i18nObjectInstancesCache[locale] = i18nObjectInstance
 
-	return lang as A
+	return i18nObjectInstance as TF
 }
 
 // sync ---------------------------------------------------------------------------------------------------------------
 
-export const langaugeLoader = <
-	L extends string,
-	T extends LangaugeBaseTranslation,
-	// eslint-disable-next-line @typescript-eslint/ban-types
-	A extends object = TranslatorFn<T>,
-	F extends LangaugeBaseFormatters = LangaugeBaseFormatters
+export const i18nLoader = <
+	L extends Locale,
+	T extends BaseTranslation,
+	TF extends TranslationFunctions,
+	F extends BaseFormatters
 >(
 	locale: L,
-	getTranslationForLocale: (locale: L) => T,
-	formattersInitializer: LangaugeFormatterInitializer<L, F>,
-): A => {
-	if (langaugeInstancesCache[locale]) {
-		return langaugeInstancesCache[locale]
+	getTranslationForLocale: TranslationLoader<L, T>,
+	formattersInitializer: FormattersInitializer<L, F>,
+): TF => {
+	if (i18nObjectInstancesCache[locale]) {
+		return i18nObjectInstancesCache[locale]
 	}
 
 	const foundTranslation = getTranslationForLocale(locale)
 	if (!foundTranslation) {
-		throw new Error(`[LANGAUGE] ERROR: could not find locale '${locale}'`)
+		throwError(locale)
 	}
 
-	const lang = langaugeObjectWrapper<L, T, A, F>(locale, foundTranslation, formattersInitializer(locale))
-	langaugeInstancesCache[locale] = lang
+	const i18nObjectInstance = i18nObject<L, T, TF, F>(locale, foundTranslation, formattersInitializer(locale))
+	i18nObjectInstancesCache[locale] = i18nObjectInstance
 
-	return lang as A
+	return i18nObjectInstance as TF
 }

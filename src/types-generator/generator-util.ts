@@ -1,3 +1,5 @@
+import type { Arguments, Locale } from '../core/core'
+
 export const getPermutations = <T>(rest: T[], permutatedArray: T[] = []): T[][] => {
 	if (rest.length === 0) {
 		return [permutatedArray]
@@ -36,18 +38,18 @@ export const supportsImportType = ({ major, minor }: TypescriptVersion): boolean
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const sanitizeLocale = (locale: string): string => locale.replace(/-/g, '_')
+export const sanitizeLocale = (locale: Locale): Locale => locale.replace(/-/g, '_')
 
 // --------------------------------------------------------------------------------------------------------------------
 
 export type Logger = {
-	info: (...messages: unknown[]) => void
-	warn: (...messages: unknown[]) => void
-	error: (...messages: unknown[]) => void
+	info: (...messages: Arguments) => void
+	warn: (...messages: Arguments) => void
+	error: (...messages: Arguments) => void
 }
 
-const log = (console: Console, type: 'info' | 'warn' | 'error', ...messages: unknown[]) =>
-	console[type]('[langauge]', ...messages)
+const log = (console: Console, type: 'info' | 'warn' | 'error', ...messages: Arguments) =>
+	console[type]('[typesafe-i18n]', ...messages)
 
 export const createLogger = (console: Console): Logger => {
 	return {

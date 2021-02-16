@@ -4,5 +4,5 @@
 		"module": "CommonJS",
 		"outDir": "./rollup"
 	},
-	"include": ["./src/rollup-plugin-langauge-watcher.ts"]
+	"include": ["./src/rollup-plugin-typesafe-i18n-watcher.ts"]
 }

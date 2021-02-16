@@ -1,3 +1,3 @@
-import { langaugeLoader } from './core/util.loader'
+import { i18nLoader } from './core/util.loader'
 //@ts-ignore
-window.langauge = langaugeLoader
+window.i18n = i18nLoader

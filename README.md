@@ -1,19 +1,4 @@
-
 An opinionated, full type-safe, lightweight localization library for TypeScript projects with no external dependencies.
-
----
----
----
----
----
-
-## This package was renamed to `typesafe-i18n`. Please visit the [new package location](https://www.npmjs.com/package/typesafe-i18n).
-
----
----
----
----
----
 
 ## Motivation
 
@@ -28,15 +13,11 @@ I want something that:
  - [prevents me from making mistakes](#typesafety)
 
 Long story short: I created my own localization library. The outcome was better than I could have imagined. Going down the rabbit hole, I came up with a solution that checks whether you call the translation-function with the correct amount of arguments, if the types of the arguments are correct and your translations for other locales contain all required arguments.\
-This package consists of a [translation-function](#langaugeStringWrapper), as well as an [generator](#typesafety) for TypeScript code. By looking at your base translation, it can output type definitions, to make your (developer-)life easier.
+This package consists of a [translation-function](#i18nString), as well as an [generator](#typesafety) for TypeScript code. By looking at your base translation, it can output type definitions, to make your (developer-)life easier.
 
  > The package can be used inside JavaScript and TypeScript applications, but you will get a lot of benefits using it together with TypeScript, since the [watcher](#typesafety) will generate a few wrappers for easier usage.
 
-<!-- TODO: make a gif demonstrating langauge -->
-
-#### Why this name?
-
-I got a typo when I tried to write language. So the package-name became langauge.
+<!-- TODO: make a gif demonstrating typesafe-i18n -->
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -45,7 +26,7 @@ I got a typo when I tried to write language. So the package-name became langauge
 ## Installation
 
 ```
-$ npm install --save langauge
+$ npm install --save typesafe-i18n
 ```
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -132,7 +113,7 @@ LLL(MEMBERS, 9) => '9 weitere Mitglieder'
 
 ### plural (full syntax):
 
-Under the hood, langauge uses the [Intl.PluralRules](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules) for detecting the plural form.
+Under the hood, `typesafe-i18n` uses the [Intl.PluralRules](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules) for detecting the plural form.
 
  > Syntax: `{{zero|one|two|few|many|other}}`
 
@@ -216,7 +197,7 @@ LLL(MESSAGE, { name: 'John', nrOfApples: 42 }) => 'Hi JOHN, I would like to buy 
 
 ### text only:
 
-Of course langauge can handle that as well.
+Of course `typesafe-i18n` can handle that as well.
 
 ```typescript
 LLL('Welcome to my site') => 'Welcome to my site'
@@ -229,12 +210,13 @@ LLL('Welcome to my site') => 'Welcome to my site'
 
 ## Usage
 
-You can use langauge in a variety of project-setups:
+You can use `typesafe-i18n` in a variety of project-setups:
 
  - [NodeJS](#nodeJS) apis, backends, scripts, ...
  - [Svelte](#svelte) applications
  - [Sapper](#sapper) projects
  - [SvelteKit](#sveltekit) projects
+<!-- TODO: create example for react -->
  - [Browser](#browser) projects
  - [other frameworks](#other) like React, VueJS, Angular and others ...
 
@@ -242,35 +224,35 @@ You can use langauge in a variety of project-setups:
 
 The lanauge package exports a few different objects you can use to localize your applications:
 
- - [langaugeStringWrapper (LLL)](#langaugeStringWrapper)
- - [langaugeObjectWrapper (LL)](#langaugeObjectWrapper)
- - [langauge (L)](#langauge)
+ - [i18nString (LLL)](#i18nString)
+ - [i18nObject (LL)](#i18nObject)
+ - [i18n (L)](#i18n)
 
-#### langaugeStringWrapper
+#### i18nString
 
-The `langaugeStringWrapper` contains the core of the localization engine. To initialize it, you need to pass your desired `locale` and (optional) the `formatters` you want to use.\
+The `i18nString` contains the core of the localization engine. To initialize it, you need to pass your desired `locale` and (optional) the `formatters` you want to use.\
 You will get an object back (`LLL`) that can be used to transform your strings.
 
 ```typescript
-import { langaugeStringWrapper } from 'langauge'
+import { i18nString } from 'typesafe-i18n'
 
 const locale = 'en'
 const formatters = {
    uppercase: (value) => value.toUpperCase()
 }
 
-const LLL = langaugeStringWrapper(locale, formatters)
+const LLL = i18nString(locale, formatters)
 
 LLL('Hello {name|uppercase}!', { name: 'world' }) // => 'Hello WORLD!'
 ```
 
-#### langaugeObjectWrapper
+#### i18nObject
 
-The `langaugeObjectWrapper` wraps your translations for a certain locale. To initialize it, you need to pass your desired `locale`, your `translations`-object and (optional) the `formatters` you want to use.\
+The `i18nObject` wraps your translations for a certain locale. To initialize it, you need to pass your desired `locale`, your `translations`-object and (optional) the `formatters` you want to use.\
 You will get an object back (`LL`) that can be used to access and apply your translations.
 
 ```typescript
-import { langaugeStringWrapper } from 'langauge'
+import { i18nObject } from 'typesafe-i18n'
 
 const locale = 'en'
 const translations = {
@@ -280,20 +262,20 @@ const translations = {
 }
 const formatters = { ... }
 
-const LL = langaugeObjectWrapper(locale, translations, formatters)
+const LL = i18nObject(locale, translations, formatters)
 
 LL.HI({ name: 'world' }) // => 'Hello world!'
 LL.RESET_PASSWORD() // => 'reset password'
 ```
 
-#### langauge
+#### i18n
 
-Wrap all your locales with `langauge`. To initialize it, you need to pass a callback to get the `translations`-object for a given locale and (optional) a callback to initialize the `formatters` you want to use.\
+Wrap all your locales with `i18n`. To initialize it, you need to pass a callback to get the `translations`-object for a given locale and (optional) a callback to initialize the `formatters` you want to use.\
 You will get an object back (`L`) that can be used to access all your locaLes and apply your translations.
 
 
 ```typescript
-import { langaugeStringWrapper } from 'langauge'
+import { i18n } from 'typesafe-i18n'
 
 const localeTranslations = {
    en: { TODAY: "Today is {date|weekday}" },
@@ -311,7 +293,7 @@ const initFormatters = (locale) => {
    }
 }
 
-const L = langauge(loadLocale, initFormatters)
+const L = i18n(loadLocale, initFormatters)
 
 const now = new Date()
 
@@ -338,20 +320,20 @@ function doSomething(session) {
 ### NodeJS
 
 * **TypeScript**\
-	When running the [watcher](#watcher) the file `langauge-util.ts` will export typesafe wrappers for the [langauge objects](#general). You can use them everywhere in your TypeScript files.
+	When running the [watcher](#watcher) the file `i18n-util.ts` will export typesafe wrappers for the [i18n functions](#general). You can use them everywhere in your TypeScript files.
 
   ```typescript
-  import { ... } from './langauge/langauge-util'
+  import { ... } from './i18n/i18n-util'
   ```
 
 * **JavaScript**\
-  Depending what you need, you can import any [function](#general) from the root `langauge` package.
+  Depending what you need, you can import any [function](#general) from the root `typesafe-i18n` package.
 
   ```javascript
-  import { ... } from 'langauge'
+  import { ... } from 'typesafe-i18n'
   ```
 
-You can take a look at this [demo repository](https://github.com/ivanhofer/langauge-template-nodejs) to see how langauge will work in node projects.
+<!-- You can take a look at this [demo repository](https://github.com/ivanhofer/typesafe-i18n-template-nodejs) to see how `typesafe-i18n` will work in node projects. -->
 
 ### Svelte
 
@@ -360,14 +342,14 @@ You can take a look at this [demo repository](https://github.com/ivanhofer/langa
 
 	Svelte by default comes with a rollup-config. You could setup the watcher as [rollup-plugin](#rollup-plugin).
 
-	The watcher will generate custom svelte stores inside `langauge-svelte.ts` that you can use inside your components.
+	The watcher will generate custom svelte stores inside `i18n-svelte.ts` that you can use inside your components.
 
 * **JavaScript**\
-	Since you can't take advantage of the generated types, you need to import the stores directly from 'langauge/svelte'.\
+	Since you can't take advantage of the generated types, you need to import the stores directly from 'i18n/svelte'.\
 	When initializing you need to pass a callback to load the translation and an optional callback to initialize your formatters.
 
 	```typescript
-	import LL, { initLangauge } from 'langauge/svelte/svelte-store'
+	import LL, { initI18n } from 'typesafe-i18n/svelte/svelte-store'
 
 	const localeTranslations = {
 	   en: { TODAY: "Today is {date|weekday}" },
@@ -385,7 +367,7 @@ You can take a look at this [demo repository](https://github.com/ivanhofer/langa
 	   }
 	}
 
-	initLangauge('en', loadLocale, initFormatters)
+	initiI8n('en', loadLocale, initFormatters)
 
 	$LL.TODAY(new Date()) // => 'Today is friday'
 	```
@@ -393,7 +375,7 @@ You can take a look at this [demo repository](https://github.com/ivanhofer/langa
 
 The file exports following functions and readable stores:
 
-#### initLangauge
+#### initI18n
 
 You need to call initialize in order to setup all stores.
 
@@ -401,9 +383,9 @@ Call it inside your root svelte component:
 
 ```html
 <script>
-   import { initLangauge } from './langauge/langauge-svelte'
+   import { initI18n } from './i18n/i18n-svelte'
 
-   initLangauge('en')
+   initI18n('en')
 </script>
 ```
 
@@ -413,7 +395,7 @@ The default export of the generated file will be the store you can use to transl
 
 ```html
 <script>
-   import LL from './langauge/langauge-svelte'
+   import LL from './i18n/i18n-svelte'
 
    const showMessage = () => {
       alert(LL.SOME_MESSAGE())
@@ -432,7 +414,7 @@ This svelte store will contain the current selected locale.
 
 ```html
 <script>
-   import { locale } from './langauge/langauge-svelte'
+   import { locale } from './i18n/i18n-svelte'
 </script>
 
 <div>
@@ -446,7 +428,7 @@ If you want to change the locale, you need to call `setLocale` with the desited 
 
 ```html
 <script>
-   import { setLocale } from './langauge/langauge-svelte'
+   import { setLocale } from './i18n/i18n-svelte'
 </script>
 
 <div id="language-picker">
@@ -474,7 +456,7 @@ Svelte store that returns a `boolean`. It can be used to wait for the locale to 
 
 ```html
 <script>
-   import { isLocaleLoading } from './langauge/langauge-svelte'
+   import { isLocaleLoading } from './i18n/i18n-svelte'
 </script>
 
 {#if $isLocaleLoading}
@@ -490,14 +472,14 @@ Svelte store that returns a `boolean`. It can be used to wait for the locale to 
 
 ### Sapper
 
-For your Sapper projects, you should call the `initLangauge` function inside `preload` in your root `routes/_layout.svelte` file:
+For your Sapper projects, you should call the `initI18n` function inside `preload` in your root `routes/_layout.svelte` file:
 
 ```html
 <script context="module">
-   import { initLangauge } from '../langauge/langauge-svelte'
+   import { initI18n } from '../i18n/i18n-svelte'
 
    export async function preload(page, session) {
-      await initLangauge(session.locale)
+      await initI18n(session.locale)
    }
 </script>
 ```
@@ -516,55 +498,55 @@ I will update this part as soon as I get my hands on the beta and the syntax. Bu
 
 Load your desired function from the unpkg CDN and inject it into your HTML-code:
 
-  - use [langaugeStringWrapper](#langaugeStringWrapper) (761 bytes gzipped)
+  - use [i18nString](#i18nString) (779 bytes gzipped)
 	```html
-  	<script src="https://unpkg.com/langauge/dist/langauge.string.min.js"></script>
+  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.string.min.js"></script>
 
 	<script>
-	   const LLL = langauge( /* langaugeStringWrapper parameters */ )
+	   const LLL = i18n( /* i18nString parameters */ )
 
 	   LLL('Hi {0}', 'John')
 	</script>
   	```
 
-  - use [langaugeObjectWrapper](#langaugeObjectWrapper) (817 bytes gzipped)
+  - use [i18nObject](#i18nObject) (836 bytes gzipped)
   	```html
-  	<script src="https://unpkg.com/langauge/dist/langauge.object.min.js"></script>
+  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.object.min.js"></script>
 
 	<script>
-	   const LL = langauge( /* langaugeObjectWrapper parameters */ )
+	   const LL = i18n( /* i18nObject parameters */ )
 
 	   LL.HI('John')
 	</script>
   	```
 
-  - use [langauge](#langauge) (923 bytes gzipped)
+  - use [i18n](#i18n) (941 bytes gzipped)
 
 	```html
-  	<script src="https://unpkg.com/langauge/dist/langauge.instance.min.js"></script>
+  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.min.js"></script>
 
 	<script>
-	   const L = langauge( /* langauge parameters */ )
+	   const L = i18n( /* i18n parameters */ )
 
 	   L.en.HI('John')
 	</script>
   	```
 
-  - all together (978 bytes gzipped)
+  - all together (996 bytes gzipped)
   	```html
-  	<script src="https://unpkg.com/langauge/dist/langauge.min.js"></script>
+  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.all.min.js"></script>
 
 	<script>
-	   const LLL = langauge.initStringWrapper( ... )
-	   const LL = langauge.initObjectWrapper( ... )
-	   const L = langauge.init( ... )
+	   const LLL = i18n.initString( ... )
+	   const LL = i18n.initObject( ... )
+	   const L = i18n.init( ... )
 	</script>
   	```
 
 ### Other
 
-All you need is inside the generated file `langauge-utils.ts`. You can use the functions in there to create a small wrapper for your application.\
-Feel free to open an [issue](https://github.com/ivanhofer/langauge/issues), if you need a guide for a specific framework.
+All you need is inside the generated file `i18n-utils.ts`. You can use the functions in there to create a small wrapper for your application.\
+Feel free to open an [issue](https://github.com/ivanhofer/typesafe-i18n/issues), if you need a guide for a specific framework.
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -572,11 +554,11 @@ Feel free to open an [issue](https://github.com/ivanhofer/langauge/issues), if y
 
 ## Typesafety
 
-The langauge package allows us to be 100% typesafe for our tranlsation functions and even the translations for other locales itself. It generates TypeScript definitions based on your base locale. It also generates some utility functions for easy usage.
+The `typesafe-i18n` package allows us to be 100% typesafe for our tranlsation functions and even the translations for other locales itself. It generates TypeScript definitions based on your base locale. It also generates some utility functions for easy usage.
 
 In order to get get full typesafety for your locales, you can start the watcher during development. The watcher listens for changes you make to your [base locale file](#folder-structure) and generates the corresponding TypeScript types.
 
- > The watcher will generate a different output depending on your TypeScript version. Older versions don't support all the features langauge need to provide you with the best types. Make sure to use a TypeScript version `> 4.1.x` to benefit from all the typechecking features.
+ > The watcher will generate a different output depending on your TypeScript version. Older versions don't support all the features `typesafe-i18n` need to provide you with the best types. Make sure to use a TypeScript version `> 4.1.x` to benefit from all the typechecking features.
 
 Currently you can choose between two variants to start the watcher:
 
@@ -587,21 +569,21 @@ Currently you can choose between two variants to start the watcher:
 Start the watcher node process in your terminal:
 
 ```bash
-> node ./node_modules/langauge/node/watcher.js
+> node ./node_modules/typesafe-i18n/node/watcher.js
 ```
 
-You can pass [options](#options) to the watcher by creating a `.langauge.json` file in the root of your workspace.
+You can pass [options](#options) to the watcher by creating a `.typesafe-i18n.json` file in the root of your workspace.
 
 > You could use a npm-package like `npm-run-all` in order to start the watcher and you development-server in parallel.
 
-You can take a look at this [demo repository](https://github.com/ivanhofer/langauge-template-nodejs) to see how to run the watcher node process.
+You can take a look at this [demo repository](https://github.com/ivanhofer/typesafe-i18n-template-nodejs) to see how to run the watcher node process.
 
 ### rollup-plugin
 
-Add the `langaugeWatcher` to your `rollup.config.js`.
+Add the `i18nWatcher` to your `rollup.config.js`.
 
 ```typescript
-import langaugeWatcher from 'langauge/rollup-plugin-langauge-watcher'
+import i18nWatcher from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n-watcher'
 
 const isDev = !!process.env.ROLLUP_WATCH
 
@@ -614,14 +596,14 @@ export default {
 
       // only running in development mode
       // looks for changes in your base locale file
-      isDev && langaugeWatcher({ /* options go here */ })
+      isDev && i18nWatcher({ /* options go here */ })
    }
 }
 ```
 
 > Make sure you start the watcher only in your development environment.
 
-You can pass [options](#options) to the watcher by creating a `.langauge.json` file in the root of your workspace, or by passing it as an argument to `langaugeWatcher`.
+You can pass [options](#options) to the watcher by creating a `.typesafe-i18n.json` file in the root of your workspace, or by passing it as an argument to `i18nWatcher`.
 
 
  <!-- TODO: create example repository -->
@@ -629,47 +611,47 @@ You can pass [options](#options) to the watcher by creating a `.langauge.json` f
 
 ### folder structure
 
-This project requires you to use an opinionated folderstructure for your locales. By default all your files, you need for localizations live insed your `src/langauge` folder (you can [configure](#options) this).
+This project requires you to use an opinionated folderstructure for your locales. By default all your files, you need for localizations live insed your `src/i18n` folder (you can [configure](#options) this).
 
 When running the watcher for the first time, a few files will be generated:
 
 ```
 src/
-   langauge/
+   i18n/
       en/
          index.ts
       formatters.ts
-      langauge-types.ts
-      langauge-util.ts
+      i18n-types.ts
+      i18n-util.ts
       custom-types.ts
 ```
 
  > Some files are auto-generated, please don't make manual changes to them, since they will be overwritten.
 
  - `en/index.ts`\
-  	If 'en' is your [base locale](#baselocale), the file `src/langauge/en/index.ts` will contain your translations. Whenever you make changes to this file, the watcher will generate updated type definitions.
+  	If 'en' is your [base locale](#baselocale), the file `src/i18n/en/index.ts` will contain your translations. Whenever you make changes to this file, the watcher will generate updated type definitions.
 
  - `formatters.ts`\
 	In this file, you can configure the [formatters](#formatters) to use inside your translations.
 
- - `langauge-types.ts`\
+ - `i18n-types.ts`\
 	Type definitions are generated in this file. You don't have to understand them. They are just here to help TypeScript understand, how you need to call the translation functions.
 
- - `langauge-util.ts`\
-   This file contains some wrappers around the [base langauge functions](#general).
+ - `i18n-util.ts`\
+   This file contains some wrappers around the [base i18n functions](#general).
 
  - `custom-types.ts`\
-	For [definig types](#custom-types) that are unknown to langauge.
+	For [definig types](#custom-types) that are unknown to `typesafe-i18n`.
 
 
 #### locales
 
-Locales must follow a specific file pattern. For each locale, you have to create a folder with the name of the locale inside your `src/langauge` folder e.g. 'en', 'en-us', 'en-GB'. The name of the folder is also the name of the locale you use inside your code. Each locales folder needs to have an `index.ts` file with a default export. The file should export an object with key-values pairs and should look something like:
+Locales must follow a specific file pattern. For each locale, you have to create a folder with the name of the locale inside your `src/i18n` folder e.g. 'en', 'en-us', 'en-GB'. The name of the folder is also the name of the locale you use inside your code. Each locales folder needs to have an `index.ts` file with a default export. The file should export an object with key-values pairs and should look something like:
 
 ```javascript
-import type { LangaugeTranslation } from '../langauge-types';
+import type { Translation } from '../i18n-types';
 
-const de: LangaugeTranslation = {
+const de: Translation = {
 
    ... // your translations go here
 
@@ -677,7 +659,7 @@ const de: LangaugeTranslation = {
 
 export default de
 ```
- > make shure to give it the type of `LangaugeTranslation`, to get compile-errors, when some translations are missing
+ > make shure to give it the type of `Translation`, to get compile-errors, when some translations are missing
 
 #### formatters
 
@@ -694,12 +676,14 @@ LLL('Invest ${0} and get ${0|roiCalculator} in return', 100)
 // => 'Invest $100 and get $413 in return'
 ```
 
+<!-- TODO: create examples for date-fns or other common formatters -->
+
 You can also use a few builtin formatters:
 
  - date\
    A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
 	```typescript
-	import { date } from 'langauge/formatters'
+	import { date } from 'typesafe-i18n/formatters'
 
 	const formatters = {
 	   weekday: date({ weekday: 'long' })
@@ -710,7 +694,7 @@ You can also use a few builtin formatters:
  - time\
   	A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
 	```typescript
-	import { time } from 'langauge/formatters'
+	import { time } from 'typesafe-i18n/formatters'
 
 	const formatters = {
 	   timeShort: time('en', { timeStyle: 'short' })
@@ -721,7 +705,7 @@ You can also use a few builtin formatters:
  - number\
   	A wrapper for [Intl.NumberFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
 	```typescript
-	import { number } from 'langauge/formatters'
+	import { number } from 'tyoesafe-i18n/formatters'
 
 	const formatters = {
 	   currency: number('en', { style: 'currency', currency: 'EUR' })
@@ -732,7 +716,7 @@ You can also use a few builtin formatters:
  - replace
 	A wrapper for [String.prototype.replace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
 	```typescript
-	import { replace } from 'langauge/formatters'
+	import { replace } from 'typesafe-i18n/formatters'
 
 	const formatters = {
 	   noSpaces: replace(' ', '-')
@@ -745,7 +729,7 @@ You can also use a few builtin formatters:
  - uppercase\
  	A wrapper for [String.prototype.toUpperCase](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase)
 	```typescript
-	import { uppercase } from 'langauge/formatters'
+	import { uppercase } from 'typesafe-i18n/formatters'
 
 	const formatters = {
 	   upper: uppercase
@@ -756,7 +740,7 @@ You can also use a few builtin formatters:
  - lowercase\
   	A wrapper for [String.prototype.toLowerCase](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase)
 	```typescript
-	import { lowercase } from 'langauge/formatters'
+	import { lowercase } from 'typesafe-i18n/formatters'
 
 	const formatters = {
 	   lower: lowercase
@@ -767,12 +751,12 @@ You can also use a few builtin formatters:
 
 #### custom types
 
-If you want to pass arguments with your own types to the translation function, you need to tell langauge how these types look like. In order to do this, you need to create an export with the exact name of tht type inside this file.
+If you want to pass arguments with your own types to the translation function, you need to tell `typesafe-i18n` how these types look like. In order to do this, you need to create an export with the exact name of that type inside this file.
 
 If you have a translation with e.g. the type `Sum`,
 
 ```javascript
-const translations: LangaugeBaseTranslation = {
+const translations: BaseTranslation = {
    RESULT: 'The result is: {0:Sum|calculate}'
 }
 ```
@@ -795,18 +779,18 @@ export type Sum = {
 
 You can set options for the [watcher](#typesafety) in order to get optimized output for your specific project. The available options are:
 
-| key                                                       | type                    | default value                            |
-| --------------------------------------------------------- | ----------------------- | ---------------------------------------- |
-| [baseLocale](#baseLocale)                                 | `string`                | `'en'`                                   |
-| [locales](#locales)                                       | `string[]`              | `[]`                                     |
-| [lazyLoad](#lazyLoad)                                     | `boolean`               | `true`                                   |
-| [svelte](#svelte)                                         | `boolean &#124; string` | `false`                                  |
-| [outputPath](#outputPath)                                 | `string`                | `'./src/langauge/'`                      |
-| [typesFileName](#typesFileName)                           | `string`                | `'langauge-types'`                       |
-| [utilFileName](#utilFileName)                             | `string`                | `'langauge-util'`                        |
-| [formattersTemplateFileName](#formattersTemplateFileName) | `string`                | `'formatters'`                           |
-| [typesTemplateFileName](#typesTemplateFileName)           | `string`                | `'custom-types'`                         |
-| [tempPath](#tempPath)                                     | `string`                | `'./node_modules/langauge/temp-output/'` |
+| key                                                       | type                    | default value                                 |
+| --------------------------------------------------------- | ----------------------- | --------------------------------------------- |
+| [baseLocale](#baseLocale)                                 | `string`                | `'en'`                                        |
+| [locales](#locales)                                       | `string[]`              | `[]`                                          |
+| [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`               | `true`                                        |
+| [svelte](#svelte)                                         | `boolean &#124; string` | `false`                                       |
+| [outputPath](#outputPath)                                 | `string`                | `'./src/i18n/'`                               |
+| [typesFileName](#typesFileName)                           | `string`                | `'i18n-types'`                                |
+| [utilFileName](#utilFileName)                             | `string`                | `'i18n-util'`                                 |
+| [formattersTemplateFileName](#formattersTemplateFileName) | `string`                | `'formatters'`                                |
+| [typesTemplateFileName](#typesTemplateFileName)           | `string`                | `'custom-types'`                              |
+| [tempPath](#tempPath)                                     | `string`                | `'./node_modules/typesafe-i18n/temp-output/'` |
 
 
 ### baseLocale
@@ -817,13 +801,13 @@ Defines which locale to use for the types generation. You can find more informat
 
 Specifies the locales you want to use. If you want to only include certain locales, you need to pass only the localess you want to use. If empty, it will use all locales.
 
-### lazyLoad
+### loadLocalesAsync
 
-Whether to generate code that loads the locales asynchronously. If set to `true`, a locale will be loaded, when you first access it. If set to `false` all locales will be loaded when you init the langauge-object.
+Whether to generate code that loads the locales asynchronously. If set to `true`, a locale will be loaded, when you first access it. If set to `false` all locales will be loaded when you init the i18n-functions.
 
 ### svelte
 
-If set to  `true`, generates code that wraps the langauge object into a svelte store to use inside your Svelte, Sapper or SvelteKit applications. If set to a `string` value, it uses that value for the name of the generated file. The default filename is `langauge-svelte`.
+If set to  `true`, generates code that wraps i18n functions into a svelte store to use inside your Svelte, Sapper or SvelteKit applications. If set to a `string` value, it uses that value for the name of the generated file. The default filename is `i18n-svelte`.
 
 ### outputPath
 
@@ -835,7 +819,7 @@ Name for the file where the types for your locales are generated.
 
 ### utilFileName
 
-Name for the file where the typesafe langauge-objects are generated.
+Name for the file where the typesafe i18n-functions are generated.
 
 ### formattersTemplateFileName
 

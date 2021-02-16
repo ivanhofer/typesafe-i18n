@@ -3,18 +3,18 @@
 
 import type { A, B } from './argOrder/types-template.actual.output'
 
-export type LangaugeBaseLocale = 'en'
+export type BaseLocale = 'en'
 
-export type LangaugeLocale =
+export type Locales =
 	| 'en'
 
-export type LangaugeTranslationKeys =
+export type TranslationKeys =
 	| 'ORDER_INDEX'
 	| 'ORDER_KEYED'
 	| 'ORDER_FORMATTER'
 	| 'ORDER_TYPES'
 
-export type LangaugeTranslation = {
+export type Translation = {
 	/**
 	 * {1} {0} {2} {0}
 	 * @param {unknown} 0
@@ -43,7 +43,7 @@ export type LangaugeTranslation = {
 	'ORDER_TYPES': RequiredParams2<'0', '1'>
 }
 
-export type LangaugeTranslationArgs = {
+export type TranslationFunctions = {
 	/**
 	 * {1} {0} {2} {0}
 	 */
@@ -62,12 +62,11 @@ export type LangaugeTranslationArgs = {
 	'ORDER_TYPES': (arg0: B, arg1: A) => string
 }
 
-export type LangaugeFormatters = {
+export type Formatters = {
 	a: (value: unknown) => unknown
 	z: (value: unknown) => unknown
 }
 
-export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters
 
 type Param<P extends string> = `{${P}}`
 

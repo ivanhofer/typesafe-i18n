@@ -1,0 +1,14 @@
+{
+	"baseLocale": "en",
+	"locales": ["en"],
+
+	"tempPath": "./node_modules/typesafe-i18n/temp-output/",
+	"outputPath": "./src/i18n/",
+	"typesFileName": "i18n-types",
+	"utilFileName": "i18n-util",
+	"formattersTemplateFileName": "formatters",
+	"typesTemplateFileName": "custom-types",
+
+	"svelte": "false",
+	"loadLocalesAsync": "true"
+}

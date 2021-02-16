@@ -1,16 +1,16 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-import { langaugeLoaderAsync, langaugeStringWrapper } from 'langauge'
+import { i18nLoaderAsync, i18nString } from 'typesafe-i18n'
 import type {
-	LangaugeTranslation,
-	LangaugeTranslationArgs,
-	LangaugeFormatters,
-	LangaugeLocale,
+	Translation,
+	TranslationFunctions,
+	Formatters,
+	Locales,
 } from './withFormatters/types.actual.output'
 import { initFormatters } from './withFormatters/formatters-template.actual.output'
 
-export const locales: LangaugeLocale[] = [
+export const locales: Locales[] = [
 	'en'
 ]
 
@@ -18,8 +18,8 @@ const localeTranslationLoaders = {
 	en: () => import('./en'),
 }
 
-export const getTranslationForLocale = async (locale: LangaugeLocale) => (await localeTranslationLoaders[locale]()).default as LangaugeTranslation
+export const getTranslationForLocale = async (locale: Locales) => (await localeTranslationLoaders[locale]()).default as Translation
 
-export const initLangaugeForLocale = (locale: LangaugeLocale) => langaugeLoaderAsync<LangaugeLocale, LangaugeTranslation, LangaugeTranslationArgs, LangaugeFormatters>(locale, getTranslationForLocale, initFormatters)
+export const initI18nForLocale = (locale: Locales) => i18nLoaderAsync<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
 
-export const initLangaugeStringWrapper = (locale: LangaugeLocale) => langaugeStringWrapper(locale, initFormatters(locale))
+export const initI18nString = (locale: Locales) => i18nString(locale, initFormatters(locale))

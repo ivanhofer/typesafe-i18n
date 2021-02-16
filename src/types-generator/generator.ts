@@ -1,4 +1,4 @@
-import type { LangaugeBaseTranslation } from '../core/core'
+import type { BaseTranslation } from '../core/core'
 import { generateTypes } from './files/generate-types'
 import { generateUtil } from './files/generate-util'
 import { generateSvelte } from './files/generate-svelte'
@@ -23,7 +23,7 @@ export type GeneratorConfig = {
 	typesTemplateFileName?: string
 
 	svelte?: boolean | string
-	lazyLoad?: boolean
+	loadLocalesAsync?: boolean
 }
 
 export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
@@ -35,7 +35,7 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 	utilFileName: string
 	formattersTemplateFileName: string
 	typesTemplateFileName: string
-	lazyLoad: boolean
+	loadLocalesAsync: boolean
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -45,18 +45,18 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 export const setDefaultConfigValuesIfMissing = (config: GeneratorConfig): GeneratorConfigWithDefaultValues => ({
 	baseLocale: 'en',
 	locales: [],
-	tempPath: './node_modules/langauge/temp-output/',
-	outputPath: './src/langauge/',
-	typesFileName: 'langauge-types',
-	utilFileName: 'langauge-util',
+	tempPath: './node_modules/typesafe-i18n/temp-output/',
+	outputPath: './src/i18n/',
+	typesFileName: 'i18n-types',
+	utilFileName: 'i18n-util',
 	formattersTemplateFileName: 'formatters',
 	typesTemplateFileName: 'custom-types',
-	lazyLoad: true,
+	loadLocalesAsync: true,
 	...config,
 })
 
 export const generate = async (
-	translations: LangaugeBaseTranslation,
+	translations: BaseTranslation,
 	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
 	version: TypescriptVersion,
 	logger: Logger = defaultLogger,

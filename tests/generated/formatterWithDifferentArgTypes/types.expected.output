@@ -1,16 +1,16 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-export type LangaugeBaseLocale = 'en'
+export type BaseLocale = 'en'
 
-export type LangaugeLocale =
+export type Locales =
 	| 'en'
 
-export type LangaugeTranslationKeys =
+export type TranslationKeys =
 	| 'A'
 	| 'B'
 
-export type LangaugeTranslation = {
+export type Translation = {
 	/**
 	 * {0|calculate}!
 	 * @param {number} 0
@@ -23,7 +23,7 @@ export type LangaugeTranslation = {
 	'B': RequiredParams1<'0|calculate'>
 }
 
-export type LangaugeTranslationArgs = {
+export type TranslationFunctions = {
 	/**
 	 * {0|calculate}!
 	 */
@@ -34,11 +34,10 @@ export type LangaugeTranslationArgs = {
 	'B': (arg0: Date) => string
 }
 
-export type LangaugeFormatters = {
+export type Formatters = {
 	calculate: (value: number | Date) => unknown
 }
 
-export type LangaugeFormattersInitializer = (locale: LangaugeLocale) => LangaugeFormatters
 
 type Param<P extends string> = `{${P}}`
 

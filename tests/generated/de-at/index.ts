@@ -1,6 +1,6 @@
-import type { LangaugeBaseTranslation } from 'langauge'
+import type { BaseTranslation } from 'typesafe-i18n'
 
-const de_at: LangaugeBaseTranslation = {
+const de_at: BaseTranslation = {
 	// TODO: your translations go here
 }
 

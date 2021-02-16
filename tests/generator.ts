@@ -2,7 +2,7 @@ import { promises } from 'fs'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
-import type { LangaugeBaseTranslation } from '../src'
+import type { BaseTranslation } from '../src'
 import { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../src/types-generator/generator'
 import { generate, setDefaultConfigValuesIfMissing } from '../src/types-generator/generator'
 import { parseTypescriptVersion, TypescriptVersion } from '../src/types-generator/generator-util'
@@ -47,8 +47,9 @@ const check = async (prefix: string, file: FileToCheck) => {
 	try {
 		expected = (await readFile(getPathOfOutputFile(prefix, file, 'expected'))).toString()
 		actual = (await readFile(getPathOfOutputFile(prefix, file, 'actual'))).toString()
-		// eslint-disable-next-line no-empty
-	} catch { }
+	} catch {
+		return
+	}
 
 	if (expected && actual) {
 		assert.match(removeWhitespace(expected), removeWhitespace(actual))
@@ -57,7 +58,7 @@ const check = async (prefix: string, file: FileToCheck) => {
 
 const testGeneratedOutput = async (
 	prefix: string,
-	translation: LangaugeBaseTranslation,
+	translation: BaseTranslation,
 	config: GeneratorConfig = {},
 	version: TypescriptVersion = defaultVersion,
 ) =>
@@ -103,7 +104,7 @@ const mockLogger = () => {
 
 const testGeneratedConsoleOutput = async (
 	prefix: string,
-	translation: LangaugeBaseTranslation,
+	translation: BaseTranslation,
 	callback: (outputs: ConsoleOutputs) => Promise<void>,
 ) =>
 	test(`console ${prefix}`, async () => {
@@ -142,7 +143,7 @@ testGeneratedOutput('deLocale', {}, { baseLocale: 'de' })
 testGeneratedOutput('multipleLocales', {}, { locales: ['de', 'en', 'it'] })
 
 testGeneratedOutput('LocaleWithDash', {}, { baseLocale: 'de-at' })
-testGeneratedOutput('LocaleWithDashSync', {}, { baseLocale: 'de-at', lazyLoad: false })
+testGeneratedOutput('LocaleWithDashSync', {}, { baseLocale: 'de-at', loadLocalesAsync: false })
 testGeneratedOutput('LocalesWithDash', {}, { locales: ['it-it', 'en-us', 'fr-be'] })
 
 testGeneratedOutput('argTypes', { STRING_TYPE: 'Hi {name:string}!', NUMBER_TYPE: '{0:number} apple{{s}}' })
@@ -163,7 +164,7 @@ testGeneratedOutput('svelte-async', { HELLO_SVELTE: 'Hi {0}' }, { svelte: getFil
 testGeneratedOutput(
 	'svelte-sync',
 	{ HELLO_SVELTE: 'Hi {0}' },
-	{ svelte: getFileName('svelte-sync', 'svelte'), lazyLoad: false },
+	{ svelte: getFileName('svelte-sync', 'svelte'), loadLocalesAsync: false },
 )
 
 testGeneratedOutput('same-param', { SAME_PARAM: '{0} {0} {0}' })

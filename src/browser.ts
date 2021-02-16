@@ -1,13 +1,3 @@
-import { langaugeStringWrapper } from './core/util.string'
-import { langaugeObjectWrapper } from './core/util.object'
-import { langauge } from './core/util.instance'
-// import { langaugeLoader, langaugeLoaderAsync } from './core/util.loader'
-
+import { i18n } from './core/util.instance'
 //@ts-ignore
-window.langauge = {
-	init: langauge,
-	initStringWrapper: langaugeStringWrapper,
-	initObjectWrapper: langaugeObjectWrapper,
-	// initLoader: langaugeLoader,
-	// initLoaderAsync: langaugeLoaderAsync,
-}
+window.i18n = i18n

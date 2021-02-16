@@ -1,7 +1,8 @@
-import { LangaugeFormatters, LangaugeFormattersInitializer } from './typescript3.0/types.actual.output'
+import { FormattersInitializer } from 'typesafe-i18n'
+import { Locales, Formatters } from './typescript3.0/types.actual.output'
 
-export const initFormatters: LangaugeFormattersInitializer = (locale) => {
-	const formatters: LangaugeFormatters = {
+export const initFormatters: FormattersInitializer<Locales, Formatters> = (locale) => {
+	const formatters: Formatters = {
 		// add your formatter functions here
 	}
 

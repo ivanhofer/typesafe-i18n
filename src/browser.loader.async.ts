@@ -1,3 +1,3 @@
-import { langaugeLoaderAsync } from './core/util.loader'
+import { i18nLoaderAsync } from './core/util.loader'
 //@ts-ignore
-window.langauge = langaugeLoaderAsync
+window.i18n = i18nLoaderAsync

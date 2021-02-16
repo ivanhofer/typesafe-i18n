@@ -1,7 +1,7 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
-import { langaugeObjectWrapper, langaugeStringWrapper } from '../src/index'
+import { i18nString, i18nObject } from '../src/index'
 import { uppercase, lowercase, replace, date } from '../src/formatters'
 
 const test = suite('formatters')
@@ -26,11 +26,11 @@ const formatters = {
 	noSpaces: (value: string) => value.replace(/\s/g, ''),
 }
 
-const LLL = langaugeStringWrapper('en', formatters)
+const LLL = i18nString('en', formatters)
 
 test('LLL uppercase', () => assert.is(LLL('This is a {0|uppercase}', 'test'), 'This is a TEST'))
 
-const LL = langaugeObjectWrapper('en', translation, formatters)
+const LL = i18nObject('en', translation, formatters)
 
 const someDate = new Date('2020-03-13')
 

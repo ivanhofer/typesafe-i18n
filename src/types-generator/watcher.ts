@@ -1,7 +1,7 @@
 import * as ts from 'typescript'
 import fs from 'fs'
 import path, { resolve } from 'path'
-import type { LangaugeBaseTranslation } from '../core/core'
+import type { BaseTranslation } from '../core/core'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './generator'
 import {
 	copyFile,
@@ -24,12 +24,12 @@ const transpileTypescriptAndPrepareImportFile = async (languageFilePath: string,
 	program.emit()
 
 	const compiledPath = resolve(tempPath, 'index.js')
-	const copyPath = resolve(tempPath, `langauge-temp-${debounceCounter}.js`)
+	const copyPath = resolve(tempPath, `i18n-temp-${debounceCounter}.js`)
 
 	const copySuccess = await copyFile(compiledPath, copyPath, false)
 	if (!copySuccess) {
 		logger.warn(
-			`Make shure to give your base locales default export the type of 'LangaugeBaseTranslation' and don't import anything from outside the base locales directory via relative path.`,
+			`Make shure to give your base locales default export the type of 'BaseTranslation' and don't import anything from outside the base locales directory via relative path.`,
 		)
 		return ''
 	}
@@ -41,7 +41,7 @@ const parseLanguageFile = async (
 	outputPath: string,
 	locale: string,
 	tempPath: string,
-): Promise<LangaugeBaseTranslation | null> => {
+): Promise<BaseTranslation | null> => {
 	const originalPath = resolve(outputPath, locale, 'index.ts')
 
 	if (!(await doesPathExist(originalPath))) {
@@ -56,7 +56,7 @@ const parseLanguageFile = async (
 		return null
 	}
 
-	const languageImport = await importFile<LangaugeBaseTranslation>(importPath)
+	const languageImport = await importFile<BaseTranslation>(importPath)
 
 	await deleteFolderRecursive(tempPath)
 
@@ -108,7 +108,7 @@ const debonce = (callback: () => void) =>
 
 export const startWatcher = async (config?: GeneratorConfig): Promise<void> => {
 	if (!config) {
-		config = (await importFile<GeneratorConfig>(path.resolve('.langauge.json'), false)) || {}
+		config = (await importFile<GeneratorConfig>(path.resolve('.typesafe-i18n.json'), false)) || {}
 	}
 
 	const configWithDefaultValues = setDefaultConfigValuesIfMissing(config)

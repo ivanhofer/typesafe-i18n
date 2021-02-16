@@ -1,3 +1,3 @@
-import type { FormatterFn } from './_types'
+import type { FormatterFunction } from './_types'
 
-export const uppercase: FormatterFn<string> = (value: string): string => value?.toUpperCase()
+export const uppercase: FormatterFunction<string> = (value): string => value?.toUpperCase()
