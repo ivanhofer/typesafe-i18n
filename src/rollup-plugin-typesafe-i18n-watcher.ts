@@ -1,5 +1,5 @@
 import { startWatcher } from './types-generator/watcher'
-import type { Plugin, RollupWarning } from 'rollup'
+import type { Plugin } from 'rollup'
 import type { GeneratorConfig } from './types-generator/generator'
 
 let started = false
