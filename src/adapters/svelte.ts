@@ -16,7 +16,7 @@ type SvelteStoreInit<
 	> = {
 		initI18n: (
 			newlocale: L,
-			getTranslationForLocaleCallback: TranslationLoaderAsync<L, T>,
+			getTranslationForLocaleCallback: TranslationLoader<L, T> | TranslationLoaderAsync<L, T>,
 			initFormattersCallback?: FormattersInitializer<L, F>,
 		) => Promise<void>
 		setLocale: (locale: L) => void
