@@ -13,11 +13,11 @@ I want something that:
  - [prevents me from making mistakes](#typesafety)
 
 Long story short: I created my own localization library. The outcome was better than I could have imagined. Going down the rabbit hole, I came up with a solution that checks whether you call the translation-function with the correct amount of arguments, if the types of the arguments are correct and your translations for other locales contain all required arguments.\
-This package consists of a [translation-function](#langaugeStringWrapper), as well as an [generator](#typesafety) for TypeScript code. By looking at your base translation, it can output type definitions, to make your (developer-)life easier.
+This package consists of a [translation-function](#i18nString), as well as an [generator](#typesafety) for TypeScript code. By looking at your base translation, it can output type definitions, to make your (developer-)life easier.
 
  > The package can be used inside JavaScript and TypeScript applications, but you will get a lot of benefits using it together with TypeScript, since the [watcher](#typesafety) will generate a few wrappers for easier usage.
 
-<!-- TODO: make a gif demonstrating langauge -->
+<!-- TODO: make a gif demonstrating typesafe-i18n -->
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -113,7 +113,7 @@ LLL(MEMBERS, 9) => '9 weitere Mitglieder'
 
 ### plural (full syntax):
 
-Under the hood, langauge uses the [Intl.PluralRules](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules) for detecting the plural form.
+Under the hood, `typesafe-i18n` uses the [Intl.PluralRules](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules) for detecting the plural form.
 
  > Syntax: `{{zero|one|two|few|many|other}}`
 
@@ -197,7 +197,7 @@ LLL(MESSAGE, { name: 'John', nrOfApples: 42 }) => 'Hi JOHN, I would like to buy 
 
 ### text only:
 
-Of course langauge can handle that as well.
+Of course `typesafe-i18n` can handle that as well.
 
 ```typescript
 LLL('Welcome to my site') => 'Welcome to my site'
@@ -210,7 +210,7 @@ LLL('Welcome to my site') => 'Welcome to my site'
 
 ## Usage
 
-You can use langauge in a variety of project-setups:
+You can use `typesafe-i18n` in a variety of project-setups:
 
  - [NodeJS](#nodeJS) apis, backends, scripts, ...
  - [Svelte](#svelte) applications
@@ -320,7 +320,7 @@ function doSomething(session) {
 ### NodeJS
 
 * **TypeScript**\
-	When running the [watcher](#watcher) the file `i18n-util.ts` will export typesafe wrappers for the [langauge objects](#general). You can use them everywhere in your TypeScript files.
+	When running the [watcher](#watcher) the file `i18n-util.ts` will export typesafe wrappers for the [i18n functions](#general). You can use them everywhere in your TypeScript files.
 
   ```typescript
   import { ... } from './i18n/i18n-util'
@@ -333,7 +333,7 @@ function doSomething(session) {
   import { ... } from 'typesafe-i18n'
   ```
 
-You can take a look at this [demo repository](https://github.com/ivanhofer/typesafe-i18n-template-nodejs) to see how langauge will work in node projects.
+<!-- You can take a look at this [demo repository](https://github.com/ivanhofer/typesafe-i18n-template-nodejs) to see how `typesafe-i18n` will work in node projects. -->
 
 ### Svelte
 
@@ -554,11 +554,11 @@ Feel free to open an [issue](https://github.com/ivanhofer/typesafe-i18n/issues),
 
 ## Typesafety
 
-The langauge package allows us to be 100% typesafe for our tranlsation functions and even the translations for other locales itself. It generates TypeScript definitions based on your base locale. It also generates some utility functions for easy usage.
+The `typesafe-i18n` package allows us to be 100% typesafe for our tranlsation functions and even the translations for other locales itself. It generates TypeScript definitions based on your base locale. It also generates some utility functions for easy usage.
 
 In order to get get full typesafety for your locales, you can start the watcher during development. The watcher listens for changes you make to your [base locale file](#folder-structure) and generates the corresponding TypeScript types.
 
- > The watcher will generate a different output depending on your TypeScript version. Older versions don't support all the features langauge need to provide you with the best types. Make sure to use a TypeScript version `> 4.1.x` to benefit from all the typechecking features.
+ > The watcher will generate a different output depending on your TypeScript version. Older versions don't support all the features `typesafe-i18n` need to provide you with the best types. Make sure to use a TypeScript version `> 4.1.x` to benefit from all the typechecking features.
 
 Currently you can choose between two variants to start the watcher:
 
@@ -638,10 +638,10 @@ src/
 	Type definitions are generated in this file. You don't have to understand them. They are just here to help TypeScript understand, how you need to call the translation functions.
 
  - `i18n-util.ts`\
-   This file contains some wrappers around the [base langauge functions](#general).
+   This file contains some wrappers around the [base i18n functions](#general).
 
  - `custom-types.ts`\
-	For [definig types](#custom-types) that are unknown to langauge.
+	For [definig types](#custom-types) that are unknown to `typesafe-i18n`.
 
 
 #### locales
@@ -751,7 +751,7 @@ You can also use a few builtin formatters:
 
 #### custom types
 
-If you want to pass arguments with your own types to the translation function, you need to tell langauge how these types look like. In order to do this, you need to create an export with the exact name of tht type inside this file.
+If you want to pass arguments with your own types to the translation function, you need to tell `typesafe-i18n` how these types look like. In order to do this, you need to create an export with the exact name of that type inside this file.
 
 If you have a translation with e.g. the type `Sum`,
 
@@ -803,11 +803,11 @@ Specifies the locales you want to use. If you want to only include certain local
 
 ### lazyLoad
 
-Whether to generate code that loads the locales asynchronously. If set to `true`, a locale will be loaded, when you first access it. If set to `false` all locales will be loaded when you init the langauge-object.
+Whether to generate code that loads the locales asynchronously. If set to `true`, a locale will be loaded, when you first access it. If set to `false` all locales will be loaded when you init the i18n-functions.
 
 ### svelte
 
-If set to  `true`, generates code that wraps the langauge object into a svelte store to use inside your Svelte, Sapper or SvelteKit applications. If set to a `string` value, it uses that value for the name of the generated file. The default filename is `i18n-svelte`.
+If set to  `true`, generates code that wraps i18n functions into a svelte store to use inside your Svelte, Sapper or SvelteKit applications. If set to a `string` value, it uses that value for the name of the generated file. The default filename is `i18n-svelte`.
 
 ### outputPath
 
@@ -819,7 +819,7 @@ Name for the file where the types for your locales are generated.
 
 ### utilFileName
 
-Name for the file where the typesafe langauge-objects are generated.
+Name for the file where the typesafe i18n-functions are generated.
 
 ### formattersTemplateFileName
 
