@@ -55,7 +55,7 @@ const localeTranslations: LocaleTranslations<Locales, Translation> = {${localesT
 
 export const getTranslationForLocale = (locale: Locales) => localeTranslations[locale]
 
-export const initI18nForLocale = (locale: Locales) => i18nLoader<Locales, Translation, TranslationsFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
+export const initI18nForLocale = (locale: Locales) => i18nLoader<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
 
 export const initI18n = () => i18n<Locales, Translation, TranslationFunctions, Formatters>(getTranslationForLocale, initFormatters)
 `
@@ -71,7 +71,7 @@ const getUtil = (config: GeneratorConfigWithDefaultValues, importType: string): 
 
 	const dynamicImports = loadLocalesAsync
 		? `import { i18nLoaderAsync, i18nString } from 'typesafe-i18n'`
-		: `import${importType} { TranslationFunctions } from 'typesafe-i18n'
+		: `import${importType} { LocaleTranslations } from 'typesafe-i18n'
 import { i18nLoader, i18n, i18nString } from 'typesafe-i18n'`
 
 	const dynamicCode = loadLocalesAsync ? getAsyncCode(config) : getSyncCode(config)
