@@ -16,7 +16,4 @@ const plugin = (config?: GeneratorConfig): Plugin => {
 	}
 }
 
-export const onwarn = (warning: RollupWarning, defaultHandler?: (warning: string | RollupWarning) => void): unknown =>
-	!warning.id?.includes('langauge') && defaultHandler && defaultHandler(warning)
-
 export default plugin

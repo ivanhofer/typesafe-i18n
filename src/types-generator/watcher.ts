@@ -29,7 +29,7 @@ const transpileTypescriptAndPrepareImportFile = async (languageFilePath: string,
 	const copySuccess = await copyFile(compiledPath, copyPath, false)
 	if (!copySuccess) {
 		logger.warn(
-			`Make shure to give your base locales default export the type of 'LangaugeBaseTranslation' and don't import anything from outside the base locales directory via relative path.`,
+			`Make shure to give your base locales default export the type of 'BaseTranslation' and don't import anything from outside the base locales directory via relative path.`,
 		)
 		return ''
 	}

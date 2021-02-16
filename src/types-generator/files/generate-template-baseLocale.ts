@@ -6,7 +6,7 @@ import { sanitizeLocale } from '../generator-util'
 const getBaseLocaleTemplate = (baseLocale: string, importType: string) => {
 	const sanitizedLocale = sanitizeLocale(baseLocale)
 
-	return `import${importType} { BaseTranslation } from 'langauge'
+	return `import${importType} { BaseTranslation } from 'typesafe-i18n'
 
 const ${sanitizedLocale}: BaseTranslation = {
 	// TODO: your translations go here

@@ -65,9 +65,9 @@ const getUtil = (config: GeneratorConfigWithDefaultValues, importType: string): 
 	const { typesFileName: typesFile, formattersTemplateFileName: formattersTemplatePath, lazyLoad, locales } = config
 
 	const dynamicImports = lazyLoad
-		? `import { i18nLoaderAsync, i18nString } from 'langauge'`
-		: `import${importType} { TranslationFunctions } from 'langauge'
-import { i18nLoader, i18n, i18nString } from 'langauge'`
+		? `import { i18nLoaderAsync, i18nString } from 'typesafe-i18n'`
+		: `import${importType} { TranslationFunctions } from 'typesafe-i18n'
+import { i18nLoader, i18n, i18nString } from 'typesafe-i18n'`
 
 	const dynamicCode = lazyLoad ? getAsyncCode(config) : getSyncCode(config)
 

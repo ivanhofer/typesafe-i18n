@@ -45,7 +45,7 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 export const setDefaultConfigValuesIfMissing = (config: GeneratorConfig): GeneratorConfigWithDefaultValues => ({
 	baseLocale: 'en',
 	locales: [],
-	tempPath: './node_modules/langauge/temp-output/',
+	tempPath: './node_modules/typesafe-i18n/temp-output/',
 	outputPath: './src/i18n/',
 	typesFileName: 'i18n-types',
 	utilFileName: 'i18n-util',

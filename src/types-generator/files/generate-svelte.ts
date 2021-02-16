@@ -14,7 +14,7 @@ const getSvelteStore = (
 	return `// This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-import { getI18nSvelteStore } from 'langauge';
+import { getI18nSvelteStore } from 'typesafe-i18n';
 import${importType} { Locales, Translation, TranslationFunctions, Formatters } from './${typesFile}'
 import { getTranslationForLocale } from './${utilFile}'
 import { initFormatters } from './${formattersTemplatePath}'
