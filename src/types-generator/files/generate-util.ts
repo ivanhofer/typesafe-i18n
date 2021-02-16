@@ -62,14 +62,19 @@ export const initI18n = () => i18n<Locales, Translation, TranslationFunctions, F
 }
 
 const getUtil = (config: GeneratorConfigWithDefaultValues, importType: string): string => {
-	const { typesFileName: typesFile, formattersTemplateFileName: formattersTemplatePath, lazyLoad, locales } = config
+	const {
+		typesFileName: typesFile,
+		formattersTemplateFileName: formattersTemplatePath,
+		loadLocalesAsync,
+		locales,
+	} = config
 
-	const dynamicImports = lazyLoad
+	const dynamicImports = loadLocalesAsync
 		? `import { i18nLoaderAsync, i18nString } from 'typesafe-i18n'`
 		: `import${importType} { TranslationFunctions } from 'typesafe-i18n'
 import { i18nLoader, i18n, i18nString } from 'typesafe-i18n'`
 
-	const dynamicCode = lazyLoad ? getAsyncCode(config) : getSyncCode(config)
+	const dynamicCode = loadLocalesAsync ? getAsyncCode(config) : getSyncCode(config)
 
 	const localesEnum = `export const locales: Locales[] = [${locales.map(
 		(locale) => `

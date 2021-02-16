@@ -143,7 +143,7 @@ testGeneratedOutput('deLocale', {}, { baseLocale: 'de' })
 testGeneratedOutput('multipleLocales', {}, { locales: ['de', 'en', 'it'] })
 
 testGeneratedOutput('LocaleWithDash', {}, { baseLocale: 'de-at' })
-testGeneratedOutput('LocaleWithDashSync', {}, { baseLocale: 'de-at', lazyLoad: false })
+testGeneratedOutput('LocaleWithDashSync', {}, { baseLocale: 'de-at', loadLocalesAsync: false })
 testGeneratedOutput('LocalesWithDash', {}, { locales: ['it-it', 'en-us', 'fr-be'] })
 
 testGeneratedOutput('argTypes', { STRING_TYPE: 'Hi {name:string}!', NUMBER_TYPE: '{0:number} apple{{s}}' })
@@ -164,7 +164,7 @@ testGeneratedOutput('svelte-async', { HELLO_SVELTE: 'Hi {0}' }, { svelte: getFil
 testGeneratedOutput(
 	'svelte-sync',
 	{ HELLO_SVELTE: 'Hi {0}' },
-	{ svelte: getFileName('svelte-sync', 'svelte'), lazyLoad: false },
+	{ svelte: getFileName('svelte-sync', 'svelte'), loadLocalesAsync: false },
 )
 
 testGeneratedOutput('same-param', { SAME_PARAM: '{0} {0} {0}' })

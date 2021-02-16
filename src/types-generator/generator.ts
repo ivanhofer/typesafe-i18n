@@ -23,7 +23,7 @@ export type GeneratorConfig = {
 	typesTemplateFileName?: string
 
 	svelte?: boolean | string
-	lazyLoad?: boolean
+	loadLocalesAsync?: boolean
 }
 
 export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
@@ -35,7 +35,7 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 	utilFileName: string
 	formattersTemplateFileName: string
 	typesTemplateFileName: string
-	lazyLoad: boolean
+	loadLocalesAsync: boolean
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ export const setDefaultConfigValuesIfMissing = (config: GeneratorConfig): Genera
 	utilFileName: 'i18n-util',
 	formattersTemplateFileName: 'formatters',
 	typesTemplateFileName: 'custom-types',
-	lazyLoad: true,
+	loadLocalesAsync: true,
 	...config,
 })
 

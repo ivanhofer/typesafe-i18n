@@ -783,7 +783,7 @@ You can set options for the [watcher](#typesafety) in order to get optimized out
 | --------------------------------------------------------- | ----------------------- | --------------------------------------------- |
 | [baseLocale](#baseLocale)                                 | `string`                | `'en'`                                        |
 | [locales](#locales)                                       | `string[]`              | `[]`                                          |
-| [lazyLoad](#lazyLoad)                                     | `boolean`               | `true`                                        |
+| [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`               | `true`                                        |
 | [svelte](#svelte)                                         | `boolean &#124; string` | `false`                                       |
 | [outputPath](#outputPath)                                 | `string`                | `'./src/i18n/'`                               |
 | [typesFileName](#typesFileName)                           | `string`                | `'i18n-types'`                                |
@@ -801,7 +801,7 @@ Defines which locale to use for the types generation. You can find more informat
 
 Specifies the locales you want to use. If you want to only include certain locales, you need to pass only the localess you want to use. If empty, it will use all locales.
 
-### lazyLoad
+### loadLocalesAsync
 
 Whether to generate code that loads the locales asynchronously. If set to `true`, a locale will be loaded, when you first access it. If set to `false` all locales will be loaded when you init the i18n-functions.
 
