@@ -4,5 +4,5 @@
 		"module": "CommonJS",
 		"outDir": "./cjs"
 	},
-	"exclude": ["./src/node-watcher.ts", "./src/rollup-plugin-langauge.ts"]
+	"exclude": ["./src/node-watcher.ts", "./src/rollup-plugin-typesafe-i18n.ts", "./src/browser*.ts"]
 }

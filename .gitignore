@@ -8,6 +8,7 @@ node_modules
 /svelte
 /tests/generated/**/*.actual.output
 /tests/generated/de
+/tests/generated/de-at
 /tests/generated/en
 /tests/generated/console*
 /typesafe-i18n-*.tgz

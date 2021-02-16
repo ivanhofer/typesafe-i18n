@@ -1,8 +1,8 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-import type { TranslationFunctions } from 'langauge'
-import { i18nLoader, i18n, i18nString } from 'langauge'
+import type { TranslationFunctions } from 'typesafe-i18n'
+import { i18nLoader, i18n, i18nString } from 'typesafe-i18n'
 import type {
 	Translation,
 	TranslationFunctions,
