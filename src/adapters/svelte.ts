@@ -39,7 +39,7 @@ export const getI18nSvelteStore = <
 ): SvelteStoreInit<L, T, TF, F> => {
 	const currentLocale = writable<L>(baseLocale)
 
-	const isLoading = writable<boolean>(true)
+	const isLoading = writable<boolean>(false)
 
 	let i18nObjectInstance = new Proxy({} as TF, {
 		get: (_target, key: string) => () => key,
@@ -55,13 +55,13 @@ export const getI18nSvelteStore = <
 		getTranslationForLocaleCallback: TranslationLoader<L, T> | TranslationLoaderAsync<L, T>,
 		initFormattersCallback?: FormattersInitializer<L, F>,
 	): Promise<void> => {
-		initFormatters = initFormattersCallback || (() => ({} as F))
 		getTranslationForLocale = getTranslationForLocaleCallback
+		initFormatters = initFormattersCallback || (() => ({} as F))
 		await setLocale(newlocale)
 	}
 
 	const setLocale = async (newlocale: L): Promise<void> => {
-		if (!newlocale) return
+		if (!newlocale || !getTranslationForLocale) return
 
 		isLoading.set(true)
 
