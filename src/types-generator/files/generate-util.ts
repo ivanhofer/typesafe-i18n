@@ -20,7 +20,7 @@ const getAsyncCode = ({ locales, baseLocale }: GeneratorConfigWithDefaultValues)
 const localeTranslationLoaders = {${localesTranslationLoaders}
 }
 
-export const getTranslationForLocale = async (locale: Locales) => (await (localeTranslationLoaders[locale] || localeTranslationLoaders[${baseLocale}])()).default as Translation
+export const getTranslationForLocale = async (locale: Locales) => (await (localeTranslationLoaders[locale] || localeTranslationLoaders['${baseLocale}'])()).default as Translation
 
 export const initI18nForLocale = (locale: Locales) => i18nLoaderAsync<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
 `
@@ -53,7 +53,7 @@ import ${sanitizeLocale(locale)} from './${locale}'`,
 const localeTranslations: LocaleTranslations<Locales, Translation> = {${localesTranslations}
 }
 
-export const getTranslationForLocale = (locale: Locales) => localeTranslations[locale] || localeTranslations[${baseLocale}]
+export const getTranslationForLocale = (locale: Locales) => localeTranslations[locale] || localeTranslations['${baseLocale}']
 
 export const initI18nForLocale = (locale: Locales) => i18nLoader<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
 
