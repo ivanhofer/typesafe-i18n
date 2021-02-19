@@ -9,6 +9,6 @@
 	"formattersTemplateFileName": "formatters",
 	"typesTemplateFileName": "custom-types",
 
-	"svelte": "false",
+	"adapter": "node",
 	"loadLocalesAsync": "true"
 }

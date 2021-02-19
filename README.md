@@ -338,7 +338,7 @@ function doSomething(session) {
 ### Svelte
 
 * **TypeScript**\
-	First, make sure you set the `svelte` [option](#options) to `true`.
+	First, make sure you set the `adapter` [option](#options) to `svelte`.
 
 	Svelte by default comes with a rollup-config. You could setup the watcher as [rollup-plugin](#rollup-plugin).
 
@@ -659,7 +659,7 @@ const de: Translation = {
 
 export default de
 ```
- > make shure to give it the type of `Translation`, to get compile-errors, when some translations are missing
+ > make sure to give it the type of `Translation`, to get compile-errors, when some translations are missing
 
 #### formatters
 
@@ -779,18 +779,19 @@ export type Sum = {
 
 You can set options for the [watcher](#typesafety) in order to get optimized output for your specific project. The available options are:
 
-| key                                                       | type                    | default value                                 |
-| --------------------------------------------------------- | ----------------------- | --------------------------------------------- |
-| [baseLocale](#baseLocale)                                 | `string`                | `'en'`                                        |
-| [locales](#locales)                                       | `string[]`              | `[]`                                          |
-| [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`               | `true`                                        |
-| [svelte](#svelte)                                         | `boolean &#124; string` | `false`                                       |
-| [outputPath](#outputPath)                                 | `string`                | `'./src/i18n/'`                               |
-| [typesFileName](#typesFileName)                           | `string`                | `'i18n-types'`                                |
-| [utilFileName](#utilFileName)                             | `string`                | `'i18n-util'`                                 |
-| [formattersTemplateFileName](#formattersTemplateFileName) | `string`                | `'formatters'`                                |
-| [typesTemplateFileName](#typesTemplateFileName)           | `string`                | `'custom-types'`                              |
-| [tempPath](#tempPath)                                     | `string`                | `'./node_modules/typesafe-i18n/temp-output/'` |
+| key                                                       | type                                          | default value                                 |
+| --------------------------------------------------------- | --------------------------------------------- | --------------------------------------------- |
+| [baseLocale](#baseLocale)                                 | `string`                                      | `'en'`                                        |
+| [locales](#locales)                                       | `string[]`                                    | `[]`                                          |
+| [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`                                     | `true`                                        |
+| [adapter](#adapter)                                       | `'node'` &#124; `'svelte'` &#124; `undefined` | `undefined`                                   |
+| [outputPath](#outputPath)                                 | `string`                                      | `'./src/i18n/'`                               |
+| [typesFileName](#typesFileName)                           | `string`                                      | `'i18n-types'`                                |
+| [utilFileName](#utilFileName)                             | `string`                                      | `'i18n-util'`                                 |
+| [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                      | `'formatters'`                                |
+| [typesTemplateFileName](#typesTemplateFileName)           | `string`                                      | `'custom-types'`                              |
+| [adapterFileName](#adapterFileName)                       | `string` &#124; `undefined`                   | `undefined`                                   |
+| [tempPath](#tempPath)                                     | `string`                                      | `'./node_modules/typesafe-i18n/temp-output/'` |
 
 
 ### baseLocale
@@ -805,9 +806,9 @@ Specifies the locales you want to use. If you want to only include certain local
 
 Whether to generate code that loads the locales asynchronously. If set to `true`, a locale will be loaded, when you first access it. If set to `false` all locales will be loaded when you init the i18n-functions.
 
-### svelte
+### adapter
 
-If set to  `true`, generates code that wraps i18n functions into a svelte store to use inside your Svelte, Sapper or SvelteKit applications. If set to a `string` value, it uses that value for the name of the generated file. The default filename is `i18n-svelte`.
+If config is set, code will be generated that wraps i18n functions into useful helpers for that environment e.g. a `svelte`-store.
 
 ### outputPath
 
@@ -828,6 +829,10 @@ Name for the file where you can configure your formatters.
 ### typesTemplateFileName
 
 Name for the file where you can configure your custom-types.
+
+### adapterFileName
+
+Name for the file when generating output for an adapter. The default filename is `i18n-[adapter]`.
 
 ### tempPath
 

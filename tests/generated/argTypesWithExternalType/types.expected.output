@@ -1,7 +1,7 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
-import type { Result } from './argTypesWithExternalType/types-template.actual.output'
+import type { Result } from './types-template.actual.output'
 
 export type BaseLocale = 'en'
 

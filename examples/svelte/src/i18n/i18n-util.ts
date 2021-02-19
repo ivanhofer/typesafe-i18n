@@ -33,4 +33,4 @@ export const initI18nForLocale = (locale: Locales) => i18nLoader<Locales, Transl
 
 export const initI18n = () => i18n<Locales, Translation, TranslationFunctions, Formatters>(getTranslationForLocale, initFormatters)
 
-export const initI18nString = (locale: Locales) => i18nString(locale, initFormatters(locale))
+export const initI18nString = (locale: Locales = 'en') => i18nString(locale, initFormatters(locale))

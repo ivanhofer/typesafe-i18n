@@ -1,15 +1,18 @@
 import type { BaseTranslation } from '../core/core'
 import { generateTypes } from './files/generate-types'
 import { generateUtil } from './files/generate-util'
-import { generateSvelte } from './files/generate-svelte'
+import { generateSvelteAdapter } from './files/generate-adapter-svelte'
 import { generateFormattersTemplate } from './files/generate-template-formatters'
 import { generateCustomTypesTemplate } from './files/generate-template-types'
 import { generateBaseLocaleTemplate } from './files/generate-template-baseLocale'
 import { logger as defaultLogger, Logger, supportsImportType, TypescriptVersion } from './generator-util'
+import { generateNodeAdapter } from './files/generate-adapter-node'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
+
+type Adapters = 'svelte' | 'node'
 
 export type GeneratorConfig = {
 	baseLocale?: string
@@ -22,7 +25,8 @@ export type GeneratorConfig = {
 	formattersTemplateFileName?: string
 	typesTemplateFileName?: string
 
-	svelte?: boolean | string
+	adapter?: Adapters
+	adapterFileName?: string
 	loadLocalesAsync?: boolean
 }
 
@@ -75,7 +79,9 @@ export const generate = async (
 
 	await generateUtil(config, importType)
 
-	if (config.svelte) {
-		await generateSvelte(config, importType)
+	if (config.adapter === 'node') {
+		await generateNodeAdapter(config)
+	} else if (config.adapter === 'svelte') {
+		await generateSvelteAdapter(config, importType)
 	}
 }
