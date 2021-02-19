@@ -16,5 +16,6 @@ export const generateNodeAdapter = async (config: GeneratorConfigWithDefaultValu
 
 	const nodeUtils = getNodeUtils(config)
 
-	await writeFileIfContainsChanges(outputPath, 'i18n-node', nodeUtils)
+	const fileName = config.adapterFileName || 'i18n-node'
+	await writeFileIfContainsChanges(outputPath, fileName, nodeUtils)
 }

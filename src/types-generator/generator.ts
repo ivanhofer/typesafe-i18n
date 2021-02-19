@@ -26,6 +26,7 @@ export type GeneratorConfig = {
 	typesTemplateFileName?: string
 
 	adapter?: Adapters
+	adapterFileName?: string
 	loadLocalesAsync?: boolean
 }
 

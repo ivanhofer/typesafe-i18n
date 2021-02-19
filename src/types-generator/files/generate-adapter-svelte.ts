@@ -31,5 +31,6 @@ export const generateSvelteAdapter = async (
 
 	const svelteUtils = getSvelteUtils(config, importType)
 
-	await writeFileIfContainsChanges(outputPath, 'i18n-svelte', svelteUtils)
+	const fileName = config.adapterFileName || 'i18n-svelte'
+	await writeFileIfContainsChanges(outputPath, fileName, svelteUtils)
 }
