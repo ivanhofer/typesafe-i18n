@@ -39,9 +39,6 @@ type FileToCheck = 'types' | 'util' | 'formatters-template' | 'types-template' |
 const getPathOfOutputFile = (prefix: string, file: FileToCheck, type: 'actual' | 'expected') =>
 	`${outputPath}${prefix}/${file}.${type}.output`
 
-const REGEX_WHITESPACE = /[\s]+/g
-const removeWhitespace = (text: string) => text.replace(REGEX_WHITESPACE, '')
-
 const check = async (prefix: string, file: FileToCheck) => {
 	let expected = ''
 	let actual = ''
@@ -54,7 +51,7 @@ const check = async (prefix: string, file: FileToCheck) => {
 	}
 
 	if (expected && actual) {
-		assert.match(removeWhitespace(expected), removeWhitespace(actual))
+		assert.match(expected, actual)
 	}
 }
 
