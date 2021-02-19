@@ -39,6 +39,7 @@ type FileToCheck = 'types' | 'util' | 'formatters-template' | 'types-template' |
 const getPathOfOutputFile = (prefix: string, file: FileToCheck, type: 'actual' | 'expected') =>
 	`${outputPath}${prefix}/${file}.${type}.output`
 
+const REGEX_NEW_LINE = /\n/g
 const check = async (prefix: string, file: FileToCheck) => {
 	let expected = ''
 	let actual = ''
@@ -51,7 +52,12 @@ const check = async (prefix: string, file: FileToCheck) => {
 	}
 
 	if (expected && actual) {
-		assert.match(expected, actual)
+		const expectedSplitByLines = expected.split(REGEX_NEW_LINE)
+		const actualSplitByLines = actual.split(REGEX_NEW_LINE)
+
+		expectedSplitByLines.forEach((_, i) =>
+			assert.match(expectedSplitByLines[i] as string, actualSplitByLines[i] as string),
+		)
 	}
 }
 
