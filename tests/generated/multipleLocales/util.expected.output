@@ -22,7 +22,7 @@ const localeTranslationLoaders = {
 	it: () => import('./it'),
 }
 
-export const getTranslationForLocale = async (locale: Locales) => (await localeTranslationLoaders[locale]()).default as Translation
+export const getTranslationForLocale = async (locale: Locales) => (await (localeTranslationLoaders[locale] || localeTranslationLoaders['en'])()).default as Translation
 
 export const initI18nForLocale = (locale: Locales) => i18nLoaderAsync<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
 
