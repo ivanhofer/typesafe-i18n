@@ -17,16 +17,18 @@ const actualPostfix = '.actual.output'
 
 const defaultVersion = parseTypescriptVersion('4.1')
 
-const getFileName = (prefix: string, name: string) => prefix + '/' + name + actualPostfix
+const getFileName = (name: string) => name + actualPostfix
+
+const svelteAdapterFileName = getFileName('svelte')
 
 const createConfig = (prefix: string, config?: GeneratorConfig): GeneratorConfigWithDefaultValues =>
 	setDefaultConfigValuesIfMissing({
-		outputPath,
+		outputPath: outputPath + prefix,
 
-		typesFileName: getFileName(prefix, 'types'),
-		utilFileName: getFileName(prefix, 'util'),
-		formattersTemplateFileName: getFileName(prefix, 'formatters-template'),
-		typesTemplateFileName: getFileName(prefix, 'types-template'),
+		typesFileName: getFileName('types'),
+		utilFileName: getFileName('util'),
+		formattersTemplateFileName: getFileName('formatters-template'),
+		typesTemplateFileName: getFileName('types-template'),
 
 		...config,
 		locales: config?.locales?.length ? config?.locales : [config?.baseLocale || 'en'],
@@ -159,12 +161,16 @@ testGeneratedOutput('formatterWithDifferentArgTypes', { A: '{0:number|calculate}
 
 testGeneratedOutput('argTypesWithExternalType', { EXTERNAL_TYPE: 'The result is {0:Result|calculate}!' })
 
-testGeneratedOutput('svelte-async', { HELLO_SVELTE: 'Hi {0}' }, { svelte: getFileName('svelte-async', 'svelte') })
+testGeneratedOutput(
+	'svelte-async',
+	{ HELLO_SVELTE: 'Hi {0}' },
+	{ adapter: 'svelte', adapterFileName: svelteAdapterFileName },
+)
 
 testGeneratedOutput(
 	'svelte-sync',
 	{ HELLO_SVELTE: 'Hi {0}' },
-	{ svelte: getFileName('svelte-sync', 'svelte'), loadLocalesAsync: false },
+	{ adapter: 'svelte', adapterFileName: svelteAdapterFileName, loadLocalesAsync: false },
 )
 
 testGeneratedOutput('same-param', { SAME_PARAM: '{0} {0} {0}' })
