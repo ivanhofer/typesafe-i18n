@@ -790,6 +790,7 @@ You can set options for the [watcher](#typesafety) in order to get optimized out
 | [utilFileName](#utilFileName)                             | `string`                                      | `'i18n-util'`                                 |
 | [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                      | `'formatters'`                                |
 | [typesTemplateFileName](#typesTemplateFileName)           | `string`                                      | `'custom-types'`                              |
+| [adapterFileName](#adapterFileName)                       | `string` &#124; `undefined`                   | `undefined`                                   |
 | [tempPath](#tempPath)                                     | `string`                                      | `'./node_modules/typesafe-i18n/temp-output/'` |
 
 
@@ -807,7 +808,7 @@ Whether to generate code that loads the locales asynchronously. If set to `true`
 
 ### adapter
 
-If config is set, code will be generated that wraps i18n functions into useful helpers for that environment e.g. a `svelte`-store. The default filename is `i18n-[adapter]`.
+If config is set, code will be generated that wraps i18n functions into useful helpers for that environment e.g. a `svelte`-store.
 
 ### outputPath
 
@@ -828,6 +829,10 @@ Name for the file where you can configure your formatters.
 ### typesTemplateFileName
 
 Name for the file where you can configure your custom-types.
+
+### adapterFileName
+
+Name for the file when generating output for an adapter. The default filename is `i18n-[adapter]`.
 
 ### tempPath
 
