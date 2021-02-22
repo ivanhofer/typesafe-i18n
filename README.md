@@ -212,10 +212,8 @@ LLL('Welcome to my site') => 'Welcome to my site'
 
 You can use `typesafe-i18n` in a variety of project-setups:
 
- - [NodeJS](#nodeJS) apis, backends, scripts, ...
- - [Svelte](#svelte) applications
- - [Sapper](#sapper) projects
- - [SvelteKit](#sveltekit) projects
+ - [NodeJS](#nodejs) apis, backends, scripts, ...
+ - [Svelte/Sapper/SvelteKit](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte) applications
 <!-- TODO: create example for react -->
  - [Browser](#browser) projects
  - [other frameworks](#other) like React, VueJS, Angular and others ...
@@ -258,9 +256,9 @@ const locale = 'en'
 const translations = {
    HI: "Hello {name}!",
    RESET_PASSWORD: "reset password"
-   ...
+   /* ... */
 }
-const formatters = { ... }
+const formatters = { /* ... */ }
 
 const LL = i18nObject(locale, translations, formatters)
 
@@ -308,7 +306,7 @@ A good usecase for this object could be inside your API, when your locale is dyn
 ```typescript
 function doSomething(session) {
 
-   ...
+   /* ... */
 
    const locale = session.language
    return L[locale].SUCCESS_MESSAGE()
@@ -317,182 +315,23 @@ function doSomething(session) {
 ```
 
 
-### NodeJS
+### Node.js
 
 * **TypeScript**\
 	When running the [watcher](#watcher) the file `i18n-util.ts` will export typesafe wrappers for the [i18n functions](#general). You can use them everywhere in your TypeScript files.
 
   ```typescript
-  import { ... } from './i18n/i18n-util'
+  import { /* ... */ } from './i18n/i18n-util'
   ```
 
 * **JavaScript**\
   Depending what you need, you can import any [function](#general) from the root `typesafe-i18n` package.
 
   ```javascript
-  import { ... } from 'typesafe-i18n'
+  import { /* ... */ } from 'typesafe-i18n'
   ```
 
 <!-- You can take a look at this [demo repository](https://github.com/ivanhofer/typesafe-i18n-template-nodejs) to see how `typesafe-i18n` will work in node projects. -->
-
-### Svelte
-
-* **TypeScript**\
-	First, make sure you set the `adapter` [option](#options) to `svelte`.
-
-	Svelte by default comes with a rollup-config. You could setup the watcher as [rollup-plugin](#rollup-plugin).
-
-	The watcher will generate custom svelte stores inside `i18n-svelte.ts` that you can use inside your components.
-
-* **JavaScript**\
-	Since you can't take advantage of the generated types, you need to import the stores directly from 'i18n/svelte'.\
-	When initializing you need to pass a callback to load the translation and an optional callback to initialize your formatters.
-
-	```typescript
-	import LL, { initI18n } from 'typesafe-i18n/svelte/svelte-store'
-
-	const localeTranslations = {
-	   en: { TODAY: "Today is {date|weekday}" },
-	   de: { TODAY: "Heute ist {date|weekday}" },
-	   it: { TODAY: "Oggi è {date|weekday}" },
-	}
-
-	const loadLocale = (locale) => localeTranslations(locale)
-
-	const initFormatters = (locale) => {
-	   const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
-
-	   return {
-	      date: (value) => dateFormatter.format(value)
-	   }
-	}
-
-	initiI8n('en', loadLocale, initFormatters)
-
-	$LL.TODAY(new Date()) // => 'Today is friday'
-	```
-
-
-The file exports following functions and readable stores:
-
-#### initI18n
-
-You need to call initialize in order to setup all stores.
-
-Call it inside your root svelte component:
-
-```html
-<script>
-   import { initI18n } from './i18n/i18n-svelte'
-
-   initI18n('en')
-</script>
-```
-
-#### LL
-
-The default export of the generated file will be the store you can use to translate your app. You can use it with subscriptions (`$LL`) or as a regular JavaScript object (`LL`).
-
-```html
-<script>
-   import LL from './i18n/i18n-svelte'
-
-   const showMessage = () => {
-      alert(LL.SOME_MESSAGE())
-   }
-</script>
-
-{$LL.HELLO({ name: 'world' })}
-
-<button on:click={showMessage}>click me</button>
-```
-
-
-#### locale
-
-This svelte store will contain the current selected locale.
-
-```html
-<script>
-   import { locale } from './i18n/i18n-svelte'
-</script>
-
-<div>
-   your language is: {$locale}
-</div>
-```
-
-#### setLocale
-
-If you want to change the locale, you need to call `setLocale` with the desited locale as argument.
-
-```html
-<script>
-   import { setLocale } from './i18n/i18n-svelte'
-</script>
-
-<div id="language-picker">
-
-   Choose language:
-
-   <button on:click={() => setLocale('en')}>
-      english
-   </button>
-
-   <button on:click={() => setLocale('de')}>
-      deutsch
-   </button>
-
-   <button on:click={() => setLocale('it')}>
-      italiano
-   </button>
-
-</div>
-```
-
-#### localeLoading
-
-Svelte store that returns a `boolean`. It can be used to wait for the locale to be loaded.
-
-```html
-<script>
-   import { isLocaleLoading } from './i18n/i18n-svelte'
-</script>
-
-{#if $isLocaleLoading}
-   loading...
-{:else}
-
-   <!-- your app code goes here  -->
-
-{/if}
-```
-
- <!-- TODO: create example repository -->
-
-### Sapper
-
-For your Sapper projects, you should call the `initI18n` function inside `preload` in your root `routes/_layout.svelte` file:
-
-```html
-<script context="module">
-   import { initI18n } from '../i18n/i18n-svelte'
-
-   export async function preload(page, session) {
-      await initI18n(session.locale)
-   }
-</script>
-```
-
-For more information about the stores you can use, see the [Svelte](#svelte) section.
-
- <!-- TODO: create example repository -->
-
-### SvelteKit
-
-I will update this part as soon as I get my hands on the beta and the syntax. But it will be more or less the same like described in the [Sapper](#sapper) and [Svelte](#svelte) sections.
-
- <!-- TODO: create example repository -->
 
 ### Browser
 
@@ -537,9 +376,9 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
   	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.all.min.js"></script>
 
 	<script>
-	   const LLL = i18n.initString( ... )
-	   const LL = i18n.initObject( ... )
-	   const L = i18n.init( ... )
+	   const LLL = i18n.initString( /* ...*/ )
+	   const LL = i18n.initObject( /* ... */ )
+	   const L = i18n.init( /* ... */ )
 	</script>
   	```
 
@@ -653,7 +492,7 @@ import type { Translation } from '../i18n-types';
 
 const de: Translation = {
 
-   ... // your translations go here
+   /* your translations go here */
 
 }
 
