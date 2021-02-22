@@ -1,0 +1,23 @@
+{
+	"name": "typesafe-i18n_node-demo",
+	"version": "1.0.0",
+	"scripts": {
+		"dev": "npm-run-all --parallel nodemon typesafe-i18n-watcher",
+		"nodemon": "nodemon src/index.ts",
+		"typesafe-i18n-watcher": "node ./node_modules/typesafe-i18n/node/watcher.js"
+	},
+	"devDependencies": {
+		"@types/express": "^4.17.11",
+		"@types/locale": "^0.1.0",
+		"@types/node": "^14.14.31",
+		"nodemon": "^2.0.7",
+		"npm-run-all": "^4.1.5",
+		"ts-node": "^9.1.1",
+		"typescript": "^4.1.5"
+	},
+	"dependencies": {
+		"express": "^4.17.1",
+		"locale": "^0.1.0",
+		"typesafe-i18n": "^2.2.3"
+	}
+}
