@@ -66,6 +66,7 @@ const getUtil = (config: GeneratorConfigWithDefaultValues, importType: string): 
 		typesFileName: typesFile,
 		formattersTemplateFileName: formattersTemplatePath,
 		loadLocalesAsync,
+		baseLocale,
 		locales,
 	} = config
 
@@ -93,6 +94,8 @@ import${importType} {
 	Locales,
 } from './${typesFile}'
 import { initFormatters } from './${formattersTemplatePath}'
+
+export const baseLocale: Locales = '${baseLocale}'
 
 ${localesEnum}
 ${dynamicCode}

@@ -10,6 +10,8 @@ import type {
 } from './types.actual.output'
 import { initFormatters } from './formatters-template.actual.output'
 
+export const baseLocale: Locales = 'de-at'
+
 export const locales: Locales[] = [
 	'de-at'
 ]

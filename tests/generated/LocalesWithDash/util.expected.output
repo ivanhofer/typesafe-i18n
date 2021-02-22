@@ -10,6 +10,8 @@ import type {
 } from './types.actual.output'
 import { initFormatters } from './formatters-template.actual.output'
 
+export const baseLocale: Locales = 'en'
+
 export const locales: Locales[] = [
 	'it-it',
 	'en-us',
