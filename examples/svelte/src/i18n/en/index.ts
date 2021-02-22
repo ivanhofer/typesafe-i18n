@@ -4,7 +4,7 @@ const en: BaseTranslation = {
 	STARTUP: 'app started',
 	CHOOSE_LOCALE: 'choose locale...',
 	HI: 'Hello {name:string}!',
-	TUTORIAL: 'Visit the {link:string|linkToSvelteTutorial}" to learn how to build Svelte apps.',
+	TUTORIAL: 'Visit the {link:string|linkToSvelteTutorial} to learn how to build Svelte apps.',
 	YOUR_NAME: 'Your name:',
 	SELECTED_LOCALE: 'Selected locale:',
 	TODAY: 'Today is {date:Date|weekday}',

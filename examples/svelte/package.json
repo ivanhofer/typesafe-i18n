@@ -25,6 +25,6 @@
   },
   "dependencies": {
     "sirv-cli": "^1.0.0",
-    "typesafe-i18n": "^2.0.3"
+    "typesafe-i18n": "^2.2.0"
   }
 }

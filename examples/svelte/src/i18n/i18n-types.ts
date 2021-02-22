@@ -35,7 +35,7 @@ export type Translation = {
 	 */
 	'HI': RequiredParams1<'name'>
 	/**
-	 * Visit the {link|linkToSvelteTutorial}" to learn how to build Svelte apps.
+	 * Visit the {link|linkToSvelteTutorial} to learn how to build Svelte apps.
 	 * @param {string} link
 	 */
 	'TUTORIAL': RequiredParams1<'link|linkToSvelteTutorial'>
@@ -82,7 +82,7 @@ export type TranslationFunctions = {
 	 */
 	'HI': (arg: { name: string }) => string
 	/**
-	 * Visit the {link|linkToSvelteTutorial}" to learn how to build Svelte apps.
+	 * Visit the {link|linkToSvelteTutorial} to learn how to build Svelte apps.
 	 */
 	'TUTORIAL': (arg: { link: string }) => string
 	/**
