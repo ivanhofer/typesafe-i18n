@@ -19,8 +19,6 @@ const defaultVersion = parseTypescriptVersion('4.1')
 
 const getFileName = (name: string) => name + actualPostfix
 
-const svelteAdapterFileName = getFileName('svelte')
-
 const createConfig = (prefix: string, config?: GeneratorConfig): GeneratorConfigWithDefaultValues =>
 	setDefaultConfigValuesIfMissing({
 		outputPath: outputPath + prefix,
@@ -164,23 +162,41 @@ testGeneratedOutput('formatterWithDifferentArgTypes', { A: '{0:number|calculate}
 
 testGeneratedOutput('argTypesWithExternalType', { EXTERNAL_TYPE: 'The result is {0:Result|calculate}!' })
 
-testGeneratedOutput(
-	'svelte-async',
-	{ HELLO_SVELTE: 'Hi {0}' },
-	{ adapter: 'svelte', adapterFileName: svelteAdapterFileName },
-)
-
-testGeneratedOutput(
-	'svelte-sync',
-	{ HELLO_SVELTE: 'Hi {0}' },
-	{ adapter: 'svelte', adapterFileName: svelteAdapterFileName, loadLocalesAsync: false },
-)
-
 testGeneratedOutput('same-param', { SAME_PARAM: '{0} {0} {0}' })
 
 testGeneratedOutput('same-keyed-param', { SAME_KEYED_PARAM: '{name} {name} {name}' })
 
 testGeneratedOutput('only-plural-rules', { ONLY_PLURAL: 'apple{{s}}', ONLY_SINGULAR_PLURAL: '{{Afpel|Äpfel}}' })
+
+// --------------------------------------------------------------------------------------------------------------------
+
+const svelteAdapterFileName = getFileName('svelte')
+
+testGeneratedOutput(
+	'adapter_svelte-async',
+	{ HELLO_SVELTE: 'Hi {0}' },
+	{ adapter: 'svelte', adapterFileName: svelteAdapterFileName },
+)
+
+testGeneratedOutput(
+	'adapter_svelte-sync',
+	{ HELLO_SVELTE: 'Hi {0}' },
+	{ adapter: 'svelte', adapterFileName: svelteAdapterFileName, loadLocalesAsync: false },
+)
+
+const nodeAdapterFileName = getFileName('node')
+
+testGeneratedOutput(
+	'adapter_node_async',
+	{ HELLO_NODE: 'Hi {0:name}' },
+	{ adapter: 'node', adapterFileName: nodeAdapterFileName },
+)
+
+testGeneratedOutput(
+	'adapter_node_sync',
+	{ HELLO_NODE: 'Hi {0:name}' },
+	{ adapter: 'node', adapterFileName: nodeAdapterFileName, loadLocalesAsync: false },
+)
 
 // --------------------------------------------------------------------------------------------------------------------
 
