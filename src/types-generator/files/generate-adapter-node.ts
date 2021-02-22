@@ -7,7 +7,9 @@ const getNodeUtils = ({ utilFileName: utilFile }: GeneratorConfigWithDefaultValu
 
 import { initI18n } from './${utilFile}';
 
-export const LLL = initI18n()
+export const L = initI18n()
+
+export default L
 `
 }
 
