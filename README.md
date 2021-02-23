@@ -29,6 +29,172 @@ This package consists of a [translation-function](#i18nString), as well as an [g
 $ npm install --save typesafe-i18n
 ```
 
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+## Usage
+
+You can use `typesafe-i18n` in a variety of project-setups:
+
+ - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/node) apis, backends, scripts, ...
+ - [Svelte/Sapper/SvelteKit](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte) applications
+<!-- TODO: create example for react -->
+ - [Browser](#browser) projects
+ - [other frameworks](#other) like React, VueJS, Angular and others ...
+
+### General
+
+The lanauge package exports a few different objects you can use to localize your applications:
+
+ - [i18nString (LLL)](#i18nString)
+ - [i18nObject (LL)](#i18nObject)
+ - [i18n (L)](#i18n)
+
+#### i18nString
+
+The `i18nString` contains the core of the localization engine. To initialize it, you need to pass your desired `locale` and (optional) the `formatters` you want to use.\
+You will get an object back (`LLL`) that can be used to transform your strings.
+
+```typescript
+import { i18nString } from 'typesafe-i18n'
+
+const locale = 'en'
+const formatters = {
+   uppercase: (value) => value.toUpperCase()
+}
+
+const LLL = i18nString(locale, formatters)
+
+LLL('Hello {name|uppercase}!', { name: 'world' }) // => 'Hello WORLD!'
+```
+
+#### i18nObject
+
+The `i18nObject` wraps your translations for a certain locale. To initialize it, you need to pass your desired `locale`, your `translations`-object and (optional) the `formatters` you want to use.\
+You will get an object back (`LL`) that can be used to access and apply your translations.
+
+```typescript
+import { i18nObject } from 'typesafe-i18n'
+
+const locale = 'en'
+const translations = {
+   HI: "Hello {name}!",
+   RESET_PASSWORD: "reset password"
+   /* ... */
+}
+const formatters = { /* ... */ }
+
+const LL = i18nObject(locale, translations, formatters)
+
+LL.HI({ name: 'world' }) // => 'Hello world!'
+LL.RESET_PASSWORD() // => 'reset password'
+```
+
+#### i18n
+
+Wrap all your locales with `i18n`. To initialize it, you need to pass a callback to get the `translations`-object for a given locale and (optional) a callback to initialize the `formatters` you want to use.\
+You will get an object back (`L`) that can be used to access all your locaLes and apply your translations.
+
+
+```typescript
+import { i18n } from 'typesafe-i18n'
+
+const localeTranslations = {
+   en: { TODAY: "Today is {date|weekday}" },
+   de: { TODAY: "Heute ist {date|weekday}" },
+   it: { TODAY: "Oggi è {date|weekday}" },
+}
+
+const loadLocale = (locale) => localeTranslations(locale)
+
+const initFormatters = (locale) => {
+   const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
+
+   return {
+      date: (value) => dateFormatter.format(value)
+   }
+}
+
+const L = i18n(loadLocale, initFormatters)
+
+const now = new Date()
+
+L.en.TODAY() // => 'Today is friday'
+L.de.TODAY() // => 'Heute ist Freitag'
+L.it.TODAY() // => 'Oggi è venerdì'
+
+```
+
+A good usecase for this object could be inside your API, when your locale is dynamic e.g. derived from a users session:
+
+```typescript
+function doSomething(session) {
+
+   /* ... */
+
+   const locale = session.language
+   return L[locale].SUCCESS_MESSAGE()
+}
+
+```
+
+### Browser
+
+Load your desired function from the unpkg CDN and inject it into your HTML-code:
+
+  - use [i18nString](#i18nString) (779 bytes gzipped)
+	```html
+  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.string.min.js"></script>
+
+	<script>
+	   const LLL = i18n( /* i18nString parameters */ )
+
+	   LLL('Hi {0}', 'John')
+	</script>
+  	```
+
+  - use [i18nObject](#i18nObject) (836 bytes gzipped)
+  	```html
+  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.object.min.js"></script>
+
+	<script>
+	   const LL = i18n( /* i18nObject parameters */ )
+
+	   LL.HI('John')
+	</script>
+  	```
+
+  - use [i18n](#i18n) (941 bytes gzipped)
+
+	```html
+  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.min.js"></script>
+
+	<script>
+	   const L = i18n( /* i18n parameters */ )
+
+	   L.en.HI('John')
+	</script>
+  	```
+
+  - all together (996 bytes gzipped)
+  	```html
+  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.all.min.js"></script>
+
+	<script>
+	   const LLL = i18n.initString( /* ...*/ )
+	   const LL = i18n.initObject( /* ... */ )
+	   const L = i18n.init( /* ... */ )
+	</script>
+  	```
+
+### Other
+
+All you need is inside the generated file `i18n-utils.ts`. You can use the functions in there to create a small wrapper for your application.\
+Feel free to open an [issue](https://github.com/ivanhofer/typesafe-i18n/issues), if you need a guide for a specific framework.
+
+
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -202,171 +368,6 @@ Of course `typesafe-i18n` can handle that as well.
 ```typescript
 LLL('Welcome to my site') => 'Welcome to my site'
 ```
-
-
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-
-## Usage
-
-You can use `typesafe-i18n` in a variety of project-setups:
-
- - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/node) apis, backends, scripts, ...
- - [Svelte/Sapper/SvelteKit](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte) applications
-<!-- TODO: create example for react -->
- - [Browser](#browser) projects
- - [other frameworks](#other) like React, VueJS, Angular and others ...
-
-### General
-
-The lanauge package exports a few different objects you can use to localize your applications:
-
- - [i18nString (LLL)](#i18nString)
- - [i18nObject (LL)](#i18nObject)
- - [i18n (L)](#i18n)
-
-#### i18nString
-
-The `i18nString` contains the core of the localization engine. To initialize it, you need to pass your desired `locale` and (optional) the `formatters` you want to use.\
-You will get an object back (`LLL`) that can be used to transform your strings.
-
-```typescript
-import { i18nString } from 'typesafe-i18n'
-
-const locale = 'en'
-const formatters = {
-   uppercase: (value) => value.toUpperCase()
-}
-
-const LLL = i18nString(locale, formatters)
-
-LLL('Hello {name|uppercase}!', { name: 'world' }) // => 'Hello WORLD!'
-```
-
-#### i18nObject
-
-The `i18nObject` wraps your translations for a certain locale. To initialize it, you need to pass your desired `locale`, your `translations`-object and (optional) the `formatters` you want to use.\
-You will get an object back (`LL`) that can be used to access and apply your translations.
-
-```typescript
-import { i18nObject } from 'typesafe-i18n'
-
-const locale = 'en'
-const translations = {
-   HI: "Hello {name}!",
-   RESET_PASSWORD: "reset password"
-   /* ... */
-}
-const formatters = { /* ... */ }
-
-const LL = i18nObject(locale, translations, formatters)
-
-LL.HI({ name: 'world' }) // => 'Hello world!'
-LL.RESET_PASSWORD() // => 'reset password'
-```
-
-#### i18n
-
-Wrap all your locales with `i18n`. To initialize it, you need to pass a callback to get the `translations`-object for a given locale and (optional) a callback to initialize the `formatters` you want to use.\
-You will get an object back (`L`) that can be used to access all your locaLes and apply your translations.
-
-
-```typescript
-import { i18n } from 'typesafe-i18n'
-
-const localeTranslations = {
-   en: { TODAY: "Today is {date|weekday}" },
-   de: { TODAY: "Heute ist {date|weekday}" },
-   it: { TODAY: "Oggi è {date|weekday}" },
-}
-
-const loadLocale = (locale) => localeTranslations(locale)
-
-const initFormatters = (locale) => {
-   const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
-
-   return {
-      date: (value) => dateFormatter.format(value)
-   }
-}
-
-const L = i18n(loadLocale, initFormatters)
-
-const now = new Date()
-
-L.en.TODAY() // => 'Today is friday'
-L.de.TODAY() // => 'Heute ist Freitag'
-L.it.TODAY() // => 'Oggi è venerdì'
-
-```
-
-A good usecase for this object could be inside your API, when your locale is dynamic e.g. derived from a users session:
-
-```typescript
-function doSomething(session) {
-
-   /* ... */
-
-   const locale = session.language
-   return L[locale].SUCCESS_MESSAGE()
-}
-
-```
-
-### Browser
-
-Load your desired function from the unpkg CDN and inject it into your HTML-code:
-
-  - use [i18nString](#i18nString) (779 bytes gzipped)
-	```html
-  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.string.min.js"></script>
-
-	<script>
-	   const LLL = i18n( /* i18nString parameters */ )
-
-	   LLL('Hi {0}', 'John')
-	</script>
-  	```
-
-  - use [i18nObject](#i18nObject) (836 bytes gzipped)
-  	```html
-  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.object.min.js"></script>
-
-	<script>
-	   const LL = i18n( /* i18nObject parameters */ )
-
-	   LL.HI('John')
-	</script>
-  	```
-
-  - use [i18n](#i18n) (941 bytes gzipped)
-
-	```html
-  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.min.js"></script>
-
-	<script>
-	   const L = i18n( /* i18n parameters */ )
-
-	   L.en.HI('John')
-	</script>
-  	```
-
-  - all together (996 bytes gzipped)
-  	```html
-  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.all.min.js"></script>
-
-	<script>
-	   const LLL = i18n.initString( /* ...*/ )
-	   const LL = i18n.initObject( /* ... */ )
-	   const L = i18n.init( /* ... */ )
-	</script>
-  	```
-
-### Other
-
-All you need is inside the generated file `i18n-utils.ts`. You can use the functions in there to create a small wrapper for your application.\
-Feel free to open an [issue](https://github.com/ivanhofer/typesafe-i18n/issues), if you need a guide for a specific framework.
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
