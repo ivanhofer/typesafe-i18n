@@ -212,7 +212,7 @@ LLL('Welcome to my site') => 'Welcome to my site'
 
 You can use `typesafe-i18n` in a variety of project-setups:
 
- - [NodeJS](#nodejs) apis, backends, scripts, ...
+ - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/node) apis, backends, scripts, ...
  - [Svelte/Sapper/SvelteKit](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte) applications
 <!-- TODO: create example for react -->
  - [Browser](#browser) projects
@@ -313,25 +313,6 @@ function doSomething(session) {
 }
 
 ```
-
-
-### Node.js
-
-* **TypeScript**\
-	When running the [watcher](#watcher) the file `i18n-util.ts` will export typesafe wrappers for the [i18n functions](#general). You can use them everywhere in your TypeScript files.
-
-  ```typescript
-  import { /* ... */ } from './i18n/i18n-util'
-  ```
-
-* **JavaScript**\
-  Depending what you need, you can import any [function](#general) from the root `typesafe-i18n` package.
-
-  ```javascript
-  import { /* ... */ } from 'typesafe-i18n'
-  ```
-
-<!-- You can take a look at this [demo repository](https://github.com/ivanhofer/typesafe-i18n-template-nodejs) to see how `typesafe-i18n` will work in node projects. -->
 
 ### Browser
 
