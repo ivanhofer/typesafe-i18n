@@ -1,6 +1,6 @@
 # typesafe-i18n Svelte
 
-This is a small demo project demonstrating a `typesafe-i18n` integration with Svelte.
+This is a small project demonstrating a `typesafe-i18n` integration with Svelte.
 
 > This is a clone from the [Svelte](https://svelte.dev) template (see https://github.com/sveltejs/template). The template was then converted to TypeScript:
 >```bash
@@ -26,6 +26,7 @@ Navigate to [http://localhost:5000](http://localhost:5000). You should see the e
  - [available Svelte stores](#stores)
  - [Sapper projects](#sapper)
  - [SvelteKit projects](#sveltekit)
+ - [JavaScript projects](#javascript)
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -218,33 +219,33 @@ I will update this part as soon as I get my hands on the beta and the syntax. Bu
  <!-- TODO: create example repository -->
 
 
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
 
+Since you can't take advantage of the generated types, you need to import the stores directly from 'typesafe-i18n/svelte'.\
+When initializing you need to pass a callback to load the translation and an optional callback to initialize your formatters.
 
+```typescript
+import LL, { initI18n } from 'typesafe-i18n/svelte/svelte-store'
 
-<!-- * **JavaScript**\
-	Since you can't take advantage of the generated types, you need to import the stores directly from 'i18n/svelte'.\
-	When initializing you need to pass a callback to load the translation and an optional callback to initialize your formatters.
+const localeTranslations = {
+   en: { TODAY: "Today is {date|weekday}" },
+   de: { TODAY: "Heute ist {date|weekday}" },
+   it: { TODAY: "Oggi è {date|weekday}" },
+}
 
-	```typescript
-	import LL, { initI18n } from 'typesafe-i18n/svelte/svelte-store'
+const loadLocale = (locale) => localeTranslations[locale]
 
-	const localeTranslations = {
-	   en: { TODAY: "Today is {date|weekday}" },
-	   de: { TODAY: "Heute ist {date|weekday}" },
-	   it: { TODAY: "Oggi è {date|weekday}" },
-	}
+const initFormatters = (locale) => {
+   const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
 
-	const loadLocale = (locale) => localeTranslations(locale)
+   return {
+      date: (value) => dateFormatter.format(value)
+   }
+}
 
-	const initFormatters = (locale) => {
-	   const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
+initI18n('en', loadLocale, initFormatters)
 
-	   return {
-	      date: (value) => dateFormatter.format(value)
-	   }
-	}
-
-	initiI8n('en', loadLocale, initFormatters)
-
-	$LL.TODAY(new Date()) // => 'Today is friday'
-	``` -->
+$LL.TODAY(new Date()) // => 'Today is friday'
+```
