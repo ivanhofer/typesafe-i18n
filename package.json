@@ -48,7 +48,8 @@
 		"/esm",
 		"/formatters",
 		"/node",
-		"/rollup"
+		"/rollup",
+		"/svelte"
 	],
 	"scripts": {
 		"dev": "tsc -p tsconfig-rollup.json -w",
