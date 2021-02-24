@@ -1,0 +1,21 @@
+body,
+html {
+	min-height: 100%;
+	margin: 0;
+	background-color: #e6e7eb;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	padding: 30px;
+}
+
+p {
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+p + p {
+	margin-top: 0;
+}

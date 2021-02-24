@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="styles.css" />
+		<title>typesafe-i18n: i18nString</title>
+
+		<script src="https://unpkg.com/typesafe-i18n/dist/i18n.string.min.js"></script>
+		<script type="module">
+			import { date } from 'https://unpkg.com/typesafe-i18n@2.3.0/formatters/date.js'
+
+			const initI18nString = (locale) => {
+				const formatters = {
+					uppercase: (value) => value.toUpperCase(),
+					weekday: date(locale, { weekday: 'long' }),
+				}
+
+				return i18n(locale, formatters)
+			}
+
+			const addTexts = (locale, ...texts) => {
+				const section = document.createElement('section')
+				section.setAttribute('id', locale)
+				document.body.append(section)
+				const h3 = document.createElement('h3')
+				h3.append(locale)
+				section.append(h3)
+
+				texts.forEach((text) => {
+					const p = document.createElement('p')
+					p.append(text)
+					section.append(p)
+				})
+			}
+
+			const LLL_EN = initI18nString('en')
+			addTexts(
+				'en',
+				LLL_EN('Hello {name|uppercase}!', { name: 'world' }),
+				LLL_EN('Today is {0|weekday}!', new Date()),
+				LLL_EN('Text with no arguments'),
+			)
+
+			const LLL_DE = initI18nString('de')
+			addTexts(
+				'de',
+				LLL_DE('Hallo {name|uppercase}!', { name: 'Welt' }),
+				LLL_DE('Heute ist {0|weekday}!', new Date()),
+				LLL_DE('Text ohne Parameter'),
+			)
+
+			const LLL_IT = initI18nString('it')
+			addTexts(
+				'it',
+				LLL_IT('Ciao {name|uppercase}!', { name: 'mondo' }),
+				LLL_IT('Oggi è {0|weekday}!', new Date()),
+				LLL_IT('Testo senza parametri'),
+			)
+		</script>
+	</head>
+	<body>
+		<a href="/">back</a>
+		<h2>typesafe-i18n browser demo: i18nString</h2>
+	</body>
+</html>

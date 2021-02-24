@@ -1,0 +1,10 @@
+{
+	"name": "typesafe-i18n_browser-demo",
+	"version": "1.0.0",
+	"scripts": {
+		"dev": "serve ./src"
+	},
+	"devDependencies": {
+		"serve": "^11.3.2"
+	}
+}
