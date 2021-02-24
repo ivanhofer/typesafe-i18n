@@ -26,6 +26,8 @@ Navigate to [http://localhost:3001](http://localhost:3001). You should see the e
 
 # Configure `typesafe-i18n` for an existing Node.js project
 
+> requires a node version >= 12.x
+
 First, you need to configure the watcher to listen for changes in your locales files.
 For this you can add following line to the scripts-section of your `package.json` file.
 
