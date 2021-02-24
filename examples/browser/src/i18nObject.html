@@ -33,7 +33,7 @@
 					weekday: date(locale, { weekday: 'long' }),
 				}
 
-				return i18n(locale, translations, formatters)
+				return i18nObject(locale, translations, formatters)
 			}
 
 			const LL_EN = initI18nObject('en', {
