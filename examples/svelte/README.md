@@ -42,15 +42,15 @@ First, you need to configure the watcher inside `rollup.config.js` to listen for
 import i18nWatcher from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n-watcher'
 
 export default {
-	input: { /* ... */ },
-	output: { /* ... */ },
-	plugins: [
+   input: { /* ... */ },
+   output: { /* ... */ },
+   plugins: [
 
-		/* other plugins */
+      /* other plugins */
 
-		!production && i18nWatcher({ adapter: 'svelte', loadLocalesAsync: false }),
+      !production && i18nWatcher({ adapter: 'svelte', loadLocalesAsync: false }),
 
-	],
+   ],
 }
 
 ```
@@ -249,3 +249,8 @@ initI18n('en', loadLocale, initFormatters)
 
 $LL.TODAY(new Date()) // => 'Today is friday'
 ```
+
+---
+---
+
+**For more information about `typesafe-i18n`, take a look at the [main repository](https://github.com/ivanhofer/typesafe-i18n).**

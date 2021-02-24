@@ -32,8 +32,6 @@ For this you can add following line to the scripts-section of your `package.json
 ```json
 {
 
-   ...
-
    "scripts": {
       "typesafe-i18n-watcher": "node ./node_modules/typesafe-i18n/node/watcher.js"
    }
@@ -45,8 +43,8 @@ If you are running a node server it makes also sense to set the `loadLocalesAsyn
 
 ```json
 {
-	"adapter": "node",
-	"loadLocalesAsync": false
+   "adapter": "node",
+   "loadLocalesAsync": false
 }
 ```
 
@@ -73,3 +71,12 @@ The file `i18n-node.ts` exports following function:
 
 An object of type [i18n](https://github.com/ivanhofer/typesafe-i18n#i18n) you can use inside your code.\
 This is also the default object of that file.
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+---
+---
+
+**For more information about `typesafe-i18n`, take a look at the [main repository](https://github.com/ivanhofer/typesafe-i18n).**

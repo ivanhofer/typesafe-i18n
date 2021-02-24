@@ -40,9 +40,9 @@ You can use `typesafe-i18n` in a variety of project-setups:
 
  - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/node) apis, backends, scripts, ...
  - [Svelte/Sapper/SvelteKit](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte) applications
-<!-- TODO: create example for react -->
  - [Browser](#browser) projects
  - [other frameworks](#other) like React, VueJS, Angular and others ...
+<!-- TODO: create example for react -->
 
 ### General
 
@@ -144,7 +144,7 @@ function doSomething(session) {
 
 Load your desired function from the unpkg CDN and inject it into your HTML-code:
 
-  - use [i18nString](#i18nString) (779 bytes gzipped)
+  - [i18nString](#i18nString) (779 bytes gzipped)
 	```html
   	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.string.min.js"></script>
 
@@ -155,7 +155,7 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
 	</script>
   	```
 
-  - use [i18nObject](#i18nObject) (836 bytes gzipped)
+  - [i18nObject](#i18nObject) (836 bytes gzipped)
   	```html
   	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.object.min.js"></script>
 
@@ -166,7 +166,7 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
 	</script>
   	```
 
-  - use [i18n](#i18n) (941 bytes gzipped)
+  - [i18n](#i18n) (941 bytes gzipped)
 
 	```html
   	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.min.js"></script>
