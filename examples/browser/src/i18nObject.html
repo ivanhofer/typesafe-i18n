@@ -6,6 +6,57 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="styles.css" />
 		<title>typesafe-i18n: i18nObject</title>
+
+		<script src="https://unpkg.com/typesafe-i18n/dist/i18n.object.min.js"></script>
+		<script type="module">
+			import { date } from 'https://unpkg.com/typesafe-i18n@2.3.0/formatters/date.js'
+
+			// helper function to render translation in HTML
+			const addTexts = (locale, ...texts) => {
+				const section = document.createElement('section')
+				section.setAttribute('id', locale)
+				document.body.append(section)
+				const h3 = document.createElement('h3')
+				h3.append(locale)
+				section.append(h3)
+
+				texts.forEach((text) => {
+					const p = document.createElement('p')
+					p.append(text)
+					section.append(p)
+				})
+			}
+
+			const initI18nObject = (locale, translations) => {
+				const formatters = {
+					uppercase: (value) => value.toUpperCase(),
+					weekday: date(locale, { weekday: 'long' }),
+				}
+
+				return i18n(locale, translations, formatters)
+			}
+
+			const LL_EN = initI18nObject('en', {
+				HI: 'Hello {name|uppercase}!',
+				TODAY: 'Today is {0|weekday}',
+				NO_ARGS: 'Text with no arguments',
+			})
+			addTexts('en', LL_EN.HI({ name: 'world' }), LL_EN.TODAY(new Date()), LL_EN.NO_ARGS())
+
+			const LL_DE = initI18nObject('de', {
+				HI: 'Hallo {name|uppercase}!',
+				TODAY: 'Heute ist {0|weekday}',
+				NO_ARGS: 'Text ohne Parameter',
+			})
+			addTexts('de', LL_DE.HI({ name: 'Welt' }), LL_DE.TODAY(new Date()), LL_DE.NO_ARGS())
+
+			const LL_IT = initI18nObject('it', {
+				HI: 'Ciao {name|uppercase}!',
+				TODAY: 'Oggi è {0|weekday}',
+				NO_ARGS: 'Testo senza parametri',
+			})
+			addTexts('it', LL_IT.HI({ name: 'mondo' }), LL_IT.TODAY(new Date()), LL_IT.NO_ARGS())
+		</script>
 	</head>
 	<body>
 		<a href="/">back</a>

@@ -6,6 +6,48 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="styles.css" />
 		<title>typesafe-i18n: i18n</title>
+
+		<script src="https://unpkg.com/typesafe-i18n/dist/i18n.min.js"></script>
+		<script type="module">
+			import { date } from 'https://unpkg.com/typesafe-i18n@2.3.0/formatters/date.js'
+
+			// helper function to render translation in HTML
+			const addTexts = (locale, ...texts) => {
+				const section = document.createElement('section')
+				section.setAttribute('id', locale)
+				document.body.append(section)
+				const h3 = document.createElement('h3')
+				h3.append(locale)
+				section.append(h3)
+
+				texts.forEach((text) => {
+					const p = document.createElement('p')
+					p.append(text)
+					section.append(p)
+				})
+			}
+
+			const localeTranslations = {
+				en: { HI: 'Hello {name|uppercase}!', TODAY: 'Today is {0|weekday}', NO_ARGS: 'Text with no arguments' },
+				de: { HI: 'Hallo {name|uppercase}!', TODAY: 'Heute ist {0|weekday}', NO_ARGS: 'Text ohne Parameter' },
+				it: { HI: 'Ciao {name|uppercase}!', TODAY: 'Oggi è {0|weekday}', NO_ARGS: 'Testo senza parametri' },
+			}
+
+			const loadLocale = (locale) => localeTranslations[locale]
+
+			const initFormatters = (locale) => ({
+				uppercase: (value) => value.toUpperCase(),
+				weekday: date(locale, { weekday: 'long' }),
+			})
+
+			const L = i18n(loadLocale, initFormatters)
+
+			addTexts('en', L.en.HI({ name: 'world' }), L.en.TODAY(new Date()), L.en.NO_ARGS())
+
+			addTexts('de', L.de.HI({ name: 'Welt' }), L.de.TODAY(new Date()), L.de.NO_ARGS())
+
+			addTexts('it', L.it.HI({ name: 'mondo' }), L.it.TODAY(new Date()), L.it.NO_ARGS())
+		</script>
 	</head>
 	<body>
 		<a href="/">back</a>

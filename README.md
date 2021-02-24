@@ -5,7 +5,7 @@ An opinionated, full type-safe, lightweight localization library for TypeScript 
 There exist a lot of localization libraries. But I could not find any solution that meet my requirements.
 
 I want something that:
- - is [lightweight](#browser) (< 1 kb)
+ - is lightweight (< 1 kb)
  - has an [easy to use syntax](#syntax)
  - supports [plural rules](#plural)
  - allows [formatting](#formatters) of values e.g. locale-dependent date or number formats
@@ -40,7 +40,7 @@ You can use `typesafe-i18n` in a variety of project-setups:
 
  - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/node) apis, backends, scripts, ...
  - [Svelte/Sapper/SvelteKit](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte) applications
- - [Browser](#browser) projects
+ - [Browser](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/browser) projects
  - [other frameworks](#other) like React, VueJS, Angular and others ...
 <!-- TODO: create example for react -->
 
@@ -107,7 +107,7 @@ const localeTranslations = {
    it: { TODAY: "Oggi è {date|weekday}" },
 }
 
-const loadLocale = (locale) => localeTranslations(locale)
+const loadLocale = (locale) => localeTranslations[locale]
 
 const initFormatters = (locale) => {
    const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
@@ -139,55 +139,6 @@ function doSomething(session) {
 }
 
 ```
-
-### Browser
-
-Load your desired function from the unpkg CDN and inject it into your HTML-code:
-
-  - [i18nString](#i18nString) (779 bytes gzipped)
-	```html
-  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.string.min.js"></script>
-
-	<script>
-	   const LLL = i18n( /* i18nString parameters */ )
-
-	   LLL('Hi {0}', 'John')
-	</script>
-  	```
-
-  - [i18nObject](#i18nObject) (836 bytes gzipped)
-  	```html
-  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.object.min.js"></script>
-
-	<script>
-	   const LL = i18n( /* i18nObject parameters */ )
-
-	   LL.HI('John')
-	</script>
-  	```
-
-  - [i18n](#i18n) (941 bytes gzipped)
-
-	```html
-  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.min.js"></script>
-
-	<script>
-	   const L = i18n( /* i18n parameters */ )
-
-	   L.en.HI('John')
-	</script>
-  	```
-
-  - all together (996 bytes gzipped)
-  	```html
-  	<script src="https://unpkg.com/typesafe-i18n/dist/i18n.all.min.js"></script>
-
-	<script>
-	   const LLL = i18n.initString( /* ...*/ )
-	   const LL = i18n.initObject( /* ... */ )
-	   const L = i18n.init( /* ... */ )
-	</script>
-  	```
 
 ### Other
 

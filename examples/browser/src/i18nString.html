@@ -11,15 +11,7 @@
 		<script type="module">
 			import { date } from 'https://unpkg.com/typesafe-i18n@2.3.0/formatters/date.js'
 
-			const initI18nString = (locale) => {
-				const formatters = {
-					uppercase: (value) => value.toUpperCase(),
-					weekday: date(locale, { weekday: 'long' }),
-				}
-
-				return i18n(locale, formatters)
-			}
-
+			// helper function to render translation in HTML
 			const addTexts = (locale, ...texts) => {
 				const section = document.createElement('section')
 				section.setAttribute('id', locale)
@@ -35,11 +27,20 @@
 				})
 			}
 
+			const initI18nString = (locale) => {
+				const formatters = {
+					uppercase: (value) => value.toUpperCase(),
+					weekday: date(locale, { weekday: 'long' }),
+				}
+
+				return i18n(locale, formatters)
+			}
+
 			const LLL_EN = initI18nString('en')
 			addTexts(
 				'en',
 				LLL_EN('Hello {name|uppercase}!', { name: 'world' }),
-				LLL_EN('Today is {0|weekday}!', new Date()),
+				LLL_EN('Today is {0|weekday}', new Date()),
 				LLL_EN('Text with no arguments'),
 			)
 
@@ -47,7 +48,7 @@
 			addTexts(
 				'de',
 				LLL_DE('Hallo {name|uppercase}!', { name: 'Welt' }),
-				LLL_DE('Heute ist {0|weekday}!', new Date()),
+				LLL_DE('Heute ist {0|weekday}', new Date()),
 				LLL_DE('Text ohne Parameter'),
 			)
 
@@ -55,7 +56,7 @@
 			addTexts(
 				'it',
 				LLL_IT('Ciao {name|uppercase}!', { name: 'mondo' }),
-				LLL_IT('Oggi è {0|weekday}!', new Date()),
+				LLL_IT('Oggi è {0|weekday}', new Date()),
 				LLL_IT('Testo senza parametri'),
 			)
 		</script>
