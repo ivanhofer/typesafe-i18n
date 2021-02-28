@@ -26,7 +26,7 @@ Navigate to [http://localhost:5000](http://localhost:5000). You should see the e
  - [available Svelte stores](#stores)
  - [Sapper projects](#sapper)
  - [SvelteKit projects](#sveltekit)
- - [JavaScript projects](#javascript)
+ - [JavaScript projects](#usage-in-javascript-projects)
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -222,6 +222,8 @@ I will update this part as soon as I get my hands on the beta and the syntax. Bu
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
+
+# usage in JavaScript projects
 
 Since you can't take advantage of the generated types, you need to import the stores directly from 'typesafe-i18n/svelte'.\
 When initializing you need to pass a callback to load the translation and an optional callback to initialize your formatters.
