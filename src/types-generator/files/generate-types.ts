@@ -6,6 +6,7 @@ import {
 	isNotZero,
 	isObject,
 	isPropertyFalsy,
+	isPropertyTrue,
 	not,
 	sortNumberASC,
 	sortStringASC,
@@ -40,6 +41,7 @@ type JsDocInfos = {
 type JsDocInfo = {
 	text: string
 	types: Types
+	pluralOnlyArgs: string[]
 }
 
 type ParsedResult = {
@@ -191,19 +193,25 @@ const createTranslationKeysType = (parsedTranslations: ParsedResult[]) => {
 
 const createJsDocsMapping = (parsedTranslations: ParsedResult[]) => {
 	const map = {} as JsDocInfos
-	parsedTranslations.forEach(({ key, textWithoutTypes, types }) => {
+	parsedTranslations.forEach(({ key, textWithoutTypes, types, args }) => {
 		map[key] = {
 			text: textWithoutTypes,
 			types,
+			pluralOnlyArgs: args.filter(isPropertyTrue('pluralOnly')).map(({ key }) => key),
 		}
 	})
 
 	return map
 }
 
-const createJsDocsString = ({ text, types }: JsDocInfo, renderTypes = false) => {
+const createJsDocsString = (
+	{ text, types, pluralOnlyArgs }: JsDocInfo,
+	renderTypes = false,
+	renderPluralOnlyArgs = true,
+) => {
 	const renderedTypes = renderTypes
 		? `${Object.entries(types || {})
+			.filter(({ '0': key }) => renderPluralOnlyArgs || !pluralOnlyArgs.includes(key))
 			.sort(sortStringPropertyASC('0'))
 			.map(createJsDocsParamString)
 			.join('')}`
@@ -231,7 +239,7 @@ const createTranslationType = (
 			.map(
 				({ key, args }) =>
 					`
-	${createJsDocsString(jsDocInfo[key] as JsDocInfo, true)}'${key}': ${generateTranslationType(
+	${createJsDocsString(jsDocInfo[key] as JsDocInfo, true, false)}'${key}': ${generateTranslationType(
 						paramTypesToGenerate,
 						args,
 						generateTemplateLiteralTypes,
@@ -316,18 +324,18 @@ type RequiredParams${l}<${generics}> =${permutations
 }
 
 // --------------------------------------------------------------------------------------------------------------------
-const createTranslationArgsType = (parsedTranslations: ParsedResult[], jsDocInfo: JsDocInfos) =>
+const createTranslationsArgsType = (parsedTranslations: ParsedResult[], jsDocInfo: JsDocInfos) =>
 	`export type TranslationFunctions = ${wrapObjectType(parsedTranslations, () =>
 		parsedTranslations
 			.map(
 				(translation) =>
 					`
-	${createTranslationArgssType(translation, jsDocInfo)}`,
+	${createTranslationArgsType(translation, jsDocInfo)}`,
 			)
 			.join(''),
 	)}`
 
-const createTranslationArgssType = ({ key, args, types }: ParsedResult, jsDocInfo: JsDocInfos) =>
+const createTranslationArgsType = ({ key, args, types }: ParsedResult, jsDocInfo: JsDocInfos) =>
 	`${createJsDocsString(jsDocInfo[key] as JsDocInfo)}'${key}': (${mapTranslationArgs(args, types)}) => string`
 
 const mapTranslationArgs = (args: Arg[], types: Types) => {
@@ -405,7 +413,7 @@ const getTypes = (
 
 	const paramsType = generateTemplateLiteralTypes ? createParamsType(paramTypesToGenerate) : ''
 
-	const translationArgsType = createTranslationArgsType(parsedTranslations, jsDocsInfo)
+	const translationArgsType = createTranslationsArgsType(parsedTranslations, jsDocsInfo)
 
 	const formattersType = createFormattersType(parsedTranslations)
 

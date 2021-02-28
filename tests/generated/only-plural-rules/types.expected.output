@@ -13,14 +13,12 @@ export type TranslationKeys =
 export type Translation = {
 	/**
 	 * apple{{s}}
-	 * @param {string | number | boolean} 0
 	 */
-	'ONLY_PLURAL': RequiredParams1<'0'>
+	'ONLY_PLURAL': string
 	/**
 	 * {{Afpel|Äpfel}}
-	 * @param {string | number | boolean} 0
 	 */
-	'ONLY_SINGULAR_PLURAL': RequiredParams1<'0'>
+	'ONLY_SINGULAR_PLURAL': string
 }
 
 export type TranslationFunctions = {
@@ -36,11 +34,3 @@ export type TranslationFunctions = {
 
 export type Formatters = {}
 
-
-type Param<P extends string> = `{${P}}`
-
-type Params1<P1 extends string> =
-	`${string}${Param<P1>}${string}`
-
-type RequiredParams1<P1 extends string> =
-	 | Params1<P1>
