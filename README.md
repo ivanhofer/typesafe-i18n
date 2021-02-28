@@ -1,6 +1,7 @@
 An opinionated, full type-safe, lightweight localization library for TypeScript projects with no external dependencies.
 
-<!-- TODO: make a gif demonstrating typesafe-i18n -->
+![typesafe-i18n demo](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/typesafe-i18n-demo.gif)
+
 
 ## Motivation
 
@@ -281,94 +282,6 @@ export default de
 ```
  > make sure to give it the type of `Translation`, to get compile-errors, when some translations are missing
 
-#### formatters
-
-You can specify your own formatters, that take an argument as an input and return a another value.
-
-```typescript
-const formatters = {
-   roiCalculator: (value) => {
-      return (value * 4.2) - 7
-   }
-}
-
-LLL('Invest ${0} and get ${0|roiCalculator} in return', 100)
-// => 'Invest $100 and get $413 in return'
-```
-
-<!-- TODO: create examples for date-fns or other common formatters -->
-
-You can also use a few builtin formatters:
-
- - date\
-   A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
-	```typescript
-	import { date } from 'typesafe-i18n/formatters'
-
-	const formatters = {
-	   weekday: date({ weekday: 'long' })
-	}
-
-	LLL('Today is {0|weekday}', new Date()) // => 'Today is friday'
-	```
- - time\
-  	A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
-	```typescript
-	import { time } from 'typesafe-i18n/formatters'
-
-	const formatters = {
-	   timeShort: time('en', { timeStyle: 'short' })
-	}
-
-	LLL('Next meeting: {0|timeShort}', meetingTime) // => 'Next meeting: 8:00 AM'
-	```
- - number\
-  	A wrapper for [Intl.NumberFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
-	```typescript
-	import { number } from 'tyoesafe-i18n/formatters'
-
-	const formatters = {
-	   currency: number('en', { style: 'currency', currency: 'EUR' })
-	}
-
-	LLL('your balance is {0|currency}', 12345) // => 'your balance is €12,345.00'
-	```
- - replace
-	A wrapper for [String.prototype.replace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
-	```typescript
-	import { replace } from 'typesafe-i18n/formatters'
-
-	const formatters = {
-	   noSpaces: replace(' ', '-')
-	}
-
-	LLL('The link is: https://www.xyz.com/{0|noSpaces}', 'super cool product')
-	// => 'The link is: https://www.xyz.com/super-cool-product'
-
-	```
- - uppercase\
- 	A wrapper for [String.prototype.toUpperCase](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase)
-	```typescript
-	import { uppercase } from 'typesafe-i18n/formatters'
-
-	const formatters = {
-	   upper: uppercase
-	}
-
-	LLL('I sayed: {0|upper}', 'hello') // => 'I sayed: HELLO'
-	```
- - lowercase\
-  	A wrapper for [String.prototype.toLowerCase](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase)
-	```typescript
-	import { lowercase } from 'typesafe-i18n/formatters'
-
-	const formatters = {
-	   lower: lowercase
-	}
-
-	LLL('He sayed: {0|lower}', 'SOMETHING') // => 'He sayed: something'
-	```
-
 #### custom types
 
 If you want to pass arguments with your own types to the translation function, you need to tell `typesafe-i18n` how these types look like. In order to do this, you need to create an export with the exact name of that type inside this file.
@@ -391,11 +304,7 @@ export type Sum = {
 }
 ```
 
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-
-## Options
+### Options
 
 You can set options for the [watcher](#typesafety) in order to get optimized output for your specific project. The available options are:
 
@@ -530,7 +439,7 @@ LLL(APPLES, { nrOfApples: 5 }) => '5 apples'
 ```
 <!-- ------------------------------------------------------------------------------------------ -->
 
-### plural (shorthand for only singular):
+### plural (shorthand for only singular version):
 
  > Syntax: `{{singular|}}`
 
@@ -563,7 +472,7 @@ LLL(PLURAL, 18) => 'I have many apples'
 <!-- ------------------------------------------------------------------------------------------ -->
 
 
-### format values:
+### format passed in arguments:
 
 Read the [formatters](#formatters) section to learn how you can configure formatters.
 
@@ -633,6 +542,100 @@ Of course `typesafe-i18n` can handle that as well.
 ```typescript
 LLL('Welcome to my site') => 'Welcome to my site'
 ```
+
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+## formatters
+
+You can specify your own formatters, that take an argument as an input and returns another value.
+
+```typescript
+const formatters = {
+   roiCalculator: (value) => {
+      return (value * 4.2) - 7
+   }
+}
+
+LLL('Invest ${0} and get ${0|roiCalculator} in return', 100)
+// => 'Invest $100 and get $413 in return'
+```
+
+<!-- TODO: create examples for date-fns or other common formatters -->
+
+You can also use a few builtin formatters:
+
+ - date\
+   A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
+	```typescript
+	import { date } from 'typesafe-i18n/formatters'
+
+	const formatters = {
+	   weekday: date({ weekday: 'long' })
+	}
+
+	LLL('Today is {0|weekday}', new Date()) // => 'Today is friday'
+	```
+ - time\
+  	A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
+	```typescript
+	import { time } from 'typesafe-i18n/formatters'
+
+	const formatters = {
+	   timeShort: time('en', { timeStyle: 'short' })
+	}
+
+	LLL('Next meeting: {0|timeShort}', meetingTime) // => 'Next meeting: 8:00 AM'
+	```
+ - number\
+  	A wrapper for [Intl.NumberFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
+	```typescript
+	import { number } from 'tyoesafe-i18n/formatters'
+
+	const formatters = {
+	   currency: number('en', { style: 'currency', currency: 'EUR' })
+	}
+
+	LLL('your balance is {0|currency}', 12345) // => 'your balance is €12,345.00'
+	```
+ - replace
+	A wrapper for [String.prototype.replace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
+	```typescript
+	import { replace } from 'typesafe-i18n/formatters'
+
+	const formatters = {
+	   noSpaces: replace(' ', '-')
+	}
+
+	LLL('The link is: https://www.xyz.com/{0|noSpaces}', 'super cool product')
+	// => 'The link is: https://www.xyz.com/super-cool-product'
+
+	```
+ - uppercase\
+ 	A wrapper for [String.prototype.toUpperCase](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase)
+	```typescript
+	import { uppercase } from 'typesafe-i18n/formatters'
+
+	const formatters = {
+	   upper: uppercase
+	}
+
+	LLL('I sayed: {0|upper}', 'hello') // => 'I sayed: HELLO'
+	```
+ - lowercase\
+  	A wrapper for [String.prototype.toLowerCase](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase)
+	```typescript
+	import { lowercase } from 'typesafe-i18n/formatters'
+
+	const formatters = {
+	   lower: lowercase
+	}
+
+	LLL('He sayed: {0|lower}', 'SOMETHING') // => 'He sayed: something'
+	```
+
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
