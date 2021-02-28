@@ -158,23 +158,23 @@ Feel free to open an [issue](https://github.com/ivanhofer/typesafe-i18n/issues),
 The `typesafe-i18n` package allows us to be 100% typesafe for our tranlsation functions and even the translations for other locales itself. It generates TypeScript definitions based on your base locale. It also generates some utility functions for easy usage.
 
 > code completion for all available locales
-> ![typesafe locales completion](https://github.com/ivanhofer/typesafe-i18n/tree/master/docs/01_typesafe-locales-completion.png)
+> ![typesafe locales completion](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/01_typesafe-locales-completion.png)
 
 > code completion for all available translations
-> ![typesafe translation key completion](https://github.com/ivanhofer/typesafe-i18n/tree/master/docs/02_typesafe-key-completion.png)
+> ![typesafe translation key completion](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/02_typesafe-key-completion.png)
 
 > error when forgetting to pass arguments to the translate function
-> ![typesafe number of arguments](https://github.com/ivanhofer/typesafe-i18n/tree/master/docs/03_typesafe-nr-of-arguments.png)
+> ![typesafe number of arguments](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/03_typesafe-nr-of-arguments.png)
 
 > error when passing the wrong type as argument
-> ![typesafe arguments](https://github.com/ivanhofer/typesafe-i18n/tree/master/docs/04_typesafe-arguments.png)
-> ![typesafe arguments](https://github.com/ivanhofer/typesafe-i18n/tree/master/docs/04_typesafe-arguments-2.png)
+> ![typesafe arguments](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/04_typesafe-arguments.png)
+> ![typesafe arguments](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/04_typesafe-arguments-2.png)
 
 > error when a translation is missing in a locale
-> ![typesafe keys in translations](https://github.com/ivanhofer/typesafe-i18n/tree/master/docs/05_typesafe-keys-in-translations.png)
+> ![typesafe keys in translations](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/05_typesafe-keys-in-translations.png)
 
 > error when a translation is missing an argument
-> ![typesafe arguments in translation](https://github.com/ivanhofer/typesafe-i18n/tree/master/docs/06_typesafe-arguments-in-translation.png)
+> ![typesafe arguments in translation](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/06_typesafe-arguments-in-translation.png)
 
 
 In order to get get full typesafety for your locales, you can start the watcher during development. The watcher listens for changes you make to your [base locale file](#folder-structure) and generates the corresponding TypeScript types.
