@@ -5,6 +5,7 @@ import {
 	isNotUndefined,
 	isNotZero,
 	isObject,
+	isPropertyFalsy,
 	not,
 	sortNumberASC,
 	sortStringASC,
@@ -25,6 +26,7 @@ import { getPermutations, Logger, supportsTemplateLiteralTypes, TypescriptVersio
 type Arg = {
 	key: string
 	formatters?: string[]
+	pluralOnly?: boolean
 }
 
 type Types = {
@@ -97,7 +99,7 @@ const parseTanslationEntry = ([key, text]: [string, string], logger: Logger): Pa
 			types[k] = ['string', 'number', 'boolean']
 			if (!args.find(({ key }) => key === k)) {
 				// if only pluralpart exists => add it as argument
-				args.push({ key: k, formatters: [] })
+				args.push({ key: k, formatters: [], pluralOnly: true })
 			}
 		}
 	})
@@ -245,9 +247,9 @@ const generateTranslationType = (
 	args: Arg[],
 	generateTemplateLiteralTypes: boolean,
 ) => {
-	const argStrings = args.map(({ key, formatters }) =>
-		partAsStringWithoutTypes({ k: key, f: formatters }).replace(REGEX_BRACKETS, ''),
-	)
+	const argStrings = args
+		.filter(isPropertyFalsy('pluralOnly'))
+		.map(({ key, formatters }) => partAsStringWithoutTypes({ k: key, f: formatters }).replace(REGEX_BRACKETS, ''))
 
 	const nrOfArgs = argStrings.length
 	paramTypesToGenerate.push(nrOfArgs)
