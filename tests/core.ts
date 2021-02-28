@@ -26,6 +26,8 @@ test('trim plural only 2', () => assert.is(LLL('{{ this is plural }}', 2), 'this
 test('trim singular only 1', () => assert.is(LLL('{{ this is singular | }}', 1), 'this is singular'))
 test('trim singular only 2', () => assert.is(LLL('{{ this is singular | }}', 2), ''))
 
+test('plural part before key', () => assert.is(LLL('apple{{s}}: {nrOfApples:number}', { nrOfApples: 1 }), 'apple: 1'))
+
 // --------------------------------------------------------------------------------------------------------------------
 
 const translation = {

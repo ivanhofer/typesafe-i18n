@@ -56,7 +56,7 @@ const parsePluralPart = (content: string, lastAcessor: string): PluralPart => {
 	return { k: key, z, o, t, f, m, r } as PluralPart
 }
 
-export const parseRawText = (rawText: string, optimize = true, lastKey = '0'): Part[] =>
+export const parseRawText = (rawText: string, optimize = true, firstKey = '', lastKey = ''): Part[] =>
 	rawText
 		.split(REGEX_BRACKETS_SPLIT)
 		.filter(Boolean)
@@ -73,11 +73,14 @@ export const parseRawText = (rawText: string, optimize = true, lastKey = '0'): P
 			const parsedPart = parseArgumentPart(content)
 
 			lastKey = parsedPart.k || lastKey
+			!firstKey && (firstKey = lastKey)
 
 			return parsedPart
 		})
 		.map((part) => {
 			if (isString(part)) return part
+
+			if (!part.k) part.k = firstKey || '0'
 
 			const trimmed = trimAllValues(part)
 			return optimize ? removeEmptyValues(trimmed) : trimmed
