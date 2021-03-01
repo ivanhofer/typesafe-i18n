@@ -155,25 +155,25 @@ Feel free to open an [issue](https://github.com/ivanhofer/typesafe-i18n/issues),
 
 ## Typesafety
 
-The `typesafe-i18n` package allows us to be 100% typesafe for our tranlsation functions and even the translations for other locales itself. It generates TypeScript definitions based on your base locale. It also generates some utility functions for easy usage.
+The `typesafe-i18n` package allows us to be 100% typesafe for our tranlsation functions and even the translations for other locales itself. It generates TypeScript definitions based on your base locale. Here you can see some examples where the generated types can help you:
 
-#### code completion for all available locales
+#### typesafe auto-completion for all your defined locales
 ![typesafe locales completion](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/01_typesafe-locales-completion.png)
 
-#### code completion for all available translations
+#### typesafe auto-completion for all available translations
 ![typesafe translation key completion](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/02_typesafe-key-completion.png)
 
-#### error when forgetting to pass arguments to the translate function
+#### you will get an error if you forget to pass arguments
 ![typesafe number of arguments](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/03_typesafe-nr-of-arguments.png)
 
-#### error when passing the wrong type as argument
+#### you will get an error if you pass the wrong type arguments
 ![typesafe arguments](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/04_typesafe-arguments.png)
 ![typesafe arguments](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/04_typesafe-arguments-2.png)
 
-#### error when a translation is missing in a locale
+#### you will get an error if you forgot to add a translation in a locale
 ![typesafe keys in translations](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/05_typesafe-keys-in-translations.png)
 
-#### error when a translation is missing an argument
+#### you will get an error when a translation is missing an argument
 ![typesafe arguments in translation](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/06_typesafe-arguments-in-translation.png)
 
 
@@ -181,7 +181,7 @@ In order to get get full typesafety for your locales, you can start the watcher 
 
 Make shure you have installed `node` version `> 12.x` and are using a `typescript` version `> 3.x.x`.
 
- > The watcher will generate a different output depending on your TypeScript version. Older versions don't support all the features `typesafe-i18n` need to provide you with the best types. Make sure to use a TypeScript version `> 4.1.x` to benefit from all the typechecking features.
+ > The watcher will generate a different output depending on your TypeScript version. Older versions don't support all the features `typesafe-i18n` need to provide you with the best types. Make shure to use a TypeScript version `> 4.1.x` to benefit from all the typechecking features.
 
 You can choose between two variants to run the watcher.
 
@@ -206,7 +206,7 @@ You can take a look at this [demo repository](https://github.com/ivanhofer/types
 
 ### rollup-plugin
 
-If you are already using `rollup` as your bundelr, you can add the `i18nWatcher` to your `rollup.config.js`.
+If you are already using `rollup` as your bundler, you can add the `i18nWatcher` to your `rollup.config.js`.
 
 ```typescript
 import i18nWatcher from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n-watcher'
@@ -234,7 +234,7 @@ You can pass [options](#options) to the watcher by creating a `.typesafe-i18n.js
 
 ### folder structure
 
-This project requires you to use an opinionated folderstructure for your locales. By default all your files, you need for localizations live insed your `src/i18n` folder (you can [configure](#options) this).
+This project requires you to use an opinionated folder structure for your locales. All your localization files are located inside the `src/i18n` folder.
 
 When running the watcher for the first time, a few files will be generated:
 
@@ -243,16 +243,19 @@ src/
    i18n/
       en/
          index.ts
+      custom-types.ts
       formatters.ts
       i18n-types.ts
       i18n-util.ts
-      custom-types.ts
 ```
 
- > Some files are auto-generated, please don't make manual changes to them, since they will be overwritten.
+ > Some files are auto-generated on every change of your base locale file; please don't make manual changes to them, since they will be overwritten.
 
  - `en/index.ts`\
   	If 'en' is your [base locale](#baselocale), the file `src/i18n/en/index.ts` will contain your translations. Whenever you make changes to this file, the watcher will generate updated type definitions.
+
+ - `custom-types.ts`\
+	To [defining types](#custom-types) that are unknown to `typesafe-i18n`.
 
  - `formatters.ts`\
 	In this file, you can configure the [formatters](#formatters) to use inside your translations.
@@ -263,13 +266,10 @@ src/
  - `i18n-util.ts`\
    This file contains some wrappers around the [base i18n functions](#general).
 
- - `custom-types.ts`\
-	For [definig types](#custom-types) that are unknown to `typesafe-i18n`.
-
 
 #### locales
 
-Locales must follow a specific file pattern. For each locale, you have to create a folder with the name of the locale inside your `src/i18n` folder e.g. 'en', 'en-us', 'en-GB'. The name of the folder is also the name of the locale you use inside your code. Each locales folder needs to have an `index.ts` file with a default export. The file should export an object with key-values pairs and should look something like:
+Locales must follow a specific file pattern. For each locale, you have to create a folder with the name of the locale inside your `src/i18n` folder e.g. 'en', 'en-us', 'en-GB'. The name of the folder is also the name of the locale you use inside your code. Each locales folder needs to have an `index.ts` file with a default export. The file should export an object with string key-values pairs and should look something like:
 
 ```javascript
 import type { Translation } from '../i18n-types';
@@ -282,7 +282,7 @@ const de: Translation = {
 
 export default de
 ```
- > make sure to give it the type of `Translation`, to get compile-errors, when some translations are missing
+ > make shure to give it the type of `Translation` to get compile-errors, when some translations are missing
 
 #### custom types
 
@@ -327,11 +327,11 @@ You can set options for the [watcher](#typesafety) in order to get optimized out
 
 ### baseLocale
 
-Defines which locale to use for the types generation. You can find more information on how to structure your locales [here](#folder-structure).
+Defines which locale to use for the types generation. You can find more information on how to structure your locales [here](#locales).
 
 ### locales
 
-Specifies the locales you want to use. If you want to only include certain locales, you need to pass only the localess you want to use. If empty, it will use all locales.
+Specifies the locales you want to use. This can be useful if you want to create an own bundle for each locale. If you want to include only certain locales, you need to set the locales you want to use. If empty, all locales will be used.
 
 ### loadLocalesAsync
 
@@ -339,11 +339,11 @@ Whether to generate code that loads the locales asynchronously. If set to `true`
 
 ### adapter
 
-If config is set, code will be generated that wraps i18n functions into useful helpers for that environment e.g. a `svelte`-store.
+If this config is set, code will be generated that wraps i18n functions into useful helpers for that environment e.g. a `svelte`-store.
 
 ### outputPath
 
-Folder in which the files should be generated and where the watcher should look for your locale files.
+Folder in which the files should be generated and where your locale files are located.
 
 ### typesFileName
 
@@ -367,7 +367,7 @@ Name for the file when generating output for an adapter. The default filename is
 
 ### tempPath
 
-Folder where the watcher can store temporary files. These files are generated when your baseLocale is analyzed and the types are generated. The folder will be cleared, after the types were generated, so make sure you use an empty folder, if you change this option.
+Folder where the watcher can store temporary files. These files are generated when your base locale is analyzed and the types are generated. The folder will be cleared, after the types were generated. So make shure you use an empty folder, if you change this option.
 
 
 
