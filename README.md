@@ -184,7 +184,10 @@ Make shure you have installed `node` version `> 12.x` and are using a `typescrip
 
  > The watcher will generate a different output depending on your TypeScript version. Older versions don't support all the features `typesafe-i18n` need to provide you with the best types. Make sure to use a TypeScript version `> 4.1.x` to benefit from all the typechecking features.
 
-Currently you can choose between two variants to start the watcher:
+You can choose between two variants to run the watcher.
+
+- as a [node-process](#node-process)
+- as a [rollup-plugin](#rollup-plugin)
 
 ### node-process
 
