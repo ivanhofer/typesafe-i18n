@@ -1,23 +1,36 @@
-An opinionated, full type-safe, lightweight localization library for TypeScript projects with no external dependencies.
+# :earth_africa: typesafe-i18n
+
+**An opinionated, full type-safe, lightweight localization library for TypeScript projects with no external dependencies.**
 
 <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/typesafe-i18n-demo.gif" width="100%">
 
-## Motivation
 
-There exist a lot of localization libraries. But I could not find any solution that meet my requirements.
+## Advantages
 
-I want something that:
- - is [lightweight](#sizes) (< 1 kb)
- - has an [easy to use syntax](#syntax)
- - supports [plural rules](#plural)
- - allows [formatting](#formatters) of values e.g. locale-dependent date or number formats
- - can be used for [frontend, backend and API](#usage) projects
- - [prevents me from making mistakes](#typesafety)
+:baby_chick: [lightweight](#sizes) (< 1 kb)\
+:black_nib: [easy to use syntax](#syntax)\
+:running: [fast and efficient](#performance)\
+:speech_balloon: [supports plural rules](#plural)\
+:twisted_rightwards_arrows: allows [formatting of values](#formatters) e.g. locale-dependent date or number formats\
+:muscle: can be used for [frontend, backend and API](#usage) projects\
+:safety_vest: [prevents you from making mistakes](#typesafety)\
+:stop_sign: no external dependencies
 
-Long story short: I created my own localization library. The outcome was better than I could have imagined. Going down the rabbit hole, I came up with a solution that checks whether you call the translation-function with the correct amount of arguments, if the types of the arguments are correct and your translations for other locales contain all required arguments.\
-This package consists of a [translation-function](#i18nString), as well as an [generator](#typesafety) for TypeScript code. By looking at your base translation, it can output type definitions, to make your (developer-)life easier.
 
- > The package can be used inside JavaScript and TypeScript applications, but you will get a lot of benefits using it together with TypeScript, since the [watcher](#typesafety) will generate a few wrappers for easier usage.
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Typesafety](#typesafety)
+- [Syntax](#syntax)
+- [formatters](#formatters)
+- [Sizes](#sizes)
+- [Performance](#performance)
+
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -36,6 +49,8 @@ $ npm install --save typesafe-i18n
 <!-- ------------------------------------------------------------------------------------------ -->
 
 ## Usage
+
+> The package can be used inside JavaScript and TypeScript applications, but you will get a lot of benefits using it together with TypeScript, since the [watcher](#typesafety) will generate a few wrappers for easier usage.
 
 You can use `typesafe-i18n` in a variety of project-setups:
 
@@ -661,3 +676,20 @@ Apart from that there can be a small overhead depending on which utilities and w
 
 There also exists a useful wrapper for svelte applications:
 - [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte#usage-in-javascript-projects): 1970 bytes gzipped
+
+
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+## Performance
+
+The package was optimized for performance:
+ - **the amount of network traffic is kept small**\
+   The translation functions are [small](#sizes). Only the locales that are currently used are [loaded](#loadLocalesAsync).
+ - **no unecessary workload**\
+   Parsing your translation file for variables and formatters will only be performed when you access a translation for the first time. The result of that parsing process will be stored in an optimized object and kept in memory.
+ - **fast translations**\
+	Passing variables to the [translation function](#usage) will be fast, because its treated like a simple string concatenation. For formatting values, a single function is called per [formatter](#formatters).
+
