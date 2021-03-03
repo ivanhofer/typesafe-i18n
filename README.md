@@ -57,7 +57,7 @@ You can use `typesafe-i18n` in a variety of project-setups:
  - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/node) apis, backends, scripts, ...
  - [Svelte/Sapper/SvelteKit](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte) applications
  - [Browser](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/browser) projects
- - [other frameworks](#other) like React, VueJS, Angular and others ...
+ - [other frameworks](#other-frameworks) like React, VueJS, Angular and others ...
 <!-- TODO: create example for react -->
 
 ### General
@@ -158,10 +158,12 @@ function doSomething(session) {
 
 ```
 
-### Other
+### Other frameworks
 
 All you need is inside the [generated](#typesafety) file `i18n-utils.ts`. You can use the functions in there to create a small wrapper for your application.\
-Feel free to open an [issue](https://github.com/ivanhofer/typesafe-i18n/issues), if you need a guide for a specific framework.
+
+> Feel free to open an [issue](https://github.com/ivanhofer/typesafe-i18n/issues), if you need a guide for a specific framework.
+
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -279,10 +281,10 @@ src/
 	Type definitions are generated in this file. You don't have to understand them. They are just here to help TypeScript understand, how you need to call the translation functions.
 
  - `i18n-util.ts`\
-   This file contains some wrappers around the [base i18n functions](#general).
+   This file contains wrappers with type-informations around the [base i18n functions](#general).
 
 
-#### locales
+### locales
 
 Locales must follow a specific file pattern. For each locale, you have to create a folder with the name of the locale inside your `src/i18n` folder e.g. 'en', 'en-us', 'en-GB'. The name of the folder is also the name of the locale you use inside your code. Each locales folder needs to have an `index.ts` file with a default export. The file should export an object with string key-values pairs and should look something like:
 
@@ -299,7 +301,7 @@ export default de
 ```
  > make shure to give it the type of `Translation` to get compile-errors, when some translations are missing
 
-#### custom types
+### custom types
 
 If you want to pass arguments with your own types to the translation function, you need to tell `typesafe-i18n` how these types look like. In order to do this, you need to create an export with the exact name of that type inside this file.
 
