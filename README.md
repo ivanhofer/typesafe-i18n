@@ -4,17 +4,22 @@
 
 <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/typesafe-i18n-demo.gif" width="100%">
 
+[![npm version](https://badgen.net/npm/v/typesafe-i18n)](https://badgen.net/npm/v/typesafe-i18n)
+[![types included](https://badgen.net/npm/types/typesafe-i18n)](https://badgen.net/npm/types/typesafe-i18n)
+[![bundlse size](https://badgen.net/bundlephobia/minzip/typesafe-i18n)](https://badgen.net/bundlephobia/minzip/typesafe-i18n)
+[![bump version & publish to npm](https://github.com/ivanhofer/typesafe-i18n/actions/workflows/release.yml/badge.svg?branch=master)](https://github.com/ivanhofer/typesafe-i18n/actions/workflows/release.yml)
+
 
 ## Advantages
 
-:baby_chick: [lightweight](#sizes) (< 1 kb)\
-:black_nib: [easy to use syntax](#syntax)\
+:baby_chick: [lightweight](#sizes)\
+:ok_hand: [easy to use syntax](#syntax)\
 :running: [fast and efficient](#performance)\
 :speech_balloon: [supports plural rules](#plural)\
 :twisted_rightwards_arrows: allows [formatting of values](#formatters) e.g. locale-dependent date or number formats\
 :muscle: can be used for [frontend, backend and API](#usage) projects\
 :safety_vest: [prevents you from making mistakes](#typesafety)\
-:stop_sign: no external dependencies
+:no_entry: no external dependencies
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -113,7 +118,7 @@ LL.RESET_PASSWORD() // => 'reset password'
 #### i18n
 
 Wrap all your locales with `i18n`. To initialize it, you need to pass a callback to get the `translations`-object for a given locale and a callback to initialize the `formatters` you want to use (optional).\
-You will get an object back that can be used to access all your locaLes and apply your translations.
+You will get an object back that can be used to access all your locales and apply your translations.
 
 
 ```typescript
@@ -196,9 +201,9 @@ The `typesafe-i18n` package allows us to be 100% typesafe for our tranlsation fu
 
 In order to get get full typesafety for your locales, you can start the watcher during development. The watcher listens for changes you make to your [base locale file](#folder-structure) and generates the corresponding TypeScript types.
 
-Make shure you have installed `node` version `> 12.x` and are using a `typescript` version `> 3.x.x`.
+Make sure you have installed `node` version `> 12.x` and are using a `typescript` version `> 3.x.x`.
 
- > The watcher will generate a different output depending on your TypeScript version. Older versions don't support all the features `typesafe-i18n` need to provide you with the best types. Make shure to use a TypeScript version `> 4.1.x` to benefit from all the typechecking features.
+ > The watcher will generate a different output depending on your TypeScript version. Older versions don't support all the features `typesafe-i18n` need to provide you with the best types. Make sure to use a TypeScript version `> 4.1.x` to benefit from all the typechecking features.
 
 You can choose between two variants to run the watcher.
 
@@ -244,7 +249,7 @@ export default {
 }
 ```
 
-> Make shure you start the watcher only in your development environment.
+> Make sure you start the watcher only in your development environment.
 
 You can pass [options](#options) to the watcher by creating a `.typesafe-i18n.json` file in the root of your workspace, or by passing it as an argument to `i18nWatcher`.
 
@@ -299,7 +304,7 @@ const de: Translation = {
 
 export default de
 ```
- > make shure to give it the type of `Translation` to get compile-errors, when some translations are missing
+ > make sure to give it the type of `Translation` to get compile-errors, when some translations are missing
 
 ### custom types
 
@@ -384,7 +389,7 @@ Name for the file when generating output for an adapter. The default filename is
 
 ### tempPath
 
-Folder where the watcher can store temporary files. These files are generated when your base locale is analyzed and the types are generated. The folder will be cleared, after the types were generated. So make shure you use an empty folder, if you change this option.
+Folder where the watcher can store temporary files. These files are generated when your base locale is analyzed and the types are generated. The folder will be cleared, after the types were generated. So make sure you use an empty folder, if you change this option.
 
 
 

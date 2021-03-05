@@ -9,12 +9,12 @@
 	},
 	"author": "ivanhofer",
 	"keywords": [
-		"l10n",
 		"i18n",
+		"typescript",
 		"lightweight",
 		"localization",
-		"localization engine",
-		"typescript"
+		"l10n",
+		"localization engine"
 	],
 	"license": "MIT",
 	"module": "esm/index.js",
