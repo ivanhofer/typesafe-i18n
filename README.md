@@ -136,7 +136,7 @@ const initFormatters = (locale) => {
    const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
 
    return {
-      date: (value) => dateFormatter.format(value)
+      weekday: (value) => dateFormatter.format(value)
    }
 }
 
@@ -144,9 +144,9 @@ const L = i18n(loadLocale, initFormatters)
 
 const now = new Date()
 
-L.en.TODAY() // => 'Today is friday'
-L.de.TODAY() // => 'Heute ist Freitag'
-L.it.TODAY() // => 'Oggi è venerdì'
+L.en.TODAY({ date: now }) // => 'Today is friday'
+L.de.TODAY({ date: now }) // => 'Heute ist Freitag'
+L.it.TODAY({ date: now }) // => 'Oggi è venerdì'
 
 ```
 
