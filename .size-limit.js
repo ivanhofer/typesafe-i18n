@@ -2,17 +2,17 @@ module.exports = [
 	{
 		name: 'i18n-string',
 		path: 'dist/i18n.string.min.js',
-		limit: '800 b',
+		limit: '765 b',
 	},
 	{
 		name: 'i18n-object',
 		path: 'dist/i18n.object.min.js',
-		limit: '858 b',
+		limit: '819 b',
 	},
 	{
 		name: 'i18n-instance',
 		path: 'dist/i18n.min.js',
-		limit: '961 b',
+		limit: '924 b',
 	},
 	// {
 	// 	name: 'i18n-loader',
@@ -27,11 +27,11 @@ module.exports = [
 	{
 		name: 'all together',
 		path: 'dist/i18n.all.min.js',
-		limit: '1012 b',
+		limit: '975 b',
 	},
 	{
 		name: 'svelte-store',
 		path: 'svelte/svelte-store.min.js',
-		limit: '1970 b',
+		limit: '1960 b',
 	},
 ]

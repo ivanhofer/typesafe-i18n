@@ -1,4 +1,3 @@
-import { isArray, isNotEmpty, isString } from 'typesafe-utils'
 import { isPluralPart } from './core'
 import type { ArgumentPart, Part, PluralPart } from './parser'
 
@@ -14,7 +13,7 @@ export const trimAllValues = <T extends ArgumentPart | PluralPart>(part: T): T =
 	const trimmedObject: any = {} as T
 	Object.keys(part).forEach((key) => {
 		const val = (part[key as keyof T] as unknown) as string | string[]
-		if (isArray(val)) {
+		if (Array.isArray(val)) {
 			trimmedObject[key] = val.map((v) => v?.trim())
 			return
 		}
@@ -27,12 +26,12 @@ export const trimAllValues = <T extends ArgumentPart | PluralPart>(part: T): T =
 export const partsAsStringWithoutTypes = (parts: Part[]): string => parts.map(partAsStringWithoutTypes).join('')
 
 export const partAsStringWithoutTypes = (part: Part): string => {
-	if (isString(part)) {
+	if (typeof part === 'string') {
 		return part
 	}
 
 	if (isPluralPart(part)) {
-		return `{{${[part.z, part.o, part.t, part.f, part.m, part.r].filter(isNotEmpty).join('|')}}}`
+		return `{{${[part.z, part.o, part.t, part.f, part.m, part.r].filter((value) => value !== '').join('|')}}}`
 	}
 
 	return `{${part.k}${part.f?.length ? `|${part.f.join('|')}` : ''}}`

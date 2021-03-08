@@ -1,4 +1,3 @@
-import { isNotUndefined, isString } from 'typesafe-utils'
 import { trimAllValues, removeEmptyValues } from './core-utils'
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -46,12 +45,12 @@ const parsePluralPart = (content: string, lastAcessor: string): PluralPart => {
 	}
 
 	const [zero, one, two, few, many, rest] = values.split('|')
-	const z = (isNotUndefined(rest) && zero) || ''
-	const t = (isNotUndefined(rest) && two) || ''
-	const f = (isNotUndefined(rest) && few) || ''
-	const m = (isNotUndefined(rest) && many) || ''
-	const o = (isNotUndefined(rest) ? one : isNotUndefined(one) ? zero : one) || ''
-	const r = (isNotUndefined(rest) ? rest : o ? one : zero) || ''
+	const z = (rest !== undefined && zero) || ''
+	const t = (rest !== undefined && two) || ''
+	const f = (rest !== undefined && few) || ''
+	const m = (rest !== undefined && many) || ''
+	const o = (rest !== undefined ? one : one !== undefined ? zero : one) || ''
+	const r = (rest !== undefined ? rest : o ? one : zero) || ''
 
 	return { k: key, z, o, t, f, m, r } as PluralPart
 }
@@ -78,7 +77,7 @@ export const parseRawText = (rawText: string, optimize = true, firstKey = '', la
 			return parsedPart
 		})
 		.map((part) => {
-			if (isString(part)) return part
+			if (typeof part === 'string') return part
 
 			if (!part.k) part.k = firstKey || '0'
 

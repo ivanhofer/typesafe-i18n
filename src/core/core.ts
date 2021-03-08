@@ -1,4 +1,3 @@
-import { isBoolean, isPrimitiveObject, isString } from 'typesafe-utils'
 import type { FormatterFunction } from '../formatters/_types'
 import type { ArgumentPart, Part, PluralPart } from './parser'
 
@@ -69,7 +68,7 @@ const applyArguments = (
 ) =>
 	textParts
 		.map((part) => {
-			if (isString(part)) {
+			if (typeof part === 'string') {
 				return part
 			}
 
@@ -77,7 +76,7 @@ const applyArguments = (
 			const value = args[(key as unknown) as number] as unknown
 
 			if (isPluralPart(part)) {
-				return isBoolean(value) ? (value ? part.o : part.r) : getPlural(pluralRules, part, value) || ''
+				return typeof value === 'boolean' ? (value ? part.o : part.r) : getPlural(pluralRules, part, value) || ''
 			}
 
 			const formattedValue = formatterKeys.length ? applyFormatters(formatters, formatterKeys, value) : value
@@ -92,7 +91,9 @@ export const translate = (
 	formatters: BaseFormatters,
 	args: Arguments,
 ): string => {
-	const transformedArgs = (args.length === 1 && isPrimitiveObject(args[0]) ? args[0] : args) as Arguments
+	const firstArg = args[0]
+	const isObject = firstArg && typeof firstArg === 'object' && firstArg.constructor === Object
+	const transformedArgs = (args.length === 1 && isObject ? firstArg : args) as Arguments
 
 	return applyArguments(textParts, pluralRules, formatters, transformedArgs)
 }
