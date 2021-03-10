@@ -1,4 +1,4 @@
-name: bump version & publish to npm
+name: run tests & bump version & publish to npm
 
 on:
    push:
