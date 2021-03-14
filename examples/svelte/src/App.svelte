@@ -50,12 +50,12 @@
 	<hr />
 
 	<label>
-		Apples:
+		{$LL.APPLES_LABEL()}:
 		<input type="number" bind:value={nrOfApples} min={0} />
 	</label>
 
 	<label>
-		Bananas:
+		{$LL.BANANAS_LABEL()}:
 		<input type="number" bind:value={nrOfBananas} min={0} />
 	</label>
 

@@ -9,7 +9,7 @@ const files = fs.readdirSync('src/formatters/')
 const config = files
 	.filter((file) => !file.includes('_types.ts'))
 	.map((file) => ({
-		input: [`src/formatters/${file}`],
+		input: `src/formatters/${file}`,
 		output: [
 			{
 				file: `formatters/${file.replace('.ts', '.js')}`,
