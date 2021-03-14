@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 import type { LocaleTranslations } from 'typesafe-i18n'
-import { i18nLoader, i18n, i18nString } from 'typesafe-i18n'
+import { i18nString as initI18nString, i18nObjectLoader, i18n as initI18n } from 'typesafe-i18n'
 import type {
 	Translation,
 	TranslationFunctions,
@@ -25,8 +25,8 @@ const localeTranslations: LocaleTranslations<Locales, Translation> = {
 
 export const getTranslationForLocale = (locale: Locales) => localeTranslations[locale] || localeTranslations['en']
 
-export const initI18nForLocale = (locale: Locales) => i18nLoader<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
+export const i18nObject = (locale: Locales) => i18nObjectLoader<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
 
-export const initI18n = () => i18n<Locales, Translation, TranslationFunctions, Formatters>(getTranslationForLocale, initFormatters)
+export const i18n = () => initI18n<Locales, Translation, TranslationFunctions, Formatters>(getTranslationForLocale, initFormatters)
 
-export const initI18nString = (locale: Locales) => i18nString(locale, initFormatters(locale))
+export const i18nString = (locale: Locales) => initI18nString(locale, initFormatters(locale))

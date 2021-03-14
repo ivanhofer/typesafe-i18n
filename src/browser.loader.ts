@@ -1,3 +1,3 @@
-import { i18nLoader } from './core/util.loader'
+import { i18nObjectLoader } from './core/util.loader'
 //@ts-ignore
-window.i18nLoader = i18nLoader
+window.i18nObjectLoader = i18nObjectLoader

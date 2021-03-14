@@ -35,7 +35,7 @@ const throwError = (locale: Locale) => {
 
 // async --------------------------------------------------------------------------------------------------------------
 
-export const i18nLoaderAsync = async <
+export const i18nObjectLoaderAsync = async <
 	L extends Locale,
 	T extends BaseTranslation,
 	TF extends TranslationFunctions,
@@ -62,7 +62,7 @@ export const i18nLoaderAsync = async <
 
 // sync ---------------------------------------------------------------------------------------------------------------
 
-export const i18nLoader = <
+export const i18nObjectLoader = <
 	L extends Locale,
 	T extends BaseTranslation,
 	TF extends TranslationFunctions,

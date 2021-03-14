@@ -22,7 +22,7 @@ const localeTranslationLoaders = {${localesTranslationLoaders}
 
 export const getTranslationForLocale = async (locale: Locales) => (await (localeTranslationLoaders[locale] || localeTranslationLoaders['${baseLocale}'])()).default as Translation
 
-export const initI18nForLocale = (locale: Locales) => i18nLoaderAsync<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
+export const i18nObject = (locale: Locales) => i18nObjectLoaderAsync<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
 `
 }
 
@@ -55,9 +55,9 @@ const localeTranslations: LocaleTranslations<Locales, Translation> = {${localesT
 
 export const getTranslationForLocale = (locale: Locales) => localeTranslations[locale] || localeTranslations['${baseLocale}']
 
-export const initI18nForLocale = (locale: Locales) => i18nLoader<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
+export const i18nObject = (locale: Locales) => i18nObjectLoader<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
 
-export const initI18n = () => i18n<Locales, Translation, TranslationFunctions, Formatters>(getTranslationForLocale, initFormatters)
+export const i18n = () => initI18n<Locales, Translation, TranslationFunctions, Formatters>(getTranslationForLocale, initFormatters)
 `
 }
 
@@ -71,9 +71,9 @@ const getUtil = (config: GeneratorConfigWithDefaultValues, importType: string): 
 	} = config
 
 	const dynamicImports = loadLocalesAsync
-		? `import { i18nLoaderAsync, i18nString } from 'typesafe-i18n'`
+		? `import { i18nString as initI18nString, i18nObjectLoaderAsync } from 'typesafe-i18n'`
 		: `import${importType} { LocaleTranslations } from 'typesafe-i18n'
-import { i18nLoader, i18n, i18nString } from 'typesafe-i18n'`
+import { i18nString as initI18nString, i18nObjectLoader, i18n as initI18n } from 'typesafe-i18n'`
 
 	const dynamicCode = loadLocalesAsync ? getAsyncCode(config) : getSyncCode(config)
 
@@ -99,7 +99,7 @@ export const baseLocale: Locales = '${baseLocale}'
 
 ${localesEnum}
 ${dynamicCode}
-export const initI18nString = (locale: Locales) => i18nString(locale, initFormatters(locale))
+export const i18nString = (locale: Locales) => initI18nString(locale, initFormatters(locale))
 `
 }
 
