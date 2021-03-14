@@ -700,3 +700,8 @@ The package was optimized for performance:
  - **fast translations**\
 	Passing variables to the [translation function](#usage) will be fast, because its treated like a simple string concatenation. For formatting values, a single function is called per [formatter](#formatters).
 
+If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n solutions. But that does't mean, we should stop there. There are planned some possible optimizations, to improve the bundle size even further:
+
+ - [x] get rid of the arguments type informations inside your base-translation [#13](https://github.com/ivanhofer/typesafe-i18n/issues/13)
+ - [ ] rewrite keyed to index-based arguments [#15](https://github.com/ivanhofer/typesafe-i18n/issues/15)
+ - [ ] inline translations for single-locale bundles[#14](https://github.com/ivanhofer/typesafe-i18n/issues/14)
