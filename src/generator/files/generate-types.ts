@@ -177,7 +177,7 @@ const createTypeImports = (
 	return !externalTypes.length
 		? ''
 		: `
-import${importType} { ${externalTypes.join(', ')} } from './${typesTemplatePath.replace('.ts', '')}'
+${importType} { ${externalTypes.join(', ')} } from './${typesTemplatePath.replace('.ts', '')}'
 `
 }
 

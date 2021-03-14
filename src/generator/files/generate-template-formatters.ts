@@ -1,11 +1,16 @@
-import { writeFileIfNotExists } from '../file-utils'
+import { writeFileIfContainsChanges, writeFileIfNotExists } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generator'
 
-const getFormattersTemplate = ({ typesFileName: typesFile }: GeneratorConfigWithDefaultValues, importType: string) => {
-	return `import${importType} { FormattersInitializer } from 'typesafe-i18n'
-import${importType} { Locales, Formatters } from './${typesFile}'
+const getFormattersTemplate = (
+	{ typesFileName: typesFile, loadLocalesAsync }: GeneratorConfigWithDefaultValues,
+	importType: string,
+) => {
+	const formattersInitializerType = `${loadLocalesAsync ? 'Async' : ''}FormattersInitializer`
+	return `${importType} { ${formattersInitializerType} } from 'typesafe-i18n'
+${importType} { Locales, Formatters } from './${typesFile}'
 
-export const initFormatters: FormattersInitializer<Locales, Formatters> = (locale) => {
+export const initFormatters: ${formattersInitializerType}<Locales, Formatters> = ${loadLocalesAsync ? 'async ' : ''
+		}(locale) => {
 	const formatters: Formatters = {
 		// add your formatter functions here
 	}
@@ -18,10 +23,12 @@ export const initFormatters: FormattersInitializer<Locales, Formatters> = (local
 export const generateFormattersTemplate = async (
 	config: GeneratorConfigWithDefaultValues,
 	importType: string,
+	forceOverride: boolean,
 ): Promise<void> => {
 	const { outputPath, formattersTemplateFileName: formattersTemplatePath } = config
 
 	const configTemplate = getFormattersTemplate(config, importType)
 
-	await writeFileIfNotExists(outputPath, formattersTemplatePath, configTemplate)
+	const write = forceOverride ? writeFileIfContainsChanges : writeFileIfNotExists
+	await write(outputPath, formattersTemplatePath, configTemplate)
 }

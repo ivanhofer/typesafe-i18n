@@ -32,6 +32,6 @@ module.exports = [
 	{
 		name: 'svelte-store',
 		path: 'svelte/svelte-store.min.js',
-		limit: '1960 b',
+		limit: '1962 b',
 	},
 ]

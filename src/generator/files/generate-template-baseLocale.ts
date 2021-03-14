@@ -1,12 +1,12 @@
 import { join } from 'path'
-import { writeFileIfNotExists } from '../file-utils'
+import { writeFileIfContainsChanges, writeFileIfNotExists } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generator'
 import { sanitizeLocale } from '../generator-util'
 
 const getBaseLocaleTemplate = (baseLocale: string, importType: string) => {
 	const sanitizedLocale = sanitizeLocale(baseLocale)
 
-	return `import${importType} { BaseTranslation } from 'typesafe-i18n'
+	return `${importType} { BaseTranslation } from 'typesafe-i18n'
 
 const ${sanitizedLocale}: BaseTranslation = {
 	// TODO: your translations go here
@@ -19,10 +19,12 @@ export default ${sanitizedLocale}
 export const generateBaseLocaleTemplate = async (
 	config: GeneratorConfigWithDefaultValues,
 	importType: string,
+	forceOverride: boolean,
 ): Promise<void> => {
 	const { outputPath, baseLocale } = config
 
 	const baseLocaleTemplate = getBaseLocaleTemplate(baseLocale, importType)
 
-	await writeFileIfNotExists(join(outputPath, baseLocale), `index.ts`, baseLocaleTemplate)
+	const write = forceOverride ? writeFileIfContainsChanges : writeFileIfNotExists
+	await write(join(outputPath, baseLocale), `index.ts`, baseLocaleTemplate)
 }

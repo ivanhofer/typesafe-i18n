@@ -2,7 +2,12 @@ import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../c
 import type { Readable, Writable } from 'svelte/store'
 import { derived, writable } from 'svelte/store'
 import { i18nObject } from '../core/util.object'
-import { FormattersInitializer, TranslationLoader, TranslationLoaderAsync } from '../core/util.loader'
+import {
+	FormattersInitializer,
+	AsyncFormattersInitializer,
+	TranslationLoader,
+	TranslationLoaderAsync,
+} from '../core/util.loader'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -17,7 +22,7 @@ type SvelteStoreInit<
 		initI18n: (
 			newlocale: L,
 			getTranslationForLocaleCallback: TranslationLoader<L, T> | TranslationLoaderAsync<L, T>,
-			initFormattersCallback?: FormattersInitializer<L, F>,
+			initFormattersCallback?: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F>,
 		) => Promise<void>
 		setLocale: (locale: L) => void
 		isLoadingLocale: Readable<boolean>
@@ -48,12 +53,12 @@ export const getI18nSvelteStore = <
 	const i18nObjectInstanceStore = writable<TF>(i18nObjectInstance)
 
 	let getTranslationForLocale: TranslationLoader<L, T> | TranslationLoaderAsync<L, T>
-	let initFormatters: FormattersInitializer<L, F>
+	let initFormatters: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F>
 
 	const initI18n = async (
 		newlocale: L,
 		getTranslationForLocaleCallback: TranslationLoader<L, T> | TranslationLoaderAsync<L, T>,
-		initFormattersCallback?: FormattersInitializer<L, F>,
+		initFormattersCallback?: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F>,
 	): Promise<void> => {
 		getTranslationForLocale = getTranslationForLocaleCallback
 		initFormatters = initFormattersCallback || (() => ({} as F))
@@ -66,7 +71,7 @@ export const getI18nSvelteStore = <
 		isLoading.set(true)
 
 		const translation: T = await (getTranslationForLocale as TranslationLoaderAsync<L, T>)(newlocale)
-		i18nObjectInstance = i18nObject(newlocale, translation, initFormatters(newlocale))
+		i18nObjectInstance = i18nObject(newlocale, translation, await initFormatters(newlocale))
 		i18nObjectInstanceStore.set(i18nObjectInstance)
 
 		currentLocale.set(newlocale)

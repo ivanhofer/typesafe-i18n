@@ -64,17 +64,18 @@ export const generate = async (
 	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
 	version: TypescriptVersion,
 	logger: Logger = defaultLogger,
+	forceOverride = false,
 ): Promise<void> => {
-	const importType = supportsImportType(version) ? ' type' : ''
+	const importType = `import${supportsImportType(version) ? ' type' : ''}`
 
-	await generateBaseLocaleTemplate(config, importType)
+	await generateBaseLocaleTemplate(config, importType, forceOverride)
 
 	const hasCustomTypes = await generateTypes({ ...config, translations }, importType, version, logger)
 
-	await generateFormattersTemplate(config, importType)
+	await generateFormattersTemplate(config, importType, forceOverride)
 
 	if (hasCustomTypes) {
-		await generateCustomTypesTemplate(config)
+		await generateCustomTypesTemplate(config, forceOverride)
 	}
 
 	await generateUtil(config, importType)

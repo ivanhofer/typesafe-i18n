@@ -72,7 +72,7 @@ const getUtil = (config: GeneratorConfigWithDefaultValues, importType: string): 
 
 	const dynamicImports = loadLocalesAsync
 		? `import { i18nString as initI18nString, i18nObjectLoaderAsync } from 'typesafe-i18n'`
-		: `import${importType} { LocaleTranslations } from 'typesafe-i18n'
+		: `${importType} { LocaleTranslations } from 'typesafe-i18n'
 import { i18nString as initI18nString, i18nObjectLoader, i18n as initI18n } from 'typesafe-i18n'`
 
 	const dynamicCode = loadLocalesAsync ? getAsyncCode(config) : getSyncCode(config)
@@ -87,7 +87,7 @@ import { i18nString as initI18nString, i18nObjectLoader, i18n as initI18n } from
 /* eslint-disable */
 
 ${dynamicImports}
-import${importType} {
+${importType} {
 	Translation,
 	TranslationFunctions,
 	Formatters,

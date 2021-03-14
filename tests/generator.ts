@@ -66,7 +66,7 @@ const testGeneratedOutput = async (
 	version: TypescriptVersion = defaultVersion,
 ) =>
 	test(`generate ${prefix}`, async () => {
-		await generate(translation, createConfig(prefix, config), version)
+		await generate(translation, createConfig(prefix, config), version, undefined, true)
 		await check(prefix, 'types')
 		await check(prefix, 'util')
 		await check(prefix, 'formatters-template')

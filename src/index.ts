@@ -1,6 +1,6 @@
 export { BaseTranslation } from './core/core'
 
-export { LocaleTranslations, FormattersInitializer } from './core/util.loader'
+export { LocaleTranslations, FormattersInitializer, AsyncFormattersInitializer } from './core/util.loader'
 
 export { i18nString } from './core/util.string'
 export { i18nObject } from './core/util.object'

@@ -9,7 +9,7 @@ const getSvelteUtils = (
 /* eslint-disable */
 
 import { getI18nSvelteStore } from 'typesafe-i18n/adapters/svelte';
-import${importType} { Locales, Translation, TranslationFunctions, Formatters } from './${typesFileName}'
+${importType} { Locales, Translation, TranslationFunctions, Formatters } from './${typesFileName}'
 import { getTranslationForLocale } from './${utilFileName}'
 import { initFormatters } from './${formattersTemplateFileName}'
 
