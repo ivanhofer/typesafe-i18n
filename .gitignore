@@ -1,4 +1,5 @@
 node_modules
+/adapters
 /cjs
 /dist
 /esm

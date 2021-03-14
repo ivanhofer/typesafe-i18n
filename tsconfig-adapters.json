@@ -1,0 +1,9 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"module": "ESNext",
+		"outDir": "./adapters",
+		"emitDeclarationOnly": true
+	},
+	"include": ["./src/adapter-*"]
+}
