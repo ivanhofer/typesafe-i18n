@@ -40,6 +40,8 @@ export default {
 		file: 'public/build/bundle.js',
 	},
 	plugins: [
+		!production && i18nWatcher({ adapter: 'svelte', loadLocalesAsync: false }),
+
 		svelte({
 			preprocess: sveltePreprocess({ sourceMap: !production }),
 			compilerOptions: {
@@ -65,7 +67,6 @@ export default {
 			sourceMap: !production,
 			inlineSources: !production,
 		}),
-		!production && i18nWatcher({ adapter: 'svelte', loadLocalesAsync: false }),
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
