@@ -8,23 +8,23 @@
 		"validate": "svelte-check"
 	},
 	"devDependencies": {
-		"@rollup/plugin-commonjs": "^17.0.0",
-		"@rollup/plugin-node-resolve": "^11.0.0",
-		"rollup": "^2.3.4",
+		"@rollup/plugin-commonjs": "^17.1.0",
+		"@rollup/plugin-node-resolve": "^11.2.0",
+		"rollup": "^2.41.2",
 		"rollup-plugin-css-only": "^3.1.0",
 		"rollup-plugin-livereload": "^2.0.0",
-		"rollup-plugin-svelte": "^7.0.0",
-		"rollup-plugin-terser": "^7.0.0",
-		"svelte": "^3.0.0",
-		"svelte-check": "^1.0.0",
-		"svelte-preprocess": "^4.0.0",
-		"@rollup/plugin-typescript": "^6.0.0",
-		"typescript": "^4.1.5",
-		"tslib": "^2.0.0",
-		"@tsconfig/svelte": "^1.0.0"
+		"rollup-plugin-svelte": "^7.1.0",
+		"rollup-plugin-terser": "^7.0.2",
+		"sirv-cli": "^1.0.11",
+		"svelte": "^3.35.0",
+		"svelte-check": "^1.2.5",
+		"svelte-preprocess": "^4.6.9",
+		"@rollup/plugin-typescript": "^8.2.0",
+		"typescript": "^4.2.3",
+		"tslib": "^2.1.0",
+		"@tsconfig/svelte": "^1.0.10"
 	},
 	"dependencies": {
-		"sirv-cli": "^1.0.0",
-		"typesafe-i18n": "^2.2.0"
+		"typesafe-i18n": "^2.8.2"
 	}
 }
