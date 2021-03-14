@@ -1,6 +1,6 @@
 # :earth_africa: typesafe-i18n
 
-**An opinionated, full type-safe, lightweight localization library for TypeScript projects with no external dependencies.**
+**An opinionated, fully type-safe, lightweight localization library for TypeScript projects with no external dependencies.**
 
 <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/typesafe-i18n-demo.gif" width="100%">
 
