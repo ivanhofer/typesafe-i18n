@@ -61,6 +61,7 @@ You can use `typesafe-i18n` in a variety of project-setups:
 
  - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/node) apis, backends, scripts, ...
  - [Svelte/Sapper/SvelteKit](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte) applications
+ - [React](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/react) applications
  - [Browser](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/browser) projects
  - [other frameworks](#other-frameworks) like React, VueJS, Angular and others ...
 <!-- TODO: create example for react -->
@@ -332,19 +333,19 @@ export type Sum = {
 
 You can set options for the [watcher](#typesafety) in order to get optimized output for your specific project. The available options are:
 
-| key                                                       | type                                          | default value                                 |
-| --------------------------------------------------------- | --------------------------------------------- | --------------------------------------------- |
-| [baseLocale](#baseLocale)                                 | `string`                                      | `'en'`                                        |
-| [locales](#locales)                                       | `string[]`                                    | `[]`                                          |
-| [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`                                     | `true`                                        |
-| [adapter](#adapter)                                       | `'node'` &#124; `'svelte'` &#124; `undefined` | `undefined`                                   |
-| [outputPath](#outputPath)                                 | `string`                                      | `'./src/i18n/'`                               |
-| [typesFileName](#typesFileName)                           | `string`                                      | `'i18n-types'`                                |
-| [utilFileName](#utilFileName)                             | `string`                                      | `'i18n-util'`                                 |
-| [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                      | `'formatters'`                                |
-| [typesTemplateFileName](#typesTemplateFileName)           | `string`                                      | `'custom-types'`                              |
-| [adapterFileName](#adapterFileName)                       | `string` &#124; `undefined`                   | `undefined`                                   |
-| [tempPath](#tempPath)                                     | `string`                                      | `'./node_modules/typesafe-i18n/temp-output/'` |
+| key                                                       | type                                                           | default value                                 |
+| --------------------------------------------------------- | -------------------------------------------------------------- | --------------------------------------------- |
+| [baseLocale](#baseLocale)                                 | `string`                                                       | `'en'`                                        |
+| [locales](#locales)                                       | `string[]`                                                     | `[]`                                          |
+| [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`                                                      | `true`                                        |
+| [adapter](#adapter)                                       | `'node'` &#124; `'svelte'` &#124; `'react'` &#124; `undefined` | `undefined`                                   |
+| [outputPath](#outputPath)                                 | `string`                                                       | `'./src/i18n/'`                               |
+| [typesFileName](#typesFileName)                           | `string`                                                       | `'i18n-types'`                                |
+| [utilFileName](#utilFileName)                             | `string`                                                       | `'i18n-util'`                                 |
+| [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                                       | `'formatters'`                                |
+| [typesTemplateFileName](#typesTemplateFileName)           | `string`                                                       | `'custom-types'`                              |
+| [adapterFileName](#adapterFileName)                       | `string` &#124; `undefined`                                    | `undefined`                                   |
+| [tempPath](#tempPath)                                     | `string`                                                       | `'./node_modules/typesafe-i18n/temp-output/'` |
 
 
 ### baseLocale
