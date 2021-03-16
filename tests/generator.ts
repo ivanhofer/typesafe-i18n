@@ -172,6 +172,20 @@ testGeneratedOutput('plural-part-before-key', { PLURAL_BEFORE_KEY: 'apple{{s}}: 
 
 // --------------------------------------------------------------------------------------------------------------------
 
+const nodeAdapterFileName = getFileName('node')
+
+testGeneratedOutput(
+	'adapter_node_async',
+	{ HELLO_NODE: 'Hi {0:name}' },
+	{ adapter: 'node', adapterFileName: nodeAdapterFileName },
+)
+
+testGeneratedOutput(
+	'adapter_node_sync',
+	{ HELLO_NODE: 'Hi {0:name}' },
+	{ adapter: 'node', adapterFileName: nodeAdapterFileName, loadLocalesAsync: false },
+)
+
 const svelteAdapterFileName = getFileName('svelte')
 
 testGeneratedOutput(
@@ -186,18 +200,18 @@ testGeneratedOutput(
 	{ adapter: 'svelte', adapterFileName: svelteAdapterFileName, loadLocalesAsync: false },
 )
 
-const nodeAdapterFileName = getFileName('node')
+const reactAdapterFileName = getFileName('react')
 
 testGeneratedOutput(
-	'adapter_node_async',
+	'adapter_react_async',
 	{ HELLO_NODE: 'Hi {0:name}' },
-	{ adapter: 'node', adapterFileName: nodeAdapterFileName },
+	{ adapter: 'react', adapterFileName: reactAdapterFileName },
 )
 
 testGeneratedOutput(
-	'adapter_node_sync',
+	'adapter_react_sync',
 	{ HELLO_NODE: 'Hi {0:name}' },
-	{ adapter: 'node', adapterFileName: nodeAdapterFileName, loadLocalesAsync: false },
+	{ adapter: 'react', adapterFileName: reactAdapterFileName, loadLocalesAsync: false },
 )
 
 // --------------------------------------------------------------------------------------------------------------------

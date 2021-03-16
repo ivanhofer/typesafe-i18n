@@ -7,12 +7,13 @@ import { generateCustomTypesTemplate } from './files/generate-template-types'
 import { generateBaseLocaleTemplate } from './files/generate-template-baseLocale'
 import { logger as defaultLogger, Logger, supportsImportType, TypescriptVersion } from './generator-util'
 import { generateNodeAdapter } from './files/generate-adapter-node'
+import { generateReactAdapter } from './files/generate-adapter-react'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-type Adapters = 'svelte' | 'node'
+type Adapters = 'node' | 'svelte' | 'react'
 
 export type GeneratorConfig = {
 	baseLocale?: string
@@ -84,5 +85,7 @@ export const generate = async (
 		await generateNodeAdapter(config)
 	} else if (config.adapter === 'svelte') {
 		await generateSvelteAdapter(config, importType)
+	} else if (config.adapter === 'react') {
+		await generateReactAdapter(config, importType)
 	}
 }

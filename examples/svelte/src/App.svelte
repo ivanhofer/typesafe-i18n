@@ -8,7 +8,7 @@
 	export let name: string
 
 	onMount(async () => {
-		await initI18n(localStorage.getItem('locale') as Locales)
+		await initI18n((localStorage.getItem('locale') as Locales) || undefined)
 		console.log(LL.STARTUP())
 		localeToSelect = $locale
 	})
