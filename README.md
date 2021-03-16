@@ -189,8 +189,8 @@ The `typesafe-i18n` package allows us to be 100% typesafe for our tranlsation fu
 ![typesafe number of arguments](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/03_typesafe-nr-of-arguments.png)
 
 #### you will get an error if you pass the wrong type arguments
-![typesafe arguments](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/04_typesafe-arguments.png)
-![typesafe arguments](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/04_typesafe-arguments-2.png)
+![typesafe arguments 1](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/04_typesafe-arguments.png)
+![typesafe arguments 2](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/04_typesafe-arguments-2.png)
 
 #### you will get an error if you forgot to add a translation in a locale
 ![typesafe keys in translations](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/05_typesafe-keys-in-translations.png)

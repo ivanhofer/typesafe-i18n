@@ -2,7 +2,7 @@ import type { Translation } from '../i18n-types'
 
 const it: Translation = {
 	STARTUP: "L'applicazione è stata iniziata",
-	CHOOSE_LOCALE: 'Seleziona la lingua...',
+	CHOOSE_LOCALE: 'Seleziona lingua...',
 	HI: 'Ciao {name}!',
 	TUTORIAL: 'Visitate il {link|linkToSvelteTutorial} per imparare a sviluppare applicazioni Svelte.',
 	YOUR_NAME: 'Il tuo nome:',
