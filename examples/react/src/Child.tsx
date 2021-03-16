@@ -5,7 +5,7 @@ import I18nContext from './i18n/i18n-react'
 import { locales } from './i18n/i18n-util'
 import { Locales } from './i18n/i18n-types'
 
-function App() {
+function Child() {
 	const [name, setName] = useState('John')
 
 	const { setLocale, LL, locale } = useContext(I18nContext)
@@ -58,4 +58,4 @@ function App() {
 	)
 }
 
-export default App
+export default Child
