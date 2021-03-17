@@ -99,7 +99,8 @@ export const baseLocale: Locales = '${baseLocale}'
 
 ${localesEnum}
 ${dynamicCode}
-export const i18nString = (locale: Locales) => initI18nString(locale, initFormatters(locale))
+export const i18nString = ${loadLocalesAsync ? 'async ' : ''}(locale: Locales) => initI18nString(locale, ${loadLocalesAsync ? 'await ' : ''
+		}initFormatters(locale))
 `
 }
 
