@@ -1,3 +1,5 @@
+# !!! WIP !!! not yet ready
+
 # typesafe-i18n React
 
 This is a small project demonstrating a `typesafe-i18n` integration with React.

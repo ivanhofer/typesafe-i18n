@@ -61,7 +61,6 @@ You can use `typesafe-i18n` in a variety of project-setups:
 
  - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/node) apis, backends, scripts, ...
  - [Svelte/Sapper/SvelteKit](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte) applications
- - [React](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/react) applications
  - [Browser](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/browser) projects
  - [other frameworks](#other-frameworks) like React, VueJS, Angular and others ...
 <!-- TODO: create example for react -->
