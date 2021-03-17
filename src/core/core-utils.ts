@@ -1,4 +1,4 @@
-import { isPluralPart } from './core'
+import { isPluralPart, TranslationFunctions } from './core'
 import type { ArgumentPart, Part, PluralPart } from './parser'
 
 export const removeEmptyValues = <T>(object: T): T =>
@@ -36,3 +36,8 @@ export const partAsStringWithoutTypes = (part: Part): string => {
 
 	return `{${part.k}${part.f?.length ? `|${part.f.join('|')}` : ''}}`
 }
+
+export const getFallbackProxy = <TF extends TranslationFunctions>(): TF =>
+	new Proxy({} as TF, {
+		get: (_target, key: string) => () => key,
+	})

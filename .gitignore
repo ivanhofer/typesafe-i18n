@@ -5,6 +5,7 @@ node_modules
 /esm
 /formatters
 /node
+/react
 /rollup
 /svelte
 /tests/generated/**/*.actual.output
