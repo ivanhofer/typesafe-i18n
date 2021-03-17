@@ -28,8 +28,9 @@
 			"require": "./cjs/formatters/*.js"
 		},
 		"./adapters/*": "./adapters/*.js",
-		"./svelte/svelte-store": "./svelte/svelte-store.js",
+		"./react/react-context": "./react/react-context.js",
 		"./rollup/*": "./rollup/*.js",
+		"./svelte/svelte-store": "./svelte/svelte-store.js",
 		"./package.json": "./package.json",
 		"./*": {
 			"import": "./esm/*",
