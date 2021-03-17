@@ -1,7 +1,6 @@
 import type { Translation } from '../i18n-types'
 
 const de: Translation = {
-	STARTUP: 'Anwendung wurde gestartet',
 	CHOOSE_LOCALE: 'Sprache auswählen...',
 	HI: 'Hallo {name}!',
 	EDIT_AND_SAVE: 'Bearbeite und speicher <code>src/App.tsx</code> um neu zu laden.',

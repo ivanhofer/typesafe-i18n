@@ -9,7 +9,6 @@ export type Locales =
 	| 'it'
 
 export type TranslationKeys =
-	| 'STARTUP'
 	| 'CHOOSE_LOCALE'
 	| 'HI'
 	| 'EDIT_AND_SAVE'
@@ -19,10 +18,6 @@ export type TranslationKeys =
 	| 'TODAY'
 
 export type Translation = {
-	/**
-	 * app started
-	 */
-	'STARTUP': string
 	/**
 	 * choose locale...
 	 */
@@ -56,10 +51,6 @@ export type Translation = {
 }
 
 export type TranslationFunctions = {
-	/**
-	 * app started
-	 */
-	'STARTUP': () => string
 	/**
 	 * choose locale...
 	 */

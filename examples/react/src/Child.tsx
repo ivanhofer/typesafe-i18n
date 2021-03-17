@@ -1,14 +1,14 @@
 import React, { ChangeEventHandler, useContext, useState } from 'react'
 import logo from './logo.svg'
 import './App.css'
-import I18nContext from './i18n/i18n-react'
 import { locales } from './i18n/i18n-util'
 import { Locales } from './i18n/i18n-types'
+import { I18nContext } from './i18n/i18n-react'
 
 function Child() {
-	const [name, setName] = useState('John')
-
 	const { setLocale, LL, locale } = useContext(I18nContext)
+
+	const [name, setName] = useState('John')
 
 	const onLocaleSelected: ChangeEventHandler<HTMLSelectElement> = ({ target }) => {
 		const locale = target.value as Locales
@@ -22,7 +22,7 @@ function Child() {
 		<header className="App-header">
 			<label>
 				{LL.SELECTED_LOCALE()}
-				<select value={locale} onChange={onLocaleSelected}>
+				<select value={locale || ''} onChange={onLocaleSelected}>
 					<option value="" disabled>
 						{LL.CHOOSE_LOCALE()}
 					</option>

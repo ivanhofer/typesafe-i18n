@@ -10,13 +10,16 @@ ${importType} { Locales, Translation, TranslationFunctions, Formatters } from '.
 import { baseLocale, getTranslationForLocale } from './${utilFileName}'
 import { initFormatters } from './formatters'
 
-const { initI18n: init, context: I18nContext } = getReactHelpers<Locales, Translation, TranslationFunctions, Formatters>()
+const { component: TypesafeI18n, context: I18nContext } = getReactHelpers<
+	Locales,
+	Translation,
+	TranslationFunctions,
+	Formatters
+>(baseLocale, getTranslationForLocale, initFormatters)
 
-const initI18n = (locale: Locales = baseLocale) => init(locale, getTranslationForLocale, initFormatters)
+export { I18nContext }
 
-export { initI18n, I18nContext }
-
-export default I18nContext
+export default TypesafeI18n
 `
 }
 
@@ -28,6 +31,6 @@ export const generateReactAdapter = async (
 
 	const reactUtils = getReactUtils(config, importType)
 
-	const fileName = config.adapterFileName || 'i18n-react'
+	const fileName = config.adapterFileName || 'i18n-react.tsx'
 	await writeFileIfContainsChanges(outputPath, fileName, reactUtils)
 }

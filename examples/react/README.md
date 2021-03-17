@@ -1,5 +1,3 @@
-# !!! WIP !!! not yet ready
-
 # typesafe-i18n React
 
 This is a small project demonstrating a `typesafe-i18n` integration with React.
@@ -50,23 +48,22 @@ You could configure your development script to run the watcher in parallel to `r
 }
 ```
 
-The watcher will generate a custom React context inside `i18n-react.ts` that you can use inside your components.
+The watcher will generate a custom React component and context inside `i18n-react.ts` that you can use inside your application.
 
-Inside your root component initialize the context:
+Wrap your application root with the `TypesafeI18n` component:
 
 ```typescript
 import React from 'react'
-import I18nContext, { useI18n } from './i18n/i18n-react'
+import TypesafeI18n from './i18n/i18n-react'
 
 function App() {
-   const i18n = useI18n()
 
    return (
-      <I18nContext.Provider value={i18n}>
+      <TypesafeI18n initialLocale="en">
 
          <!-- your app goes here -->
 
-      </I18nContext.Provider>
+		</TypesafeI18n>
    )
 }
 
@@ -78,7 +75,7 @@ That's it. You can then start using `typesafe-i18n` inside your React components
 
 ```typescript
 import React from 'react'
-import I18nContext from './i18n/i18n-react'
+import { I18nContext } from './i18n/i18n-react'
 
 function Greeting(props) {
    const { LL } = useContext(I18nContext)
