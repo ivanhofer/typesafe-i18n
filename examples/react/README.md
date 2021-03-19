@@ -50,7 +50,7 @@ The watcher will generate a custom React component and context inside `i18n-reac
 
 Wrap your application root with the `TypesafeI18n` component:
 
-```typescript
+```jsx
 import React from 'react'
 import TypesafeI18n from './i18n/i18n-react'
 
@@ -70,7 +70,7 @@ export default App
 
 That's it. You can then start using `typesafe-i18n` inside your React components.
 
-```typescript
+```jsx
 import React from 'react'
 import { I18nContext } from './i18n/i18n-react'
 
@@ -94,7 +94,7 @@ export default Greeting
 
 When running the [watcher](https://github.com/ivanhofer/typesafe-i18n#typesafety), the file `i18n-react.tsx` will export a React component you can wrap around your application. It accepts the (optional) prop `initialLocale` where you can pass a locale to initialize the context.
 
-```typescript
+```jsx
 import React from 'react'
 import TypesafeI18n from './i18n/i18n-react'
 
@@ -117,7 +117,7 @@ export default App
 
 Also a React context is exported by the generated file `i18n-react.tsx`. You can use it with the `useContext` hook.
 
-```typescript
+```jsx
 import React from 'react'
 import { I18nContext } from './i18n/i18n-react'
 
@@ -136,7 +136,7 @@ The context gives you access to following variables:
 
 An initialized [`i18nObject`](https://github.com/ivanhofer/typesafe-i18n#i18nobject) you can use to translate your app.
 
-```typescript
+```jsx
 import React from 'react'
 import { I18nContext } from './i18n/i18n-react'
 
@@ -162,7 +162,7 @@ A `boolean` that indicates if the locale is currently loading. Can be useful if 
 A function to set another locale for the context.
 
 
-```typescript
+```jsx
 import React from 'react'
 import { I18nContext } from './i18n/i18n-react'
 
