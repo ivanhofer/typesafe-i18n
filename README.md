@@ -231,9 +231,7 @@ You can take a look at this [demo repository](https://github.com/ivanhofer/types
 If you are already using `rollup` as your bundler, you can add the `i18nWatcher` to your `rollup.config.js`.
 
 ```typescript
-import i18nWatcher from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n-watcher'
-
-const isDev = !!process.env.ROLLUP_WATCH
+import typesafeI18n from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n'
 
 export default {
    input: ...,
@@ -242,16 +240,22 @@ export default {
       ...
       typescript(),
 
-      // only running in development mode
-      // looks for changes in your base locale file
-      isDev && i18nWatcher({ /* options go here */ })
+      // looks for changes in your base locale file in development mode & optimizes code in production mode
+      typesafeI18n({ /* options go here */ })
    }
 }
 ```
 
-> Make sure you start the watcher only in your development environment.
+You can pass [options](#options) to the watcher by creating a `.typesafe-i18n.json` file in the root of your workspace, or by passing it as an argument to the `typesafeI18n` plugin.
 
-You can pass [options](#options) to the watcher by creating a `.typesafe-i18n.json` file in the root of your workspace, or by passing it as an argument to `i18nWatcher`.
+The rollup plugin has an advantage over the node-process, since it can also be used to optimize the translations.
+
+Currently implemented optimizations:
+
+ - get rid of the arguments type informations inside your base-translation:\
+   These types inside your base translations e.g. `Hello {name:string}!` are only used from the watcher to generate types for your translation. The rollup plugin removes these types from the translations in order to reduce bundle size by a few bytes. The example above will be optimized to `Hello {name}!` inside your production bundle.
+
+More [optimizations](#performance) will follow.
 
 
 ### folder structure

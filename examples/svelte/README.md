@@ -88,7 +88,7 @@ That's it. You can then start using `typesafe-i18n` inside your Svelte applicati
 
 ## Stores
 
-The file `i18n-svelte.ts` exports following functions and readable stores:
+When running the [watcher](https://github.com/ivanhofer/typesafe-i18n#typesafety), the file `i18n-svelte.ts` will export following functions and readable stores:
 
 
 ### initI18n
