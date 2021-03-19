@@ -61,7 +61,7 @@ function App() {
 
          <!-- your app goes here -->
 
-		</TypesafeI18n>
+      </TypesafeI18n>
    )
 }
 
@@ -105,7 +105,7 @@ function App() {
 
          <!-- your app goes here -->
 
-		</TypesafeI18n>
+      </TypesafeI18n>
    )
 }
 
@@ -123,7 +123,6 @@ import { I18nContext } from './i18n/i18n-react'
 
 function MyComponent(props) {
    const { LL, isLoadingLocale, locale, setLocale } = useContext(I18nContext)
-
 
    return // ...
 }
