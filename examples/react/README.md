@@ -207,27 +207,27 @@ import { useContext } from 'react'
 import { initI18nReact } from 'typesafe-i18n/react/react-context'
 
 const localeTranslations = {
-	en: { TODAY: 'Today is {date|weekday}' },
-	de: { TODAY: 'Heute ist {date|weekday}' },
-	it: { TODAY: 'Oggi è {date|weekday}' },
+   en: { TODAY: 'Today is {date|weekday}' },
+   de: { TODAY: 'Heute ist {date|weekday}' },
+   it: { TODAY: 'Oggi è {date|weekday}' },
 }
 
 const loadLocale = (locale) => localeTranslations[locale]
 
 const initFormatters = (locale) => {
-	const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
+   const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
 
-	return {
-		weekday: (value) => dateFormatter.format(value),
-	}
+   return {
+      weekday: (value) => dateFormatter.format(value),
+   }
 }
 
 const { component: TypesafeI18n, context: I18nContext } = initI18nReact('en', loadLocale, initFormatters)
 
 function Child() {
-	const { LL } = useContext(I18nContext)
+   const { LL } = useContext(I18nContext)
 
-	return (
+   return (
       <div>
          { LL.TODAY({ date: new Date() }) }
       </div>
@@ -235,17 +235,15 @@ function Child() {
 }
 
 function App() {
-	return (
-		<TypesafeI18n>
-			<Child />
-		</TypesafeI18n>
-	)
+   return (
+      <TypesafeI18n>
+         <Child />
+      </TypesafeI18n>
+   )
 }
 
 export default App
 ```
-
-
 
 ---
 ---
