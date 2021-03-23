@@ -681,12 +681,13 @@ These parts are bundled into the [core functions](#general). The sizes of the co
 
 - [i18nString](#i18nString): 765 bytes gzipped
 - [i18nObject](#i18nObject): 819 bytes gzipped
-- [i18n](#i18n): 975 bytes gzipped
+- [i18n](#i18n): 924 bytes gzipped
 
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
-There also exists a useful wrapper for svelte applications:
-- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte#usage-in-javascript-projects): 1970 bytes gzipped
+There also exists a useful wrapper for some frameworks:
+- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte#usage-in-javascript-projects): 1072 bytes gzipped
+- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/react#usage-in-javascript-projects): 1054 bytes gzipped
 
 
 
