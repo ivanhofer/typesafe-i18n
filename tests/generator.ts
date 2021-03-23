@@ -32,7 +32,7 @@ const createConfig = (prefix: string, config?: GeneratorConfig): GeneratorConfig
 		locales: config?.locales?.length ? config?.locales : [config?.baseLocale || 'en'],
 	})
 
-type FileToCheck = 'types' | 'util' | 'formatters-template' | 'types-template' | 'svelte'
+type FileToCheck = 'types' | 'util' | 'formatters-template' | 'types-template' | 'svelte' | 'react'
 
 const getPathOfOutputFile = (prefix: string, file: FileToCheck, type: 'actual' | 'expected') =>
 	`${outputPath}${prefix}/${file}.${type}.output`
@@ -72,6 +72,7 @@ const testGeneratedOutput = async (
 		await check(prefix, 'formatters-template')
 		await check(prefix, 'types-template')
 		await check(prefix, 'svelte')
+		await check(prefix, 'react')
 	})
 
 // --------------------------------------------------------------------------------------------------------------------

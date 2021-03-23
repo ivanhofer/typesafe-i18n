@@ -225,7 +225,7 @@ I will update this part as soon as I get my hands on the beta and the syntax. Bu
 
 # usage in JavaScript projects
 
-Since you can't take advantage of the generated types, you need to import the stores directly from 'typesafe-i18n/svelte'.\
+Since you can't take advantage of the generated types, you need to import the stores directly from 'typesafe-i18n/svelte/svelte-store'.\
 When initializing you need to pass a callback to load the translation and an optional callback to initialize your formatters.
 
 ```typescript
@@ -243,7 +243,7 @@ const initFormatters = (locale) => {
    const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
 
    return {
-      date: (value) => dateFormatter.format(value)
+      weekday: (value) => dateFormatter.format(value)
    }
 }
 

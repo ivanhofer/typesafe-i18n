@@ -1,1 +1,1 @@
-export { getReactHelpers } from './adapters/react'
+export { initI18nReact } from './adapters/react'

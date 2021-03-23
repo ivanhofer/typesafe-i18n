@@ -35,7 +35,7 @@ type TypesafeI18nProps<L extends string> = {
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-export const getReactHelpers = <
+export const initI18nReact = <
 	L extends string = string,
 	T extends BaseTranslation = BaseTranslation,
 	TF extends TranslationFunctions = TranslationFunctions<T>,
