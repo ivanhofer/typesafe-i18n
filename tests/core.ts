@@ -69,6 +69,8 @@ test('param', () => assert.is(LL.PARAM('hi'), 'hi'))
 test('param but empty', () => assert.is(LL.PARAM(), ''))
 test('param but empty multiple', () => assert.is(LL.SAME_PARAM(), '  '))
 
+test('toString', () => assert.is(LL.NO_PARAM(), '' + LL.NO_PARAM))
+
 // --------------------------------------------------------------------------------------------------------------------
 
 test('trim plural one', () => assert.is(LL.TRIM_PLURAL({ key: 1 }), '1'))

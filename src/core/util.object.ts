@@ -46,7 +46,10 @@ export function i18nObject(locale: any, translations: any, formatters: any = {})
 	return new Proxy(
 		{},
 		{
-			get: (_target, key: string) => translateFunctionInstance.bind(null, key),
+			get: (_target, key: string) => {
+				const fn = translateFunctionInstance.bind(null, key)
+				return Object.assign(fn, { toString: fn })
+			},
 		},
 	)
 }
