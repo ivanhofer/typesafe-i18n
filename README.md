@@ -414,7 +414,7 @@ For more information about the `LLL` object, read the [usage](#i18nString) secti
 ```typescript
 const APPLES = '{0} apples'
 
-LLL(APPLES, 12) => '12 apples'
+LLL(APPLES, 12) // => '12 apples'
 ```
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -424,7 +424,7 @@ LLL(APPLES, 12) => '12 apples'
 ```typescript
 const FRUITS = '{0} apples and {1} bananas'
 
-LLL(FRUITS, 3, 7) => '3 apples and 7 bananas'
+LLL(FRUITS, 3, 7) // => '3 apples and 7 bananas'
 ```
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -436,7 +436,7 @@ LLL(FRUITS, 3, 7) => '3 apples and 7 bananas'
 ```typescript
 const FRUITS = '{nrOfApples} apples and {nrOfBananas} bananas'
 
-LLL(FRUITS, { nrOfApples: 3, nrOfBananas: 7 }) => '3 apples and 7 bananas'
+LLL(FRUITS, { nrOfApples: 3, nrOfBananas: 7 }) // => '3 apples and 7 bananas'
 ```
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -448,8 +448,8 @@ LLL(FRUITS, { nrOfApples: 3, nrOfBananas: 7 }) => '3 apples and 7 bananas'
 ```typescript
 const APPLES = '{nrOfApples} {{apple|apples}}'
 
-LLL(APPLES, { nrOfApples: 1 }) => '1 apple'
-LLL(APPLES, { nrOfApples: 2 }) => '2 apples'
+LLL(APPLES, { nrOfApples: 1 }) // => '1 apple'
+LLL(APPLES, { nrOfApples: 2 }) // => '2 apples'
 ```
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -461,9 +461,9 @@ LLL(APPLES, { nrOfApples: 2 }) => '2 apples'
 ```typescript
 const APPLES = '{nrOfApples} apple{{s}}'
 
-LLL(APPLES, { nrOfApples: 0 }) => '0 apples'
-LLL(APPLES, { nrOfApples: 1 }) => '1 apple'
-LLL(APPLES, { nrOfApples: 5 }) => '5 apples'
+LLL(APPLES, { nrOfApples: 0 }) // => '0 apples'
+LLL(APPLES, { nrOfApples: 1 }) // => '1 apple'
+LLL(APPLES, { nrOfApples: 5 }) // => '5 apples'
 ```
 <!-- ------------------------------------------------------------------------------------------ -->
 
@@ -474,9 +474,9 @@ LLL(APPLES, { nrOfApples: 5 }) => '5 apples'
 ```typescript
 const MEMBERS = '{0} weitere{{s|}} Mitglied{{er}}'
 
-LLL(MEMBERS, 0) => '0 weitere Mitglieder'
-LLL(MEMBERS, 1) => '1 weiteres Mitglied'
-LLL(MEMBERS, 9) => '9 weitere Mitglieder'
+LLL(MEMBERS, 0) // => '0 weitere Mitglieder'
+LLL(MEMBERS, 1) // => '1 weiteres Mitglied'
+LLL(MEMBERS, 9) // => '9 weitere Mitglieder'
 ```
 
 ### plural (full syntax):
@@ -490,11 +490,11 @@ Under the hood, `typesafe-i18n` uses the [Intl.PluralRules](https://developer.mo
 
 const PLURAL = 'I have {{zero|one|two|a few|many|a lot}} apple{{s}}'
 
-LLL(PLURAL, 0) => 'I have zero apples'
-LLL(PLURAL, 1) => 'I have one apple'
-LLL(PLURAL, 2) => 'I have two apples'
-LLL(PLURAL, 6) => 'I have a few apples'
-LLL(PLURAL, 18) => 'I have many apples'
+LLL(PLURAL, 0) // => 'I have zero apples'
+LLL(PLURAL, 1) // => 'I have one apple'
+LLL(PLURAL, 2) // => 'I have two apples'
+LLL(PLURAL, 6) // => 'I have a few apples'
+LLL(PLURAL, 18) // => 'I have many apples'
 ```
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -507,8 +507,8 @@ Read the [formatters](#formatters) section to learn how you can configure format
 ```typescript
 const now = Date.now()
 
-LLL('Today is {date|weekday}', { date: now }) => 'Today is Friday'
-LLL('Heute ist {date|weekday}', { date: now }) => 'Heute ist Freitag'
+LLL('Today is {date|weekday}', { date: now }) // => 'Today is Friday'
+LLL('Heute ist {date|weekday}', { date: now }) // => 'Heute ist Freitag'
 ```
 
 Allows also to format values by multiple formatters in row. The formatters will be called from left to right.
@@ -516,9 +516,9 @@ Allows also to format values by multiple formatters in row. The formatters will 
 ```typescript
 const now = Date.now()
 
-LLL('Today is {date|weekday}', { date: now }) => 'Today is Friday'
-LLL('Today is {date|weekday|uppercase}', { date: now }) => 'Today is FRIDAY'
-LLL('Today is {date|weekday|uppercase|shorten}', { date: now }) => 'Today is FRI'
+LLL('Today is {date|weekday}', { date: now }) // => 'Today is Friday'
+LLL('Today is {date|weekday|uppercase}', { date: now }) // => 'Today is FRIDAY'
+LLL('Today is {date|weekday|uppercase|shorten}', { date: now }) // => 'Today is FRI'
 ```
 
 
@@ -535,7 +535,7 @@ const translation = {
 
 LL.HI() // => ERROR: Expected 1 arguments, but got 0.
 LL.HI('John', 'Jane') // => ERROR: Expected 1 arguments, but got 2.
-LL.HI('John') => 'Hi John'
+LL.HI('John') // => 'Hi John'
 ```
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -549,9 +549,8 @@ const translation = {
    HI: 'Hello {name:string}'
 }
 
-LL.HI('John')
-// => ERROR: Argument of type 'string' is not assignable to parameter of type '{ name: string; }'.
-LL.HI({ name: 'John' }) => 'Hi John'
+LL.HI('John') // => ERROR: Argument of type 'string' is not assignable to parameter of type '{ name: string; }'.
+LL.HI({ name: 'John' }) // => 'Hi John'
 ```
 
 #### everything together:
@@ -559,7 +558,7 @@ LL.HI({ name: 'John' }) => 'Hi John'
 ```typescript
 const MESSAGE = 'Hi {name:string|uppercase}, I want to buy {nrOfApples:number} apple{{s}}'
 
-LLL(MESSAGE, { name: 'John', nrOfApples: 42 }) => 'Hi JOHN, I would like to buy 42 apples'
+LLL(MESSAGE, { name: 'John', nrOfApples: 42 }) // => 'Hi JOHN, I would like to buy 42 apples'
 
 ```
 
@@ -568,8 +567,27 @@ LLL(MESSAGE, { name: 'John', nrOfApples: 42 }) => 'Hi JOHN, I would like to buy 
 Of course `typesafe-i18n` can handle that as well.
 
 ```typescript
-LLL('Welcome to my site') => 'Welcome to my site'
+LLL('Welcome to my site') // => 'Welcome to my site'
 ```
+
+Or if you are using the [i18nObject (LL)](#i18nObject):
+
+```html
+<script>
+   const translation = {
+      LOGIN: 'login'
+   }
+<script>
+
+<div>
+   {LL.LOGIN()} <!-- => 'login' -->
+
+   <!-- NOTE: *not* supported everywhere -->
+   {LL.LOGIN} <!-- => 'login' -->
+</div>
+```
+
+> Some frameworks like 'Svelte' will call the `toString()` method on objects inside the html-template. So if you have translations with no arguments you can omit calling the translation-function. The framework will do that for you.
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
