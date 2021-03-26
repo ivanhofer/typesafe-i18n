@@ -24,4 +24,4 @@ export const getTranslationForLocale = async (locale: Locales) => (await (locale
 
 export const i18nObject = (locale: Locales) => i18nObjectLoaderAsync<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
 
-export const i18nString = async (locale: Locales) => initI18nString(locale, await initFormatters(locale))
+export const i18nString = async (locale: Locales) => initI18nString<Locales, Formatters>(locale, await initFormatters(locale))
