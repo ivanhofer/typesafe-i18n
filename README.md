@@ -254,6 +254,8 @@ Currently implemented optimizations:
 
  - get rid of the arguments type informations inside your base-translation:\
    These types inside your base translations e.g. `Hello {name:string}!` are only used from the watcher to generate types for your translation. The rollup plugin removes these types from the translations in order to reduce bundle size by a few bytes. The example above will be optimized to `Hello {name}!` inside your production bundle.
+ - include only certain locales:\
+	If you want to create an own bundle per locale. When running rollup to create your production-bundle, you can specify the `'locales'` [option](#options) to include only certain locales. The rollup plugin will remove all other locales from the production bundle.
 
 More [optimizations](#performance) will follow.
 
@@ -358,6 +360,8 @@ Defines which locale to use for the types generation. You can find more informat
 ### locales
 
 Specifies the locales you want to use. This can be useful if you want to create an own bundle for each locale. If you want to include only certain locales, you need to set the locales you want to use. If empty, all locales will be used.
+
+> Note: requires the usage of the [rollup-plugin](#rollup-plugin)
 
 ### loadLocalesAsync
 
