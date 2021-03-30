@@ -1,5 +1,13 @@
 import type { AcornNode, Plugin } from 'rollup'
-import type { BaseNode, SimpleLiteral, ImportDeclaration, Identifier, Property } from 'estree'
+import type {
+	BaseNode,
+	SimpleLiteral,
+	ImportDeclaration,
+	Identifier,
+	Property,
+	VariableDeclarator,
+	ArrayExpression,
+} from 'estree'
 import { GeneratorConfig, setDefaultConfigValuesIfMissing } from './generator/generator'
 import { createFilter } from '@rollup/pluginutils'
 import { walk } from 'estree-walker'
@@ -31,14 +39,42 @@ const isImportDeclarationNode = <T extends BaseNode>(node: T): node is ImportDec
 	node.type === 'ImportDeclaration'
 
 //@ts-ignore
+const isVariableDeclaratorNode = <T extends BaseNode>(node: T): node is VariableDeclarator =>
+	node.type === 'VariableDeclarator'
+
+//@ts-ignore
 const isIdentifierNode = <T extends BaseNode>(node: T): node is Identifier => node.type === 'Identifier'
+
+//@ts-ignore
+const isArrayExpressionNode = <T extends BaseNode>(node: T): node is ArrayExpression => node.type === 'ArrayExpression'
 
 //@ts-ignore
 const isPropertyNode = <T extends BaseNode>(node: T): node is Property => node.type === 'Property'
 
-const removeLocales = (ast: AcornNode, locales: string[]) =>
+const removeLocales = (ast: AcornNode, locales: string[], locale: string) =>
 	walk(ast, {
 		enter(node) {
+			if (isVariableDeclaratorNode(node) && isIdentifierNode(node.id)) {
+				// set correct baseLocale
+				if (node.id.name === 'baseLocale') {
+					const literalNode = node.init as SimpleLiteral
+					if (isLiteralNode(literalNode) && literalNode.value !== locale) {
+						literalNode.value = locale
+						literalNode.raw = `"${locale}"`
+					}
+				}
+
+				// remove locales from array
+				if (node.id.name === 'locales') {
+					const arrayExpressionNode = node.init as ArrayExpression
+					if (isArrayExpressionNode(arrayExpressionNode)) {
+						arrayExpressionNode.elements = arrayExpressionNode.elements
+							.filter(isLiteralNode)
+							.filter(({ value }) => locales.includes(value as string))
+					}
+				}
+			}
+
 			// remove locale import
 			if (
 				isImportDeclarationNode(node) &&
@@ -75,12 +111,14 @@ const plugin = (config?: GeneratorConfig): Plugin => {
 	let filterForBaseLocale: (id: unknown) => boolean
 	let filterForUtilFile: (id: unknown) => boolean = () => false
 	let locales: string[]
+	let locale: string
 
 	const initFilters = async () => {
 		const configWithDefaultValues = await setDefaultConfigValuesIfMissing(config)
 
 		const { outputPath, baseLocale, utilFileName } = configWithDefaultValues
 		locales = configWithDefaultValues.locales
+		locale = (locales.length && locales.includes(baseLocale) ? baseLocale : locales[0]) || baseLocale
 
 		filterForBaseLocale = createFilter([`${outputPath}/${baseLocale}/index.ts`])
 		locales.length && (filterForUtilFile = createFilter([`./${outputPath}/${utilFileName}.ts`]))
@@ -98,7 +136,7 @@ const plugin = (config?: GeneratorConfig): Plugin => {
 			const ast = this.parse(code)
 
 			isBaseLocale && removeTypesFromStrings(ast)
-			isUtilFile && removeLocales(ast, locales)
+			isUtilFile && removeLocales(ast, locales, locale)
 
 			const map = new sourceMap.SourceMapGenerator({ file: id })
 			const formattedCode = generate(ast, { sourceMap: map })
