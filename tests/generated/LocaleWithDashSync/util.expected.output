@@ -23,7 +23,7 @@ const localeTranslations: LocaleTranslations<Locales, Translation> = {
 	'de-at': de_at as Translation,
 }
 
-export const getTranslationForLocale = (locale: Locales) => localeTranslations[locale] || localeTranslations['de-at']
+export const getTranslationForLocale = (locale: Locales) => localeTranslations[locale] || localeTranslations[baseLocale]
 
 export const i18nObject = (locale: Locales) => i18nObjectLoader<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
 
