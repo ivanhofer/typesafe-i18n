@@ -53,7 +53,7 @@ import ${sanitizeLocale(locale)} from './${locale}'`,
 const localeTranslations: LocaleTranslations<Locales, Translation> = {${localesTranslations}
 }
 
-export const getTranslationForLocale = (locale: Locales) => localeTranslations[locale] || localeTranslations['${baseLocale}']
+export const getTranslationForLocale = (locale: Locales) => localeTranslations[locale] || localeTranslations[baseLocale]
 
 export const i18nObject = (locale: Locales) => i18nObjectLoader<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
 
