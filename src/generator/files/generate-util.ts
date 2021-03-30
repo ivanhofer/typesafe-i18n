@@ -13,14 +13,14 @@ const getLocalesTranslationRowAsync = (locale: Locale): string => {
 	${wrappedLocale}: () => import('./${locale}'),`
 }
 
-const getAsyncCode = ({ locales, baseLocale }: GeneratorConfigWithDefaultValues) => {
+const getAsyncCode = ({ locales }: GeneratorConfigWithDefaultValues) => {
 	const localesTranslationLoaders = locales.map(getLocalesTranslationRowAsync).join('')
 
 	return `
 const localeTranslationLoaders = {${localesTranslationLoaders}
 }
 
-export const getTranslationForLocale = async (locale: Locales) => (await (localeTranslationLoaders[locale] || localeTranslationLoaders['${baseLocale}'])()).default as Translation
+export const getTranslationForLocale = async (locale: Locales) => (await (localeTranslationLoaders[locale] || localeTranslationLoaders[baseLocale])()).default as Translation
 
 export const i18nObject = (locale: Locales) => i18nObjectLoaderAsync<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
 `
