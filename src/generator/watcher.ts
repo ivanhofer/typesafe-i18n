@@ -1,6 +1,6 @@
 import * as ts from 'typescript'
 import fs from 'fs'
-import path, { resolve } from 'path'
+import { resolve } from 'path'
 import type { BaseTranslation } from '../core/core'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './generator'
 import {
@@ -77,16 +77,9 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 		logger.info('files were modified => looking for changes ...')
 	}
 
-	const { baseLocale, locales: localesToUse, tempPath, outputPath } = config
+	const { baseLocale: locale, tempPath, outputPath } = config
 
-	const locales = (await getAllLanguages(outputPath)).filter(
-		(locale) => !localesToUse.length || localesToUse.includes(locale),
-	)
-	const locale = locales.find((l) => l === baseLocale) || locales[0] || baseLocale
-
-	if (!locales.length) {
-		locales.push(baseLocale)
-	}
+	const locales = await getAllLanguages(outputPath)
 
 	const languageFile = (locale && (await parseLanguageFile(outputPath, locale, tempPath))) || {}
 
@@ -107,11 +100,7 @@ const debonce = (callback: () => void) =>
 	)
 
 export const startWatcher = async (config?: GeneratorConfig): Promise<void> => {
-	if (!config) {
-		config = (await importFile<GeneratorConfig>(path.resolve('.typesafe-i18n.json'), false)) || {}
-	}
-
-	const configWithDefaultValues = setDefaultConfigValuesIfMissing(config)
+	const configWithDefaultValues = await setDefaultConfigValuesIfMissing(config)
 	const { outputPath } = configWithDefaultValues
 
 	const version = parseTypescriptVersion(ts.versionMajorMinor)

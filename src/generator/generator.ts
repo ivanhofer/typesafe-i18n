@@ -8,6 +8,8 @@ import { generateBaseLocaleTemplate } from './files/generate-template-baseLocale
 import { logger as defaultLogger, Logger, supportsImportType, TypescriptVersion } from './generator-util'
 import { generateNodeAdapter } from './files/generate-adapter-node'
 import { generateReactAdapter } from './files/generate-adapter-react'
+import { importFile } from './file-utils'
+import path from 'path'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -47,18 +49,26 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-export const setDefaultConfigValuesIfMissing = (config: GeneratorConfig): GeneratorConfigWithDefaultValues => ({
-	baseLocale: 'en',
-	locales: [],
-	tempPath: './node_modules/typesafe-i18n/temp-output/',
-	outputPath: './src/i18n/',
-	typesFileName: 'i18n-types',
-	utilFileName: 'i18n-util',
-	formattersTemplateFileName: 'formatters',
-	typesTemplateFileName: 'custom-types',
-	loadLocalesAsync: true,
-	...config,
-})
+export const setDefaultConfigValuesIfMissing = async (
+	config: GeneratorConfig | undefined,
+): Promise<GeneratorConfigWithDefaultValues> => {
+	if (!config) {
+		config = (await importFile<GeneratorConfig>(path.resolve('.typesafe-i18n.json'), false)) || {}
+	}
+
+	return {
+		baseLocale: 'en',
+		locales: [],
+		tempPath: './node_modules/typesafe-i18n/temp-output/',
+		outputPath: './src/i18n/',
+		typesFileName: 'i18n-types',
+		utilFileName: 'i18n-util',
+		formattersTemplateFileName: 'formatters',
+		typesTemplateFileName: 'custom-types',
+		loadLocalesAsync: true,
+		...config,
+	}
+}
 
 export const generate = async (
 	translations: BaseTranslation,

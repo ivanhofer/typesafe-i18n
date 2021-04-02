@@ -19,7 +19,7 @@ const defaultVersion = parseTypescriptVersion('4.1')
 
 const getFileName = (name: string) => name + actualPostfix
 
-const createConfig = (prefix: string, config?: GeneratorConfig): GeneratorConfigWithDefaultValues =>
+const createConfig = async (prefix: string, config?: GeneratorConfig): Promise<GeneratorConfigWithDefaultValues> =>
 	setDefaultConfigValuesIfMissing({
 		outputPath: outputPath + prefix,
 
@@ -66,7 +66,7 @@ const testGeneratedOutput = async (
 	version: TypescriptVersion = defaultVersion,
 ) =>
 	test(`generate ${prefix}`, async () => {
-		await generate(translation, createConfig(prefix, config), version, undefined, true)
+		await generate(translation, await createConfig(prefix, config), version, undefined, true)
 		await check(prefix, 'types')
 		await check(prefix, 'util')
 		await check(prefix, 'formatters-template')
@@ -114,7 +114,7 @@ const testGeneratedConsoleOutput = async (
 	test(`console ${prefix}`, async () => {
 		const loggerWrapper = mockLogger()
 
-		await generate(translation, createConfig(prefix, {}), defaultVersion, loggerWrapper.logger)
+		await generate(translation, await createConfig(prefix, {}), defaultVersion, loggerWrapper.logger)
 
 		await callback(loggerWrapper.outputs)
 	})
