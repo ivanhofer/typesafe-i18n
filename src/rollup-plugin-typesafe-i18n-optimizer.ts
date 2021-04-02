@@ -51,16 +51,50 @@ const isArrayExpressionNode = <T extends BaseNode>(node: T): node is ArrayExpres
 //@ts-ignore
 const isPropertyNode = <T extends BaseNode>(node: T): node is Property => node.type === 'Property'
 
-const removeLocales = (ast: AcornNode, locales: string[], locale: string) =>
+const createTranslationImportReplacementNode = (key: string) =>
+	createTranslationReplacementNode({
+		type: 'Identifier',
+		name: key,
+	})
+
+const createTranslationMappingReplacementNode = (key: string) =>
+	createTranslationReplacementNode({
+		type: 'Literal',
+		value: 'key',
+		raw: `'${key}'`,
+	})
+
+const createTranslationReplacementNode = (key: SimpleLiteral | Identifier): Property => ({
+	type: 'Property',
+	method: false,
+	shorthand: false,
+	computed: false,
+	key,
+	kind: 'init',
+	value: {
+		type: 'Literal',
+		raw: 'null',
+		value: null,
+	},
+})
+
+// eslint-disable-next-line no-console
+const log = (...messages: unknown[]) => void console.info('[typesafe-i18n] optimizer:', ...messages)
+
+const removeLocales = (ast: AcornNode, locales: string[], baseLocale: string) =>
 	walk(ast, {
 		enter(node) {
 			if (isVariableDeclaratorNode(node) && isIdentifierNode(node.id)) {
 				// set correct baseLocale
 				if (node.id.name === 'baseLocale') {
 					const literalNode = node.init as SimpleLiteral
-					if (isLiteralNode(literalNode) && literalNode.value !== locale) {
-						literalNode.value = locale
-						literalNode.raw = `"${locale}"`
+					if (isLiteralNode(literalNode) && literalNode.value !== baseLocale) {
+						const oldLocale = literalNode.value
+
+						literalNode.value = baseLocale
+						literalNode.raw = `"${baseLocale}"`
+
+						return log(`changed base locale from '${oldLocale}' to '${baseLocale}'`)
 					}
 				}
 
@@ -68,9 +102,16 @@ const removeLocales = (ast: AcornNode, locales: string[], locale: string) =>
 				if (node.id.name === 'locales') {
 					const arrayExpressionNode = node.init as ArrayExpression
 					if (isArrayExpressionNode(arrayExpressionNode)) {
+						const toRemove = arrayExpressionNode.elements
+							.filter(isLiteralNode)
+							.map(({ value }) => value as string)
+							.filter((locale) => !locales.includes(locale))
+
 						arrayExpressionNode.elements = arrayExpressionNode.elements
 							.filter(isLiteralNode)
 							.filter(({ value }) => locales.includes(value as string))
+
+						return log(`removed locales '${toRemove.join(',')}' from bundle`)
 					}
 				}
 			}
@@ -83,24 +124,31 @@ const removeLocales = (ast: AcornNode, locales: string[], locale: string) =>
 			) {
 				const locale = ('' + node.source.value).substring(2)
 				if (!locales.includes(locale)) {
-					this.remove()
+					this.replace(createTranslationImportReplacementNode(node.specifiers[0]?.local.name))
+
+					return log('[typesafe-i18n] optimizer:', `removed locale import '${locale}'`)
 				}
-				return
 			}
 
-			// remove locale from tranlsations
+			// remove locale from translations
 			if (
 				isPropertyNode(node) &&
 				node.kind === 'init' &&
 				!node.method &&
 				!node.computed &&
-				isIdentifierNode(node.key) &&
+				(isIdentifierNode(node.key) || isLiteralNode(node.key)) &&
 				isIdentifierNode(node.value)
 			) {
-				if (!locales.includes(node.key.name)) {
-					this.remove()
+				const key = isIdentifierNode(node.key) ? node.key.name : (node.key.value as string)
+
+				if (!locales.includes(key)) {
+					this.replace(createTranslationMappingReplacementNode(key))
+
+					return log('[typesafe-i18n] optimizer:', `removed locale from translations '${key}'`)
 				}
 			}
+
+			return
 		},
 	})
 
