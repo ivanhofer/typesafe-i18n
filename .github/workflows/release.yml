@@ -42,6 +42,11 @@ jobs:
               minor-wording: 'feat,feature'
               major-wording: 'major'
 
+         - uses: actions/upload-artifact@v2
+           with:
+              name: typesafe-i18n-browser
+              path: dist/
+
          - name: publish to npm
            uses: JS-DevTools/npm-publish@v1
            with:
