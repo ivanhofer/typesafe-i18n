@@ -42,7 +42,8 @@ jobs:
               minor-wording: 'feat,feature'
               major-wording: 'major'
 
-         - uses: actions/upload-artifact@v2
+         - name: create browser artifacts
+           uses: actions/upload-artifact@v2
            with:
               name: typesafe-i18n-browser
               path: dist/
