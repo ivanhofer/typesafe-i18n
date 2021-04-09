@@ -29,10 +29,10 @@ const localeTranslations: LocaleTranslations<Locales, Translation> = {
 	it,
 }
 
-export const getTranslationForLocale = (locale: Locales) => localeTranslations[locale] || localeTranslations['en']
+export const getTranslationForLocale = (locale: Locales) => localeTranslations[locale] || localeTranslations[baseLocale]
 
 export const i18nObject = (locale: Locales) => i18nObjectLoader<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
 
 export const i18n = () => initI18n<Locales, Translation, TranslationFunctions, Formatters>(getTranslationForLocale, initFormatters)
 
-export const i18nString = (locale: Locales) => initI18nString(locale, initFormatters(locale))
+export const i18nString = (locale: Locales) => initI18nString<Locales, Formatters>(locale, initFormatters(locale))
