@@ -205,26 +205,10 @@ Make sure you have installed `node` version `> 12.x` and are using a `typescript
 
  > The watcher will generate a different output depending on your TypeScript version. Older versions don't support all the features `typesafe-i18n` need to provide you with the best types. Make sure to use a TypeScript version `> 4.1.x` to benefit from all the typechecking features.
 
-You can choose between two variants to run the watcher.
+You can choose between two variants to run the watcher:
 
-- as a [node-process](#node-process)
 - as a [rollup-plugin](#rollup-plugin)
-
-### node-process
-
- > recommended, because it's faster than the rollup plugin
-
-Start the watcher node process in your terminal:
-
-```bash
-> node ./node_modules/typesafe-i18n/node/watcher.js
-```
-
-You can pass [options](#options) to the watcher by creating a `.typesafe-i18n.json` file in the root of your workspace.
-
-> You could use a npm-package like `npm-run-all` in order to start the watcher and you development-server in parallel.
-
-You can take a look at this [demo repository](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/node) to see how to run the watcher node process.
+- as a [node-process](#node-process)
 
 ### rollup-plugin
 
@@ -258,6 +242,24 @@ Currently implemented optimizations:
 	If you want to create an own bundle per locale. When running rollup to create your production-bundle, you can specify the `'locales'` [option](#options) to include only certain locales. The rollup plugin will remove all other locales from the production bundle.
 
 More [optimizations](#performance) will follow.
+
+
+### node-process
+
+ > This is the fallback option for all developers who aren't using rollup. Use this option if you bundle your application via webpack, parcel etc. or if you don't use a bundler at all.
+
+Start the watcher node process in your terminal:
+
+```bash
+> node ./node_modules/typesafe-i18n/node/watcher.js
+```
+
+Passing [options](#options) to the watcher is possible by creating a `.typesafe-i18n.json` file in the root of your workspace.
+
+> You could use a npm-package like `npm-run-all` in order to start the watcher and you development-server in parallel.
+
+Take a look at this [demo repository](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/node) to see how to run the watcher node process.
+
 
 
 ### folder structure
