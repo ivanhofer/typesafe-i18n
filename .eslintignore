@@ -3,5 +3,6 @@ node_modules
 /dist
 /esm
 /formatters
-/rollup
 /node
+/rollup
+/swebpack

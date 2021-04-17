@@ -31,6 +31,7 @@
 		"./react/react-context": "./react/react-context.js",
 		"./rollup/*": "./rollup/*.js",
 		"./svelte/svelte-store": "./svelte/svelte-store.js",
+		"./webpack/*": "./webpack/*.js",
 		"./package.json": "./package.json",
 		"./*": {
 			"import": "./esm/*",
@@ -53,12 +54,13 @@
 		"/node",
 		"/react",
 		"/rollup",
-		"/svelte"
+		"/svelte",
+		"/webpack"
 	],
 	"scripts": {
 		"dev:rollup": "tsc -p tsconfig-rollup.json -w",
 		"dev:node": "rollup -c rollup-node.config.ts -w",
-		"build": "npm run build:node && npm run build:rollup && npm run build:formatters && npm run build:adapters && npm run build:esm && npm run build:cjs && npm run build:browser && npm run build:svelte && npm run build:react",
+		"build": "npm run build:node && npm run build:rollup && npm run build:webpack && npm run build:formatters && npm run build:adapters && npm run build:esm && npm run build:cjs && npm run build:browser && npm run build:svelte && npm run build:react",
 		"build:adapters": "rollup -c rollup-adapters.config.ts && tsc -p tsconfig-adapters.json",
 		"build:browser": "rollup -c rollup-browser.config.ts",
 		"build:cjs": "tsc -p tsconfig-cjs.json",
@@ -68,6 +70,7 @@
 		"build:react": "rollup -c rollup-react.config.ts && tsc -p tsconfig-react.json --emitDeclarationOnly",
 		"build:rollup": "rollup -c rollup-rollup.config.ts && tsc -p tsconfig-rollup.json --emitDeclarationOnly",
 		"build:svelte": "rollup -c rollup-svelte.config.ts && tsc -p tsconfig-svelte.json --emitDeclarationOnly",
+		"build:webpack": "rollup -c rollup-webpack.config.ts && tsc -p tsconfig-webpack.json --emitDeclarationOnly",
 		"lint": "eslint src",
 		"lint:fix": "eslint src --fix",
 		"test": "uvu -r ts-node/register -i update.ts -i index.ts tests",
@@ -76,6 +79,7 @@
 		"test:size": "size-limit"
 	},
 	"dependencies": {
+		"@types/webpack": "^5.28.0",
 		"typesafe-utils": "^1.11.1"
 	},
 	"devDependencies": {
