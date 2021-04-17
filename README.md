@@ -208,11 +208,12 @@ Make sure you have installed `node` version `> 12.x` and are using a `typescript
 You can choose between two variants to run the watcher:
 
 - as a [rollup-plugin](#rollup-plugin)
+- as a [webpack-plugin](#webpack-plugin)
 - as a [node-process](#node-process)
 
 ### rollup-plugin
 
-If you are already using `rollup` as your bundler, you can add the `i18nWatcher` to your `rollup.config.js`.
+If you are already using `rollup` as your bundler, you can add the `typesafeI18n`-Plugin to your `rollup.config.js`.
 
 ```typescript
 import typesafeI18n from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n'
@@ -221,7 +222,7 @@ export default {
    input: ...,
    output: ...,
    plugins: {
-      ...
+		...
       typescript(),
 
       // looks for changes in your base locale file in development mode & optimizes code in production mode
@@ -244,9 +245,31 @@ Currently implemented optimizations:
 More [optimizations](#performance) will follow.
 
 
+### webpack-plugin
+
+If you are already using `webpack` as your bundler, you can add the `TypesafeI18nPlugin` to your `webpack.config.js`.
+
+```typescript
+const TypesafeI18nPlugin = require('typesafe-i18n/webpack/webpack-plugin-typesafe-i18n').default
+
+module.exports = {
+   entry: ...,
+   module: ...,
+   output: ...,
+   plugins: [
+      ...
+      // looks for changes in your base locale file in development mode
+      new TypesafeI18nPlugin({ /* options go here */ })
+   ],
+}
+```
+
+You can pass [options](#options) to the watcher by creating a `.typesafe-i18n.json` file in the root of your workspace, or by passing it as an argument to the constructor of `TypesafeI18nPlugin`.
+
+
 ### node-process
 
- > This is the fallback option for all developers who aren't using rollup. Use this option if you bundle your application via webpack, parcel etc. or if you don't use a bundler at all.
+> This is the fallback option for all developers who aren't using rollup or webpack. Use this option if you bundle your application via parcel, esbuild etc. or if you don't use a bundler at all.
 
 Start the watcher node process in your terminal:
 
