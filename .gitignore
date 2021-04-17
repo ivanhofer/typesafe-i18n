@@ -14,3 +14,4 @@ node_modules
 /tests/generated/**/de-at
 /tests/generated/console*
 /typesafe-i18n-*.tgz
+/webpack
