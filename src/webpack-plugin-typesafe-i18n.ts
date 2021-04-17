@@ -12,6 +12,10 @@ export default class TypesafeI18nWebpackPlugin implements node.NodeTargetPlugin 
 	}
 
 	apply(compiler: Compiler): void {
+		if ((compiler.options.mode || process.env.NODE_ENV) === 'production') {
+			return
+		}
+
 		compiler.hooks.compile.tap('TypesafeI18nWebpackPlugin', () => {
 			if (started) return
 

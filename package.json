@@ -60,6 +60,7 @@
 	"scripts": {
 		"dev:rollup": "tsc -p tsconfig-rollup.json -w",
 		"dev:node": "rollup -c rollup-node.config.ts -w",
+		"dev:webpack": "rollup -c rollup-webpack.config.ts -w",
 		"build": "npm run build:node && npm run build:rollup && npm run build:webpack && npm run build:formatters && npm run build:adapters && npm run build:esm && npm run build:cjs && npm run build:browser && npm run build:svelte && npm run build:react",
 		"build:adapters": "rollup -c rollup-adapters.config.ts && tsc -p tsconfig-adapters.json",
 		"build:browser": "rollup -c rollup-browser.config.ts",
