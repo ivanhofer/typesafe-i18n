@@ -4,7 +4,7 @@ import * as assert from 'uvu/assert'
 
 import type { BaseTranslation } from '../src'
 import { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../src/generator/generator'
-import { generate, setDefaultConfigValuesIfMissing } from '../src/generator/generator'
+import { generate, getConfigWithDefaultValues } from '../src/generator/generator'
 import { parseTypescriptVersion, TypescriptVersion } from '../src/generator/generator-util'
 
 const { readFile } = promises
@@ -20,7 +20,7 @@ const defaultVersion = parseTypescriptVersion('4.1')
 const getFileName = (name: string) => name + actualPostfix
 
 const createConfig = async (prefix: string, config?: GeneratorConfig): Promise<GeneratorConfigWithDefaultValues> =>
-	setDefaultConfigValuesIfMissing({
+	getConfigWithDefaultValues({
 		outputPath: outputPath + prefix,
 
 		typesFileName: getFileName('types'),

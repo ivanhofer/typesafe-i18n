@@ -26,12 +26,11 @@
 		"resolveJsonModule": true,
 		"jsx": "react"
 	},
-	"include": ["src/**/*"],
+	"include": ["src/**/*", "tests/*.ts"],
 	"exclude": ["node_modules"],
 	"ts-node": {
 		"compilerOptions": {
 			"module": "commonjs"
-		},
-		"include": ["tests/*.ts"]
+		}
 	}
 }
