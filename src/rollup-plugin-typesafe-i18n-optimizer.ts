@@ -8,7 +8,7 @@ import type {
 	VariableDeclarator,
 	ArrayExpression,
 } from 'estree'
-import { GeneratorConfig, setDefaultConfigValuesIfMissing } from './generator/generator'
+import { GeneratorConfig, getConfigWithDefaultValues } from './generator/generator'
 import { createFilter } from '@rollup/pluginutils'
 import { walk } from 'estree-walker'
 import { partsAsStringWithoutTypes } from './core/core-utils'
@@ -162,7 +162,7 @@ const plugin = (config?: GeneratorConfig): Plugin => {
 	let locale: string
 
 	const initFilters = async () => {
-		const configWithDefaultValues = await setDefaultConfigValuesIfMissing(config)
+		const configWithDefaultValues = await getConfigWithDefaultValues(config)
 
 		const { outputPath, baseLocale, utilFileName } = configWithDefaultValues
 		locales = configWithDefaultValues.locales

@@ -49,13 +49,12 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-export const setDefaultConfigValuesIfMissing = async (
+export const readConfig = async (config: GeneratorConfig | undefined): Promise<GeneratorConfig> =>
+	config || (await importFile<GeneratorConfig>(path.resolve('.typesafe-i18n.json'), false)) || {}
+
+export const getConfigWithDefaultValues = async (
 	config: GeneratorConfig | undefined,
 ): Promise<GeneratorConfigWithDefaultValues> => {
-	if (!config) {
-		config = (await importFile<GeneratorConfig>(path.resolve('.typesafe-i18n.json'), false)) || {}
-	}
-
 	return {
 		baseLocale: 'en',
 		locales: [],
@@ -66,7 +65,7 @@ export const setDefaultConfigValuesIfMissing = async (
 		formattersTemplateFileName: 'formatters',
 		typesTemplateFileName: 'custom-types',
 		loadLocalesAsync: true,
-		...config,
+		...(await readConfig(config)),
 	}
 }
 

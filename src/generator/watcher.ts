@@ -2,7 +2,7 @@ import * as ts from 'typescript'
 import fs from 'fs'
 import { resolve } from 'path'
 import type { BaseTranslation } from '../core/core'
-import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './generator'
+import { GeneratorConfig, GeneratorConfigWithDefaultValues, readConfig } from './generator'
 import {
 	copyFile,
 	createPathIfNotExits,
@@ -11,7 +11,7 @@ import {
 	getFiles,
 	importFile,
 } from './file-utils'
-import { generate, setDefaultConfigValuesIfMissing } from './generator'
+import { generate, getConfigWithDefaultValues } from './generator'
 import { logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
 
 const getAllLanguages = async (path: string) => {
@@ -100,7 +100,7 @@ const debonce = (callback: () => void) =>
 	)
 
 export const startWatcher = async (config?: GeneratorConfig): Promise<void> => {
-	const configWithDefaultValues = await setDefaultConfigValuesIfMissing(config)
+	const configWithDefaultValues = await getConfigWithDefaultValues(config)
 	const { outputPath } = configWithDefaultValues
 
 	const version = parseTypescriptVersion(ts.versionMajorMinor)
@@ -113,7 +113,7 @@ export const startWatcher = async (config?: GeneratorConfig): Promise<void> => {
 
 	logger.info(`generating files for typescript version: '${ts.versionMajorMinor}.x'`)
 	logger.info(`watcher started in: '${outputPath}'`)
-	logger.info(`options:`, config)
+	logger.info(`options:`, await readConfig(config))
 
 	onChange()
 }
