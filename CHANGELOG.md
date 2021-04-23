@@ -4,6 +4,9 @@
 
  - add CHANGELOG file
 
+Fix:
+ - add deprecation message for `.toString()` functionality [#27](https://github.com/ivanhofer/typesafe-i18n/issues/27)
+
 ## 2.16.0 (2021-04-17)
 
 Features:
