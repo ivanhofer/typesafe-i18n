@@ -610,13 +610,8 @@ Or if you are using the [i18nObject (LL)](#i18nObject):
 
 <div>
    {LL.LOGIN()} <!-- => 'login' -->
-
-   <!-- NOTE: *not* supported everywhere -->
-   {LL.LOGIN} <!-- => 'login' -->
 </div>
 ```
-
-> Some frameworks like 'Svelte' will call the `toString()` method on objects inside the html-template. So if you have translations with no arguments you can omit calling the translation-function. The framework will do that for you.
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
