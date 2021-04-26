@@ -1,5 +1,5 @@
 import * as ts from 'typescript'
-import fs from 'fs'
+import { watch } from 'chokidar'
 import { resolve } from 'path'
 import type { BaseTranslation } from '../core/core'
 import { GeneratorConfig, GeneratorConfigWithDefaultValues, readConfig } from './generator'
@@ -109,11 +109,9 @@ export const startWatcher = async (config?: GeneratorConfig): Promise<void> => {
 
 	await createPathIfNotExits(outputPath)
 
-	fs.watch(outputPath, { recursive: true }, () => debonce(onChange))
+	watch(outputPath).on('all', () => debonce(onChange))
 
 	logger.info(`generating files for typescript version: '${ts.versionMajorMinor}.x'`)
 	logger.info(`watcher started in: '${outputPath}'`)
 	logger.info(`options:`, await readConfig(config))
-
-	onChange()
 }

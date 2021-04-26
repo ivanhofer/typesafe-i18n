@@ -1,6 +1,10 @@
 # CHANGELOG.md
 
-## 2.16.1 (2021-04-22)
+## 2.17.0 (2021-04-26)
+
+ - replace `fs.watch` with `chokidar.watch` [#29](https://github.com/ivanhofer/typesafe-i18n/issues/29)
+
+## 2.16.1 (2021-04-23)
 
  - add CHANGELOG file
 
