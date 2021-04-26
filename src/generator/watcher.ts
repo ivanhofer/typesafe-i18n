@@ -109,8 +109,6 @@ export const startWatcher = async (config?: GeneratorConfig): Promise<void> => {
 
 	await createPathIfNotExits(outputPath)
 	
-	let watchOptions = { recursive: true };
-
 	// Recursive watching only supported on Windows and macOS
 	// https://nodejs.org/docs/latest/api/fs.html#fs_caveats
 	const recursive = process.platform == "win32" || process.platform == "darwin"
