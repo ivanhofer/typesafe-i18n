@@ -108,8 +108,13 @@ export const startWatcher = async (config?: GeneratorConfig): Promise<void> => {
 	const onChange = parseAndGenerate.bind(null, configWithDefaultValues, version)
 
 	await createPathIfNotExits(outputPath)
+	
+	let watchOptions = { recursive: true };
 
-	fs.watch(outputPath, { recursive: true }, () => debonce(onChange))
+	// Recursive watching only supported on Windows and macOS
+	// https://nodejs.org/docs/latest/api/fs.html#fs_caveats
+	const recursive = process.platform == "win32" || process.platform == "darwin"
+	fs.watch(outputPath, { recursive }, () => debonce(onChange))
 
 	logger.info(`generating files for typescript version: '${ts.versionMajorMinor}.x'`)
 	logger.info(`watcher started in: '${outputPath}'`)
