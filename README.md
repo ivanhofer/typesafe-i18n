@@ -274,7 +274,17 @@ You can pass [options](#options) to the watcher by creating a `.typesafe-i18n.js
 Start the watcher node process in your terminal:
 
 ```bash
-> node ./node_modules/typesafe-i18n/node/watcher.js
+> npx typesafe-i18n
+```
+
+or define a script in your `package.json` file:
+
+```json
+{
+   "scripts": {
+      "typesafe-i18n-watcher": "typesafe-i18n"
+   }
+}
 ```
 
 Passing [options](#options) to the watcher is possible by creating a `.typesafe-i18n.json` file in the root of your workspace.
