@@ -13,7 +13,7 @@ const config = [
 				sourcemap: true,
 			},
 		],
-		external: ['typescript'],
+		external: ['typescript', 'chokidar'],
 		plugins: [resolve({ preferBuiltins: true }), commonjs(), externals(), typescript()],
 	},
 ]
