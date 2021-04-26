@@ -1,8 +1,14 @@
 # CHANGELOG.md
 
+## 2.17.1 (2021-04-26)
+
+Fix:
+ - run watcher via `bin`-field in `package.json` [#30](https://github.com/ivanhofer/typesafe-i18n/issues/30)
+
 ## 2.17.0 (2021-04-26)
 
- - replace `fs.watch` with `chokidar.watch` [#29](https://github.com/ivanhofer/typesafe-i18n/issues/29)
+Feature:
+ - add unix support for watcher [#29](https://github.com/ivanhofer/typesafe-i18n/issues/29)
 
 ## 2.16.1 (2021-04-23)
 
