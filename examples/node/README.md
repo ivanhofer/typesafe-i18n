@@ -35,7 +35,7 @@ For this you can add following line to the scripts-section of your `package.json
 {
 
    "scripts": {
-      "typesafe-i18n-watcher": "node ./node_modules/typesafe-i18n/node/watcher.js"
+      "typesafe-i18n-watcher": "typesafe-i18n"
    }
 }
 ```

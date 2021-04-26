@@ -42,7 +42,7 @@ You could configure your development script to run the watcher in parallel to `r
 
 "scripts": {
    "dev": "npm-run-all --parallel start typesafe-i18n-watcher",
-   "typesafe-i18n-watcher": "node ./node_modules/typesafe-i18n/node/watcher.js",
+   "typesafe-i18n-watcher": "typesafe-i18n",
    "start": "react-scripts start"
 }
 ```
