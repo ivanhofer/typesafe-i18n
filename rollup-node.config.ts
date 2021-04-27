@@ -8,6 +8,7 @@ const config = [
 		input: './src/node-watcher.ts',
 		output: [
 			{
+				banner: '#!/usr/bin/env node\n',
 				file: 'node/watcher.js',
 				format: 'cjs',
 				sourcemap: true,

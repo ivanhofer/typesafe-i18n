@@ -112,6 +112,6 @@
 		"watchlist": "^0.2.3"
 	},
 	"bin": {
-		"typesafe-i18n": "./node/watcher.js"
+		"typesafe-i18n": "node/watcher.js"
 	}
 }

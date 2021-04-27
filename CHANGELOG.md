@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.17.3 (2021-04-27)
+
+Fix:
+ - mark node script as node executable
+
 ## 2.17.2 (2021-04-26)
 
 Examples:
