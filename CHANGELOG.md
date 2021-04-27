@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.17.4 (2021-04-27)
+
+Examples:
+ - update to latest `typesafe-i18n` version
+
 ## 2.17.3 (2021-04-27)
 
 Fix:
