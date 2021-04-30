@@ -21,8 +21,7 @@ export type TranslationFunctions<T = BaseTranslation> = {
 
 export type Locale = string
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Arguments = any[]
+export type Arguments = unknown[]
 
 export type BaseTranslation = {
 	[key: string]: string
@@ -60,6 +59,8 @@ const getPlural = (pluraRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPar
 	}
 }
 
+const REGEX_PLURAL = /\?\?/g
+
 const applyArguments = (
 	textParts: Part[],
 	pluralRules: Intl.PluralRules,
@@ -76,7 +77,9 @@ const applyArguments = (
 			const value = args[(key as unknown) as number] as unknown
 
 			if (isPluralPart(part)) {
-				return typeof value === 'boolean' ? (value ? part.o : part.r) : getPlural(pluralRules, part, value) || ''
+				return (
+					(typeof value === 'boolean' ? (value ? part.o : part.r) : getPlural(pluralRules, part, value)) || ''
+				).replace(REGEX_PLURAL, value as string)
 			}
 
 			const formattedValue = formatterKeys.length ? applyFormatters(formatters, formatterKeys, value) : value
