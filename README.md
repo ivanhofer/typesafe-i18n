@@ -518,9 +518,33 @@ LLL(MEMBERS, 1) // => '1 weiteres Mitglied'
 LLL(MEMBERS, 9) // => '9 weitere Mitglieder'
 ```
 
+### plural (zero, one, other):
+
+ > Syntax: `{{zero|one|other}}`
+
+```typescript
+const LIST_ITEMS = 'The list includes {{ no items | an item | ?? items }}'
+
+LLL(LIST_ITEMS, 0) // => 'The list includes no items'
+LLL(LIST_ITEMS, 1) // => 'The list includes an item'
+LLL(LIST_ITEMS, 12) // => 'The list includes 12 items'
+```
+
+### plural (inject passed argument):
+
+ > Syntax: `{{singular|?? plural}}`
+
+```typescript
+const BANANAS = '{{ a banana | ?? bananas }}'
+
+LLL(BANANAS, 1) // => 'a banana'
+LLL(BANANAS, 3) // => '3 bananas'
+```
+
 ### plural (full syntax):
 
-Under the hood, `typesafe-i18n` uses the [Intl.PluralRules](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules) for detecting the plural form.
+Under the hood, `typesafe-i18n` uses the [Intl.PluralRules](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules) for detecting the plural form.\
+The only small modificatin made is, that the values `0` and `'0'` are always mapped to `'zero'` instead of `'other'`.
 
  > Syntax: `{{zero|one|two|few|many|other}}`
 
@@ -535,6 +559,7 @@ LLL(PLURAL, 2) // => 'I have two apples'
 LLL(PLURAL, 6) // => 'I have a few apples'
 LLL(PLURAL, 18) // => 'I have many apples'
 ```
+
 
 <!-- ------------------------------------------------------------------------------------------ -->
 
@@ -731,15 +756,15 @@ The footprint of the `typesafe-i18n` package is smaller compared to other existi
 
 These parts are bundled into the [core functions](#general). The sizes of the core functionalities are:
 
-- [i18nString](#i18nString): 765 bytes gzipped
-- [i18nObject](#i18nObject): 835 bytes gzipped
-- [i18n](#i18n): 944 bytes gzipped
+- [i18nString](#i18nString): 804 bytes gzipped
+- [i18nObject](#i18nObject): 858 bytes gzipped
+- [i18n](#i18n): 962 bytes gzipped
 
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
 There also exists a useful wrapper for some frameworks:
-- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte#usage-in-javascript-projects): 1092 bytes gzipped
-- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/react#usage-in-javascript-projects): 1068 bytes gzipped
+- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte#usage-in-javascript-projects): 1102 bytes gzipped
+- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/react#usage-in-javascript-projects): 1081 bytes gzipped
 
 
 
