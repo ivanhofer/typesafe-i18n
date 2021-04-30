@@ -44,15 +44,22 @@ const parsePluralPart = (content: string, lastAcessor: string): PluralPart => {
 		key = lastAcessor
 	}
 
-	const [zero, one, two, few, many, rest] = values.split('|')
-	const z = (rest !== undefined && zero) || ''
-	const t = (rest !== undefined && two) || ''
-	const f = (rest !== undefined && few) || ''
-	const m = (rest !== undefined && many) || ''
-	const o = (rest !== undefined ? one : one !== undefined ? zero : one) || ''
-	const r = (rest !== undefined ? rest : o ? one : zero) || ''
+	const entries = values.split('|')
+	const [zero, one, two, few, many, rest] = entries
 
-	return { k: key, z, o, t, f, m, r } as PluralPart
+	const nrOfEntries = entries.filter((entry) => entry !== undefined).length
+
+	if (nrOfEntries === 1) {
+		return { k: key, r: zero } as PluralPart
+	}
+	if (nrOfEntries === 2) {
+		return { k: key, o: zero, r: one } as PluralPart
+	}
+	if (nrOfEntries === 3) {
+		return { k: key, z: zero, o: one, r: two } as PluralPart
+	}
+
+	return { k: key, z: zero, o: one, t: two, f: few, m: many, r: rest } as PluralPart
 }
 
 export const parseRawText = (rawText: string, optimize = true, firstKey = '', lastKey = ''): Part[] =>

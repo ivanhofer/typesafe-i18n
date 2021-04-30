@@ -28,6 +28,13 @@ test('trim singular only 2', () => assert.is(LLL('{{ this is singular | }}', 2),
 
 test('plural part before key', () => assert.is(LLL('apple{{s}}: {nrOfApples:number}', { nrOfApples: 1 }), 'apple: 1'))
 
+test('zero 0', () => assert.is(LLL('{{zero|one|other}}', 0), 'zero'))
+test('zero 1', () => assert.is(LLL('{{zero|one|other}}', 1), 'one'))
+test('zero 5', () => assert.is(LLL('{{zero|one|other}}', 5), 'other'))
+
+test('plural ?? 3', () => assert.is(LLL('{{zero|one|?? items}}', 3), '3 items'))
+test('plural ?? 7 7', () => assert.is(LLL('{{zero|one|?? items ??}}', 7), '7 items 7'))
+
 // --------------------------------------------------------------------------------------------------------------------
 
 const translation = {
@@ -46,6 +53,8 @@ const translation = {
 	ONLY_PLURAL: '{{plural}}',
 	ONLY_SINGULAR_PLURAL: '{{singular|plural}}',
 	ONLY_SINGULAR: '{{singular|}}',
+	ZERO: '{{zero|one|other}}',
+	PLURAL_VALUE: '{{ no items | one item | ?? items }}',
 }
 
 const LL = i18nObject('en', translation)
@@ -94,6 +103,14 @@ test('only singular plural false', () => assert.is(LL.ONLY_SINGULAR_PLURAL(false
 
 test('only singular true', () => assert.is(LL.ONLY_SINGULAR(true), 'singular'))
 test('only singular false', () => assert.is(LL.ONLY_SINGULAR(false), ''))
+
+test('zero 0', () => assert.is(LL.ZERO(0), 'zero'))
+test('zero 1', () => assert.is(LL.ZERO(1), 'one'))
+test('zero 7', () => assert.is(LL.ZERO(7), 'other'))
+
+test('plural zero: no', () => assert.is(LL.PLURAL_VALUE(0), 'no items'))
+test('plural zero: one', () => assert.is(LL.PLURAL_VALUE(1), 'one item'))
+test('plural zero: ??', () => assert.is(LL.PLURAL_VALUE(99), '99 items'))
 
 // --------------------------------------------------------------------------------------------------------------------
 

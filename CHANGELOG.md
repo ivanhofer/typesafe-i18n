@@ -1,5 +1,13 @@
 # CHANGELOG.md
 
+## 2.18.0 (2021-04-30)
+
+Feature:
+ - add support for plural rule `{{zero|one|other}}`
+
+Fix:
+ - detect `0` and `'0'` always as `'zero'` instead of `'other'`
+
 ## 2.17.4 (2021-04-27)
 
 Examples:
