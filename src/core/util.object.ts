@@ -46,17 +46,7 @@ export function i18nObject(locale: any, translations: any, formatters: any = {})
 	return new Proxy(
 		{},
 		{
-			get: (_target, key: string) => {
-				const fn = translateFunctionInstance.bind(null, key)
-				const toString = () => {
-					// eslint-disable-next-line no-console
-					console.warn(
-						`[typesafe-i18n] DEPRECATED translation call for '${key}'; see https://github.com/ivanhofer/typesafe-i18n/issues/27`,
-					)
-					fn()
-				}
-				return Object.assign(fn, { toString })
-			},
+			get: (_target, key: string) => translateFunctionInstance.bind(null, key),
 		},
 	)
 }
