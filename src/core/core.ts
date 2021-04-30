@@ -44,7 +44,7 @@ const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], va
 	formatterKeys.reduce((prev, formatterKey) => formatters[formatterKey]?.(prev) || prev, value)
 
 const getPlural = (pluraRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPart, value: unknown) => {
-	switch (pluraRules.select(value as number)) {
+	switch (z && value == 0 ? 'zero' : pluraRules.select(value as number)) {
 		case 'zero':
 			return z
 		case 'one':

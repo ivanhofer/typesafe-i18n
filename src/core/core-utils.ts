@@ -31,7 +31,7 @@ export const partAsStringWithoutTypes = (part: Part): string => {
 	}
 
 	if (isPluralPart(part)) {
-		return `{{${[part.z, part.o, part.t, part.f, part.m, part.r].filter((value) => value !== '').join('|')}}}`
+		return `{{${[part.z, part.o, part.t, part.f, part.m, part.r].filter((value) => value !== undefined).join('|')}}}`
 	}
 
 	return `{${part.k}${part.f?.length ? `|${part.f.join('|')}` : ''}}`
