@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.19.0 (2021-05-07)
+
+Fix:
+ - remove `.toString()` functionality [#27](https://github.com/ivanhofer/typesafe-i18n/issues/27)
+
 ## 2.18.0 (2021-04-30)
 
 Feature:
