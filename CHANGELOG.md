@@ -1,6 +1,6 @@
 # CHANGELOG.md
 
-## 2.19.0 (unreleased)
+## 2.19.0 (2021-05-07)
 
 Fix:
  - remove `.toString()` functionality [#27](https://github.com/ivanhofer/typesafe-i18n/issues/27)
