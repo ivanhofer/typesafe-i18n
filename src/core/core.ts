@@ -21,7 +21,8 @@ export type TranslationFunctions<T = BaseTranslation> = {
 
 export type Locale = string
 
-export type Arguments = unknown[]
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Arguments = any[]
 
 export type BaseTranslation = {
 	[key: string]: string

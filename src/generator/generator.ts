@@ -54,20 +54,18 @@ export const readConfig = async (config: GeneratorConfig | undefined): Promise<G
 
 export const getConfigWithDefaultValues = async (
 	config: GeneratorConfig | undefined,
-): Promise<GeneratorConfigWithDefaultValues> => {
-	return {
-		baseLocale: 'en',
-		locales: [],
-		tempPath: './node_modules/typesafe-i18n/temp-output/',
-		outputPath: './src/i18n/',
-		typesFileName: 'i18n-types',
-		utilFileName: 'i18n-util',
-		formattersTemplateFileName: 'formatters',
-		typesTemplateFileName: 'custom-types',
-		loadLocalesAsync: true,
-		...(await readConfig(config)),
-	}
-}
+): Promise<GeneratorConfigWithDefaultValues> => ({
+	baseLocale: 'en',
+	locales: [],
+	tempPath: './node_modules/typesafe-i18n/temp-output/',
+	outputPath: './src/i18n/',
+	typesFileName: 'i18n-types',
+	utilFileName: 'i18n-util',
+	formattersTemplateFileName: 'formatters',
+	typesTemplateFileName: 'custom-types',
+	loadLocalesAsync: true,
+	...(await readConfig(config)),
+})
 
 export const generate = async (
 	translations: BaseTranslation,

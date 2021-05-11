@@ -1,5 +1,13 @@
 # CHANGELOG.md
 
+## 2.19.1 (2021-05-11)
+
+- update dependencies
+
+Bugfix:
+ - better types for `TranslationFunctions`
+
+
 ## 2.19.0 (2021-05-07)
 
 Fix:

@@ -18,6 +18,9 @@
 	],
 	"license": "MIT",
 	"module": "esm/index.js",
+	"main": "cjs/index.js",
+	"browser": "dist/index.min.js",
+	"types": "esm/index.d.ts",
 	"exports": {
 		"./formatters": {
 			"import": "./esm/formatters/index.js",
@@ -32,7 +35,6 @@
 		"./rollup/*": "./rollup/*.js",
 		"./svelte/svelte-store": "./svelte/svelte-store.js",
 		"./webpack/*": "./webpack/*.js",
-		"./package.json": "./package.json",
 		"./*": {
 			"import": "./esm/*",
 			"require": "./cjs/*"
@@ -42,9 +44,6 @@
 			"require": "./cjs/index.js"
 		}
 	},
-	"browser": "dist/index.min.js",
-	"main": "cjs/index.js",
-	"types": "esm/index.d.ts",
 	"files": [
 		"/adapters",
 		"/cjs",

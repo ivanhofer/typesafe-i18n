@@ -5,7 +5,7 @@ import { i18nObjectLoader } from './util.loader'
 export const i18n = <
 	L extends Locale,
 	T extends BaseTranslation,
-	TF extends TranslationFunctions,
+	TF extends TranslationFunctions<T>,
 	F extends BaseFormatters
 >(
 	getTranslationForLocale: (locale: L) => T,

@@ -118,11 +118,10 @@ export const getFiles = async (path: string, depth = 0): Promise<GetFilesType[]>
 	return files
 }
 
-export const importFile = async <T = unknown>(file: string, outputError = true): Promise<T> => {
-	return (
+export const importFile = async <T = unknown>(file: string, outputError = true): Promise<T> =>
+	(
 		await import(file).catch((e) => {
-			outputError && logger.error('import failed ', e)
+			outputError && logger.error(`import failed for ${file}`, e)
 			return null
 		})
 	)?.default
-}
