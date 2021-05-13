@@ -53,6 +53,7 @@
 		"/node",
 		"/react",
 		"/rollup",
+		"/schema",
 		"/svelte",
 		"/webpack"
 	],
@@ -71,6 +72,7 @@
 		"build:rollup": "rollup -c rollup-rollup.config.ts && tsc -p tsconfig-rollup.json --emitDeclarationOnly",
 		"build:svelte": "rollup -c rollup-svelte.config.ts && tsc -p tsconfig-svelte.json --emitDeclarationOnly",
 		"build:webpack": "rollup -c rollup-webpack.config.ts && tsc -p tsconfig-webpack.json --emitDeclarationOnly",
+		"generate:json-schema": "mkdir schema && typescript-json-schema ./tsconfig-esm.json GeneratorConfig > ./schema/typesafe-i18n.json",
 		"lint": "eslint src",
 		"lint:fix": "eslint src --fix",
 		"test": "uvu -r ts-node/register -i update.ts -i index.ts tests",
@@ -107,6 +109,7 @@
 		"tiny-glob": "^0.2.8",
 		"ts-node": "^9.1.1",
 		"typescript": "^4.2.4",
+		"typescript-json-schema": "^0.50.0",
 		"uvu": "^0.5.1",
 		"watchlist": "^0.2.3"
 	},

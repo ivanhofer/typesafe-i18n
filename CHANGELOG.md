@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.20.0 (2021-05-13)
+
+Feature:
+ - add json-schema for `./typesafe-i18n.json` config file
+
 ## 2.19.1 (2021-05-11)
 
 - update dependencies

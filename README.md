@@ -287,7 +287,16 @@ or define a script in your `package.json` file:
 }
 ```
 
-Passing [options](#options) to the watcher is possible by creating a `.typesafe-i18n.json` file in the root of your workspace.
+Passing [options](#options) to the watcher is possible by creating a `.typesafe-i18n.json` file in the root of your workspace e.g.
+
+```json
+{
+   "$schema": "https://unpkg.com/typesafe-i18n/schema/typesafe-i18n.json",
+
+   "baseLocale": "de",
+   "adapter": "svelte"
+}
+```
 
 > You could use a npm-package like `npm-run-all` in order to start the watcher and you development-server in parallel.
 

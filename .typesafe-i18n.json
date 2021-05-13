@@ -1,4 +1,6 @@
 {
+	"$schema": "https://unpkg.com/typesafe-i18n/schema/typesafe-i18n.json",
+
 	"baseLocale": "en",
 	"locales": ["en"],
 
@@ -10,5 +12,5 @@
 	"typesTemplateFileName": "custom-types",
 
 	"adapter": "node",
-	"loadLocalesAsync": "true"
+	"loadLocalesAsync": true
 }
