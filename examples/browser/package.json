@@ -8,6 +8,6 @@
 		"serve": "^11.3.2"
 	},
 	"dependencies": {
-		"typesafe-i18n": "^2.17.3"
+		"typesafe-i18n": "^2.19.1"
 	}
 }

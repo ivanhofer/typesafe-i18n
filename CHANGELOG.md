@@ -5,6 +5,9 @@
 Feature:
  - add json-schema for `./typesafe-i18n.json` config file
 
+Examples:
+ - update dependencies
+
 ## 2.19.1 (2021-05-11)
 
 - update dependencies
