@@ -49,8 +49,13 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-export const readConfig = async (config: GeneratorConfig | undefined): Promise<GeneratorConfig> =>
-	config || (await importFile<GeneratorConfig>(path.resolve('.typesafe-i18n.json'), false)) || {}
+export const readConfig = async (config: GeneratorConfig | undefined): Promise<GeneratorConfig> => {
+	const generatorConfig =
+		config || (await importFile<GeneratorConfig>(path.resolve('.typesafe-i18n.json'), false)) || {}
+
+	// remove "$schema" property
+	return Object.fromEntries(Object.entries(generatorConfig).filter(([key]) => key !== '$schema'))
+}
 
 export const getConfigWithDefaultValues = async (
 	config: GeneratorConfig | undefined,
