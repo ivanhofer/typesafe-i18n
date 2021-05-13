@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.20.1 (2021-05-13)
+
+Fix:
+ - use path with implicit version for `"$schema"` in `./typesafe-i18n.json` because redirects are not valid for json schemas
+
 ## 2.20.0 (2021-05-13)
 
 Feature:
