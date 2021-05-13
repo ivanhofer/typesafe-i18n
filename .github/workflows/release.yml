@@ -48,6 +48,9 @@ jobs:
               name: typesafe-i18n-browser
               path: dist/
 
+         - name: generate json schema
+           run: npm run generate:json-schema
+
          - name: publish to npm
            uses: JS-DevTools/npm-publish@v1
            with:
