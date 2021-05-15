@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.21.0 (2021-05-15)
+
+Fix:
+ - explicitly type parameter `locale` in `initFormatters` function
+
 ## 2.20.1 (2021-05-13)
 
 Fix:
