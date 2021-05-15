@@ -127,41 +127,41 @@ testGeneratedOutput('simple', {
 	TEST: 'This is a test',
 })
 
-testGeneratedOutput('withParams', {
+testGeneratedOutput('with-params', {
 	PARAM: '{0} apple{{s}}',
 	PARAMS: '{0} apple{{s}} and {1} banana{{s}}',
 })
 
-testGeneratedOutput('keyedParams', {
+testGeneratedOutput('keyed-params', {
 	KEYED_PARAM: '{nrOfApples} apple{{s}}',
 	KEYED_PARAMS: '{nrOfApples} apple{{s}} and {nrOfBananas} banana{{s}}',
 })
 
-testGeneratedOutput('withFormatters', {
+testGeneratedOutput('with-formatters', {
 	FORMATTER_1: '{0|timesTen} apple{{s}}',
 	FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
 })
 
-testGeneratedOutput('deLocale', {}, { baseLocale: 'de' })
+testGeneratedOutput('base-locale-de', {}, { baseLocale: 'de' })
 
-testGeneratedOutput('multipleLocales', {}, { locales: ['de', 'en', 'it'] })
+testGeneratedOutput('multiple-locales', {}, { locales: ['de', 'en', 'it'] })
 
-testGeneratedOutput('LocaleWithDash', {}, { baseLocale: 'de-at' })
-testGeneratedOutput('LocaleWithDashSync', {}, { baseLocale: 'de-at', loadLocalesAsync: false })
-testGeneratedOutput('LocalesWithDash', {}, { locales: ['it-it', 'en-us', 'fr-be'] })
+testGeneratedOutput('locale-with-dash', {}, { baseLocale: 'de-at' })
+testGeneratedOutput('locale-with-dash-sync', {}, { baseLocale: 'de-at', loadLocalesAsync: false })
+testGeneratedOutput('locales-with-dash', {}, { locales: ['it-it', 'en-us', 'fr-be'] })
 
-testGeneratedOutput('argTypes', { STRING_TYPE: 'Hi {name:string}!', NUMBER_TYPE: '{0:number} apple{{s}}' })
+testGeneratedOutput('arg-types', { STRING_TYPE: 'Hi {name:string}!', NUMBER_TYPE: '{0:number} apple{{s}}' })
 
-testGeneratedOutput('argOrder', {
+testGeneratedOutput('arg-order', {
 	ORDER_INDEX: '{1} {0} {2} {0}',
 	ORDER_KEYED: '{b} {z} {a}',
 	ORDER_FORMATTER: '{0|z} {1|a}',
 	ORDER_TYPES: '{0:B} {1:A}',
 })
 
-testGeneratedOutput('formatterWithDifferentArgTypes', { A: '{0:number|calculate}!', B: '{0:Date|calculate}' })
+testGeneratedOutput('formatter-with-different-arg-types', { A: '{0:number|calculate}!', B: '{0:Date|calculate}' })
 
-testGeneratedOutput('argTypesWithExternalType', { EXTERNAL_TYPE: 'The result is {0:Result|calculate}!' })
+testGeneratedOutput('arg-types-with-external-type', { EXTERNAL_TYPE: 'The result is {0:Result|calculate}!' })
 
 testGeneratedOutput('same-param', { SAME_PARAM: '{0} {0} {0}' })
 
@@ -176,13 +176,13 @@ testGeneratedOutput('plural-part-before-key', { PLURAL_BEFORE_KEY: 'apple{{s}}: 
 const nodeAdapterFileName = getFileName('node')
 
 testGeneratedOutput(
-	'adapter_node_async',
+	'adapter-node-async',
 	{ HELLO_NODE: 'Hi {0:name}' },
 	{ adapter: 'node', adapterFileName: nodeAdapterFileName },
 )
 
 testGeneratedOutput(
-	'adapter_node_sync',
+	'adapter-node-sync',
 	{ HELLO_NODE: 'Hi {0:name}' },
 	{ adapter: 'node', adapterFileName: nodeAdapterFileName, loadLocalesAsync: false },
 )
@@ -190,13 +190,13 @@ testGeneratedOutput(
 const svelteAdapterFileName = getFileName('svelte')
 
 testGeneratedOutput(
-	'adapter_svelte-async',
+	'adapter-svelte-async',
 	{ HELLO_SVELTE: 'Hi {0}' },
 	{ adapter: 'svelte', adapterFileName: svelteAdapterFileName },
 )
 
 testGeneratedOutput(
-	'adapter_svelte-sync',
+	'adapter-svelte-sync',
 	{ HELLO_SVELTE: 'Hi {0}' },
 	{ adapter: 'svelte', adapterFileName: svelteAdapterFileName, loadLocalesAsync: false },
 )
@@ -204,13 +204,13 @@ testGeneratedOutput(
 const reactAdapterFileName = getFileName('react')
 
 testGeneratedOutput(
-	'adapter_react_async',
+	'adapter-react-async',
 	{ HELLO_NODE: 'Hi {0:name}' },
 	{ adapter: 'react', adapterFileName: reactAdapterFileName },
 )
 
 testGeneratedOutput(
-	'adapter_react_sync',
+	'adapter-react-sync',
 	{ HELLO_NODE: 'Hi {0:name}' },
 	{ adapter: 'react', adapterFileName: reactAdapterFileName, loadLocalesAsync: false },
 )
@@ -219,19 +219,19 @@ testGeneratedOutput(
 
 const tsTestTranslation = { TEST: 'Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}' }
 
-testGeneratedOutput('typescript3.0', tsTestTranslation, {}, parseTypescriptVersion('3.0'))
-testGeneratedOutput('typescript3.8', tsTestTranslation, {}, parseTypescriptVersion('3.8'))
-testGeneratedOutput('typescript4.1', tsTestTranslation, {}, parseTypescriptVersion('4.1'))
+testGeneratedOutput('typescript-3.0', tsTestTranslation, {}, parseTypescriptVersion('3.0'))
+testGeneratedOutput('typescript-3.8', tsTestTranslation, {}, parseTypescriptVersion('3.8'))
+testGeneratedOutput('typescript-4.1', tsTestTranslation, {}, parseTypescriptVersion('4.1'))
 
 // --------------------------------------------------------------------------------------------------------------------
 
-testGeneratedConsoleOutput('consoleNoTranslations', {}, async (outputs) => {
+testGeneratedConsoleOutput('console-no-translations', {}, async (outputs) => {
 	assert.is(outputs.info.length, 0)
 	assert.is(outputs.error.length, 0)
 	assert.is(outputs.warn.length, 0)
 })
 
-testGeneratedConsoleOutput('consoleWrongIndex', { TEST: '{0} {2}' }, async (outputs) => {
+testGeneratedConsoleOutput('console-wrong-index', { TEST: '{0} {2}' }, async (outputs) => {
 	assert.is(outputs.info.length, 0)
 	assert.is(outputs.error.length, 0)
 	assert.is(outputs.warn.length, 2)
@@ -239,7 +239,7 @@ testGeneratedConsoleOutput('consoleWrongIndex', { TEST: '{0} {2}' }, async (outp
 	assert.is(outputs.warn[1], "translation 'TEST' => make sure to not skip an index")
 })
 
-testGeneratedConsoleOutput('consoleKeyedAndIndexBasedKeys', { TEST: '{hi} {0}' }, async (outputs) => {
+testGeneratedConsoleOutput('console-keyed-and-index-based-keys', { TEST: '{hi} {0}' }, async (outputs) => {
 	assert.is(outputs.info.length, 0)
 	assert.is(outputs.error.length, 0)
 	assert.is(outputs.warn.length, 2)
