@@ -83,6 +83,9 @@
 	"dependencies": {
 		"typesafe-utils": "^1.11.1"
 	},
+	"peerDependencies": {
+		"chokidar": "^3.5.1"
+	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^19.0.0",
 		"@rollup/plugin-node-resolve": "^13.0.0",
@@ -95,7 +98,6 @@
 		"@typescript-eslint/eslint-plugin": "^4.23.0",
 		"@typescript-eslint/parser": "^4.23.0",
 		"astring": "^1.7.4",
-		"chokidar": "^3.5.1",
 		"eslint": "^7.26.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-prettier": "^3.4.0",

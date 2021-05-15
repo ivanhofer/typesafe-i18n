@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.21.1 (2021-05-15)
+
+Fix:
+ - mark `chokidar` as peer dependency
+
 ## 2.21.0 (2021-05-15)
 
 Fix:
