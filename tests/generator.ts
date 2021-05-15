@@ -13,7 +13,7 @@ const test = suite('types')
 
 const outputPath = 'tests/generated/'
 
-const actualPostfix = '.actual.output'
+const actualPostfix = '.actual'
 
 const defaultVersion = parseTypescriptVersion('4.1')
 
@@ -35,7 +35,7 @@ const createConfig = async (prefix: string, config?: GeneratorConfig): Promise<G
 type FileToCheck = 'types' | 'util' | 'formatters-template' | 'types-template' | 'svelte' | 'react'
 
 const getPathOfOutputFile = (prefix: string, file: FileToCheck, type: 'actual' | 'expected') =>
-	`${outputPath}${prefix}/${file}.${type}.output`
+	`${outputPath}${prefix}/${file}.${type}.ts`
 
 const REGEX_NEW_LINE = /\n/g
 const check = async (prefix: string, file: FileToCheck) => {

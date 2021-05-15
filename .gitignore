@@ -9,10 +9,7 @@ node_modules
 /rollup
 /schema
 /svelte
-/tests/generated/**/*.actual.output
-/tests/generated/**/en
-/tests/generated/**/de
-/tests/generated/**/de-at
+/tests/generated/**/*.actual.ts
 /tests/generated/console*
 /typesafe-i18n-*.tgz
 /webpack
