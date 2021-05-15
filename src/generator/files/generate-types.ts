@@ -151,17 +151,9 @@ const createLocalesType = (locales: string[], baseLocale: string) => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const BASE_TYPES = [
-	'boolean',
-	'number',
-	'bigint',
-	'string',
-	'Date',
-	'object',
-	'undefined',
-	'null',
-	'unknown',
-].flatMap((t: string) => [t, `${t}[]`])
+const BASE_TYPES = ['boolean', 'number', 'bigint', 'string', 'Date', 'object', 'undefined', 'null', 'unknown'].flatMap(
+	(t: string) => [t, `${t}[]`],
+)
 
 const createTypeImports = (
 	parsedTranslations: ParsedResult[],
@@ -318,7 +310,7 @@ const generatePermutationType = (args: number[]) => {
 type RequiredParams${l}<${generics}> =${permutations
 			.map(
 				(permutation) => `
-	 | Params${l}<${permutation.map((p) => `P${p}`).join(', ')}>`,
+	| Params${l}<${permutation.map((p) => `P${p}`).join(', ')}>`,
 			)
 			.join('')}`
 }
