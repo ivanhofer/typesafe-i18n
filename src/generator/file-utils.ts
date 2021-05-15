@@ -1,5 +1,5 @@
 import { promises as fsPromises } from 'fs'
-import { join, resolve, dirname, extname } from 'path'
+import { join, resolve, dirname } from 'path'
 import { logger } from './generator-util'
 
 const { readFile: read, readdir, writeFile, mkdir, stat, copyFile: cp, rmdir } = fsPromises
@@ -72,7 +72,7 @@ export const deleteFolderRecursive = async (path: string): Promise<boolean> => {
 }
 
 const getFileName = (path: string, file: string) => {
-	const ext = extname(file) ? '' : '.ts'
+	const ext = file.endsWith('.ts') ? '' : '.ts'
 	return join(path, file + ext)
 }
 
