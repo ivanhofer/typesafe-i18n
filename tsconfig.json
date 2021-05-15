@@ -30,6 +30,6 @@
 		"compilerOptions": {
 			"module": "commonjs"
 		},
-		"include": ["tests/*.ts"]
+		"include": ["test/*.ts"]
 	}
 }

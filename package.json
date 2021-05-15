@@ -75,9 +75,9 @@
 		"generate:json-schema": "mkdir schema && typescript-json-schema ./tsconfig-esm.json GeneratorConfig > ./schema/typesafe-i18n.json",
 		"lint": "eslint src",
 		"lint:fix": "eslint src --fix",
-		"test": "require-self && uvu -r ts-node/register -i generated tests",
-		"test:watch": "watchlist src tests -- npm test",
-		"test:update-generated-files": "ts-node tests/generated/update.ts",
+		"test": "require-self && uvu -r ts-node/register -i generated test",
+		"test:watch": "watchlist src test -- npm test",
+		"test:update-generated-files": "ts-node test/generated/update.ts",
 		"test:size": "size-limit"
 	},
 	"dependencies": {

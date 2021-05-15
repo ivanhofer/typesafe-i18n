@@ -11,7 +11,7 @@ const { readFile } = promises
 
 const test = suite('types')
 
-const outputPath = 'tests/generated/'
+const outputPath = 'test/generated/'
 
 const actualPostfix = '.actual'
 
