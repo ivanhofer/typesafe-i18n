@@ -10,7 +10,7 @@ const getFormattersTemplate = (
 ${importType} { Locales, Formatters } from './${typesFile}'
 
 export const initFormatters: ${formattersInitializerType}<Locales, Formatters> = ${loadLocalesAsync ? 'async ' : ''
-		}(locale) => {
+		}(locale: Locales) => {
 	const formatters: Formatters = {
 		// add your formatter functions here
 	}

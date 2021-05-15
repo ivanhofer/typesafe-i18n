@@ -93,11 +93,15 @@ export const generate = async (
 
 	await generateUtil(config, importType)
 
-	if (config.adapter === 'node') {
-		await generateNodeAdapter(config)
-	} else if (config.adapter === 'svelte') {
-		await generateSvelteAdapter(config, importType)
-	} else if (config.adapter === 'react') {
-		await generateReactAdapter(config, importType)
+	switch (config.adapter) {
+		case 'node':
+			await generateNodeAdapter(config)
+			break
+		case 'svelte':
+			await generateSvelteAdapter(config, importType)
+			break
+		case 'react':
+			await generateReactAdapter(config, importType)
+			break
 	}
 }
