@@ -7,35 +7,26 @@ export type Locales =
 	| 'en'
 
 export type TranslationKeys =
-	| 'A'
-	| 'B'
+	| 'FORMATTER'
 
 export type Translation = {
 	/**
-	 * {0|calculate}!
-	 * @param {number} 0
+	 * {0|custom formatter|and another}
+	 * @param {unknown} 0
 	 */
-	'A': RequiredParams1<'0|calculate'>
-	/**
-	 * {0|calculate}
-	 * @param {Date} 0
-	 */
-	'B': RequiredParams1<'0|calculate'>
+	'FORMATTER': RequiredParams1<'0|custom formatter|and another'>
 }
 
 export type TranslationFunctions = {
 	/**
-	 * {0|calculate}!
+	 * {0|custom formatter|and another}
 	 */
-	'A': (arg0: number) => string
-	/**
-	 * {0|calculate}
-	 */
-	'B': (arg0: Date) => string
+	'FORMATTER': (arg0: unknown) => string
 }
 
 export type Formatters = {
-	'calculate': (value: number | Date) => unknown
+	'and another': (value: unknown) => unknown
+	'custom formatter': (value: unknown) => unknown
 }
 
 

@@ -369,7 +369,7 @@ const createFormattersType = (parsedTranslations: ParsedResult[]) => {
 			.map(
 				([key, types]) =>
 					`
-	${key}: (value: ${types?.join(' | ')}) => unknown`,
+	'${key}': (value: ${types?.join(' | ')}) => unknown`,
 			)
 			.join(''),
 	)}`

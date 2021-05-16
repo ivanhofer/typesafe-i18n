@@ -1,5 +1,13 @@
 # CHANGELOG.md
 
+## 2.22.0 (2021-05-16)
+
+Feature:
+ - add [generateOnlyTypes](https://github.com/ivanhofer/typesafe-i18n#generateOnlyTypes) option
+
+Fix:
+ - wrap types of Formatters in a `string` to be able to use any kind of formatter name
+
 ## 2.21.1 (2021-05-15)
 
 Fix:

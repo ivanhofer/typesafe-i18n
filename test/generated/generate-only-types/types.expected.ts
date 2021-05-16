@@ -27,7 +27,7 @@ export type TranslationFunctions = {
 }
 
 export type Formatters = {
-	someFormatter: (value: CustomType) => unknown
+	'someFormatter': (value: CustomType) => unknown
 }
 
 

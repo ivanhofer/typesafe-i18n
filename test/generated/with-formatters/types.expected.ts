@@ -36,8 +36,8 @@ export type TranslationFunctions = {
 }
 
 export type Formatters = {
-	timesTen: (value: string | number | boolean) => unknown
-	wrapWithHtmlSpan: (value: string | number | boolean) => unknown
+	'timesTen': (value: string | number | boolean) => unknown
+	'wrapWithHtmlSpan': (value: string | number | boolean) => unknown
 }
 
 

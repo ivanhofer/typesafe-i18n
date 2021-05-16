@@ -142,6 +142,10 @@ testGeneratedOutput('with-formatters', {
 	FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
 })
 
+testGeneratedOutput('formatters-with-dashes', { FORMATTER: '{0|custom-formatter|and-another}' })
+
+testGeneratedOutput('formatters-with-spaces', { FORMATTER: '{0| custom formatter | and another }' })
+
 testGeneratedOutput('base-locale-de', {}, { baseLocale: 'de' })
 
 testGeneratedOutput('multiple-locales', {}, { locales: ['de', 'en', 'it'] })
