@@ -1,3 +1,3 @@
-import { startWatcher } from '../../../src/generator/watcher'
+import { startWatcher } from '../../generator/src/watcher'
 
 startWatcher()

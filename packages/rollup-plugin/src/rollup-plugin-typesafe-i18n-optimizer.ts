@@ -8,7 +8,7 @@ import type {
 	VariableDeclarator,
 	ArrayExpression,
 } from 'estree'
-import { GeneratorConfig, getConfigWithDefaultValues } from '../../../src/generator/generator'
+import { GeneratorConfig, getConfigWithDefaultValues } from '../../generator/src/generator'
 import { createFilter } from '@rollup/pluginutils'
 import { walk } from 'estree-walker'
 import { partsAsStringWithoutTypes } from '../../core/src/core-utils'
