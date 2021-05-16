@@ -27,7 +27,6 @@ const config = files
 			commonjs(),
 			typescript({
 				tsconfig: getPath('./tsconfig.json'),
-				declaration: true,
 				sourceMap: false,
 			}),
 			terser(),

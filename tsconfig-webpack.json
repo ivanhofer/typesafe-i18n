@@ -1,8 +1,0 @@
-{
-	"extends": "./tsconfig.json",
-	"compilerOptions": {
-		"module": "CommonJS",
-		"outDir": "./webpack"
-	},
-	"include": ["./src/webpack-plugin-typesafe-i18n*.ts"]
-}
