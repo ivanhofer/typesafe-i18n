@@ -7,6 +7,9 @@ Feature:
  - add [identity](https://github.com/ivanhofer/typesafe-i18n#identity) formatter
  - add [ignore](https://github.com/ivanhofer/typesafe-i18n#ignore) formatter
 
+Readme:
+ - create FAQ section
+
 Fix:
  - wrap types of Formatters in a `string` to be able to use any kind of formatter name
 

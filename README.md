@@ -35,6 +35,7 @@
 - [formatters](#formatters)
 - [Sizes](#sizes)
 - [Performance](#performance)
+- [FAQ](#faq)
 
 
 
@@ -63,7 +64,7 @@ You can use `typesafe-i18n` in a variety of project-setups:
  - [Svelte/Sapper/SvelteKit](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte) applications
  - [React](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/react) applications
  - [Browser](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/browser) projects
- - [other frameworks](#other-frameworks) like React, VueJS, Angular and others ...
+ - [other frameworks](#other-frameworks) like VueJS, Angular and others ...
 
 ### General
 
@@ -394,6 +395,7 @@ You can set options for the [watcher](#typesafety) in order to get optimized out
 | [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                                       | `'formatters'`                                |
 | [typesTemplateFileName](#typesTemplateFileName)           | `string`                                                       | `'custom-types'`                              |
 | [adapterFileName](#adapterFileName)                       | `string` &#124; `undefined`                                    | `undefined`                                   |
+| [generateOnlyTypes](#generateOnlyTypes)                   | `boolean`                                                      | `false`                                       |
 | [tempPath](#tempPath)                                     | `string`                                                       | `'./node_modules/typesafe-i18n/temp-output/'` |
 
 
@@ -438,6 +440,10 @@ Name for the file where you can configure your custom-types.
 ### adapterFileName
 
 Name for the file when generating output for an adapter. The default filename is `i18n-[adapter]`.
+
+### generateOnlyTypes
+
+If you don't want to use the auto-generated helpers and instead write your own wrappers, you can set this option to `true`.
 
 ### tempPath
 
@@ -681,74 +687,111 @@ LLL('Invest ${0} and get ${0|roiCalculator} in return', 100)
 
 You can also use a few builtin formatters:
 
- - date\
-   A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
-	```typescript
-	import { date } from 'typesafe-i18n/formatters'
+### date
+A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
 
-	const formatters = {
-	   weekday: date({ weekday: 'long' })
-	}
+```typescript
+import { date } from 'typesafe-i18n/formatters'
 
-	LLL('Today is {0|weekday}', new Date()) // => 'Today is friday'
-	```
- - time\
-  	A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
-	```typescript
-	import { time } from 'typesafe-i18n/formatters'
+const formatters = {
+   weekday: date({ weekday: 'long' })
+}
 
-	const formatters = {
-	   timeShort: time('en', { timeStyle: 'short' })
-	}
+LLL('Today is {0|weekday}', new Date()) // => 'Today is friday'
+```
 
-	LLL('Next meeting: {0|timeShort}', meetingTime) // => 'Next meeting: 8:00 AM'
-	```
- - number\
-  	A wrapper for [Intl.NumberFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
-	```typescript
-	import { number } from 'tyoesafe-i18n/formatters'
+### time
+A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
+```typescript
+import { time } from 'typesafe-i18n/formatters'
 
-	const formatters = {
-	   currency: number('en', { style: 'currency', currency: 'EUR' })
-	}
+const formatters = {
+   timeShort: time('en', { timeStyle: 'short' })
+}
 
-	LLL('your balance is {0|currency}', 12345) // => 'your balance is €12,345.00'
-	```
- - replace
-	A wrapper for [String.prototype.replace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
-	```typescript
-	import { replace } from 'typesafe-i18n/formatters'
+LLL('Next meeting: {0|timeShort}', meetingTime) // => 'Next meeting: 8:00 AM'
+```
 
-	const formatters = {
-	   noSpaces: replace(' ', '-')
-	}
+### number
+A wrapper for [Intl.NumberFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
 
-	LLL('The link is: https://www.xyz.com/{0|noSpaces}', 'super cool product')
-	// => 'The link is: https://www.xyz.com/super-cool-product'
+```typescript
+import { number } from 'tyoesafe-i18n/formatters'
 
-	```
- - uppercase\
- 	A wrapper for [String.prototype.toUpperCase](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase)
-	```typescript
-	import { uppercase } from 'typesafe-i18n/formatters'
+const formatters = {
+   currency: number('en', { style: 'currency', currency: 'EUR' })
+}
 
-	const formatters = {
-	   upper: uppercase
-	}
+LLL('your balance is {0|currency}', 12345) // => 'your balance is €12,345.00'
+```
 
-	LLL('I sayed: {0|upper}', 'hello') // => 'I sayed: HELLO'
-	```
- - lowercase\
-  	A wrapper for [String.prototype.toLowerCase](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase)
-	```typescript
-	import { lowercase } from 'typesafe-i18n/formatters'
+### replace
+A wrapper for [String.prototype.replace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
 
-	const formatters = {
-	   lower: lowercase
-	}
+```typescript
+import { replace } from 'typesafe-i18n/formatters'
 
-	LLL('He sayed: {0|lower}', 'SOMETHING') // => 'He sayed: something'
-	```
+const formatters = {
+   noSpaces: replace(' ', '-')
+}
+
+LLL('The link is: https://www.xyz.com/{0|noSpaces}', 'super cool product')
+// => 'The link is: https://www.xyz.com/super-cool-product'
+```
+
+### identity
+Returns the variable without modifications
+
+```typescript
+import { identity } from 'typesafe-i18n/formatters'
+
+const formatters = {
+   myFormatter: identity // (value) => value
+}
+
+LLL('Hello {name|myFormatter}', 'John')
+// => 'Hello John'
+```
+
+### ignore
+Ignores the variable and returns an empty string.
+
+```typescript
+import { ignore } from 'typesafe-i18n/formatters'
+
+const formatters = {
+   myFormatter: ignore // () => ''
+}
+
+LLL('Hello {name|myFormatter}', 'John')
+// => 'Hello '
+```
+
+### uppercase
+A wrapper for [String.prototype.toUpperCase](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase)
+
+```typescript
+import { uppercase } from 'typesafe-i18n/formatters'
+
+const formatters = {
+   upper: uppercase
+}
+
+LLL('I sayed: {0|upper}', 'hello') // => 'I sayed: HELLO'
+```
+
+### lowercase
+A wrapper for [String.prototype.toLowerCase](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase)
+
+```typescript
+import { lowercase } from 'typesafe-i18n/formatters'
+
+const formatters = {
+   lower: lowercase
+}
+
+LLL('He sayed: {0|lower}', 'SOMETHING') // => 'He sayed: something'
+```
 
 
 
@@ -796,3 +839,169 @@ If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n 
  - [x] get rid of the arguments type informations inside your base-translation [#13](https://github.com/ivanhofer/typesafe-i18n/issues/13)
  - [ ] rewrite keyed to index-based arguments [#15](https://github.com/ivanhofer/typesafe-i18n/issues/15)
  - [ ] inline translations for single-locale bundles[#14](https://github.com/ivanhofer/typesafe-i18n/issues/14)
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+## FAQ
+
+### I added a new translation to my locale file, but TypeScript gives me the Error `Property 'XYZ' does not exist on type 'TranslationFunctions'`
+
+Make shure to run the [watcher](#typesafety) after you make changes to your base translation file. The watcher will [generate and update the types](#folder-structure) for you.
+
+
+### I added a new translation to my locale file, but the watcher will not generate new types
+
+The [watcher](#typesafety) will only look for changes in your base locale file. Make shure to always update your base locale file first, in order to get the correct auto-generated types. If you want to [change your base locale file](#baselocale), make shure to give it the type of `BaseTranslation`. All other locales should have the type of `Translation`. E.g. if you set your base locale to italian, you would need to do it like this:
+
+ - set your base locale to italian (`it`):
+   ```json
+   // file '.typesafe-i18n.json'
+   {
+      "baseLocale": "it"
+   }
+   ```
+
+ - define the type of your base locale as `BaseTranslation`
+   ```typescript
+   // file 'src/i18n/it/index.ts'
+   import type { BaseTranslation } from 'typesafe-i18n'
+
+   const it: BaseTranslation = {
+      WELCOME: "Benvenuto!"
+   }
+
+   export default it
+   ```
+
+ - define the type of your other locales as `Translation`
+   ```typescript
+   // file 'src/i18n/en/index.ts'
+   import type { Translation } from '../i18n-types'
+
+   const en: Translation = {
+      WELCOME: "Welcome!"
+   }
+
+   export default en
+   ```
+
+
+### The watcher keeps overriding my changes I make to the i18n-files
+
+The [watcher](#typesafety) creates some helpful wrappers for you. If you want to write your own wrappers, you can disable the generation of these files by setting the [`generateOnlyTypes`](#generateonlytypes) option to `true`.
+
+
+### I have two similar locales (only a few translations are different) but I don't want to duplicate my translations
+
+Your locale translation files can be any kind of JavaScript object. So you can make object-transformations inside your translation file. The only restriction is: in the end it has to contain a default export with type `Translation`. You could do something like this:
+
+ - create your `BaseTranslation`
+   ```typescript
+   // file 'src/i18n/en/index.ts'
+   import type { BaseTranslation } from 'typesafe-i18n'
+
+   const en: BaseTranslation = {
+      WELCOME: "Welcome to XYZ",
+      // ... some other translations
+
+      COLOR: "colour"
+   }
+
+   export default en
+   ```
+
+ - create your other translation that overrides specific translations
+   ```typescript
+   // file 'src/i18n/en-US/index.ts'
+   import type { Translation } from '../i18n-types'
+   import en from '../en' // import translations from 'en' locale
+
+   const en_US: Translation = {
+      ...en, // use destructuring to copy all translations from your 'en' locale
+
+      COLOR: "color" // override specific translations
+   }
+
+   export default en_US
+   ```
+
+### For certain locales I don't want to output a variable, but due to the strict typing I have to specify it in my translation
+
+The generated types are really strict. It helps you from making unintentional mistakes. If you want to opt-out for certain translations, you can use the `any` keyword.
+
+ - create your `BaseTranslation` with a translation containing a parameter
+   ```typescript
+   // file 'src/i18n/en/index.ts'
+   import type { BaseTranslation } from 'typesafe-i18n'
+
+   const en: BaseTranslation = {
+      HELLO: "Hi {name}!",
+   }
+
+   export default en
+   ```
+
+ - create another locale without that paramter by disabling the strict type checking with  `as any`
+   ```typescript
+   // file 'src/i18n/de/index.ts'
+   import type { Translation } from '../i18n-types'
+
+   const de: Translation = {
+      HELLO: "Hallo!" as any // we don't want to output the 'name' variable
+   }
+
+   export default de
+   ```
+
+> WARNING! the usage of 'any' can introduce unintentional mistakes in future. It should only be used when really necessary and you know what you are doing.
+
+A better approach would be to create a custom formatter e.g.
+
+ - create your tranlsation and add a formatter to your variable
+   ```typescript
+   // file 'src/i18n/en/index.ts'
+   import type { BaseTranslation } from 'typesafe-i18n'
+
+   const en: BaseTranslation = {
+      HELLO: "Hi {name|nameFormatter}!",
+   }
+
+   export default en
+   ```
+
+   ```typescript
+   // file 'src/i18n/de/index.ts'
+   import type { Translation } from '../i18n-types'
+
+   const de: Translation = {
+      HELLO: "Hallo {name|nameFormatter}!"
+   }
+
+   export default de
+   ```
+
+ - create the formatter based on the locale
+   ```typescript
+   // file 'src/i18n/formatters.ts'
+   import type { FormattersInitializer } from 'typesafe-i18n'
+   import type { Locales, Formatters } from './i18n-types'
+   import { identity, ignore } from 'typesafe-i18n/formatters'
+
+   export const initFormatters: FormattersInitializer<Locales, Formatters> = (locale: Locales)    => {
+
+      const nameFormatter =
+         locale === 'de'
+            // return an empty string for locale 'de'
+            ? ignore // same as: () => ''
+            // return the unmodified parmeter
+            : identity // same as: (value) => value
+
+      const formatters: Formatters = {
+         nameFormatter: nameFormatter
+      }
+
+      return formatters
+   }
+   ```
