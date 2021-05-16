@@ -4,6 +4,8 @@
 
 Feature:
  - add [generateOnlyTypes](https://github.com/ivanhofer/typesafe-i18n#generateOnlyTypes) option
+ - add [identity](https://github.com/ivanhofer/typesafe-i18n#identity) formatter
+ - add [ignore](https://github.com/ivanhofer/typesafe-i18n#ignore) formatter
 
 Fix:
  - wrap types of Formatters in a `string` to be able to use any kind of formatter name
