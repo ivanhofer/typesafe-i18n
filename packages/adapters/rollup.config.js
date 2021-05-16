@@ -1,24 +1,29 @@
+// @ts-check
+
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
+import path from 'path'
 import { terser } from 'rollup-plugin-terser'
+
+const getPath = (file) => path.resolve(__dirname, file)
 
 const files = ['svelte', 'react']
 
 const config = files.map((file) => ({
-	input: [`src/adapter-${file}.ts`],
+	input: getPath(`src/adapter-${file}.ts`),
 	output: [
 		{
-			file: `adapters/adapter-${file}.js`,
+			file: getPath(`../../adapters/adapter-${file}.js`),
 			format: 'esm',
+			sourcemap: true,
 		},
 	],
 	external: [file],
 	plugins: [
 		resolve(),
 		typescript({
-			tsconfig: './tsconfig-adapters.json',
-			declaration: false,
-			sourceMap: false,
+			tsconfig: getPath('./tsconfig.json'),
+			sourceMap: true,
 		}),
 		terser(),
 	],

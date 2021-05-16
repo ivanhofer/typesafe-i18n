@@ -4,7 +4,7 @@ import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 import externals from 'rollup-plugin-node-externals'
 import commonjs from '@rollup/plugin-commonjs'
-import path from 'node:path'
+import path from 'path'
 
 const getPath = (file) => path.resolve(__dirname, file)
 

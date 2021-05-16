@@ -65,7 +65,7 @@
 		"dev:rollup": "rollup -c packages/rollup-plugin/rollup.config.ts -w",
 		"dev:webpack": "rollup -c packages/webpack-plugin/rollup.config.ts -w",
 		"build": "npm run build:node && npm run build:rollup && npm run build:webpack && npm run build:formatters && npm run build:adapters && npm run build:esm && npm run build:cjs && npm run build:browser && npm run build:svelte && npm run build:react",
-		"build:adapters": "rollup -c rollup-adapters.config.ts && tsc -p tsconfig-adapters.json",
+		"build:adapters": "rollup -c packages/adapters/rollup.config.js && tsc -p packages/adapters/tsconfig.json --emitDeclarationOnly",
 		"build:browser": "rollup -c packages/browser/rollup.config.js",
 		"build:cjs": "tsc -p packages/core/tsconfig-cjs.json",
 		"build:esm": "tsc -p packages/core/tsconfig-esm.json",
