@@ -70,7 +70,7 @@
 		"build:cjs": "tsc -p tsconfig-cjs.json",
 		"build:esm": "tsc -p tsconfig-esm.json",
 		"build:formatters": "rollup -c packages/formatters/rollup.config.js && tsc -p packages/formatters/tsconfig.json --emitDeclarationOnly",
-		"build:node": "rollup -c rollup-node.config.ts",
+		"build:node": "rollup -c packages/node-process/rollup.config.js",
 		"build:react": "rollup -c rollup-react.config.ts && tsc -p tsconfig-react.json --emitDeclarationOnly",
 		"build:rollup": "rollup -c packages/rollup-plugin/rollup.config.js && tsc -p packages/rollup-plugin/tsconfig.json --emitDeclarationOnly",
 		"build:svelte": "rollup -c rollup-svelte.config.ts && tsc -p tsconfig-svelte.json --emitDeclarationOnly",
