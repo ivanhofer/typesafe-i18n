@@ -1,7 +1,7 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
-import { i18nString, i18nObject } from '../../../src/index'
+import { i18nString, i18nObject } from '../../core/src/index'
 import { uppercase, lowercase, replace, date, ignore, identity } from '../src'
 
 const test = suite('formatters')
