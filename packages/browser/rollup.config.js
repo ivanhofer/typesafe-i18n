@@ -1,16 +1,21 @@
+// @ts-check
+
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
+import path from 'path'
 import { terser } from 'rollup-plugin-terser'
+
+const getPath = (file) => path.resolve(__dirname, file)
 
 const wrap = (type) => (type ? `.${type}` : '')
 
 const getPlugins = (minify) => [resolve(), typescript({ sourceMap: !minify }), minify && terser()]
 
 const iifeConfig = (type, minify = false) => ({
-	input: `./src/browser${wrap(type)}.ts`,
+	input: getPath(`src/browser${wrap(type)}.ts`),
 	output: [
 		{
-			file: `dist/i18n${wrap(type)}${minify ? '.min' : ''}.js`,
+			file: getPath(`../../dist/i18n${wrap(type)}${minify ? '.min' : ''}.js`),
 			format: 'iife',
 			sourcemap: !minify,
 		},
