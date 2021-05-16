@@ -3,14 +3,16 @@
 
 	"baseLocale": "en",
 	"locales": ["en"],
+	"loadLocalesAsync": true,
 
-	"tempPath": "./node_modules/typesafe-i18n/temp-output/",
 	"outputPath": "./src/i18n/",
 	"typesFileName": "i18n-types",
 	"utilFileName": "i18n-util",
 	"formattersTemplateFileName": "formatters",
 	"typesTemplateFileName": "custom-types",
+	"tempPath": "./node_modules/typesafe-i18n/temp-output/",
+	"generateOnlyTypes": false,
 
 	"adapter": "node",
-	"loadLocalesAsync": true
+	"adapterFileName": "i18n-node"
 }

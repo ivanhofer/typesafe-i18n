@@ -41,7 +41,7 @@ type IsPluralPart<T> = T extends PluralPart ? T : never
 export const isPluralPart = (part: Part): part is IsPluralPart<Part> => !!((<PluralPart>part).o || (<PluralPart>part).r)
 
 const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], value: unknown) =>
-	formatterKeys.reduce((prev, formatterKey) => formatters[formatterKey]?.(prev) || prev, value)
+	formatterKeys.reduce((prev, formatterKey) => formatters[formatterKey]?.(prev) ?? prev, value)
 
 const getPlural = (pluraRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPart, value: unknown) => {
 	switch (z && value == 0 ? 'zero' : pluraRules.select(value as number)) {
@@ -75,7 +75,7 @@ const applyArguments = (
 			}
 
 			const { k: key = '0', f: formatterKeys = [] } = part as ArgumentPart
-			const value = args[(key as unknown) as number] as unknown
+			const value = args[key as unknown as number] as unknown
 
 			if (isPluralPart(part)) {
 				return (

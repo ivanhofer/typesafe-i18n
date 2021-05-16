@@ -31,6 +31,7 @@ export type GeneratorConfig = {
 	adapter?: Adapters
 	adapterFileName?: string
 	loadLocalesAsync?: boolean
+	generateOnlyTypes?: boolean
 }
 
 export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
@@ -43,6 +44,7 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 	formattersTemplateFileName: string
 	typesTemplateFileName: string
 	loadLocalesAsync: boolean
+	generateOnlyTypes: boolean
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -69,6 +71,7 @@ export const getConfigWithDefaultValues = async (
 	formattersTemplateFileName: 'formatters',
 	typesTemplateFileName: 'custom-types',
 	loadLocalesAsync: true,
+	generateOnlyTypes: false,
 	...(await readConfig(config)),
 })
 
@@ -85,13 +88,15 @@ export const generate = async (
 
 	const hasCustomTypes = await generateTypes({ ...config, translations }, importType, version, logger)
 
-	await generateFormattersTemplate(config, importType, forceOverride)
+	if (!config.generateOnlyTypes) {
+		await generateFormattersTemplate(config, importType, forceOverride)
 
-	if (hasCustomTypes) {
-		await generateCustomTypesTemplate(config, forceOverride)
+		if (hasCustomTypes) {
+			await generateCustomTypesTemplate(config, forceOverride)
+		}
+
+		await generateUtil(config, importType)
 	}
-
-	await generateUtil(config, importType)
 
 	switch (config.adapter) {
 		case 'node':

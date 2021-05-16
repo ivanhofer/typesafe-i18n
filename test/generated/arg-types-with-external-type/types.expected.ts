@@ -27,7 +27,7 @@ export type TranslationFunctions = {
 }
 
 export type Formatters = {
-	calculate: (value: Result) => unknown
+	'calculate': (value: Result) => unknown
 }
 
 

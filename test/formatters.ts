@@ -2,7 +2,7 @@ import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
 import { i18nString, i18nObject } from '../src/index'
-import { uppercase, lowercase, replace, date } from '../src/formatters'
+import { uppercase, lowercase, replace, date, ignore, identity } from '../src/formatters'
 
 const test = suite('formatters')
 
@@ -14,6 +14,8 @@ const translation = {
 	DATE_EN: 'The date is {0|dateEN}.',
 	DATE_CUSTOM: 'The date is {0|dateCUSTOM}.',
 	NO_SPACES: '{0|noSpaces}',
+	IGNORE: 'Hi {name|ignore}',
+	IDENTITY: 'Hi {name|identity}',
 }
 
 const formatters = {
@@ -24,6 +26,8 @@ const formatters = {
 	dateEN: date('en'),
 	dateCUSTOM: date('en', { day: 'numeric', month: 'long', year: '2-digit' }),
 	noSpaces: (value: string) => value.replace(/\s/g, ''),
+	ignore,
+	identity,
 }
 
 const LLL = i18nString('en', formatters)
@@ -47,5 +51,9 @@ test('date en', () => assert.is(LL.DATE_EN(someDate), 'The date is 3/13/2020.'))
 test('date custom', () => assert.is(LL.DATE_CUSTOM(someDate), 'The date is March 13, 20.'))
 
 test('no spaces', () => assert.is(LL.NO_SPACES('some text with no spaces'), 'sometextwithnospaces'))
+
+test('ignore', () => assert.is(LL.IGNORE({ name: 'John' }), 'Hi '))
+
+test('identity', () => assert.is(LL.IDENTITY({ name: 'John' }), 'Hi John'))
 
 test.run()

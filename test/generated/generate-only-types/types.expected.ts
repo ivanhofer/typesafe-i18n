@@ -1,41 +1,33 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
+import type { CustomType } from './types-template.actual'
+
 export type BaseLocale = 'en'
 
 export type Locales =
 	| 'en'
 
 export type TranslationKeys =
-	| 'A'
-	| 'B'
+	| 'TEST'
 
 export type Translation = {
 	/**
-	 * {0|calculate}!
-	 * @param {number} 0
+	 * This is a test {0|someFormatter}
+	 * @param {CustomType} 0
 	 */
-	'A': RequiredParams1<'0|calculate'>
-	/**
-	 * {0|calculate}
-	 * @param {Date} 0
-	 */
-	'B': RequiredParams1<'0|calculate'>
+	'TEST': RequiredParams1<'0|someFormatter'>
 }
 
 export type TranslationFunctions = {
 	/**
-	 * {0|calculate}!
+	 * This is a test {0|someFormatter}
 	 */
-	'A': (arg0: number) => string
-	/**
-	 * {0|calculate}
-	 */
-	'B': (arg0: Date) => string
+	'TEST': (arg0: CustomType) => string
 }
 
 export type Formatters = {
-	'calculate': (value: number | Date) => unknown
+	'someFormatter': (value: CustomType) => unknown
 }
 
 

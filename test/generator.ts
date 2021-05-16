@@ -142,6 +142,10 @@ testGeneratedOutput('with-formatters', {
 	FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
 })
 
+testGeneratedOutput('formatters-with-dashes', { FORMATTER: '{0|custom-formatter|and-another}' })
+
+testGeneratedOutput('formatters-with-spaces', { FORMATTER: '{0| custom formatter | and another }' })
+
 testGeneratedOutput('base-locale-de', {}, { baseLocale: 'de' })
 
 testGeneratedOutput('multiple-locales', {}, { locales: ['de', 'en', 'it'] })
@@ -170,6 +174,12 @@ testGeneratedOutput('same-keyed-param', { SAME_KEYED_PARAM: '{name} {name} {name
 testGeneratedOutput('only-plural-rules', { ONLY_PLURAL: 'apple{{s}}', ONLY_SINGULAR_PLURAL: '{{Afpel|Äpfel}}' })
 
 testGeneratedOutput('plural-part-before-key', { PLURAL_BEFORE_KEY: 'apple{{s}}: {nrOfApples:number}' })
+
+testGeneratedOutput(
+	'generate-only-types',
+	{ TEST: 'This is a test {0:CustomType|someFormatter}' },
+	{ generateOnlyTypes: true },
+)
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -246,5 +256,7 @@ testGeneratedConsoleOutput('console-keyed-and-index-based-keys', { TEST: '{hi} {
 	assert.is(outputs.warn[0], "translation 'TEST' => argument {1} expected, but {hi} found")
 	assert.is(outputs.warn[1], "translation 'TEST' => you can't mix keyed and index-based args")
 })
+
+// --------------------------------------------------------------------------------------------------------------------
 
 test.run()

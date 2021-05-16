@@ -63,8 +63,8 @@ export type TranslationFunctions = {
 }
 
 export type Formatters = {
-	a: (value: unknown) => unknown
-	z: (value: unknown) => unknown
+	'a': (value: unknown) => unknown
+	'z': (value: unknown) => unknown
 }
 
 
