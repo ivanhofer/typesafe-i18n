@@ -1,7 +1,7 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-
-import { i18nObject, i18nString } from '../src/index'
+import { i18nObject } from '../src/util.object'
+import { i18nString } from '../src/util.string'
 
 const test = suite('core')
 

@@ -1,4 +1,4 @@
-import type { BaseTranslation } from '../core/core'
+import type { BaseTranslation } from '../../packages/core/src/core'
 import { generateTypes } from './files/generate-types'
 import { generateUtil } from './files/generate-util'
 import { generateSvelteAdapter } from './files/generate-adapter-svelte'

@@ -1,3 +1,3 @@
-import { i18nString } from '../../../src/core/util.string'
+import { i18nString } from '../../core/src/util.string'
 //@ts-ignore
 window.i18nString = i18nString

@@ -12,12 +12,16 @@ import {
 	sortStringASC,
 	sortStringPropertyASC,
 } from 'typesafe-utils'
-import { parseRawText } from '../../core/parser'
-import { isPluralPart, BaseTranslation } from '../../core/core'
-import type { ArgumentPart } from '../../core/parser'
+import { parseRawText } from '../../../packages/core/src/parser'
+import { isPluralPart, BaseTranslation } from '../../../packages/core/src/core'
+import type { ArgumentPart } from '../../../packages/core/src/parser'
 import { writeFileIfContainsChanges } from '../file-utils'
 import type { GeneratorConfigWithDefaultValues } from '../generator'
-import { removeEmptyValues, partsAsStringWithoutTypes, partAsStringWithoutTypes } from '../../core/core-utils'
+import {
+	removeEmptyValues,
+	partsAsStringWithoutTypes,
+	partAsStringWithoutTypes,
+} from '../../../packages/core/src/core-utils'
 import { getPermutations, Logger, supportsTemplateLiteralTypes, TypescriptVersion } from '../generator-util'
 
 // --------------------------------------------------------------------------------------------------------------------

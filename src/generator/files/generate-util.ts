@@ -1,4 +1,4 @@
-import type { Locale } from '../../core/core'
+import type { Locale } from '../../../packages/core/src/core'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generator'
 import { sanitizeLocale } from '../generator-util'
