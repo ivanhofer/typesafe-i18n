@@ -1,14 +1,19 @@
+// @ts-check
+
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 import externals from 'rollup-plugin-node-externals'
 import commonjs from '@rollup/plugin-commonjs'
 import { terser } from 'rollup-plugin-terser'
+import path from 'path'
+
+const getPath = (file) => path.resolve(__dirname, file)
 
 const createConfig = (minify) => ({
-	input: './src/svelte-store.ts',
+	input: getPath('src/svelte-store.ts'),
 	output: [
 		{
-			file: `svelte/svelte-store${minify ? '.min' : ''}.js`,
+			file: getPath(`../../svelte/svelte-store${minify ? '.min' : ''}.js`),
 			format: 'esm',
 			sourcemap: !minify,
 			exports: 'named',
@@ -19,7 +24,10 @@ const createConfig = (minify) => ({
 		commonjs(),
 		resolve({ preferBuiltins: true }),
 		externals(),
-		typescript({ sourceMap: !minify }),
+		typescript({
+			tsconfig: getPath('./tsconfig.json'),
+			sourceMap: !minify,
+		}),
 		minify && terser(),
 	],
 })

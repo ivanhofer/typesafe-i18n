@@ -61,9 +61,9 @@
 		"/webpack"
 	],
 	"scripts": {
-		"dev:rollup": "tsc -p tsconfig-rollup.json -w",
-		"dev:node": "rollup -c rollup-node.config.ts -w",
-		"dev:webpack": "rollup -c rollup-webpack.config.ts -w",
+		"dev:node": "rollup -c packages/node-process/rollup.config.ts -w",
+		"dev:rollup": "rollup -c packages/rollup-plugin/rollup.config.ts -w",
+		"dev:webpack": "rollup -c packages/webpack-plugin/rollup.config.ts -w",
 		"build": "npm run build:node && npm run build:rollup && npm run build:webpack && npm run build:formatters && npm run build:adapters && npm run build:esm && npm run build:cjs && npm run build:browser && npm run build:svelte && npm run build:react",
 		"build:adapters": "rollup -c rollup-adapters.config.ts && tsc -p tsconfig-adapters.json",
 		"build:browser": "rollup -c packages/browser/rollup.config.js",
@@ -73,7 +73,7 @@
 		"build:node": "rollup -c packages/node-process/rollup.config.js",
 		"build:react": "rollup -c rollup-react.config.ts && tsc -p tsconfig-react.json --emitDeclarationOnly",
 		"build:rollup": "rollup -c packages/rollup-plugin/rollup.config.js && tsc -p packages/rollup-plugin/tsconfig.json --emitDeclarationOnly",
-		"build:svelte": "rollup -c rollup-svelte.config.ts && tsc -p tsconfig-svelte.json --emitDeclarationOnly",
+		"build:svelte": "rollup -c packages/adapter-svelte/rollup.config.js && tsc -p packages/adapter-svelte/tsconfig.json --emitDeclarationOnly",
 		"build:webpack": "rollup -c packages/webpack-plugin/rollup.config.js && tsc -p packages/webpack-plugin/tsconfig.json --emitDeclarationOnly",
 		"generate:json-schema": "mkdir schema && typescript-json-schema ./tsconfig-esm.json GeneratorConfig > ./schema/typesafe-i18n.json",
 		"lint": "eslint src",

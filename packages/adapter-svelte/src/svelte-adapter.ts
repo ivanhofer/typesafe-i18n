@@ -1,14 +1,14 @@
-import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../packages/core/src/core'
+import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../core/src/core'
 import type { Readable, Writable } from 'svelte/store'
 import { derived, writable } from 'svelte/store'
-import { i18nObject } from '../../packages/core/src/util.object'
+import { i18nObject } from '../../core/src/util.object'
 import {
 	FormattersInitializer,
 	AsyncFormattersInitializer,
 	TranslationLoader,
 	TranslationLoaderAsync,
-} from '../../packages/core/src/util.loader'
-import { getFallbackProxy } from '../../packages/core/src/core-utils'
+} from '../../core/src/util.loader'
+import { getFallbackProxy } from '../../core/src/core-utils'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------

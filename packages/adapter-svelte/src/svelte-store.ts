@@ -1,4 +1,4 @@
-import { getI18nSvelteStore } from './adapters/svelte'
+import { getI18nSvelteStore } from './svelte-adapter'
 
 const { initI18n, setLocale, isLoadingLocale, locale, LL } = getI18nSvelteStore()
 
