@@ -96,11 +96,8 @@
 		"@size-limit/preset-app": "^4.10.2",
 		"@size-limit/webpack": "^4.10.2",
 		"@types/node": "^15.0.3",
-		"@types/react": "^17.0.5",
-		"@types/webpack": "^5.28.0",
 		"@typescript-eslint/eslint-plugin": "^4.23.0",
 		"@typescript-eslint/parser": "^4.23.0",
-		"astring": "^1.7.4",
 		"eslint": "^7.26.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-prettier": "^3.4.0",
@@ -110,8 +107,6 @@
 		"rollup-plugin-node-externals": "^2.2.0",
 		"rollup-plugin-terser": "^7.0.2",
 		"size-limit": "^4.10.2",
-		"source-map": "^0.7.3",
-		"svelte": "^3.38.2",
 		"tiny-glob": "^0.2.8",
 		"ts-node": "^9.1.1",
 		"typescript": "^4.2.4",
@@ -121,5 +116,17 @@
 	},
 	"bin": {
 		"typesafe-i18n": "node/watcher.js"
-	}
+	},
+	"workspaces": [
+		"packages/adapter-react",
+		"packages/adapter-svelte",
+		"packages/adapters",
+		"packages/browser",
+		"packages/core",
+		"packages/formatters",
+		"packages/generator",
+		"packages/node-process",
+		"packages/rollup-plugin",
+		"packages/webpack-plugin"
+	]
 }

@@ -1,0 +1,6 @@
+{
+	"name": "@typesafe-i18n/adapter-svelte",
+	"devDependencies": {
+		"svelte": "^3.38.2"
+	}
+}

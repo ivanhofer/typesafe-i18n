@@ -1,2 +1,11 @@
 node_modules
-lib
+/adapters
+/cjs
+/dist
+/esm
+/formatters
+/node
+/react
+/rollup
+/svelte
+/webpack

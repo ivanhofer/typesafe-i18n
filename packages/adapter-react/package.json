@@ -1,0 +1,6 @@
+{
+	"name": "@typesafe-i18n/adapter-react",
+	"devDependencies": {
+		"@types/react": "^17.0.5"
+	}
+}

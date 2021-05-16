@@ -1,7 +1,7 @@
 import * as ts from 'typescript'
 import { watch } from 'chokidar'
 import { resolve } from 'path'
-import type { BaseTranslation } from '../../core/src/core'
+import type { BaseTranslation } from '@typesafe-i18n/core/src/core'
 import { GeneratorConfig, GeneratorConfigWithDefaultValues, readConfig } from './generator'
 import {
 	copyFile,
