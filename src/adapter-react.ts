@@ -1,1 +1,1 @@
-export * from './adapters/react'
+export * from '../packages/adapter-react/src/react-adapter'

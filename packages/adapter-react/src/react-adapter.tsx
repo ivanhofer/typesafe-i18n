@@ -1,13 +1,13 @@
 import React, { createContext, useState } from 'react'
-import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../packages/core/src/core'
-import { getFallbackProxy } from '../../packages/core/src/core-utils'
+import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../core/src/core'
+import { getFallbackProxy } from '../../core/src/core-utils'
 import {
 	AsyncFormattersInitializer,
 	FormattersInitializer,
 	TranslationLoader,
 	TranslationLoaderAsync,
-} from '../../packages/core/src/util.loader'
-import { i18nObject } from '../../packages/core/src/util.object'
+} from '../../core/src/util.loader'
+import { i18nObject } from '../../core/src/util.object'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
