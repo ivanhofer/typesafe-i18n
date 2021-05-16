@@ -6,7 +6,7 @@
 		"declaration": true,
 		"sourceMap": true,
 		"outDir": "./lib",
-		"rootDir": "./src",
+		"rootDir": "./",
 		"strict": true,
 		"noImplicitAny": true,
 		"strictNullChecks": true,
@@ -24,7 +24,7 @@
 		"resolveJsonModule": true,
 		"jsx": "react"
 	},
-	"include": ["src/**/*"],
+	"include": ["src/**/*", "packages/**/*"],
 	"exclude": ["node_modules"],
 	"ts-node": {
 		"compilerOptions": {

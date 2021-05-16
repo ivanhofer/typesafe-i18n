@@ -1,4 +1,4 @@
-import type { FormatterFunction } from '../formatters/_types'
+import { FormatterFunction } from '../../packages/formatters/src/_types'
 import type { ArgumentPart, Part, PluralPart } from './parser'
 
 // --------------------------------------------------------------------------------------------------------------------

@@ -10,11 +10,14 @@
 	"author": "ivanhofer",
 	"keywords": [
 		"i18n",
+		"internationalization",
 		"typescript",
-		"lightweight",
-		"localization",
+		"typesave",
 		"l10n",
-		"localization engine"
+		"localization",
+		"localization library",
+		"localization engine",
+		"lightweight"
 	],
 	"license": "MIT",
 	"module": "esm/index.js",
@@ -66,7 +69,7 @@
 		"build:browser": "rollup -c rollup-browser.config.ts",
 		"build:cjs": "tsc -p tsconfig-cjs.json",
 		"build:esm": "tsc -p tsconfig-esm.json",
-		"build:formatters": "rollup -c rollup-formatters.config.ts && tsc -p tsconfig-formatters.json",
+		"build:formatters": "rollup -c packages/formatters/rollup.config.ts && tsc -p packages/formatters/tsconfig.json --emitDeclarationOnly",
 		"build:node": "rollup -c rollup-node.config.ts",
 		"build:react": "rollup -c rollup-react.config.ts && tsc -p tsconfig-react.json --emitDeclarationOnly",
 		"build:rollup": "rollup -c rollup-rollup.config.ts && tsc -p tsconfig-rollup.json --emitDeclarationOnly",

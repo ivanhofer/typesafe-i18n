@@ -18,7 +18,7 @@ type SvelteStoreInit<
 	L extends string = string,
 	T extends BaseTranslation = BaseTranslation,
 	TF extends TranslationFunctions = TranslationFunctions<T>,
-	F extends BaseFormatters = BaseFormatters
+	F extends BaseFormatters = BaseFormatters,
 	> = {
 		initI18n: (
 			newlocale: L,
@@ -39,9 +39,9 @@ export const getI18nSvelteStore = <
 	L extends string = string,
 	T extends BaseTranslation = BaseTranslation,
 	TF extends TranslationFunctions = TranslationFunctions<T>,
-	F extends BaseFormatters = BaseFormatters
->(
-	baseLocale: L = '' as L,
+	F extends BaseFormatters = BaseFormatters,
+	>(
+		baseLocale: L = '' as L,
 ): SvelteStoreInit<L, T, TF, F> => {
 	const currentLocale = writable<L>(baseLocale)
 

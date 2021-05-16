@@ -1,0 +1,8 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"rootDir": "src",
+		"outDir": "../../formatters"
+	},
+	"include": ["./src/index.ts"]
+}
