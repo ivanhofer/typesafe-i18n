@@ -8,20 +8,13 @@ export const removeEmptyValues = <T>(object: T): T =>
 			.filter(Boolean),
 	) as T
 
-export const trimAllValues = <T extends ArgumentPart | PluralPart>(part: T): T => {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const trimmedObject: any = {} as T
-	Object.keys(part).forEach((key) => {
-		const val = (part[key as keyof T] as unknown) as string | string[]
-		if (Array.isArray(val)) {
-			trimmedObject[key] = val.map((v) => v?.trim())
-			return
-		}
-		trimmedObject[key] = val?.trim()
-	})
-
-	return trimmedObject
-}
+export const trimAllValues = <T extends ArgumentPart | PluralPart>(part: T): T =>
+	Object.fromEntries(
+		Object.keys(part).map((key) => {
+			const val = part[key as keyof T] as unknown as string | string[]
+			return [key, Array.isArray(val) ? val.map((v) => v?.trim()) : val?.trim()] as const
+		}),
+	) as T
 
 export const partsAsStringWithoutTypes = (parts: Part[]): string => parts.map(partAsStringWithoutTypes).join('')
 
