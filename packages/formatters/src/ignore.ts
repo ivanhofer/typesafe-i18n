@@ -1,4 +1,4 @@
-import type { FormatterFunction } from './_types'
+import { FormatterFunction } from './_types'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-export const ignore: FormatterFunction = (): string => ''
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const ignore: FormatterFunction<any, ''> = (_value): '' => ''
