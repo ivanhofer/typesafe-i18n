@@ -25,14 +25,8 @@
 	"browser": "dist/i18n.min.js",
 	"types": "types/index.d.ts",
 	"exports": {
-		"./formatters": {
-			"import": "./esm/formatters/index.js",
-			"require": "./cjs/formatters/index.js"
-		},
-		"./formatters/*": {
-			"import": "./esm/formatters/*.js",
-			"require": "./cjs/formatters/*.js"
-		},
+		"./formatters": "./formatters/index.js",
+		"./formatters/*": "./formatters/*.js",
 		"./adapters/*": "./adapters/*.js",
 		"./react/react-context": "./react/react-context.js",
 		"./rollup/*": "./rollup/*.js",
