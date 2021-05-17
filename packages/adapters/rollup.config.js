@@ -24,6 +24,8 @@ const config = files.map((file) => ({
 		typescript({
 			tsconfig: getPath('./tsconfig.json'),
 			sourceMap: true,
+			declaration: false,
+			declarationDir: null,
 		}),
 		terser(),
 	],

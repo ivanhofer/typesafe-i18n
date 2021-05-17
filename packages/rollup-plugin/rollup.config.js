@@ -12,27 +12,27 @@ const getPath = (file) => path.resolve(__dirname, file)
 
 const files = fs.readdirSync(getPath('src'))
 
-const config = files
-	.filter((file) => file.startsWith('rollup-plugin-typesafe-i18n'))
-	.map((file) => ({
-		input: getPath(`src/${file}`),
-		output: [
-			{
-				file: getPath(`../../rollup/${file.replace('.ts', '.js')}`),
-				format: 'cjs',
-				sourcemap: true,
-				exports: 'named',
-			},
-		],
-		external: ['typescript', 'chokidar'],
-		plugins: [
-			commonjs(),
-			resolve({ preferBuiltins: true }),
-			externals(),
-			typescript({
-				tsconfig: getPath('./tsconfig.json'),
-			}),
-		],
-	}))
+const config = files.map((file) => ({
+	input: getPath(`src/${file}`),
+	output: [
+		{
+			file: getPath(`../../rollup/${file.replace('.ts', '.js')}`),
+			format: 'cjs',
+			sourcemap: true,
+			exports: 'named',
+		},
+	],
+	external: ['typescript', 'chokidar'],
+	plugins: [
+		commonjs(),
+		resolve({ preferBuiltins: true }),
+		externals(),
+		typescript({
+			tsconfig: getPath('./tsconfig.json'),
+			declaration: false,
+			declarationDir: null,
+		}),
+	],
+}))
 
 export default config

@@ -27,6 +27,8 @@ const createConfig = (minify) => ({
 		typescript({
 			tsconfig: getPath('./tsconfig.json'),
 			sourceMap: !minify,
+			declaration: false,
+			declarationDir: null,
 		}),
 		minify && terser(),
 	],

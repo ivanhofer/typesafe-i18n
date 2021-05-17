@@ -25,6 +25,8 @@ const config = {
 		externals(),
 		typescript({
 			tsconfig: getPath('./tsconfig.json'),
+			declaration: false,
+			declarationDir: null,
 		}),
 	],
 }

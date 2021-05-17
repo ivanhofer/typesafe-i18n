@@ -28,6 +28,8 @@ const config = files
 			typescript({
 				tsconfig: getPath('./tsconfig.json'),
 				sourceMap: false,
+				declaration: false,
+				declarationDir: null,
 			}),
 			terser(),
 		],
