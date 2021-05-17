@@ -22,7 +22,7 @@
 	"license": "MIT",
 	"module": "esm/index.js",
 	"main": "cjs/index.js",
-	"browser": "dist/index.min.js",
+	"browser": "dist/i18n.min.js",
 	"types": "types/index.d.ts",
 	"exports": {
 		"./formatters": {
