@@ -1,1 +1,1 @@
-export * from '@typesafe-i18n/adapter-svelte/src/svelte-adapter'
+export * from '../../adapter-svelte/src/svelte-adapter'

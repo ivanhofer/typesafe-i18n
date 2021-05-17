@@ -1,4 +1,4 @@
-import type { FormatterFunction } from './_types'
+import type { FormatterFunction } from '../../core/src/core'
 
 export const number = (
 	locale: string,

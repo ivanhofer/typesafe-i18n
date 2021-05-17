@@ -1,6 +1,0 @@
-{
-	"name": "@typesafe-i18n/webpack-plugin",
-	"devDependencies": {
-		"@types/webpack": "^5.28.0"
-	}
-}

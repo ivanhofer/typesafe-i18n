@@ -1,4 +1,4 @@
-import type { Locale } from '@typesafe-i18n/core/src/core'
+import type { Locale } from '../../../core/src/core'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generator'
 import { sanitizeLocale } from '../generator-util'

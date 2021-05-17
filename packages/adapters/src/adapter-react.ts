@@ -1,1 +1,1 @@
-export * from '@typesafe-i18n/adapter-react/src/react-adapter'
+export * from '../../adapter-react/src/react-adapter'

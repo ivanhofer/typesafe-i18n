@@ -1,4 +1,3 @@
-import { FormatterFunction } from '@typesafe-i18n/formatters/src/_types'
 import type { ArgumentPart, Part, PluralPart } from './parser'
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -27,6 +26,9 @@ export type Arguments = any[]
 export type BaseTranslation = {
 	[key: string]: string
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type FormatterFunction<T = any, U = unknown> = (value: T) => U
 
 export type BaseFormatters = {
 	[formatter: string]: FormatterFunction

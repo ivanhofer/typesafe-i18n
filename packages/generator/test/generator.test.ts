@@ -3,7 +3,7 @@ import { resolve } from 'path'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
-import type { BaseTranslation } from '@typesafe-i18n/core/src/core'
+import type { BaseTranslation } from '../../core/src/core'
 import { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../src/generator'
 import { generate, getConfigWithDefaultValues } from '../src/generator'
 import { parseTypescriptVersion, TypescriptVersion } from '../src/generator-util'

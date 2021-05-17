@@ -1,4 +1,4 @@
-import type { BaseTranslation } from '@typesafe-i18n/core/src/core'
+import type { BaseTranslation } from '../../core/src/core'
 import { generateTypes } from './files/generate-types'
 import { generateUtil } from './files/generate-util'
 import { generateSvelteAdapter } from './files/generate-adapter-svelte'

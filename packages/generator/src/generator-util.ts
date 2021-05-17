@@ -1,4 +1,4 @@
-import type { Arguments, Locale } from '@typesafe-i18n/core/src/core'
+import type { Arguments, Locale } from '../../core/src/core'
 
 export const getPermutations = <T>(rest: T[], permutatedArray: T[] = []): T[][] => {
 	if (rest.length === 0) {

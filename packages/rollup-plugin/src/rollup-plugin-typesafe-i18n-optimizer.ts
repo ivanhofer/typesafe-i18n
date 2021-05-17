@@ -8,11 +8,11 @@ import type {
 	VariableDeclarator,
 	ArrayExpression,
 } from 'estree'
-import { GeneratorConfig, getConfigWithDefaultValues } from '@typesafe-i18n/generator/src/generator'
+import { GeneratorConfig, getConfigWithDefaultValues } from '../../generator/src/generator'
 import { createFilter } from '@rollup/pluginutils'
 import { walk } from 'estree-walker'
-import { partsAsStringWithoutTypes } from '@typesafe-i18n/core/src/core-utils'
-import { parseRawText } from '@typesafe-i18n/core/src/parser'
+import { partsAsStringWithoutTypes } from '../../core/src/core-utils'
+import { parseRawText } from '../../core/src/parser'
 import { generate } from 'astring'
 import sourceMap from 'source-map'
 
