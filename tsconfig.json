@@ -8,6 +8,7 @@
 		"baseUrl": "./",
 		"outDir": "./",
 		"rootDir": "./packages",
+		"declarationDir": "./types",
 		"strict": true,
 		"noImplicitAny": true,
 		"strictNullChecks": true,

@@ -3,5 +3,5 @@
 	"compilerOptions": {
 		"outDir": "../../rollup"
 	},
-	"include": ["./src/**/*.ts"]
+	"include": ["./src/**/*.ts", "../core/src/**/*.ts", "../generator/src/**/*.ts"]
 }

@@ -23,7 +23,7 @@
 	"module": "esm/index.js",
 	"main": "cjs/index.js",
 	"browser": "dist/index.min.js",
-	"types": "esm/index.d.ts",
+	"types": "types/index.d.ts",
 	"exports": {
 		"./formatters": {
 			"import": "./esm/formatters/index.js",
@@ -64,7 +64,7 @@
 		"dev:node": "rollup -c packages/node-process/rollup.config.ts -w",
 		"dev:rollup": "rollup -c packages/rollup-plugin/rollup.config.ts -w",
 		"dev:webpack": "rollup -c packages/webpack-plugin/rollup.config.ts -w",
-		"build": "npm run build:node && npm run build:rollup && npm run build:webpack && npm run build:formatters && npm run build:adapters && npm run build:esm && npm run build:cjs && npm run build:browser && npm run build:svelte && npm run build:react",
+		"build": "npm run build:node && npm run build:rollup && npm run build:webpack && npm run build:formatters && npm run build:adapters && npm run build:esm && npm run build:cjs && npm run build:browser && npm run build:svelte && npm run build:react && npm run link-types",
 		"build:adapters": "rollup -c packages/adapters/rollup.config.js && tsc -p packages/adapters/tsconfig.json --emitDeclarationOnly",
 		"build:browser": "rollup -c packages/browser/rollup.config.js",
 		"build:cjs": "tsc -p packages/core/tsconfig-cjs.json",
@@ -75,6 +75,7 @@
 		"build:rollup": "rollup -c packages/rollup-plugin/rollup.config.js && tsc -p packages/rollup-plugin/tsconfig.json --emitDeclarationOnly",
 		"build:svelte": "rollup -c packages/adapter-svelte/rollup.config.js && tsc -p packages/adapter-svelte/tsconfig.json --emitDeclarationOnly",
 		"build:webpack": "rollup -c packages/webpack-plugin/rollup.config.js && tsc -p packages/webpack-plugin/tsconfig.json --emitDeclarationOnly",
+		"link-types": "ts-node ./packages/link-types.ts",
 		"generate:json-schema": "mkdir schema && typescript-json-schema ./tsconfig-esm.json GeneratorConfig > ./schema/typesafe-i18n.json",
 		"lint": "eslint src",
 		"lint:fix": "eslint src --fix",
