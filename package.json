@@ -58,6 +58,7 @@
 		"/rollup",
 		"/schema",
 		"/svelte",
+		"/types",
 		"/webpack"
 	],
 	"scripts": {
