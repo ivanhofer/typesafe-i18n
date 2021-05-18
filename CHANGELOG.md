@@ -1,6 +1,6 @@
 # CHANGELOG.md
 
-## 2.23.0 (2021-05-17)
+## 2.23.0 (2021-05-19)
 
  - better type-definitions for formatter functions
 
