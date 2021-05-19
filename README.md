@@ -292,7 +292,7 @@ Passing [options](#options) to the watcher is possible by creating a `.typesafe-
 
 ```json
 {
-   "$schema": "https://unpkg.com/typesafe-i18n@2.23.1/schema/typesafe-i18n.json",
+   "$schema": "https://unpkg.com/typesafe-i18n@2.23.2/schema/typesafe-i18n.json",
 
    "baseLocale": "de",
    "adapter": "svelte"

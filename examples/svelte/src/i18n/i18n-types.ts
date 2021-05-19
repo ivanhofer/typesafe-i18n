@@ -112,9 +112,9 @@ export type TranslationFunctions = {
 }
 
 export type Formatters = {
-	fallback0: (value: number | number) => unknown
-	linkToSvelteTutorial: (value: string) => unknown
-	weekday: (value: Date) => unknown
+	'fallback0': (value: number | number) => unknown
+	'linkToSvelteTutorial': (value: string) => unknown
+	'weekday': (value: Date) => unknown
 }
 
 
@@ -127,8 +127,8 @@ type Params2<P1 extends string, P2 extends string> =
 	`${string}${Param<P1>}${string}${Param<P2>}${string}`
 
 type RequiredParams1<P1 extends string> =
-	 | Params1<P1>
+	| Params1<P1>
 
 type RequiredParams2<P1 extends string, P2 extends string> =
-	 | Params2<P1, P2>
-	 | Params2<P2, P1>
+	| Params2<P1, P2>
+	| Params2<P2, P1>
