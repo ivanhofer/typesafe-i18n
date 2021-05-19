@@ -71,7 +71,7 @@
 		"build:svelte": "rollup -c packages/adapter-svelte/rollup.config.js && tsc -p packages/adapter-svelte/tsconfig.json --emitDeclarationOnly",
 		"build:webpack": "rollup -c packages/webpack-plugin/rollup.config.js && tsc -p packages/webpack-plugin/tsconfig.json --emitDeclarationOnly",
 		"link-typedefinitions": "ts-node ./packages/link-typedefinitions.ts",
-		"generate:json-schema": "mkdir schema && typescript-json-schema ./tsconfig-esm.json GeneratorConfig > ./schema/typesafe-i18n.json",
+		"generate:json-schema": "mkdir schema && typescript-json-schema ./packages/rollup-plugin/tsconfig.json GeneratorConfig > ./schema/typesafe-i18n.json",
 		"lint": "eslint src",
 		"lint:fix": "eslint src --fix",
 		"test": "require-self && uvu -r ts-node/register -i generated packages test",

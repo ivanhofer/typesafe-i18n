@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.23.1 (2021-05-19)
+
+Fix
+ - fix path for generating schema file
+
 ## 2.23.0 (2021-05-19)
 
  - better type-definitions for formatter functions
