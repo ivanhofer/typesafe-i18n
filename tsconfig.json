@@ -5,8 +5,10 @@
 		"moduleResolution": "Node",
 		"declaration": true,
 		"sourceMap": true,
-		"outDir": "./lib",
-		"rootDir": "./src",
+		"baseUrl": "./",
+		"outDir": "./",
+		"rootDir": "./packages",
+		"declarationDir": "./types",
 		"strict": true,
 		"noImplicitAny": true,
 		"strictNullChecks": true,
@@ -24,8 +26,8 @@
 		"resolveJsonModule": true,
 		"jsx": "react"
 	},
-	"include": ["src/**/*"],
-	"exclude": ["node_modules"],
+	"include": ["packages/**/*"],
+	"exclude": ["node_modules", "packages/**/test/**/*"],
 	"ts-node": {
 		"compilerOptions": {
 			"module": "commonjs"

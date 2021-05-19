@@ -1,8 +1,0 @@
-{
-	"extends": "./tsconfig.json",
-	"compilerOptions": {
-		"module": "CommonJS",
-		"outDir": "./rollup"
-	},
-	"include": ["./src/rollup-plugin-typesafe-i18n*.ts"]
-}

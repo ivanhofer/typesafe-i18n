@@ -1,8 +1,12 @@
 node_modules
+/adapters
 /cjs
 /dist
 /esm
 /formatters
 /node
+/react
 /rollup
-/swebpack
+/svelte
+/webpack
+rollup.config.js

@@ -1,0 +1,7 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"outDir": "../../adapters"
+	},
+	"include": ["./src/**/*.ts", "../core/src/**/*.ts", "../adapter-react/src/**/*.ts", "../adapter-svelte/src/**/*.ts"]
+}
