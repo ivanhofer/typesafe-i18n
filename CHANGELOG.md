@@ -1,8 +1,13 @@
 # CHANGELOG.md
 
+## 2.23.2 (2021-05-19)
+
+Fix:
+ - use correct file extension when generating react context
+
 ## 2.23.1 (2021-05-19)
 
-Fix
+Fix:
  - fix path for generating schema file
 
 ## 2.23.0 (2021-05-19)

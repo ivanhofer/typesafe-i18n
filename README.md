@@ -12,7 +12,7 @@
 
 ## Advantages
 
-:baby_chick: [lightweight](#sizes)\
+:baby_chick: [lightweight](#sizes) (<1kb)\
 :ok_hand: [easy to use syntax](#syntax)\
 :running: [fast and efficient](#performance)\
 :speech_balloon: [supports plural rules](#plural)\
@@ -32,7 +32,7 @@
 - [Usage](#usage)
 - [Typesafety](#typesafety)
 - [Syntax](#syntax)
-- [formatters](#formatters)
+- [Formatters](#formatters)
 - [Sizes](#sizes)
 - [Performance](#performance)
 - [FAQ](#faq)
@@ -292,7 +292,7 @@ Passing [options](#options) to the watcher is possible by creating a `.typesafe-
 
 ```json
 {
-   "$schema": "https://unpkg.com/typesafe-i18n@2.20.0/schema/typesafe-i18n.json",
+   "$schema": "https://unpkg.com/typesafe-i18n@2.23.1/schema/typesafe-i18n.json",
 
    "baseLocale": "de",
    "adapter": "svelte"
@@ -668,7 +668,7 @@ Or if you are using the [i18nObject (LL)](#i18nObject):
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
-## formatters
+## Formatters
 
 You can specify your own formatters, that take an argument as an input and returns another value.
 

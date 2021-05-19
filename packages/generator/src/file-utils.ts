@@ -72,7 +72,7 @@ export const deleteFolderRecursive = async (path: string): Promise<boolean> => {
 }
 
 const getFileName = (path: string, file: string) => {
-	const ext = file.endsWith('.ts') ? '' : '.ts'
+	const ext = file.endsWith('.ts') || file.endsWith('.tsx') ? '' : '.ts'
 	return join(path, file + ext)
 }
 
