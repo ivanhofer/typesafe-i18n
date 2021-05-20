@@ -91,6 +91,7 @@
 		"@rollup/plugin-typescript": "^8.2.1",
 		"@size-limit/preset-app": "^4.10.2",
 		"@size-limit/webpack": "^4.10.2",
+		"@types/express": "^4.17.11",
 		"@types/node": "^15.3.0",
 		"@types/node-fetch": "^2.5.10",
 		"@types/react": "^17.0.5",
