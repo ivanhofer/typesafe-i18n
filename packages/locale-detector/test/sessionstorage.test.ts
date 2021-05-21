@@ -31,19 +31,19 @@ testDetector('undefined', undefined, [])
 
 testDetector('empty', {}, [])
 
-testDetector('single value', { lang: 'de-AT' }, ['de-AT'])
+testDetector('single value', { locale: 'de-AT' }, ['de-AT'])
 
-testDetector('single value with custom key', { locale: 'en-US' }, ['en-US'], 'locale')
+testDetector('single value with custom key', { lang: 'en-US' }, ['en-US'], 'lang')
 
-testDetector('single value with custom key not specified', { locale: 'fr' }, [])
+testDetector('single value with custom key not specified', { lang: 'fr' }, [])
 
-testDetector('single value with wrong custom key not specified', { lang: 'fr' }, [], 'locale')
+testDetector('single value with wrong custom key not specified', { locale: 'fr' }, [], 'lang')
 
 testDetector(
 	'multiple values',
 	{
 		id: '1234',
-		lang: 'it',
+		locale: 'it',
 	},
 	['it'],
 )
