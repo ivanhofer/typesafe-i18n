@@ -17,7 +17,6 @@
 	},
 	"dependencies": {
 		"express": "^4.17.1",
-		"locale": "^0.1.0",
 		"typesafe-i18n": "^2.23.2"
 	}
 }
