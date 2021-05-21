@@ -93,6 +93,7 @@ ${importType} {
 	Formatters,
 	Locales,
 } from './${typesFile}'
+import { LocaleDetector, detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
 import { initFormatters } from './${formattersTemplatePath}'
 
 export const baseLocale: Locales = '${baseLocale}'
@@ -102,6 +103,8 @@ ${dynamicCode}
 export const i18nString = ${loadLocalesAsync ? 'async ' : ''
 		}(locale: Locales) => initI18nString<Locales, Formatters>(locale, ${loadLocalesAsync ? 'await ' : ''
 		}initFormatters(locale))
+
+export const detectLocale = (...detectors: LocaleDetector[]) => detectLocaleFn<Locales>(baseLocale, locales, ...detectors)
 `
 }
 

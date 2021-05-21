@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.24.0 (unreleased)
+
+Feature
+ - add locale-detection feature
+
 ## 2.23.2 (2021-05-19)
 
 Fix:

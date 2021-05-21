@@ -1,3 +1,4 @@
+export type { LocaleDetector } from './detect'
 export { detectLocale } from './detect'
 
 export { initAcceptLanguageHeaderDetector } from './detectors/accept-language-header'

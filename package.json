@@ -78,7 +78,7 @@
 		"lint:fix": "eslint packages --fix",
 		"test": "require-self && uvu -r ts-node/register -i generated packages test",
 		"test:watch": "watchlist packages test -- npm test",
-		"test:update-generated-files": "ts-node test/generated/update.ts",
+		"test:update-generated-files": "ts-node packages/generator/test/generated/update.ts",
 		"test:size": "size-limit"
 	},
 	"dependencies": {
