@@ -1,4 +1,4 @@
-import type { Locale } from 'packages/core/src/core'
+import type { Locale } from '../../../core/src/core'
 import { isTruthy } from 'typesafe-utils'
 import type { LocaleDetector } from '../detect'
 
