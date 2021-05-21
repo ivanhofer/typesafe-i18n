@@ -1,15 +1,15 @@
-import type { Headers } from 'node-fetch'
 import { isNotEmpty } from 'typesafe-utils'
 import type { Locale } from '../../../core/src/core'
 import type { LocaleDetector } from '../detect'
 
+type Headers = Record<string, string | string[] | undefined>
+
 const REGEX_ACCEPT_LANGUAGE_SPLIT = /;|,/
 
 export const initAcceptLanguageHeaderDetector =
-	(headers: Headers): LocaleDetector =>
+	(headers: Headers, headerKey = 'accept-language'): LocaleDetector =>
 		(): Locale[] =>
-			headers
-				.get('Accept-Language')
+			(headers[headerKey] as string)
 				?.split(REGEX_ACCEPT_LANGUAGE_SPLIT)
 				.filter((part) => !part.startsWith('q'))
 				.map((part) => part.trim())

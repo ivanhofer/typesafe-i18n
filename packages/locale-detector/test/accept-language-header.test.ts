@@ -1,4 +1,3 @@
-import { Headers } from 'node-fetch'
 import type { Locale } from '../../core/src/core'
 
 import { suite } from 'uvu'
@@ -13,9 +12,9 @@ const test = suite('detector:accept-language-header')
 
 const testDetector = (name: string, acceptLanguageHeaderValue: string | undefined, expected: Locale[]) =>
 	test(`accept-language-header ${name}`, () => {
-		const headers = new Headers()
+		const headers = {} as { 'accept-language': string }
 		if (isNotUndefined(acceptLanguageHeaderValue)) {
-			headers.set('Accept-Language', acceptLanguageHeaderValue as string)
+			headers['accept-language'] = acceptLanguageHeaderValue as string
 		}
 		const detector = initAcceptLanguageHeaderDetector(headers)
 		assert.equal(detector(), expected)
