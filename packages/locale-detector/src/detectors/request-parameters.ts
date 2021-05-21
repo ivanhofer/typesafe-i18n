@@ -1,9 +1,9 @@
 import { Request } from 'express'
+import { isTruthy } from 'typesafe-utils'
 import type { Locale } from '../../../core/src/core'
 import type { LocaleDetector } from '../detect'
-import { parseValueFromCookie } from './_cookie.util'
 
-export const initRequestCookiesDetector =
+export const initRequestParametersDetector =
 	(req: Request, key = 'lang'): LocaleDetector =>
 		(): Locale[] =>
-			parseValueFromCookie(req?.cookies, key)
+			[req?.params?.[key]].filter(isTruthy)
