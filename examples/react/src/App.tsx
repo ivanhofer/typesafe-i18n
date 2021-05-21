@@ -2,13 +2,14 @@ import React from 'react'
 import './App.css'
 import Child from './Child'
 import TypesafeI18n from './i18n/i18n-react'
-import { Locales } from './i18n/i18n-types'
+import { detectLocale, localStorageDetector } from 'typesafe-i18n/detectors'
+import { baseLocale, locales } from './i18n/i18n-util'
 
 function App() {
-	const initialLocale = localStorage.getItem('locale') as Locales
+	const detectedLocale = detectLocale(baseLocale, locales, localStorageDetector)
 
 	return (
-		<TypesafeI18n initialLocale={initialLocale}>
+		<TypesafeI18n initialLocale={detectedLocale}>
 			<div className="App">
 				<Child></Child>
 			</div>
