@@ -1,6 +1,7 @@
 node_modules
 /adapters
 /cjs
+/detectors
 /dist
 /esm
 /formatters

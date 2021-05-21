@@ -10,7 +10,12 @@ import { terser } from 'rollup-plugin-terser'
 
 const getPath = (file) => path.resolve(__dirname, file)
 
-const files = fs.readdirSync(getPath('./src'))
+const isNotFolder = (fileName) => fileName.includes('.')
+
+const files = [
+	...fs.readdirSync(getPath('./src')).filter(isNotFolder),
+	...fs.readdirSync(getPath('./src/detectors')).map((file) => `detectors/${file}`),
+]
 
 const config = files
 	.filter((file) => !file.startsWith('_'))
@@ -18,8 +23,8 @@ const config = files
 		input: getPath(`./src/${file}`),
 		output: [
 			{
-				file: getPath(`../../formatters/${file.replace('.ts', '.js')}`),
-				format: 'esm',
+				file: getPath(`../../detectors/${file.replace('.ts', '.js')}`),
+				format: 'cjs',
 			},
 		],
 		plugins: [

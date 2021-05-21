@@ -1,5 +1,6 @@
-import { readdirSync, writeFileSync } from 'fs'
+import { writeFileSync } from 'fs'
 import { resolve } from 'path'
+import { sync as globSync } from 'glob'
 
 type FromWheretoImport = string
 type OutputPath = string
@@ -12,12 +13,15 @@ const mappings: [FromWheretoImport, OutputPath?, FilterFunction?][] = [
 	['core', 'cjs'],
 	['core', 'esm'],
 	['formatters'],
+	['locale-detector', 'detectors'],
 	['rollup-plugin', 'rollup'],
 	['webpack-plugin', 'webpack'],
 ]
 
 mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, mapperFunction]) => {
-	const files = readdirSync(resolve(__dirname, `../types/${fromWheretoImport}/src`))
+	const files = globSync(resolve(__dirname, `../types/${fromWheretoImport}/src/**/*.d.ts`)).map((file) =>
+		resolve(file).substring(resolve(__dirname, `../types/${fromWheretoImport}/src/`).length + 1),
+	)
 
 	const filteredFiles = (mapperFunction && files.filter(mapperFunction)) || files
 

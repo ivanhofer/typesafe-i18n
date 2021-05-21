@@ -25,9 +25,9 @@
 	"browser": "dist/i18n.min.js",
 	"types": "types/index.d.ts",
 	"exports": {
-		"./formatters": "./formatters/index.js",
-		"./formatters/*": "./formatters/*.js",
 		"./adapters/*": "./adapters/*.js",
+		"./detectors": "./detectors/index.js",
+		"./formatters": "./formatters/index.js",
 		"./react/react-context": "./react/react-context.js",
 		"./rollup/*": "./rollup/*.js",
 		"./svelte/svelte-store": "./svelte/svelte-store.js",
@@ -59,10 +59,11 @@
 		"dev:node": "rollup -c packages/node-process/rollup.config.ts -w",
 		"dev:rollup": "rollup -c packages/rollup-plugin/rollup.config.ts -w",
 		"dev:webpack": "rollup -c packages/webpack-plugin/rollup.config.ts -w",
-		"build": "npm run build:node && npm run build:rollup && npm run build:webpack && npm run build:formatters && npm run build:adapters && npm run build:esm && npm run build:cjs && npm run build:browser && npm run build:svelte && npm run build:react && npm run link-typedefinitions",
+		"build": "npm run build:node && npm run build:rollup && npm run build:webpack && npm run build:formatters && npm run build:adapters && npm run build:esm && npm run build:cjs && npm run build:detectors && npm run build:browser && npm run build:svelte && npm run build:react && npm run link-typedefinitions",
 		"build:adapters": "rollup -c packages/adapters/rollup.config.js && tsc -p packages/adapters/tsconfig.json --emitDeclarationOnly",
 		"build:browser": "rollup -c packages/browser/rollup.config.js",
 		"build:cjs": "tsc -p packages/core/tsconfig-cjs.json",
+		"build:detectors": "rollup -c packages/locale-detector/rollup.config.js && tsc -p packages/locale-detector/tsconfig.json --emitDeclarationOnly",
 		"build:esm": "tsc -p packages/core/tsconfig-esm.json",
 		"build:formatters": "rollup -c packages/formatters/rollup.config.js && tsc -p packages/formatters/tsconfig.json --emitDeclarationOnly",
 		"build:node": "rollup -c packages/node-process/rollup.config.js",
@@ -80,6 +81,8 @@
 		"test:size": "size-limit"
 	},
 	"dependencies": {
+		"@types/glob": "^7.1.3",
+		"glob": "^7.1.7",
 		"typesafe-utils": "^1.11.1"
 	},
 	"peerDependencies": {
