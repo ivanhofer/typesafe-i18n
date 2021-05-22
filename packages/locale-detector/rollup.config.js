@@ -1,30 +1,32 @@
 // @ts-check
 
-import fs from 'fs'
 import path from 'path'
 
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import typescript from '@rollup/plugin-typescript'
 import { terser } from 'rollup-plugin-terser'
+import { sync as glob } from 'glob'
 
 const getPath = (file) => path.resolve(__dirname, file)
 
-const isNotFolder = (fileName) => fileName.includes('.')
+const files = glob(path.resolve(__dirname, `./src/**/*.ts`)).map((file) =>
+	path
+		.resolve(file)
+		.substring(path.resolve(__dirname, `./src/`).length + 1)
+		.replace(/\\/g, '/'),
+)
 
-const files = [
-	...fs.readdirSync(getPath('./src')).filter(isNotFolder),
-	...fs.readdirSync(getPath('./src/detectors')).map((file) => `detectors/${file}`),
-]
+const getOutputFormat = (file) => (file.startsWith('detectors/browser') ? 'esm' : 'cjs')
 
 const config = files
-	.filter((file) => !file.startsWith('_'))
+	.filter((file) => !file.split('/').some((part) => part.startsWith('_')))
 	.map((file) => ({
 		input: getPath(`./src/${file}`),
 		output: [
 			{
 				file: getPath(`../../detectors/${file.replace('.ts', '.js')}`),
-				format: 'cjs',
+				format: getOutputFormat(file),
 			},
 		],
 		plugins: [
