@@ -1,12 +1,11 @@
-import type { Locale } from '../../core/src/core'
+import type { Locale } from '../../../core/src/core'
 
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
-import { initRequestCookiesDetector } from '../src/detectors/request-cookies'
-import { Request } from 'express'
+import { initDocumentCookieDetector } from '../../src/detectors/browser/document-cookie'
 
-const test = suite('detector:request-cookies')
+const test = suite('detector:document-cookie')
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -16,9 +15,9 @@ const testDetector = (
 	expected: Locale[],
 	cookieName: string | undefined = undefined,
 ) =>
-	test(`request-cookies ${name}`, () => {
-		const req = { cookies: cookieValue } as Request
-		const detector = initRequestCookiesDetector(req, cookieName)
+	test(`document-cookie ${name}`, () => {
+		globalThis.document = { cookie: cookieValue } as Document
+		const detector = initDocumentCookieDetector(cookieName)
 		assert.equal(detector(), expected)
 	})
 

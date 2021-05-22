@@ -1,9 +1,9 @@
-import type { Locale } from '../../core/src/core'
+import type { Locale } from '../../../core/src/core'
 
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
-import { navigatorDetector } from '../src/detectors/navigator'
+import { navigatorDetector } from '../../src/detectors/browser/navigator'
 
 const test = suite('detector:navigator')
 

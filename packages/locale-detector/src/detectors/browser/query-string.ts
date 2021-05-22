@@ -1,5 +1,5 @@
-import type { Locale } from 'packages/core/src/core'
-import type { LocaleDetector } from '../detect'
+import type { Locale } from '../../../../core/src/core'
+import type { LocaleDetector } from '../../detect'
 
 export const initQueryStringDetector =
 	(key = 'lang'): LocaleDetector =>

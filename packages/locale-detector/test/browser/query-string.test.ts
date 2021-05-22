@@ -1,9 +1,9 @@
-import type { Locale } from '../../core/src/core'
+import type { Locale } from '../../../core/src/core'
 
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
-import { initQueryStringDetector } from '../src/detectors/query-string'
+import { initQueryStringDetector } from '../../src/detectors/browser/query-string'
 
 const test = suite('detector:query-string')
 

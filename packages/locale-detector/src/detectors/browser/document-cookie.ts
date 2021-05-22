@@ -1,6 +1,6 @@
-import type { Locale } from '../../../core/src/core'
-import type { LocaleDetector } from '../detect'
-import { parseValueFromCookie } from './_cookie.util'
+import type { Locale } from '../../../../core/src/core'
+import type { LocaleDetector } from '../../detect'
+import { parseValueFromCookie } from '../_cookie.util'
 
 export const initDocumentCookieDetector =
 	(key = 'lang'): LocaleDetector =>

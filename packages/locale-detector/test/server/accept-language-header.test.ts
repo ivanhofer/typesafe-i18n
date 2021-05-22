@@ -1,9 +1,9 @@
-import type { Locale } from '../../core/src/core'
+import type { Locale } from '../../../core/src/core'
 
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
-import { initAcceptLanguageHeaderDetector } from '../src/detectors/accept-language-header'
+import { initAcceptLanguageHeaderDetector } from '../../src/detectors/server/accept-language-header'
 import { isNotUndefined } from 'typesafe-utils'
 
 const test = suite('detector:accept-language-header')
