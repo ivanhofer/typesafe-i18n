@@ -2,12 +2,12 @@ import { isNotEmpty } from 'typesafe-utils'
 import type { Locale } from '../../../core/src/core'
 import type { LocaleDetector } from '../detect'
 
-type Headers = Record<string, string | string[] | undefined>
+type ObjectWithHeaders = { headers: Record<string, string | string[] | undefined> }
 
 const REGEX_ACCEPT_LANGUAGE_SPLIT = /;|,/
 
 export const initAcceptLanguageHeaderDetector =
-	(headers: Headers, headerKey = 'accept-language'): LocaleDetector =>
+	({ headers }: ObjectWithHeaders, headerKey = 'accept-language'): LocaleDetector =>
 		(): Locale[] =>
 			(headers[headerKey] as string)
 				?.split(REGEX_ACCEPT_LANGUAGE_SPLIT)

@@ -2,7 +2,7 @@ export type { LocaleDetector } from './detect'
 export { detectLocale } from './detect'
 
 export { initAcceptLanguageHeaderDetector } from './detectors/accept-language-header'
-export { documentCookieDetector, initDocumentCookieDetector } from './detectors/document-cookie'
+export { initDocumentCookieDetector, documentCookieDetector } from './detectors/document-cookie'
 export { htmlLangAttributeDetector } from './detectors/html-lang-attribute'
 export { initLocalStorageDetector, localStorageDetector } from './detectors/localstorage-detector'
 export { navigatorDetector } from './detectors/navigator'

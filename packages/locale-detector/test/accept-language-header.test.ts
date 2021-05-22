@@ -16,7 +16,7 @@ const testDetector = (name: string, acceptLanguageHeaderValue: string | undefine
 		if (isNotUndefined(acceptLanguageHeaderValue)) {
 			headers['accept-language'] = acceptLanguageHeaderValue as string
 		}
-		const detector = initAcceptLanguageHeaderDetector(headers)
+		const detector = initAcceptLanguageHeaderDetector({ headers })
 		assert.equal(detector(), expected)
 	})
 
