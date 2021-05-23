@@ -7,11 +7,14 @@ export const detectLocale = <L extends Locale>(
 	baseLocale: L,
 	availableLocales: L[],
 	...detectors: LocaleDetector[]
-): L =>
-	detectors.reduce<L | undefined>(
-		(prev, detector) => prev || findMatchingLocale<L>(availableLocales, detector),
-		'' as L,
-	) || baseLocale
+): L => {
+	for (const detector of detectors) {
+		const found = findMatchingLocale<L>(availableLocales, detector)
+		if (found) return found
+	}
+
+	return baseLocale
+}
 
 const findMatchingLocale = <L extends Locale>(availableLocales: L[], detector: LocaleDetector): L | undefined => {
 	const detectedLocales = detector().map((locale) => locale.toLowerCase())
