@@ -42,15 +42,21 @@ const REGEX_NEW_LINE = /\n/g
 const check = async (prefix: string, file: FileToCheck) => {
 	let expected = ''
 	let actual = ''
+	let pathOfFailingFile = ''
 
 	try {
 		expected = (await readFile(getPathOfOutputFile(prefix, file, 'expected'))).toString()
+	} catch (e) {
+		pathOfFailingFile = e.path
+	}
+
+	try {
 		actual = (await readFile(getPathOfOutputFile(prefix, file, 'actual'))).toString()
 	} catch (e) {
-		// eslint-disable-next-line no-console
-		console.error(`Could not find file '${e.path}'`)
-		return
+		pathOfFailingFile = e.path
 	}
+
+	if ((expected && !actual) || (!expected && actual)) throw Error(`Could not find file '${pathOfFailingFile}'`)
 
 	if (expected && actual) {
 		const expectedSplitByLines = expected.split(REGEX_NEW_LINE)
