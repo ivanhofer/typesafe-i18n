@@ -18,7 +18,7 @@ const mappings: [FromWheretoImport, OutputPath?, FilterFunction?][] = [
 	['webpack-plugin', 'webpack'],
 ]
 
-const getToRoot = (file: string) => new Array(file.split('/').length).fill('../').join('')
+const goToRoot = (file: string) => new Array(file.split('/').length).fill('../').join('')
 
 mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, mapperFunction]) => {
 	const files = glob(resolve(__dirname, `../types/${fromWheretoImport}/src/**/*.d.ts`)).map((file) =>
@@ -32,7 +32,7 @@ mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, mapperFunc
 	filteredFiles.forEach((file) => {
 		writeFileSync(
 			resolve(__dirname, `../${outputPath}/${file}`),
-			`export * from '${getToRoot(file)}types/${fromWheretoImport}/src/${file.substring(0, file.length - 5)}'`,
+			`export * from '${goToRoot(file)}types/${fromWheretoImport}/src/${file.substring(0, file.length - 5)}'`,
 			{ encoding: 'utf8' },
 		)
 	})
