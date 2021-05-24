@@ -40,21 +40,14 @@ const getPathOfOutputFile = (prefix: string, file: FileToCheck, type: 'actual' |
 
 const REGEX_NEW_LINE = /\n/g
 const check = async (prefix: string, file: FileToCheck) => {
-	let expected = ''
-	let actual = ''
 	let pathOfFailingFile = ''
-
-	try {
-		expected = (await readFile(getPathOfOutputFile(prefix, file, 'expected'))).toString()
-	} catch (e) {
+	const onError = (e: { path: string }) => {
 		pathOfFailingFile = e.path
+		return ''
 	}
 
-	try {
-		actual = (await readFile(getPathOfOutputFile(prefix, file, 'actual'))).toString()
-	} catch (e) {
-		pathOfFailingFile = e.path
-	}
+	const expected: string = (await readFile(getPathOfOutputFile(prefix, file, 'expected')).catch(onError)).toString()
+	const actual: string = (await readFile(getPathOfOutputFile(prefix, file, 'actual')).catch(onError)).toString()
 
 	if ((expected && !actual) || (!expected && actual)) throw Error(`Could not find file '${pathOfFailingFile}'`)
 
