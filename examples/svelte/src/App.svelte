@@ -1,14 +1,16 @@
 <script lang="ts">
+	import { detectLocale, localStorageDetector } from 'typesafe-i18n/detectors';
 	import { onMount } from 'svelte'
 
 	import LL, { initI18n, locale, setLocale } from './i18n/i18n-svelte'
 	import type { Locales } from './i18n/i18n-types'
-	import { locales } from './i18n/i18n-util'
+	import { baseLocale, locales } from './i18n/i18n-util'
 
 	export let name: string
 
 	onMount(async () => {
-		await initI18n((localStorage.getItem('locale') as Locales) || undefined)
+		const detectedLocale = detectLocale(baseLocale, locales, localStorageDetector)
+		await initI18n(detectedLocale)
 		console.log(LL.STARTUP())
 		localeToSelect = $locale
 	})

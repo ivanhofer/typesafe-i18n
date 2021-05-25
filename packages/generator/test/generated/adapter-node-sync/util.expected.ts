@@ -9,6 +9,7 @@ import type {
 	Formatters,
 	Locales,
 } from './types.actual'
+import { LocaleDetector, detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
 import { initFormatters } from './formatters-template.actual'
 
 export const baseLocale: Locales = 'en'
@@ -30,3 +31,5 @@ export const i18nObject = (locale: Locales) => i18nObjectLoader<Locales, Transla
 export const i18n = () => initI18n<Locales, Translation, TranslationFunctions, Formatters>(getTranslationForLocale, initFormatters)
 
 export const i18nString = (locale: Locales) => initI18nString<Locales, Formatters>(locale, initFormatters(locale))
+
+export const detectLocale = (...detectors: LocaleDetector[]) => detectLocaleFn<Locales>(baseLocale, locales, ...detectors)

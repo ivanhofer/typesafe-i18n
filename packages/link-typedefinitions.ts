@@ -1,5 +1,6 @@
-import { readdirSync, writeFileSync } from 'fs'
+import { writeFileSync } from 'fs'
 import { resolve } from 'path'
+import { sync as glob } from 'glob'
 
 type FromWheretoImport = string
 type OutputPath = string
@@ -12,19 +13,26 @@ const mappings: [FromWheretoImport, OutputPath?, FilterFunction?][] = [
 	['core', 'cjs'],
 	['core', 'esm'],
 	['formatters'],
+	['locale-detector', 'detectors'],
 	['rollup-plugin', 'rollup'],
 	['webpack-plugin', 'webpack'],
 ]
 
+const goToRoot = (file: string) => new Array(file.split('/').length).fill('../').join('')
+
 mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, mapperFunction]) => {
-	const files = readdirSync(resolve(__dirname, `../types/${fromWheretoImport}/src`))
+	const files = glob(resolve(__dirname, `../types/${fromWheretoImport}/src/**/*.d.ts`)).map((file) =>
+		resolve(file)
+			.substring(resolve(__dirname, `../types/${fromWheretoImport}/src/`).length + 1)
+			.replace(/\\/g, '/'),
+	)
 
 	const filteredFiles = (mapperFunction && files.filter(mapperFunction)) || files
 
 	filteredFiles.forEach((file) => {
 		writeFileSync(
 			resolve(__dirname, `../${outputPath}/${file}`),
-			`export * from '../types/${fromWheretoImport}/src/${file.substring(0, file.length - 5)}'`,
+			`export * from '${goToRoot(file)}types/${fromWheretoImport}/src/${file.substring(0, file.length - 5)}'`,
 			{ encoding: 'utf8' },
 		)
 	})

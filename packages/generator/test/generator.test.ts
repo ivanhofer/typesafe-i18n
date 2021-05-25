@@ -36,19 +36,20 @@ const createConfig = async (prefix: string, config?: GeneratorConfig): Promise<G
 type FileToCheck = 'types' | 'util' | 'formatters-template' | 'types-template' | 'svelte' | 'react'
 
 const getPathOfOutputFile = (prefix: string, file: FileToCheck, type: 'actual' | 'expected') =>
-	`${outputPath}${prefix}/${file}.${type}.ts`
+	`${outputPath}/${prefix}/${file}.${type}.ts`
 
 const REGEX_NEW_LINE = /\n/g
 const check = async (prefix: string, file: FileToCheck) => {
-	let expected = ''
-	let actual = ''
-
-	try {
-		expected = (await readFile(getPathOfOutputFile(prefix, file, 'expected'))).toString()
-		actual = (await readFile(getPathOfOutputFile(prefix, file, 'actual'))).toString()
-	} catch {
-		return
+	let pathOfFailingFile = ''
+	const onError = (e: { path: string }) => {
+		pathOfFailingFile = e.path
+		return ''
 	}
+
+	const expected: string = (await readFile(getPathOfOutputFile(prefix, file, 'expected')).catch(onError)).toString()
+	const actual: string = (await readFile(getPathOfOutputFile(prefix, file, 'actual')).catch(onError)).toString()
+
+	if ((expected && !actual) || (!expected && actual)) throw Error(`Could not find file '${pathOfFailingFile}'`)
 
 	if (expected && actual) {
 		const expectedSplitByLines = expected.split(REGEX_NEW_LINE)

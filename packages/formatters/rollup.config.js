@@ -13,7 +13,7 @@ const getPath = (file) => path.resolve(__dirname, file)
 const files = fs.readdirSync(getPath('./src'))
 
 const config = files
-	.filter((file) => !file.includes('_types.ts'))
+	.filter((file) => !file.startsWith('_'))
 	.map((file) => ({
 		input: getPath(`./src/${file}`),
 		output: [
