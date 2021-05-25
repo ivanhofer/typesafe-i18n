@@ -815,7 +815,7 @@ import { detectLocale } from 'typesafe-i18n/detectors'
 const detectedLocale = detectLocale(fallbackLocale, availableLocales, detector)
 ```
 
-The funtion expects following parameters:
+The function expects following parameters:
  - `fallbackLocale: string`\
    When no matching locale is found this value is used.
  - `availableLocales: string[]`\
@@ -828,7 +828,7 @@ The funtion expects following parameters:
 
 ### Detectors
 
-You can use the [built-in detectors](#server) or write your own `detector` functions:
+Detectors can be used either on the browser or the server side. You can use the [built-in detectors](#server) or write your own `detector` functions:
 
 ```typescript
 import { detectLocale } from 'typesafe-i18n/detectors'
@@ -1010,7 +1010,7 @@ import { detectLocale, localStorageDetector } from 'typesafe-i18n/detectors'
 const detectedLocale = detectLocale(fallbackLocale, availableLocales, localStorageDetector)
 ```
 
-The default item-key is `'locale'`, but you can change it by using the `initLocalStorageDetector` function:
+The default item-key is `'lang'`, but you can change it by using the `initLocalStorageDetector` function:
 
 ```typescript
 import { detectLocale, initLocalStorageDetector } from 'typesafe-i18n/detectors'
@@ -1032,7 +1032,7 @@ import { detectLocale, sessionStorageDetector } from 'typesafe-i18n/detectors'
 const detectedLocale = detectLocale(fallbackLocale, availableLocales, sessionStorageDetector)
 ```
 
-The default item-key is `'locale'`, but you can change it by using the `initSessionStorageDetector` function:
+The default item-key is `'lang'`, but you can change it by using the `initSessionStorageDetector` function:
 
 
 ```typescript
@@ -1123,12 +1123,12 @@ If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n 
 
 ### I added a new translation to my locale file, but TypeScript gives me the Error `Property 'XYZ' does not exist on type 'TranslationFunctions'`
 
-Make shure to run the [watcher](#typesafety) after you make changes to your base translation file. The watcher will [generate and update the types](#folder-structure) for you.
+Make sure to run the [watcher](#typesafety) after you make changes to your base translation file. The watcher will [generate and update the types](#folder-structure) for you.
 
 
 ### I added a new translation to my locale file, but the watcher will not generate new types
 
-The [watcher](#typesafety) will only look for changes in your base locale file. Make shure to always update your base locale file first, in order to get the correct auto-generated types. If you want to [change your base locale file](#baselocale), make shure to give it the type of `BaseTranslation`. All other locales should have the type of `Translation`. E.g. if you set your base locale to italian, you would need to do it like this:
+The [watcher](#typesafety) will only look for changes in your base locale file. Make sure to always update your base locale file first, in order to get the correct auto-generated types. If you want to [change your base locale file](#baselocale), make sure to give it the type of `BaseTranslation`. All other locales should have the type of `Translation`. E.g. if you set your base locale to italian, you would need to do it like this:
 
  - set your base locale to italian (`it`):
    ```json
