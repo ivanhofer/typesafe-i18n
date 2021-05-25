@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.24.1 (2021-05-25)
+
+Fix
+ - inlude `detectors` files in npm package
+
 ## 2.24.0 (2021-05-25)
 
 Feature

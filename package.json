@@ -43,6 +43,7 @@
 	},
 	"files": [
 		"/adapters",
+		"/detectors",
 		"/cjs",
 		"/dist",
 		"/esm",
