@@ -12,7 +12,7 @@ function Child() {
 
 	const onLocaleSelected: ChangeEventHandler<HTMLSelectElement> = ({ target }) => {
 		const locale = target.value as Locales
-		localStorage.setItem('locale', locale)
+		localStorage.setItem('lang', locale)
 		setLocale(locale)
 	}
 

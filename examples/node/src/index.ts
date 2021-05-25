@@ -1,10 +1,10 @@
 import express, { Application, Request, Response } from 'express'
 
 import L from './i18n/i18n-node'
-import { baseLocale, locales } from './i18n/i18n-util'
+import { detectLocale } from './i18n/i18n-util'
 import { Locales } from './i18n/i18n-types'
 
-import { detectLocale, initAcceptLanguageHeaderDetector, initRequestParametersDetector } from 'typesafe-i18n/detectors'
+import { initAcceptLanguageHeaderDetector, initRequestParametersDetector } from 'typesafe-i18n/detectors'
 
 const app: Application = express()
 
@@ -43,9 +43,9 @@ app.get('*', (req: Request, res: Response) => {
 
 const getPreferredLocale = (req: Request): Locales => {
 	const requestParametersDetector = initRequestParametersDetector(req, 'locale')
-	const acceptLanguageDetector = initAcceptLanguageHeaderDetector(req.headers)
+	const acceptLanguageDetector = initAcceptLanguageHeaderDetector(req)
 
-	return detectLocale(baseLocale, locales, requestParametersDetector, acceptLanguageDetector)
+	return detectLocale(requestParametersDetector, acceptLanguageDetector)
 }
 
 // eslint-disable-next-line no-console

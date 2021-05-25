@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { detectLocale, localStorageDetector } from 'typesafe-i18n/detectors';
+	import { localStorageDetector } from 'typesafe-i18n/detectors'
 	import { onMount } from 'svelte'
 
 	import LL, { initI18n, locale, setLocale } from './i18n/i18n-svelte'
 	import type { Locales } from './i18n/i18n-types'
-	import { baseLocale, locales } from './i18n/i18n-util'
+	import { detectLocale, locales } from './i18n/i18n-util'
 
 	export let name: string
 
 	onMount(async () => {
-		const detectedLocale = detectLocale(baseLocale, locales, localStorageDetector)
+		const detectedLocale = detectLocale(localStorageDetector)
 		await initI18n(detectedLocale)
 		console.log(LL.STARTUP())
 		localeToSelect = $locale
@@ -18,10 +18,11 @@
 	let localeToSelect: Locales
 	$: localeToSelect && setLocale(localeToSelect)
 
-	$: $locale && localStorage.setItem('locale', $locale)
+	$: $locale && localStorage.setItem('lang', $locale)
 
 	let nrOfApples = 1
 	let nrOfBananas = 2
+
 </script>
 
 <main>
@@ -89,4 +90,5 @@
 			max-width: none;
 		}
 	}
+
 </style>
