@@ -34,20 +34,20 @@ Configure `typesafe-i18n` by creating the file `.typesafe-i18n.json` with follow
 }
 ```
 
-Run the watcher e.g. by adding a new script inside your `package.json` file.
-You could configure your development script to run the watcher in parallel to `react-scripts start`.
+Run the generator e.g. by adding a new script inside your `package.json` file.
+You could configure your development script to run the generator in parallel to `react-scripts start`.
 
 ```json
 // ... other options
 
 "scripts": {
-   "dev": "npm-run-all --parallel start typesafe-i18n-watcher",
-   "typesafe-i18n-watcher": "typesafe-i18n",
+   "dev": "npm-run-all --parallel start typesafe-i18n-generator",
+   "typesafe-i18n-generator": "typesafe-i18n",
    "start": "react-scripts start"
 }
 ```
 
-The watcher will generate a custom React component and context inside `i18n-react.ts` that you can use inside your application.
+The generator will create a custom React component and context inside `i18n-react.ts` that you can use inside your application.
 
 Wrap your application root with the `TypesafeI18n` component:
 
@@ -93,7 +93,7 @@ export default Greeting
 
 ### TypesafeI18n
 
-When running the [watcher](https://github.com/ivanhofer/typesafe-i18n#typesafety), the file `i18n-react.tsx` will export a React component you can wrap around your application. It accepts the (optional) prop `initialLocale` where you can pass a locale to initialize the context.
+When running the [generator](https://github.com/ivanhofer/typesafe-i18n#typesafety), the file `i18n-react.tsx` will export a React component you can wrap around your application. It accepts the (optional) prop `initialLocale` where you can pass a locale to initialize the context.
 
 ```jsx
 import React from 'react'

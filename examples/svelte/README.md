@@ -35,11 +35,11 @@ Navigate to [http://localhost:5000](http://localhost:5000). You should see the e
 
 # Configure `typesafe-i18n` for an existing Svelte project
 
-First, you need to configure the watcher inside `rollup.config.js` to listen for changes in your locales files.
+First, you need to configure the generator inside `rollup.config.js` to listen for changes in your locales files.
 
 ```javascript
 
-import i18nWatcher from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n-watcher'
+import typesafeI18n from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n'
 
 export default {
    input: { /* ... */ },
@@ -48,7 +48,7 @@ export default {
 
       /* other plugins */
 
-      !production && i18nWatcher({ adapter: 'svelte', loadLocalesAsync: false }),
+      !production && typesafeI18n({ adapter: 'svelte', loadLocalesAsync: false }),
 
    ],
 }
@@ -56,7 +56,7 @@ export default {
 ```
 > make sure to set the `adapter`-option to `'svelte'`
 
-The watcher will generate some custom Svelte stores inside `i18n-svelte.ts` that you can use inside your components.
+The generator will create some custom Svelte stores inside `i18n-svelte.ts` that you can use inside your components.
 
 Then inside your root-component, you need to call `initI18n` in order to setup all stores.
 
@@ -88,7 +88,7 @@ That's it. You can then start using `typesafe-i18n` inside your Svelte applicati
 
 ## Stores
 
-When running the [watcher](https://github.com/ivanhofer/typesafe-i18n#typesafety), the file `i18n-svelte.ts` will export following functions and readable stores:
+When running the [generator](https://github.com/ivanhofer/typesafe-i18n#typesafety), the file `i18n-svelte.ts` will export following functions and readable stores:
 
 
 ### initI18n

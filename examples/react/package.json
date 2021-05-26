@@ -13,8 +13,8 @@
 		"web-vitals": "^1.1.2"
 	},
 	"scripts": {
-		"dev": "npm-run-all --parallel start typesafe-i18n-watcher",
-		"typesafe-i18n-watcher": "typesafe-i18n",
+		"dev": "npm-run-all --parallel start typesafe-i18n-generator",
+		"typesafe-i18n-generator": "typesafe-i18n",
 		"start": "react-scripts start",
 		"build": "react-scripts build"
 	},

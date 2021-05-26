@@ -1,6 +1,6 @@
 import { Compiler, node } from 'webpack'
 import { GeneratorConfig } from '../../generator/src/generate-files'
-import { startWatcher } from '../../generator/src/watcher'
+import { startGenerator } from '../../generator/src/generator'
 
 let started = false
 
@@ -19,7 +19,7 @@ export default class TypesafeI18nWebpackPlugin implements node.NodeTargetPlugin 
 		compiler.hooks.compile.tap('TypesafeI18nWebpackPlugin', () => {
 			if (started) return
 
-			startWatcher(this.config)
+			startGenerator(this.config)
 			started = true
 		})
 	}

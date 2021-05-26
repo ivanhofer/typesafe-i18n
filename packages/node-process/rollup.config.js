@@ -10,11 +10,11 @@ const getPath = (file) => path.resolve(__dirname, file)
 
 const config = [
 	{
-		input: getPath('src/node-watcher.ts'),
+		input: getPath('src/node-generator.ts'),
 		output: [
 			{
 				banner: '#!/usr/bin/env node\n',
-				file: getPath('../../node/watcher.js'),
+				file: getPath('../../node/generator.js'),
 				format: 'cjs',
 				sourcemap: true,
 			},

@@ -28,14 +28,14 @@ Navigate to [http://localhost:3001](http://localhost:3001). You should see the e
 
 > requires a node version >= 12.x
 
-First, you need to configure the watcher to listen for changes in your locales files.
+First, you need to configure the generator to listen for changes in your locales files.
 For this you can add following line to the scripts-section of your `package.json` file.
 
 ```json
 {
 
    "scripts": {
-      "typesafe-i18n-watcher": "typesafe-i18n"
+      "typesafe-i18n-generator": "typesafe-i18n"
    }
 }
 ```
@@ -50,7 +50,7 @@ If you are running a node server it makes also sense to set the `loadLocalesAsyn
 }
 ```
 
-The watcher will generate some custom utils inside `i18n-node.ts`.
+The generator will create some custom utils inside `i18n-node.ts`.
 
 That's it. You can then start using `typesafe-i18n` inside your application.
 

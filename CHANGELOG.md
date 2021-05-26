@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 2.25.0 (2021-05-27)
+
+ - rename `watcher` to `generator`
+
 ## 2.24.1 (2021-05-25)
 
 Fix
