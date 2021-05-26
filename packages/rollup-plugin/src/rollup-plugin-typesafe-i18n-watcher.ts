@@ -1,6 +1,6 @@
 import type { Plugin } from 'rollup'
 import { startWatcher } from '../../generator/src/watcher'
-import type { GeneratorConfig } from '../../generator/src/generator'
+import type { GeneratorConfig } from '../../generator/src/generate-files'
 
 let started = false
 

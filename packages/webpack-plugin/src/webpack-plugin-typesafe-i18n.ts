@@ -1,5 +1,5 @@
 import { Compiler, node } from 'webpack'
-import { GeneratorConfig } from '../../generator/src/generator'
+import { GeneratorConfig } from '../../generator/src/generate-files'
 import { startWatcher } from '../../generator/src/watcher'
 
 let started = false

@@ -2,7 +2,7 @@ import * as ts from 'typescript'
 import { watch } from 'chokidar'
 import { resolve } from 'path'
 import type { BaseTranslation } from '../../core/src/core'
-import { GeneratorConfig, GeneratorConfigWithDefaultValues, readConfig } from './generator'
+import { GeneratorConfig, GeneratorConfigWithDefaultValues, readConfig } from './generate-files'
 import {
 	copyFile,
 	createPathIfNotExits,
@@ -11,7 +11,7 @@ import {
 	getFiles,
 	importFile,
 } from './file-utils'
-import { generate, getConfigWithDefaultValues } from './generator'
+import { generate, getConfigWithDefaultValues } from './generate-files'
 import { logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
 
 const getAllLanguages = async (path: string) => {
