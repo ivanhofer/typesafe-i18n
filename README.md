@@ -294,7 +294,7 @@ Passing [options](#options) to the generator is possible by creating a `.typesaf
 
 ```json
 {
-   "$schema": "https://unpkg.com/typesafe-i18n@2.23.2/schema/typesafe-i18n.json",
+   "$schema": "https://unpkg.com/typesafe-i18n@2.25.0/schema/typesafe-i18n.json",
 
    "baseLocale": "de",
    "adapter": "svelte"

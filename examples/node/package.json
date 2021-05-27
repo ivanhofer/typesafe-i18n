@@ -17,6 +17,6 @@
 	},
 	"dependencies": {
 		"express": "^4.17.1",
-		"typesafe-i18n": "^2.24.1"
+		"typesafe-i18n": "^2.25.0"
 	}
 }
