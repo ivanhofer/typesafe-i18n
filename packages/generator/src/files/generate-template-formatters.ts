@@ -1,5 +1,5 @@
 import { writeFileIfContainsChanges, writeFileIfNotExists } from '../file-utils'
-import { GeneratorConfigWithDefaultValues } from '../generator'
+import { GeneratorConfigWithDefaultValues } from '../generate-files'
 
 const getFormattersTemplate = (
 	{ typesFileName: typesFile, loadLocalesAsync }: GeneratorConfigWithDefaultValues,

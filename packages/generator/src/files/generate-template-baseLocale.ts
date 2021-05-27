@@ -1,6 +1,6 @@
 import { join } from 'path'
 import { writeFileIfContainsChanges, writeFileIfNotExists } from '../file-utils'
-import { GeneratorConfigWithDefaultValues } from '../generator'
+import { GeneratorConfigWithDefaultValues } from '../generate-files'
 import { sanitizeLocale } from '../generator-util'
 
 const getBaseLocaleTemplate = (baseLocale: string, importType: string) => {

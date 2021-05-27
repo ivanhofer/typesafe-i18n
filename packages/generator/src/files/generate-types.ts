@@ -16,7 +16,7 @@ import { parseRawText } from '../../../core/src/parser'
 import { isPluralPart, BaseTranslation } from '../../../core/src/core'
 import type { ArgumentPart } from '../../../core/src/parser'
 import { writeFileIfContainsChanges } from '../file-utils'
-import type { GeneratorConfigWithDefaultValues } from '../generator'
+import type { GeneratorConfigWithDefaultValues } from '../generate-files'
 import { removeEmptyValues, partsAsStringWithoutTypes, partAsStringWithoutTypes } from '../../../core/src/core-utils'
 import { getPermutations, Logger, supportsTemplateLiteralTypes, TypescriptVersion } from '../generator-util'
 

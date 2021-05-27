@@ -4,8 +4,8 @@ import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 
 import type { BaseTranslation } from '../../core/src/core'
-import { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../src/generator'
-import { generate, getConfigWithDefaultValues } from '../src/generator'
+import { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../src/generate-files'
+import { generate, getConfigWithDefaultValues } from '../src/generate-files'
 import { parseTypescriptVersion, TypescriptVersion } from '../src/generator-util'
 
 const { readFile } = promises

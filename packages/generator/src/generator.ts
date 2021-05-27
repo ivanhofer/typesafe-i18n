@@ -1,112 +1,117 @@
+import * as ts from 'typescript'
+import { watch } from 'chokidar'
+import { resolve } from 'path'
 import type { BaseTranslation } from '../../core/src/core'
-import { generateTypes } from './files/generate-types'
-import { generateUtil } from './files/generate-util'
-import { generateSvelteAdapter } from './files/generate-adapter-svelte'
-import { generateFormattersTemplate } from './files/generate-template-formatters'
-import { generateCustomTypesTemplate } from './files/generate-template-types'
-import { generateBaseLocaleTemplate } from './files/generate-template-baseLocale'
-import { logger as defaultLogger, Logger, supportsImportType, TypescriptVersion } from './generator-util'
-import { generateNodeAdapter } from './files/generate-adapter-node'
-import { generateReactAdapter } from './files/generate-adapter-react'
-import { importFile } from './file-utils'
-import path from 'path'
+import { GeneratorConfig, GeneratorConfigWithDefaultValues, readConfig } from './generate-files'
+import {
+	copyFile,
+	createPathIfNotExits,
+	deleteFolderRecursive,
+	doesPathExist,
+	getFiles,
+	importFile,
+} from './file-utils'
+import { generate, getConfigWithDefaultValues } from './generate-files'
+import { logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
 
-// --------------------------------------------------------------------------------------------------------------------
-// types --------------------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------------------------------------
-
-type Adapters = 'node' | 'svelte' | 'react'
-
-export type GeneratorConfig = {
-	baseLocale?: string
-	locales?: string[]
-
-	tempPath?: string
-	outputPath?: string
-	typesFileName?: string
-	utilFileName?: string
-	formattersTemplateFileName?: string
-	typesTemplateFileName?: string
-
-	adapter?: Adapters
-	adapterFileName?: string
-	loadLocalesAsync?: boolean
-	generateOnlyTypes?: boolean
+const getAllLanguages = async (path: string) => {
+	const files = await getFiles(path, 1)
+	return files.filter(({ folder, name }) => folder && name === 'index.ts').map(({ folder }) => folder)
 }
 
-export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
-	baseLocale: string
-	locales: string[]
-	tempPath: string
-	outputPath: string
-	typesFileName: string
-	utilFileName: string
-	formattersTemplateFileName: string
-	typesTemplateFileName: string
-	loadLocalesAsync: boolean
-	generateOnlyTypes: boolean
-}
+const transpileTypescriptAndPrepareImportFile = async (languageFilePath: string, tempPath: string): Promise<string> => {
+	const program = ts.createProgram([languageFilePath], { outDir: tempPath })
+	program.emit()
 
-// --------------------------------------------------------------------------------------------------------------------
-// implementation -----------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------------------------------------
+	const compiledPath = resolve(tempPath, 'index.js')
+	const copyPath = resolve(tempPath, `i18n-temp-${debounceCounter}.js`)
 
-export const readConfig = async (config: GeneratorConfig | undefined): Promise<GeneratorConfig> => {
-	const generatorConfig =
-		config || (await importFile<GeneratorConfig>(path.resolve('.typesafe-i18n.json'), false)) || {}
-
-	// remove "$schema" property
-	return Object.fromEntries(Object.entries(generatorConfig).filter(([key]) => key !== '$schema'))
-}
-
-export const getConfigWithDefaultValues = async (
-	config: GeneratorConfig | undefined,
-): Promise<GeneratorConfigWithDefaultValues> => ({
-	baseLocale: 'en',
-	locales: [],
-	tempPath: './node_modules/typesafe-i18n/temp-output/',
-	outputPath: './src/i18n/',
-	typesFileName: 'i18n-types',
-	utilFileName: 'i18n-util',
-	formattersTemplateFileName: 'formatters',
-	typesTemplateFileName: 'custom-types',
-	loadLocalesAsync: true,
-	generateOnlyTypes: false,
-	...(await readConfig(config)),
-})
-
-export const generate = async (
-	translations: BaseTranslation,
-	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
-	version: TypescriptVersion,
-	logger: Logger = defaultLogger,
-	forceOverride = false,
-): Promise<void> => {
-	const importType = `import${supportsImportType(version) ? ' type' : ''}`
-
-	await generateBaseLocaleTemplate(config, importType, forceOverride)
-
-	const hasCustomTypes = await generateTypes({ ...config, translations }, importType, version, logger)
-
-	if (!config.generateOnlyTypes) {
-		await generateFormattersTemplate(config, importType, forceOverride)
-
-		if (hasCustomTypes) {
-			await generateCustomTypesTemplate(config, forceOverride)
-		}
-
-		await generateUtil(config, importType)
+	const copySuccess = await copyFile(compiledPath, copyPath, false)
+	if (!copySuccess) {
+		logger.warn(
+			`Make sure to give your base locales default export the type of 'BaseTranslation' and don't import anything from outside the base locales directory via relative path.`,
+		)
+		return ''
 	}
 
-	switch (config.adapter) {
-		case 'node':
-			await generateNodeAdapter(config)
-			break
-		case 'svelte':
-			await generateSvelteAdapter(config, importType)
-			break
-		case 'react':
-			await generateReactAdapter(config, importType)
-			break
+	return copyPath
+}
+
+const parseLanguageFile = async (
+	outputPath: string,
+	locale: string,
+	tempPath: string,
+): Promise<BaseTranslation | null> => {
+	const originalPath = resolve(outputPath, locale, 'index.ts')
+
+	if (!(await doesPathExist(originalPath))) {
+		logger.info(`could not load base locale file '${locale}'`)
+		return null
 	}
+
+	await createPathIfNotExits(tempPath)
+
+	const importPath = await transpileTypescriptAndPrepareImportFile(originalPath, tempPath)
+	if (!importPath) {
+		return null
+	}
+
+	const languageImport = await importFile<BaseTranslation>(importPath)
+
+	await deleteFolderRecursive(tempPath)
+
+	if (!languageImport) {
+		logger.error(`could not read default export from language file '${locale}'`)
+		return null
+	}
+
+	return languageImport
+}
+
+let first = true
+
+const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, version: TypescriptVersion) => {
+	if (first) {
+		first = false
+	} else {
+		logger.info('files were modified => looking for changes ...')
+	}
+
+	const { baseLocale: locale, tempPath, outputPath } = config
+
+	const locales = await getAllLanguages(outputPath)
+
+	const languageFile = (locale && (await parseLanguageFile(outputPath, locale, tempPath))) || {}
+
+	await generate(languageFile, { ...config, baseLocale: locale, locales }, version, logger)
+
+	logger.info('... all files are up to date')
+}
+
+let debounceCounter = 0
+
+const debonce = (callback: () => void) =>
+	setTimeout(
+		(i) => {
+			i === debounceCounter && callback()
+		},
+		100,
+		++debounceCounter,
+	)
+
+export const startGenerator = async (config?: GeneratorConfig): Promise<void> => {
+	const configWithDefaultValues = await getConfigWithDefaultValues(config)
+	const { outputPath } = configWithDefaultValues
+
+	const version = parseTypescriptVersion(ts.versionMajorMinor)
+
+	const onChange = parseAndGenerate.bind(null, configWithDefaultValues, version)
+
+	await createPathIfNotExits(outputPath)
+
+	watch(outputPath).on('all', () => debonce(onChange))
+
+	logger.info(`generating files for typescript version: '${ts.versionMajorMinor}.x'`)
+	logger.info(`watcher started in: '${outputPath}'`)
+	logger.info(`options:`, await readConfig(config))
 }

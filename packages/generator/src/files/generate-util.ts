@@ -1,6 +1,6 @@
 import type { Locale } from '../../../core/src/core'
 import { writeFileIfContainsChanges } from '../file-utils'
-import { GeneratorConfigWithDefaultValues } from '../generator'
+import { GeneratorConfigWithDefaultValues } from '../generate-files'
 import { sanitizeLocale } from '../generator-util'
 
 const getLocalesTranslationRowAsync = (locale: Locale): string => {

@@ -1,5 +1,5 @@
 import { writeFileIfContainsChanges } from '../file-utils'
-import { GeneratorConfigWithDefaultValues } from '../generator'
+import { GeneratorConfigWithDefaultValues } from '../generate-files'
 
 const getSvelteUtils = (
 	{ baseLocale, formattersTemplateFileName, typesFileName, utilFileName }: GeneratorConfigWithDefaultValues,

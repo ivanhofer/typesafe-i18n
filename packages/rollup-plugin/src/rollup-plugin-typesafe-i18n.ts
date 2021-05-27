@@ -1,8 +1,8 @@
 import pluginOptimizer from './rollup-plugin-typesafe-i18n-optimizer'
-import pluginWatcher from './rollup-plugin-typesafe-i18n-watcher'
+import pluginGenerator from './rollup-plugin-typesafe-i18n-generator'
 
 const production = !process.env.ROLLUP_WATCH
 
-const plugin = production ? pluginOptimizer : pluginWatcher
+const plugin = production ? pluginOptimizer : pluginGenerator
 
 export default plugin

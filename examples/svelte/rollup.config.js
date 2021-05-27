@@ -1,3 +1,5 @@
+// @ts-check
+
 import svelte from 'rollup-plugin-svelte'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
@@ -6,7 +8,7 @@ import { terser } from 'rollup-plugin-terser'
 import sveltePreprocess from 'svelte-preprocess'
 import typescript from '@rollup/plugin-typescript'
 import css from 'rollup-plugin-css-only'
-import i18nWatcher from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n-watcher'
+import typesafeI18n from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -40,7 +42,7 @@ export default {
 		file: 'public/build/bundle.js',
 	},
 	plugins: [
-		!production && i18nWatcher({ adapter: 'svelte', loadLocalesAsync: false }),
+		!production && typesafeI18n({ adapter: 'svelte', loadLocalesAsync: false }),
 
 		svelte({
 			preprocess: sveltePreprocess({ sourceMap: !production }),
