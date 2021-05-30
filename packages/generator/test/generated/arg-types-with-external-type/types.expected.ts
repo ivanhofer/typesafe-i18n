@@ -8,9 +8,6 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type TranslationKeys =
-	| 'EXTERNAL_TYPE'
-
 export type Translation = {
 	/**
 	 * The result is {0|calculate}!

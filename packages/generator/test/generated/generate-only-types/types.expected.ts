@@ -8,9 +8,6 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type TranslationKeys =
-	| 'TEST'
-
 export type Translation = {
 	/**
 	 * This is a test {0|someFormatter}

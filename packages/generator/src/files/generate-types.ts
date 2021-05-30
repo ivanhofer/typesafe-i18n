@@ -175,14 +175,6 @@ ${importType} { ${externalTypes.join(', ')} } from './${typesTemplatePath.replac
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const createTranslationKeysType = (parsedTranslations: ParsedResult[]) => {
-	const keys = parsedTranslations.map(({ key }) => key)
-
-	return `export type TranslationKeys =${wrapUnionType(keys)}`
-}
-
-// --------------------------------------------------------------------------------------------------------------------
-
 const createJsDocsMapping = (parsedTranslations: ParsedResult[]) => {
 	const map = {} as JsDocInfos
 	parsedTranslations.forEach(({ key, textWithoutTypes, types, args }) => {
@@ -389,8 +381,6 @@ const getTypes = (
 
 	const localesType = createLocalesType(locales, baseLocale)
 
-	const translationKeysType = createTranslationKeysType(parsedTranslations)
-
 	const jsDocsInfo = createJsDocsMapping(parsedTranslations)
 
 	const generateTemplateLiteralTypes = supportsTemplateLiteralTypes(version)
@@ -415,8 +405,6 @@ ${typeImports}
 export type BaseLocale = '${baseLocale}'
 
 ${localesType}
-
-${translationKeysType}
 
 ${translationType}
 

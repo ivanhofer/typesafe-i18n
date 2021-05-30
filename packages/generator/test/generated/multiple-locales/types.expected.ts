@@ -8,8 +8,6 @@ export type Locales =
 	| 'en'
 	| 'it'
 
-export type TranslationKeys = never
-
 export type Translation = {}
 
 export type TranslationFunctions = {}
