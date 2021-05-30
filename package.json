@@ -10,11 +10,12 @@
 	"author": "ivanhofer",
 	"keywords": [
 		"i18n",
-		"internationalization",
 		"typescript",
-		"typesave",
+		"internationalization",
+		"typesafe",
 		"l10n",
 		"localization",
+		"internationalization library",
 		"localization library",
 		"localization engine",
 		"lightweight"
