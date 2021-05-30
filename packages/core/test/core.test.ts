@@ -125,4 +125,32 @@ test('advanced plural rule 6', () => assert.is(LL2.ADVANCED_PLURAL(6), 'few'))
 test('advanced plural rule 18', () => assert.is(LL2.ADVANCED_PLURAL(18), 'many'))
 test('advanced plural rule "test"', () => assert.is(LL2.ADVANCED_PLURAL('test'), 'other'))
 
+// --------------------------------------------------------------------------------------------------------------------
+
+const LL3 = i18nObject('en', {
+	z: 'nested 0',
+	a: { b: 'nested 1' },
+	d: {
+		e: { f: 'nested 2' },
+	},
+	o: {
+		p: {
+			q: {
+				r: {
+					s: {
+						t: { u: 'nested 3' },
+					},
+				},
+			},
+		},
+	},
+})
+
+test('nested 0', () => assert.is(LL3.z(), 'nested 0'))
+test('nested 1', () => assert.is(LL3.a.b(), 'nested 1'))
+test('nested 2', () => assert.is(LL3.d.e.f(), 'nested 2'))
+test('nested 3', () => assert.is(LL3.o.p.q.r.s.t.u(), 'nested 3'))
+
+// --------------------------------------------------------------------------------------------------------------------
+
 test.run()

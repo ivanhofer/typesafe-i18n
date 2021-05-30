@@ -10,12 +10,12 @@ type TranslationParts<T = BaseTranslation> = {
 
 export type Cache<T = BaseTranslation> = TranslationParts<T>
 
-export type TranslationKey<T> = keyof T
+export type TranslationKey<T extends BaseTranslation> = keyof T
 
 type BaseTranslationFunction = (...args: Arguments) => string
 
 export type TranslationFunctions<T = BaseTranslation> = {
-	[key in keyof T]: BaseTranslationFunction
+	[key in keyof T]: T[key] extends string ? BaseTranslationFunction : TranslationFunctions<T[key]>
 }
 
 export type Locale = string
@@ -24,7 +24,7 @@ export type Locale = string
 export type Arguments = any[]
 
 export type BaseTranslation = {
-	[key: string]: string
+	[key: string]: string | BaseTranslation
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
