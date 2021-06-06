@@ -9,6 +9,7 @@ import {
 	isPropertyFalsy,
 	isPropertyTrue,
 	isString,
+	isTruthy,
 	not,
 	sortNumberASC,
 	sortStringASC,
@@ -121,7 +122,7 @@ const parseTranslations = (translations: BaseTranslation, logger: Logger, parent
 		})
 		: []
 
-const parseTanslationEntry = ([key, text]: [string, string], logger: Logger, parentKeys: string[]): ParsedResult => {
+const parseTanslationEntry = ([key, text]: [string, string], logger: Logger, parentKeys: string[]): ParsedResult | null => {
 	const parsedParts = parseRawText(text, false)
 	const textWithoutTypes = partsAsStringWithoutTypes(parsedParts)
 
@@ -157,37 +158,40 @@ const parseTanslationEntry = ([key, text]: [string, string], logger: Logger, par
 
 	args.sort(sortStringPropertyASC('key'))
 
-	validateTranslation(key, types, logger)
+	const isValid = validateTranslation(key, types, logger)
+
+	if (!isValid) return null
 
 	return removeEmptyValues({ key, text, textWithoutTypes, args, types, parentKeys })
 }
 
-// display warning when wrong key found in translation
-//  - if keyed and index-based args are mixed together
-//  - index-based args have a missing index
-const validateTranslation = (key: string, types: Types, logger: Logger) => {
+const validateTranslation = (key: string, types: Types, logger: Logger): boolean => {
 	const base = `translation '${key}' =>`
 
 	if (key.includes('.')) {
-		logger.warn(`${base} key can't contain the '.' character. Please remove it. If you want to nest keys, you should look at https://github.com/ivanhofer/typesafe-i18n#nested-translations`)
+		logger.error(`${base} key can't contain the '.' character. Please remove it. If you want to nest keys, you should look at https://github.com/ivanhofer/typesafe-i18n#nested-translations`)
+		return false
 	}
 
 	const argKeys = Object.keys(types).sort(sortStringASC)
 	if (isArrayNotEmpty(argKeys) && !isNaN(+argKeys[0])) {
 		let expectedKey = '0'
-		argKeys.forEach((argKey) => {
+		for (const argKey of argKeys) {
 			if (argKey !== expectedKey) {
-				logger.warn(`${base} argument {${expectedKey}} expected, but {${argKey}} found`)
-				if (isNaN(+argKey)) {
-					logger.warn(`${base} you can't mix keyed and index-based args`)
-				} else {
-					logger.warn(`${base} make sure to not skip an index`)
-				}
+				const info = (isNaN(+argKey))
+					? (`You can't mix keyed and index-based arguments.`)
+					: (`Make sure to not skip an index for your arguments.`)
+
+				logger.error(`${base} argument {${expectedKey}} expected, but {${argKey}} found.`, info)
+				return false
 			}
 			expectedKey = (+argKey + 1).toString()
-		})
+		}
 	}
+
+	return true
 }
+
 // --------------------------------------------------------------------------------------------------------------------
 
 const createLocalesType = (locales: string[], baseLocale: string) => {
@@ -252,7 +256,7 @@ const createJsDocsMapping = (parsedTranslations: ParsedResult[]) => {
 }
 
 const createJsDocsString = (
-	{ text, types, pluralOnlyArgs }: JsDocInfo,
+	{ text, types, pluralOnlyArgs }: JsDocInfo = {} as JsDocInfo,
 	renderTypes = false,
 	renderPluralOnlyArgs = true,
 ) => {
@@ -264,10 +268,10 @@ const createJsDocsString = (
 			.join('')}`
 		: ''
 
-	return `/**
+	return (text?.length + renderedTypes.length) ? `/**
 	 * ${text}${renderedTypes}
 	 */
-	`
+	` : ''
 }
 
 const createJsDocsParamString = ([paramName, types]: [string, string[]]) => `
@@ -454,7 +458,7 @@ const getTypes = (
 	version: TypescriptVersion,
 	logger: Logger,
 ) => {
-	const parsedTranslations = parseTranslations(translations, logger)
+	const parsedTranslations = parseTranslations(translations, logger).filter(isTruthy)
 
 	const typeImports = createTypeImports(parsedTranslations, typesTemplateFileName, importType)
 
