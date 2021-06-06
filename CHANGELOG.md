@@ -1,9 +1,13 @@
 # CHANGELOG.md
 
-## 2.26.0 (unreleased)
+## 2.26.0 (2021-06-07)
 
 Feature
  - add support for nested translation keys
+ - show colorized error-output in console
+
+Fix:
+ - don't generate types when validation failed
 
 Breaking:
  - translation keys can't contain the '.' character
