@@ -118,6 +118,34 @@ LL.HI({ name: 'world' }) // => 'Hello world!'
 LL.RESET_PASSWORD() // => 'reset password'
 ```
 
+##### nested-translations
+
+You can group sections of your application by defining nested translations:
+
+```typescript
+import { i18nObject } from 'typesafe-i18n'
+
+const translations = {
+   login: {
+      greeting: 'Welcome to XYZ',
+      labels: {
+         'email': 'email-address:',
+         'pw': 'password:'
+      },
+   },
+   projects: {
+      count: '{0} project{{s}}',
+   }
+}
+const LL = i18nObject('en', translations)
+
+LL.login.labels.email() // => 'email-address:'
+LL.projects.count(3) // => '3 projects'
+```
+
+> Nesting can be as deep as you want. The only restriction is that you can't use the '.' character for your translation keys.
+
+
 #### i18n
 
 Wrap all your locales with `i18n`. To initialize it, you need to pass a callback to get the `translations`-object for a given locale and a callback to initialize the `formatters` you want to use (optional).\
