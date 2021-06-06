@@ -183,6 +183,12 @@ testGeneratedOutput(
 	{ generateOnlyTypes: true },
 )
 
+testGeneratedOutput('nested-deep', { a: { b: { c: { d: { e: { f: { g: { h: { i: { j: { k: { l: { m: 'I am deeply nested' } } } } } } } } } } } } })
+
+testGeneratedOutput('nested-with-arguments', { 'a': { APPLES: '{0} apple{{s}}' }, 'b': { APPLES: '{0:number} apple{{s}}' }, 'c': { APPLES: '{nrOfApples:number} apple{{s}}' } })
+
+testGeneratedOutput('nested-formatters', { 'some-key': { 'other-key': 'format {me:string|custom-formatter}' }, 'another-key': '{0|format}' })
+
 // --------------------------------------------------------------------------------------------------------------------
 
 const nodeAdapterFileName = getFileName('node')

@@ -1,5 +1,13 @@
 # CHANGELOG.md
 
+## 2.26.0 (unreleased)
+
+Feature
+ - add support for nested translation keys
+
+Other:
+ - don't generate type `TranslationKeys` anymore
+
 ## 2.25.0 (2021-05-27)
 
  - rename `watcher` to `generator`
@@ -70,7 +78,6 @@ Examples:
 
 Bugfix:
  - better types for `TranslationFunctions`
-
 
 ## 2.19.0 (2021-05-07)
 
