@@ -1,4 +1,5 @@
 import type { Arguments, Locale } from '../../core/src/core'
+import kleur from 'kleur'
 
 export const getPermutations = <T>(rest: T[], permutatedArray: T[] = []): T[][] => {
 	if (rest.length === 0) {
@@ -42,21 +43,31 @@ export const sanitizeLocale = (locale: Locale): Locale => locale.replace(/-/g, '
 
 // --------------------------------------------------------------------------------------------------------------------
 
+type LogLevel = 'info' | 'warn' | 'error'
+
 export type Logger = {
 	info: (...messages: Arguments) => void
 	warn: (...messages: Arguments) => void
 	error: (...messages: Arguments) => void
 }
 
-const log = (console: Console, type: 'info' | 'warn' | 'error', ...messages: Arguments) =>
-	console[type]('[typesafe-i18n]', ...messages)
+const colorMap = {
+	'warn': 'yellow',
+	'error': 'red',
+} as const
 
-export const createLogger = (console: Console): Logger => {
-	return {
-		info: log.bind(null, console, 'info'),
-		warn: log.bind(null, console, 'warn', 'WARNING:'),
-		error: log.bind(null, console, 'error', 'ERROR:'),
-	}
-}
+const colorize = (loglevel: LogLevel, ...messages: string[]) =>
+	(loglevel === 'info')
+		? messages
+		: [kleur[colorMap[loglevel]]().bold(messages.join(' '))]
+
+const log = (console: Console, loglevel: LogLevel, ...messages: Arguments) =>
+	console[loglevel](...colorize(loglevel, '[typesafe-i18n]', ...messages))
+
+export const createLogger = (console: Console): Logger => ({
+	info: log.bind(null, console, 'info'),
+	warn: log.bind(null, console, 'warn', 'WARNING:'),
+	error: log.bind(null, console, 'error', 'ERROR:'),
+})
 
 export const logger = createLogger(console)
