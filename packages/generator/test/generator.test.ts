@@ -265,6 +265,13 @@ testGeneratedConsoleOutput('console-keyed-and-index-based-keys', { TEST: '{hi} {
 	assert.is(outputs.warn[1], "translation 'TEST' => you can't mix keyed and index-based args")
 })
 
+testGeneratedConsoleOutput('console-translation-key-with-dot', { 'i.am.wrongly.nested': 'ohhh' }, async (outputs) => {
+	assert.is(outputs.info.length, 0)
+	assert.is(outputs.error.length, 0)
+	assert.is(outputs.warn.length, 1)
+	assert.is(outputs.warn[0], "translation 'i.am.wrongly.nested' => key can't contain the '.' character. Please remove it. If you want to nest keys, you should look at https://github.com/ivanhofer/typesafe-i18n#nested-translations")
+})
+
 // --------------------------------------------------------------------------------------------------------------------
 
 test.run()

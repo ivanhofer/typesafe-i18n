@@ -157,7 +157,7 @@ const parseTanslationEntry = ([key, text]: [string, string], logger: Logger, par
 
 	args.sort(sortStringPropertyASC('key'))
 
-	checkForMissingArgs(key, types, logger)
+	validateTranslation(key, types, logger)
 
 	return removeEmptyValues({ key, text, textWithoutTypes, args, types, parentKeys })
 }
@@ -165,8 +165,12 @@ const parseTanslationEntry = ([key, text]: [string, string], logger: Logger, par
 // display warning when wrong key found in translation
 //  - if keyed and index-based args are mixed together
 //  - index-based args have a missing index
-const checkForMissingArgs = (key: string, types: Types, logger: Logger) => {
+const validateTranslation = (key: string, types: Types, logger: Logger) => {
 	const base = `translation '${key}' =>`
+
+	if (key.includes('.')) {
+		logger.warn(`${base} key can't contain the '.' character. Please remove it. If you want to nest keys, you should look at https://github.com/ivanhofer/typesafe-i18n#nested-translations`)
+	}
 
 	const argKeys = Object.keys(types).sort(sortStringASC)
 	if (isArrayNotEmpty(argKeys) && !isNaN(+argKeys[0])) {

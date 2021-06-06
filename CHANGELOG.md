@@ -5,6 +5,9 @@
 Feature
  - add support for nested translation keys
 
+Breaking:
+ - translation keys can't contain the '.' character
+
 Other:
  - don't generate type `TranslationKeys` anymore
 
