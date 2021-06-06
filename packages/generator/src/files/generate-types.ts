@@ -37,7 +37,7 @@ type Types = {
 }
 
 type JsDocInfos = {
-	[key: string]: JsDocInfo | JsDocInfos
+	[key: string]: JsDocInfo
 }
 
 type JsDocInfo = {
