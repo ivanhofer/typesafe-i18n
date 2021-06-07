@@ -8,11 +8,6 @@ export type Locales =
 	| 'en'
 	| 'it'
 
-export type TranslationKeys =
-	| 'HI'
-	| 'INSTRUCTIONS_LOCALE'
-	| 'INSTRUCTIONS_NAME'
-
 export type Translation = {
 	/**
 	 * Hello {name}!
