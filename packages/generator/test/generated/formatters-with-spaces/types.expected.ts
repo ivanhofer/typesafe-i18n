@@ -6,9 +6,6 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type TranslationKeys =
-	| 'FORMATTER'
-
 export type Translation = {
 	/**
 	 * {0|custom formatter|and another}

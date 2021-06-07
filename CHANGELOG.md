@@ -1,5 +1,20 @@
 # CHANGELOG.md
 
+## 2.26.0 (2021-06-07)
+
+Feature
+ - add support for nested translation keys
+ - show colorized error-output in console
+
+Fix:
+ - don't generate types when validation failed
+
+Breaking:
+ - translation keys can't contain the '.' character
+
+Other:
+ - don't generate type `TranslationKeys` anymore
+
 ## 2.25.0 (2021-05-27)
 
  - rename `watcher` to `generator`
@@ -70,7 +85,6 @@ Examples:
 
 Bugfix:
  - better types for `TranslationFunctions`
-
 
 ## 2.19.0 (2021-05-07)
 

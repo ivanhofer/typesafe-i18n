@@ -6,10 +6,6 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type TranslationKeys =
-	| 'KEYED_PARAM'
-	| 'KEYED_PARAMS'
-
 export type Translation = {
 	/**
 	 * {nrOfApples} apple{{s}}

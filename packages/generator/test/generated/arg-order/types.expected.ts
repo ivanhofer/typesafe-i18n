@@ -8,12 +8,6 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type TranslationKeys =
-	| 'ORDER_INDEX'
-	| 'ORDER_KEYED'
-	| 'ORDER_FORMATTER'
-	| 'ORDER_TYPES'
-
 export type Translation = {
 	/**
 	 * {1} {0} {2} {0}

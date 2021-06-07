@@ -8,9 +8,6 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type TranslationKeys =
-	| 'HELLO_NODE'
-
 export type Translation = {
 	/**
 	 * Hi {0}

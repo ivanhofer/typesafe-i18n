@@ -6,9 +6,6 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type TranslationKeys =
-	| 'TEST'
-
 export type Translation = {
 	/**
 	 * Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}

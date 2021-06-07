@@ -6,10 +6,6 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type TranslationKeys =
-	| 'STRING_TYPE'
-	| 'NUMBER_TYPE'
-
 export type Translation = {
 	/**
 	 * Hi {name}!

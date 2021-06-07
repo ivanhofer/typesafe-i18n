@@ -183,6 +183,12 @@ testGeneratedOutput(
 	{ generateOnlyTypes: true },
 )
 
+testGeneratedOutput('nested-deep', { a: { b: { c: { d: { e: { f: { g: { h: { i: { j: { k: { l: { m: 'I am deeply nested' } } } } } } } } } } } } })
+
+testGeneratedOutput('nested-with-arguments', { 'a': { APPLES: '{0} apple{{s}}' }, 'b': { APPLES: '{0:number} apple{{s}}' }, 'c': { APPLES: '{nrOfApples:number} apple{{s}}' } })
+
+testGeneratedOutput('nested-formatters', { 'some-key': { 'other-key': 'format {me:string|custom-formatter}' }, 'another-key': '{0|format}' })
+
 // --------------------------------------------------------------------------------------------------------------------
 
 const nodeAdapterFileName = getFileName('node')
@@ -245,18 +251,23 @@ testGeneratedConsoleOutput('console-no-translations', {}, async (outputs) => {
 
 testGeneratedConsoleOutput('console-wrong-index', { TEST: '{0} {2}' }, async (outputs) => {
 	assert.is(outputs.info.length, 0)
-	assert.is(outputs.error.length, 0)
-	assert.is(outputs.warn.length, 2)
-	assert.is(outputs.warn[0], "translation 'TEST' => argument {1} expected, but {2} found")
-	assert.is(outputs.warn[1], "translation 'TEST' => make sure to not skip an index")
+	assert.is(outputs.warn.length, 0)
+	assert.is(outputs.error.length, 1)
+	assert.is(outputs.error[0], "translation 'TEST' => argument {1} expected, but {2} found. Make sure to not skip an index for your arguments.")
 })
 
 testGeneratedConsoleOutput('console-keyed-and-index-based-keys', { TEST: '{hi} {0}' }, async (outputs) => {
 	assert.is(outputs.info.length, 0)
-	assert.is(outputs.error.length, 0)
-	assert.is(outputs.warn.length, 2)
-	assert.is(outputs.warn[0], "translation 'TEST' => argument {1} expected, but {hi} found")
-	assert.is(outputs.warn[1], "translation 'TEST' => you can't mix keyed and index-based args")
+	assert.is(outputs.warn.length, 0)
+	assert.is(outputs.error.length, 1)
+	assert.is(outputs.error[0], "translation 'TEST' => argument {1} expected, but {hi} found. You can't mix keyed and index-based arguments.")
+})
+
+testGeneratedConsoleOutput('console-translation-key-with-dot', { 'i.am.wrongly.nested': 'ohhh' }, async (outputs) => {
+	assert.is(outputs.info.length, 0)
+	assert.is(outputs.warn.length, 0)
+	assert.is(outputs.error.length, 1)
+	assert.is(outputs.error[0], "translation 'i.am.wrongly.nested' => key can't contain the '.' character. Please remove it. If you want to nest keys, you should look at https://github.com/ivanhofer/typesafe-i18n#nested-translations")
 })
 
 // --------------------------------------------------------------------------------------------------------------------

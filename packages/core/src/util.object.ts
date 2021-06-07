@@ -10,10 +10,12 @@ import type {
 import { translate } from './core'
 import { getPartsFromString } from './util.string'
 
-type TranslateByKey<T> = (key: TranslationKey<T>, ...args: Arguments) => string
+type TranslateByKey<T extends BaseTranslation> = (key: TranslationKey<T>, ...args: Arguments) => string
 
-const getTextFromTranslationKey = <T extends BaseTranslation>(translations: T, key: TranslationKey<T>): string =>
-	translations[key] ?? (key as string)
+const getTextFromTranslationKey = <T extends BaseTranslation>(translations: T, key: TranslationKey<T>): string => {
+	; (key as string).split('.').forEach((k) => (translations = translations[k] as T))
+	return (translations as unknown as string) ?? (key as string)
+}
 
 const getTranslateInstance = <L extends Locale, T extends BaseTranslation, F extends BaseFormatters>(
 	locale: L,
@@ -30,23 +32,21 @@ export function i18nObject<
 	L extends Locale,
 	T extends BaseTranslation,
 	TF extends TranslationFunctions = TranslationFunctions<T>,
-	F extends BaseFormatters = BaseFormatters
->(locale: L, translations: T, formatters: F): TF
+	F extends BaseFormatters = BaseFormatters,
+	>(locale: L, translations: T, formatters: F): TF
 
 export function i18nObject<
 	L extends Locale,
 	T extends BaseTranslation,
-	TF extends TranslationFunctions = TranslationFunctions<T>
->(locale: L, translations: T): TF
+	TF extends TranslationFunctions = TranslationFunctions<T>,
+	>(locale: L, translations: T): TF
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 export function i18nObject(locale: any, translations: any, formatters: any = {}): any {
-	const translateFunctionInstance = getTranslateInstance(locale, translations, formatters)
-
-	return new Proxy(
-		{},
-		{
-			get: (_target, key: string) => translateFunctionInstance.bind(null, key),
-		},
-	)
+	return createProxy(getTranslateInstance(locale, translations, formatters))
 }
+
+const createProxy = <T extends BaseTranslation>(fn: TranslateByKey<T>, prefixKey?: string): TranslationFunctions<T> =>
+	new Proxy(fn.bind(null, prefixKey as string) as unknown as TranslationFunctions<T>, {
+		get: (_target, key: string) => createProxy(fn, prefixKey ? `${prefixKey}.${key}` : key),
+	})

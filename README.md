@@ -2,12 +2,12 @@
 
 **An opinionated, fully type-safe, lightweight localization library for TypeScript projects with no external dependencies.**
 
-<img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/typesafe-i18n-demo.gif" width="100%">
+<img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/typesafe-i18n-demo.gif" width="100%">
 
 [![npm version](https://badgen.net/npm/v/typesafe-i18n)](https://badgen.net/npm/v/typesafe-i18n)
 [![types included](https://badgen.net/npm/types/typesafe-i18n)](https://badgen.net/npm/types/typesafe-i18n)
 [![bundlse size](https://badgen.net/bundlephobia/minzip/typesafe-i18n)](https://badgen.net/bundlephobia/minzip/typesafe-i18n)
-[![bump version & publish to npm](https://github.com/ivanhofer/typesafe-i18n/actions/workflows/release.yml/badge.svg?branch=master)](https://github.com/ivanhofer/typesafe-i18n/actions/workflows/release.yml)
+[![bump version & publish to npm](https://github.com/ivanhofer/typesafe-i18n/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/ivanhofer/typesafe-i18n/actions/workflows/release.yml)
 
 
 ## Advantages
@@ -62,10 +62,10 @@ $ npm install --save typesafe-i18n
 
 You can use `typesafe-i18n` in a variety of project-setups:
 
- - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/node) apis, backends, scripts, ...
- - [Svelte/Sapper/SvelteKit](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte) applications
- - [React](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/react) applications
- - [Browser](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/browser) projects
+ - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/node) apis, backends, scripts, ...
+ - [Svelte/Sapper/SvelteKit](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte) applications
+ - [React](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react) applications
+ - [Browser](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/browser) projects
  - [other frameworks](#other-frameworks) like VueJS, Angular and others ...
 
 ### General
@@ -117,6 +117,34 @@ const LL = i18nObject(locale, translations, formatters)
 LL.HI({ name: 'world' }) // => 'Hello world!'
 LL.RESET_PASSWORD() // => 'reset password'
 ```
+
+##### nested-translations
+
+You can group sections of your application by defining nested translations:
+
+```typescript
+import { i18nObject } from 'typesafe-i18n'
+
+const translations = {
+   login: {
+      greeting: 'Welcome to XYZ',
+      labels: {
+         'email': 'email-address:',
+         'pw': 'password:'
+      },
+   },
+   projects: {
+      count: '{0} project{{s}}',
+   }
+}
+const LL = i18nObject('en', translations)
+
+LL.login.labels.email() // => 'email-address:'
+LL.projects.count(3) // => '3 projects'
+```
+
+> Nesting can be as deep as you want. The only restriction is that you can't use the '.' character for your translation keys.
+
 
 #### i18n
 
@@ -183,23 +211,23 @@ All you need is inside the [generated](#typesafety) file `i18n-utils.ts`. You ca
 The `typesafe-i18n` package allows us to be 100% typesafe for our tranlsation functions and even the translations for other locales itself. It generates TypeScript definitions based on your base locale. Here you can see some examples where the generated types can help you:
 
 #### typesafe auto-completion for all your defined locales
-![typesafe locales completion](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/01_typesafe-locales-completion.png)
+![typesafe locales completion](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/01_typesafe-locales-completion.png)
 
 #### typesafe auto-completion for all available translations
-![typesafe translation key completion](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/02_typesafe-key-completion.png)
+![typesafe translation key completion](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/02_typesafe-key-completion.png)
 
 #### you will get an error if you forget to pass arguments
-![typesafe number of arguments](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/03_typesafe-nr-of-arguments.png)
+![typesafe number of arguments](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/03_typesafe-nr-of-arguments.png)
 
 #### you will get an error if you pass the wrong type arguments
-![typesafe arguments 1](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/04_typesafe-arguments.png)
-![typesafe arguments 2](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/04_typesafe-arguments-2.png)
+![typesafe arguments 1](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/04_typesafe-arguments.png)
+![typesafe arguments 2](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/04_typesafe-arguments-2.png)
 
 #### you will get an error if you forgot to add a translation in a locale
-![typesafe keys in translations](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/05_typesafe-keys-in-translations.png)
+![typesafe keys in translations](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/05_typesafe-keys-in-translations.png)
 
 #### you will get an error when a translation is missing an argument
-![typesafe arguments in translation](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/master/docs/06_typesafe-arguments-in-translation.png)
+![typesafe arguments in translation](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/06_typesafe-arguments-in-translation.png)
 
 
 In order to get get full typesafety for your locales, you can start the generator during development. The generator listens for changes you make to your [base locale file](#folder-structure) and creates the corresponding TypeScript types.
@@ -303,7 +331,7 @@ Passing [options](#options) to the generator is possible by creating a `.typesaf
 
 > You could use a npm-package like `npm-run-all` in order to start the generator and you development-server in parallel.
 
-Take a look at this [demo repository](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/node) to see how to run the generator node process.
+Take a look at this [demo repository](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/node) to see how to run the generator node process.
 
 
 
@@ -1082,14 +1110,14 @@ The footprint of the `typesafe-i18n` package is smaller compared to other existi
 These parts are bundled into the [core functions](#general). The sizes of the core functionalities are:
 
 - [i18nString](#i18nString): 806 bytes gzipped
-- [i18nObject](#i18nObject): 856 bytes gzipped
-- [i18n](#i18n): 960 bytes gzipped
+- [i18nObject](#i18nObject): 892 bytes gzipped
+- [i18n](#i18n): 994 bytes gzipped
 
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
 There also exists a useful wrapper for some frameworks:
-- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/svelte#usage-in-javascript-projects): 1104 bytes gzipped
-- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/master/examples/react#usage-in-javascript-projects): 1080 bytes gzipped
+- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte#usage-in-javascript-projects): 1147 bytes gzipped
+- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react#usage-in-javascript-projects): 1124 bytes gzipped
 
 
 

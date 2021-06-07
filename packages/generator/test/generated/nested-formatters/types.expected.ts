@@ -7,23 +7,36 @@ export type Locales =
 	| 'en'
 
 export type Translation = {
+	'some-key': {	
+		/**
+		 * format {me|custom-formatter}
+		 * @param {string} me
+		 */
+		'other-key': RequiredParams1<'me|custom-formatter'>
+	}
 	/**
-	 * {0|custom-formatter|and-another}
+	 * {0|format}
 	 * @param {unknown} 0
 	 */
-	'FORMATTER': RequiredParams1<'0|custom-formatter|and-another'>
+	'another-key': RequiredParams1<'0|format'>
 }
 
 export type TranslationFunctions = {
+	'some-key': {	
+		/**
+		 * format {me|custom-formatter}
+		 */
+		'other-key': (arg: { me: string }) => string
+	}
 	/**
-	 * {0|custom-formatter|and-another}
+	 * {0|format}
 	 */
-	'FORMATTER': (arg0: unknown) => string
+	'another-key': (arg0: unknown) => string
 }
 
 export type Formatters = {
-	'and-another': (value: unknown) => unknown
-	'custom-formatter': (value: unknown) => unknown
+	'custom-formatter': (value: string) => unknown
+	'format': (value: unknown) => unknown
 }
 
 

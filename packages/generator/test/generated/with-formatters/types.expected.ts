@@ -6,10 +6,6 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type TranslationKeys =
-	| 'FORMATTER_1'
-	| 'FORMATTER_2'
-
 export type Translation = {
 	/**
 	 * {0|timesTen} apple{{s}}
