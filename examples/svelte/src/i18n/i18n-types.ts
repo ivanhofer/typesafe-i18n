@@ -8,18 +8,6 @@ export type Locales =
 	| 'en'
 	| 'it'
 
-export type TranslationKeys =
-	| 'STARTUP'
-	| 'CHOOSE_LOCALE'
-	| 'HI'
-	| 'TUTORIAL'
-	| 'YOUR_NAME'
-	| 'SELECTED_LOCALE'
-	| 'TODAY'
-	| 'APPLES_LABEL'
-	| 'BANANAS_LABEL'
-	| 'FRUITS'
-
 export type Translation = {
 	/**
 	 * app started
