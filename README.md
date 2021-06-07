@@ -1110,14 +1110,14 @@ The footprint of the `typesafe-i18n` package is smaller compared to other existi
 These parts are bundled into the [core functions](#general). The sizes of the core functionalities are:
 
 - [i18nString](#i18nString): 806 bytes gzipped
-- [i18nObject](#i18nObject): 892 bytes gzipped
-- [i18n](#i18n): 994 bytes gzipped
+- [i18nObject](#i18nObject): 895 bytes gzipped
+- [i18n](#i18n): 996 bytes gzipped
 
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
 There also exists a useful wrapper for some frameworks:
-- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte#usage-in-javascript-projects): 1147 bytes gzipped
-- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react#usage-in-javascript-projects): 1124 bytes gzipped
+- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte#usage-in-javascript-projects): 1170 bytes gzipped
+- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react#usage-in-javascript-projects): 1145 bytes gzipped
 
 
 

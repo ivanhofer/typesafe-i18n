@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.26.3 (2021-06-07)
+
+Fix:
+ - fix react adapter [#49](https://github.com/ivanhofer/typesafe-i18n/issues/49)
+
 ## 2.26.2 (2021-06-07)
 
 Fix:

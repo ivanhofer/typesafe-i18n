@@ -47,6 +47,6 @@ export function i18nObject(locale: any, translations: any, formatters: any = {})
 }
 
 const createProxy = <T extends BaseTranslation>(fn: TranslateByKey<T>, prefixKey?: string): TranslationFunctions<T> =>
-	new Proxy(fn.bind(null, prefixKey as string) as unknown as TranslationFunctions<T>, {
+	new Proxy((prefixKey ? fn.bind(null, prefixKey) : {}) as TranslationFunctions<T>, {
 		get: (_target, key: string) => createProxy(fn, prefixKey ? `${prefixKey}.${key}` : key),
 	})
