@@ -38,8 +38,7 @@ type SvelteStoreInit<
 export const getI18nSvelteStore = <
 	L extends string = string,
 	T extends BaseTranslation = BaseTranslation,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	TF extends TranslationFunctions = TranslationFunctions<any>, // TODO: check why 'T' is beeing generated to 'BaseTranslation'
+	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 	F extends BaseFormatters = BaseFormatters,
 	>(
 		baseLocale: L = '' as L,

@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.26.2 (2021-06-07)
+
+Fix:
+ - fix wrong types for react and svelte adapters
+
 ## 2.26.1 (2021-06-07)
 
 Fix:
