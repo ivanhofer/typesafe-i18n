@@ -8,15 +8,6 @@ export type Locales =
 	| 'en'
 	| 'it'
 
-export type TranslationKeys =
-	| 'CHOOSE_LOCALE'
-	| 'HI'
-	| 'EDIT_AND_SAVE'
-	| 'LEARN_REACT'
-	| 'YOUR_NAME'
-	| 'SELECTED_LOCALE'
-	| 'TODAY'
-
 export type Translation = {
 	/**
 	 * choose locale...
