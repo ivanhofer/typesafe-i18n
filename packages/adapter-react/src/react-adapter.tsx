@@ -35,7 +35,8 @@ type TypesafeI18nProps<L extends string> = {
 export const initI18nReact = <
 	L extends string = string,
 	T extends BaseTranslation = BaseTranslation,
-	TF extends TranslationFunctions = TranslationFunctions<T>,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	TF extends TranslationFunctions = TranslationFunctions<any>, // TODO: check why 'T' is beeing generated to 'BaseTranslation'
 	F extends BaseFormatters = BaseFormatters,
 >(
 	baseLocale: L = '' as L,

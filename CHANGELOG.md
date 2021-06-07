@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.26.1 (2021-06-07)
+
+Fix:
+ - temporary fix for wrong tsc compilation for react and svelte adapters
+
 ## 2.26.0 (2021-06-07)
 
 Feature
