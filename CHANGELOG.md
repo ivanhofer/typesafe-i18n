@@ -4,6 +4,7 @@
 
 Fix:
  - temporary fix for wrong tsc compilation for react and svelte adapters
+ - correctly set formatter path for react adapter
 
 ## 2.26.0 (2021-06-07)
 

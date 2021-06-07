@@ -4,7 +4,7 @@
 import { initI18nReact } from 'typesafe-i18n/adapters/adapter-react'
 import type { Locales, Translation, TranslationFunctions, Formatters } from './types.actual'
 import { baseLocale, getTranslationForLocale } from './util.actual'
-import { initFormatters } from './formatters'
+import { initFormatters } from './formatters-template.actual'
 
 const { component: TypesafeI18n, context: I18nContext } = initI18nReact<
 	Locales,
