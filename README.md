@@ -76,7 +76,7 @@ The `typesafe-i18n` package exports a few different objects you can use to local
  - [i18nObject (LL)](#i18nObject)
  - [i18n (L)](#i18n)
 
-In order to get full typechecking support, you sould use the exported functions in `i18n-utils.ts` created by the [generator](#typesafety). It contains fully typed wrappers for the following core functionalities.
+In order to get full typechecking support, you should use the exported functions in `i18n-utils.ts` created by the [generator](#typesafety). It contains fully typed wrappers for the following core functionalities.
 
 #### i18nString
 
