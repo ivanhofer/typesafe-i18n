@@ -453,7 +453,7 @@ const createFormattersType = (parsedTranslations: ParsedResult[]) => {
 // --------------------------------------------------------------------------------------------------------------------
 
 const getTypes = (
-	{ translations, baseLocale, locales, typesTemplateFileName }: GenerateTypesType,
+	{ translations, baseLocale, locales, typesTemplateFileName, banner }: GenerateTypesType,
 	importType: string,
 	version: TypescriptVersion,
 	logger: Logger,
@@ -487,7 +487,7 @@ import type { LocalizedString } from 'typesafe-i18n'
 	const formattersType = createFormattersType(parsedTranslations)
 
 	const type = `// This types were auto-generated. Any manual changes will be overwritten.
-/* eslint-disable */
+${banner}
 ${imports}${typeImports}
 export type BaseLocale = '${baseLocale}'
 

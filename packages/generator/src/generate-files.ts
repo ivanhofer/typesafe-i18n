@@ -1,15 +1,15 @@
+import path from 'path'
 import type { BaseTranslation } from '../../core/src/core'
-import { generateTypes } from './files/generate-types'
-import { generateUtil } from './files/generate-util'
-import { generateSvelteAdapter } from './files/generate-adapter-svelte'
-import { generateFormattersTemplate } from './files/generate-template-formatters'
-import { generateCustomTypesTemplate } from './files/generate-template-types'
-import { generateBaseLocaleTemplate } from './files/generate-template-baseLocale'
-import { logger as defaultLogger, Logger, supportsImportType, TypescriptVersion } from './generator-util'
+import { importFile } from './file-utils'
 import { generateNodeAdapter } from './files/generate-adapter-node'
 import { generateReactAdapter } from './files/generate-adapter-react'
-import { importFile } from './file-utils'
-import path from 'path'
+import { generateSvelteAdapter } from './files/generate-adapter-svelte'
+import { generateBaseLocaleTemplate } from './files/generate-template-baseLocale'
+import { generateFormattersTemplate } from './files/generate-template-formatters'
+import { generateCustomTypesTemplate } from './files/generate-template-types'
+import { generateTypes } from './files/generate-types'
+import { generateUtil } from './files/generate-util'
+import { logger as defaultLogger, Logger, supportsImportType, TypescriptVersion } from './generator-util'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -32,6 +32,8 @@ export type GeneratorConfig = {
 	adapterFileName?: string
 	loadLocalesAsync?: boolean
 	generateOnlyTypes?: boolean
+
+	banner?: string
 }
 
 export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
@@ -45,6 +47,7 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 	typesTemplateFileName: string
 	loadLocalesAsync: boolean
 	generateOnlyTypes: boolean
+	banner: string
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -72,6 +75,7 @@ export const getConfigWithDefaultValues = async (
 	typesTemplateFileName: 'custom-types',
 	loadLocalesAsync: true,
 	generateOnlyTypes: false,
+	banner: '/* eslint-disable */',
 	...(await readConfig(config)),
 })
 

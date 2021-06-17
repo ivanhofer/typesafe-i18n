@@ -4,6 +4,7 @@
 
 Feature:
  - make `TranslationFunctions` return a `LocalizedString`
+ - add [`banner`](https://github.com/ivanhofer/typesafe-i18n#banner) option to make it possible to disable linting not just for [ESLint](https://eslint.org/)
 
 ## 2.26.3 (2021-06-07)
 

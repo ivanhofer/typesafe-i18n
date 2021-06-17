@@ -427,6 +427,7 @@ You can set options for the [generator](#typesafety) in order to get optimized o
 | [adapterFileName](#adapterFileName)                       | `string` &#124; `undefined`                                    | `undefined`                                   |
 | [generateOnlyTypes](#generateOnlyTypes)                   | `boolean`                                                      | `false`                                       |
 | [tempPath](#tempPath)                                     | `string`                                                       | `'./node_modules/typesafe-i18n/temp-output/'` |
+| [banner](#banner)                                         | `string`                                                       | `'/* eslint-disable */'`                      |
 
 
 ### baseLocale
@@ -479,7 +480,9 @@ If you don't want to use the auto-generated helpers and instead write your own w
 
 Folder where the generator can store temporary files. These files are generated when your base locale is analyzed and the types are generated. The folder will be cleared, after the types were generated. So make sure you use an empty folder, if you change this option.
 
+### banner
 
+This text will be output on top of all auto-generated files. It is meant to add a custom dislable-linter comment. Since every project can have different lint rules, we want to disable linting on those files.
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
