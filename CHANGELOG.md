@@ -1,6 +1,6 @@
 # CHANGELOG.md
 
-## 2.27.0 (unreleased)
+## 2.27.0 (2021-06-18)
 
 Feature:
  - make `TranslationFunctions` return a `LocalizedString`
