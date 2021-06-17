@@ -1311,3 +1311,49 @@ A better approach would be to create a custom formatter e.g.
       return formatters
    }
    ```
+
+### Why does the translation function return a type of `LocalizedString` and not the tpe `string` itself?
+
+With the help of `LocalizedString` you could enforce texts in your applcation to be translated. Lets take an Error message as example:
+
+```typescript
+const showErrorMessage(message: string) => alert(message)
+
+const createUser = (name: string, password: string) => {
+   if (name.length === 0) {
+      showErrorMessage(LL.user.create.nameNotProvided())
+      return
+   }
+
+   if (isStrongPassword(password)) {
+      showErrorMessage('Password is to weak')
+      return
+   }
+
+   // ... create user in DB
+}
+```
+
+In this example we can pass in any string, so it can also happen that some parts of your application are not translated. To improve your i18n experience a bit we can take advantage of the `LocalizedString` type:
+
+```typescript
+import type { LocalizedString } from 'typesafe-i18n'
+
+const showErrorMessage(message: LocalizedString) => alert(message)
+
+const createUser = (name: string, password: string) => {
+   if (name.length === 0) {
+      showErrorMessage(LL.user.create.nameNotProvided())
+      return
+   }
+
+   if (isStrongPassword(password)) {
+      showErrorMessage('Password is to weak') // => ERROR: Argument of type 'string' is not assignable to parameter of type 'LocalizedString'.
+      return
+   }
+
+   // ... create user in DB
+}
+```
+
+With the type `LocalizedString` you can restrict your functions to only translated strings.
