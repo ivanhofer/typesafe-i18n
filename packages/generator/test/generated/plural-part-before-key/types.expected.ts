@@ -1,6 +1,8 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
+import type { LocalizedString } from 'typesafe-i18n'
+
 export type BaseLocale = 'en'
 
 export type Locales =
@@ -18,7 +20,7 @@ export type TranslationFunctions = {
 	/**
 	 * apple{{s}}: {nrOfApples}
 	 */
-	'PLURAL_BEFORE_KEY': (arg: { nrOfApples: number }) => string
+	'PLURAL_BEFORE_KEY': (arg: { nrOfApples: number }) => LocalizedString
 }
 
 export type Formatters = {}

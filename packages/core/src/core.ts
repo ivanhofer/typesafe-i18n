@@ -1,4 +1,4 @@
-import type { ArgumentPart, Part, PluralPart } from './parser'
+import type { ArgumentPart, Part, PluralPart } from './parser';
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -12,7 +12,10 @@ export type Cache<T = BaseTranslation> = TranslationParts<T>
 
 export type TranslationKey<T extends BaseTranslation> = keyof T
 
-type BaseTranslationFunction = (...args: Arguments) => string
+declare const localized: unique symbol
+export type LocalizedString = string & { readonly [localized]: unknown }
+
+type BaseTranslationFunction = (...args: Arguments) => LocalizedString
 
 export type TranslationFunctions<T = BaseTranslation> = {
 	[key in keyof T]: T[key] extends string ? BaseTranslationFunction : TranslationFunctions<T[key]>

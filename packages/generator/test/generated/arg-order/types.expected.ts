@@ -1,6 +1,8 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
+import type { LocalizedString } from 'typesafe-i18n'
+
 import type { A, B } from './types-template.actual'
 
 export type BaseLocale = 'en'
@@ -41,19 +43,19 @@ export type TranslationFunctions = {
 	/**
 	 * {1} {0} {2} {0}
 	 */
-	'ORDER_INDEX': (arg0: unknown, arg1: unknown, arg2: unknown) => string
+	'ORDER_INDEX': (arg0: unknown, arg1: unknown, arg2: unknown) => LocalizedString
 	/**
 	 * {b} {z} {a}
 	 */
-	'ORDER_KEYED': (arg: { a: unknown, b: unknown, z: unknown }) => string
+	'ORDER_KEYED': (arg: { a: unknown, b: unknown, z: unknown }) => LocalizedString
 	/**
 	 * {0|z} {1|a}
 	 */
-	'ORDER_FORMATTER': (arg0: unknown, arg1: unknown) => string
+	'ORDER_FORMATTER': (arg0: unknown, arg1: unknown) => LocalizedString
 	/**
 	 * {0} {1}
 	 */
-	'ORDER_TYPES': (arg0: B, arg1: A) => string
+	'ORDER_TYPES': (arg0: B, arg1: A) => LocalizedString
 }
 
 export type Formatters = {
