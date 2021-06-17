@@ -1,4 +1,4 @@
-import type { TranslationFunctions, BaseFormatters, BaseTranslation, Locale } from './core'
+import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from './core'
 import type { FormattersInitializer, LocaleTranslationFunctions } from './util.loader'
 import { i18nObjectLoader } from './util.loader'
 

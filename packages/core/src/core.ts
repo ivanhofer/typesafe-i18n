@@ -72,7 +72,7 @@ const applyArguments = (
 	pluralRules: Intl.PluralRules,
 	formatters: BaseFormatters,
 	args: Arguments,
-) =>
+): LocalizedString =>
 	textParts
 		.map((part) => {
 			if (typeof part === 'string') {
@@ -92,14 +92,14 @@ const applyArguments = (
 
 			return ('' + (formattedValue ?? '')).trim()
 		})
-		.join('')
+		.join('') as LocalizedString
 
 export const translate = (
 	textParts: Part[],
 	pluralRules: Intl.PluralRules,
 	formatters: BaseFormatters,
 	args: Arguments,
-): string => {
+): LocalizedString => {
 	const firstArg = args[0]
 	const isObject = firstArg && typeof firstArg === 'object' && firstArg.constructor === Object
 	const transformedArgs = (args.length === 1 && isObject ? firstArg : args) as Arguments

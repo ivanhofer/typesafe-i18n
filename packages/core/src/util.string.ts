@@ -1,9 +1,9 @@
-import type { Arguments, BaseFormatters, Cache, Locale } from './core'
+import type { Arguments, BaseFormatters, Cache, Locale, LocalizedString } from './core'
 import { translate } from './core'
 import type { Part } from './parser'
 import { parseRawText } from './parser'
 
-type TranslateByString = ((text: string) => string) | ((text: string, ...args: Arguments) => string)
+type TranslateByString = ((text: string) => LocalizedString) | ((text: string, ...args: Arguments) => LocalizedString)
 
 export const getPartsFromString = (cache: Cache, text: string): Part[] =>
 	cache[text] || (cache[text] = parseRawText(text))
