@@ -1,5 +1,5 @@
 {
-	"$schema": "https://unpkg.com/typesafe-i18n@2.25.0/schema/typesafe-i18n.json",
+	"$schema": "https://unpkg.com/typesafe-i18n@2.27.0/schema/typesafe-i18n.json",
 
 	"loadLocalesAsync": false,
 	"adapter": "react"

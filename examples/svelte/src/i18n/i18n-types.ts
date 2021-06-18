@@ -1,6 +1,8 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
+import type { LocalizedString } from 'typesafe-i18n'
+
 export type BaseLocale = 'en'
 
 export type Locales =
@@ -60,43 +62,43 @@ export type TranslationFunctions = {
 	/**
 	 * app started
 	 */
-	'STARTUP': () => string
+	'STARTUP': () => LocalizedString
 	/**
 	 * choose locale...
 	 */
-	'CHOOSE_LOCALE': () => string
+	'CHOOSE_LOCALE': () => LocalizedString
 	/**
 	 * Hello {name}!
 	 */
-	'HI': (arg: { name: string }) => string
+	'HI': (arg: { name: string }) => LocalizedString
 	/**
 	 * Visit the {link|linkToSvelteTutorial} to learn how to build Svelte apps.
 	 */
-	'TUTORIAL': (arg: { link: string }) => string
+	'TUTORIAL': (arg: { link: string }) => LocalizedString
 	/**
 	 * Your name:
 	 */
-	'YOUR_NAME': () => string
+	'YOUR_NAME': () => LocalizedString
 	/**
 	 * Selected locale:
 	 */
-	'SELECTED_LOCALE': () => string
+	'SELECTED_LOCALE': () => LocalizedString
 	/**
 	 * Today is {date|weekday}
 	 */
-	'TODAY': (arg: { date: Date }) => string
+	'TODAY': (arg: { date: Date }) => LocalizedString
 	/**
 	 * Apples
 	 */
-	'APPLES_LABEL': () => string
+	'APPLES_LABEL': () => LocalizedString
 	/**
 	 * Bananas
 	 */
-	'BANANAS_LABEL': () => string
+	'BANANAS_LABEL': () => LocalizedString
 	/**
 	 * I want to buy {nrOfApples|fallback0} apple{{s}} and {nrOfBananas|fallback0} banana{{s}}.
 	 */
-	'FRUITS': (arg: { nrOfApples: number, nrOfBananas: number }) => string
+	'FRUITS': (arg: { nrOfApples: number, nrOfBananas: number }) => LocalizedString
 }
 
 export type Formatters = {
