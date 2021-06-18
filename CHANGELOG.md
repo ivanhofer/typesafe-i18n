@@ -1,5 +1,11 @@
 # CHANGELOG.md
 
+## 2.27.0 (2021-06-18)
+
+Feature:
+ - make `TranslationFunctions` return a `LocalizedString`
+ - add [`banner`](https://github.com/ivanhofer/typesafe-i18n#banner) option to make it possible to disable linting not just for [ESLint](https://eslint.org/)
+
 ## 2.26.3 (2021-06-07)
 
 Fix:
@@ -18,7 +24,7 @@ Fix:
 
 ## 2.26.0 (2021-06-07)
 
-Feature
+Feature:
  - add support for nested translation keys
  - show colorized error-output in console
 
@@ -37,12 +43,12 @@ Other:
 
 ## 2.24.1 (2021-05-25)
 
-Fix
+Fix:
  - inlude `detectors` files in npm package
 
 ## 2.24.0 (2021-05-25)
 
-Feature
+Feature:
  - add locale-detection feature
 
 ## 2.23.2 (2021-05-19)

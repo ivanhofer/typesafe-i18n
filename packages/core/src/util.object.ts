@@ -1,11 +1,5 @@
 import type {
-	Cache,
-	BaseFormatters,
-	TranslationFunctions,
-	BaseTranslation,
-	TranslationKey,
-	Locale,
-	Arguments,
+	Arguments, BaseFormatters, BaseTranslation, Cache, Locale, TranslationFunctions, TranslationKey
 } from './core'
 import { translate } from './core'
 import { getPartsFromString } from './util.string'

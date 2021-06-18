@@ -13,14 +13,14 @@ import {
 	not,
 	sortNumberASC,
 	sortStringASC,
-	sortStringPropertyASC,
+	sortStringPropertyASC
 } from 'typesafe-utils'
-import { parseRawText } from '../../../core/src/parser'
-import { isPluralPart, BaseTranslation } from '../../../core/src/core'
+import { BaseTranslation, isPluralPart } from '../../../core/src/core'
+import { partAsStringWithoutTypes, partsAsStringWithoutTypes, removeEmptyValues } from '../../../core/src/core-utils'
 import type { ArgumentPart } from '../../../core/src/parser'
+import { parseRawText } from '../../../core/src/parser'
 import { writeFileIfContainsChanges } from '../file-utils'
 import type { GeneratorConfigWithDefaultValues } from '../generate-files'
-import { removeEmptyValues, partsAsStringWithoutTypes, partAsStringWithoutTypes } from '../../../core/src/core-utils'
 import { getPermutations, Logger, supportsTemplateLiteralTypes, TypescriptVersion } from '../generator-util'
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -399,7 +399,7 @@ const createTranslationArgsType = (parsedResult: ParsedResult, jsDocInfo: JsDocI
 		const jsDocString = createJsDocsString((jsDocInfo[nestedKey] as JsDocInfo))
 
 		return `
-	${jsDocString}'${key}': (${mapTranslationArgs(args, types,)}) => string`
+	${jsDocString}'${key}': (${mapTranslationArgs(args, types,)}) => LocalizedString`
 	}
 
 	return processNestedParsedResult(parsedResult, (parsedResultEntry) => createTranslationArgsType(parsedResultEntry, jsDocInfo))
@@ -453,7 +453,7 @@ const createFormattersType = (parsedTranslations: ParsedResult[]) => {
 // --------------------------------------------------------------------------------------------------------------------
 
 const getTypes = (
-	{ translations, baseLocale, locales, typesTemplateFileName }: GenerateTypesType,
+	{ translations, baseLocale, locales, typesTemplateFileName, banner }: GenerateTypesType,
 	importType: string,
 	version: TypescriptVersion,
 	logger: Logger,
@@ -478,13 +478,17 @@ const getTypes = (
 
 	const paramsType = generateTemplateLiteralTypes ? createParamsType(paramTypesToGenerate) : ''
 
+	const imports = parsedTranslations.length ? `
+import type { LocalizedString } from 'typesafe-i18n'
+` : ''
+
 	const translationArgsType = createTranslationsArgsType(parsedTranslations, jsDocsInfo)
 
 	const formattersType = createFormattersType(parsedTranslations)
 
 	const type = `// This types were auto-generated. Any manual changes will be overwritten.
-/* eslint-disable */
-${typeImports}
+${banner}
+${imports}${typeImports}
 export type BaseLocale = '${baseLocale}'
 
 ${localesType}

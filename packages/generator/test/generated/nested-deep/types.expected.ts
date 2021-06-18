@@ -1,6 +1,8 @@
 // This types were auto-generated. Any manual changes will be overwritten.
 /* eslint-disable */
 
+import type { LocalizedString } from 'typesafe-i18n'
+
 export type BaseLocale = 'en'
 
 export type Locales =
@@ -53,7 +55,7 @@ export type TranslationFunctions = {
 													/**
 													 * I am deeply nested
 													 */
-													'm': () => string
+													'm': () => LocalizedString
 												}
 											}
 										}

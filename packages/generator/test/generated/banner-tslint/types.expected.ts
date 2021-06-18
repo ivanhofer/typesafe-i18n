@@ -1,5 +1,5 @@
 // This types were auto-generated. Any manual changes will be overwritten.
-/* eslint-disable */
+/* tslint:disable */
 
 import type { LocalizedString } from 'typesafe-i18n'
 
@@ -15,14 +15,14 @@ export type Translation = {
 	 * Hi {0}
 	 * @param {name} 0
 	 */
-	'HELLO_NODE': RequiredParams1<'0'>
+	'HI': RequiredParams1<'0'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * Hi {0}
 	 */
-	'HELLO_NODE': (arg0: name) => LocalizedString
+	'HI': (arg0: name) => LocalizedString
 }
 
 export type Formatters = {}

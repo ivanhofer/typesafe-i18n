@@ -2,10 +2,8 @@ import { promises } from 'fs'
 import { resolve } from 'path'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-
 import type { BaseTranslation } from '../../core/src/core'
-import { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../src/generate-files'
-import { generate, getConfigWithDefaultValues } from '../src/generate-files'
+import { generate, GeneratorConfig, GeneratorConfigWithDefaultValues, getConfigWithDefaultValues } from '../src/generate-files'
 import { parseTypescriptVersion, TypescriptVersion } from '../src/generator-util'
 
 const { readFile } = promises
@@ -269,6 +267,14 @@ testGeneratedConsoleOutput('console-translation-key-with-dot', { 'i.am.wrongly.n
 	assert.is(outputs.error.length, 1)
 	assert.is(outputs.error[0], "translation 'i.am.wrongly.nested' => key can't contain the '.' character. Please remove it. If you want to nest keys, you should look at https://github.com/ivanhofer/typesafe-i18n#nested-translations")
 })
+
+// --------------------------------------------------------------------------------------------------------------------
+
+testGeneratedOutput(
+	'banner-tslint',
+	{ HI: 'Hi {0:name}' },
+	{ banner: '/* tslint:disable */' },
+)
 
 // --------------------------------------------------------------------------------------------------------------------
 

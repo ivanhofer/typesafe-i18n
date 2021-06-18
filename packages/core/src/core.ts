@@ -1,4 +1,4 @@
-import type { ArgumentPart, Part, PluralPart } from './parser'
+import type { ArgumentPart, Part, PluralPart } from './parser';
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -12,7 +12,10 @@ export type Cache<T = BaseTranslation> = TranslationParts<T>
 
 export type TranslationKey<T extends BaseTranslation> = keyof T
 
-type BaseTranslationFunction = (...args: Arguments) => string
+declare const localized: unique symbol
+export type LocalizedString = string & { readonly [localized]: unknown }
+
+type BaseTranslationFunction = (...args: Arguments) => LocalizedString
 
 export type TranslationFunctions<T = BaseTranslation> = {
 	[key in keyof T]: T[key] extends string ? BaseTranslationFunction : TranslationFunctions<T[key]>
@@ -69,7 +72,7 @@ const applyArguments = (
 	pluralRules: Intl.PluralRules,
 	formatters: BaseFormatters,
 	args: Arguments,
-) =>
+): LocalizedString =>
 	textParts
 		.map((part) => {
 			if (typeof part === 'string') {
@@ -89,14 +92,14 @@ const applyArguments = (
 
 			return ('' + (formattedValue ?? '')).trim()
 		})
-		.join('')
+		.join('') as LocalizedString
 
 export const translate = (
 	textParts: Part[],
 	pluralRules: Intl.PluralRules,
 	formatters: BaseFormatters,
 	args: Arguments,
-): string => {
+): LocalizedString => {
 	const firstArg = args[0]
 	const isObject = firstArg && typeof firstArg === 'object' && firstArg.constructor === Object
 	const transformedArgs = (args.length === 1 && isObject ? firstArg : args) as Arguments
