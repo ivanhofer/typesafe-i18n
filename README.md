@@ -15,11 +15,12 @@
 :baby_chick: [lightweight](#sizes) (<1kb)\
 :ok_hand: [easy to use syntax](#syntax)\
 :running: [fast and efficient](#performance)\
-:speech_balloon: [supports plural rules](#plural)\
-:twisted_rightwards_arrows: allows [formatting of values](#formatters) e.g. locale-dependent date or number formats\
-:muscle: can be used for [frontend, backend and API](#usage) projects\
 :safety_vest: [prevents you from making mistakes](#typesafety)\
-:detective: [locale-detection](#locale-detection) for browser and server environments\
+:speech_balloon: [supports plural rules](#plural)\
+:date: allows [formatting of values](#formatters) e.g. locale-dependent date or number formats\
+:arrows_counterclockwise: option for [asynchronous loading of locales](#loadLocalesAsync)\
+:handshake: can be used for [frontend, backend and API](#usage) projects\
+:mag: [locale-detection](#locale-detection) for browser and server environments\
 :no_entry: no external dependencies
 
 
