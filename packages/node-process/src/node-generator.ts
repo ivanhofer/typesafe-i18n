@@ -9,9 +9,9 @@ const [, , ...args] = process.argv as [string, string, ...AllowedArguments[]]
 
 args.forEach(arg => {
 	if (!allowedArguments.includes(arg)) {
-		logger.error(`unknwon argument '${arg}'`)
+		logger.error(`unknown argument '${arg}'`)
 		logger.info(`allowed arguments: ${allowedArguments.map(arg => `'${arg}'`).join(', ')}`)
-		process.exit()
+		process.exit(1)
 	}
 })
 
