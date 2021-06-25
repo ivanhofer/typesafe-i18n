@@ -27,7 +27,10 @@
 	"types": "types/index.d.ts",
 	"exports": {
 		"./adapters/*": "./adapters/*.js",
-		"./detectors": "./detectors/index.js",
+		"./detectors": {
+			"import": "./detectors/index.esm.js",
+			"require": "./detectors/index.cjs.js"
+		},
 		"./formatters": "./formatters/index.js",
 		"./react/react-context": {
 			"import": "./react/react-context.esm.js",

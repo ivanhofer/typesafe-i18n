@@ -13,7 +13,7 @@ const mappings: [FromWheretoImport, OutputPath?, FilterFunction?, boolean?][] = 
 	['core', 'cjs'],
 	['core', 'esm'],
 	['formatters'],
-	['locale-detector', 'detectors'],
+	['locale-detector', 'detectors', (file) => file !== 'index.d.ts'],
 	['rollup-plugin', 'rollup'],
 	['webpack-plugin', 'webpack'],
 ]
