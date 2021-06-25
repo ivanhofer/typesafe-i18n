@@ -34,7 +34,10 @@
 			"require": "./react/react-context.cjs.js"
 		},
 		"./rollup/*": "./rollup/*.js",
-		"./svelte/svelte-store": "./svelte/svelte-store.js",
+		"./svelte/svelte-store": {
+			"import": "./svelte/svelte-store.esm.js",
+			"require": "./svelte/svelte-store.cjs.js"
+		},
 		"./webpack/*": "./webpack/*.js",
 		"./*": {
 			"import": "./esm/*",
