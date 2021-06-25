@@ -2,5 +2,6 @@
 	"editor.codeActionsOnSave": {
 		"source.sortImports": true,
 		"source.fixAll.eslint": true
-	}
+	},
+	"files.associations": { "*.mts": "typescript" }
 }

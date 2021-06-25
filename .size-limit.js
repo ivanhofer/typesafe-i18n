@@ -22,13 +22,13 @@ module.exports = [
 	{
 		name: 'svelte-store',
 		path: 'svelte/svelte-store.min.js',
-		limit: '1170 b',
+		limit: '1150 b',
 		ignore: ['svelte'],
 	},
 	{
 		name: 'react-context',
 		path: 'react/react-context.min.js',
-		limit: '1145 b',
+		limit: '1147 b',
 		ignore: ['react'],
 	},
 ]

@@ -27,14 +27,20 @@
 	"types": "types/index.d.ts",
 	"exports": {
 		"./adapters/*": "./adapters/*.js",
-		"./detectors": "./detectors/index.js",
+		"./detectors": {
+			"import": "./detectors/index.mjs",
+			"require": "./detectors/index.js"
+		},
 		"./formatters": "./formatters/index.js",
 		"./react/react-context": {
-			"import": "./react/react-context.esm.js",
-			"require": "./react/react-context.cjs.js"
+			"import": "./react/react-context.mjs",
+			"require": "./react/react-context.js"
 		},
 		"./rollup/*": "./rollup/*.js",
-		"./svelte/svelte-store": "./svelte/svelte-store.js",
+		"./svelte/svelte-store": {
+			"import": "./svelte/svelte-store.mjs",
+			"require": "./svelte/svelte-store.js"
+		},
 		"./webpack/*": "./webpack/*.js",
 		"./*": {
 			"import": "./esm/*",
