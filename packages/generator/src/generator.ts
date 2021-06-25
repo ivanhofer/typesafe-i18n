@@ -1,17 +1,16 @@
-import * as ts from 'typescript'
 import { watch } from 'chokidar'
 import { resolve } from 'path'
+import * as ts from 'typescript'
 import type { BaseTranslation } from '../../core/src/core'
-import { GeneratorConfig, GeneratorConfigWithDefaultValues, readConfig } from './generate-files'
 import {
 	copyFile,
 	createPathIfNotExits,
 	deleteFolderRecursive,
 	doesPathExist,
 	getFiles,
-	importFile,
+	importFile
 } from './file-utils'
-import { generate, getConfigWithDefaultValues } from './generate-files'
+import { generate, GeneratorConfig, GeneratorConfigWithDefaultValues, getConfigWithDefaultValues, readConfig } from './generate-files'
 import { logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
 
 const getAllLanguages = async (path: string) => {
@@ -99,7 +98,7 @@ const debonce = (callback: () => void) =>
 		++debounceCounter,
 	)
 
-export const startGenerator = async (config?: GeneratorConfig): Promise<void> => {
+export const startGenerator = async (config?: GeneratorConfig, watchFiles = false): Promise<void> => {
 	const configWithDefaultValues = await getConfigWithDefaultValues(config)
 	const { outputPath } = configWithDefaultValues
 
@@ -109,9 +108,14 @@ export const startGenerator = async (config?: GeneratorConfig): Promise<void> =>
 
 	await createPathIfNotExits(outputPath)
 
-	watch(outputPath).on('all', () => debonce(onChange))
+	watchFiles && watch(outputPath).on('all', () => debonce(onChange))
 
 	logger.info(`generating files for typescript version: '${ts.versionMajorMinor}.x'`)
-	logger.info(`watcher started in: '${outputPath}'`)
 	logger.info(`options:`, await readConfig(config))
+	watchFiles && logger.info(`watcher started in: '${outputPath}'`)
+
+	if (!watchFiles) {
+		await onChange()
+		logger.info(`generating files completed`)
+	}
 }
