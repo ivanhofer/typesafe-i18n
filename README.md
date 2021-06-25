@@ -336,7 +336,7 @@ Take a look at this [demo repository](https://github.com/ivanhofer/typesafe-i18n
 
 #### running the generator in CI/CD
 
-When running tests or scripts you can disable the watcher by passing the argument `--no-watch` to the generator node-porcess:
+When running tests or scripts you can disable the watcher by passing the argument `--no-watch` to the generator node-process:
 
 ```bash
 > npx typesafe-i18n --no-watch

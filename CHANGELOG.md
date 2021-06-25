@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.28.0 (2021-06-25)
+
+Feature:
+ - add `--no-watch` option to generator node process
+
 ## 2.27.0 (2021-06-18)
 
 Feature:
