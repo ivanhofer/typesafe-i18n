@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.29.0 (2021-06-25)
+
+Feature:
+ - output react adapter as `cjs` and `esm` module
+
 ## 2.28.0 (2021-06-25)
 
 Feature:

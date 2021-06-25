@@ -1,20 +1,20 @@
 // @ts-check
 
+import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
-import externals from 'rollup-plugin-node-externals'
-import commonjs from '@rollup/plugin-commonjs'
-import { terser } from 'rollup-plugin-terser'
 import path from 'path'
+import externals from 'rollup-plugin-node-externals'
+import { terser } from 'rollup-plugin-terser'
 
 const getPath = (file) => path.resolve(__dirname, file)
 
-const createConfig = (minify) => ({
+const createConfig = (format, minify) => ({
 	input: getPath('src/react-context.ts'),
 	output: [
 		{
-			file: getPath(`../../react/react-context${minify ? '.min' : ''}.js`),
-			format: 'esm',
+			file: getPath(`../../react/react-context.${format}${minify ? '.min' : ''}.js`),
+			format,
 			sourcemap: !minify,
 			exports: 'named',
 		},
@@ -34,4 +34,9 @@ const createConfig = (minify) => ({
 	],
 })
 
-export default [createConfig(false), createConfig(true)]
+export default [
+	createConfig('esm', false),
+	createConfig('esm', true),
+	createConfig('cjs', false),
+	createConfig('cjs', true),
+]
