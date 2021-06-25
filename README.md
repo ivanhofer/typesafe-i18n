@@ -334,6 +334,15 @@ Passing [options](#options) to the generator is possible by creating a `.typesaf
 
 Take a look at this [demo repository](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/node) to see how to run the generator node process.
 
+#### running the generator in CI/CD
+
+When running tests or scripts you can disable the watcher by passing the argument `--no-watch` to the generator node-porcess:
+
+```bash
+> npx typesafe-i18n --no-watch
+```
+
+This will only generate types once and **not** listen to changes in your locale files.
 
 
 ### folder structure
