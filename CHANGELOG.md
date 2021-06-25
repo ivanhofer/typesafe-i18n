@@ -1,5 +1,13 @@
 # CHANGELOG.md
 
+## 2.30.0 (2021-06-25)
+
+Feature:
+ - output svelte adapter as `cjs` and `esm` module
+
+Fix:
+ - fix `cjs` and `esm` import mappings
+
 ## 2.29.0 (2021-06-25)
 
 Feature:

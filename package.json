@@ -28,18 +28,18 @@
 	"exports": {
 		"./adapters/*": "./adapters/*.js",
 		"./detectors": {
-			"import": "./detectors/index.esm.js",
-			"require": "./detectors/index.cjs.js"
+			"import": "./detectors/index.mjs",
+			"require": "./detectors/index.js"
 		},
 		"./formatters": "./formatters/index.js",
 		"./react/react-context": {
-			"import": "./react/react-context.esm.js",
-			"require": "./react/react-context.cjs.js"
+			"import": "./react/react-context.mjs",
+			"require": "./react/react-context.js"
 		},
 		"./rollup/*": "./rollup/*.js",
 		"./svelte/svelte-store": {
-			"import": "./svelte/svelte-store.esm.js",
-			"require": "./svelte/svelte-store.cjs.js"
+			"import": "./svelte/svelte-store.mjs",
+			"require": "./svelte/svelte-store.js"
 		},
 		"./webpack/*": "./webpack/*.js",
 		"./*": {

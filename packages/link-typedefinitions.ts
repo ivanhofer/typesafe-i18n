@@ -6,21 +6,21 @@ type FromWheretoImport = string
 type OutputPath = string
 type FilterFunction = (file: string) => boolean
 
-const mappings: [FromWheretoImport, OutputPath?, FilterFunction?, boolean?][] = [
+const mappings: [FromWheretoImport, OutputPath?, FilterFunction?][] = [
 	['adapters'],
-	['adapter-svelte', 'svelte', (file) => file === 'svelte-store.d.ts', true],
-	['adapter-react', 'react', (file) => file === 'react-context.d.ts', true],
+	['adapter-svelte', 'svelte', (file) => file === 'svelte-store.d.ts'],
+	['adapter-react', 'react', (file) => file === 'react-context.d.ts'],
 	['core', 'cjs'],
 	['core', 'esm'],
 	['formatters'],
-	['locale-detector', 'detectors', (file) => file !== 'index.d.ts'],
+	['locale-detector', 'detectors'],
 	['rollup-plugin', 'rollup'],
 	['webpack-plugin', 'webpack'],
 ]
 
 const goToRoot = (file: string) => new Array(file.split('/').length).fill('../').join('')
 
-mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, mapperFunction, esmAndCjsOutput = false]) => {
+mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, mapperFunction]) => {
 	const files = glob(resolve(__dirname, `../types/${fromWheretoImport}/src/**/*.d.ts`)).map((file) =>
 		resolve(file)
 			.substring(resolve(__dirname, `../types/${fromWheretoImport}/src/`).length + 1)
@@ -42,20 +42,10 @@ mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, mapperFunc
 
 
 	// link generated files to types
-	let filteredFiles = (mapperFunction && files.filter(mapperFunction)) || files
-
-	if (esmAndCjsOutput) {
-		filteredFiles = filteredFiles
-			.flatMap(file => [file.replace('.d.ts', '.esm.d.ts'), file.replace('.d.ts', '.cjs.d.ts')])
-	}
+	const filteredFiles = (mapperFunction && files.filter(mapperFunction)) || files
 
 	filteredFiles.forEach((file) => {
-		let fileName = file.substring(0, file.length - 5)
-		if (esmAndCjsOutput) {
-			if (fileName.endsWith(".esm") || fileName.endsWith(".cjs")) {
-				fileName = fileName.substring(0, fileName.length - 4)
-			}
-		}
+		const fileName = file.substring(0, file.length - 5)
 
 		writeFileSync(
 			resolve(__dirname, `../${outputPath}/${file}`),

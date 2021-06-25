@@ -1,10 +1,9 @@
 import express, { Application, Request, Response } from 'express'
-
-import L from './i18n/i18n-node'
-import { detectLocale } from './i18n/i18n-util'
-import { Locales } from './i18n/i18n-types'
-
 import { initAcceptLanguageHeaderDetector, initRequestParametersDetector } from 'typesafe-i18n/detectors'
+import L from './i18n/i18n-node'
+import { Locales } from './i18n/i18n-types'
+import { detectLocale } from './i18n/i18n-util'
+
 
 const app: Application = express()
 

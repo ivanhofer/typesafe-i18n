@@ -13,7 +13,7 @@ const createConfig = (format, minify) => ({
 	input: getPath('src/react-context.ts'),
 	output: [
 		{
-			file: getPath(`../../react/react-context.${format}${minify ? '.min' : ''}.js`),
+			file: getPath(`../../react/react-context.${minify ? '.min' : ''}.${format === 'esm' ? 'm' : ''}js`),
 			format,
 			sourcemap: !minify,
 			exports: 'named',

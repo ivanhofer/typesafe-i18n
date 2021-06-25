@@ -13,7 +13,7 @@ const createConfig = (format, minify) => ({
 	input: getPath('src/svelte-store.ts'),
 	output: [
 		{
-			file: getPath(`../../svelte/svelte-store.${format}${minify ? '.min' : ''}.js`),
+			file: getPath(`../../svelte/svelte-store${minify ? '.min' : ''}.${format === 'esm' ? 'm' : ''}js`),
 			format,
 			sourcemap: !minify,
 			exports: 'named',
