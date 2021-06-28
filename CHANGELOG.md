@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.30.1 (2021-06-28)
+
+Fix:
+ - show translations on first render for sync react adapter
+
 ## 2.30.0 (2021-06-25)
 
 Feature:

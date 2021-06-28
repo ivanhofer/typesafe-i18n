@@ -52,8 +52,16 @@ export const initI18nReact = <
 		const setLocale = async (newLocale: L): Promise<void> => {
 			setIsLoadingLocale(true)
 
-			const translation: T = (getTranslationForLocale as TranslationLoader<L, T>)(newLocale)
-			setLL(i18nObject<L, T, TF, F>(newLocale, translation, await initFormatters(newLocale)))
+			const translation = getTranslationForLocale(newLocale)
+			const formatters = initFormatters(newLocale)
+
+			setLL(
+				i18nObject<L, T, TF, F>(
+					newLocale,
+					translation instanceof Promise ? await translation : translation,
+					formatters instanceof Promise ? await formatters : formatters,
+				),
+			)
 
 			setCurrentLocale(newLocale)
 			setIsLoadingLocale(false)
