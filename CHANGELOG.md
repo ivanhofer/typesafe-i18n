@@ -23,7 +23,7 @@ Feature:
 Feature:
  - add `--no-watch` option to generator node process
 
-## 2.27.0 (2021-06-18)
+## 2.31.1 (2021-06-18)
 
 Feature:
  - make `TranslationFunctions` return a `LocalizedString`
