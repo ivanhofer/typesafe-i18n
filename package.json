@@ -26,12 +26,18 @@
 	"browser": "dist/i18n.min.js",
 	"types": "types/index.d.ts",
 	"exports": {
-		"./adapters/*": "./adapters/*.js",
+		"./adapters/*": {
+			"import": "./adapters/*.mjs",
+			"require": "./adapters/*.js"
+		},
 		"./detectors": {
 			"import": "./detectors/index.mjs",
 			"require": "./detectors/index.js"
 		},
-		"./formatters": "./formatters/index.js",
+		"./formatters": {
+			"import": "./formatters/index.mjs",
+			"require": "./formatters/index.js"
+		},
 		"./react/react-context": {
 			"import": "./react/react-context.mjs",
 			"require": "./react/react-context.js"

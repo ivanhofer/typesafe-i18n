@@ -7,14 +7,12 @@ import { terser } from 'rollup-plugin-terser'
 
 const getPath = (file) => path.resolve(__dirname, file)
 
-const files = ['svelte', 'react']
-
-const config = files.map((file) => ({
+const createConfig = (format, file) => ({
 	input: getPath(`src/adapter-${file}.ts`),
 	output: [
 		{
-			file: getPath(`../../adapters/adapter-${file}.js`),
-			format: 'esm',
+			file: getPath(`../../adapters/adapter-${file}.${format === 'esm' ? 'm' : ''}js`),
+			format,
 			sourcemap: true,
 		},
 	],
@@ -29,6 +27,11 @@ const config = files.map((file) => ({
 		}),
 		terser(),
 	],
-}))
+})
 
-export default config
+export default [
+	createConfig('esm', 'svelte'),
+	createConfig('esm', 'react'),
+	createConfig('cjs', 'svelte'),
+	createConfig('cjs', 'react'),
+]

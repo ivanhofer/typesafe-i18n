@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.31.0 (2021-06-30)
+
+Feature:
+ - output formatters as `cjs` and `esm` module
+
 ## 2.30.1 (2021-06-28)
 
 Fix:
@@ -23,7 +28,7 @@ Feature:
 Feature:
  - add `--no-watch` option to generator node process
 
-## 2.31.1 (2021-06-18)
+## 2.27.0 (2021-06-18)
 
 Feature:
  - make `TranslationFunctions` return a `LocalizedString`
