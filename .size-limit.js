@@ -28,7 +28,7 @@ module.exports = [
 	{
 		name: 'react-context',
 		path: 'react/react-context.min.js',
-		limit: '1147 b',
+		limit: '1171 b',
 		ignore: ['react'],
 	},
 ]
