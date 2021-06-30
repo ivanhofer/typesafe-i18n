@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.32.0 (unreleased)
+
+Fix:
+ - make formatters tree-shakeable
+
 ## 2.31.0 (2021-06-30)
 
 Feature:

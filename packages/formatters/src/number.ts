@@ -1,6 +1,6 @@
 import type { FormatterFunction } from '../../core/src/core'
 
-export const number = (
+export default (
 	locale: string,
 	options: Intl.NumberFormatOptions = {},
 ): FormatterFunction<number | bigint, string> => {

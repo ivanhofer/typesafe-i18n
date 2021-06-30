@@ -20,6 +20,7 @@ const config = files
 				{
 					file: getPath(`../../formatters/${file.replace('.ts', `.${format === 'esm' ? 'm' : ''}js`)}`),
 					format,
+					exports: 'auto',
 				},
 			],
 			plugins: [
