@@ -4,6 +4,7 @@
 
 Fix:
  - make formatters tree-shakeable
+ - make detectors tree-shakeable
 
 ## 2.31.0 (2021-06-30)
 

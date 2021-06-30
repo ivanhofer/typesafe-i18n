@@ -18,27 +18,27 @@ const files = glob(path.resolve(__dirname, `./src/**/*.*ts`))
 	)
 	.filter((file) => !file.split('/').some((part) => part.startsWith('_')))
 
-const getOutputFormat = (file) => (file.startsWith('detectors/browser') || file.endsWith('.mts') ? 'esm' : 'cjs')
-
-const config = files.map((file) => ({
-	input: getPath(`./src/${file}`),
-	output: [
-		{
-			file: getPath(`../../detectors/${file.replace('.ts', '.js').replace('.mts', '.mjs')}`),
-			format: getOutputFormat(file),
-		},
-	],
-	plugins: [
-		resolve(),
-		commonjs(),
-		typescript({
-			tsconfig: getPath('./tsconfig.json'),
-			sourceMap: false,
-			declaration: false,
-			declarationDir: null,
-		}),
-		terser(),
-	],
-}))
+const config = files.flatMap((file) =>
+	['esm', 'cjs'].map((format) => ({
+		input: getPath(`./src/${file}`),
+		output: [
+			{
+				file: getPath(`../../detectors/${file.replace('.ts', `.${format === 'esm' ? 'm' : ''}js`)}`),
+				format,
+			},
+		],
+		plugins: [
+			resolve(),
+			commonjs(),
+			typescript({
+				tsconfig: getPath('./tsconfig.json'),
+				sourceMap: false,
+				declaration: false,
+				declarationDir: null,
+			}),
+			terser(),
+		],
+	})),
+)
 
 export default config
