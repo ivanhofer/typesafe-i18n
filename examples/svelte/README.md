@@ -189,17 +189,22 @@ Svelte store that returns a `boolean`. It can be used to wait for the locale to 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
-# Sapper
 
-For your Sapper projects, you should call the `initI18n` function inside `preload` in your root `routes/_layout.svelte` file:
+# SvelteKit
+
+For your SvelteKit projects, you should call `initI18n` inside the `load` function in your `routes/__layout.svelte` file:
 
 ```html
 <script context="module">
-   import { initI18n } from '../i18n/i18n-svelte'
+	import LL, { initI18n, setLocale } from '../i18n/i18n-svelte';
 
-   export async function preload(page, session) {
-      await initI18n(session.locale)
-   }
+	export async function load({ page, fetch, session, context }) {
+      // detect locale of user (see https://github.com/ivanhofer/typesafe-i18n#locale-detection)
+      const locale = 'en'
+		await initI18n(locale)
+
+		return {}
+	}
 </script>
 ```
 
@@ -212,9 +217,24 @@ For more information about the stores you can use, see the [Svelte](#svelte) sec
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
-# SvelteKit
 
-I will update this part as soon as I get my hands on the beta and the syntax. But it will be more or less the same like described in the [Sapper](#sapper) and [Svelte](#svelte) sections.
+# Sapper
+
+For your Sapper projects, you should call the `initI18n` function inside `preload` in your root `routes/_layout.svelte` file:
+
+```html
+<script context="module">
+   import { initI18n } from '../i18n/i18n-svelte'
+
+   export async function preload(page, session) {
+      // detect locale of user (see https://github.com/ivanhofer/typesafe-i18n#locale-detection)
+      const locale = 'en'
+      await initI18n(locale)
+   }
+</script>
+```
+
+For more information about the stores you can use, see the [Svelte](#svelte) section.
 
  <!-- TODO: create example repository -->
 
