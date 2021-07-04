@@ -1,2 +1,3 @@
 examples/* linguist-detectable=false
 .size-limit.js linguist-detectable=false
+rollup.config.js linguist-detectable=false
