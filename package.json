@@ -99,7 +99,7 @@
 		"test:size": "size-limit"
 	},
 	"dependencies": {
-		"typesafe-utils": "^1.13.0"
+		"typesafe-utils": "^1.14.0"
 	},
 	"peerDependencies": {
 		"chokidar": "^3.5.2"

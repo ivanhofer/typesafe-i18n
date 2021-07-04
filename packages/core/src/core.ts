@@ -1,3 +1,4 @@
+import type { TypeGuard } from 'typesafe-utils';
 import type { ArgumentPart, Part, PluralPart } from './parser';
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -41,9 +42,7 @@ export type BaseFormatters = {
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-type IsPluralPart<T> = T extends PluralPart ? T : never
-
-export const isPluralPart = (part: Part): part is IsPluralPart<Part> => !!((<PluralPart>part).o || (<PluralPart>part).r)
+export const isPluralPart = (part: Part): part is TypeGuard<PluralPart, Part> => !!((<PluralPart>part).o || (<PluralPart>part).r)
 
 const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], value: unknown) =>
 	formatterKeys.reduce((prev, formatterKey) => formatters[formatterKey]?.(prev) ?? prev, value)

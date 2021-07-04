@@ -13,7 +13,8 @@ import {
 	not,
 	sortNumberASC,
 	sortStringASC,
-	sortStringPropertyASC
+	sortStringPropertyASC,
+	TypeGuard
 } from 'typesafe-utils'
 import { BaseTranslation, isPluralPart } from '../../../core/src/core'
 import { partAsStringWithoutTypes, partsAsStringWithoutTypes, removeEmptyValues } from '../../../core/src/core-utils'
@@ -205,9 +206,7 @@ const BASE_TYPES = ['boolean', 'number', 'bigint', 'string', 'Date', 'object', '
 	(t: string) => [t, `${t}[]`],
 )
 
-type IsParsedResultEntry<T> = T extends ParsedResultEntry ? T : never
-
-const isParsedResultEntry = <T extends ParsedResult>(entry: T): entry is IsParsedResultEntry<T> =>
+const isParsedResultEntry = <T extends ParsedResult>(entry: T): entry is TypeGuard<ParsedResultEntry, T> =>
 	isArray(entry.parentKeys) && isObject(entry.types)
 
 const extractTypes = (parsedTranslations: ParsedResult[]): string[] =>
