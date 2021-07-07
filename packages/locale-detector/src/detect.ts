@@ -1,5 +1,5 @@
-import { Locale } from '../../core/src/core'
 import { isTruthy } from 'typesafe-utils'
+import { Locale } from '../../core/src/core'
 
 export type LocaleDetector = () => string[]
 
