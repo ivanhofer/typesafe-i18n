@@ -3,7 +3,7 @@ import { resolve } from 'path';
 
 const content = readFileSync(resolve(__dirname, './src/index.ts'))
 	.toString()
-	.split(/\r\n/)
+	.split(/\r?\n/)
 	.filter(line => !line.startsWith("export type"))
 	.join('\r\n')
 
