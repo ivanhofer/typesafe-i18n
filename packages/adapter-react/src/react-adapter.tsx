@@ -1,11 +1,11 @@
-import React, { createContext, useState } from 'react'
+import React from 'react'
 import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../core/src/core'
 import { getFallbackProxy } from '../../core/src/core-utils'
 import {
 	AsyncFormattersInitializer,
 	FormattersInitializer,
 	TranslationLoader,
-	TranslationLoaderAsync,
+	TranslationLoaderAsync
 } from '../../core/src/util.loader'
 import { i18nObject } from '../../core/src/util.object'
 
@@ -45,9 +45,9 @@ export const initI18nReact = <
 	const context = getI18nContext<L, T, TF>()
 
 	const component: React.FunctionComponent<TypesafeI18nProps<L>> = (props) => {
-		const [isLoadingLocale, setIsLoadingLocale] = useState<boolean>(false)
-		const [currentLocale, setCurrentLocale] = useState<L>(null as unknown as L)
-		const [LL, setLL] = useState<TranslationFunctions>(getFallbackProxy<TranslationFunctions>())
+		const [isLoadingLocale, setIsLoadingLocale] = React.useState<boolean>(false)
+		const [currentLocale, setCurrentLocale] = React.useState<L>(null as unknown as L)
+		const [LL, setLL] = React.useState<TranslationFunctions>(getFallbackProxy<TranslationFunctions>())
 
 		const setLocale = async (newLocale: L): Promise<void> => {
 			setIsLoadingLocale(true)
@@ -85,4 +85,4 @@ const getI18nContext = <
 	L extends string = string,
 	T extends BaseTranslation = BaseTranslation,
 	TF extends TranslationFunctions = TranslationFunctions<T>,
->() => createContext({} as I18nContextType<L, T, TF>)
+>() => React.createContext({} as I18nContextType<L, T, TF>)
