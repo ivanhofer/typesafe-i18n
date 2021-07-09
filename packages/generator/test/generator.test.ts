@@ -163,6 +163,8 @@ testGeneratedOutput('arg-order', {
 	ORDER_TYPES: '{0:B} {1:A}',
 })
 
+testGeneratedOutput('arg-type-localized-string', { localized: 'Click on the button: <button>{buttonText:LocalizedString}</button>' })
+
 testGeneratedOutput('formatter-with-different-arg-types', { A: '{0:number|calculate}!', B: '{0:Date|calculate}' })
 
 testGeneratedOutput('arg-types-with-external-type', { EXTERNAL_TYPE: 'The result is {0:Result|calculate}!' })

@@ -202,7 +202,7 @@ const createLocalesType = (locales: string[], baseLocale: string) => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const BASE_TYPES = ['boolean', 'number', 'bigint', 'string', 'Date', 'object', 'undefined', 'null', 'unknown'].flatMap(
+const BASE_TYPES = ['boolean', 'number', 'bigint', 'string', 'Date', 'object', 'undefined', 'null', 'unknown', 'LocalizedString'].flatMap(
 	(t: string) => [t, `${t}[]`],
 )
 
