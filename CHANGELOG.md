@@ -1,5 +1,17 @@
 # CHANGELOG.md
 
+## 2.33.0 (2021-07-09)
+
+Feature:
+ - add `LocalizedString` to known types
+
+## 2.32.3 (2021-07-07)
+## 2.32.2 (2021-07-07)
+## 2.32.1 (2021-07-07)
+
+Bugfix:
+ - fix `esm` output for `react` adapter
+
 ## 2.32.0 (2021-07-01)
 
 Fix:
