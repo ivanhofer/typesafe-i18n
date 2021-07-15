@@ -44,17 +44,19 @@ const check = async (prefix: string, file: FileToCheck) => {
 		return ''
 	}
 
-	const expected: string = (await readFile(getPathOfOutputFile(prefix, file, 'expected')).catch(onError)).toString()
 	const actual: string = (await readFile(getPathOfOutputFile(prefix, file, 'actual')).catch(onError)).toString()
+	const expected: string = (await readFile(getPathOfOutputFile(prefix, file, 'expected')).catch(onError)).toString()
 
 	if ((expected && !actual) || (!expected && actual)) throw Error(`Could not find file '${pathOfFailingFile}'`)
 
 	if (expected && actual) {
-		const expectedSplitByLines = expected.split(REGEX_NEW_LINE)
 		const actualSplitByLines = actual.split(REGEX_NEW_LINE)
+		const expectedSplitByLines = expected.split(REGEX_NEW_LINE)
+
+		assert.is(actualSplitByLines.length, expectedSplitByLines.length)
 
 		expectedSplitByLines.forEach((_, i) =>
-			assert.match(expectedSplitByLines[i] as string, actualSplitByLines[i] as string),
+			assert.match(actualSplitByLines[i] as string, expectedSplitByLines[i] as string),
 		)
 	}
 }
@@ -231,6 +233,12 @@ testGeneratedOutput(
 	'adapter-react-sync',
 	{ HELLO_NODE: 'Hi {0:name}' },
 	{ adapter: 'react', adapterFileName: reactAdapterFileName, loadLocalesAsync: false },
+)
+
+testGeneratedOutput(
+	'adapter-react-jsdoc-sync',
+	{ HELLO_NODE: 'Hi {0:name}' },
+	{ adapter: 'react', adapterFileName: reactAdapterFileName, loadLocalesAsync: false, outputFormat: 'JavaScript' },
 )
 
 // --------------------------------------------------------------------------------------------------------------------
