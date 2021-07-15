@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.34.0 (2021-07-15)
+
+Feature:
+ - add support for Angular's Proxy implementation
+
 ## 2.33.0 (2021-07-09)
 
 Feature:
