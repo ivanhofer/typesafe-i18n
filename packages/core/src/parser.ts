@@ -1,4 +1,4 @@
-import { trimAllValues, removeEmptyValues } from './core-utils'
+import { removeEmptyValues, trimAllValues } from './core-utils'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -37,11 +37,11 @@ const parseArgumentPart = (text: string): ArgumentPart => {
 	return { k: key, i: type, f: formatterKeys } as ArgumentPart
 }
 
-const parsePluralPart = (content: string, lastAcessor: string): PluralPart => {
+const parsePluralPart = (content: string, lastAccessor: string): PluralPart => {
 	let [key, values] = content.split(':') as [string, string?]
 	if (!values) {
 		values = key
-		key = lastAcessor
+		key = lastAccessor
 	}
 
 	const entries = values.split('|')
