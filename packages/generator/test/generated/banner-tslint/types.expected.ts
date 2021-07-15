@@ -27,7 +27,6 @@ export type TranslationFunctions = {
 
 export type Formatters = {}
 
-
 type Param<P extends string> = `{${P}}`
 
 type Params1<P1 extends string> =

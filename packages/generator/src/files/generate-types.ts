@@ -22,8 +22,8 @@ import type { ArgumentPart } from '../../../core/src/parser'
 import { parseRawText } from '../../../core/src/parser'
 import { writeFileIfContainsChanges } from '../file-utils'
 import type { GeneratorConfigWithDefaultValues } from '../generate-files'
-import { getPermutations, Logger } from '../generator-util'
-import { importTypes, OVERRIDE_WARNING, shouldGenerateJsDoc, supportsTemplateLiteralTypes } from '../output-handler'
+import { getPermutations, Logger, prettify } from '../generator-util'
+import { fileEndingForTypesFile, importTypes, importTypeStatement, OVERRIDE_WARNING, supportsTemplateLiteralTypes } from '../output-handler'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -232,7 +232,7 @@ const createTypeImports = (
 	return !externalTypes.length
 		? ''
 		: `
-${importTypes(`./${typesTemplatePath.replace('.ts', '')}`, ...externalTypes)}
+${importTypeStatement} { ${externalTypes.join(COMMA_SEPARATION)} } from './${typesTemplatePath.replace('.ts', '')}'
 `
 }
 
@@ -469,7 +469,7 @@ const getTypes = (
 	const paramsType = supportsTemplateLiteralTypes ? createParamsType(paramTypesToGenerate) : ''
 
 	const imports = parsedTranslations.length ? `
-${importTypes('typesafe-i18n', 'LocalizedString')}
+${importTypeStatement} { LocalizedString } from 'typesafe-i18n'
 ` : ''
 
 	const translationArgsType = createTranslationsArgsType(parsedTranslations, jsDocsInfo)
@@ -508,8 +508,7 @@ export const generateTypes = async (
 
 	const [types, hasCustomTypes] = getTypes(config, logger)
 
-	const fileEnding = shouldGenerateJsDoc ? '.d.ts' : '.ts'
-	await writeFileIfContainsChanges(outputPath, `${typesFileName}${fileEnding}`, types)
+	await writeFileIfContainsChanges(outputPath, `${typesFileName}${fileEndingForTypesFile}`, prettify(types))
 
 	return hasCustomTypes
 }

@@ -1,11 +1,12 @@
 import { writeFileIfContainsChanges } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generate-files'
-import { importTypes, OVERRIDE_WARNING, type } from '../output-handler'
+import { prettify } from '../generator-util'
+import { importTypes, OVERRIDE_WARNING, tsCheck, type } from '../output-handler'
 
 const getSvelteUtils = (
 	{ baseLocale, formattersTemplateFileName, typesFileName, utilFileName, banner }: GeneratorConfigWithDefaultValues,
 ) => {
-	return `${OVERRIDE_WARNING}
+	return `${OVERRIDE_WARNING}${tsCheck}
 ${banner}
 
 import { getI18nSvelteStore } from 'typesafe-i18n/adapters/adapter-svelte';
@@ -31,5 +32,5 @@ export const generateSvelteAdapter = async (
 	const svelteUtils = getSvelteUtils(config)
 
 	const fileName = config.adapterFileName || 'i18n-svelte'
-	await writeFileIfContainsChanges(outputPath, fileName, svelteUtils)
+	await writeFileIfContainsChanges(outputPath, fileName, prettify(svelteUtils))
 }

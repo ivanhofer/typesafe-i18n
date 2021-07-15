@@ -3,7 +3,7 @@ import { resolve } from 'path'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 import type { BaseTranslation } from '../../core/src/core'
-import { generate, GeneratorConfig, GeneratorConfigWithDefaultValues, getConfigWithDefaultValues } from '../src/generate-files'
+import { generate, GeneratorConfig, GeneratorConfigWithDefaultValues, getConfigWithDefaultValues, OutputFormats } from '../src/generate-files'
 import { parseTypescriptVersion, TypescriptVersion } from '../src/generator-util'
 
 const { readFile } = promises
@@ -33,19 +33,25 @@ const createConfig = async (prefix: string, config?: GeneratorConfig): Promise<G
 
 type FileToCheck = 'types' | 'util' | 'formatters-template' | 'types-template' | 'svelte' | 'react'
 
-const getPathOfOutputFile = (prefix: string, file: FileToCheck, type: 'actual' | 'expected') =>
-	`${outputPath}/${prefix}/${file}.${type}.ts`
+const getPathOfOutputFile = (prefix: string, file: FileToCheck, type: 'actual' | 'expected', outputFormat: OutputFormats) => {
+	const fileEnding = outputFormat === 'TypeScript'
+		? '.ts'
+		: file === 'types' || file === 'types-template'
+			? '.d.ts'
+			: '.js'
+	return `${outputPath}/${prefix}/${file}.${type}${fileEnding}`
+}
 
 const REGEX_NEW_LINE = /\n/g
-const check = async (prefix: string, file: FileToCheck) => {
+const check = async (prefix: string, file: FileToCheck, outputFormat: OutputFormats) => {
 	let pathOfFailingFile = ''
 	const onError = (e: { path: string }) => {
 		pathOfFailingFile = e.path
 		return ''
 	}
 
-	const actual: string = (await readFile(getPathOfOutputFile(prefix, file, 'actual')).catch(onError)).toString()
-	const expected: string = (await readFile(getPathOfOutputFile(prefix, file, 'expected')).catch(onError)).toString()
+	const actual: string = (await readFile(getPathOfOutputFile(prefix, file, 'actual', outputFormat)).catch(onError)).toString()
+	const expected: string = (await readFile(getPathOfOutputFile(prefix, file, 'expected', outputFormat)).catch(onError)).toString()
 
 	if ((expected && !actual) || (!expected && actual)) throw Error(`Could not find file '${pathOfFailingFile}'`)
 
@@ -68,13 +74,15 @@ const testGeneratedOutput = async (
 	version: TypescriptVersion = defaultVersion,
 ) =>
 	test(`generate ${prefix}`, async () => {
-		await generate(translation, await createConfig(prefix, config), version, undefined, true)
-		await check(prefix, 'types')
-		await check(prefix, 'util')
-		await check(prefix, 'formatters-template')
-		await check(prefix, 'types-template')
-		await check(prefix, 'svelte')
-		await check(prefix, 'react')
+		const configWithDefaultValues = await createConfig(prefix, config)
+		const { outputFormat } = configWithDefaultValues
+		await generate(translation, configWithDefaultValues, version, undefined, true)
+		await check(prefix, 'types', outputFormat)
+		await check(prefix, 'util', outputFormat)
+		await check(prefix, 'formatters-template', outputFormat)
+		await check(prefix, 'types-template', outputFormat)
+		await check(prefix, 'svelte', outputFormat)
+		await check(prefix, 'react', outputFormat)
 	})
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -125,6 +133,8 @@ const testGeneratedConsoleOutput = async (
 
 testGeneratedOutput('empty', {})
 
+testGeneratedOutput('empty-jsdoc', {}, { outputFormat: 'JavaScript' })
+
 testGeneratedOutput('simple', {
 	TEST: 'This is a test',
 })
@@ -143,6 +153,11 @@ testGeneratedOutput('with-formatters', {
 	FORMATTER_1: '{0|timesTen} apple{{s}}',
 	FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
 })
+
+testGeneratedOutput('with-formatters-jsdoc', {
+	FORMATTER_1: '{0|timesTen} apple{{s}}',
+	FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
+}, { outputFormat: 'JavaScript' })
 
 testGeneratedOutput('formatters-with-dashes', { FORMATTER: '{0|custom-formatter|and-another}' })
 
@@ -179,17 +194,29 @@ testGeneratedOutput('only-plural-rules', { ONLY_PLURAL: 'apple{{s}}', ONLY_SINGU
 
 testGeneratedOutput('plural-part-before-key', { PLURAL_BEFORE_KEY: 'apple{{s}}: {nrOfApples:number}' })
 
+// --------------------------------------------------------------------------------------------------------------------
+
 testGeneratedOutput(
 	'generate-only-types',
 	{ TEST: 'This is a test {0:CustomType|someFormatter}' },
 	{ generateOnlyTypes: true },
 )
 
+// --------------------------------------------------------------------------------------------------------------------
+
 testGeneratedOutput('nested-deep', { a: { b: { c: { d: { e: { f: { g: { h: { i: { j: { k: { l: { m: 'I am deeply nested' } } } } } } } } } } } } })
 
 testGeneratedOutput('nested-with-arguments', { 'a': { APPLES: '{0} apple{{s}}' }, 'b': { APPLES: '{0:number} apple{{s}}' }, 'c': { APPLES: '{nrOfApples:number} apple{{s}}' } })
 
 testGeneratedOutput('nested-formatters', { 'some-key': { 'other-key': 'format {me:string|custom-formatter}' }, 'another-key': '{0|format}' })
+
+// --------------------------------------------------------------------------------------------------------------------
+
+testGeneratedOutput(
+	'banner-tslint',
+	{ HI: 'Hi {0:name}' },
+	{ banner: '/* tslint:disable */' },
+)
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -207,6 +234,18 @@ testGeneratedOutput(
 	{ adapter: 'node', adapterFileName: nodeAdapterFileName, loadLocalesAsync: false },
 )
 
+testGeneratedOutput(
+	'adapter-node-async-jsdoc',
+	{ HELLO_NODE: 'Hi {0:name}' },
+	{ adapter: 'node', adapterFileName: nodeAdapterFileName, outputFormat: 'JavaScript' },
+)
+
+testGeneratedOutput(
+	'adapter-node-sync-jsdoc',
+	{ HELLO_NODE: 'Hi {0:name}' },
+	{ adapter: 'node', adapterFileName: nodeAdapterFileName, loadLocalesAsync: false, outputFormat: 'JavaScript' },
+)
+
 const svelteAdapterFileName = getFileName('svelte')
 
 testGeneratedOutput(
@@ -219,6 +258,18 @@ testGeneratedOutput(
 	'adapter-svelte-sync',
 	{ HELLO_SVELTE: 'Hi {0}' },
 	{ adapter: 'svelte', adapterFileName: svelteAdapterFileName, loadLocalesAsync: false },
+)
+
+testGeneratedOutput(
+	'adapter-svelte-async-jsdoc',
+	{ HELLO_SVELTE: 'Hi {0}' },
+	{ adapter: 'svelte', adapterFileName: svelteAdapterFileName, outputFormat: 'JavaScript' },
+)
+
+testGeneratedOutput(
+	'adapter-svelte-sync-jsdoc',
+	{ HELLO_SVELTE: 'Hi {0}' },
+	{ adapter: 'svelte', adapterFileName: svelteAdapterFileName, loadLocalesAsync: false, outputFormat: 'JavaScript' },
 )
 
 const reactAdapterFileName = getFileName('react')
@@ -236,7 +287,13 @@ testGeneratedOutput(
 )
 
 testGeneratedOutput(
-	'adapter-react-jsdoc-sync',
+	'adapter-react-async-jsdoc',
+	{ HELLO_NODE: 'Hi {0:name}' },
+	{ adapter: 'react', adapterFileName: reactAdapterFileName, outputFormat: 'JavaScript' },
+)
+
+testGeneratedOutput(
+	'adapter-react-sync-jsdoc',
 	{ HELLO_NODE: 'Hi {0:name}' },
 	{ adapter: 'react', adapterFileName: reactAdapterFileName, loadLocalesAsync: false, outputFormat: 'JavaScript' },
 )
@@ -246,8 +303,11 @@ testGeneratedOutput(
 const tsTestTranslation = { TEST: 'Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}' }
 
 testGeneratedOutput('typescript-3.0', tsTestTranslation, {}, parseTypescriptVersion('3.0'))
+testGeneratedOutput('typescript-3.0-jsdoc', tsTestTranslation, { outputFormat: 'JavaScript' }, parseTypescriptVersion('3.0'))
 testGeneratedOutput('typescript-3.8', tsTestTranslation, {}, parseTypescriptVersion('3.8'))
+testGeneratedOutput('typescript-3.8-jsdoc', tsTestTranslation, { outputFormat: 'JavaScript' }, parseTypescriptVersion('3.8'))
 testGeneratedOutput('typescript-4.1', tsTestTranslation, {}, parseTypescriptVersion('4.1'))
+testGeneratedOutput('typescript-4.1-jsdoc', tsTestTranslation, { outputFormat: 'JavaScript' }, parseTypescriptVersion('4.1'))
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -277,14 +337,6 @@ testGeneratedConsoleOutput('console-translation-key-with-dot', { 'i.am.wrongly.n
 	assert.is(outputs.error.length, 1)
 	assert.is(outputs.error[0], "translation 'i.am.wrongly.nested' => key can't contain the '.' character. Please remove it. If you want to nest keys, you should look at https://github.com/ivanhofer/typesafe-i18n#nested-translations")
 })
-
-// --------------------------------------------------------------------------------------------------------------------
-
-testGeneratedOutput(
-	'banner-tslint',
-	{ HI: 'Hi {0:name}' },
-	{ banner: '/* tslint:disable */' },
-)
 
 // --------------------------------------------------------------------------------------------------------------------
 

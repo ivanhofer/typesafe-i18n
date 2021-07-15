@@ -1,12 +1,14 @@
 import { writeFileIfContainsChanges, writeFileIfNotExists } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generate-files'
-import { importTypes, type } from '../output-handler'
+import { prettify } from '../generator-util'
+import { importTypes, tsCheck, type } from '../output-handler'
 
 const getFormattersTemplate = (
 	{ typesFileName: typesFile, loadLocalesAsync }: GeneratorConfigWithDefaultValues,
 ) => {
 	const formattersInitializerType = `${loadLocalesAsync ? 'Async' : ''}FormattersInitializer`
-	return `${importTypes('typesafe-i18n', formattersInitializerType)}
+	return `${tsCheck}
+${importTypes('typesafe-i18n', formattersInitializerType)}
 ${importTypes(`./${typesFile}`, 'Locales', 'Formatters')}
 
 export const initFormatters${type(`${formattersInitializerType}<Locales, Formatters>`)} = ${loadLocalesAsync ? 'async ' : ''
@@ -29,5 +31,5 @@ export const generateFormattersTemplate = async (
 	const configTemplate = getFormattersTemplate(config)
 
 	const write = forceOverride ? writeFileIfContainsChanges : writeFileIfNotExists
-	await write(outputPath, formattersTemplatePath, configTemplate)
+	await write(outputPath, formattersTemplatePath, prettify(configTemplate))
 }

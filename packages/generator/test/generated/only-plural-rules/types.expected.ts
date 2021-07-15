@@ -31,4 +31,3 @@ export type TranslationFunctions = {
 }
 
 export type Formatters = {}
-

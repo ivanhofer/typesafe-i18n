@@ -63,7 +63,6 @@ export type Formatters = {
 	'z': (value: unknown) => unknown
 }
 
-
 type Param<P extends string> = `{${P}}`
 
 type Params2<P1 extends string, P2 extends string> =

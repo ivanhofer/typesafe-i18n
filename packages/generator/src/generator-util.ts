@@ -35,6 +35,11 @@ export const parseTypescriptVersion = (versionMajorMinor: `${number}.${number}`)
 
 export const sanitizeLocale = (locale: Locale): Locale => locale.replace(/-/g, '_')
 
+export const prettify = (content: string): string => content
+	.replace(/^(\n)+/, '') // remove all new-lines on top of the file
+	.replace(/\n\n+/g, '\n\n') // remove multiple new-lines
+	.replace(/(\n)+$/, '\n') // remove all multiple trailing new-lines
+
 // --------------------------------------------------------------------------------------------------------------------
 
 type LogLevel = 'info' | 'warn' | 'error'

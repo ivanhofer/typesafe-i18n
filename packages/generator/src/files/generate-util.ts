@@ -1,8 +1,8 @@
 import type { Locale } from '../../../core/src/core'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generate-files'
-import { sanitizeLocale } from '../generator-util'
-import { importTypes, OVERRIDE_WARNING, type } from '../output-handler'
+import { prettify, sanitizeLocale } from '../generator-util'
+import { generics, importTypes, OVERRIDE_WARNING, tsCheck, type, typeCast } from '../output-handler'
 
 const getLocalesTranslationRowAsync = (locale: Locale): string => {
 	const sanitizedLocale = sanitizeLocale(locale)
@@ -21,9 +21,9 @@ const getAsyncCode = ({ locales }: GeneratorConfigWithDefaultValues) => {
 const localeTranslationLoaders = {${localesTranslationLoaders}
 }
 
-export const getTranslationForLocale = async (locale: Locales) => (await (localeTranslationLoaders[locale] || localeTranslationLoaders[baseLocale])()).default as Translation
+export const getTranslationForLocale = async (locale${type('Locales')}) => (await (localeTranslationLoaders[locale] || localeTranslationLoaders[baseLocale])()).default${typeCast('Translation')}
 
-export const i18nObject = (locale: Locales) => i18nObjectLoaderAsync<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
+export const i18nObject = (locale${type('Locales')}) => i18nObjectLoaderAsync${generics('Locales', 'Translation', 'TranslationFunctions', 'Formatters')}(locale, getTranslationForLocale, initFormatters)
 `
 }
 
@@ -32,7 +32,7 @@ const getLocalesTranslationRowSync = (locale: Locale, baseLocale: string): strin
 	const needsEscaping = locale !== sanitizedLocale
 
 	const postfix =
-		locale === baseLocale ? `: ${sanitizedLocale} as Translation` : needsEscaping ? `: ${sanitizedLocale}` : ''
+		locale === baseLocale ? `: ${sanitizedLocale}${typeCast('Translation')}` : needsEscaping ? `: ${sanitizedLocale}` : ''
 
 	const wrappedLocale = needsEscaping ? `'${locale}'` : locale
 
@@ -56,9 +56,9 @@ const localeTranslations${type('LocaleTranslations<Locales, Translation>')} = {$
 
 export const getTranslationForLocale = (locale${type('Locales')}) => localeTranslations[locale] || localeTranslations[baseLocale]
 
-export const i18nObject = (locale${type('Locales')}) => i18nObjectLoader<Locales, Translation, TranslationFunctions, Formatters>(locale, getTranslationForLocale, initFormatters)
+export const i18nObject = (locale${type('Locales')}) => i18nObjectLoader${generics('Locales', 'Translation', 'TranslationFunctions', 'Formatters')}(locale, getTranslationForLocale, initFormatters)
 
-export const i18n = () => initI18n<Locales, Translation, TranslationFunctions, Formatters>(getTranslationForLocale, initFormatters)
+export const i18n = () => initI18n${generics('Locales', 'Translation', 'TranslationFunctions', 'Formatters')}(getTranslationForLocale, initFormatters)
 `
 }
 
@@ -85,12 +85,13 @@ import { i18nString as initI18nString, i18nObjectLoader, i18n as initI18n } from
 	)}
 ]`
 
-	return `${OVERRIDE_WARNING}
+	return `${OVERRIDE_WARNING}${tsCheck}
 ${banner}
 
 ${dynamicImports}
 ${importTypes(`./${typesFile}`, 'Translation', 'TranslationFunctions', 'Formatters', 'Locales')}
-import { LocaleDetector, detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
+${importTypes('typesafe-i18n/detectors', 'LocaleDetector')}
+import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
 import { initFormatters } from './${formattersTemplatePath}'
 
 export const baseLocale${type('Locales')} = '${baseLocale}'
@@ -98,10 +99,10 @@ export const baseLocale${type('Locales')} = '${baseLocale}'
 ${localesEnum}
 ${dynamicCode}
 export const i18nString = ${loadLocalesAsync ? 'async ' : ''
-		}(locale${type('Locales')}) => initI18nString<Locales, Formatters>(locale, ${loadLocalesAsync ? 'await ' : ''
+		}(locale${type('Locales')}) => initI18nString${generics('Locales', 'Formatters')}(locale, ${loadLocalesAsync ? 'await ' : ''
 		}initFormatters(locale))
 
-export const detectLocale = (...detectors${type('LocaleDetector[]')}) => detectLocaleFn<Locales>(baseLocale, locales, ...detectors)
+export const detectLocale = (...detectors${type('LocaleDetector[]')}) => detectLocaleFn${generics('Locales')}(baseLocale, locales, ...detectors)
 `
 }
 
@@ -109,5 +110,5 @@ export const generateUtil = async (config: GeneratorConfigWithDefaultValues): Pr
 	const { outputPath, utilFileName: utilFile } = config
 
 	const util = getUtil(config)
-	await writeFileIfContainsChanges(outputPath, utilFile, util)
+	await writeFileIfContainsChanges(outputPath, utilFile, prettify(util))
 }

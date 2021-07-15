@@ -29,7 +29,6 @@ export type Formatters = {
 	'calculate': (value: Result) => unknown
 }
 
-
 type Param<P extends string> = `{${P}}`
 
 type Params1<P1 extends string> =

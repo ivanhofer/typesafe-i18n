@@ -4,7 +4,8 @@
 import type { LocaleTranslations } from 'typesafe-i18n'
 import { i18nString as initI18nString, i18nObjectLoader, i18n as initI18n } from 'typesafe-i18n'
 import type { Translation, TranslationFunctions, Formatters, Locales } from './types.actual'
-import { LocaleDetector, detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
+import type { LocaleDetector } from 'typesafe-i18n/detectors'
+import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
 import { initFormatters } from './formatters-template.actual'
 
 export const baseLocale: Locales = 'en'
