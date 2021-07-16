@@ -16,6 +16,8 @@ export const configureOutputHandler = (config: GeneratorConfigWithDefaultValues,
 	fileEndingForTypesFile = shouldGenerateJsDoc ? '.d.ts' : '.ts'
 	tsCheck = shouldGenerateJsDoc ? `
 // @ts-check` : ''
+	jsDocTsIgnore = shouldGenerateJsDoc ? `
+	// @ts-ignore` : ''
 
 	tsVersion = version
 	supportsTemplateLiteralTypes = shouldGenerateJsDoc || (tsVersion.major === 4 && tsVersion.minor >= 1) || tsVersion.major >= 5
@@ -23,11 +25,25 @@ export const configureOutputHandler = (config: GeneratorConfigWithDefaultValues,
 
 	importTypeStatement = `import${supportsImportType ? ' type' : ''}`
 
-	importTypes = (from: string, ...types: string[]): string =>
+	importTypes = (from, ...types) =>
 		shouldGenerateJsDoc ? '' : `${importTypeStatement} { ${types.join(', ')} } from '${from}'`
-	type = (type: string): string => shouldGenerateJsDoc ? '' : `: ${type}`
-	typeCast = (type: string): string => shouldGenerateJsDoc ? '' : ` as ${type}`
-	generics = (...generics: string[]): string => shouldGenerateJsDoc ? '' : `<${generics.join(', ')}>`
+	type = (type) => shouldGenerateJsDoc ? '' : `: ${type}`
+	typeCast = (type) => shouldGenerateJsDoc ? '' : ` as ${type}`
+	generics = (...generics) => shouldGenerateJsDoc ? '' : `<${generics.join(', ')}>`
+
+	jsDocImports = (...imports) => shouldGenerateJsDoc ? `
+/**${imports.map(({ from, type, alias }) => `
+ * @typedef { import('${from}').${type} } ${alias || type}`)}
+ */
+`: ''
+
+	jsDocFunction = (returnType, ...params) => shouldGenerateJsDoc ? `
+/**${params.map(({ type, name }) => `
+ * @param { ${type} } ${name}`)}
+ * @return { ${returnType} }
+ */`: ''
+
+	jsDocType = (type) => shouldGenerateJsDoc ? `/** @type { ${type} } */` : ''
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -39,6 +55,7 @@ export let fileEnding: FileEnding
 export let fileEndingForTypesFile: FileEnding
 export let tsCheck: string
 export let importTypeStatement: string
+export let jsDocTsIgnore: string
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -49,3 +66,10 @@ export let type: (type: string) => string
 export let typeCast: (type: string) => string
 
 export let generics: (...generic: string[]) => string
+
+export let jsDocImports: (...imports: { from: string, type: string, alias?: string }[]) => string
+
+export let jsDocFunction: (returnType: string, ...params: ({ type: string, name: string })[]) => string
+
+export let jsDocType: (type: string) => string
+

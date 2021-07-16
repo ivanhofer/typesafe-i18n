@@ -2,7 +2,7 @@ import { join } from 'path'
 import { writeFileIfContainsChanges, writeFileIfNotExists } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generate-files'
 import { prettify, sanitizeLocale } from '../generator-util'
-import { fileEnding, importTypes, tsCheck, type } from '../output-handler'
+import { fileEnding, importTypes, jsDocImports, jsDocType, tsCheck, type } from '../output-handler'
 
 const getBaseLocaleTemplate = (baseLocale: string) => {
 	const sanitizedLocale = sanitizeLocale(baseLocale)
@@ -10,6 +10,11 @@ const getBaseLocaleTemplate = (baseLocale: string) => {
 	return `${tsCheck}
 ${importTypes('typesafe-i18n', 'BaseTranslation')}
 
+${jsDocImports(
+		{ from: `typesafe-i18n`, type: 'BaseTranslation' },
+	)}
+
+${jsDocType('BaseTranslation')}
 const ${sanitizedLocale}${type('BaseTranslation')} = {
 	// TODO: your translations go here
 }

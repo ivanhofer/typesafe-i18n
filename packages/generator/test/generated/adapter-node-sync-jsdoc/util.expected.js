@@ -2,29 +2,61 @@
 // @ts-check
 /* eslint-disable */
 
+/**
+ * @typedef { import('typesafe-i18n').TranslateByString } TranslateByString,
+ * @typedef { import('typesafe-i18n').LocaleTranslations<Locales, Translation> } LocaleTranslations,
+ * @typedef { import('typesafe-i18n/detectors').LocaleDetector } LocaleDetector,
+ * @typedef { import('./types.actual').Locales } Locales,
+ * @typedef { import('./types.actual').Translation } Translation,
+ * @typedef { import('./types.actual').TranslationFunctions } TranslationFunctions
+ */
+
 import { i18nString as initI18nString, i18nObjectLoader, i18n as initI18n } from 'typesafe-i18n'
 
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
 import { initFormatters } from './formatters-template.actual'
 
+/** @type { Locales } */
 export const baseLocale = 'en'
 
+/** @type { Locales[] } */
 export const locales = [
 	'en'
 ]
 
 import en from './en'
 
+/** @type { LocaleTranslations } */
 const localeTranslations = {
+	// @ts-ignore
 	en: en,
 }
 
+/**
+ * @param { Locales } locale
+ * @return { Translation }
+ */
 export const getTranslationForLocale = (locale) => localeTranslations[locale] || localeTranslations[baseLocale]
 
+/**
+ * @param { Locales } locale
+ * @return { TranslationFunctions }
+ */
 export const i18nObject = (locale) => i18nObjectLoader(locale, getTranslationForLocale, initFormatters)
 
+/**
+ * @return { LocaleTranslationFunctions }
+ */
 export const i18n = () => initI18n(getTranslationForLocale, initFormatters)
 
+/**
+ * @param { Locales } locale
+ * @return { TranslateByString }
+ */
 export const i18nString = (locale) => initI18nString(locale, initFormatters(locale))
 
+/**
+ * @param { LocaleDetector[] } detectors
+ * @return { Locales }
+ */
 export const detectLocale = (...detectors) => detectLocaleFn(baseLocale, locales, ...detectors)
