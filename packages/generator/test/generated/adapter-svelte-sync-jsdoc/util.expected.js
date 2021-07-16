@@ -5,6 +5,7 @@
 /**
  * @typedef { import('typesafe-i18n').TranslateByString } TranslateByString,
  * @typedef { import('typesafe-i18n').LocaleTranslations<Locales, Translation> } LocaleTranslations,
+ * @typedef { import('typesafe-i18n').LocaleTranslationFunctions } LocaleTranslationFunctions,
  * @typedef { import('typesafe-i18n/detectors').LocaleDetector } LocaleDetector,
  * @typedef { import('./types.actual').Locales } Locales,
  * @typedef { import('./types.actual').Translation } Translation,

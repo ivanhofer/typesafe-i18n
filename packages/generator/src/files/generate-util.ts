@@ -100,6 +100,7 @@ ${banner}
 ${jsDocImports(
 		{ from: 'typesafe-i18n', type: 'TranslateByString' },
 		{ from: 'typesafe-i18n', type: 'LocaleTranslations<Locales, Translation>', alias: 'LocaleTranslations' },
+		!loadLocalesAsync ? { from: 'typesafe-i18n', type: 'LocaleTranslationFunctions' } : undefined,
 		{ from: 'typesafe-i18n/detectors', type: 'LocaleDetector' },
 		{ from: `./${typesFileName}`, type: 'Locales' },
 		{ from: `./${typesFileName}`, type: 'Translation' },

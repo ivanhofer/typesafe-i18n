@@ -2,13 +2,26 @@
 // @ts-check
 /* eslint-disable */
 
+/**
+ * @typedef { import('typesafe-i18n/adapters/adapter-svelte').SvelteStoreInit<Locales, Translation, TranslationFunctions> } SvelteStoreInit,
+ * @typedef { import('./types.actual').Locales } Locales,
+ * @typedef { import('./types.actual').Translation } Translation,
+ * @typedef { import('./types.actual').TranslationFunctions } TranslationFunctions,
+ * @typedef { import('./types.actual').Formatters } Formatters
+ */
+
 import { getI18nSvelteStore } from 'typesafe-i18n/adapters/adapter-svelte';
 
 import { getTranslationForLocale } from './util.actual'
 import { initFormatters } from './formatters-template.actual'
 
-const { initI18n: init, setLocale, isLoadingLocale, locale, LL } = getI18nSvelteStore<Locales, Translation, TranslationFunctions, Formatters>()
+/** @type { SvelteStoreInit } */
+const { initI18n: init, setLocale, isLoadingLocale, locale, LL } = getI18nSvelteStore()
 
+/**
+ * @param { Locales } locale
+ * @return { Promise<void> }
+ */
 const initI18n = (locale = 'en') => init(locale, getTranslationForLocale, initFormatters)
 
 export { initI18n, setLocale, isLoadingLocale, locale, LL }

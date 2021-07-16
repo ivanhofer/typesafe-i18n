@@ -5,8 +5,8 @@
 /**
  * @typedef { import('react').FunctionComponent } ReactFunctionComponent,
  * @typedef { import('react').Context<I18nContextType> } ReactContext,
- * @typedef { import('typesafe-i18n/adapters/adapter-react').I18nContextType<Locales, Translation, TranslationFunctions> } I18nContextType,
  * @typedef { import('typesafe-i18n/adapters/adapter-react').TypesafeI18nProps<Locales> } TypesafeI18nProps,
+ * @typedef { import('typesafe-i18n/adapters/adapter-react').I18nContextType<Locales, Translation, TranslationFunctions> } I18nContextType,
  * @typedef { import('./types.actual').Locales } Locales,
  * @typedef { import('./types.actual').Translation } Translation,
  * @typedef { import('./types.actual').TranslationFunctions } TranslationFunctions,

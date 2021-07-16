@@ -10,8 +10,8 @@ ${banner}
 ${jsDocImports(
 		{ from: 'react', type: 'FunctionComponent', alias: 'ReactFunctionComponent' },
 		{ from: 'react', type: 'Context<I18nContextType>', alias: 'ReactContext' },
-		{ from: 'typesafe-i18n/adapters/adapter-react', type: 'I18nContextType<Locales, Translation, TranslationFunctions>', alias: 'I18nContextType' },
 		{ from: 'typesafe-i18n/adapters/adapter-react', type: 'TypesafeI18nProps<Locales>', alias: 'TypesafeI18nProps' },
+		{ from: 'typesafe-i18n/adapters/adapter-react', type: 'I18nContextType<Locales, Translation, TranslationFunctions>', alias: 'I18nContextType' },
 		{ from: `./${typesFileName}`, type: 'Locales' },
 		{ from: `./${typesFileName}`, type: 'Translation' },
 		{ from: `./${typesFileName}`, type: 'TranslationFunctions' },
