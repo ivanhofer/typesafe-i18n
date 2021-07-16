@@ -28,6 +28,14 @@ export type TypesafeI18nProps<L extends string> = {
 	initialLocale?: L
 }
 
+export type ReactInit<
+L extends string = string,
+	T extends BaseTranslation = BaseTranslation,
+	TF extends TranslationFunctions = TranslationFunctions<T>> = {
+	component: React.FunctionComponent<TypesafeI18nProps<L>>
+	context: React.Context<I18nContextType<L, T, TF>>
+}
+
 // --------------------------------------------------------------------------------------------------------------------
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
@@ -41,7 +49,7 @@ export const initI18nReact = <
 	baseLocale: L = '' as L,
 	getTranslationForLocale: TranslationLoader<L, T> | TranslationLoaderAsync<L, T> = () => ({} as T),
 	initFormatters: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F> = () => ({} as F),
-): { component: React.FunctionComponent<TypesafeI18nProps<L>>; context: React.Context<I18nContextType<L, T, TF>> } => {
+): ReactInit<L, T, TF> => {
 	const context = getI18nContext<L, T, TF>()
 
 	const component: React.FunctionComponent<TypesafeI18nProps<L>> = (props) => {

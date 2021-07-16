@@ -23,7 +23,7 @@ import { parseRawText } from '../../../core/src/parser'
 import { writeFileIfContainsChanges } from '../file-utils'
 import type { GeneratorConfigWithDefaultValues } from '../generate-files'
 import { getPermutations, Logger, prettify } from '../generator-util'
-import { fileEndingForTypesFile, importTypes, importTypeStatement, OVERRIDE_WARNING, supportsTemplateLiteralTypes } from '../output-handler'
+import { fileEndingForTypesFile, importTypeStatement, OVERRIDE_WARNING, supportsTemplateLiteralTypes } from '../output-handler'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------

@@ -1,17 +1,14 @@
 import { writeFileIfContainsChanges } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generate-files'
 import { prettify } from '../generator-util'
-import { generics, importTypes, jsDocImports, jsDocType, OVERRIDE_WARNING, tsCheck } from '../output-handler'
+import { fileEnding, generics, importTypes, jsDocImports, jsDocType, OVERRIDE_WARNING, tsCheck } from '../output-handler'
 
 const getReactUtils = ({ utilFileName, typesFileName, formattersTemplateFileName, banner }: GeneratorConfigWithDefaultValues) => {
 	return `${OVERRIDE_WARNING}${tsCheck}
 ${banner}
 
 ${jsDocImports(
-		{ from: 'react', type: 'FunctionComponent', alias: 'ReactFunctionComponent' },
-		{ from: 'react', type: 'Context<I18nContextType>', alias: 'ReactContext' },
-		{ from: 'typesafe-i18n/adapters/adapter-react', type: 'TypesafeI18nProps<Locales>', alias: 'TypesafeI18nProps' },
-		{ from: 'typesafe-i18n/adapters/adapter-react', type: 'I18nContextType<Locales, Translation, TranslationFunctions>', alias: 'I18nContextType' },
+		{ from: 'typesafe-i18n/adapters/adapter-react', type: 'ReactInit<Locales, Translation, TranslationFunctions>', alias: 'ReactInit' },
 		{ from: `./${typesFileName}`, type: 'Locales' },
 		{ from: `./${typesFileName}`, type: 'Translation' },
 		{ from: `./${typesFileName}`, type: 'TranslationFunctions' },
@@ -23,7 +20,7 @@ ${importTypes(`./${typesFileName}`, 'Locales', 'Translation', 'TranslationFuncti
 import { baseLocale, getTranslationForLocale } from './${utilFileName}'
 import { initFormatters } from './${formattersTemplateFileName}'
 
-${jsDocType('{ component: React.FunctionComponent<TypesafeI18nProps>; context: React.Context<I18nContextType>}')}
+${jsDocType('ReactInit')}
 const { component: TypesafeI18n, context: I18nContext } = initI18nReact${generics('Locales', 'Translation', 'TranslationFunctions', 'Formatters')}(baseLocale, getTranslationForLocale, initFormatters)
 
 export { I18nContext }
@@ -39,6 +36,6 @@ export const generateReactAdapter = async (
 
 	const reactUtils = getReactUtils(config)
 
-	const fileName = config.adapterFileName || 'i18n-react.tsx'
-	await writeFileIfContainsChanges(outputPath, fileName, prettify(reactUtils))
+	const fileName = config.adapterFileName || 'i18n-react'
+	await writeFileIfContainsChanges(outputPath, `${fileName}${fileEnding}x`, prettify(reactUtils))
 }
