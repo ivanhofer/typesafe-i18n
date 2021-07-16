@@ -24,7 +24,7 @@ export type I18nContextType<
 	LL: TF
 }
 
-type TypesafeI18nProps<L extends string> = {
+export type TypesafeI18nProps<L extends string> = {
 	initialLocale?: L
 }
 

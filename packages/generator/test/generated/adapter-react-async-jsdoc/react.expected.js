@@ -2,11 +2,23 @@
 // @ts-check
 /* eslint-disable */
 
+/**
+ * @typedef { import('react').FunctionComponent } ReactFunctionComponent,
+ * @typedef { import('react').Context<I18nContextType> } ReactContext,
+ * @typedef { import('typesafe-i18n/adapters/adapter-react').I18nContextType<Locales, Translation, TranslationFunctions> } I18nContextType,
+ * @typedef { import('typesafe-i18n/adapters/adapter-react').TypesafeI18nProps<Locales> } TypesafeI18nProps,
+ * @typedef { import('./types.actual').Locales } Locales,
+ * @typedef { import('./types.actual').Translation } Translation,
+ * @typedef { import('./types.actual').TranslationFunctions } TranslationFunctions,
+ * @typedef { import('./types.actual').Formatters } Formatters
+ */
+
 import { initI18nReact } from 'typesafe-i18n/adapters/adapter-react'
 
 import { baseLocale, getTranslationForLocale } from './util.actual'
 import { initFormatters } from './formatters-template.actual'
 
+/** @type { { component: React.FunctionComponent<TypesafeI18nProps>; context: React.Context<I18nContextType>} } */
 const { component: TypesafeI18n, context: I18nContext } = initI18nReact(baseLocale, getTranslationForLocale, initFormatters)
 
 export { I18nContext }

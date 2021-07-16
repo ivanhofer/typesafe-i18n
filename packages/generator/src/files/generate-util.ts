@@ -71,7 +71,7 @@ export const i18n = () => initI18n${generics('Locales', 'Translation', 'Translat
 
 const getUtil = (config: GeneratorConfigWithDefaultValues): string => {
 	const {
-		typesFileName: typesFile,
+		typesFileName,
 		formattersTemplateFileName: formattersTemplatePath,
 		loadLocalesAsync,
 		baseLocale,
@@ -101,13 +101,13 @@ ${jsDocImports(
 		{ from: 'typesafe-i18n', type: 'TranslateByString' },
 		{ from: 'typesafe-i18n', type: 'LocaleTranslations<Locales, Translation>', alias: 'LocaleTranslations' },
 		{ from: 'typesafe-i18n/detectors', type: 'LocaleDetector' },
-		{ from: `./${typesFile}`, type: 'Locales' },
-		{ from: `./${typesFile}`, type: 'Translation' },
-		{ from: `./${typesFile}`, type: 'TranslationFunctions' },
+		{ from: `./${typesFileName}`, type: 'Locales' },
+		{ from: `./${typesFileName}`, type: 'Translation' },
+		{ from: `./${typesFileName}`, type: 'TranslationFunctions' },
 	)}
 
 ${dynamicImports}
-${importTypes(`./${typesFile}`, 'Translation', 'TranslationFunctions', 'Formatters', 'Locales')}
+${importTypes(`./${typesFileName}`, 'Translation', 'TranslationFunctions', 'Formatters', 'Locales')}
 ${importTypes('typesafe-i18n/detectors', 'LocaleDetector')}
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
 import { initFormatters } from './${formattersTemplatePath}'
