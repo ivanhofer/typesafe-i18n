@@ -5,8 +5,6 @@
  */
 
 /** @type { BaseTranslation } */
-const en = {
+module.exports = {
 	// TODO: your translations go here
 }
-
-export default en
