@@ -276,25 +276,25 @@ const reactAdapterFileName = getFileName('react')
 
 testGeneratedOutput(
 	'adapter-react-async',
-	{ HELLO_NODE: 'Hi {0:name}' },
+	{ HELLO_REACT: 'Hi {0:name}' },
 	{ adapter: 'react', adapterFileName: reactAdapterFileName },
 )
 
 testGeneratedOutput(
 	'adapter-react-sync',
-	{ HELLO_NODE: 'Hi {0:name}' },
+	{ HELLO_REACT: 'Hi {0:name}' },
 	{ adapter: 'react', adapterFileName: reactAdapterFileName, loadLocalesAsync: false },
 )
 
 testGeneratedOutput(
 	'adapter-react-async-jsdoc',
-	{ HELLO_NODE: 'Hi {0:name}' },
+	{ HELLO_REACT: 'Hi {0:name}' },
 	{ adapter: 'react', adapterFileName: reactAdapterFileName, outputFormat: 'JavaScript' },
 )
 
 testGeneratedOutput(
 	'adapter-react-sync-jsdoc',
-	{ HELLO_NODE: 'Hi {0:name}' },
+	{ HELLO_REACT: 'Hi {0:name}' },
 	{ adapter: 'react', adapterFileName: reactAdapterFileName, loadLocalesAsync: false, outputFormat: 'JavaScript' },
 )
 

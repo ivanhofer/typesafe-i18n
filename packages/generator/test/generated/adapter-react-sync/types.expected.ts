@@ -15,14 +15,14 @@ export type Translation = {
 	 * Hi {0}
 	 * @param {name} 0
 	 */
-	'HELLO_NODE': RequiredParams1<'0'>
+	'HELLO_REACT': RequiredParams1<'0'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * Hi {0}
 	 */
-	'HELLO_NODE': (arg0: name) => LocalizedString
+	'HELLO_REACT': (arg0: name) => LocalizedString
 }
 
 export type Formatters = {}
