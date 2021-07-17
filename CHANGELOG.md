@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.35.0 (unreleased)
+
+Feature:
+ - add option to generate type-safe JavaScript code trough JSDoc annotations
+
 ## 2.34.0 (2021-07-15)
 
 Feature:

@@ -1,6 +1,6 @@
 # :earth_africa: typesafe-i18n
 
-**An opinionated, fully type-safe, lightweight localization library for TypeScript projects with no external dependencies.**
+**An opinionated, fully type-safe, lightweight localization library for TypeScript and JavaScript projects with no external dependencies.**
 
 <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/typesafe-i18n-demo.gif" width="100%">
 
@@ -59,7 +59,7 @@ $ npm install --save typesafe-i18n
 
 ## Usage
 
-> The package can be used inside JavaScript and TypeScript applications, but you will get a lot of benefits using it together with TypeScript, since the [generator](#typesafety) will create a few wrappers for easier usage.
+> The package can be used inside JavaScript and TypeScript applications. You will get a lot of benefits by running the [generator](#typesafety) since it will create a few wrappers to provide you with full typesafety.
 
 You can use `typesafe-i18n` in a variety of project-setups:
 
@@ -209,7 +209,7 @@ All you need is inside the [generated](#typesafety) file `i18n-utils.ts`. You ca
 
 ## Typesafety
 
-The `typesafe-i18n` package allows us to be 100% typesafe for our tranlsation functions and even the translations for other locales itself. It generates TypeScript definitions based on your base locale. Here you can see some examples where the generated types can help you:
+The `typesafe-i18n` package allows us to be 100% typesafe for our translation functions and even the translations for other locales itself. It generates TypeScript definitions based on your base locale. Here you can see some examples where the generated types can help you:
 
 #### typesafe auto-completion for all your defined locales
 ![typesafe locales completion](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/01_typesafe-locales-completion.png)
@@ -232,6 +232,8 @@ The `typesafe-i18n` package allows us to be 100% typesafe for our tranlsation fu
 
 
 In order to get get full typesafety for your locales, you can start the generator during development. The generator listens for changes you make to your [base locale file](#folder-structure) and creates the corresponding TypeScript types.
+
+> You will also benefit from full typesafe JavaScript code via [JSDoc-annotations](#jsdoc).
 
 Make sure you have installed `node` version `> 12.x` and are using a `typescript` version `> 3.x.x`.
 
@@ -265,7 +267,7 @@ export default {
 
 You can pass [options](#options) to the generator by creating a `.typesafe-i18n.json` file in the root of your workspace, or by passing it as an argument to the `typesafeI18n` plugin.
 
-The rollup plugin has an advantage over the node-process, since it can also be used to optimize the translations.
+The rollup plugin has an advantage over the node-process, since it can also be used to optimize the translations for your production bundle.
 
 Currently implemented optimizations:
 
@@ -430,6 +432,7 @@ You can set options for the [generator](#typesafety) in order to get optimized o
 | [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`                                                      | `true`                                        |
 | [adapter](#adapter)                                       | `'node'` &#124; `'svelte'` &#124; `'react'` &#124; `undefined` | `undefined`                                   |
 | [outputPath](#outputPath)                                 | `string`                                                       | `'./src/i18n/'`                               |
+| [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                           | `'TypeScript'`                                |
 | [typesFileName](#typesFileName)                           | `string`                                                       | `'i18n-types'`                                |
 | [utilFileName](#utilFileName)                             | `string`                                                       | `'i18n-util'`                                 |
 | [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                                       | `'formatters'`                                |
@@ -440,59 +443,94 @@ You can set options for the [generator](#typesafety) in order to get optimized o
 | [banner](#banner)                                         | `string`                                                       | `'/* eslint-disable */'`                      |
 
 
-### baseLocale
+#### baseLocale
 
 Defines which locale to use for the types generation. You can find more information on how to structure your locales [here](#locales).
 
-### locales
+#### locales
 
 Specifies the locales you want to use. This can be useful if you want to create an own bundle for each locale. If you want to include only certain locales, you need to set the locales you want to use. If empty, all locales will be used.
 
 > Note: requires the usage of the [rollup-plugin](#rollup-plugin)
 
-### loadLocalesAsync
+#### loadLocalesAsync
 
 Whether to generate code that loads the locales asynchronously. If set to `true`, a locale will be loaded, when you first access it. If set to `false` all locales will be loaded when you init the i18n-functions.
 
-### adapter
+#### adapter
 
 If this config is set, code will be generated that wraps i18n functions into useful helpers for that environment e.g. a `svelte`-store.
 
-### outputPath
+#### outputPath
 
 Folder in which the files should be generated and where your locale files are located.
 
-### typesFileName
+#### outputFormat
+
+The programming language you use inside your code. If 'TypeScript' is selected, the generator will output TypeScript code and types. If you choose 'JavaScript' the generator will output typesafe JavaScript code annotated with [JSDoc-comments](#jsdoc).
+
+#### typesFileName
 
 Name for the file where the types for your locales are generated.
 
-### utilFileName
+#### utilFileName
 
 Name for the file where the typesafe i18n-functions are generated.
 
-### formattersTemplateFileName
+#### formattersTemplateFileName
 
 Name for the file where you can configure your formatters.
 
-### typesTemplateFileName
+#### typesTemplateFileName
 
 Name for the file where you can configure your custom-types.
 
-### adapterFileName
+#### adapterFileName
 
 Name for the file when generating output for an adapter. The default filename is `i18n-[adapter]`.
 
-### generateOnlyTypes
+#### generateOnlyTypes
 
 If you don't want to use the auto-generated helpers and instead write your own wrappers, you can set this option to `true`.
 
-### tempPath
+#### tempPath
 
 Folder where the generator can store temporary files. These files are generated when your base locale is analyzed and the types are generated. The folder will be cleared, after the types were generated. So make sure you use an empty folder, if you change this option.
 
-### banner
+#### banner
 
-This text will be output on top of all auto-generated files. It is meant to add a custom dislable-linter comment. Since every project can have different lint rules, we want to disable linting on those files.
+This text will be output on top of all auto-generated files. It is meant to add a custom disable-linter comment. Since every project can have different lint rules, we want to disable linting on those files.
+
+
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+## JSDoc
+
+If you want to use `typesafe-i18n` inside your JavaScript code, you can get also full typesafety by running the [`generator`](#generator) with the `outputFormat` [option](#outputformat) set to `'JavaScript'`. The generator then provides wrappers for the [core functions](#usage) together with [JSDoc](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html)  annotations.
+
+> An IDE like [VS Code](https://code.visualstudio.com/) will show you code-completions and errors when you have opened a file in the editor.
+
+In order to get typesafety for your locales files, you need to annotate it like this:
+
+```javascript
+// @ts-check
+
+/**
+ * @typedef { import('../i18n-types').Translation } Translation
+ */
+
+/** @type { Translation } */
+module.exports = {
+
+   /* your translations go here */
+
+}
+```
+
+
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
