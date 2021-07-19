@@ -69,7 +69,10 @@ You can use `typesafe-i18n` in a variety of project-setups:
  - [Browser](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/browser) projects
  - [other frameworks](#other-frameworks) like VueJS, Angular and others ...
 
-> This library uses some functionality from the [`Intl` namespace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl). If you want to support older browsers that don't include these functions, you would need to add a polyfill like https://formatjs.io/docs/polyfills/intl-pluralrules/
+
+### Browser Support
+
+The library should work in all **modern browsers**. It uses some functionality from the [`Intl` namespace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl). If you want to support older browsers that don't include these functions, you would need to include a polyfill like https://formatjs.io/docs/polyfills/intl-pluralrules/.
 
 
 ### General
@@ -738,7 +741,7 @@ LLL('Invest ${0} and get ${0|roiCalculator} in return', 100)
 You can also use a few builtin formatters:
 
 ### date
-A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
+A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat).
 
 ```typescript
 import { date } from 'typesafe-i18n/formatters'
