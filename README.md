@@ -6,7 +6,7 @@
 
 [![npm version](https://badgen.net/npm/v/typesafe-i18n)](https://badgen.net/npm/v/typesafe-i18n)
 [![types included](https://badgen.net/npm/types/typesafe-i18n)](https://badgen.net/npm/types/typesafe-i18n)
-[![bundlse size](https://badgen.net/bundlephobia/minzip/typesafe-i18n)](https://badgen.net/bundlephobia/minzip/typesafe-i18n)
+[![bundle size](https://badgen.net/bundlephobia/minzip/typesafe-i18n)](https://badgen.net/bundlephobia/minzip/typesafe-i18n)
 [![bump version & publish to npm](https://github.com/ivanhofer/typesafe-i18n/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/ivanhofer/typesafe-i18n/actions/workflows/release.yml)
 
 
@@ -49,7 +49,7 @@
 ## Installation
 
 ```
-$ npm install --save typesafe-i18n
+$ npm install typesafe-i18n
 ```
 
 
@@ -68,6 +68,12 @@ You can use `typesafe-i18n` in a variety of project-setups:
  - [React](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react) applications
  - [Browser](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/browser) projects
  - [other frameworks](#other-frameworks) like VueJS, Angular and others ...
+
+
+### Browser Support
+
+The library should work in all **modern browsers**. It uses some functionality from the [`Intl` namespace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl). If you want to support older browsers that don't include these functions, you would need to include a polyfill like https://formatjs.io/docs/polyfills/intl-pluralrules/.
+
 
 ### General
 
@@ -209,7 +215,7 @@ All you need is inside the [generated](#typesafety) file `i18n-utils.ts`. You ca
 
 ## Typesafety
 
-The `typesafe-i18n` package allows us to be 100% typesafe for our tranlsation functions and even the translations for other locales itself. It generates TypeScript definitions based on your base locale. Here you can see some examples where the generated types can help you:
+The `typesafe-i18n` package allows us to be 100% typesafe for our translation functions and even the translations for other locales itself. It generates TypeScript definitions based on your base locale. Here you can see some examples where the generated types can help you:
 
 #### typesafe auto-completion for all your defined locales
 ![typesafe locales completion](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/01_typesafe-locales-completion.png)
@@ -269,7 +275,7 @@ The rollup plugin has an advantage over the node-process, since it can also be u
 
 Currently implemented optimizations:
 
- - get rid of the arguments type informations inside your base-translation:\
+ - get rid of the arguments type information inside your base-translation:\
    These types inside your base translations e.g. `Hello {name:string}!` are only used from the generator to create types for your translations. The rollup plugin removes these types from the translations in order to reduce bundle size by a few bytes. The example above will be optimized to `Hello {name}!` inside your production bundle.
  - include only certain locales:\
 	If you want to create an own bundle per locale. When running rollup to create your production-bundle, you can specify the `'locales'` [option](#options) to include only certain locales. The rollup plugin will remove all other locales from the production bundle.
@@ -377,7 +383,7 @@ src/
 	Type definitions are generated in this file. You don't have to understand them. They are just here to help TypeScript understand, how you need to call the translation functions.
 
  - `i18n-util.ts`\
-   This file contains wrappers with type-informations around the [base i18n functions](#general).
+   This file contains wrappers with type-information around the [base i18n functions](#general).
 
 
 ### locales
@@ -492,7 +498,7 @@ Folder where the generator can store temporary files. These files are generated 
 
 ### banner
 
-This text will be output on top of all auto-generated files. It is meant to add a custom dislable-linter comment. Since every project can have different lint rules, we want to disable linting on those files.
+This text will be output on top of all auto-generated files. It is meant to add a custom disable-linter comment. Since every project can have different lint rules, we want to disable linting on those files.
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -602,7 +608,7 @@ LLL(BANANAS, 3) // => '3 bananas'
 ### plural (full syntax):
 
 Under the hood, `typesafe-i18n` uses the [Intl.PluralRules](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules) for detecting the plural form.\
-The only small modificatin made is, that the values `0` and `'0'` are always mapped to `'zero'` instead of `'other'`.
+The only small modification made is, that the values `0` and `'0'` are always mapped to `'zero'` instead of `'other'`.
 
  > Syntax: `{{zero|one|two|few|many|other}}`
 
@@ -735,7 +741,7 @@ LLL('Invest ${0} and get ${0|roiCalculator} in return', 100)
 You can also use a few builtin formatters:
 
 ### date
-A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
+A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat).
 
 ```typescript
 import { date } from 'typesafe-i18n/formatters'
@@ -763,7 +769,7 @@ LLL('Next meeting: {0|timeShort}', meetingTime) // => 'Next meeting: 8:00 AM'
 A wrapper for [Intl.NumberFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
 
 ```typescript
-import { number } from 'tyoesafe-i18n/formatters'
+import { number } from 'typesafe-i18n/formatters'
 
 const formatters = {
    currency: number('en', { style: 'currency', currency: 'EUR' })
@@ -824,7 +830,7 @@ const formatters = {
    upper: uppercase
 }
 
-LLL('I sayed: {0|upper}', 'hello') // => 'I sayed: HELLO'
+LLL('I said: {0|upper}', 'hello') // => 'I said: HELLO'
 ```
 
 ### lowercase
@@ -837,7 +843,7 @@ const formatters = {
    lower: lowercase
 }
 
-LLL('He sayed: {0|lower}', 'SOMETHING') // => 'He sayed: something'
+LLL('He said: {0|lower}', 'SOMETHING') // => 'He said: something'
 ```
 
 
@@ -912,7 +918,7 @@ const detectedLocale = detectLocale(fallbackLocale, availableLocales, customDete
 
 ### Server
 
-This detectors are expected to run on a server-environement e.g. an express server or serverless function. These detectors **all expect** an [`express`](http://expressjs.com/)-compatible [`req`](http://expressjs.com/en/api.html#req) object.
+This detectors are expected to run on a server-environment e.g. an express server or serverless function. These detectors **all expect** an [`express`](http://expressjs.com/)-compatible [`req`](http://expressjs.com/en/api.html#req) object.
 
 #### `accept-language` header
 
@@ -983,7 +989,7 @@ The default parameter name is `'lang'`, but you can change it by passing a `stri
 
 ### Browser
 
-This detectors are expected to run in a browser-environement e.g. on the website an user visits.
+This detectors are expected to run in a browser-environment e.g. on the website an user visits.
 
 #### navigator
 
@@ -1118,7 +1124,7 @@ const detectedLocale = detectLocale(fallbackLocale, availableLocales, documentCo
 The footprint of the `typesafe-i18n` package is smaller compared to other existing i18n packages. Most of the magic happens in development mode, where the generator creates TypeScript definitions for your translations. This means, you don't have to ship the whole package to your users. The only two parts, that are needed in production are:
 
 - string-parser: detects variables, formatters and plural-rules in your localized strings
-- translation function: injects arguments, formattes them and finds the correct plural form for the given arguments
+- translation function: injects arguments, formats them and finds the correct plural form for the given arguments
 
 These parts are bundled into the [core functions](#general). The sizes of the core functionalities are:
 
@@ -1143,14 +1149,14 @@ There also exists a useful wrapper for some frameworks:
 The package was optimized for performance:
  - **the amount of network traffic is kept small**\
    The translation functions are [small](#sizes). Only the locales that are currently used are [loaded](#loadLocalesAsync).
- - **no unecessary workload**\
+ - **no unnecessary workload**\
    Parsing your translation file for variables and formatters will only be performed when you access a translation for the first time. The result of that parsing process will be stored in an optimized object and kept in memory.
  - **fast translations**\
 	Passing variables to the [translation function](#usage) will be fast, because its treated like a simple string concatenation. For formatting values, a single function is called per [formatter](#formatters).
 
-If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n solutions. But that does't mean, we should stop there. There are planned some possible optimizations, to improve the bundle size even further:
+If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n solutions. But that doesn't mean, we should stop there. There are planned some possible optimizations, to improve the bundle size even further:
 
- - [x] get rid of the arguments type informations inside your base-translation [#13](https://github.com/ivanhofer/typesafe-i18n/issues/13)
+ - [x] get rid of the arguments type information inside your base-translation [#13](https://github.com/ivanhofer/typesafe-i18n/issues/13)
  - [ ] rewrite keyed to index-based arguments [#15](https://github.com/ivanhofer/typesafe-i18n/issues/15)
  - [ ] inline translations for single-locale bundles[#14](https://github.com/ivanhofer/typesafe-i18n/issues/14)
 
@@ -1259,7 +1265,7 @@ The generated types are really strict. It helps you from making unintentional mi
    export default en
    ```
 
- - create another locale without that paramter by disabling the strict type checking with  `as any`
+ - create another locale without that parameter by disabling the strict type checking with  `as any`
    ```typescript
    // file 'src/i18n/de/index.ts'
    import type { Translation } from '../i18n-types'
@@ -1275,7 +1281,7 @@ The generated types are really strict. It helps you from making unintentional mi
 
 A better approach would be to create a custom formatter e.g.
 
- - create your tranlsation and add a formatter to your variable
+ - create your translation and add a formatter to your variable
    ```typescript
    // file 'src/i18n/en/index.ts'
    import type { BaseTranslation } from 'typesafe-i18n'
@@ -1311,7 +1317,7 @@ A better approach would be to create a custom formatter e.g.
          locale === 'de'
             // return an empty string for locale 'de'
             ? ignore // same as: () => ''
-            // return the unmodified parmeter
+            // return the unmodified parameter
             : identity // same as: (value) => value
 
       const formatters: Formatters = {
@@ -1324,7 +1330,7 @@ A better approach would be to create a custom formatter e.g.
 
 ### Why does the translation function return a type of `LocalizedString` and not the tpe `string` itself?
 
-With the help of `LocalizedString` you could enforce texts in your applcation to be translated. Lets take an Error message as example:
+With the help of `LocalizedString` you could enforce texts in your application to be translated. Lets take an Error message as example:
 
 ```typescript
 const showErrorMessage(message: string) => alert(message)

@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.35.0 (unreleased)
+
+Readme:
+ - add polyfill info
+
 ## 2.34.0 (2021-07-15)
 
 Feature:
