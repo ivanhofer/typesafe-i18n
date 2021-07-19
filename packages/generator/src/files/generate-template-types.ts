@@ -1,8 +1,10 @@
 import { writeFileIfContainsChanges, writeFileIfNotExists } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generate-files'
+import { prettify } from '../generator-util'
+import { fileEndingForTypesFile } from '../output-handler'
 
 const getCustomTypesTemplate = ({ typesFileName: typesFile }: GeneratorConfigWithDefaultValues) => {
-	return `// use this file to export your custom types; these types will be imported by './${typesFile}.ts'`
+	return `// use this file to export your custom types; these types will be imported by './${typesFile}${fileEndingForTypesFile}'`
 }
 
 export const generateCustomTypesTemplate = async (
@@ -14,5 +16,5 @@ export const generateCustomTypesTemplate = async (
 	const customTypesTemplate = getCustomTypesTemplate(config)
 
 	const write = forceOverride ? writeFileIfContainsChanges : writeFileIfNotExists
-	await write(outputPath, typesTemplatePath, customTypesTemplate)
+	await write(outputPath, `${typesTemplatePath}${fileEndingForTypesFile}`, prettify(customTypesTemplate))
 }

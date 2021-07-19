@@ -9,7 +9,8 @@ import { generateFormattersTemplate } from './files/generate-template-formatters
 import { generateCustomTypesTemplate } from './files/generate-template-types'
 import { generateTypes } from './files/generate-types'
 import { generateUtil } from './files/generate-util'
-import { logger as defaultLogger, Logger, supportsImportType, TypescriptVersion } from './generator-util'
+import { logger as defaultLogger, Logger, TypescriptVersion } from './generator-util'
+import { configureOutputHandler } from './output-handler'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -17,12 +18,15 @@ import { logger as defaultLogger, Logger, supportsImportType, TypescriptVersion 
 
 type Adapters = 'node' | 'svelte' | 'react'
 
+export type OutputFormats = 'TypeScript' | 'JavaScript'
+
 export type GeneratorConfig = {
 	baseLocale?: string
 	locales?: string[]
 
 	tempPath?: string
 	outputPath?: string
+	outputFormat?: OutputFormats
 	typesFileName?: string
 	utilFileName?: string
 	formattersTemplateFileName?: string
@@ -41,6 +45,7 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 	locales: string[]
 	tempPath: string
 	outputPath: string
+	outputFormat: OutputFormats
 	typesFileName: string
 	utilFileName: string
 	formattersTemplateFileName: string
@@ -69,6 +74,7 @@ export const getConfigWithDefaultValues = async (
 	locales: [],
 	tempPath: './node_modules/typesafe-i18n/temp-output/',
 	outputPath: './src/i18n/',
+	outputFormat: 'TypeScript',
 	typesFileName: 'i18n-types',
 	utilFileName: 'i18n-util',
 	formattersTemplateFileName: 'formatters',
@@ -86,20 +92,20 @@ export const generate = async (
 	logger: Logger = defaultLogger,
 	forceOverride = false,
 ): Promise<void> => {
-	const importType = `import${supportsImportType(version) ? ' type' : ''}`
+	configureOutputHandler(config, version)
 
-	await generateBaseLocaleTemplate(config, importType, forceOverride)
+	await generateBaseLocaleTemplate(config, forceOverride)
 
-	const hasCustomTypes = await generateTypes({ ...config, translations }, importType, version, logger)
+	const hasCustomTypes = await generateTypes({ ...config, translations }, logger)
 
 	if (!config.generateOnlyTypes) {
-		await generateFormattersTemplate(config, importType, forceOverride)
+		await generateFormattersTemplate(config, forceOverride)
 
 		if (hasCustomTypes) {
 			await generateCustomTypesTemplate(config, forceOverride)
 		}
 
-		await generateUtil(config, importType)
+		await generateUtil(config)
 	}
 
 	switch (config.adapter) {
@@ -107,10 +113,10 @@ export const generate = async (
 			await generateNodeAdapter(config)
 			break
 		case 'svelte':
-			await generateSvelteAdapter(config, importType)
+			await generateSvelteAdapter(config)
 			break
 		case 'react':
-			await generateReactAdapter(config, importType)
+			await generateReactAdapter(config)
 			break
 	}
 }

@@ -12,10 +12,11 @@ import {
 } from './file-utils'
 import { generate, GeneratorConfig, GeneratorConfigWithDefaultValues, getConfigWithDefaultValues, readConfig } from './generate-files'
 import { logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
+import { configureOutputHandler, fileEnding, shouldGenerateJsDoc } from './output-handler'
 
 const getAllLanguages = async (path: string) => {
 	const files = await getFiles(path, 1)
-	return files.filter(({ folder, name }) => folder && name === 'index.ts').map(({ folder }) => folder)
+	return files.filter(({ folder, name }) => folder && name === `index${fileEnding}`).map(({ folder }) => folder)
 }
 
 const transpileTypescriptAndPrepareImportFile = async (languageFilePath: string, tempPath: string): Promise<string> => {
@@ -41,23 +42,26 @@ const parseLanguageFile = async (
 	locale: string,
 	tempPath: string,
 ): Promise<BaseTranslation | null> => {
-	const originalPath = resolve(outputPath, locale, 'index.ts')
+	const originalPath = resolve(outputPath, locale, `index${fileEnding}`)
 
 	if (!(await doesPathExist(originalPath))) {
 		logger.info(`could not load base locale file '${locale}'`)
 		return null
 	}
 
-	await createPathIfNotExits(tempPath)
+	!shouldGenerateJsDoc && await createPathIfNotExits(tempPath)
 
-	const importPath = await transpileTypescriptAndPrepareImportFile(originalPath, tempPath)
+	const importPath = shouldGenerateJsDoc
+		? originalPath
+		: await transpileTypescriptAndPrepareImportFile(originalPath, tempPath)
+
 	if (!importPath) {
 		return null
 	}
 
 	const languageImport = await importFile<BaseTranslation>(importPath)
 
-	await deleteFolderRecursive(tempPath)
+	!shouldGenerateJsDoc && await deleteFolderRecursive(tempPath)
 
 	if (!languageImport) {
 		logger.error(`could not read default export from language file '${locale}'`)
@@ -80,7 +84,8 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 
 	const locales = await getAllLanguages(outputPath)
 
-	const languageFile = (locale && (await parseLanguageFile(outputPath, locale, tempPath))) || {}
+	const languageFile =
+		(locale && (await parseLanguageFile(outputPath, locale, tempPath))) || {}
 
 	await generate(languageFile, { ...config, baseLocale: locale, locales }, version, logger)
 
@@ -89,7 +94,7 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 
 let debounceCounter = 0
 
-const debonce = (callback: () => void) =>
+const debounce = (callback: () => void) =>
 	setTimeout(
 		(i) => {
 			i === debounceCounter && callback()
@@ -103,14 +108,18 @@ export const startGenerator = async (config?: GeneratorConfig, watchFiles = true
 	const { outputPath } = configWithDefaultValues
 
 	const version = parseTypescriptVersion(ts.versionMajorMinor)
+	configureOutputHandler(configWithDefaultValues, version)
 
 	const onChange = parseAndGenerate.bind(null, configWithDefaultValues, version)
 
 	await createPathIfNotExits(outputPath)
 
-	watchFiles && watch(outputPath).on('all', () => debonce(onChange))
+	watchFiles && watch(outputPath).on('all', () => debounce(onChange))
 
-	logger.info(`generating files for typescript version: '${ts.versionMajorMinor}.x'`)
+	logger.info(`generating files for ${shouldGenerateJsDoc
+		? 'JavaScript with JSDoc notation'
+		: `TypeScript version: '${ts.versionMajorMinor}.x'`}`
+	)
 	logger.info(`options:`, await readConfig(config))
 	watchFiles && logger.info(`watcher started in: '${outputPath}'`)
 

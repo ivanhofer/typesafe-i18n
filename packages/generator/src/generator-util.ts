@@ -1,16 +1,16 @@
-import type { Arguments, Locale } from '../../core/src/core'
 import kleur from 'kleur'
+import type { Arguments, Locale } from '../../core/src/core'
 
-export const getPermutations = <T>(rest: T[], permutatedArray: T[] = []): T[][] => {
+export const getPermutations = <T>(rest: T[], permutedArray: T[] = []): T[][] => {
 	if (rest.length === 0) {
-		return [permutatedArray]
+		return [permutedArray]
 	}
 
 	return rest
 		.map((_, i) => {
 			const curr = rest.slice()
 			const next = curr.splice(i, 1)
-			return getPermutations(curr.slice(), permutatedArray.concat(next))
+			return getPermutations(curr.slice(), permutedArray.concat(next))
 		})
 		.flat()
 }
@@ -31,15 +31,14 @@ export const parseTypescriptVersion = (versionMajorMinor: `${number}.${number}`)
 	}
 }
 
-export const supportsTemplateLiteralTypes = ({ major, minor }: TypescriptVersion): boolean =>
-	(major === 4 && minor >= 1) || major >= 5
-
-export const supportsImportType = ({ major, minor }: TypescriptVersion): boolean =>
-	(major === 3 && minor >= 8) || major >= 4
-
 // --------------------------------------------------------------------------------------------------------------------
 
 export const sanitizeLocale = (locale: Locale): Locale => locale.replace(/-/g, '_')
+
+export const prettify = (content: string): string => content
+	.replace(/^(\n)+/, '') // remove all new-lines on top of the file
+	.replace(/\n\n+/g, '\n\n') // remove multiple new-lines
+	.replace(/(\n)+$/, '\n') // remove all multiple trailing new-lines
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -56,13 +55,13 @@ const colorMap = {
 	'error': 'red',
 } as const
 
-const colorize = (loglevel: LogLevel, ...messages: string[]) =>
-	(loglevel === 'info')
+const colorize = (logLevel: LogLevel, ...messages: string[]) =>
+	(logLevel === 'info')
 		? messages
-		: [kleur[colorMap[loglevel]]().bold(messages.join(' '))]
+		: [kleur[colorMap[logLevel]]().bold(messages.join(' '))]
 
-const log = (console: Console, loglevel: LogLevel, ...messages: Arguments) =>
-	console[loglevel](...colorize(loglevel, '[typesafe-i18n]', ...messages))
+const log = (console: Console, logLevel: LogLevel, ...messages: Arguments) =>
+	console[logLevel](...colorize(logLevel, '[typesafe-i18n]', ...messages))
 
 export const createLogger = (console: Console): Logger => ({
 	info: log.bind(null, console, 'info'),

@@ -12,7 +12,7 @@ import { i18nObject } from '../../core/src/util.object'
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-type SvelteStoreInit<
+export type SvelteStoreInit<
 	L extends string = string,
 	T extends BaseTranslation = BaseTranslation,
 	TF extends TranslationFunctions = TranslationFunctions<T>,
