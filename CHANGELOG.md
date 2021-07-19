@@ -5,6 +5,9 @@
 Feature:
  - add option to generate type-safe JavaScript code trough JSDoc annotations
 
+Readme:
+ - add polyfill info
+
 ## 2.34.0 (2021-07-15)
 
 Feature:
