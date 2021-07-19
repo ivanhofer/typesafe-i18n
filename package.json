@@ -23,7 +23,6 @@
 	"license": "MIT",
 	"module": "esm/index.js",
 	"main": "cjs/index.js",
-	"browser": "dist/i18n.min.js",
 	"types": "types/index.d.ts",
 	"exports": {
 		"./adapters/*": {

@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.35.1 (2021-07-19)
+
+Bugfix:
+ - remove `browser` property from `package.json` to support older Angular versions
+
 ## 2.35.0 (2021-07-19)
 
 Feature:
