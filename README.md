@@ -1195,8 +1195,9 @@ The package was optimized for performance:
 If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n solutions. But that doesn't mean, we should stop there. There are planned some possible optimizations, to improve the bundle size even further:
 
  - [x] get rid of the arguments type information inside your base-translation [#13](https://github.com/ivanhofer/typesafe-i18n/issues/13)
+ - [x] inline translations for single-locale bundles [#14](https://github.com/ivanhofer/typesafe-i18n/issues/14)
+ - [ ] transform bundle so no runtime parsing is needed [#68](https://github.com/ivanhofer/typesafe-i18n/issues/68)
  - [ ] rewrite keyed to index-based arguments [#15](https://github.com/ivanhofer/typesafe-i18n/issues/15)
- - [ ] inline translations for single-locale bundles[#14](https://github.com/ivanhofer/typesafe-i18n/issues/14)
 
 
 
