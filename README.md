@@ -1259,6 +1259,80 @@ The [generator](#typesafety) will only look for changes in your base locale file
 The [generator](#typesafety) creates some helpful wrappers for you. If you want to write your own wrappers, you can disable the generation of these files by setting the [`generateOnlyTypes`](#generateonlytypes) option to `true`.
 
 
+### How do I render a component inside a Translation?
+
+By default `typesafe-i18n` at this time does not provide such a functionality. But you could easily write a function like this:
+
+```jsx
+import { LocalizedString } from 'typesafe-i18n'
+
+// create a component that handles the translated message
+
+interface WrapTranslationPropsType {
+   message: LocalizedString,
+   renderComponent: (messagePart: LocalizedString) => JSX.Element
+}
+
+export function WrapTranslation({ message, renderComponent }: WrapTranslationPropsType) {
+   // define a split character, in this case '<>'
+   let [prefix, infix, postfix] = message.split('<>') as LocalizedString[]
+
+   // render infix only if the message doesn't have any split characters
+   if (!infix && !postfix) {
+      infix = prefix
+      prefix = '' as LocalizedString
+   }
+
+   return <>
+      {prefix}
+      {renderComponent(infix)}
+      {prefix}
+   </>
+}
+
+// your translations would look something like this
+
+const en = {
+   'WELCOME': 'Hi {name:string}, click <>here<> to create your first project'
+   'LOGOUT': 'Logout'
+}
+
+export default en
+
+
+// create a wrapper for a component for easier usage
+
+interface WrappedButtonPropsType {
+   message: LocalizedString,
+   onClick: () => void,
+}
+
+export function WrappedButton({ message, onClick }: WrappedButtonPropsType) {
+   return <WrapTranslation
+      onClick={onClick}
+      message={message}
+      renderComponent={(infix) => <button>{infix}</button>} />
+}
+
+// use it inside your application
+
+export function App() {
+   return <>
+      <header>
+         <WrappedButton message={LL.LOGOUT()} onClick={() => alert('do logout')}>
+      </header>
+      <main>
+         <WrappedButton message={LL.WELCOME({ name: 'John' })} onClick={() => alert('clicked')}>
+      </main>
+   <>
+}
+
+```
+> This is an example written for a react application, but this concept can be used with any kind of framework.
+
+Basically you will need to write a function that splits the translated message and renders a component between the parts. You can define your split characters yourself but you would always need to make sure you add them in any translation since `typesafe-i18n` doesn't provide any typesafety for these characters (yet).
+
+
 ### I have two similar locales (only a few translations are different) but I don't want to duplicate my translations
 
 Your locale translation files can be any kind of JavaScript object. So you can make object-transformations inside your translation file. The only restriction is: in the end it has to contain a default export with type `Translation`. You could do something like this:
