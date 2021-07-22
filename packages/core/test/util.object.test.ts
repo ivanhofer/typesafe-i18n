@@ -15,6 +15,7 @@ const translation = {
 	PLURAL: 'apple{{s}}',
 	SINGULAR_PLURAL: '{0} {{Apfel|Äpfel}}',
 	MULTIPLE_PARAMS: '{0} {1}',
+	PARAMS_WITH_SPACES: '{ test param 1 } {test param2}',
 	MULTIPLE_PARAMS_PLURAL: '{0} banana{{s}} and {1} apple{{s}}',
 	EMPTY: '',
 	SAME_PARAM: '{0} {0} {0}',
@@ -61,6 +62,7 @@ test('singular-plural 1', () => assert.is(LL.SINGULAR_PLURAL(1), '1 Apfel'))
 test('singular-plural 2', () => assert.is(LL.SINGULAR_PLURAL(2), '2 Äpfel'))
 
 test('multiple params', () => assert.is(LL.MULTIPLE_PARAMS(1, 2), '1 2'))
+test('params with spaces', () => assert.is(LL.PARAMS_WITH_SPACES({ 'test param 1': '1', 'test param2': '2' }), '1 2'))
 
 test('multiple params plural', () => assert.is(LL.MULTIPLE_PARAMS_PLURAL(1, 2), '1 banana and 2 apples'))
 

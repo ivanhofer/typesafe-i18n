@@ -6,15 +6,18 @@ const test = suite('util.string')
 
 const LLL = i18nString('en')
 
-test('string hi', () => assert.is(LLL('Welcome'), 'Welcome'))
+test('basic', () => assert.is(LLL('Welcome'), 'Welcome'))
 
-test('string with param', () => assert.is(LLL('Hi {0}', 'John'), 'Hi John'))
+test('param', () => assert.is(LLL('Hi {0}', 'John'), 'Hi John'))
 
-test('string with keyed param', () => assert.is(LLL('Hi {name}', { name: 'John' }), 'Hi John'))
+test('keyed param', () => assert.is(LLL('Hi {name}', { name: 'John' }), 'Hi John'))
+test('keyed camelCase', () => assert.is(LLL('Hi {firstName}', { firstName: 'John' }), 'Hi John'))
+test('keyed param trimmed', () => assert.is(LLL('Hi { name }', { name: 'John' }), 'Hi John'))
+test('keyed param with spaces', () => assert.is(LLL('Hi { first name }', { 'first name': 'John' }), 'Hi John'))
 
-test('string plural 0', () => assert.is(LLL('{0} apple{{s}}', 0), '0 apples'))
-test('string plural 1', () => assert.is(LLL('{0} apple{{s}}', 1), '1 apple'))
-test('string plural 5', () => assert.is(LLL('{0} apple{{s}}', 5), '5 apples'))
+test('plural 0', () => assert.is(LLL('{0} apple{{s}}', 0), '0 apples'))
+test('plural 1', () => assert.is(LLL('{0} apple{{s}}', 1), '1 apple'))
+test('plural 5', () => assert.is(LLL('{0} apple{{s}}', 5), '5 apples'))
 
 test('trim plural 1', () => assert.is(LLL('{{ singular | plural }}', 1), 'singular'))
 test('trim plural 2', () => assert.is(LLL('{{ singular | plural }}', 2), 'plural'))
