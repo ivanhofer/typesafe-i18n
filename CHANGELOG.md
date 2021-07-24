@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.36.0 (2021-07-27)
+
+Fix:
+ - fix all 'esm' and 'cjs' imports to include file ending
+
 ## 2.35.3 (2021-07-26)
 
 Fix:
