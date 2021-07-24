@@ -47,12 +47,18 @@
 			"require": "./svelte/svelte-store.js"
 		},
 		"./webpack/*": "./webpack/*.js",
+		"./esm/*": {
+			"import": "./esm/*.mjs"
+		},
+		"./cjs/*": {
+			"require": "./cjs/*.js"
+		},
 		"./*": {
-			"import": "./esm/*",
-			"require": "./cjs/*"
+			"import": "./esm/*.mjs",
+			"require": "./cjs/*.js"
 		},
 		".": {
-			"import": "./esm/index.js",
+			"import": "./esm/index.mjs",
 			"require": "./cjs/index.js"
 		}
 	},
@@ -81,7 +87,7 @@
 		"build:browser": "rollup -c packages/browser/rollup.config.js",
 		"build:cjs": "tsc -p packages/core/tsconfig-cjs.json",
 		"build:detectors": "rollup -c packages/locale-detector/rollup.config.js && tsc -p packages/locale-detector/tsconfig.json --emitDeclarationOnly && node --loader ts-node/esm ./packages/locale-detector/generateTreeShakableIndexFile.ts",
-		"build:esm": "tsc -p packages/core/tsconfig-esm.json",
+		"build:esm": "tsc -p packages/core/tsconfig-esm.json && ts-node ./packages/core/rename-esm.ts",
 		"build:formatters": "rollup -c packages/formatters/rollup.config.js && tsc -p packages/formatters/tsconfig.json --emitDeclarationOnly && node --loader ts-node/esm ./packages/formatters/generateTreeShakableIndexFile.ts",
 		"build:node": "rollup -c packages/node-process/rollup.config.js",
 		"build:react": "rollup -c packages/adapter-react/rollup.config.js && tsc -p packages/adapter-react/tsconfig.json --emitDeclarationOnly",

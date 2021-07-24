@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.35.2 (2021-07-26)
+
+Fix:
+ - export files from 'esm' folder as `.mjs` files
+
 ## 2.35.1 (2021-07-19)
 
 Bugfix:
