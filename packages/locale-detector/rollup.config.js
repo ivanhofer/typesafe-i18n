@@ -23,7 +23,7 @@ const config = files.flatMap((file) =>
 		input: getPath(`./src/${file}`),
 		output: [
 			{
-				file: getPath(`../../detectors/${file.replace('.ts', `.${format === 'esm' ? 'm' : ''}js`)}`),
+				file: getPath(`../../detectors/${file.replace('.ts', `.${format === 'esm' ? 'm' : 'c'}js`)}`),
 				format,
 			},
 		],

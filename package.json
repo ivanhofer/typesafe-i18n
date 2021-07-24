@@ -21,45 +21,45 @@
 		"lightweight"
 	],
 	"license": "MIT",
-	"module": "esm/index.js",
-	"main": "cjs/index.js",
+	"module": "esm/index.mjs",
+	"main": "cjs/index.cjs",
 	"types": "types/index.d.ts",
 	"exports": {
 		"./adapters/*": {
 			"import": "./adapters/*.mjs",
-			"require": "./adapters/*.js"
+			"require": "./adapters/*.cjs"
 		},
 		"./detectors": {
 			"import": "./detectors/index.mjs",
-			"require": "./detectors/index.js"
+			"require": "./detectors/index.cjs"
 		},
 		"./formatters": {
 			"import": "./formatters/index.mjs",
-			"require": "./formatters/index.js"
+			"require": "./formatters/index.cjs"
 		},
 		"./react/react-context": {
 			"import": "./react/react-context.mjs",
-			"require": "./react/react-context.js"
+			"require": "./react/react-context.cjs"
 		},
 		"./rollup/*": "./rollup/*.js",
 		"./svelte/svelte-store": {
 			"import": "./svelte/svelte-store.mjs",
-			"require": "./svelte/svelte-store.js"
+			"require": "./svelte/svelte-store.cjs"
 		},
 		"./webpack/*": "./webpack/*.js",
 		"./esm/*": {
 			"import": "./esm/*.mjs"
 		},
 		"./cjs/*": {
-			"require": "./cjs/*.js"
+			"require": "./cjs/*.cjs"
 		},
 		"./*": {
 			"import": "./esm/*.mjs",
-			"require": "./cjs/*.js"
+			"require": "./cjs/*.cjs"
 		},
 		".": {
 			"import": "./esm/index.mjs",
-			"require": "./cjs/index.js"
+			"require": "./cjs/index.cjs"
 		}
 	},
 	"files": [
@@ -85,7 +85,7 @@
 		"build": "concurrently -n w: npm:build:* && npm run link-typedefinitions",
 		"build:adapters": "rollup -c packages/adapters/rollup.config.js && tsc -p packages/adapters/tsconfig.json --emitDeclarationOnly",
 		"build:browser": "rollup -c packages/browser/rollup.config.js",
-		"build:cjs": "tsc -p packages/core/tsconfig-cjs.json",
+		"build:cjs": "tsc -p packages/core/tsconfig-cjs.json && ts-node ./packages/core/rename-cjs.ts",
 		"build:detectors": "rollup -c packages/locale-detector/rollup.config.js && tsc -p packages/locale-detector/tsconfig.json --emitDeclarationOnly && node --loader ts-node/esm ./packages/locale-detector/generateTreeShakableIndexFile.ts",
 		"build:esm": "tsc -p packages/core/tsconfig-esm.json && ts-node ./packages/core/rename-esm.ts",
 		"build:formatters": "rollup -c packages/formatters/rollup.config.js && tsc -p packages/formatters/tsconfig.json --emitDeclarationOnly && node --loader ts-node/esm ./packages/formatters/generateTreeShakableIndexFile.ts",
