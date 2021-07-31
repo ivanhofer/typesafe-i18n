@@ -72,7 +72,7 @@ You can use `typesafe-i18n` in a variety of project-setups:
 
 ### Browser Support
 
-The library should work in all **modern browsers**. It uses some functionality from the [`Intl` namespace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl). If you want to support older browsers that don't include these functions, you would need to include a polyfill like https://formatjs.io/docs/polyfills/intl-pluralrules/.
+The library should work in all **modern browsers**. It uses some functionality from the [`Intl` namespace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl). You can see the list of supported browsers [here](https://caniuse.com/intl-pluralrules). If you want to support older browsers that don't include these functions, you would need to include a polyfill like https://formatjs.io/docs/polyfills/intl-pluralrules/.
 
 
 ### General
@@ -791,8 +791,12 @@ const formatters = {
 LLL('Today is {0|weekday}', new Date()) // => 'Today is friday'
 ```
 
+> See [here](#with-nodejs-the-intl-package-does-not-work-with-locales-other-than-en) if you want to use this formatter in a Node.JS environment.
+
 ### time
-A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
+
+Same as the [`date`-formatter](#date)
+
 ```typescript
 import { time } from 'typesafe-i18n/formatters'
 
@@ -815,6 +819,8 @@ const formatters = {
 
 LLL('your balance is {0|currency}', 12345) // => 'your balance is €12,345.00'
 ```
+
+> See [here](#with-nodejs-the-intl-package-does-not-work-with-locales-other-than-en) if you want to use this formatter in a Node.JS environment.
 
 ### replace
 A wrapper for [String.prototype.replace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
@@ -1367,6 +1373,7 @@ Your locale translation files can be any kind of JavaScript object. So you can m
    export default en_US
    ```
 
+
 ### For certain locales I don't want to output a variable, but due to the strict typing I have to specify it in my translation
 
 The generated types are really strict. It helps you from making unintentional mistakes. If you want to opt-out for certain translations, you can use the `any` keyword.
@@ -1446,6 +1453,7 @@ A better approach would be to create a custom formatter e.g.
    }
    ```
 
+
 ### Why does the translation function return a type of `LocalizedString` and not the tpe `string` itself?
 
 With the help of `LocalizedString` you could enforce texts in your application to be translated. Lets take an Error message as example:
@@ -1491,3 +1499,22 @@ const createUser = (name: string, password: string) => {
 ```
 
 With the type `LocalizedString` you can restrict your functions to only translated strings.
+
+
+### With Node.JS the `Intl` package does not work with locales other than 'en'
+
+Node.JS, by default, does not come with the full [`intl`](https://nodejs.org/api/intl.html) support. To reduce the size of the node installment it will only include 'en' as locale. You would need to add it yourself. The easiest way is to install the `intl` package
+
+```bash
+> npm i intl
+```
+
+and then add following lines on top of your `src/i18n/formatters.ts` file:
+
+```typescript
+const intl = require('intl')
+intl.__disableRegExpRestore()
+globalThis.Intl.DateTimeFormat = intl.DateTimeFormat
+```
+
+Then you should be able to use formatters from the `Intl` namespace with all locales.
