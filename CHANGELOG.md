@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.36.1 (2021-08-21)
+
+Fix:
+ - mark `chokidar` as dev dependency [#73](https://github.com/ivanhofer/typesafe-i18n/issues/73)
+
 ## 2.36.0 (2021-07-27)
 
 Fix:
