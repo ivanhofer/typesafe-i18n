@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.37.2 (2021-08-25)
+
+Fix:
+ - import path of types for `time` formatter
+
 ## 2.37.1 (2021-08-25)
 
 Fix:
