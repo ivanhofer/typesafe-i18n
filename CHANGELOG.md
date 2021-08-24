@@ -1,5 +1,53 @@
 # CHANGELOG.md
 
+## 2.37.1 (2021-08-25)
+
+Fix:
+ - generate unique argument types for `Formatters` type [#75](https://github.com/ivanhofer/typesafe-i18n/issues/75)
+
+## 2.37.0 (2021-08-24)
+
+Feature:
+ - allow to import files to the base locale file from outside of the base locale folder location
+
+## 2.36.1 (2021-08-21)
+
+Fix:
+ - mark `chokidar` as dev dependency [#73](https://github.com/ivanhofer/typesafe-i18n/issues/73)
+
+## 2.36.0 (2021-07-27)
+
+Fix:
+ - fix all 'esm' and 'cjs' imports to include file ending
+
+## 2.35.3 (2021-07-26)
+
+Fix:
+ - export files from 'cjs' folder as `.cjs` files
+
+## 2.35.2 (2021-07-26)
+
+Fix:
+ - export files from 'esm' folder as `.mjs` files
+
+## 2.35.1 (2021-07-19)
+
+Bugfix:
+ - remove `browser` property from `package.json` to support older Angular versions
+
+## 2.35.0 (2021-07-19)
+
+Feature:
+ - add option to generate type-safe JavaScript code trough JSDoc annotations
+
+Readme:
+ - add polyfill info
+
+## 2.34.0 (2021-07-15)
+
+Feature:
+ - add support for Angular's Proxy implementation
+
 ## 2.33.0 (2021-07-09)
 
 Feature:

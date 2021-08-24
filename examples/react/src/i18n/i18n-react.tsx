@@ -6,12 +6,7 @@ import type { Locales, Translation, TranslationFunctions, Formatters } from './i
 import { baseLocale, getTranslationForLocale } from './i18n-util'
 import { initFormatters } from './formatters'
 
-const { component: TypesafeI18n, context: I18nContext } = initI18nReact<
-	Locales,
-	Translation,
-	TranslationFunctions,
-	Formatters
->(baseLocale, getTranslationForLocale, initFormatters)
+const { component: TypesafeI18n, context: I18nContext } = initI18nReact<Locales, Translation, TranslationFunctions, Formatters>(baseLocale, getTranslationForLocale, initFormatters)
 
 export { I18nContext }
 

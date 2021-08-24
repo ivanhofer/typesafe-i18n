@@ -40,7 +40,7 @@ export function i18nObject(locale: any, translations: any, formatters: any = {})
 	return createProxy(getTranslateInstance(locale, translations, formatters))
 }
 
-const createProxy = <T extends BaseTranslation>(fn: TranslateByKey<T>, prefixKey?: string): TranslationFunctions<T> =>
-	new Proxy((prefixKey ? fn.bind(null, prefixKey) : {}) as TranslationFunctions<T>, {
-		get: (_target, key: string) => createProxy(fn, prefixKey ? `${prefixKey}.${key}` : key),
+const createProxy = <T extends BaseTranslation>(fn: TranslateByKey<T>, prefixKey?: string, proxyObject = {}): TranslationFunctions<T> =>
+	new Proxy((prefixKey ? fn.bind(null, prefixKey) : proxyObject) as TranslationFunctions<T>, {
+		get: (target, key: string) => !(target === proxyObject && key === 'then') && createProxy(fn, prefixKey ? `${prefixKey}.${key}` : key),
 	})

@@ -2,7 +2,7 @@
 import fs from 'fs'
 import glob from 'tiny-glob/sync.js'
 
-glob('**/*.actual.ts', { cwd: __dirname }).forEach((file) => {
+glob('**/*.actual.*', { cwd: __dirname }).forEach((file) => {
 	const actual = fs.readFileSync(`${__dirname}/${file}`, 'utf-8')
-	fs.writeFileSync(`${__dirname}/${file.replace('.actual.ts', '.expected.ts')}`, actual)
+	fs.writeFileSync(`${__dirname}/${file.replace('.actual.', '.expected.')}`, actual)
 })

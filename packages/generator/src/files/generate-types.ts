@@ -14,7 +14,8 @@ import {
 	sortNumberASC,
 	sortStringASC,
 	sortStringPropertyASC,
-	TypeGuard
+	TypeGuard,
+	uniqueArray
 } from 'typesafe-utils'
 import { BaseTranslation, isPluralPart } from '../../../core/src/core'
 import { partAsStringWithoutTypes, partsAsStringWithoutTypes, removeEmptyValues } from '../../../core/src/core-utils'
@@ -22,7 +23,8 @@ import type { ArgumentPart } from '../../../core/src/parser'
 import { parseRawText } from '../../../core/src/parser'
 import { writeFileIfContainsChanges } from '../file-utils'
 import type { GeneratorConfigWithDefaultValues } from '../generate-files'
-import { getPermutations, Logger, supportsTemplateLiteralTypes, TypescriptVersion } from '../generator-util'
+import { getPermutations, Logger, prettify } from '../generator-util'
+import { fileEndingForTypesFile, importTypeStatement, OVERRIDE_WARNING, supportsTemplateLiteralTypes } from '../output-handler'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -117,13 +119,13 @@ const parseTranslations = (translations: BaseTranslation, logger: Logger, parent
 	isObject(translations)
 		? Object.entries(translations).map(([key, text]) => {
 			if (isString(text)) {
-				return parseTanslationEntry([key, text], logger, parentKeys) as ParsedResultEntry
+				return parseTranslationEntry([key, text], logger, parentKeys) as ParsedResultEntry
 			}
 			return { [key]: parseTranslations(text, logger, [...parentKeys, key]) } as ParsedResult
 		})
 		: []
 
-const parseTanslationEntry = ([key, text]: [string, string], logger: Logger, parentKeys: string[]): ParsedResult | null => {
+const parseTranslationEntry = ([key, text]: [string, string], logger: Logger, parentKeys: string[]): ParsedResult | null => {
 	const parsedParts = parseRawText(text, false)
 	const textWithoutTypes = partsAsStringWithoutTypes(parsedParts)
 
@@ -136,7 +138,7 @@ const parseTanslationEntry = ([key, text]: [string, string], logger: Logger, par
 
 	argumentParts.forEach(({ k, i, f }) => {
 		args.push({ key: k, formatters: f })
-		types[k] = Array.from(new Set([...(types[k] || []), i])).filter(isNotUndefined)
+		types[k] = uniqueArray([...(types[k] || []), i]).filter(isNotUndefined)
 	})
 
 	pluralParts.forEach(({ k }) => {
@@ -144,7 +146,7 @@ const parseTanslationEntry = ([key, text]: [string, string], logger: Logger, par
 			// if key has no types => add types that are valid for a PluralPart
 			types[k] = ['string', 'number', 'boolean']
 			if (!args.find(({ key }) => key === k)) {
-				// if only pluralpart exists => add it as argument
+				// if only pluralPart exists => add it as argument
 				args.push({ key: k, formatters: [], pluralOnly: true })
 			}
 		}
@@ -221,7 +223,6 @@ const extractTypes = (parsedTranslations: ParsedResult[]): string[] =>
 const createTypeImports = (
 	parsedTranslations: ParsedResult[],
 	typesTemplatePath: string,
-	importType: string,
 ): string => {
 	const types = extractTypes(parsedTranslations).filter(filterDuplicates)
 
@@ -232,7 +233,7 @@ const createTypeImports = (
 	return !externalTypes.length
 		? ''
 		: `
-${importType} { ${externalTypes.join(COMMA_SEPARATION)} } from './${typesTemplatePath.replace('.ts', '')}'
+${importTypeStatement} { ${externalTypes.join(COMMA_SEPARATION)} } from './${typesTemplatePath.replace('.ts', '')}'
 `
 }
 
@@ -282,11 +283,10 @@ const createTranslationType = (
 	parsedTranslations: ParsedResult[],
 	jsDocInfo: JsDocInfos,
 	paramTypesToGenerate: number[],
-	generateTemplateLiteralTypes: boolean,
 ): string =>
 	`export type Translation = ${wrapObjectType(parsedTranslations, () =>
 		mapToString(parsedTranslations, (parsedResultEntry) =>
-			createTranslationTypeEntry(parsedResultEntry, jsDocInfo, paramTypesToGenerate, generateTemplateLiteralTypes),
+			createTranslationTypeEntry(parsedResultEntry, jsDocInfo, paramTypesToGenerate),
 		),
 	)}`
 
@@ -294,21 +294,20 @@ const createTranslationTypeEntry = (
 	resultEntry: ParsedResult,
 	jsDocInfo: JsDocInfos,
 	paramTypesToGenerate: number[],
-	generateTemplateLiteralTypes: boolean,
 ): string => {
 	if (isParsedResultEntry(resultEntry)) {
 		const { key, args, parentKeys } = resultEntry
 
 		const nestedKey = getNestedKey(key, parentKeys)
 		const jsDocString = createJsDocsString((jsDocInfo[nestedKey] as JsDocInfo), true, false)
-		const translationType = generateTranslationType(paramTypesToGenerate, args, generateTemplateLiteralTypes)
+		const translationType = generateTranslationType(paramTypesToGenerate, args)
 
 		return `
 	${jsDocString}'${key}': ${translationType}`
 	}
 
 	return processNestedParsedResult(resultEntry, (parsedResultEntry) =>
-		createTranslationTypeEntry(parsedResultEntry, jsDocInfo, paramTypesToGenerate, generateTemplateLiteralTypes))
+		createTranslationTypeEntry(parsedResultEntry, jsDocInfo, paramTypesToGenerate))
 }
 
 const REGEX_BRACKETS = /[{}]/g
@@ -316,7 +315,6 @@ const REGEX_BRACKETS = /[{}]/g
 const generateTranslationType = (
 	paramTypesToGenerate: number[],
 	args: Arg[],
-	generateTemplateLiteralTypes: boolean,
 ) => {
 	const argStrings = args
 		.filter(isPropertyFalsy('pluralOnly'))
@@ -325,7 +323,7 @@ const generateTranslationType = (
 	const nrOfArgs = argStrings.length
 	paramTypesToGenerate.push(nrOfArgs)
 
-	return generateTemplateLiteralTypes && nrOfArgs
+	return supportsTemplateLiteralTypes && nrOfArgs
 		? `RequiredParams${nrOfArgs}<${argStrings.map((arg) => `'${arg}'`).join(COMMA_SEPARATION)}>`
 		: 'string'
 }
@@ -407,7 +405,6 @@ const createTranslationArgsType = (parsedResult: ParsedResult, jsDocInfo: JsDocI
 const mapTranslationArgs = (args: Arg[], types: Types) => {
 	if (!args.length) return ''
 
-
 	const uniqueArgs = args.filter(filterDuplicatesByKey('key'))
 	const arg = uniqueArgs[0]?.key as string
 
@@ -444,7 +441,7 @@ const createFormattersType = (parsedTranslations: ParsedResult[]) => {
 		mapToString(formatters,
 			([key, types]) =>
 				`
-	'${key}': (value: ${types?.join(' | ')}) => unknown`,
+	'${key}': (value: ${uniqueArray(types).join(' | ')}) => unknown`,
 		),
 	)}`
 }
@@ -453,39 +450,34 @@ const createFormattersType = (parsedTranslations: ParsedResult[]) => {
 
 const getTypes = (
 	{ translations, baseLocale, locales, typesTemplateFileName, banner }: GenerateTypesType,
-	importType: string,
-	version: TypescriptVersion,
 	logger: Logger,
 ) => {
 	const parsedTranslations = parseTranslations(translations, logger).filter(isTruthy)
 
-	const typeImports = createTypeImports(parsedTranslations, typesTemplateFileName, importType)
+	const typeImports = createTypeImports(parsedTranslations, typesTemplateFileName)
 
 	const localesType = createLocalesType(locales, baseLocale)
 
 	const jsDocsInfo = createJsDocsMapping(parsedTranslations)
-
-	const generateTemplateLiteralTypes = supportsTemplateLiteralTypes(version)
 
 	const paramTypesToGenerate: number[] = []
 	const translationType = createTranslationType(
 		parsedTranslations,
 		jsDocsInfo,
 		paramTypesToGenerate,
-		generateTemplateLiteralTypes,
 	)
 
-	const paramsType = generateTemplateLiteralTypes ? createParamsType(paramTypesToGenerate) : ''
+	const paramsType = supportsTemplateLiteralTypes ? createParamsType(paramTypesToGenerate) : ''
 
 	const imports = parsedTranslations.length ? `
-import type { LocalizedString } from 'typesafe-i18n'
+${importTypeStatement} { LocalizedString } from 'typesafe-i18n'
 ` : ''
 
 	const translationArgsType = createTranslationsArgsType(parsedTranslations, jsDocsInfo)
 
 	const formattersType = createFormattersType(parsedTranslations)
 
-	const type = `// This types were auto-generated. Any manual changes will be overwritten.
+	const type = `${OVERRIDE_WARNING}
 ${banner}
 ${imports}${typeImports}
 export type BaseLocale = '${baseLocale}'
@@ -511,15 +503,13 @@ type GenerateTypesType = GeneratorConfigWithDefaultValues & {
 
 export const generateTypes = async (
 	config: GenerateTypesType,
-	importType: string,
-	version: TypescriptVersion,
 	logger: Logger,
 ): Promise<boolean> => {
 	const { outputPath, typesFileName } = config
 
-	const [types, hasCustomTypes] = getTypes(config, importType, version, logger)
+	const [types, hasCustomTypes] = getTypes(config, logger)
 
-	await writeFileIfContainsChanges(outputPath, typesFileName, types)
+	await writeFileIfContainsChanges(outputPath, `${typesFileName}${fileEndingForTypesFile}`, prettify(types))
 
 	return hasCustomTypes
 }

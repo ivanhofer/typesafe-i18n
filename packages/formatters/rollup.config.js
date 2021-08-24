@@ -18,7 +18,7 @@ const config = files
 			input: getPath(`./src/${file}`),
 			output: [
 				{
-					file: getPath(`../../formatters/${file.replace('.ts', `.${format === 'esm' ? 'm' : ''}js`)}`),
+					file: getPath(`../../formatters/${file.replace('.ts', `.${format === 'esm' ? 'm' : 'c'}js`)}`),
 					format,
 					exports: 'auto',
 				},

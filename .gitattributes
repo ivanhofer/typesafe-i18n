@@ -1,3 +1,4 @@
 examples/* linguist-detectable=false
+packages/generator/test/generated/* linguist-detectable=false
 .size-limit.js linguist-detectable=false
 rollup.config.js linguist-detectable=false

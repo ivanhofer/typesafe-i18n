@@ -11,7 +11,7 @@ const createConfig = (format, file) => ({
 	input: getPath(`src/adapter-${file}.ts`),
 	output: [
 		{
-			file: getPath(`../../adapters/adapter-${file}.${format === 'esm' ? 'm' : ''}js`),
+			file: getPath(`../../adapters/adapter-${file}.${format === 'esm' ? 'm' : 'c'}js`),
 			format,
 			sourcemap: true,
 		},

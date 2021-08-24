@@ -8,23 +8,23 @@
 		"validate": "svelte-check"
 	},
 	"devDependencies": {
-		"@rollup/plugin-commonjs": "^19.0.0",
-		"@rollup/plugin-node-resolve": "^13.0.0",
-		"@rollup/plugin-typescript": "^8.2.1",
-		"@tsconfig/svelte": "^1.0.13",
-		"rollup": "^2.52.3",
+		"@rollup/plugin-commonjs": "^19.0.2",
+		"@rollup/plugin-node-resolve": "^13.0.4",
+		"@rollup/plugin-typescript": "^8.2.3",
+		"@tsconfig/svelte": "^2.0.1",
+		"rollup": "^2.54.0",
 		"rollup-plugin-css-only": "^3.1.0",
-		"rollup-plugin-livereload": "^2.0.0",
+		"rollup-plugin-livereload": "^2.0.5",
 		"rollup-plugin-svelte": "^7.1.0",
 		"rollup-plugin-terser": "^7.0.2",
 		"sirv-cli": "^1.0.12",
-		"svelte": "^3.38.3",
-		"svelte-check": "^2.2.0",
-		"svelte-preprocess": "^4.7.3",
+		"svelte": "^3.40.3",
+		"svelte-check": "^2.2.3",
+		"svelte-preprocess": "^4.7.4",
 		"tslib": "^2.3.0",
-		"typescript": "^4.3.4"
+		"typescript": "^4.3.5"
 	},
 	"dependencies": {
-		"typesafe-i18n": "^2.31.0"
+		"typesafe-i18n": "^2.36.0"
 	}
 }

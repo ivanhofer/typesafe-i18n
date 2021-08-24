@@ -1,12 +1,12 @@
 # :earth_africa: typesafe-i18n
 
-**An opinionated, fully type-safe, lightweight localization library for TypeScript projects with no external dependencies.**
+**An opinionated, fully type-safe, lightweight localization library for TypeScript and JavaScript projects with no external dependencies.**
 
 <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/typesafe-i18n-demo.gif" width="100%">
 
 [![npm version](https://badgen.net/npm/v/typesafe-i18n)](https://badgen.net/npm/v/typesafe-i18n)
 [![types included](https://badgen.net/npm/types/typesafe-i18n)](https://badgen.net/npm/types/typesafe-i18n)
-[![bundlse size](https://badgen.net/bundlephobia/minzip/typesafe-i18n)](https://badgen.net/bundlephobia/minzip/typesafe-i18n)
+[![bundle size](https://badgen.net/bundlephobia/minzip/typesafe-i18n)](https://badgen.net/bundlephobia/minzip/typesafe-i18n)
 [![bump version & publish to npm](https://github.com/ivanhofer/typesafe-i18n/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/ivanhofer/typesafe-i18n/actions/workflows/release.yml)
 
 
@@ -49,7 +49,7 @@
 ## Installation
 
 ```
-$ npm install --save typesafe-i18n
+$ npm install typesafe-i18n
 ```
 
 
@@ -59,7 +59,7 @@ $ npm install --save typesafe-i18n
 
 ## Usage
 
-> The package can be used inside JavaScript and TypeScript applications, but you will get a lot of benefits using it together with TypeScript, since the [generator](#typesafety) will create a few wrappers for easier usage.
+> The package can be used inside JavaScript and TypeScript applications. You will get a lot of benefits by running the [generator](#typesafety) since it will create a few wrappers to provide you with full typesafety.
 
 You can use `typesafe-i18n` in a variety of project-setups:
 
@@ -68,6 +68,12 @@ You can use `typesafe-i18n` in a variety of project-setups:
  - [React](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react) applications
  - [Browser](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/browser) projects
  - [other frameworks](#other-frameworks) like VueJS, Angular and others ...
+
+
+### Browser Support
+
+The library should work in all **modern browsers**. It uses some functionality from the [`Intl` namespace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl). You can see the list of supported browsers [here](https://caniuse.com/intl-pluralrules). If you want to support older browsers that don't include these functions, you would need to include a polyfill like https://formatjs.io/docs/polyfills/intl-pluralrules/.
+
 
 ### General
 
@@ -209,7 +215,7 @@ All you need is inside the [generated](#typesafety) file `i18n-utils.ts`. You ca
 
 ## Typesafety
 
-The `typesafe-i18n` package allows us to be 100% typesafe for our tranlsation functions and even the translations for other locales itself. It generates TypeScript definitions based on your base locale. Here you can see some examples where the generated types can help you:
+The `typesafe-i18n` package allows us to be 100% typesafe for our translation functions and even the translations for other locales itself. It generates TypeScript definitions based on your base locale. Here you can see some examples where the generated types can help you:
 
 #### typesafe auto-completion for all your defined locales
 ![typesafe locales completion](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/01_typesafe-locales-completion.png)
@@ -232,6 +238,8 @@ The `typesafe-i18n` package allows us to be 100% typesafe for our tranlsation fu
 
 
 In order to get get full typesafety for your locales, you can start the generator during development. The generator listens for changes you make to your [base locale file](#folder-structure) and creates the corresponding TypeScript types.
+
+> You will also benefit from full typesafe JavaScript code via [JSDoc-annotations](#jsdoc).
 
 Make sure you have installed `node` version `> 12.x` and are using a `typescript` version `> 3.x.x`.
 
@@ -265,11 +273,11 @@ export default {
 
 You can pass [options](#options) to the generator by creating a `.typesafe-i18n.json` file in the root of your workspace, or by passing it as an argument to the `typesafeI18n` plugin.
 
-The rollup plugin has an advantage over the node-process, since it can also be used to optimize the translations.
+The rollup plugin has an advantage over the node-process, since it can also be used to optimize the translations for your production bundle.
 
 Currently implemented optimizations:
 
- - get rid of the arguments type informations inside your base-translation:\
+ - get rid of the arguments type information inside your base-translation:\
    These types inside your base translations e.g. `Hello {name:string}!` are only used from the generator to create types for your translations. The rollup plugin removes these types from the translations in order to reduce bundle size by a few bytes. The example above will be optimized to `Hello {name}!` inside your production bundle.
  - include only certain locales:\
 	If you want to create an own bundle per locale. When running rollup to create your production-bundle, you can specify the `'locales'` [option](#options) to include only certain locales. The rollup plugin will remove all other locales from the production bundle.
@@ -323,7 +331,7 @@ Passing [options](#options) to the generator is possible by creating a `.typesaf
 
 ```json
 {
-   "$schema": "https://unpkg.com/typesafe-i18n@2.31.0/schema/typesafe-i18n.json",
+   "$schema": "https://unpkg.com/typesafe-i18n@2.36.0/schema/typesafe-i18n.json",
 
    "baseLocale": "de",
    "adapter": "svelte"
@@ -377,7 +385,7 @@ src/
 	Type definitions are generated in this file. You don't have to understand them. They are just here to help TypeScript understand, how you need to call the translation functions.
 
  - `i18n-util.ts`\
-   This file contains wrappers with type-informations around the [base i18n functions](#general).
+   This file contains wrappers with type-information around the [base i18n functions](#general).
 
 
 ### locales
@@ -430,6 +438,7 @@ You can set options for the [generator](#typesafety) in order to get optimized o
 | [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`                                                      | `true`                                        |
 | [adapter](#adapter)                                       | `'node'` &#124; `'svelte'` &#124; `'react'` &#124; `undefined` | `undefined`                                   |
 | [outputPath](#outputPath)                                 | `string`                                                       | `'./src/i18n/'`                               |
+| [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                           | `'TypeScript'`                                |
 | [typesFileName](#typesFileName)                           | `string`                                                       | `'i18n-types'`                                |
 | [utilFileName](#utilFileName)                             | `string`                                                       | `'i18n-util'`                                 |
 | [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                                       | `'formatters'`                                |
@@ -440,59 +449,94 @@ You can set options for the [generator](#typesafety) in order to get optimized o
 | [banner](#banner)                                         | `string`                                                       | `'/* eslint-disable */'`                      |
 
 
-### baseLocale
+#### baseLocale
 
 Defines which locale to use for the types generation. You can find more information on how to structure your locales [here](#locales).
 
-### locales
+#### locales
 
 Specifies the locales you want to use. This can be useful if you want to create an own bundle for each locale. If you want to include only certain locales, you need to set the locales you want to use. If empty, all locales will be used.
 
 > Note: requires the usage of the [rollup-plugin](#rollup-plugin)
 
-### loadLocalesAsync
+#### loadLocalesAsync
 
 Whether to generate code that loads the locales asynchronously. If set to `true`, a locale will be loaded, when you first access it. If set to `false` all locales will be loaded when you init the i18n-functions.
 
-### adapter
+#### adapter
 
 If this config is set, code will be generated that wraps i18n functions into useful helpers for that environment e.g. a `svelte`-store.
 
-### outputPath
+#### outputPath
 
 Folder in which the files should be generated and where your locale files are located.
 
-### typesFileName
+#### outputFormat
+
+The programming language you use inside your code. If 'TypeScript' is selected, the generator will output TypeScript code and types. If you choose 'JavaScript' the generator will output typesafe JavaScript code annotated with [JSDoc-comments](#jsdoc).
+
+#### typesFileName
 
 Name for the file where the types for your locales are generated.
 
-### utilFileName
+#### utilFileName
 
 Name for the file where the typesafe i18n-functions are generated.
 
-### formattersTemplateFileName
+#### formattersTemplateFileName
 
 Name for the file where you can configure your formatters.
 
-### typesTemplateFileName
+#### typesTemplateFileName
 
 Name for the file where you can configure your custom-types.
 
-### adapterFileName
+#### adapterFileName
 
 Name for the file when generating output for an adapter. The default filename is `i18n-[adapter]`.
 
-### generateOnlyTypes
+#### generateOnlyTypes
 
 If you don't want to use the auto-generated helpers and instead write your own wrappers, you can set this option to `true`.
 
-### tempPath
+#### tempPath
 
 Folder where the generator can store temporary files. These files are generated when your base locale is analyzed and the types are generated. The folder will be cleared, after the types were generated. So make sure you use an empty folder, if you change this option.
 
-### banner
+#### banner
 
-This text will be output on top of all auto-generated files. It is meant to add a custom dislable-linter comment. Since every project can have different lint rules, we want to disable linting on those files.
+This text will be output on top of all auto-generated files. It is meant to add a custom disable-linter comment. Since every project can have different lint rules, we want to disable linting on those files.
+
+
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+## JSDoc
+
+If you want to use `typesafe-i18n` inside your JavaScript code, you can get also full typesafety by running the [`generator`](#generator) with the `outputFormat` [option](#outputformat) set to `'JavaScript'`. The generator then provides wrappers for the [core functions](#usage) together with [JSDoc](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html)  annotations.
+
+> An IDE like [VS Code](https://code.visualstudio.com/) will show you code-completions and errors when you have opened a file in the editor.
+
+In order to get typesafety for your locales files, you need to annotate it like this:
+
+```javascript
+// @ts-check
+
+/**
+ * @typedef { import('../i18n-types').Translation } Translation
+ */
+
+/** @type { Translation } */
+module.exports = {
+
+   /* your translations go here */
+
+}
+```
+
+
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -602,7 +646,7 @@ LLL(BANANAS, 3) // => '3 bananas'
 ### plural (full syntax):
 
 Under the hood, `typesafe-i18n` uses the [Intl.PluralRules](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules) for detecting the plural form.\
-The only small modificatin made is, that the values `0` and `'0'` are always mapped to `'zero'` instead of `'other'`.
+The only small modification made is, that the values `0` and `'0'` are always mapped to `'zero'` instead of `'other'`.
 
  > Syntax: `{{zero|one|two|few|many|other}}`
 
@@ -735,7 +779,7 @@ LLL('Invest ${0} and get ${0|roiCalculator} in return', 100)
 You can also use a few builtin formatters:
 
 ### date
-A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
+A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat).
 
 ```typescript
 import { date } from 'typesafe-i18n/formatters'
@@ -747,8 +791,12 @@ const formatters = {
 LLL('Today is {0|weekday}', new Date()) // => 'Today is friday'
 ```
 
+> See [here](#with-nodejs-the-intl-package-does-not-work-with-locales-other-than-en) if you want to use this formatter in a Node.JS environment.
+
 ### time
-A wrapper for [Intl.DateTimeFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
+
+Same as the [`date`-formatter](#date)
+
 ```typescript
 import { time } from 'typesafe-i18n/formatters'
 
@@ -763,7 +811,7 @@ LLL('Next meeting: {0|timeShort}', meetingTime) // => 'Next meeting: 8:00 AM'
 A wrapper for [Intl.NumberFormat](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
 
 ```typescript
-import { number } from 'tyoesafe-i18n/formatters'
+import { number } from 'typesafe-i18n/formatters'
 
 const formatters = {
    currency: number('en', { style: 'currency', currency: 'EUR' })
@@ -771,6 +819,8 @@ const formatters = {
 
 LLL('your balance is {0|currency}', 12345) // => 'your balance is €12,345.00'
 ```
+
+> See [here](#with-nodejs-the-intl-package-does-not-work-with-locales-other-than-en) if you want to use this formatter in a Node.JS environment.
 
 ### replace
 A wrapper for [String.prototype.replace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
@@ -824,7 +874,7 @@ const formatters = {
    upper: uppercase
 }
 
-LLL('I sayed: {0|upper}', 'hello') // => 'I sayed: HELLO'
+LLL('I said: {0|upper}', 'hello') // => 'I said: HELLO'
 ```
 
 ### lowercase
@@ -837,7 +887,7 @@ const formatters = {
    lower: lowercase
 }
 
-LLL('He sayed: {0|lower}', 'SOMETHING') // => 'He sayed: something'
+LLL('He said: {0|lower}', 'SOMETHING') // => 'He said: something'
 ```
 
 
@@ -912,7 +962,7 @@ const detectedLocale = detectLocale(fallbackLocale, availableLocales, customDete
 
 ### Server
 
-This detectors are expected to run on a server-environement e.g. an express server or serverless function. These detectors **all expect** an [`express`](http://expressjs.com/)-compatible [`req`](http://expressjs.com/en/api.html#req) object.
+This detectors are expected to run on a server-environment e.g. an express server or serverless function. These detectors **all expect** an [`express`](http://expressjs.com/)-compatible [`req`](http://expressjs.com/en/api.html#req) object.
 
 #### `accept-language` header
 
@@ -983,7 +1033,7 @@ The default parameter name is `'lang'`, but you can change it by passing a `stri
 
 ### Browser
 
-This detectors are expected to run in a browser-environement e.g. on the website an user visits.
+This detectors are expected to run in a browser-environment e.g. on the website an user visits.
 
 #### navigator
 
@@ -1118,7 +1168,7 @@ const detectedLocale = detectLocale(fallbackLocale, availableLocales, documentCo
 The footprint of the `typesafe-i18n` package is smaller compared to other existing i18n packages. Most of the magic happens in development mode, where the generator creates TypeScript definitions for your translations. This means, you don't have to ship the whole package to your users. The only two parts, that are needed in production are:
 
 - string-parser: detects variables, formatters and plural-rules in your localized strings
-- translation function: injects arguments, formattes them and finds the correct plural form for the given arguments
+- translation function: injects arguments, formats them and finds the correct plural form for the given arguments
 
 These parts are bundled into the [core functions](#general). The sizes of the core functionalities are:
 
@@ -1143,16 +1193,17 @@ There also exists a useful wrapper for some frameworks:
 The package was optimized for performance:
  - **the amount of network traffic is kept small**\
    The translation functions are [small](#sizes). Only the locales that are currently used are [loaded](#loadLocalesAsync).
- - **no unecessary workload**\
+ - **no unnecessary workload**\
    Parsing your translation file for variables and formatters will only be performed when you access a translation for the first time. The result of that parsing process will be stored in an optimized object and kept in memory.
  - **fast translations**\
 	Passing variables to the [translation function](#usage) will be fast, because its treated like a simple string concatenation. For formatting values, a single function is called per [formatter](#formatters).
 
-If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n solutions. But that does't mean, we should stop there. There are planned some possible optimizations, to improve the bundle size even further:
+If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n solutions. But that doesn't mean, we should stop there. There are planned some possible optimizations, to improve the bundle size even further:
 
- - [x] get rid of the arguments type informations inside your base-translation [#13](https://github.com/ivanhofer/typesafe-i18n/issues/13)
+ - [x] get rid of the arguments type information inside your base-translation [#13](https://github.com/ivanhofer/typesafe-i18n/issues/13)
+ - [x] inline translations for single-locale bundles [#14](https://github.com/ivanhofer/typesafe-i18n/issues/14)
+ - [ ] transform bundle so no runtime parsing is needed [#68](https://github.com/ivanhofer/typesafe-i18n/issues/68)
  - [ ] rewrite keyed to index-based arguments [#15](https://github.com/ivanhofer/typesafe-i18n/issues/15)
- - [ ] inline translations for single-locale bundles[#14](https://github.com/ivanhofer/typesafe-i18n/issues/14)
 
 
 
@@ -1165,6 +1216,11 @@ If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n 
 ### I added a new translation to my locale file, but TypeScript gives me the Error `Property 'XYZ' does not exist on type 'TranslationFunctions'`
 
 Make sure to run the [generator](#typesafety) after you make changes to your base translation file. The generator will [generate and update the types](#folder-structure) for you.
+
+
+### I don't use TypeScript, can I also use `typesafe-i18n` inside JavaScript applications?
+
+Yes, you can. See the [usage](#general) section for instructions. Even if you don't use TypeScript you can still improve from some typesafety features via [JSDoc-annotations](#jsdoc).
 
 
 ### I added a new translation to my locale file, but the generator will not create new types
@@ -1209,6 +1265,80 @@ The [generator](#typesafety) will only look for changes in your base locale file
 The [generator](#typesafety) creates some helpful wrappers for you. If you want to write your own wrappers, you can disable the generation of these files by setting the [`generateOnlyTypes`](#generateonlytypes) option to `true`.
 
 
+### How do I render a component inside a Translation?
+
+By default `typesafe-i18n` at this time does not provide such a functionality. But you could easily write a function like this:
+
+```jsx
+import { LocalizedString } from 'typesafe-i18n'
+
+// create a component that handles the translated message
+
+interface WrapTranslationPropsType {
+   message: LocalizedString,
+   renderComponent: (messagePart: LocalizedString) => JSX.Element
+}
+
+export function WrapTranslation({ message, renderComponent }: WrapTranslationPropsType) {
+   // define a split character, in this case '<>'
+   let [prefix, infix, postfix] = message.split('<>') as LocalizedString[]
+
+   // render infix only if the message doesn't have any split characters
+   if (!infix && !postfix) {
+      infix = prefix
+      prefix = '' as LocalizedString
+   }
+
+   return <>
+      {prefix}
+      {renderComponent(infix)}
+      {prefix}
+   </>
+}
+
+// your translations would look something like this
+
+const en = {
+   'WELCOME': 'Hi {name:string}, click <>here<> to create your first project'
+   'LOGOUT': 'Logout'
+}
+
+export default en
+
+
+// create a wrapper for a component for easier usage
+
+interface WrappedButtonPropsType {
+   message: LocalizedString,
+   onClick: () => void,
+}
+
+export function WrappedButton({ message, onClick }: WrappedButtonPropsType) {
+   return <WrapTranslation
+      onClick={onClick}
+      message={message}
+      renderComponent={(infix) => <button>{infix}</button>} />
+}
+
+// use it inside your application
+
+export function App() {
+   return <>
+      <header>
+         <WrappedButton message={LL.LOGOUT()} onClick={() => alert('do logout')}>
+      </header>
+      <main>
+         <WrappedButton message={LL.WELCOME({ name: 'John' })} onClick={() => alert('clicked')}>
+      </main>
+   <>
+}
+
+```
+> This is an example written for a react application, but this concept can be used with any kind of framework.
+
+Basically you will need to write a function that splits the translated message and renders a component between the parts. You can define your split characters yourself but you would always need to make sure you add them in any translation since `typesafe-i18n` doesn't provide any typesafety for these characters (yet).
+
+
 ### I have two similar locales (only a few translations are different) but I don't want to duplicate my translations
 
 Your locale translation files can be any kind of JavaScript object. So you can make object-transformations inside your translation file. The only restriction is: in the end it has to contain a default export with type `Translation`. You could do something like this:
@@ -1243,6 +1373,7 @@ Your locale translation files can be any kind of JavaScript object. So you can m
    export default en_US
    ```
 
+
 ### For certain locales I don't want to output a variable, but due to the strict typing I have to specify it in my translation
 
 The generated types are really strict. It helps you from making unintentional mistakes. If you want to opt-out for certain translations, you can use the `any` keyword.
@@ -1259,7 +1390,7 @@ The generated types are really strict. It helps you from making unintentional mi
    export default en
    ```
 
- - create another locale without that paramter by disabling the strict type checking with  `as any`
+ - create another locale without that parameter by disabling the strict type checking with  `as any`
    ```typescript
    // file 'src/i18n/de/index.ts'
    import type { Translation } from '../i18n-types'
@@ -1275,7 +1406,7 @@ The generated types are really strict. It helps you from making unintentional mi
 
 A better approach would be to create a custom formatter e.g.
 
- - create your tranlsation and add a formatter to your variable
+ - create your translation and add a formatter to your variable
    ```typescript
    // file 'src/i18n/en/index.ts'
    import type { BaseTranslation } from 'typesafe-i18n'
@@ -1311,7 +1442,7 @@ A better approach would be to create a custom formatter e.g.
          locale === 'de'
             // return an empty string for locale 'de'
             ? ignore // same as: () => ''
-            // return the unmodified parmeter
+            // return the unmodified parameter
             : identity // same as: (value) => value
 
       const formatters: Formatters = {
@@ -1322,9 +1453,10 @@ A better approach would be to create a custom formatter e.g.
    }
    ```
 
+
 ### Why does the translation function return a type of `LocalizedString` and not the tpe `string` itself?
 
-With the help of `LocalizedString` you could enforce texts in your applcation to be translated. Lets take an Error message as example:
+With the help of `LocalizedString` you could enforce texts in your application to be translated. Lets take an Error message as example:
 
 ```typescript
 const showErrorMessage(message: string) => alert(message)
@@ -1367,3 +1499,22 @@ const createUser = (name: string, password: string) => {
 ```
 
 With the type `LocalizedString` you can restrict your functions to only translated strings.
+
+
+### With Node.JS the `Intl` package does not work with locales other than 'en'
+
+Node.JS, by default, does not come with the full [`intl`](https://nodejs.org/api/intl.html) support. To reduce the size of the node installment it will only include 'en' as locale. You would need to add it yourself. The easiest way is to install the `intl` package
+
+```bash
+> npm i intl
+```
+
+and then add following lines on top of your `src/i18n/formatters.ts` file:
+
+```typescript
+const intl = require('intl')
+intl.__disableRegExpRestore()
+globalThis.Intl.DateTimeFormat = intl.DateTimeFormat
+```
+
+Then you should be able to use formatters from the `Intl` namespace with all locales.

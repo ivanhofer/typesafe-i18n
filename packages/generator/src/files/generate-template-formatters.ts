@@ -1,17 +1,28 @@
 import { writeFileIfContainsChanges, writeFileIfNotExists } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generate-files'
+import { prettify } from '../generator-util'
+import { importTypes, jsDocFunction, jsDocImports, jsDocType, tsCheck, type } from '../output-handler'
 
 const getFormattersTemplate = (
 	{ typesFileName: typesFile, loadLocalesAsync }: GeneratorConfigWithDefaultValues,
-	importType: string,
 ) => {
 	const formattersInitializerType = `${loadLocalesAsync ? 'Async' : ''}FormattersInitializer`
-	return `${importType} { ${formattersInitializerType} } from 'typesafe-i18n'
-${importType} { Locales, Formatters } from './${typesFile}'
+	return `${tsCheck}
 
-export const initFormatters: ${formattersInitializerType}<Locales, Formatters> = ${loadLocalesAsync ? 'async ' : ''
-		}(locale: Locales) => {
-	const formatters: Formatters = {
+${jsDocImports(
+		{ from: 'typesafe-i18n', type: 'FormattersInitializer<Locales, Formatters>', alias: 'FormattersInitializer' },
+		{ from: `./${typesFile}`, type: 'Locales' },
+		{ from: `./${typesFile}`, type: 'Formatters' },
+	)}
+
+${importTypes('typesafe-i18n', formattersInitializerType)}
+${importTypes(`./${typesFile}`, 'Locales', 'Formatters')}
+
+${jsDocFunction(loadLocalesAsync ? 'Promise<Formatters>' : 'Formatters', { type: 'Locales', name: 'locale' })}
+export const initFormatters${type(`${formattersInitializerType}<Locales, Formatters>`)} = ${loadLocalesAsync ? 'async ' : ''
+		}(locale${type('Locales')}) => {
+	${jsDocType('Formatters')}
+	const formatters${type('Formatters')} = {
 		// add your formatter functions here
 	}
 
@@ -22,13 +33,12 @@ export const initFormatters: ${formattersInitializerType}<Locales, Formatters> =
 
 export const generateFormattersTemplate = async (
 	config: GeneratorConfigWithDefaultValues,
-	importType: string,
 	forceOverride: boolean,
 ): Promise<void> => {
 	const { outputPath, formattersTemplateFileName: formattersTemplatePath } = config
 
-	const configTemplate = getFormattersTemplate(config, importType)
+	const configTemplate = getFormattersTemplate(config)
 
 	const write = forceOverride ? writeFileIfContainsChanges : writeFileIfNotExists
-	await write(outputPath, formattersTemplatePath, configTemplate)
+	await write(outputPath, formattersTemplatePath, prettify(configTemplate))
 }

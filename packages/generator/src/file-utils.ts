@@ -1,8 +1,9 @@
 import { promises as fsPromises } from 'fs'
-import { join, resolve, dirname } from 'path'
+import { dirname, join, resolve } from 'path'
 import { logger } from './generator-util'
+import { fileEnding } from './output-handler'
 
-const { readFile: read, readdir, writeFile, mkdir, stat, copyFile: cp, rmdir } = fsPromises
+const { readFile: read, readdir, writeFile, mkdir, stat, copyFile: cp, rm } = fsPromises
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -63,7 +64,7 @@ export const copyFile = async (fromPath: string, toPath: string, showError = tru
 
 export const deleteFolderRecursive = async (path: string): Promise<boolean> => {
 	try {
-		await rmdir(path, { recursive: true })
+		await rm(path, { recursive: true })
 		return true
 	} catch (e) {
 		logger.error(`deleteFolderRecursive: ${path}`, e)
@@ -72,8 +73,10 @@ export const deleteFolderRecursive = async (path: string): Promise<boolean> => {
 }
 
 const getFileName = (path: string, file: string) => {
-	const ext = file.endsWith('.ts') || file.endsWith('.tsx') ? '' : '.ts'
-	return join(path, file + ext)
+	const ext = file.endsWith(fileEnding) || file.endsWith(`${fileEnding}x`) || file.endsWith('.d.ts')
+		? ''
+		: fileEnding
+	return join(path, `${file}${ext}`)
 }
 
 export const writeNewFile = async (path: string, file: string, content: string): Promise<void> => {
@@ -116,6 +119,23 @@ export const getFiles = async (path: string, depth = 0): Promise<GetFilesType[]>
 	}
 
 	return files
+}
+
+export const containsFolders = async (path: string): Promise<boolean> => {
+	const entries = await readdir(path, { withFileTypes: true })
+
+	return entries.some((folder) => folder.isDirectory())
+}
+
+export const getDirectoryStructure = async (path: string): Promise<Record<string, unknown>> => {
+	const entries = await readdir(path, { withFileTypes: true })
+	const folders = entries.filter((folder) => folder.isDirectory())
+
+	const promises = folders.map(({ name }) => new Promise<[string, Record<string, unknown>]>(
+		(r) => getDirectoryStructure(resolve(path, name)).then(x => r([name, x]))
+	))
+
+	return Object.fromEntries(await Promise.all(promises))
 }
 
 export const importFile = async <T = unknown>(file: string, outputError = true): Promise<T> =>

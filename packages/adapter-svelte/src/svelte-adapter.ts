@@ -1,27 +1,25 @@
-import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../core/src/core'
 import type { Readable, Writable } from 'svelte/store'
 import { derived, writable } from 'svelte/store'
-import { i18nObject } from '../../core/src/util.object'
-import {
-	FormattersInitializer,
-	AsyncFormattersInitializer,
-	TranslationLoader,
-	TranslationLoaderAsync,
-} from '../../core/src/util.loader'
+import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../core/src/core'
 import { getFallbackProxy } from '../../core/src/core-utils'
+import {
+	AsyncFormattersInitializer, FormattersInitializer, TranslationLoader,
+	TranslationLoaderAsync
+} from '../../core/src/util.loader'
+import { i18nObject } from '../../core/src/util.object'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-type SvelteStoreInit<
+export type SvelteStoreInit<
 	L extends string = string,
 	T extends BaseTranslation = BaseTranslation,
 	TF extends TranslationFunctions = TranslationFunctions<T>,
 	F extends BaseFormatters = BaseFormatters,
 	> = {
 		initI18n: (
-			newlocale: L,
+			newLocale: L,
 			getTranslationForLocaleCallback: TranslationLoader<L, T> | TranslationLoaderAsync<L, T>,
 			initFormattersCallback?: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F>,
 		) => Promise<void>
@@ -55,13 +53,13 @@ export const getI18nSvelteStore = <
 	let initFormatters: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F>
 
 	const initI18n = async (
-		newlocale: L,
+		newLocale: L,
 		getTranslationForLocaleCallback: TranslationLoader<L, T> | TranslationLoaderAsync<L, T>,
 		initFormattersCallback?: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F>,
 	): Promise<void> => {
 		getTranslationForLocale = getTranslationForLocaleCallback
 		initFormatters = initFormattersCallback || (() => ({} as F))
-		await setLocale(newlocale)
+		await setLocale(newLocale)
 	}
 
 	const setLocale = async (newLocale: L): Promise<void> => {
@@ -78,7 +76,7 @@ export const getI18nSvelteStore = <
 		isLoading.set(false)
 	}
 
-	const locale = derived<Writable<L>, L>(currentLocale, (newlocale, set) => set(newlocale))
+	const locale = derived<Writable<L>, L>(currentLocale, (newLocale, set) => set(newLocale))
 
 	const isLoadingLocale = derived<Writable<boolean>, boolean>(isLoading, (loading, set) => set(loading))
 
