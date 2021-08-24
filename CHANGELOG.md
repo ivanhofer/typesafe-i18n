@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.37.0 (2021-08-24)
+
+Feature:
+ - allow to import files to the base locale file from outside of the base locale folder location
+
 ## 2.36.1 (2021-08-21)
 
 Fix:

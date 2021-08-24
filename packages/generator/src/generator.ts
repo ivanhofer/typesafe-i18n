@@ -1,12 +1,15 @@
 import { watch } from 'chokidar'
-import { resolve } from 'path'
+import { resolve, sep } from 'path'
+import { isTruthy } from 'typesafe-utils'
 import * as ts from 'typescript'
 import type { BaseTranslation } from '../../core/src/core'
 import {
+	containsFolders,
 	copyFile,
 	createPathIfNotExits,
 	deleteFolderRecursive,
 	doesPathExist,
+	getDirectoryStructure,
 	getFiles,
 	importFile
 } from './file-utils'
@@ -19,17 +22,65 @@ const getAllLanguages = async (path: string) => {
 	return files.filter(({ folder, name }) => folder && name === `index${fileEnding}`).map(({ folder }) => folder)
 }
 
-const transpileTypescriptAndPrepareImportFile = async (languageFilePath: string, tempPath: string): Promise<string> => {
+
+/**
+ * looks for the location of the compiled 'index.js' file
+ * if the 'index.ts' file imports something from outside it's directory, we need to find the correct path to the base location file
+ */
+const detectLocationOfCompiledBaseTranslation = async (outputPath: string, locale: string, tempPath: string): Promise<string> => {
+	if (!containsFolders(tempPath)) return ''
+
+	const directory = await getDirectoryStructure(tempPath)
+
+	// contains the path from <root> to base locale file
+	const outputPathParts = resolve(outputPath, locale).replace(resolve(), '').split(sep).filter(isTruthy)
+
+	for (let i = 0; i < outputPathParts.length; i++) {
+		const part = outputPathParts[i] as string
+		const subDirectory = directory[part] as Record<string, unknown> | undefined
+		if (subDirectory) {
+			let outputPathPartsRest = [...outputPathParts].slice(i + 1)
+
+			let isPathValid = true
+			let subDirectoryOfCurrentSection = subDirectory
+			const subPaths = [part]
+			while (isPathValid && outputPathPartsRest.length) {
+				// we need to find the full matching path
+				// e.g. `src/path/i18n/en` is invalid if the base locale is located inside `src/i18n/en`
+				const subSubDirectoryOfCurrentSection = subDirectoryOfCurrentSection[outputPathPartsRest[0] as string] as Record<string, unknown>
+				if (subSubDirectoryOfCurrentSection) {
+					subPaths.push(outputPathPartsRest[0] as string)
+					outputPathPartsRest = outputPathPartsRest.slice(1)
+					subDirectoryOfCurrentSection = subSubDirectoryOfCurrentSection
+				} else {
+					isPathValid = false
+				}
+			}
+
+			if (isPathValid) {
+				i += outputPathPartsRest.length
+				return [...subPaths, ''].join('/')
+			}
+		}
+	}
+
+	return ''
+}
+
+const transpileTypescriptAndPrepareImportFile = async (outputPath: string, languageFilePath: string, locale: string, tempPath: string): Promise<string> => {
 	const program = ts.createProgram([languageFilePath], { outDir: tempPath })
 	program.emit()
 
-	const compiledPath = resolve(tempPath, 'index.js')
-	const copyPath = resolve(tempPath, `i18n-temp-${debounceCounter}.js`)
+	const baseTranslationPath = await detectLocationOfCompiledBaseTranslation(outputPath, locale, tempPath)
+
+	const compiledPath = resolve(tempPath, `${baseTranslationPath}index.js`)
+	const copyPath = resolve(tempPath, `${baseTranslationPath}i18n-temp-${debounceCounter}.js`)
 
 	const copySuccess = await copyFile(compiledPath, copyPath, false)
 	if (!copySuccess) {
-		logger.warn(
-			`Make sure to give your base locales default export the type of 'BaseTranslation' and don't import anything from outside the base locales directory via relative path.`,
+		logger.error(
+			`Make sure to give your base locale's default export the type of 'BaseTranslation' and to name the file 'index.ts'.
+See https://github.com/ivanhofer/typesafe-i18n#folder-structure for more info`,
 		)
 		return ''
 	}
@@ -53,7 +104,7 @@ const parseLanguageFile = async (
 
 	const importPath = shouldGenerateJsDoc
 		? originalPath
-		: await transpileTypescriptAndPrepareImportFile(originalPath, tempPath)
+		: await transpileTypescriptAndPrepareImportFile(outputPath, originalPath, locale, tempPath)
 
 	if (!importPath) {
 		return null
@@ -86,6 +137,8 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 
 	const languageFile =
 		(locale && (await parseLanguageFile(outputPath, locale, tempPath))) || {}
+
+	if (languageFile) return
 
 	await generate(languageFile, { ...config, baseLocale: locale, locales }, version, logger)
 
