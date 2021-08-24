@@ -14,7 +14,8 @@ import {
 	sortNumberASC,
 	sortStringASC,
 	sortStringPropertyASC,
-	TypeGuard
+	TypeGuard,
+	uniqueArray
 } from 'typesafe-utils'
 import { BaseTranslation, isPluralPart } from '../../../core/src/core'
 import { partAsStringWithoutTypes, partsAsStringWithoutTypes, removeEmptyValues } from '../../../core/src/core-utils'
@@ -118,13 +119,13 @@ const parseTranslations = (translations: BaseTranslation, logger: Logger, parent
 	isObject(translations)
 		? Object.entries(translations).map(([key, text]) => {
 			if (isString(text)) {
-				return parseTanslationEntry([key, text], logger, parentKeys) as ParsedResultEntry
+				return parseTranslationEntry([key, text], logger, parentKeys) as ParsedResultEntry
 			}
 			return { [key]: parseTranslations(text, logger, [...parentKeys, key]) } as ParsedResult
 		})
 		: []
 
-const parseTanslationEntry = ([key, text]: [string, string], logger: Logger, parentKeys: string[]): ParsedResult | null => {
+const parseTranslationEntry = ([key, text]: [string, string], logger: Logger, parentKeys: string[]): ParsedResult | null => {
 	const parsedParts = parseRawText(text, false)
 	const textWithoutTypes = partsAsStringWithoutTypes(parsedParts)
 
@@ -137,7 +138,7 @@ const parseTanslationEntry = ([key, text]: [string, string], logger: Logger, par
 
 	argumentParts.forEach(({ k, i, f }) => {
 		args.push({ key: k, formatters: f })
-		types[k] = Array.from(new Set([...(types[k] || []), i])).filter(isNotUndefined)
+		types[k] = uniqueArray([...(types[k] || []), i]).filter(isNotUndefined)
 	})
 
 	pluralParts.forEach(({ k }) => {
@@ -440,7 +441,7 @@ const createFormattersType = (parsedTranslations: ParsedResult[]) => {
 		mapToString(formatters,
 			([key, types]) =>
 				`
-	'${key}': (value: ${types?.join(' | ')}) => unknown`,
+	'${key}': (value: ${uniqueArray(types).join(' | ')}) => unknown`,
 		),
 	)}`
 }

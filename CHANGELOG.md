@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.37.1 (2021-08-25)
+
+Fix:
+ - generate unique argument types for `Formatters` type [#75](https://github.com/ivanhofer/typesafe-i18n/issues/75)
+
 ## 2.37.0 (2021-08-24)
 
 Feature:

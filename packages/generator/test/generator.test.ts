@@ -184,6 +184,8 @@ testGeneratedOutput('arg-type-localized-string', { localized: 'Click on the butt
 
 testGeneratedOutput('formatter-with-different-arg-types', { A: '{0:number|calculate}!', B: '{0:Date|calculate}' })
 
+testGeneratedOutput('formatter-with-multiple-usage', { A: '{0:number|calculate}!', B: '{0} {1:number|calculate}', C: '{0} {2:number|calculate} {1}' })
+
 testGeneratedOutput('arg-types-with-external-type', { EXTERNAL_TYPE: 'The result is {0:Result|calculate}!' })
 
 testGeneratedOutput('same-param', { SAME_PARAM: '{0} {0} {0}' })

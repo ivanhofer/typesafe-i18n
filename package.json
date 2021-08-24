@@ -106,7 +106,7 @@
 		"clear": "rm -rf ./adapters ./cjs ./detectors ./dist ./esm ./formatters ./node ./react ./rollup ./svelte ./types ./webpack"
 	},
 	"dependencies": {
-		"typesafe-utils": "^1.15.0"
+		"typesafe-utils": "^1.16.1"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^20.0.0",

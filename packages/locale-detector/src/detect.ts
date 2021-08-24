@@ -1,4 +1,4 @@
-import { isTruthy } from 'typesafe-utils'
+import { isTruthy, uniqueArray } from 'typesafe-utils'
 import { Locale } from '../../core/src/core'
 
 export type LocaleDetector = () => string[]
@@ -18,8 +18,8 @@ export const detectLocale = <L extends Locale>(
 
 const findMatchingLocale = <L extends Locale>(availableLocales: L[], detector: LocaleDetector): L | undefined => {
 	const detectedLocales = detector().map((locale) => locale.toLowerCase())
-	// also include locles without country code e.g. if only 'en-US' is detected, we should also look for 'en'
-	const localesToMatch = Array.from(new Set(detectedLocales.flatMap((locale) => [locale, locale.split('-')[0]])))
+	// also include locales without country code e.g. if only 'en-US' is detected, we should also look for 'en'
+	const localesToMatch = uniqueArray(detectedLocales.flatMap((locale) => [locale, locale.split('-')[0]]))
 
 	const lowercasedLocales = availableLocales.map((locale) => locale.toLowerCase())
 
