@@ -3,7 +3,7 @@ import { dirname, join, resolve } from 'path'
 import { logger } from './generator-util'
 import { fileEnding } from './output-handler'
 
-const { readFile: read, readdir, writeFile, mkdir, stat, copyFile: cp, rm } = fsPromises
+const { readFile: read, readdir, writeFile, mkdir, stat, rm } = fsPromises
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -49,16 +49,6 @@ export const createPathIfNotExits = async (path: string): Promise<void> => {
 	const pathExists = await doesPathExist(path)
 	if (!pathExists) {
 		await createPath(path)
-	}
-}
-
-export const copyFile = async (fromPath: string, toPath: string, showError = true): Promise<boolean> => {
-	try {
-		await cp(fromPath, toPath)
-		return true
-	} catch (e) {
-		showError && logger.error(`copyFile: ${fromPath} - ${toPath}`, e)
-		return false
 	}
 }
 

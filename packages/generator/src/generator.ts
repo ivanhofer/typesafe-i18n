@@ -5,7 +5,6 @@ import * as ts from 'typescript'
 import type { BaseTranslation } from '../../core/src/core'
 import {
 	containsFolders,
-	copyFile,
 	createPathIfNotExits,
 	deleteFolderRecursive,
 	doesPathExist,
@@ -67,25 +66,13 @@ const detectLocationOfCompiledBaseTranslation = async (outputPath: string, local
 	return ''
 }
 
-const transpileTypescriptAndPrepareImportFile = async (outputPath: string, languageFilePath: string, locale: string, tempPath: string): Promise<string> => {
+const transpileTypescriptFiles = async (outputPath: string, languageFilePath: string, locale: string, tempPath: string): Promise<string> => {
 	const program = ts.createProgram([languageFilePath], { outDir: tempPath })
 	program.emit()
 
 	const baseTranslationPath = await detectLocationOfCompiledBaseTranslation(outputPath, locale, tempPath)
 
-	const compiledPath = resolve(tempPath, `${baseTranslationPath}index.js`)
-	const copyPath = resolve(tempPath, `${baseTranslationPath}i18n-temp-${debounceCounter}.js`)
-
-	const copySuccess = await copyFile(compiledPath, copyPath, false)
-	if (!copySuccess) {
-		logger.error(
-			`Make sure to give your base locale's default export the type of 'BaseTranslation' and to name the file 'index.ts'.
-See https://github.com/ivanhofer/typesafe-i18n#folder-structure for more info`,
-		)
-		return ''
-	}
-
-	return copyPath
+	return resolve(tempPath, `${baseTranslationPath}index.js`)
 }
 
 const parseLanguageFile = async (
@@ -104,7 +91,7 @@ const parseLanguageFile = async (
 
 	const importPath = shouldGenerateJsDoc
 		? originalPath
-		: await transpileTypescriptAndPrepareImportFile(outputPath, originalPath, locale, tempPath)
+		: await transpileTypescriptFiles(outputPath, originalPath, locale, tempPath)
 
 	if (!importPath) {
 		return null
@@ -136,7 +123,7 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 	const locales = await getAllLanguages(outputPath)
 
 	const languageFile =
-		(locale && (await parseLanguageFile(outputPath, locale, tempPath))) || {}
+		(locale && (await parseLanguageFile(outputPath, locale, resolve(tempPath, `${debounceCounter}`)))) || {}
 
 	await generate(languageFile, { ...config, baseLocale: locale, locales }, version, logger)
 

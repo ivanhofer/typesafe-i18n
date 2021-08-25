@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.37.4 (2021-08-26)
+
+Bugfix:
+ - correctly detect changes in files imported by `[baseLocale]/index.ts` [#76](https://github.com/ivanhofer/typesafe-i18n/issues/76)
+
 ## 2.37.3 (2021-08-25)
 
 Bugfix:
