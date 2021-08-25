@@ -38,7 +38,7 @@
 - [Locale-detection](#locale-detection)
 - [Sizes](#sizes)
 - [Performance](#performance)
-- [FAQ](#faq)
+- [FAQs](#faqs)
 
 
 
@@ -765,14 +765,28 @@ You can specify your own formatters, that take an argument as an input and retur
 
 ```typescript
 const formatters = {
-   roiCalculator: (value) => {
-      return (value * 4.2) - 7
-   }
+   roiCalculator: (value) => (value * 4.2) - 7
 }
 
 LLL('Invest ${0} and get ${0|roiCalculator} in return', 100)
 // => 'Invest $100 and get $413 in return'
 ```
+
+### chaining formatters
+
+If you need to apply multiple formatters to the same argument, you can chain them by using the pipe `|` operator:
+
+```typescript
+const formatters = {
+   sqrt: (value) => Math.sqrt(value),
+   round: (value) => Math.round(value),
+}
+
+LLL('Result: {0|sqrt|round}', 5)
+// => 'Result: 2'
+```
+
+> The formatters get applied from left to right. So in this example `5` will be the input for the `sqrt` formatter, that will return `2.23606797749979`. This value then gets passed to the `round` formatter that will output `2`.
 
 <!-- TODO: create examples for date-fns or other common formatters -->
 
@@ -1211,7 +1225,7 @@ If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
-## FAQ
+## FAQs
 
 ### I added a new translation to my locale file, but TypeScript gives me the Error `Property 'XYZ' does not exist on type 'TranslationFunctions'`
 
@@ -1454,7 +1468,7 @@ A better approach would be to create a custom formatter e.g.
    ```
 
 
-### Why does the translation function return a type of `LocalizedString` and not the tpe `string` itself?
+### Why does the translation function return a type of `LocalizedString` and not the type `string` itself?
 
 With the help of `LocalizedString` you could enforce texts in your application to be translated. Lets take an Error message as example:
 
