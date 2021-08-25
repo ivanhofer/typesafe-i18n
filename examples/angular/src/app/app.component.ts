@@ -13,7 +13,7 @@ export class AppComponent {
   constructor(private i18nService: I18nService) {
     i18nService.initI18n('en').then(() => {
       // eslint-disable-next-line no-console
-      console.log(this.LL.WELCOME())
+      console.log(this.LL.STARTUP())
     })
   }
 
