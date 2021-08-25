@@ -138,8 +138,6 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 	const languageFile =
 		(locale && (await parseLanguageFile(outputPath, locale, tempPath))) || {}
 
-	if (languageFile) return
-
 	await generate(languageFile, { ...config, baseLocale: locale, locales }, version, logger)
 
 	logger.info('... all files are up to date')

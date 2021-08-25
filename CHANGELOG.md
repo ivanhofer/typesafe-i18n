@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.37.3 (2021-08-25)
+
+Bugfix:
+ - allow to generate base files if base locale is not present yet
+
 ## 2.37.2 (2021-08-25)
 
 Fix:
