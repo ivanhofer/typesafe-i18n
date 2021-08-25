@@ -5,5 +5,5 @@ import type { LocaleDetector } from '../../detect'
 
 export const initRequestParametersDetector =
 	(req: Request, key = 'lang'): LocaleDetector =>
-		(): Locale[] =>
-			[req?.params?.[key]].filter(isTruthy)
+	(): Locale[] =>
+		[req?.params?.[key]].filter(isTruthy)

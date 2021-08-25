@@ -10,9 +10,15 @@ import {
 	doesPathExist,
 	getDirectoryStructure,
 	getFiles,
-	importFile
+	importFile,
 } from './file-utils'
-import { generate, GeneratorConfig, GeneratorConfigWithDefaultValues, getConfigWithDefaultValues, readConfig } from './generate-files'
+import {
+	generate,
+	GeneratorConfig,
+	GeneratorConfigWithDefaultValues,
+	getConfigWithDefaultValues,
+	readConfig,
+} from './generate-files'
 import { logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
 import { configureOutputHandler, fileEnding, shouldGenerateJsDoc } from './output-handler'
 
@@ -21,12 +27,15 @@ const getAllLanguages = async (path: string) => {
 	return files.filter(({ folder, name }) => folder && name === `index${fileEnding}`).map(({ folder }) => folder)
 }
 
-
 /**
  * looks for the location of the compiled 'index.js' file
  * if the 'index.ts' file imports something from outside it's directory, we need to find the correct path to the base location file
  */
-const detectLocationOfCompiledBaseTranslation = async (outputPath: string, locale: string, tempPath: string): Promise<string> => {
+const detectLocationOfCompiledBaseTranslation = async (
+	outputPath: string,
+	locale: string,
+	tempPath: string,
+): Promise<string> => {
 	if (!containsFolders(tempPath)) return ''
 
 	const directory = await getDirectoryStructure(tempPath)
@@ -46,7 +55,9 @@ const detectLocationOfCompiledBaseTranslation = async (outputPath: string, local
 			while (isPathValid && outputPathPartsRest.length) {
 				// we need to find the full matching path
 				// e.g. `src/path/i18n/en` is invalid if the base locale is located inside `src/i18n/en`
-				const subSubDirectoryOfCurrentSection = subDirectoryOfCurrentSection[outputPathPartsRest[0] as string] as Record<string, unknown>
+				const subSubDirectoryOfCurrentSection = subDirectoryOfCurrentSection[
+					outputPathPartsRest[0] as string
+				] as Record<string, unknown>
 				if (subSubDirectoryOfCurrentSection) {
 					subPaths.push(outputPathPartsRest[0] as string)
 					outputPathPartsRest = outputPathPartsRest.slice(1)
@@ -66,7 +77,12 @@ const detectLocationOfCompiledBaseTranslation = async (outputPath: string, local
 	return ''
 }
 
-const transpileTypescriptFiles = async (outputPath: string, languageFilePath: string, locale: string, tempPath: string): Promise<string> => {
+const transpileTypescriptFiles = async (
+	outputPath: string,
+	languageFilePath: string,
+	locale: string,
+	tempPath: string,
+): Promise<string> => {
 	const program = ts.createProgram([languageFilePath], { outDir: tempPath })
 	program.emit()
 
@@ -87,7 +103,7 @@ const parseLanguageFile = async (
 		return null
 	}
 
-	!shouldGenerateJsDoc && await createPathIfNotExits(tempPath)
+	!shouldGenerateJsDoc && (await createPathIfNotExits(tempPath))
 
 	const importPath = shouldGenerateJsDoc
 		? originalPath
@@ -99,7 +115,7 @@ const parseLanguageFile = async (
 
 	const languageImport = await importFile<BaseTranslation>(importPath)
 
-	!shouldGenerateJsDoc && await deleteFolderRecursive(tempPath)
+	!shouldGenerateJsDoc && (await deleteFolderRecursive(tempPath))
 
 	if (!languageImport) {
 		logger.error(`could not read default export from language file '${locale}'`)
@@ -154,9 +170,10 @@ export const startGenerator = async (config?: GeneratorConfig, watchFiles = true
 
 	watchFiles && watch(outputPath).on('all', () => debounce(onChange))
 
-	logger.info(`generating files for ${shouldGenerateJsDoc
-		? 'JavaScript with JSDoc notation'
-		: `TypeScript version: '${ts.versionMajorMinor}.x'`}`
+	logger.info(
+		`generating files for ${
+			shouldGenerateJsDoc ? 'JavaScript with JSDoc notation' : `TypeScript version: '${ts.versionMajorMinor}.x'`
+		}`,
 	)
 	logger.info(`options:`, await readConfig(config))
 	watchFiles && logger.info(`watcher started in: '${outputPath}'`)

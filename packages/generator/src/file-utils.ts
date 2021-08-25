@@ -63,9 +63,7 @@ export const deleteFolderRecursive = async (path: string): Promise<boolean> => {
 }
 
 const getFileName = (path: string, file: string) => {
-	const ext = file.endsWith(fileEnding) || file.endsWith(`${fileEnding}x`) || file.endsWith('.d.ts')
-		? ''
-		: fileEnding
+	const ext = file.endsWith(fileEnding) || file.endsWith(`${fileEnding}x`) || file.endsWith('.d.ts') ? '' : fileEnding
 	return join(path, `${file}${ext}`)
 }
 
@@ -121,9 +119,12 @@ export const getDirectoryStructure = async (path: string): Promise<Record<string
 	const entries = await readdir(path, { withFileTypes: true })
 	const folders = entries.filter((folder) => folder.isDirectory())
 
-	const promises = folders.map(({ name }) => new Promise<[string, Record<string, unknown>]>(
-		(r) => getDirectoryStructure(resolve(path, name)).then(x => r([name, x]))
-	))
+	const promises = folders.map(
+		({ name }) =>
+			new Promise<[string, Record<string, unknown>]>((r) =>
+				getDirectoryStructure(resolve(path, name)).then((x) => r([name, x])),
+			),
+	)
 
 	return Object.fromEntries(await Promise.all(promises))
 }

@@ -6,7 +6,7 @@ export const i18n = <
 	L extends Locale,
 	T extends BaseTranslation,
 	TF extends TranslationFunctions<T>,
-	F extends BaseFormatters
+	F extends BaseFormatters,
 >(
 	getTranslationForLocale: (locale: L) => T,
 	formattersInitializer: FormattersInitializer<L, F>,

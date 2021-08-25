@@ -28,18 +28,13 @@ mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, mapperFunc
 	)
 
 	// rewrite all files to link always to the same core types
-	files.forEach(file => {
+	files.forEach((file) => {
 		const fullFilePath = resolve(__dirname, `../types/${fromWheretoImport}/src/${file}`)
 		const content = readFileSync(fullFilePath).toString()
-		if (content.includes("core/src/core")) {
-			writeFileSync(
-				fullFilePath,
-				content.replace('core/src/core', 'core'),
-				{ encoding: 'utf8' },
-			)
+		if (content.includes('core/src/core')) {
+			writeFileSync(fullFilePath, content.replace('core/src/core', 'core'), { encoding: 'utf8' })
 		}
 	})
-
 
 	// link generated files to types
 	const filteredFiles = (mapperFunction && files.filter(mapperFunction)) || files

@@ -6,5 +6,6 @@
 	"printWidth": 120,
 	"arrowParens": "always",
 	"trailingComma": "all",
-	"htmlWhitespaceSensitivity": "ignore"
+	"htmlWhitespaceSensitivity": "ignore",
+	"endOfLine": "auto"
 }
