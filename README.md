@@ -444,66 +444,71 @@ You can set options for the [generator](#typesafety) in order to get optimized o
 | [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                                       | `'formatters'`                                |
 | [typesTemplateFileName](#typesTemplateFileName)           | `string`                                                       | `'custom-types'`                              |
 | [adapterFileName](#adapterFileName)                       | `string` &#124; `undefined`                                    | `undefined`                                   |
+| [esmSupport](#esmSupport)                                 | `boolean` &#124; `undefined`                                   | `false`                                       |
 | [generateOnlyTypes](#generateOnlyTypes)                   | `boolean`                                                      | `false`                                       |
 | [tempPath](#tempPath)                                     | `string`                                                       | `'./node_modules/typesafe-i18n/temp-output/'` |
 | [banner](#banner)                                         | `string`                                                       | `'/* eslint-disable */'`                      |
 
 
-#### baseLocale
+#### `baseLocale`
 
 Defines which locale to use for the types generation. You can find more information on how to structure your locales [here](#locales).
 
-#### locales
+#### `locales`
 
 Specifies the locales you want to use. This can be useful if you want to create an own bundle for each locale. If you want to include only certain locales, you need to set the locales you want to use. If empty, all locales will be used.
 
 > Note: requires the usage of the [rollup-plugin](#rollup-plugin)
 
-#### loadLocalesAsync
+#### `loadLocalesAsync`
 
 Whether to generate code that loads the locales asynchronously. If set to `true`, a locale will be loaded, when you first access it. If set to `false` all locales will be loaded when you init the i18n-functions.
 
-#### adapter
+#### `adapter`
 
 If this config is set, code will be generated that wraps i18n functions into useful helpers for that environment e.g. a `svelte`-store.
 
-#### outputPath
+#### `outputPath`
 
 Folder in which the files should be generated and where your locale files are located.
 
-#### outputFormat
+#### `outputFormat`
 
 The programming language you use inside your code. If 'TypeScript' is selected, the generator will output TypeScript code and types. If you choose 'JavaScript' the generator will output typesafe JavaScript code annotated with [JSDoc-comments](#jsdoc).
 
-#### typesFileName
+#### `typesFileName`
 
 Name for the file where the types for your locales are generated.
 
-#### utilFileName
+#### `utilFileName`
 
 Name for the file where the typesafe i18n-functions are generated.
 
-#### formattersTemplateFileName
+#### `formattersTemplateFileName`
 
 Name for the file where you can configure your formatters.
 
-#### typesTemplateFileName
+#### `typesTemplateFileName`
 
 Name for the file where you can configure your custom-types.
 
-#### adapterFileName
+#### `adapterFileName`
 
 Name for the file when generating output for an adapter. The default filename is `i18n-[adapter]`.
 
-#### generateOnlyTypes
+#### `esmSupport`
+
+If `true` generated files will import files with `.js` extension.
+
+#### `generateOnlyTypes`
 
 If you don't want to use the auto-generated helpers and instead write your own wrappers, you can set this option to `true`.
 
-#### tempPath
+#### `tempPath`
 
 Folder where the generator can store temporary files. These files are generated when your base locale is analyzed and the types are generated. The folder will be cleared, after the types were generated. So make sure you use an empty folder, if you change this option.
 
-#### banner
+#### `banner`
 
 This text will be output on top of all auto-generated files. It is meant to add a custom disable-linter comment. Since every project can have different lint rules, we want to disable linting on those files.
 
