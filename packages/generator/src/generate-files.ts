@@ -31,6 +31,7 @@ export type GeneratorConfig = {
 	utilFileName?: string
 	formattersTemplateFileName?: string
 	typesTemplateFileName?: string
+	esmSupport?: boolean
 
 	adapter?: Adapters
 	adapterFileName?: string
@@ -43,6 +44,7 @@ export type GeneratorConfig = {
 export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 	baseLocale: string
 	locales: string[]
+
 	tempPath: string
 	outputPath: string
 	outputFormat: OutputFormats
@@ -50,6 +52,8 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 	utilFileName: string
 	formattersTemplateFileName: string
 	typesTemplateFileName: string
+	esmSupport: boolean
+
 	loadLocalesAsync: boolean
 	generateOnlyTypes: boolean
 	banner: string
@@ -72,6 +76,7 @@ export const getConfigWithDefaultValues = async (
 ): Promise<GeneratorConfigWithDefaultValues> => ({
 	baseLocale: 'en',
 	locales: [],
+
 	tempPath: './node_modules/typesafe-i18n/temp-output/',
 	outputPath: './src/i18n/',
 	outputFormat: 'TypeScript',
@@ -79,6 +84,8 @@ export const getConfigWithDefaultValues = async (
 	utilFileName: 'i18n-util',
 	formattersTemplateFileName: 'formatters',
 	typesTemplateFileName: 'custom-types',
+	esmSupport: false,
+
 	loadLocalesAsync: true,
 	generateOnlyTypes: false,
 	banner: '/* eslint-disable */',

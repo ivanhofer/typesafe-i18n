@@ -43,11 +43,11 @@ const getLocalesTranslationRowSync = (locale: Locale, baseLocale: string): strin
 	${wrappedLocale}${postfix},`
 }
 
-const getSyncCode = ({ baseLocale, locales }: GeneratorConfigWithDefaultValues) => {
+const getSyncCode = ({ baseLocale, locales, esmSupport }: GeneratorConfigWithDefaultValues) => {
 	const localesImports = locales
 		.map(
 			(locale) => `
-import ${sanitizeLocale(locale)} from './${locale}'`,
+import ${sanitizeLocale(locale)} from './${locale}${esmSupport ? '.js' : ''}'`,
 		)
 		.join('')
 
@@ -75,6 +75,7 @@ const getUtil = (config: GeneratorConfigWithDefaultValues): string => {
 		formattersTemplateFileName: formattersTemplatePath,
 		loadLocalesAsync,
 		baseLocale,
+		esmSupport,
 		locales,
 		banner
 	} = config
@@ -108,10 +109,10 @@ ${jsDocImports(
 	)}
 
 ${dynamicImports}
-${importTypes(`./${typesFileName}`, 'Translation', 'TranslationFunctions', 'Formatters', 'Locales')}
+${importTypes(`./${typesFileName}${esmSupport ? '.js' : ''}`, 'Translation', 'TranslationFunctions', 'Formatters', 'Locales')}
 ${importTypes('typesafe-i18n/detectors', 'LocaleDetector')}
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
-import { initFormatters } from './${formattersTemplatePath}'
+import { initFormatters } from './ ${formattersTemplatePath}${esmSupport ? '.js' : ''}'
 
 ${jsDocType('Locales')}
 export const baseLocale${type('Locales')} = '${baseLocale}'
