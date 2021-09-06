@@ -329,20 +329,20 @@ testGeneratedOutput(
 
 // --------------------------------------------------------------------------------------------------------------------
 
-testGeneratedOutput('esm-imports-async', { HELLO_ESM: 'Hi {0:name}' }, { esmSupport: true })
+testGeneratedOutput('esm-imports-async', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true })
 
-testGeneratedOutput('esm-imports-sync', { HELLO_ESM: 'Hi {0:name}' }, { esmSupport: true, loadLocalesAsync: false })
+testGeneratedOutput('esm-imports-sync', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true, loadLocalesAsync: false })
 
 testGeneratedOutput(
 	'esm-imports-async-jsdoc',
 	{ HELLO_ESM: 'Hi {0:name}' },
-	{ esmSupport: true, outputFormat: 'JavaScript' },
+	{ esmImports: true, outputFormat: 'JavaScript' },
 )
 
 testGeneratedOutput(
 	'esm-imports-sync-jsdoc',
 	{ HELLO_ESM: 'Hi {0:name}' },
-	{ esmSupport: true, loadLocalesAsync: false, outputFormat: 'JavaScript' },
+	{ esmImports: true, loadLocalesAsync: false, outputFormat: 'JavaScript' },
 )
 
 // --------------------------------------------------------------------------------------------------------------------

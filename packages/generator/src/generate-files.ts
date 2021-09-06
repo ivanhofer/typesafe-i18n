@@ -31,7 +31,7 @@ export type GeneratorConfig = {
 	utilFileName?: string
 	formattersTemplateFileName?: string
 	typesTemplateFileName?: string
-	esmSupport?: boolean
+	esmImports?: boolean
 
 	adapter?: Adapters
 	adapterFileName?: string
@@ -52,7 +52,7 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 	utilFileName: string
 	formattersTemplateFileName: string
 	typesTemplateFileName: string
-	esmSupport: boolean
+	esmImports: boolean
 
 	loadLocalesAsync: boolean
 	generateOnlyTypes: boolean
@@ -84,7 +84,7 @@ export const getConfigWithDefaultValues = async (
 	utilFileName: 'i18n-util',
 	formattersTemplateFileName: 'formatters',
 	typesTemplateFileName: 'custom-types',
-	esmSupport: false,
+	esmImports: false,
 
 	loadLocalesAsync: true,
 	generateOnlyTypes: false,
