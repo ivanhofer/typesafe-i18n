@@ -112,7 +112,7 @@ ${dynamicImports}
 ${importTypes(`./${typesFileName}${esmSupport ? '.js' : ''}`, 'Translation', 'TranslationFunctions', 'Formatters', 'Locales')}
 ${importTypes('typesafe-i18n/detectors', 'LocaleDetector')}
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
-import { initFormatters } from './ ${formattersTemplatePath}${esmSupport ? '.js' : ''}'
+import { initFormatters } from './${formattersTemplatePath}${esmSupport ? '.js' : ''}'
 
 ${jsDocType('Locales')}
 export const baseLocale${type('Locales')} = '${baseLocale}'

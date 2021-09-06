@@ -444,7 +444,7 @@ You can set options for the [generator](#typesafety) in order to get optimized o
 | [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                                       | `'formatters'`                                |
 | [typesTemplateFileName](#typesTemplateFileName)           | `string`                                                       | `'custom-types'`                              |
 | [adapterFileName](#adapterFileName)                       | `string` &#124; `undefined`                                    | `undefined`                                   |
-| [esmSupport](#esmSupport)                                 | `boolean` &#124; `undefined`                                   | `false`                                       |
+| [esmSupport](#esmSupport)                                 | `boolean`                                                      | `false`                                       |
 | [generateOnlyTypes](#generateOnlyTypes)                   | `boolean`                                                      | `false`                                       |
 | [tempPath](#tempPath)                                     | `string`                                                       | `'./node_modules/typesafe-i18n/temp-output/'` |
 | [banner](#banner)                                         | `string`                                                       | `'/* eslint-disable */'`                      |
