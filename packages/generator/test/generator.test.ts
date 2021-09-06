@@ -3,7 +3,13 @@ import { resolve } from 'path'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 import type { BaseTranslation } from '../../core/src/core'
-import { generate, GeneratorConfig, GeneratorConfigWithDefaultValues, getConfigWithDefaultValues, OutputFormats } from '../src/generate-files'
+import {
+	generate,
+	GeneratorConfig,
+	GeneratorConfigWithDefaultValues,
+	getConfigWithDefaultValues,
+	OutputFormats,
+} from '../src/generate-files'
 import { parseTypescriptVersion, TypescriptVersion } from '../src/generator-util'
 
 const { readFile } = promises
@@ -33,12 +39,14 @@ const createConfig = async (prefix: string, config?: GeneratorConfig): Promise<G
 
 type FileToCheck = 'types' | 'util' | 'formatters-template' | 'types-template' | 'svelte' | 'react'
 
-const getPathOfOutputFile = (prefix: string, file: FileToCheck, type: 'actual' | 'expected', outputFormat: OutputFormats) => {
-	const fileEnding = outputFormat === 'TypeScript'
-		? '.ts'
-		: file === 'types' || file === 'types-template'
-			? '.d.ts'
-			: '.js'
+const getPathOfOutputFile = (
+	prefix: string,
+	file: FileToCheck,
+	type: 'actual' | 'expected',
+	outputFormat: OutputFormats,
+) => {
+	const fileEnding =
+		outputFormat === 'TypeScript' ? '.ts' : file === 'types' || file === 'types-template' ? '.d.ts' : '.js'
 	return `${outputPath}/${prefix}/${file}.${type}${fileEnding}`
 }
 
@@ -50,8 +58,12 @@ const check = async (prefix: string, file: FileToCheck, outputFormat: OutputForm
 		return ''
 	}
 
-	const actual: string = (await readFile(getPathOfOutputFile(prefix, file, 'actual', outputFormat)).catch(onError)).toString()
-	const expected: string = (await readFile(getPathOfOutputFile(prefix, file, 'expected', outputFormat)).catch(onError)).toString()
+	const actual: string = (
+		await readFile(getPathOfOutputFile(prefix, file, 'actual', outputFormat)).catch(onError)
+	).toString()
+	const expected: string = (
+		await readFile(getPathOfOutputFile(prefix, file, 'expected', outputFormat)).catch(onError)
+	).toString()
 
 	if ((expected && !actual) || (!expected && actual)) throw Error(`Could not find file '${pathOfFailingFile}'`)
 
@@ -154,10 +166,14 @@ testGeneratedOutput('with-formatters', {
 	FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
 })
 
-testGeneratedOutput('with-formatters-jsdoc', {
-	FORMATTER_1: '{0|timesTen} apple{{s}}',
-	FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
-}, { outputFormat: 'JavaScript' })
+testGeneratedOutput(
+	'with-formatters-jsdoc',
+	{
+		FORMATTER_1: '{0|timesTen} apple{{s}}',
+		FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
+	},
+	{ outputFormat: 'JavaScript' },
+)
 
 testGeneratedOutput('formatters-with-dashes', { FORMATTER: '{0|custom-formatter|and-another}' })
 
@@ -180,11 +196,17 @@ testGeneratedOutput('arg-order', {
 	ORDER_TYPES: '{0:B} {1:A}',
 })
 
-testGeneratedOutput('arg-type-localized-string', { localized: 'Click on the button: <button>{buttonText:LocalizedString}</button>' })
+testGeneratedOutput('arg-type-localized-string', {
+	localized: 'Click on the button: <button>{buttonText:LocalizedString}</button>',
+})
 
 testGeneratedOutput('formatter-with-different-arg-types', { A: '{0:number|calculate}!', B: '{0:Date|calculate}' })
 
-testGeneratedOutput('formatter-with-multiple-usage', { A: '{0:number|calculate}!', B: '{0} {1:number|calculate}', C: '{0} {2:number|calculate} {1}' })
+testGeneratedOutput('formatter-with-multiple-usage', {
+	A: '{0:number|calculate}!',
+	B: '{0} {1:number|calculate}',
+	C: '{0} {2:number|calculate} {1}',
+})
 
 testGeneratedOutput('arg-types-with-external-type', { EXTERNAL_TYPE: 'The result is {0:Result|calculate}!' })
 
@@ -206,19 +228,24 @@ testGeneratedOutput(
 
 // --------------------------------------------------------------------------------------------------------------------
 
-testGeneratedOutput('nested-deep', { a: { b: { c: { d: { e: { f: { g: { h: { i: { j: { k: { l: { m: 'I am deeply nested' } } } } } } } } } } } } })
+testGeneratedOutput('nested-deep', {
+	a: { b: { c: { d: { e: { f: { g: { h: { i: { j: { k: { l: { m: 'I am deeply nested' } } } } } } } } } } } },
+})
 
-testGeneratedOutput('nested-with-arguments', { 'a': { APPLES: '{0} apple{{s}}' }, 'b': { APPLES: '{0:number} apple{{s}}' }, 'c': { APPLES: '{nrOfApples:number} apple{{s}}' } })
+testGeneratedOutput('nested-with-arguments', {
+	a: { APPLES: '{0} apple{{s}}' },
+	b: { APPLES: '{0:number} apple{{s}}' },
+	c: { APPLES: '{nrOfApples:number} apple{{s}}' },
+})
 
-testGeneratedOutput('nested-formatters', { 'some-key': { 'other-key': 'format {me:string|custom-formatter}' }, 'another-key': '{0|format}' })
+testGeneratedOutput('nested-formatters', {
+	'some-key': { 'other-key': 'format {me:string|custom-formatter}' },
+	'another-key': '{0|format}',
+})
 
 // --------------------------------------------------------------------------------------------------------------------
 
-testGeneratedOutput(
-	'banner-tslint',
-	{ HI: 'Hi {0:name}' },
-	{ banner: '/* tslint:disable */' },
-)
+testGeneratedOutput('banner-tslint', { HI: 'Hi {0:name}' }, { banner: '/* tslint:disable */' })
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -302,14 +329,47 @@ testGeneratedOutput(
 
 // --------------------------------------------------------------------------------------------------------------------
 
+testGeneratedOutput('esm-imports-async', { HELLO_ESM: 'Hi {0:name}' }, { esmSupport: true })
+
+testGeneratedOutput('esm-imports-sync', { HELLO_ESM: 'Hi {0:name}' }, { esmSupport: true, loadLocalesAsync: false })
+
+testGeneratedOutput(
+	'esm-imports-async-jsdoc',
+	{ HELLO_ESM: 'Hi {0:name}' },
+	{ esmSupport: true, outputFormat: 'JavaScript' },
+)
+
+testGeneratedOutput(
+	'esm-imports-sync-jsdoc',
+	{ HELLO_ESM: 'Hi {0:name}' },
+	{ esmSupport: true, loadLocalesAsync: false, outputFormat: 'JavaScript' },
+)
+
+// --------------------------------------------------------------------------------------------------------------------
+
 const tsTestTranslation = { TEST: 'Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}' }
 
 testGeneratedOutput('typescript-3.0', tsTestTranslation, {}, parseTypescriptVersion('3.0'))
-testGeneratedOutput('typescript-3.0-jsdoc', tsTestTranslation, { outputFormat: 'JavaScript' }, parseTypescriptVersion('3.0'))
+testGeneratedOutput(
+	'typescript-3.0-jsdoc',
+	tsTestTranslation,
+	{ outputFormat: 'JavaScript' },
+	parseTypescriptVersion('3.0'),
+)
 testGeneratedOutput('typescript-3.8', tsTestTranslation, {}, parseTypescriptVersion('3.8'))
-testGeneratedOutput('typescript-3.8-jsdoc', tsTestTranslation, { outputFormat: 'JavaScript' }, parseTypescriptVersion('3.8'))
+testGeneratedOutput(
+	'typescript-3.8-jsdoc',
+	tsTestTranslation,
+	{ outputFormat: 'JavaScript' },
+	parseTypescriptVersion('3.8'),
+)
 testGeneratedOutput('typescript-4.1', tsTestTranslation, {}, parseTypescriptVersion('4.1'))
-testGeneratedOutput('typescript-4.1-jsdoc', tsTestTranslation, { outputFormat: 'JavaScript' }, parseTypescriptVersion('4.1'))
+testGeneratedOutput(
+	'typescript-4.1-jsdoc',
+	tsTestTranslation,
+	{ outputFormat: 'JavaScript' },
+	parseTypescriptVersion('4.1'),
+)
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -323,21 +383,30 @@ testGeneratedConsoleOutput('console-wrong-index', { TEST: '{0} {2}' }, async (ou
 	assert.is(outputs.info.length, 0)
 	assert.is(outputs.warn.length, 0)
 	assert.is(outputs.error.length, 1)
-	assert.is(outputs.error[0], "translation 'TEST' => argument {1} expected, but {2} found. Make sure to not skip an index for your arguments.")
+	assert.is(
+		outputs.error[0],
+		"translation 'TEST' => argument {1} expected, but {2} found. Make sure to not skip an index for your arguments.",
+	)
 })
 
 testGeneratedConsoleOutput('console-keyed-and-index-based-keys', { TEST: '{hi} {0}' }, async (outputs) => {
 	assert.is(outputs.info.length, 0)
 	assert.is(outputs.warn.length, 0)
 	assert.is(outputs.error.length, 1)
-	assert.is(outputs.error[0], "translation 'TEST' => argument {1} expected, but {hi} found. You can't mix keyed and index-based arguments.")
+	assert.is(
+		outputs.error[0],
+		"translation 'TEST' => argument {1} expected, but {hi} found. You can't mix keyed and index-based arguments.",
+	)
 })
 
 testGeneratedConsoleOutput('console-translation-key-with-dot', { 'i.am.wrongly.nested': 'ohhh' }, async (outputs) => {
 	assert.is(outputs.info.length, 0)
 	assert.is(outputs.warn.length, 0)
 	assert.is(outputs.error.length, 1)
-	assert.is(outputs.error[0], "translation 'i.am.wrongly.nested' => key can't contain the '.' character. Please remove it. If you want to nest keys, you should look at https://github.com/ivanhofer/typesafe-i18n#nested-translations")
+	assert.is(
+		outputs.error[0],
+		"translation 'i.am.wrongly.nested' => key can't contain the '.' character. Please remove it. If you want to nest keys, you should look at https://github.com/ivanhofer/typesafe-i18n#nested-translations",
+	)
 })
 
 // --------------------------------------------------------------------------------------------------------------------
