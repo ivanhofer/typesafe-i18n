@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.38.0 (2021-09-??)
+
+Feature:
+ - add full `esm` support [#80](https://github.com/ivanhofer/typesafe-i18n/issues/80)
+
 ## 2.37.4 (2021-08-26)
 
 Bugfix:
