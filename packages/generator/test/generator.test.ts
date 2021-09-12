@@ -8,7 +8,7 @@ import {
 	GeneratorConfig,
 	GeneratorConfigWithDefaultValues,
 	getConfigWithDefaultValues,
-	OutputFormats,
+	OutputFormats
 } from '../src/generate-files'
 import { parseTypescriptVersion, TypescriptVersion } from '../src/generator-util'
 

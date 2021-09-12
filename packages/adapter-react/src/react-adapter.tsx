@@ -5,7 +5,7 @@ import {
 	AsyncFormattersInitializer,
 	FormattersInitializer,
 	TranslationLoader,
-	TranslationLoaderAsync
+	TranslationLoaderAsync,
 } from '../../core/src/util.loader'
 import { i18nObject } from '../../core/src/util.object'
 
@@ -29,9 +29,10 @@ export type TypesafeI18nProps<L extends string> = {
 }
 
 export type ReactInit<
-L extends string = string,
+	L extends string = string,
 	T extends BaseTranslation = BaseTranslation,
-	TF extends TranslationFunctions = TranslationFunctions<T>> = {
+	TF extends TranslationFunctions = TranslationFunctions<T>,
+> = {
 	component: React.FunctionComponent<TypesafeI18nProps<L>>
 	context: React.Context<I18nContextType<L, T, TF>>
 }

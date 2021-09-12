@@ -3,8 +3,10 @@ import { derived, writable } from 'svelte/store'
 import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../core/src/core'
 import { getFallbackProxy } from '../../core/src/core-utils'
 import {
-	AsyncFormattersInitializer, FormattersInitializer, TranslationLoader,
-	TranslationLoaderAsync
+	AsyncFormattersInitializer,
+	FormattersInitializer,
+	TranslationLoader,
+	TranslationLoaderAsync,
 } from '../../core/src/util.loader'
 import { i18nObject } from '../../core/src/util.object'
 
@@ -17,17 +19,17 @@ export type SvelteStoreInit<
 	T extends BaseTranslation = BaseTranslation,
 	TF extends TranslationFunctions = TranslationFunctions<T>,
 	F extends BaseFormatters = BaseFormatters,
-	> = {
-		initI18n: (
-			newLocale: L,
-			getTranslationForLocaleCallback: TranslationLoader<L, T> | TranslationLoaderAsync<L, T>,
-			initFormattersCallback?: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F>,
-		) => Promise<void>
-		setLocale: (locale: L) => Promise<void>
-		isLoadingLocale: Readable<boolean>
-		locale: Readable<L>
-		LL: Readable<TF> & TF
-	}
+> = {
+	initI18n: (
+		newLocale: L,
+		getTranslationForLocaleCallback: TranslationLoader<L, T> | TranslationLoaderAsync<L, T>,
+		initFormattersCallback?: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F>,
+	) => Promise<void>
+	setLocale: (locale: L) => Promise<void>
+	isLoadingLocale: Readable<boolean>
+	locale: Readable<L>
+	LL: Readable<TF> & TF
+}
 
 // --------------------------------------------------------------------------------------------------------------------
 // implementation -----------------------------------------------------------------------------------------------------
@@ -38,8 +40,8 @@ export const getI18nSvelteStore = <
 	T extends BaseTranslation = BaseTranslation,
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 	F extends BaseFormatters = BaseFormatters,
-	>(
-		baseLocale: L = '' as L,
+>(
+	baseLocale: L = '' as L,
 ): SvelteStoreInit<L, T, TF, F> => {
 	const currentLocale = writable<L>(baseLocale)
 

@@ -7,10 +7,10 @@ import { i18nObject } from './util.object'
 
 export type LocaleTranslationFunctions<
 	L extends Locale = Locale,
-	TF extends TranslationFunctions = TranslationFunctions
-	> = {
-		[key in L]: TF
-	}
+	TF extends TranslationFunctions = TranslationFunctions,
+> = {
+	[key in L]: TF
+}
 
 export type LocaleTranslations<L extends Locale, T = unknown> = {
 	[key in L]: T
@@ -41,7 +41,7 @@ export const i18nObjectLoaderAsync = async <
 	L extends Locale,
 	T extends BaseTranslation,
 	TF extends TranslationFunctions<T>,
-	F extends BaseFormatters
+	F extends BaseFormatters,
 >(
 	locale: L,
 	getTranslationForLocale: TranslationLoaderAsync<L, T>,
@@ -68,7 +68,7 @@ export const i18nObjectLoader = <
 	L extends Locale,
 	T extends BaseTranslation,
 	TF extends TranslationFunctions<T>,
-	F extends BaseFormatters
+	F extends BaseFormatters,
 >(
 	locale: L,
 	getTranslationForLocale: TranslationLoader<L, T>,

@@ -4,7 +4,7 @@ import type { LocaleDetector } from '../../detect'
 
 export const initLocalStorageDetector =
 	(key = 'lang'): LocaleDetector =>
-		(): Locale[] =>
-			[window?.localStorage?.getItem(key)].filter(isTruthy)
+	(): Locale[] =>
+		[window?.localStorage?.getItem(key)].filter(isTruthy)
 
 export const localStorageDetector = initLocalStorageDetector()

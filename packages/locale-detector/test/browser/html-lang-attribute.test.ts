@@ -1,29 +1,27 @@
-import type { Locale } from '../../../core/src/core'
-
+import { isNotUndefined } from 'typesafe-utils'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-
+import type { Locale } from '../../../core/src/core'
 import { htmlLangAttributeDetector } from '../../src/detectors/browser/html-lang-attribute'
-import { isNotUndefined } from 'typesafe-utils'
 
 const test = suite('detector:html-lang')
 
 // --------------------------------------------------------------------------------------------------------------------
 
 const mockDocument = () =>
-({
-	createElement: (_tag: 'html'): HTMLHtmlElement =>
 	({
-		setAttribute: function (_key: 'lang', value: string) {
-			//@ts-ignore
-			this._lang = value
-		},
-		get lang(): string {
-			//@ts-ignore
-			return this._lang
-		},
-	} as HTMLHtmlElement),
-} as Document)
+		createElement: (_tag: 'html'): HTMLHtmlElement =>
+			({
+				setAttribute: function (_key: 'lang', value: string) {
+					//@ts-ignore
+					this._lang = value
+				},
+				get lang(): string {
+					//@ts-ignore
+					return this._lang
+				},
+			} as HTMLHtmlElement),
+	} as Document)
 
 const testDetector = (name: string, htmlLangValue: string | undefined, expected: Locale[]) =>
 	test(`html-lang-attribute ${name}`, () => {

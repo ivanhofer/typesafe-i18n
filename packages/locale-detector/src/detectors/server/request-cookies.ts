@@ -5,5 +5,5 @@ import { parseValueFromCookie } from '../_cookie.util'
 
 export const initRequestCookiesDetector =
 	(req: Request, key = 'lang'): LocaleDetector =>
-		(): Locale[] =>
-			parseValueFromCookie(req?.cookies, key)
+	(): Locale[] =>
+		parseValueFromCookie(req?.cookies, key)

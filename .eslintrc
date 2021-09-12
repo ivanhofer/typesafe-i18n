@@ -2,16 +2,11 @@
 	"root": true,
 	"parser": "@typescript-eslint/parser",
 	"plugins": ["@typescript-eslint", "prettier"],
-	"extends": [
-		"eslint:recommended",
-		"plugin:@typescript-eslint/eslint-recommended",
-		"plugin:@typescript-eslint/recommended",
-		"prettier"
-	],
+	"extends": ["eslint:recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "prettier"],
 	"rules": {
 		"indent": "off",
 		"no-console": "error",
-		"prettier/prettier": "off",
+		"prettier/prettier": ["warn"],
 		"@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
 		"@typescript-eslint/ban-ts-comment": "off"
 	}

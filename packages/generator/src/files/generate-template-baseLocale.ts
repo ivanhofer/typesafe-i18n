@@ -10,9 +10,7 @@ const getBaseLocaleTemplate = (baseLocale: string) => {
 	return `${tsCheck}
 ${importTypes('typesafe-i18n', 'BaseTranslation')}
 
-${jsDocImports(
-		{ from: `typesafe-i18n`, type: 'BaseTranslation' },
-	)}
+${jsDocImports({ from: `typesafe-i18n`, type: 'BaseTranslation' })}
 
 ${jsDocType('BaseTranslation')}
 ${shouldGenerateJsDoc ? 'module.exports' : `const ${sanitizedLocale}${type('BaseTranslation')}`} = {

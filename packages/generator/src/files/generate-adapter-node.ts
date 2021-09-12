@@ -8,19 +8,21 @@ const getNodeUtils = ({ utilFileName, loadLocalesAsync, banner }: GeneratorConfi
 ${banner}
 
 import { i18nString, i18nObject${loadLocalesAsync ? '' : ', i18n'} } from './${utilFileName}';
-${loadLocalesAsync
-			? ''
-			: `
+${
+	loadLocalesAsync
+		? ''
+		: `
 const L = i18n()
 `
-		}
+}
 export { i18nString, i18nObject${loadLocalesAsync ? '' : ', L'} }
-${loadLocalesAsync
-			? ''
-			: `
+${
+	loadLocalesAsync
+		? ''
+		: `
 export default L
 `
-		}`
+}`
 }
 
 export const generateNodeAdapter = async (config: GeneratorConfigWithDefaultValues): Promise<void> => {
