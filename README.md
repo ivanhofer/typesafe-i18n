@@ -64,7 +64,7 @@ $ npm install typesafe-i18n
 You can use `typesafe-i18n` in a variety of project-setups:
 
  - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/node) apis, backends, scripts, ...
- - [Svelte/Sapper/SvelteKit](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte) applications
+ - [Svelte, SvelteKit and Sapper](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte) applications
  - [React](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react) applications
  - [Browser](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/browser) projects
  - [other frameworks](#other-frameworks) like VueJS, Angular and others ...

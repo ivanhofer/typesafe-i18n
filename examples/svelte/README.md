@@ -24,8 +24,8 @@ Navigate to [http://localhost:5000](http://localhost:5000). You should see the e
 # Overview
  - [add `typesafe-i18n` to existing projects](#configure-typesafe-i18n-for-an-existing-svelte-project)
  - [available Svelte stores](#stores)
- - [Sapper projects](#sapper)
  - [SvelteKit projects](#sveltekit)
+ - [Sapper projects](#sapper)
  - [JavaScript projects](#usage-in-javascript-projects)
 
 
