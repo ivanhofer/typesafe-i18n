@@ -45,6 +45,8 @@ export const prettify = (content: string): string =>
 
 type LogLevel = 'info' | 'warn' | 'error'
 
+class TypesafeI18nParseError extends Error {}
+
 export type Logger = {
 	info: (...messages: Arguments) => void
 	warn: (...messages: Arguments) => void
@@ -62,10 +64,15 @@ const colorize = (logLevel: LogLevel, ...messages: string[]) =>
 const log = (console: Console, logLevel: LogLevel, ...messages: Arguments) =>
 	console[logLevel](...colorize(logLevel, '[typesafe-i18n]', ...messages))
 
-export const createLogger = (console: Console): Logger => ({
+const throwError = (console: Console, logLevel: LogLevel, ...messages: Arguments) => {
+	log(console, logLevel, ...messages)
+	throw new TypesafeI18nParseError()
+}
+
+export const createLogger = (console: Console, throwOnError = false): Logger => ({
 	info: log.bind(null, console, 'info'),
 	warn: log.bind(null, console, 'warn', 'WARNING:'),
-	error: log.bind(null, console, 'error', 'ERROR:'),
+	error: (throwOnError ? throwError : log).bind(null, console, 'error', 'ERROR:'),
 })
 
 export const logger = createLogger(console)

@@ -10,17 +10,19 @@ import {
 	doesPathExist,
 	getDirectoryStructure,
 	getFiles,
-	importFile,
+	importFile
 } from './file-utils'
 import {
 	generate,
 	GeneratorConfig,
 	GeneratorConfigWithDefaultValues,
 	getConfigWithDefaultValues,
-	readConfig,
+	readConfig
 } from './generate-files'
-import { logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
+import { createLogger, Logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
 import { configureOutputHandler, fileEnding, shouldGenerateJsDoc } from './output-handler'
+
+let logger: Logger
 
 const getAllLanguages = async (path: string) => {
 	const files = await getFiles(path, 1)
@@ -158,6 +160,8 @@ const debounce = (callback: () => void) =>
 	)
 
 export const startGenerator = async (config?: GeneratorConfig, watchFiles = true): Promise<void> => {
+	logger = createLogger(console, !watchFiles)
+
 	const configWithDefaultValues = await getConfigWithDefaultValues(config)
 	const { outputPath } = configWithDefaultValues
 

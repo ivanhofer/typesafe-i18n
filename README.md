@@ -19,10 +19,12 @@
 :speech_balloon: [supports plural rules](#plural)\
 :date: allows [formatting of values](#formatters) e.g. locale-dependent date or number formats\
 :arrows_counterclockwise: option for [asynchronous loading of locales](#loadLocalesAsync)\
+:stopwatch: supports SSR (Server-Side Rendering)\
 :handshake: can be used for [frontend, backend and API](#usage) projects\
 :mag: [locale-detection](#locale-detection) for browser and server environments\
-:no_entry: no external dependencies
+:no_entry: no external dependencies\
 
+<!-- list of supported emojis on GitHub: https://github.com/ikatyang/emoji-cheat-sheet -->
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -64,9 +66,9 @@ $ npm install typesafe-i18n
 You can use `typesafe-i18n` in a variety of project-setups:
 
  - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/node) apis, backends, scripts, ...
- - [Svelte, SvelteKit and Sapper](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte) applications
- - [React](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react) applications
- - [Browser](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/browser) projects
+ - [Svelte / SvelteKit / Sapper](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte) applications
+ - [React / Next.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react) applications
+ - [Browser (Vanilla JS)](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/browser) projects
  - [other frameworks](#other-frameworks) like VueJS, Angular and others ...
 
 
@@ -350,7 +352,7 @@ When running tests or scripts you can disable the watcher by passing the argumen
 > npx typesafe-i18n --no-watch
 ```
 
-This will only generate types once and **not** listen to changes in your locale files.
+This will only generate types once and **not** listen to changes in your locale files. The process will throw an `TypesafeI18nParseError` if a wrong syntax is detected in your base locale file.
 
 
 ### folder structure
