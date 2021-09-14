@@ -442,7 +442,7 @@ You can set options for the [generator](#typesafety) in order to get optimized o
 | [outputPath](#outputPath)                                 | `string`                                                       | `'./src/i18n/'`                               |
 | [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                           | `'TypeScript'`                                |
 | [typesFileName](#typesFileName)                           | `string`                                                       | `'i18n-types'`                                |
-| [esmSupport](#esmSupport)                                 | `boolean`                                                      | `false`                                       |
+| [esmImports](#esmImports)                                 | `boolean`                                                      | `false`                                       |
 | [utilFileName](#utilFileName)                             | `string`                                                       | `'i18n-util'`                                 |
 | [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                                       | `'formatters'`                                |
 | [typesTemplateFileName](#typesTemplateFileName)           | `string`                                                       | `'custom-types'`                              |
@@ -478,9 +478,9 @@ Folder in which the files should be generated and where your locale files are lo
 
 The programming language you use inside your code. If 'TypeScript' is selected, the generator will output TypeScript code and types. If you choose 'JavaScript' the generator will output typesafe JavaScript code annotated with [JSDoc-comments](#jsdoc).
 
-#### `esmSupport`
+#### `esmImports`
 
-If `true` generated files will import files with `.js` extension.
+If `true` generated files will import other files with the `.js` file extension. This makes it compatible with ESM packages that have specified `"type": "module"` in their `package.json` file.
 
 #### `typesFileName`
 
