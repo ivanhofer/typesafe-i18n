@@ -10,6 +10,7 @@ import {
 	jsDocTsIgnore,
 	jsDocType,
 	OVERRIDE_WARNING,
+	relativeFileImportPath,
 	tsCheck,
 	type,
 	typeCast
@@ -22,7 +23,7 @@ const getLocalesTranslationRowAsync = (locale: Locale): string => {
 	const wrappedLocale = needsEscaping ? `'${locale}'` : locale
 
 	return `
-	${wrappedLocale}: () => import('./${locale}'),`
+	${wrappedLocale}: () => import('${relativeFileImportPath(locale)}'),`
 }
 
 const getAsyncCode = ({ locales }: GeneratorConfigWithDefaultValues) => {
@@ -67,11 +68,11 @@ const getLocalesTranslationRowSync = (locale: Locale, baseLocale: string): strin
 	${wrappedLocale}${postfix},`
 }
 
-const getSyncCode = ({ baseLocale, locales, esmImports }: GeneratorConfigWithDefaultValues) => {
+const getSyncCode = ({ baseLocale, locales }: GeneratorConfigWithDefaultValues) => {
 	const localesImports = locales
 		.map(
 			(locale) => `
-import ${sanitizeLocale(locale)} from './${locale}${esmImports ? '.js' : ''}'`,
+import ${sanitizeLocale(locale)} from '${relativeFileImportPath(locale)}'`,
 		)
 		.join('')
 
@@ -111,7 +112,6 @@ const getUtil = (config: GeneratorConfigWithDefaultValues): string => {
 		formattersTemplateFileName: formattersTemplatePath,
 		loadLocalesAsync,
 		baseLocale,
-		esmImports,
 		locales,
 		banner,
 	} = config
@@ -145,16 +145,10 @@ ${jsDocImports(
 )}
 
 ${dynamicImports}
-${importTypes(
-	`./${typesFileName}${esmImports ? '.js' : ''}`,
-	'Translation',
-	'TranslationFunctions',
-	'Formatters',
-	'Locales',
-)}
+${importTypes(`./${typesFileName}`, 'Translation', 'TranslationFunctions', 'Formatters', 'Locales')}
 ${importTypes('typesafe-i18n/detectors', 'LocaleDetector')}
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
-import { initFormatters } from './${formattersTemplatePath}${esmImports ? '.js' : ''}'
+import { initFormatters } from '${relativeFileImportPath(formattersTemplatePath)}'
 
 ${jsDocType('Locales')}
 export const baseLocale${type('Locales')} = '${baseLocale}'
