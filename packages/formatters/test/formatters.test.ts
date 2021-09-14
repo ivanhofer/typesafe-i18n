@@ -1,7 +1,7 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 import { i18nObject, i18nString } from '../../core/src/index'
-import { date, identity, ignore, lowercase, number, replace, time, uppercase } from '../src'
+import { date, identity, ignore, lowercase, number, replace, uppercase } from '../src'
 
 const test = suite('formatters')
 
@@ -11,7 +11,6 @@ const translation = {
 	LOWERCASE: 'This should be {0|lowercase}.',
 	CENSOR_NUMBERS: 'Your PIN is {0|censorNumbers}',
 	DATE_EN: 'The date is {0|dateEN}.',
-	TIME_EN: 'The time is {0|timeEN}.',
 	DATE_CUSTOM: 'The date is {0|dateCUSTOM}.',
 	NUMBER: 'Price: {total:number|currency}',
 	NO_SPACES: '{0|noSpaces}',
@@ -26,7 +25,6 @@ const formatters = {
 	lowercase,
 	censorNumbers: replace(/[0-9]/g, '*'),
 	dateEN: date('en'),
-	timeEN: time('en', { timeStyle: 'short' }),
 	dateCUSTOM: date('en', { day: 'numeric', month: 'long', year: '2-digit' }),
 	noSpaces: (value: string) => value.replace(/\s/g, ''),
 	ignore,
@@ -53,8 +51,6 @@ test('lowercase', () => assert.is(LL.LOWERCASE('SMALL'), 'This should be small.'
 test('censor numbers', () => assert.is(LL.CENSOR_NUMBERS('1234'), 'Your PIN is ****'))
 
 test('date en', () => assert.is(LL.DATE_EN(someDate), 'The date is 3/13/2020.'))
-
-test('time en', () => assert.is(LL.TIME_EN(someDate), 'The time is 1:00 AM.'))
 
 test('date custom', () => assert.is(LL.DATE_CUSTOM(someDate), 'The date is March 13, 20.'))
 
