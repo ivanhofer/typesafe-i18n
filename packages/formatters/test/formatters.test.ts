@@ -42,7 +42,7 @@ test('LLL uppercase', () => assert.is(LLL('This is a {0|uppercase}', 'test'), 'T
 
 const LL = i18nObject('en', translation, formatters)
 
-const someDate = new Date('2020-03-13')
+const someDate = new Date(1584057600000)
 
 test('uppercase', () => assert.is(LL.UPPERCASE('test'), 'This is a TEST.'))
 
