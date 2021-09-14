@@ -1,9 +1,14 @@
 # CHANGELOG.md
 
-## 2.38.0 (2021-09-??)
+## 2.39.0 (2021-09-??)
 
 Feature:
  - add full `esm` support [#80](https://github.com/ivanhofer/typesafe-i18n/issues/80)
+ 
+## 2.38.0 (2021-09-14)
+
+Feature:
+ - throw an Error when generator detects wrong input syntax when running with `--no-watch` option
 
 ## 2.37.4 (2021-08-26)
 

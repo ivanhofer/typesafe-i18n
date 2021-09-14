@@ -179,6 +179,8 @@ testGeneratedOutput('formatters-with-dashes', { FORMATTER: '{0|custom-formatter|
 
 testGeneratedOutput('formatters-with-spaces', { FORMATTER: '{0| custom formatter | and another }' })
 
+testGeneratedOutput('formatter-chaining', { CHAINING: '{count:number|sqrt|round}' })
+
 testGeneratedOutput('base-locale-de', {}, { baseLocale: 'de' })
 
 testGeneratedOutput('multiple-locales', {}, { locales: ['de', 'en', 'it'] })
@@ -217,6 +219,10 @@ testGeneratedOutput('same-keyed-param', { SAME_KEYED_PARAM: '{name} {name} {name
 testGeneratedOutput('only-plural-rules', { ONLY_PLURAL: 'apple{{s}}', ONLY_SINGULAR_PLURAL: '{{Afpel|Äpfel}}' })
 
 testGeneratedOutput('plural-part-before-key', { PLURAL_BEFORE_KEY: 'apple{{s}}: {nrOfApples:number}' })
+
+testGeneratedOutput('plural-part-without-output', {
+	PLURAL_WITHOUT_OUTPUT: 'New message{{nrOfMessages:s}} in {inbox:InboxType}',
+})
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -325,24 +331,6 @@ testGeneratedOutput(
 	'adapter-react-sync-jsdoc',
 	{ HELLO_REACT: 'Hi {0:name}' },
 	{ adapter: 'react', adapterFileName: reactAdapterFileName, loadLocalesAsync: false, outputFormat: 'JavaScript' },
-)
-
-// --------------------------------------------------------------------------------------------------------------------
-
-testGeneratedOutput('esm-imports-async', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true })
-
-testGeneratedOutput('esm-imports-sync', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true, loadLocalesAsync: false })
-
-testGeneratedOutput(
-	'esm-imports-async-jsdoc',
-	{ HELLO_ESM: 'Hi {0:name}' },
-	{ esmImports: true, outputFormat: 'JavaScript' },
-)
-
-testGeneratedOutput(
-	'esm-imports-sync-jsdoc',
-	{ HELLO_ESM: 'Hi {0:name}' },
-	{ esmImports: true, loadLocalesAsync: false, outputFormat: 'JavaScript' },
 )
 
 // --------------------------------------------------------------------------------------------------------------------
