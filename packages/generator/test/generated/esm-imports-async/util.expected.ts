@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 import { i18nString as initI18nString, i18nObjectLoaderAsync } from 'typesafe-i18n'
-import type { Translation, TranslationFunctions, Formatters, Locales } from './types.actual.js'
+import type { Translation, TranslationFunctions, Formatters, Locales } from './types.actual'
 import type { LocaleDetector } from 'typesafe-i18n/detectors'
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
 import { initFormatters } from './formatters-template.actual.js'
@@ -14,7 +14,7 @@ export const locales: Locales[] = [
 ]
 
 const localeTranslationLoaders = {
-	en: () => import('./en'),
+	en: () => import('./en.js'),
 }
 
 export const getTranslationForLocale = async (locale: Locales) => (await (localeTranslationLoaders[locale] || localeTranslationLoaders[baseLocale])()).default as Translation

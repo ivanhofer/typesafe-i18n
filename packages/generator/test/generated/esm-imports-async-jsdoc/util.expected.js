@@ -26,7 +26,7 @@ export const locales = [
 
 /** @type { Record<Locales, () => Promise<any>> } */
 const localeTranslationLoaders = {
-	en: () => import('./en'),
+	en: () => import('./en.js'),
 }
 
 /**
