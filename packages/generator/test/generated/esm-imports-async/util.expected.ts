@@ -14,7 +14,7 @@ export const locales: Locales[] = [
 ]
 
 const localeTranslationLoaders = {
-	en: () => import('./en.js'),
+	en: () => import('./en/index.js'),
 }
 
 export const getTranslationForLocale = async (locale: Locales) => (await (localeTranslationLoaders[locale] || localeTranslationLoaders[baseLocale])()).default as Translation

@@ -25,7 +25,7 @@ export const locales = [
 	'en'
 ]
 
-import en from './en.js'
+import en from './en/index.js'
 
 /** @type { LocaleTranslations } */
 const localeTranslations = {

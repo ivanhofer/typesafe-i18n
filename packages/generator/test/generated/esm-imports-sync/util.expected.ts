@@ -14,7 +14,7 @@ export const locales: Locales[] = [
 	'en'
 ]
 
-import en from './en.js'
+import en from './en/index.js'
 
 const localeTranslations: LocaleTranslations<Locales, Translation> = {
 	en: en as Translation,

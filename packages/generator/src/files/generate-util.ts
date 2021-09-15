@@ -11,6 +11,7 @@ import {
 	jsDocType,
 	OVERRIDE_WARNING,
 	relativeFileImportPath,
+	relativeFolderImportPath,
 	tsCheck,
 	type,
 	typeCast
@@ -23,7 +24,7 @@ const getLocalesTranslationRowAsync = (locale: Locale): string => {
 	const wrappedLocale = needsEscaping ? `'${locale}'` : locale
 
 	return `
-	${wrappedLocale}: () => import('${relativeFileImportPath(locale)}'),`
+	${wrappedLocale}: () => import('${relativeFolderImportPath(locale)}'),`
 }
 
 const getAsyncCode = ({ locales }: GeneratorConfigWithDefaultValues) => {
@@ -72,7 +73,7 @@ const getSyncCode = ({ baseLocale, locales }: GeneratorConfigWithDefaultValues) 
 	const localesImports = locales
 		.map(
 			(locale) => `
-import ${sanitizeLocale(locale)} from '${relativeFileImportPath(locale)}'`,
+import ${sanitizeLocale(locale)} from '${relativeFolderImportPath(locale)}'`,
 		)
 		.join('')
 
