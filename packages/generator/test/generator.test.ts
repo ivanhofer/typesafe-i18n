@@ -335,6 +335,24 @@ testGeneratedOutput(
 
 // --------------------------------------------------------------------------------------------------------------------
 
+testGeneratedOutput('esm-imports-async', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true })
+
+testGeneratedOutput('esm-imports-sync', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true, loadLocalesAsync: false })
+
+testGeneratedOutput(
+	'esm-imports-async-jsdoc',
+	{ HELLO_ESM: 'Hi {0:name}' },
+	{ esmImports: true, outputFormat: 'JavaScript' },
+)
+
+testGeneratedOutput(
+	'esm-imports-sync-jsdoc',
+	{ HELLO_ESM: 'Hi {0:name}' },
+	{ esmImports: true, loadLocalesAsync: false, outputFormat: 'JavaScript' },
+)
+
+// --------------------------------------------------------------------------------------------------------------------
+
 const tsTestTranslation = { TEST: 'Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}' }
 
 testGeneratedOutput('typescript-3.0', tsTestTranslation, {}, parseTypescriptVersion('3.0'))

@@ -10,9 +10,10 @@ import {
 	jsDocTsIgnore,
 	jsDocType,
 	OVERRIDE_WARNING,
+	relativeFileImportPath,
 	tsCheck,
 	type,
-	typeCast,
+	typeCast
 } from '../output-handler'
 
 const getLocalesTranslationRowAsync = (locale: Locale): string => {
@@ -22,7 +23,7 @@ const getLocalesTranslationRowAsync = (locale: Locale): string => {
 	const wrappedLocale = needsEscaping ? `'${locale}'` : locale
 
 	return `
-	${wrappedLocale}: () => import('./${locale}'),`
+	${wrappedLocale}: () => import('${relativeFileImportPath(locale)}'),`
 }
 
 const getAsyncCode = ({ locales }: GeneratorConfigWithDefaultValues) => {
@@ -71,7 +72,7 @@ const getSyncCode = ({ baseLocale, locales }: GeneratorConfigWithDefaultValues) 
 	const localesImports = locales
 		.map(
 			(locale) => `
-import ${sanitizeLocale(locale)} from './${locale}'`,
+import ${sanitizeLocale(locale)} from '${relativeFileImportPath(locale)}'`,
 		)
 		.join('')
 
@@ -147,7 +148,7 @@ ${dynamicImports}
 ${importTypes(`./${typesFileName}`, 'Translation', 'TranslationFunctions', 'Formatters', 'Locales')}
 ${importTypes('typesafe-i18n/detectors', 'LocaleDetector')}
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
-import { initFormatters } from './${formattersTemplatePath}'
+import { initFormatters } from '${relativeFileImportPath(formattersTemplatePath)}'
 
 ${jsDocType('Locales')}
 export const baseLocale${type('Locales')} = '${baseLocale}'
