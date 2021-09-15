@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.39.1 (2021-09-15)
+
+Bugfix:
+ - fix import folders when using `esm` support
+
 ## 2.39.0 (2021-09-15)
 
 Feature:
