@@ -31,6 +31,6 @@ export const partAsStringWithoutTypes = (part: Part): string => {
 }
 
 export const getFallbackProxy = <TF extends TranslationFunctions>(prefixKey?: string): TF =>
-	new Proxy((prefixKey ? (() => prefixKey) : {}) as TF, {
+	new Proxy((prefixKey ? () => prefixKey : {}) as TF, {
 		get: (_target, key: string) => getFallbackProxy(prefixKey ? `${prefixKey}.${key}` : key),
 	})

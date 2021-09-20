@@ -3,7 +3,7 @@ import { dirname, join, resolve } from 'path'
 import { logger } from './generator-util'
 import { fileEnding } from './output-handler'
 
-const { readFile: read, readdir, writeFile, mkdir, stat, copyFile: cp, rm } = fsPromises
+const { readFile: read, readdir, writeFile, mkdir, stat, rm } = fsPromises
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -52,16 +52,6 @@ export const createPathIfNotExits = async (path: string): Promise<void> => {
 	}
 }
 
-export const copyFile = async (fromPath: string, toPath: string, showError = true): Promise<boolean> => {
-	try {
-		await cp(fromPath, toPath)
-		return true
-	} catch (e) {
-		showError && logger.error(`copyFile: ${fromPath} - ${toPath}`, e)
-		return false
-	}
-}
-
 export const deleteFolderRecursive = async (path: string): Promise<boolean> => {
 	try {
 		await rm(path, { recursive: true })
@@ -73,9 +63,7 @@ export const deleteFolderRecursive = async (path: string): Promise<boolean> => {
 }
 
 const getFileName = (path: string, file: string) => {
-	const ext = file.endsWith(fileEnding) || file.endsWith(`${fileEnding}x`) || file.endsWith('.d.ts')
-		? ''
-		: fileEnding
+	const ext = file.endsWith(fileEnding) || file.endsWith(`${fileEnding}x`) || file.endsWith('.d.ts') ? '' : fileEnding
 	return join(path, `${file}${ext}`)
 }
 
@@ -131,9 +119,12 @@ export const getDirectoryStructure = async (path: string): Promise<Record<string
 	const entries = await readdir(path, { withFileTypes: true })
 	const folders = entries.filter((folder) => folder.isDirectory())
 
-	const promises = folders.map(({ name }) => new Promise<[string, Record<string, unknown>]>(
-		(r) => getDirectoryStructure(resolve(path, name)).then(x => r([name, x]))
-	))
+	const promises = folders.map(
+		({ name }) =>
+			new Promise<[string, Record<string, unknown>]>((r) =>
+				getDirectoryStructure(resolve(path, name)).then((x) => r([name, x])),
+			),
+	)
 
 	return Object.fromEntries(await Promise.all(promises))
 }

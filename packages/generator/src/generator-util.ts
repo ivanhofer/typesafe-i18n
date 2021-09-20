@@ -35,14 +35,17 @@ export const parseTypescriptVersion = (versionMajorMinor: `${number}.${number}`)
 
 export const sanitizeLocale = (locale: Locale): Locale => locale.replace(/-/g, '_')
 
-export const prettify = (content: string): string => content
-	.replace(/^(\n)+/, '') // remove all new-lines on top of the file
-	.replace(/\n\n+/g, '\n\n') // remove multiple new-lines
-	.replace(/(\n)+$/, '\n') // remove all multiple trailing new-lines
+export const prettify = (content: string): string =>
+	content
+		.replace(/^(\n)+/, '') // remove all new-lines on top of the file
+		.replace(/\n\n+/g, '\n\n') // remove multiple new-lines
+		.replace(/(\n)+$/, '\n') // remove all multiple trailing new-lines
 
 // --------------------------------------------------------------------------------------------------------------------
 
 type LogLevel = 'info' | 'warn' | 'error'
+
+class TypesafeI18nParseError extends Error {}
 
 export type Logger = {
 	info: (...messages: Arguments) => void
@@ -51,22 +54,25 @@ export type Logger = {
 }
 
 const colorMap = {
-	'warn': 'yellow',
-	'error': 'red',
+	warn: 'yellow',
+	error: 'red',
 } as const
 
 const colorize = (logLevel: LogLevel, ...messages: string[]) =>
-	(logLevel === 'info')
-		? messages
-		: [kleur[colorMap[logLevel]]().bold(messages.join(' '))]
+	logLevel === 'info' ? messages : [kleur[colorMap[logLevel]]().bold(messages.join(' '))]
 
 const log = (console: Console, logLevel: LogLevel, ...messages: Arguments) =>
 	console[logLevel](...colorize(logLevel, '[typesafe-i18n]', ...messages))
 
-export const createLogger = (console: Console): Logger => ({
+const throwError = (console: Console, logLevel: LogLevel, ...messages: Arguments) => {
+	log(console, logLevel, ...messages)
+	throw new TypesafeI18nParseError()
+}
+
+export const createLogger = (console: Console, throwOnError = false): Logger => ({
 	info: log.bind(null, console, 'info'),
 	warn: log.bind(null, console, 'warn', 'WARNING:'),
-	error: log.bind(null, console, 'error', 'ERROR:'),
+	error: (throwOnError ? throwError : log).bind(null, console, 'error', 'ERROR:'),
 })
 
 export const logger = createLogger(console)

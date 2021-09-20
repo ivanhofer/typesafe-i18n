@@ -1,5 +1,35 @@
 # CHANGELOG.md
 
+## 2.39.1 (2021-09-15)
+
+Bugfix:
+ - fix import folders when using `esm` support
+
+## 2.39.0 (2021-09-15)
+
+Feature:
+ - add full `esm` support [#80](https://github.com/ivanhofer/typesafe-i18n/issues/80)
+
+## 2.38.0 (2021-09-14)
+
+Feature:
+ - throw an Error when generator detects wrong input syntax when running with `--no-watch` option
+
+## 2.37.4 (2021-08-26)
+
+Bugfix:
+ - correctly detect changes in files imported by `[baseLocale]/index.ts` [#76](https://github.com/ivanhofer/typesafe-i18n/issues/76)
+
+## 2.37.3 (2021-08-25)
+
+Bugfix:
+ - allow to generate base files if base locale is not present yet
+
+## 2.37.2 (2021-08-25)
+
+Fix:
+ - import path of types for `time` formatter
+
 ## 2.37.1 (2021-08-25)
 
 Fix:

@@ -10,3 +10,4 @@ node_modules
 /svelte
 /webpack
 rollup.config.js
+/packages/generator/test/generated

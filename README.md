@@ -19,10 +19,12 @@
 :speech_balloon: [supports plural rules](#plural)\
 :date: allows [formatting of values](#formatters) e.g. locale-dependent date or number formats\
 :arrows_counterclockwise: option for [asynchronous loading of locales](#loadLocalesAsync)\
+:stopwatch: supports SSR (Server-Side Rendering)\
 :handshake: can be used for [frontend, backend and API](#usage) projects\
 :mag: [locale-detection](#locale-detection) for browser and server environments\
-:no_entry: no external dependencies
+:no_entry: no external dependencies\
 
+<!-- list of supported emojis on GitHub: https://github.com/ikatyang/emoji-cheat-sheet -->
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -38,7 +40,7 @@
 - [Locale-detection](#locale-detection)
 - [Sizes](#sizes)
 - [Performance](#performance)
-- [FAQ](#faq)
+- [FAQs](#faqs)
 
 
 
@@ -64,9 +66,9 @@ $ npm install typesafe-i18n
 You can use `typesafe-i18n` in a variety of project-setups:
 
  - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/node) apis, backends, scripts, ...
- - [Svelte/Sapper/SvelteKit](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte) applications
- - [React](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react) applications
- - [Browser](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/browser) projects
+ - [Svelte / SvelteKit / Sapper](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte) applications
+ - [React / Next.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react) applications
+ - [Browser (Vanilla JS)](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/browser) projects
  - [other frameworks](#other-frameworks) like VueJS, Angular and others ...
 
 
@@ -350,7 +352,7 @@ When running tests or scripts you can disable the watcher by passing the argumen
 > npx typesafe-i18n --no-watch
 ```
 
-This will only generate types once and **not** listen to changes in your locale files.
+This will only generate types once and **not** listen to changes in your locale files. The process will throw an `TypesafeI18nParseError` if a wrong syntax is detected in your base locale file.
 
 
 ### folder structure
@@ -440,6 +442,7 @@ You can set options for the [generator](#typesafety) in order to get optimized o
 | [outputPath](#outputPath)                                 | `string`                                                       | `'./src/i18n/'`                               |
 | [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                           | `'TypeScript'`                                |
 | [typesFileName](#typesFileName)                           | `string`                                                       | `'i18n-types'`                                |
+| [esmImports](#esmImports)                                 | `boolean`                                                      | `false`                                       |
 | [utilFileName](#utilFileName)                             | `string`                                                       | `'i18n-util'`                                 |
 | [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                                       | `'formatters'`                                |
 | [typesTemplateFileName](#typesTemplateFileName)           | `string`                                                       | `'custom-types'`                              |
@@ -449,61 +452,65 @@ You can set options for the [generator](#typesafety) in order to get optimized o
 | [banner](#banner)                                         | `string`                                                       | `'/* eslint-disable */'`                      |
 
 
-#### baseLocale
+#### `baseLocale`
 
 Defines which locale to use for the types generation. You can find more information on how to structure your locales [here](#locales).
 
-#### locales
+#### `locales`
 
 Specifies the locales you want to use. This can be useful if you want to create an own bundle for each locale. If you want to include only certain locales, you need to set the locales you want to use. If empty, all locales will be used.
 
 > Note: requires the usage of the [rollup-plugin](#rollup-plugin)
 
-#### loadLocalesAsync
+#### `loadLocalesAsync`
 
 Whether to generate code that loads the locales asynchronously. If set to `true`, a locale will be loaded, when you first access it. If set to `false` all locales will be loaded when you init the i18n-functions.
 
-#### adapter
+#### `adapter`
 
 If this config is set, code will be generated that wraps i18n functions into useful helpers for that environment e.g. a `svelte`-store.
 
-#### outputPath
+#### `outputPath`
 
 Folder in which the files should be generated and where your locale files are located.
 
-#### outputFormat
+#### `outputFormat`
 
 The programming language you use inside your code. If 'TypeScript' is selected, the generator will output TypeScript code and types. If you choose 'JavaScript' the generator will output typesafe JavaScript code annotated with [JSDoc-comments](#jsdoc).
 
-#### typesFileName
+#### `esmImports`
+
+If `true` generated files will import other files with the `.js` file extension. This makes it compatible with ESM packages that have specified `"type": "module"` in their `package.json` file.
+
+#### `typesFileName`
 
 Name for the file where the types for your locales are generated.
 
-#### utilFileName
+#### `utilFileName`
 
 Name for the file where the typesafe i18n-functions are generated.
 
-#### formattersTemplateFileName
+#### `formattersTemplateFileName`
 
 Name for the file where you can configure your formatters.
 
-#### typesTemplateFileName
+#### `typesTemplateFileName`
 
 Name for the file where you can configure your custom-types.
 
-#### adapterFileName
+#### `adapterFileName`
 
 Name for the file when generating output for an adapter. The default filename is `i18n-[adapter]`.
 
-#### generateOnlyTypes
+#### `generateOnlyTypes`
 
 If you don't want to use the auto-generated helpers and instead write your own wrappers, you can set this option to `true`.
 
-#### tempPath
+#### `tempPath`
 
 Folder where the generator can store temporary files. These files are generated when your base locale is analyzed and the types are generated. The folder will be cleared, after the types were generated. So make sure you use an empty folder, if you change this option.
 
-#### banner
+#### `banner`
 
 This text will be output on top of all auto-generated files. It is meant to add a custom disable-linter comment. Since every project can have different lint rules, we want to disable linting on those files.
 
@@ -765,14 +772,28 @@ You can specify your own formatters, that take an argument as an input and retur
 
 ```typescript
 const formatters = {
-   roiCalculator: (value) => {
-      return (value * 4.2) - 7
-   }
+   roiCalculator: (value) => (value * 4.2) - 7
 }
 
 LLL('Invest ${0} and get ${0|roiCalculator} in return', 100)
 // => 'Invest $100 and get $413 in return'
 ```
+
+### chaining formatters
+
+If you need to apply multiple formatters to the same argument, you can chain them by using the pipe `|` operator:
+
+```typescript
+const formatters = {
+   sqrt: (value) => Math.sqrt(value),
+   round: (value) => Math.round(value),
+}
+
+LLL('Result: {0|sqrt|round}', 5)
+// => 'Result: 2'
+```
+
+> The formatters get applied from left to right. So in this example `5` will be the input for the `sqrt` formatter, that will return `2.23606797749979`. This value then gets passed to the `round` formatter that will output `2`.
 
 <!-- TODO: create examples for date-fns or other common formatters -->
 
@@ -1211,7 +1232,7 @@ If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
-## FAQ
+## FAQs
 
 ### I added a new translation to my locale file, but TypeScript gives me the Error `Property 'XYZ' does not exist on type 'TranslationFunctions'`
 
@@ -1454,7 +1475,7 @@ A better approach would be to create a custom formatter e.g.
    ```
 
 
-### Why does the translation function return a type of `LocalizedString` and not the tpe `string` itself?
+### Why does the translation function return a type of `LocalizedString` and not the type `string` itself?
 
 With the help of `LocalizedString` you could enforce texts in your application to be translated. Lets take an Error message as example:
 

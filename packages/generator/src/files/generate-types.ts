@@ -15,7 +15,7 @@ import {
 	sortStringASC,
 	sortStringPropertyASC,
 	TypeGuard,
-	uniqueArray
+	uniqueArray,
 } from 'typesafe-utils'
 import { BaseTranslation, isPluralPart } from '../../../core/src/core'
 import { partAsStringWithoutTypes, partsAsStringWithoutTypes, removeEmptyValues } from '../../../core/src/core-utils'
@@ -24,7 +24,12 @@ import { parseRawText } from '../../../core/src/parser'
 import { writeFileIfContainsChanges } from '../file-utils'
 import type { GeneratorConfigWithDefaultValues } from '../generate-files'
 import { getPermutations, Logger, prettify } from '../generator-util'
-import { fileEndingForTypesFile, importTypeStatement, OVERRIDE_WARNING, supportsTemplateLiteralTypes } from '../output-handler'
+import {
+	fileEndingForTypesFile,
+	importTypeStatement,
+	OVERRIDE_WARNING,
+	supportsTemplateLiteralTypes,
+} from '../output-handler'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -62,8 +67,8 @@ type ParsedResultEntry = {
 type ParsedResult =
 	| ParsedResultEntry
 	| {
-		[key: string]: ParsedResult[]
-	}
+			[key: string]: ParsedResult[]
+	  }
 
 // --------------------------------------------------------------------------------------------------------------------
 // implementation -----------------------------------------------------------------------------------------------------
@@ -84,48 +89,61 @@ const createUnionType = (entries: string[]) =>
 	| '${locale}'`,
 	)
 
-
 const NEW_LINE = `
 `
 const NEW_LINE_INDENTED = `
 	`
 const COMMA_SEPARATION = ', '
 
-const mapToString = <T>(items: T[], mappingFunction: (item: T) => string): string =>
-	items.map(mappingFunction).join('')
+const mapToString = <T>(items: T[], mappingFunction: (item: T) => string): string => items.map(mappingFunction).join('')
 
-const processNestedParsedResult = (items: Exclude<ParsedResult, ParsedResultEntry>, mappingFunction: (item: ParsedResult) => string): string =>
-(NEW_LINE_INDENTED +
-	mapToString(Object.entries(items), ([key, parsedResults]) =>
-		`'${key}': {${mapToString(parsedResults, mappingFunction)
-			.split(/\r?\n/)
-			.map((line) => `	${line}`).join(NEW_LINE)}
-	}`
+const processNestedParsedResult = (
+	items: Exclude<ParsedResult, ParsedResultEntry>,
+	mappingFunction: (item: ParsedResult) => string,
+): string =>
+	NEW_LINE_INDENTED +
+	mapToString(
+		Object.entries(items),
+		([key, parsedResults]) =>
+			`'${key}': {${mapToString(parsedResults, mappingFunction)
+				.split(/\r?\n/)
+				.map((line) => `	${line}`)
+				.join(NEW_LINE)}
+	}`,
 	)
-)
 
-const getNestedKey = (key: string, parentKeys: string[]) =>
-	[...parentKeys, key].join('.')
+const getNestedKey = (key: string, parentKeys: string[]) => [...parentKeys, key].join('.')
 
-
-const flattenToParsedResultEntry = (parsedResults: ParsedResult[]): ParsedResultEntry[] => parsedResults.flatMap((parsedResult) => (isParsedResultEntry(parsedResult))
-	? parsedResult
-	: Object.entries(parsedResult).flatMap(([_, nestedParsedResults]) => flattenToParsedResultEntry(nestedParsedResults))
-)
+const flattenToParsedResultEntry = (parsedResults: ParsedResult[]): ParsedResultEntry[] =>
+	parsedResults.flatMap((parsedResult) =>
+		isParsedResultEntry(parsedResult)
+			? parsedResult
+			: Object.entries(parsedResult).flatMap(([_, nestedParsedResults]) =>
+					flattenToParsedResultEntry(nestedParsedResults),
+			  ),
+	)
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const parseTranslations = (translations: BaseTranslation, logger: Logger, parentKeys = [] as string[]): ParsedResult[] =>
+const parseTranslations = (
+	translations: BaseTranslation,
+	logger: Logger,
+	parentKeys = [] as string[],
+): ParsedResult[] =>
 	isObject(translations)
 		? Object.entries(translations).map(([key, text]) => {
-			if (isString(text)) {
-				return parseTranslationEntry([key, text], logger, parentKeys) as ParsedResultEntry
-			}
-			return { [key]: parseTranslations(text, logger, [...parentKeys, key]) } as ParsedResult
-		})
+				if (isString(text)) {
+					return parseTranslationEntry([key, text], logger, parentKeys) as ParsedResultEntry
+				}
+				return { [key]: parseTranslations(text, logger, [...parentKeys, key]) } as ParsedResult
+		  })
 		: []
 
-const parseTranslationEntry = ([key, text]: [string, string], logger: Logger, parentKeys: string[]): ParsedResult | null => {
+const parseTranslationEntry = (
+	[key, text]: [string, string],
+	logger: Logger,
+	parentKeys: string[],
+): ParsedResult | null => {
 	const parsedParts = parseRawText(text, false)
 	const textWithoutTypes = partsAsStringWithoutTypes(parsedParts)
 
@@ -172,7 +190,9 @@ const validateTranslation = (key: string, types: Types, logger: Logger): boolean
 	const base = `translation '${key}' =>`
 
 	if (key.includes('.')) {
-		logger.error(`${base} key can't contain the '.' character. Please remove it. If you want to nest keys, you should look at https://github.com/ivanhofer/typesafe-i18n#nested-translations`)
+		logger.error(
+			`${base} key can't contain the '.' character. Please remove it. If you want to nest keys, you should look at https://github.com/ivanhofer/typesafe-i18n#nested-translations`,
+		)
 		return false
 	}
 
@@ -181,9 +201,9 @@ const validateTranslation = (key: string, types: Types, logger: Logger): boolean
 		let expectedKey = '0'
 		for (const argKey of argKeys) {
 			if (argKey !== expectedKey) {
-				const info = (isNaN(+argKey))
-					? (`You can't mix keyed and index-based arguments.`)
-					: (`Make sure to not skip an index for your arguments.`)
+				const info = isNaN(+argKey)
+					? `You can't mix keyed and index-based arguments.`
+					: `Make sure to not skip an index for your arguments.`
 
 				logger.error(`${base} argument {${expectedKey}} expected, but {${argKey}} found.`, info)
 				return false
@@ -204,9 +224,18 @@ const createLocalesType = (locales: string[], baseLocale: string) => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const BASE_TYPES = ['boolean', 'number', 'bigint', 'string', 'Date', 'object', 'undefined', 'null', 'unknown', 'LocalizedString'].flatMap(
-	(t: string) => [t, `${t}[]`],
-)
+const BASE_TYPES = [
+	'boolean',
+	'number',
+	'bigint',
+	'string',
+	'Date',
+	'object',
+	'undefined',
+	'null',
+	'unknown',
+	'LocalizedString',
+].flatMap((t: string) => [t, `${t}[]`])
 
 const isParsedResultEntry = <T extends ParsedResult>(entry: T): entry is TypeGuard<ParsedResultEntry, T> =>
 	isArray(entry.parentKeys) && isObject(entry.types)
@@ -220,10 +249,7 @@ const extractTypes = (parsedTranslations: ParsedResult[]): string[] =>
 		return extractTypes(Object.values(parsedTranslation).flat())
 	})
 
-const createTypeImports = (
-	parsedTranslations: ParsedResult[],
-	typesTemplatePath: string,
-): string => {
+const createTypeImports = (parsedTranslations: ParsedResult[], typesTemplatePath: string): string => {
 	const types = extractTypes(parsedTranslations).filter(filterDuplicates)
 
 	const externalTypes = Array.from(types)
@@ -248,7 +274,7 @@ const createJsDocsMapping = (parsedTranslations: ParsedResult[]) => {
 		map[nestedKey] = {
 			text: textWithoutTypes,
 			types,
-			pluralOnlyArgs: args.filter(isPropertyTrue('pluralOnly')).map(({ key }) => key)
+			pluralOnlyArgs: args.filter(isPropertyTrue('pluralOnly')).map(({ key }) => key),
 		}
 	})
 
@@ -262,16 +288,18 @@ const createJsDocsString = (
 ) => {
 	const renderedTypes = renderTypes
 		? `${Object.entries(types || {})
-			.filter(({ '0': key }) => renderPluralOnlyArgs || !pluralOnlyArgs.includes(key))
-			.sort(sortStringPropertyASC('0'))
-			.map(createJsDocsParamString)
-			.join('')}`
+				.filter(({ '0': key }) => renderPluralOnlyArgs || !pluralOnlyArgs.includes(key))
+				.sort(sortStringPropertyASC('0'))
+				.map(createJsDocsParamString)
+				.join('')}`
 		: ''
 
-	return (text?.length + renderedTypes.length) ? `/**
+	return text?.length + renderedTypes.length
+		? `/**
 	 * ${text}${renderedTypes}
 	 */
-	` : ''
+	`
+		: ''
 }
 
 const createJsDocsParamString = ([paramName, types]: [string, string[]]) => `
@@ -299,7 +327,7 @@ const createTranslationTypeEntry = (
 		const { key, args, parentKeys } = resultEntry
 
 		const nestedKey = getNestedKey(key, parentKeys)
-		const jsDocString = createJsDocsString((jsDocInfo[nestedKey] as JsDocInfo), true, false)
+		const jsDocString = createJsDocsString(jsDocInfo[nestedKey] as JsDocInfo, true, false)
 		const translationType = generateTranslationType(paramTypesToGenerate, args)
 
 		return `
@@ -307,15 +335,13 @@ const createTranslationTypeEntry = (
 	}
 
 	return processNestedParsedResult(resultEntry, (parsedResultEntry) =>
-		createTranslationTypeEntry(parsedResultEntry, jsDocInfo, paramTypesToGenerate))
+		createTranslationTypeEntry(parsedResultEntry, jsDocInfo, paramTypesToGenerate),
+	)
 }
 
 const REGEX_BRACKETS = /[{}]/g
 
-const generateTranslationType = (
-	paramTypesToGenerate: number[],
-	args: Arg[],
-) => {
+const generateTranslationType = (paramTypesToGenerate: number[], args: Arg[]) => {
 	const argStrings = args
 		.filter(isPropertyFalsy('pluralOnly'))
 		.map(({ key, formatters }) => partAsStringWithoutTypes({ k: key, f: formatters }).replace(REGEX_BRACKETS, ''))
@@ -374,8 +400,8 @@ const generatePermutationType = (args: number[]) => {
 	const permutations = getPermutations(args)
 
 	return `
-type RequiredParams${l}<${generics}> =${mapToString(permutations
-		,
+type RequiredParams${l}<${generics}> =${mapToString(
+		permutations,
 		(permutation) => `
 	| Params${l}<${permutation.map((p) => `P${p}`).join(COMMA_SEPARATION)}>`,
 	)}`
@@ -385,21 +411,22 @@ type RequiredParams${l}<${generics}> =${mapToString(permutations
 
 const createTranslationsArgsType = (parsedTranslations: ParsedResult[], jsDocInfo: JsDocInfos) =>
 	`export type TranslationFunctions = ${wrapObjectType(parsedTranslations, () =>
-		mapToString(parsedTranslations,
-			(translation) => createTranslationArgsType(translation, jsDocInfo)),
+		mapToString(parsedTranslations, (translation) => createTranslationArgsType(translation, jsDocInfo)),
 	)}`
 
 const createTranslationArgsType = (parsedResult: ParsedResult, jsDocInfo: JsDocInfos): string => {
 	if (isParsedResultEntry(parsedResult)) {
 		const { key, args, types, parentKeys } = parsedResult
 		const nestedKey = getNestedKey(key, parentKeys)
-		const jsDocString = createJsDocsString((jsDocInfo[nestedKey] as JsDocInfo))
+		const jsDocString = createJsDocsString(jsDocInfo[nestedKey] as JsDocInfo)
 
 		return `
-	${jsDocString}'${key}': (${mapTranslationArgs(args, types,)}) => LocalizedString`
+	${jsDocString}'${key}': (${mapTranslationArgs(args, types)}) => LocalizedString`
 	}
 
-	return processNestedParsedResult(parsedResult, (parsedResultEntry) => createTranslationArgsType(parsedResultEntry, jsDocInfo))
+	return processNestedParsedResult(parsedResult, (parsedResultEntry) =>
+		createTranslationArgsType(parsedResultEntry, jsDocInfo),
+	)
 }
 
 const mapTranslationArgs = (args: Arg[], types: Types) => {
@@ -413,7 +440,11 @@ const mapTranslationArgs = (args: Arg[], types: Types) => {
 	const postfix = (isKeyed && ' }') || ''
 	const argPrefix = (!isKeyed && 'arg') || ''
 
-	return prefix + uniqueArgs.map(({ key }) => `${argPrefix}${key}: ${types[key]?.join(' | ')}`).join(COMMA_SEPARATION) + postfix
+	return (
+		prefix +
+		uniqueArgs.map(({ key }) => `${argPrefix}${key}: ${types[key]?.join(' | ')}`).join(COMMA_SEPARATION) +
+		postfix
+	)
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -421,15 +452,14 @@ const mapTranslationArgs = (args: Arg[], types: Types) => {
 const getUniqueFormatters = (parsedTranslations: ParsedResult[]): [string, string[]][] => {
 	const map = {} as Types
 
-	flattenToParsedResultEntry(parsedTranslations)
-		.forEach((parsedResult) => {
-			const { types, args } = parsedResult
-			args.forEach(({ key, formatters }) =>
-				(formatters || []).forEach(
-					(formatter) => (map[formatter] = [...(map[formatter] || []), ...(types[key] || [])]),
-				),
-			)
-		})
+	flattenToParsedResultEntry(parsedTranslations).forEach((parsedResult) => {
+		const { types, args } = parsedResult
+		args.forEach(({ key, formatters }) =>
+			(formatters || []).forEach(
+				(formatter) => (map[formatter] = [...(map[formatter] || []), ...(types[key] || [])]),
+			),
+		)
+	})
 
 	return Object.entries(map).sort(sortStringPropertyASC('0'))
 }
@@ -438,7 +468,8 @@ const createFormattersType = (parsedTranslations: ParsedResult[]) => {
 	const formatters = getUniqueFormatters(parsedTranslations)
 
 	return `export type Formatters = ${wrapObjectType(formatters, () =>
-		mapToString(formatters,
+		mapToString(
+			formatters,
 			([key, types]) =>
 				`
 	'${key}': (value: ${uniqueArray(types).join(' | ')}) => unknown`,
@@ -461,17 +492,15 @@ const getTypes = (
 	const jsDocsInfo = createJsDocsMapping(parsedTranslations)
 
 	const paramTypesToGenerate: number[] = []
-	const translationType = createTranslationType(
-		parsedTranslations,
-		jsDocsInfo,
-		paramTypesToGenerate,
-	)
+	const translationType = createTranslationType(parsedTranslations, jsDocsInfo, paramTypesToGenerate)
 
 	const paramsType = supportsTemplateLiteralTypes ? createParamsType(paramTypesToGenerate) : ''
 
-	const imports = parsedTranslations.length ? `
+	const imports = parsedTranslations.length
+		? `
 ${importTypeStatement} { LocalizedString } from 'typesafe-i18n'
-` : ''
+`
+		: ''
 
 	const translationArgsType = createTranslationsArgsType(parsedTranslations, jsDocsInfo)
 
@@ -501,10 +530,7 @@ type GenerateTypesType = GeneratorConfigWithDefaultValues & {
 	translations: BaseTranslation
 }
 
-export const generateTypes = async (
-	config: GenerateTypesType,
-	logger: Logger,
-): Promise<boolean> => {
+export const generateTypes = async (config: GenerateTypesType, logger: Logger): Promise<boolean> => {
 	const { outputPath, typesFileName } = config
 
 	const [types, hasCustomTypes] = getTypes(config, logger)

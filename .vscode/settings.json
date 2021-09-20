@@ -3,5 +3,6 @@
 		"source.sortImports": true,
 		"source.fixAll.eslint": true
 	},
-	"files.associations": { "*.mts": "typescript" }
+	"editor.formatOnSave": false,
+	"files.eol": "auto",
 }
