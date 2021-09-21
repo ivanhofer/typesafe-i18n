@@ -13,7 +13,7 @@ Start the project in development mode:
 npm run dev
 ```
 
-Navigate to [http://localhost:4000](http://localhost:4000). You should see the example app running.
+Navigate to [http://localhost:3000](http://localhost:3000). You should see the example app running.
 
 # Overview
  - [add `typesafe-i18n` to existing projects](#configure-typesafe-i18n-for-an-existing-react-project)
