@@ -102,7 +102,7 @@ export type TranslationFunctions = {
 }
 
 export type Formatters = {
-	'fallback0': (value: number | number) => unknown
+	'fallback0': (value: number) => unknown
 	'linkToSvelteTutorial': (value: string) => unknown
 	'weekday': (value: Date) => unknown
 }
