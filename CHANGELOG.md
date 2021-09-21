@@ -3,6 +3,7 @@
 ## 2.40.0 (2021-09-22)
 
 Feature:
+ - add angular adapter
  - add full `esm` support for adapters
 
 ## 2.39.1 (2021-09-15)

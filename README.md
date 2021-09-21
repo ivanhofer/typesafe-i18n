@@ -65,11 +65,12 @@ $ npm install typesafe-i18n
 
 You can use `typesafe-i18n` in a variety of project-setups:
 
- - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/node) apis, backends, scripts, ...
- - [Svelte / SvelteKit / Sapper](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte) applications
- - [React / Next.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react) applications
+ - [Angular](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular) applications
  - [Browser (Vanilla JS)](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/browser) projects
- - [other frameworks](#other-frameworks) like VueJS, Angular and others ...
+ - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/node) apis, backends, scripts, ...
+ - [React / Next.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react) applications
+ - [Svelte / SvelteKit / Sapper](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte) applications
+ - [other frameworks](#other-frameworks) like VueJS and others ...
 
 
 ### Browser Support
@@ -438,7 +439,7 @@ You can set options for the [generator](#typesafety) in order to get optimized o
 | [baseLocale](#baseLocale)                                 | `string`                                                       | `'en'`                                        |
 | [locales](#locales)                                       | `string[]`                                                     | `[]`                                          |
 | [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`                                                      | `true`                                        |
-| [adapter](#adapter)                                       | `'node'` &#124; `'svelte'` &#124; `'react'` &#124; `undefined` | `undefined`                                   |
+| [adapter](#adapter)                                       | `'angular'` &#124; `'node'` &#124; `'react'` &#124; `'svelte'` &#124; `undefined` | `undefined`                                   |
 | [outputPath](#outputPath)                                 | `string`                                                       | `'./src/i18n/'`                               |
 | [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                           | `'TypeScript'`                                |
 | [typesFileName](#typesFileName)                           | `string`                                                       | `'i18n-types'`                                |
@@ -1194,14 +1195,15 @@ The footprint of the `typesafe-i18n` package is smaller compared to other existi
 These parts are bundled into the [core functions](#general). The sizes of the core functionalities are:
 
 - [i18nString](#i18nString): 806 bytes gzipped
-- [i18nObject](#i18nObject): 895 bytes gzipped
-- [i18n](#i18n): 996 bytes gzipped
+- [i18nObject](#i18nObject): 911 bytes gzipped
+- [i18n](#i18n): 1016 bytes gzipped
 
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
 There also exists a useful wrapper for some frameworks:
-- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte#usage-in-javascript-projects): 1150 bytes gzipped
-- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react#usage-in-javascript-projects): 1171 bytes gzipped
+- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular#usage-in-javascript-projects): 1125 bytes gzipped
+- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react#usage-in-javascript-projects): 1184 bytes gzipped
+- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte#usage-in-javascript-projects): 1167 bytes gzipped
 
 
 

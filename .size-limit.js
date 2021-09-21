@@ -20,10 +20,10 @@ module.exports = [
 		limit: '1068 b',
 	},
 	{
-		name: 'svelte-store',
-		path: 'svelte/svelte-store.min.cjs',
-		limit: '1167 b',
-		ignore: ['svelte'],
+		name: 'angular-adapter',
+		path: 'angular/angular-service.min.cjs',
+		limit: '1125 b',
+		ignore: ['angular'],
 	},
 	{
 		name: 'react-context',
@@ -31,4 +31,11 @@ module.exports = [
 		limit: '1184 b',
 		ignore: ['react'],
 	},
+	{
+		name: 'svelte-store',
+		path: 'svelte/svelte-store.min.cjs',
+		limit: '1167 b',
+		ignore: ['svelte'],
+	},
+
 ]
