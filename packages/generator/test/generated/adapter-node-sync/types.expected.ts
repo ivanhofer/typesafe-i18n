@@ -3,8 +3,6 @@
 
 import type { LocalizedString } from 'typesafe-i18n'
 
-import type { name } from './types-template.actual'
-
 export type BaseLocale = 'en'
 
 export type Locales =
@@ -13,7 +11,7 @@ export type Locales =
 export type Translation = {
 	/**
 	 * Hi {0}
-	 * @param {name} 0
+	 * @param {string} 0
 	 */
 	'HELLO_NODE': RequiredParams1<'0'>
 }
@@ -22,7 +20,7 @@ export type TranslationFunctions = {
 	/**
 	 * Hi {0}
 	 */
-	'HELLO_NODE': (arg0: name) => LocalizedString
+	'HELLO_NODE': (arg0: string) => LocalizedString
 }
 
 export type Formatters = {}

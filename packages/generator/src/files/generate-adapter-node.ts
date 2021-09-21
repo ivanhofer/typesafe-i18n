@@ -1,13 +1,13 @@
 import { writeFileIfContainsChanges } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generate-files'
 import { prettify } from '../generator-util'
-import { OVERRIDE_WARNING, tsCheck } from '../output-handler'
+import { OVERRIDE_WARNING, relativeFileImportPath, tsCheck } from '../output-handler'
 
 const getNodeUtils = ({ utilFileName, loadLocalesAsync, banner }: GeneratorConfigWithDefaultValues) => {
 	return `${OVERRIDE_WARNING}${tsCheck}
 ${banner}
 
-import { i18nString, i18nObject${loadLocalesAsync ? '' : ', i18n'} } from './${utilFileName}';
+import { i18nString, i18nObject${loadLocalesAsync ? '' : ', i18n'} } from '${relativeFileImportPath(utilFileName)}';
 ${
 	loadLocalesAsync
 		? ''

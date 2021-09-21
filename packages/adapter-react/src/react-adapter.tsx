@@ -5,7 +5,7 @@ import {
 	AsyncFormattersInitializer,
 	FormattersInitializer,
 	TranslationLoader,
-	TranslationLoaderAsync,
+	TranslationLoaderAsync
 } from '../../core/src/util.loader'
 import { i18nObject } from '../../core/src/util.object'
 
@@ -56,7 +56,7 @@ export const initI18nReact = <
 	const component: React.FunctionComponent<TypesafeI18nProps<L>> = (props) => {
 		const [isLoadingLocale, setIsLoadingLocale] = React.useState<boolean>(false)
 		const [currentLocale, setCurrentLocale] = React.useState<L>(null as unknown as L)
-		const [LL, setLL] = React.useState<TranslationFunctions>(getFallbackProxy<TranslationFunctions>())
+		const [LL, setLL] = React.useState<TF>(getFallbackProxy<TF>())
 
 		const setLocale = async (newLocale: L): Promise<void> => {
 			setIsLoadingLocale(true)

@@ -8,7 +8,8 @@ import {
 	jsDocImports,
 	jsDocType,
 	OVERRIDE_WARNING,
-	tsCheck,
+	relativeFileImportPath,
+	tsCheck
 } from '../output-handler'
 
 const getReactUtils = ({
@@ -34,8 +35,8 @@ ${jsDocImports(
 
 import { initI18nReact } from 'typesafe-i18n/adapters/adapter-react'
 ${importTypes(`./${typesFileName}`, 'Locales', 'Translation', 'TranslationFunctions', 'Formatters')}
-import { baseLocale, getTranslationForLocale } from './${utilFileName}'
-import { initFormatters } from './${formattersTemplateFileName}'
+import { baseLocale, getTranslationForLocale } from '${relativeFileImportPath(utilFileName)}'
+import { initFormatters } from '${relativeFileImportPath(formattersTemplateFileName)}'
 
 ${jsDocType('ReactInit')}
 const { component: TypesafeI18n, context: I18nContext } = initI18nReact${generics(
