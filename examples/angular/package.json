@@ -1,6 +1,6 @@
 {
   "name": "typesafe-i18n_angular-demo",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "dev": "npm-run-all --parallel start typesafe-i18n-generator",
@@ -11,25 +11,25 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~12.1.2",
-    "@angular/common": "~12.1.2",
-    "@angular/compiler": "~12.1.2",
-    "@angular/core": "~12.1.2",
-    "@angular/forms": "~12.1.2",
-    "@angular/platform-browser": "~12.1.2",
-    "@angular/platform-browser-dynamic": "~12.1.2",
-    "@angular/router": "~12.1.2",
-    "rxjs": "~6.6.0",
+    "@angular/animations": "~12.1.5",
+    "@angular/common": "~12.1.5",
+    "@angular/compiler": "~12.1.5",
+    "@angular/core": "~12.1.5",
+    "@angular/forms": "~12.1.5",
+    "@angular/platform-browser": "~12.1.5",
+    "@angular/platform-browser-dynamic": "~12.1.5",
+    "@angular/router": "~12.1.5",
+    "rxjs": "~6.6.7",
     "tslib": "^2.2.0",
-    "typesafe-i18n": "^2.37.3",
+    "typesafe-i18n": "^2.40.1",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~12.1.2",
-    "@angular/cli": "~12.1.2",
-    "@angular/compiler-cli": "~12.1.2",
-    "@types/node": "^12.11.1",
+    "@angular-devkit/build-angular": "~12.1.4",
+    "@angular/cli": "~12.1.4",
+    "@angular/compiler-cli": "~12.1.5",
+    "@types/node": "^12.20.26",
     "npm-run-all": "^4.1.5",
-    "typescript": "~4.3.2"
+    "typescript": "~4.3.5"
   }
 }

@@ -4,7 +4,7 @@
 import { Injectable } from '@angular/core'
 import { I18nServiceRoot } from 'typesafe-i18n/angular/angular-service'
 import { initFormatters } from './formatters'
-import { Formatters, Locales, Translation, TranslationFunctions } from './i18n-types'
+import type { Locales, Translation, TranslationFunctions, Formatters } from './i18n-types'
 import { baseLocale, getTranslationForLocale } from './i18n-util'
 
 @Injectable({
