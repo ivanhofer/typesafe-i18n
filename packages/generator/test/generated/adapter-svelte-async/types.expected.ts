@@ -11,7 +11,7 @@ export type Locales =
 export type Translation = {
 	/**
 	 * Hi {0}
-	 * @param {unknown} 0
+	 * @param {string} 0
 	 */
 	'HELLO_SVELTE': RequiredParams1<'0'>
 }
@@ -20,7 +20,7 @@ export type TranslationFunctions = {
 	/**
 	 * Hi {0}
 	 */
-	'HELLO_SVELTE': (arg0: unknown) => LocalizedString
+	'HELLO_SVELTE': (arg0: string) => LocalizedString
 }
 
 export type Formatters = {}

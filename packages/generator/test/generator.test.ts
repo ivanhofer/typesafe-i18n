@@ -255,82 +255,46 @@ testGeneratedOutput('banner-tslint', { HI: 'Hi {0:name}' }, { banner: '/* tslint
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const nodeAdapterFileName = getFileName('node')
+const testAdapterMatrix = (prefix: string, translation: BaseTranslation, config: GeneratorConfig = {}) => {
+	testGeneratedOutput(`${prefix}-async`, translation, { ...config })
+	testGeneratedOutput(`${prefix}-sync`, translation, { ...config, loadLocalesAsync: false })
+	testGeneratedOutput(`${prefix}-async-esm`, translation, { ...config, esmImports: true })
+	testGeneratedOutput(`${prefix}-sync-esm`, translation, { ...config, loadLocalesAsync: false, esmImports: true })
+	testGeneratedOutput(`${prefix}-async-jsdoc`, translation, { ...config, outputFormat: 'JavaScript' })
+	testGeneratedOutput(`${prefix}-sync-jsdoc`, translation, {
+		...config,
+		loadLocalesAsync: false,
+		outputFormat: 'JavaScript',
+	})
+	testGeneratedOutput(`${prefix}-async-esm-jsdoc`, translation, {
+		...config,
+		esmImports: true,
+		outputFormat: 'JavaScript',
+	})
+	testGeneratedOutput(`${prefix}-sync-esm-jsdoc`, translation, {
+		...config,
+		loadLocalesAsync: false,
+		esmImports: true,
+		outputFormat: 'JavaScript',
+	})
+}
 
-testGeneratedOutput(
-	'adapter-node-async',
-	{ HELLO_NODE: 'Hi {0:name}' },
-	{ adapter: 'node', adapterFileName: nodeAdapterFileName },
+testAdapterMatrix(
+	'adapter-node',
+	{ HELLO_NODE: 'Hi {0:string}' },
+	{ adapter: 'node', adapterFileName: getFileName('node') },
 )
 
-testGeneratedOutput(
-	'adapter-node-sync',
-	{ HELLO_NODE: 'Hi {0:name}' },
-	{ adapter: 'node', adapterFileName: nodeAdapterFileName, loadLocalesAsync: false },
+testAdapterMatrix(
+	'adapter-react',
+	{ HELLO_REACT: 'Hi {0:string}' },
+	{ adapter: 'react', adapterFileName: getFileName('react') },
 )
 
-testGeneratedOutput(
-	'adapter-node-async-jsdoc',
-	{ HELLO_NODE: 'Hi {0:name}' },
-	{ adapter: 'node', adapterFileName: nodeAdapterFileName, outputFormat: 'JavaScript' },
-)
-
-testGeneratedOutput(
-	'adapter-node-sync-jsdoc',
-	{ HELLO_NODE: 'Hi {0:name}' },
-	{ adapter: 'node', adapterFileName: nodeAdapterFileName, loadLocalesAsync: false, outputFormat: 'JavaScript' },
-)
-
-const svelteAdapterFileName = getFileName('svelte')
-
-testGeneratedOutput(
-	'adapter-svelte-async',
-	{ HELLO_SVELTE: 'Hi {0}' },
-	{ adapter: 'svelte', adapterFileName: svelteAdapterFileName },
-)
-
-testGeneratedOutput(
-	'adapter-svelte-sync',
-	{ HELLO_SVELTE: 'Hi {0}' },
-	{ adapter: 'svelte', adapterFileName: svelteAdapterFileName, loadLocalesAsync: false },
-)
-
-testGeneratedOutput(
-	'adapter-svelte-async-jsdoc',
-	{ HELLO_SVELTE: 'Hi {0}' },
-	{ adapter: 'svelte', adapterFileName: svelteAdapterFileName, outputFormat: 'JavaScript' },
-)
-
-testGeneratedOutput(
-	'adapter-svelte-sync-jsdoc',
-	{ HELLO_SVELTE: 'Hi {0}' },
-	{ adapter: 'svelte', adapterFileName: svelteAdapterFileName, loadLocalesAsync: false, outputFormat: 'JavaScript' },
-)
-
-const reactAdapterFileName = getFileName('react')
-
-testGeneratedOutput(
-	'adapter-react-async',
-	{ HELLO_REACT: 'Hi {0:name}' },
-	{ adapter: 'react', adapterFileName: reactAdapterFileName },
-)
-
-testGeneratedOutput(
-	'adapter-react-sync',
-	{ HELLO_REACT: 'Hi {0:name}' },
-	{ adapter: 'react', adapterFileName: reactAdapterFileName, loadLocalesAsync: false },
-)
-
-testGeneratedOutput(
-	'adapter-react-async-jsdoc',
-	{ HELLO_REACT: 'Hi {0:name}' },
-	{ adapter: 'react', adapterFileName: reactAdapterFileName, outputFormat: 'JavaScript' },
-)
-
-testGeneratedOutput(
-	'adapter-react-sync-jsdoc',
-	{ HELLO_REACT: 'Hi {0:name}' },
-	{ adapter: 'react', adapterFileName: reactAdapterFileName, loadLocalesAsync: false, outputFormat: 'JavaScript' },
+testAdapterMatrix(
+	'adapter-svelte',
+	{ HELLO_SVELTE: 'Hi {0:string}' },
+	{ adapter: 'svelte', adapterFileName: getFileName('svelte') },
 )
 
 // --------------------------------------------------------------------------------------------------------------------

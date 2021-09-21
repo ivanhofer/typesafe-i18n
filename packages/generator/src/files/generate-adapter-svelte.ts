@@ -8,8 +8,9 @@ import {
 	jsDocImports,
 	jsDocType,
 	OVERRIDE_WARNING,
+	relativeFileImportPath,
 	tsCheck,
-	type,
+	type
 } from '../output-handler'
 
 const getSvelteUtils = ({
@@ -36,8 +37,8 @@ ${jsDocImports(
 
 import { getI18nSvelteStore } from 'typesafe-i18n/adapters/adapter-svelte';
 ${importTypes(`./${typesFileName}`, 'Locales', 'Translation', 'TranslationFunctions', 'Formatters')}
-import { getTranslationForLocale } from './${utilFileName}'
-import { initFormatters } from './${formattersTemplateFileName}'
+import { getTranslationForLocale } from '${relativeFileImportPath(utilFileName)}'
+import { initFormatters } from '${relativeFileImportPath(formattersTemplateFileName)}'
 
 ${jsDocType('SvelteStoreInit')}
 const { initI18n: init, setLocale, isLoadingLocale, locale, LL } = getI18nSvelteStore${generics(
