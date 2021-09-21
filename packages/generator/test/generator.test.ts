@@ -297,6 +297,12 @@ testAdapterMatrix(
 	{ adapter: 'svelte', adapterFileName: getFileName('svelte') },
 )
 
+testAdapterMatrix(
+	'adapter-angular',
+	{ HELLO_ANGULAR: 'Hi {0:string}' },
+	{ adapter: 'angular', adapterFileName: getFileName('angular.service') },
+)
+
 // --------------------------------------------------------------------------------------------------------------------
 
 testGeneratedOutput('esm-imports-async', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true })

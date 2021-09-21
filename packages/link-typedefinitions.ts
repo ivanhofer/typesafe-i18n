@@ -8,6 +8,7 @@ type FilterFunction = (file: string) => boolean
 
 const mappings: [FromWheretoImport, OutputPath?, FilterFunction?][] = [
 	['adapters'],
+	['adapter-angular', 'angular', (file) => file === 'angular-service.d.ts'],
 	['adapter-svelte', 'svelte', (file) => file === 'svelte-store.d.ts'],
 	['adapter-react', 'react', (file) => file === 'react-context.d.ts'],
 	['core', 'cjs'],

@@ -1,6 +1,7 @@
 import path from 'path'
 import type { BaseTranslation } from '../../core/src/core'
 import { importFile } from './file-utils'
+import { generateAngularAdapter } from './files/generate-adapter-angular'
 import { generateNodeAdapter } from './files/generate-adapter-node'
 import { generateReactAdapter } from './files/generate-adapter-react'
 import { generateSvelteAdapter } from './files/generate-adapter-svelte'
@@ -16,7 +17,7 @@ import { configureOutputHandler } from './output-handler'
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-type Adapters = 'node' | 'svelte' | 'react'
+type Adapters = 'angular' | 'node' | 'react' | 'svelte'
 
 export type OutputFormats = 'TypeScript' | 'JavaScript'
 
@@ -116,14 +117,17 @@ export const generate = async (
 	}
 
 	switch (config.adapter) {
+		case 'angular':
+			await generateAngularAdapter(config)
+			break
 		case 'node':
 			await generateNodeAdapter(config)
 			break
-		case 'svelte':
-			await generateSvelteAdapter(config)
-			break
 		case 'react':
 			await generateReactAdapter(config)
+			break
+		case 'svelte':
+			await generateSvelteAdapter(config)
 			break
 	}
 }

@@ -29,6 +29,10 @@
 			"import": "./adapters/*.mjs",
 			"require": "./adapters/*.cjs"
 		},
+		"./angular/angular-service": {
+			"import": "./angular/angular-service.mjs",
+			"require": "./angular/angular-service.cjs"
+		},
 		"./detectors": {
 			"import": "./detectors/index.mjs",
 			"require": "./detectors/index.cjs"
@@ -64,6 +68,7 @@
 	},
 	"files": [
 		"/adapters",
+		"/angular",
 		"/detectors",
 		"/cjs",
 		"/dist",
@@ -84,6 +89,7 @@
 		"dev:adapters": "rollup -c packages/adapters/rollup.config.js -w",
 		"build": "concurrently -n w: npm:build:* && npm run link-typedefinitions && npm run fix-imports",
 		"build:adapters": "rollup -c packages/adapters/rollup.config.js && tsc -p packages/adapters/tsconfig.json --emitDeclarationOnly",
+		"build:angular": "rollup -c packages/adapter-angular/rollup.config.js && tsc -p packages/adapter-angular/tsconfig.json --emitDeclarationOnly",
 		"build:browser": "rollup -c packages/browser/rollup.config.js",
 		"build:cjs": "tsc -p packages/core/tsconfig-cjs.json && ts-node ./packages/core/rename-cjs.ts",
 		"build:detectors": "rollup -c packages/locale-detector/rollup.config.js && tsc -p packages/locale-detector/tsconfig.json --emitDeclarationOnly && node --loader ts-node/esm ./packages/locale-detector/generateTreeShakableIndexFile.ts",
