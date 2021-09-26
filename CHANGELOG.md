@@ -1,6 +1,6 @@
 # CHANGELOG.md
 
-## 2.40.2 (2021-09-22)
+## 2.40.2 (2021-09-26)
 
  - show link to `config`-README on first start of the `generator`
 
