@@ -145,6 +145,16 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 
 	await generate(languageFile, { ...config, baseLocale: locale, locales }, version, logger)
 
+	if (!locales.length) {
+		let message =
+			'Visit https://github.com/ivanhofer/typesafe-i18n#options and configure `typesafe-i18n` depending on your project-setup.'
+		if (!config.adapter) {
+			message += " You probably want to set at least the 'adapter' option."
+		}
+
+		logger.warn(message)
+	}
+
 	logger.info('... all files are up to date')
 }
 
@@ -162,7 +172,9 @@ const debounce = (callback: () => void) =>
 export const startGenerator = async (config?: GeneratorConfig, watchFiles = true): Promise<void> => {
 	logger = createLogger(console, !watchFiles)
 
-	const configWithDefaultValues = await getConfigWithDefaultValues(config)
+	const parsedConfig = await readConfig(config)
+
+	const configWithDefaultValues = await getConfigWithDefaultValues(parsedConfig)
 	const { outputPath } = configWithDefaultValues
 
 	const version = parseTypescriptVersion(ts.versionMajorMinor)
@@ -179,7 +191,7 @@ export const startGenerator = async (config?: GeneratorConfig, watchFiles = true
 			shouldGenerateJsDoc ? 'JavaScript with JSDoc notation' : `TypeScript version: '${ts.versionMajorMinor}.x'`
 		}`,
 	)
-	logger.info(`options:`, await readConfig(config))
+	logger.info(`options:`, parsedConfig)
 	watchFiles && logger.info(`watcher started in: '${outputPath}'`)
 
 	if (!watchFiles) {
