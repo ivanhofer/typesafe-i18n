@@ -1,5 +1,0 @@
-blank_issues_enabled: false
-contact_links:
-  - name: GitHub Discussions
-    url: https://github.com/ivanhofer/typesafe-i18n/discussions
-    about: Ask questions and discuss upcoming features.
