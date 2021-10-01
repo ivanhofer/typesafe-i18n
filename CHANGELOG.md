@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.41.0 (2021-10-??)
+
+Feature:
+ - add support for optional parameters [#86](https://github.com/ivanhofer/typesafe-i18n/issues/86
+
 ## 2.40.2 (2021-09-26)
 
  - show link to `config`-README on first start of the `generator`

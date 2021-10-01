@@ -15,6 +15,8 @@ test('keyed camelCase', () => assert.is(LLL('Hi {firstName}', { firstName: 'John
 test('keyed param trimmed', () => assert.is(LLL('Hi { name }', { name: 'John' }), 'Hi John'))
 test('keyed param with spaces', () => assert.is(LLL('Hi { first name }', { 'first name': 'John' }), 'Hi John'))
 
+test('multiple spaces', () => assert.is(LLL('test    {0}  ', 'xyz'), 'test    xyz  '))
+
 test('plural 0', () => assert.is(LLL('{0} apple{{s}}', 0), '0 apples'))
 test('plural 1', () => assert.is(LLL('{0} apple{{s}}', 1), '1 apple'))
 test('plural 5', () => assert.is(LLL('{0} apple{{s}}', 5), '5 apples'))

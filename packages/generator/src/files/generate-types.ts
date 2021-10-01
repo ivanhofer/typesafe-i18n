@@ -15,7 +15,7 @@ import {
 	sortStringASC,
 	sortStringPropertyASC,
 	TypeGuard,
-	uniqueArray,
+	uniqueArray
 } from 'typesafe-utils'
 import { BaseTranslation, isPluralPart } from '../../../core/src/core'
 import { partAsStringWithoutTypes, partsAsStringWithoutTypes, removeEmptyValues } from '../../../core/src/core-utils'
@@ -28,7 +28,7 @@ import {
 	fileEndingForTypesFile,
 	importTypeStatement,
 	OVERRIDE_WARNING,
-	supportsTemplateLiteralTypes,
+	supportsTemplateLiteralTypes
 } from '../output-handler'
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -39,10 +39,16 @@ type Arg = {
 	key: string
 	formatters?: string[]
 	pluralOnly?: boolean
+	optional?: boolean
+}
+
+type TypeInformation = {
+	types: string[]
+	optional?: boolean
 }
 
 type Types = {
-	[key: string]: string[]
+	[key: string]: TypeInformation
 }
 
 type JsDocInfos = {
@@ -154,15 +160,18 @@ const parseTranslationEntry = (
 	const args: Arg[] = []
 	const types: Types = {}
 
-	argumentParts.forEach(({ k, i, f }) => {
-		args.push({ key: k, formatters: f })
-		types[k] = uniqueArray([...(types[k] || []), i]).filter(isNotUndefined)
+	argumentParts.forEach(({ k, n, i, f }) => {
+		args.push({ key: k, formatters: f, optional: n })
+		types[k] = {
+			types: uniqueArray([...(types[k]?.types || []), i]).filter(isNotUndefined),
+			optional: types[k]?.optional || n,
+		}
 	})
 
 	pluralParts.forEach(({ k }) => {
-		if (!types[k]?.length) {
+		if (!types[k]?.types.length) {
 			// if key has no types => add types that are valid for a PluralPart
-			types[k] = ['string', 'number', 'boolean']
+			types[k] = { types: ['string', 'number', 'boolean'] }
 			if (!args.find(({ key }) => key === k)) {
 				// if only pluralPart exists => add it as argument
 				args.push({ key: k, formatters: [], pluralOnly: true })
@@ -172,8 +181,8 @@ const parseTranslationEntry = (
 
 	// add 'unknown' if argument has no type
 	Object.keys(types).forEach((key) => {
-		if (!types[key]?.length) {
-			types[key] = ['unknown']
+		if (!types[key]?.types.length) {
+			types[key] = { types: ['unknown'], optional: types[key]?.optional }
 		}
 	})
 
@@ -243,7 +252,9 @@ const isParsedResultEntry = <T extends ParsedResult>(entry: T): entry is TypeGua
 const extractTypes = (parsedTranslations: ParsedResult[]): string[] =>
 	parsedTranslations.flatMap((parsedTranslation) => {
 		if (isParsedResultEntry(parsedTranslation)) {
-			return Object.values(parsedTranslation.types).flat() as string[]
+			return Object.values(parsedTranslation.types)
+				.map(({ types }) => types)
+				.flat()
 		}
 
 		return extractTypes(Object.values(parsedTranslation).flat())
@@ -302,8 +313,8 @@ const createJsDocsString = (
 		: ''
 }
 
-const createJsDocsParamString = ([paramName, types]: [string, string[]]) => `
-	 * @param {${types.join(' | ')}} ${paramName}`
+const createJsDocsParamString = ([paramName, { types, optional }]: [string, TypeInformation]) => `
+	 * @param {${types.join(' | ')}} ${optional ? `[${paramName}]` : paramName}`
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -344,7 +355,9 @@ const REGEX_BRACKETS = /[{}]/g
 const generateTranslationType = (paramTypesToGenerate: number[], args: Arg[]) => {
 	const argStrings = args
 		.filter(isPropertyFalsy('pluralOnly'))
-		.map(({ key, formatters }) => partAsStringWithoutTypes({ k: key, f: formatters }).replace(REGEX_BRACKETS, ''))
+		.map(({ key, optional, formatters }) =>
+			partAsStringWithoutTypes({ k: key, n: optional, f: formatters }).replace(REGEX_BRACKETS, ''),
+		)
 
 	const nrOfArgs = argStrings.length
 	paramTypesToGenerate.push(nrOfArgs)
@@ -442,7 +455,9 @@ const mapTranslationArgs = (args: Arg[], types: Types) => {
 
 	return (
 		prefix +
-		uniqueArgs.map(({ key }) => `${argPrefix}${key}: ${types[key]?.join(' | ')}`).join(COMMA_SEPARATION) +
+		uniqueArgs
+			.map(({ key, optional }) => `${argPrefix}${key}${optional ? '?' : ''}: ${types[key]?.types.join(' | ')}`)
+			.join(COMMA_SEPARATION) +
 		postfix
 	)
 }
@@ -450,13 +465,13 @@ const mapTranslationArgs = (args: Arg[], types: Types) => {
 // --------------------------------------------------------------------------------------------------------------------
 
 const getUniqueFormatters = (parsedTranslations: ParsedResult[]): [string, string[]][] => {
-	const map = {} as Types
+	const map = {} as { [key: string]: string[] }
 
 	flattenToParsedResultEntry(parsedTranslations).forEach((parsedResult) => {
 		const { types, args } = parsedResult
 		args.forEach(({ key, formatters }) =>
 			(formatters || []).forEach(
-				(formatter) => (map[formatter] = [...(map[formatter] || []), ...(types[key] || [])]),
+				(formatter) => (map[formatter] = [...(map[formatter] || []), ...(types[key]?.types || [])]),
 			),
 		)
 	})
