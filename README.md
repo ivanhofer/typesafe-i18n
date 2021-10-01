@@ -1338,9 +1338,8 @@ interface WrappedButtonPropsType {
 
 export function WrappedButton({ message, onClick }: WrappedButtonPropsType) {
    return <WrapTranslation
-      onClick={onClick}
       message={message}
-      renderComponent={(infix) => <button>{infix}</button>} />
+      renderComponent={(infix) => <button onClick={onClick}>{infix}</button>} />
 }
 
 // use it inside your application
