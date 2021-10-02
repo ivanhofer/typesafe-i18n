@@ -254,6 +254,7 @@ You can choose between three variants to run the generator:
 - as a [rollup-plugin](#rollup-plugin)
 - as a [webpack-plugin](#webpack-plugin)
 
+
 ### node-process
 
 Start the generator node process in your terminal:
