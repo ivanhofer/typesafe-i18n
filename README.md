@@ -299,7 +299,7 @@ This will only generate types once and **not** listen to changes in your locale 
 
 #### rollup-plugin
 
-If you are already using `rollup` as your bundler, you can add the `typesafeI18nPlugin` to your `rollup.config.js`.
+If you are using `rollup` as your bundler, you can add the `typesafeI18nPlugin` to your `rollup.config.js`.
 
 ```typescript
 import { typesafeI18nPlugin } from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n'
