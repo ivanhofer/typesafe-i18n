@@ -250,69 +250,11 @@ Make sure you have installed `node` version `> 12.x` and are using a `typescript
 
 You can choose between three variants to run the generator:
 
+- as a [node-process](#node-process) *(recommended)*
 - as a [rollup-plugin](#rollup-plugin)
 - as a [webpack-plugin](#webpack-plugin)
-- as a [node-process](#node-process)
-
-### rollup-plugin
-
-If you are already using `rollup` as your bundler, you can add the `typesafeI18n`-Plugin to your `rollup.config.js`.
-
-```typescript
-import typesafeI18n from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n'
-
-export default {
-   input: ...,
-   output: ...,
-   plugins: {
-		...
-      typescript(),
-
-      // looks for changes in your base locale file in development mode & optimizes code in production mode
-      typesafeI18n({ /* options go here */ })
-   }
-}
-```
-
-You can pass [options](#options) to the generator by creating a `.typesafe-i18n.json` file in the root of your workspace, or by passing it as an argument to the `typesafeI18n` plugin.
-
-The rollup plugin has an advantage over the node-process, since it can also be used to optimize the translations for your production bundle.
-
-Currently implemented optimizations:
-
- - get rid of the arguments type information inside your base-translation:\
-   These types inside your base translations e.g. `Hello {name:string}!` are only used from the generator to create types for your translations. The rollup plugin removes these types from the translations in order to reduce bundle size by a few bytes. The example above will be optimized to `Hello {name}!` inside your production bundle.
- - include only certain locales:\
-	If you want to create an own bundle per locale. When running rollup to create your production-bundle, you can specify the `'locales'` [option](#options) to include only certain locales. The rollup plugin will remove all other locales from the production bundle.
-
-More [optimizations](#performance) will follow.
-
-
-### webpack-plugin
-
-If you are already using `webpack` as your bundler, you can add the `TypesafeI18nPlugin` to your `webpack.config.js`.
-
-```typescript
-const TypesafeI18nPlugin = require('typesafe-i18n/webpack/webpack-plugin-typesafe-i18n').default
-
-module.exports = {
-   entry: ...,
-   module: ...,
-   output: ...,
-   plugins: [
-      ...
-      // looks for changes in your base locale file in development mode
-      new TypesafeI18nPlugin({ /* options go here */ })
-   ],
-}
-```
-
-You can pass [options](#options) to the generator by creating a `.typesafe-i18n.json` file in the root of your workspace, or by passing it as an argument to the constructor of `TypesafeI18nPlugin`.
-
 
 ### node-process
-
-> This is the fallback option for all developers who aren't using rollup or webpack. Use this option if you bundle your application via parcel, esbuild etc. or if you don't use a bundler at all.
 
 Start the generator node process in your terminal:
 
@@ -354,6 +296,69 @@ When running tests or scripts you can disable the watcher by passing the argumen
 ```
 
 This will only generate types once and **not** listen to changes in your locale files. The process will throw an `TypesafeI18nParseError` if a wrong syntax is detected in your base locale file.
+
+#### rollup-plugin
+
+If you are using `rollup` as your bundler, you can add the `typesafeI18nPlugin` to your `rollup.config.js`.
+
+```typescript
+import { typesafeI18nPlugin } from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n'
+
+export default {
+   input: ...,
+   output: ...,
+   plugins: {
+		...
+      typescript(),
+
+      // looks for changes in your base locale file in development mode
+      // optimizes code in production mode
+      typesafeI18nPlugin({ /* optimization-options go here */ })
+   }
+}
+```
+
+You can pass [options](#options) to the generator by creating a `.typesafe-i18n.json` file in the root of your workspace.
+
+The rollup plugin can be used to optimize the translations for your production bundle.
+
+Currently implemented optimizations:
+
+ - get rid of the arguments type information inside your base-translation:\
+   These types inside your base translations e.g. `Hello {name:string}!` are only used from the generator to create types for your translations. The rollup plugin removes these types from the translations in order to reduce bundle size by a few bytes. The example above will be optimized to `Hello {name}!` inside your production bundle.
+ - include only certain locales:\
+	If you want to create an own bundle per locale. When running rollup to create your production-bundle, you can specify the `'locales'` optimization-config to include only certain locales. The rollup plugin will remove all other locales from the production bundle.
+   ```typescript
+   export default {
+      plugins: {
+         typesafeI18nPlugin({ locales: ['de'] })
+      }
+   }
+   ```
+
+More [optimizations](#performance) will follow.
+
+
+#### webpack-plugin
+
+If you are already using `webpack` as your bundler, you can add the `TypesafeI18nPlugin` to your `webpack.config.js`.
+
+```typescript
+const TypesafeI18nPlugin = require('typesafe-i18n/webpack/webpack-plugin-typesafe-i18n').default
+
+module.exports = {
+   entry: ...,
+   module: ...,
+   output: ...,
+   plugins: [
+      ...
+      // looks for changes in your base locale file in development mode
+      new TypesafeI18nPlugin({ /* options go here */ })
+   ],
+}
+```
+
+You can pass [options](#options) to the generator by creating a `.typesafe-i18n.json` file in the root of your workspace.
 
 
 ### folder structure
@@ -432,12 +437,11 @@ export type Sum = {
 
 ### Options
 
-You can set options for the [generator](#typesafety) in order to get optimized output for your specific project. The available options are:
+You can set options for the [generator](#typesafety) inside the `.typesafe-i18n.json`-file in order to get optimized output for your specific project. The available options are:
 
 | key                                                       | type                                                           | default value                                 |
 | --------------------------------------------------------- | -------------------------------------------------------------- | --------------------------------------------- |
 | [baseLocale](#baseLocale)                                 | `string`                                                       | `'en'`                                        |
-| [locales](#locales)                                       | `string[]`                                                     | `[]`                                          |
 | [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`                                                      | `true`                                        |
 | [adapter](#adapter)                                       | `'angular'` &#124; `'node'` &#124; `'react'` &#124; `'svelte'` &#124; `undefined` | `undefined`                                   |
 | [outputPath](#outputPath)                                 | `string`                                                       | `'./src/i18n/'`                               |
@@ -456,12 +460,6 @@ You can set options for the [generator](#typesafety) in order to get optimized o
 #### `baseLocale`
 
 Defines which locale to use for the types generation. You can find more information on how to structure your locales [here](#locales).
-
-#### `locales`
-
-Specifies the locales you want to use. This can be useful if you want to create an own bundle for each locale. If you want to include only certain locales, you need to set the locales you want to use. If empty, all locales will be used.
-
-> Note: requires the usage of the [rollup-plugin](#rollup-plugin)
 
 #### `loadLocalesAsync`
 

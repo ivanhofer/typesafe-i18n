@@ -35,11 +35,20 @@ Navigate to [http://localhost:5000](http://localhost:5000). You should see the e
 
 # Configure `typesafe-i18n` for an existing Svelte project
 
-First, you need to configure the generator inside `rollup.config.js` to listen for changes in your locales files.
+Configure `typesafe-i18n` by creating the file `.typesafe-i18n.json` with following contents:
+
+```json
+{
+   "adapter": "svelte",
+   "loadLocalesAsync": false
+}
+```
+
+Then, you need add a plugin inside `rollup.config.js` to listen for changes in your locales files.
 
 ```javascript
 
-import typesafeI18n from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n'
+import { typesafeI18nPlugin } from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n'
 
 export default {
    input: { /* ... */ },
@@ -48,7 +57,7 @@ export default {
 
       /* other plugins */
 
-      !production && typesafeI18n({ adapter: 'svelte', loadLocalesAsync: false }),
+      !production && typesafeI18nPlugin(),
 
    ],
 }
