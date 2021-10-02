@@ -9,6 +9,7 @@ export type TextPart = string
 export type ArgumentPart = {
 	k: string // key
 	i?: string // type
+	n?: boolean // non-mandatory (optional)
 	f?: string[] // formatterFunctionKey
 }
 
@@ -33,8 +34,9 @@ const REGEX_BRACKETS_SPLIT = /({?{[^\\}]+}}?)/g
 const parseArgumentPart = (text: string): ArgumentPart => {
 	const [keyPart = '', ...formatterKeys] = text.split('|')
 
-	const [key = '', type] = keyPart.split(':')
-	return { k: key, i: type, f: formatterKeys } as ArgumentPart
+	const [keyWithoutType = '', type] = keyPart.split(':')
+	const [key, isOptional] = keyWithoutType.split('?') as [string, string | undefined]
+	return { k: key, i: type, n: isOptional === '', f: formatterKeys }
 }
 
 const parsePluralPart = (content: string, lastAccessor: string): PluralPart => {

@@ -11,8 +11,11 @@ export const removeEmptyValues = <T>(object: T): T =>
 export const trimAllValues = <T extends ArgumentPart | PluralPart>(part: T): T =>
 	Object.fromEntries(
 		Object.keys(part).map((key) => {
-			const val = part[key as keyof T] as unknown as string | string[]
-			return [key, Array.isArray(val) ? val.map((v) => v?.trim()) : val?.trim()] as const
+			const val = part[key as keyof T] as unknown as boolean | string | string[]
+			return [
+				key,
+				Array.isArray(val) ? val.map((v) => v?.trim()) : val === !!val ? val : (val as string)?.trim(),
+			] as const
 		}),
 	) as T
 
@@ -27,7 +30,7 @@ export const partAsStringWithoutTypes = (part: Part): string => {
 		return `{{${[part.z, part.o, part.t, part.f, part.m, part.r].filter((value) => value !== undefined).join('|')}}}`
 	}
 
-	return `{${part.k}${part.f?.length ? `|${part.f.join('|')}` : ''}}`
+	return `{${part.k}${part.n ? '?' : ''}${part.f?.length ? `|${part.f.join('|')}` : ''}}`
 }
 
 export const getFallbackProxy = <TF extends TranslationFunctions>(prefixKey?: string): TF =>

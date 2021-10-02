@@ -224,6 +224,19 @@ testGeneratedOutput('plural-part-without-output', {
 	PLURAL_WITHOUT_OUTPUT: 'New message{{nrOfMessages:s}} in {inbox:InboxType}',
 })
 
+const dictionary_optionals = {
+	index: 'Hi {0?}',
+	keyed: 'Hi {name?}',
+	typed: 'Hi {name?:string}',
+	multiple: 'Hi {name1?} and {name2?}',
+	multiple1: 'Hi {name1} and {name2?}',
+	multiple2: 'Hi {name1?} and {name2}',
+	formatter: 'Hi {name1?|uppercase}',
+}
+
+testGeneratedOutput('optional-parameters', dictionary_optionals)
+testGeneratedOutput('optional-parameters-esm', dictionary_optionals, { outputFormat: 'JavaScript' })
+
 // --------------------------------------------------------------------------------------------------------------------
 
 testGeneratedOutput(
