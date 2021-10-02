@@ -1,14 +1,18 @@
 import { Compiler, node } from 'webpack'
-import { GeneratorConfig } from '../../generator/src/generate-files'
 import { startGenerator } from '../../generator/src/generator'
+import { createLogger } from '../../generator/src/generator-util'
+
+const logger = createLogger(console, true)
 
 let started = false
 
 export default class TypesafeI18nWebpackPlugin implements node.NodeTargetPlugin {
-	config?: GeneratorConfig
-
-	constructor(config?: GeneratorConfig) {
-		this.config = config
+	constructor(config?: never) {
+		if (config) {
+			logger.error(
+				'Deprecated config. Please use the `.typesafe-i18n.json`-file instead. See https://github.com/ivanhofer/typesafe-i18n#options',
+			)
+		}
 	}
 
 	apply(compiler: Compiler): void {
@@ -19,7 +23,7 @@ export default class TypesafeI18nWebpackPlugin implements node.NodeTargetPlugin 
 		compiler.hooks.compile.tap('TypesafeI18nWebpackPlugin', () => {
 			if (started) return
 
-			startGenerator(this.config)
+			startGenerator()
 			started = true
 		})
 	}

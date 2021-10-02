@@ -1,20 +1,21 @@
-import type { AcornNode, Plugin } from 'rollup'
-import type {
-	BaseNode,
-	SimpleLiteral,
-	ImportDeclaration,
-	Identifier,
-	Property,
-	VariableDeclarator,
-	ArrayExpression,
-} from 'estree'
-import { GeneratorConfig, getConfigWithDefaultValues } from '../../generator/src/generate-files'
 import { createFilter } from '@rollup/pluginutils'
+import { generate } from 'astring'
+import type {
+	ArrayExpression,
+	BaseNode,
+	Identifier,
+	ImportDeclaration,
+	Property,
+	SimpleLiteral,
+	VariableDeclarator
+} from 'estree'
 import { walk } from 'estree-walker'
+import type { AcornNode, Plugin } from 'rollup'
+import sourceMap from 'source-map'
 import { partsAsStringWithoutTypes } from '../../core/src/core-utils'
 import { parseRawText } from '../../core/src/parser'
-import { generate } from 'astring'
-import sourceMap from 'source-map'
+import { getConfigWithDefaultValues, RollupConfig } from '../../generator/src/generate-files'
+import { validateConfig } from './_validateConfig'
 
 //@ts-ignore
 const isLiteralNode = <T extends BaseNode>(node: T): node is SimpleLiteral => node.type === 'Literal'
@@ -155,11 +156,13 @@ const removeLocales = (ast: AcornNode, locales: string[], baseLocale: string) =>
 // --------------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-const plugin = (config?: GeneratorConfig): Plugin => {
+const plugin = (config?: RollupConfig): Plugin => {
 	let filterForBaseLocale: (id: unknown) => boolean
 	let filterForUtilFile: (id: unknown) => boolean = () => false
 	let locales: string[]
 	let locale: string
+
+	validateConfig(config)
 
 	const initFilters = async () => {
 		const configWithDefaultValues = await getConfigWithDefaultValues(config)
@@ -194,3 +197,4 @@ const plugin = (config?: GeneratorConfig): Plugin => {
 }
 
 export default plugin
+export { plugin as typesafeI18nOptimizerPlugin }

@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.43.0 (2021-10-??)
+
+Breaking:
+ - get rid of `locales` as generator-config [#95](https://github.com/ivanhofer/typesafe-i18n/discussions/95)
+
 ## 2.41.0 (2021-10-02)
 
 Feature:

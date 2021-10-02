@@ -23,7 +23,6 @@ export type OutputFormats = 'TypeScript' | 'JavaScript'
 
 export type GeneratorConfig = {
 	baseLocale?: string
-	locales?: string[]
 
 	tempPath?: string
 	outputPath?: string
@@ -41,6 +40,12 @@ export type GeneratorConfig = {
 
 	banner?: string
 }
+
+export type RollupConfig = {
+	locales?: string[]
+}
+
+export type Config = GeneratorConfig & RollupConfig
 
 export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 	baseLocale: string
@@ -64,16 +69,18 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-export const readConfig = async (config: GeneratorConfig | undefined): Promise<GeneratorConfig> => {
-	const generatorConfig =
-		config || (await importFile<GeneratorConfig>(path.resolve('.typesafe-i18n.json'), false)) || {}
+export const readConfig = async (config: GeneratorConfig | undefined): Promise<Config> => {
+	const generatorConfig = {
+		...config,
+		...((await importFile<GeneratorConfig>(path.resolve('.typesafe-i18n.json'), false)) || {}),
+	}
 
 	// remove "$schema" property
 	return Object.fromEntries(Object.entries(generatorConfig).filter(([key]) => key !== '$schema'))
 }
 
 export const getConfigWithDefaultValues = async (
-	config: GeneratorConfig | undefined,
+	config: Config | undefined,
 ): Promise<GeneratorConfigWithDefaultValues> => ({
 	baseLocale: 'en',
 	locales: [],

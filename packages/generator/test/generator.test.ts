@@ -4,8 +4,8 @@ import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 import type { BaseTranslation } from '../../core/src/core'
 import {
+	Config,
 	generate,
-	GeneratorConfig,
 	GeneratorConfigWithDefaultValues,
 	getConfigWithDefaultValues,
 	OutputFormats
@@ -24,7 +24,7 @@ const defaultVersion = parseTypescriptVersion('4.1')
 
 const getFileName = (name: string) => name + actualPostfix
 
-const createConfig = async (prefix: string, config?: GeneratorConfig): Promise<GeneratorConfigWithDefaultValues> =>
+const createConfig = async (prefix: string, config?: Config): Promise<GeneratorConfigWithDefaultValues> =>
 	getConfigWithDefaultValues({
 		outputPath: resolve(outputPath, prefix),
 
@@ -82,7 +82,7 @@ const check = async (prefix: string, file: FileToCheck, outputFormat: OutputForm
 const testGeneratedOutput = async (
 	prefix: string,
 	translation: BaseTranslation,
-	config: GeneratorConfig = {},
+	config: Config = {},
 	version: TypescriptVersion = defaultVersion,
 ) =>
 	test(`generate ${prefix}`, async () => {
@@ -268,7 +268,7 @@ testGeneratedOutput('banner-tslint', { HI: 'Hi {0:name}' }, { banner: '/* tslint
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const testAdapterMatrix = (prefix: string, translation: BaseTranslation, config: GeneratorConfig = {}) => {
+const testAdapterMatrix = (prefix: string, translation: BaseTranslation, config: Config = {}) => {
 	testGeneratedOutput(`${prefix}-async`, translation, { ...config })
 	testGeneratedOutput(`${prefix}-sync`, translation, { ...config, loadLocalesAsync: false })
 	testGeneratedOutput(`${prefix}-async-esm`, translation, { ...config, esmImports: true })
