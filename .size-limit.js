@@ -2,17 +2,17 @@ module.exports = [
 	{
 		name: 'i18n-string',
 		path: 'dist/i18n.string.min.js',
-		limit: '835 b',
+		limit: '834 b',
 	},
 	{
 		name: 'i18n-object',
 		path: 'dist/i18n.object.min.js',
-		limit: '940 b',
+		limit: '939 b',
 	},
 	{
 		name: 'i18n-instance',
 		path: 'dist/i18n.min.js',
-		limit: '1045 b',
+		limit: '1044 b',
 	},
 	{
 		name: 'all together',
@@ -22,19 +22,19 @@ module.exports = [
 	{
 		name: 'angular-adapter',
 		path: 'angular/angular-service.min.cjs',
-		limit: '1151 b',
+		limit: '1152 b',
 		ignore: ['angular'],
 	},
 	{
 		name: 'react-context',
 		path: 'react/react-context.min.cjs',
-		limit: '1213 b',
+		limit: '1212 b',
 		ignore: ['react'],
 	},
 	{
 		name: 'svelte-store',
 		path: 'svelte/svelte-store.min.cjs',
-		limit: '1192 b',
+		limit: '1191 b',
 		ignore: ['svelte'],
 	},
 

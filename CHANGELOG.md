@@ -1,6 +1,6 @@
 # CHANGELOG.md
 
-## 2.41.0 (2021-10-??)
+## 2.41.0 (2021-10-02)
 
 Feature:
  - add support for optional parameters [#86](https://github.com/ivanhofer/typesafe-i18n/issues/86

@@ -36,7 +36,7 @@ const parseArgumentPart = (text: string): ArgumentPart => {
 
 	const [keyWithoutType = '', type] = keyPart.split(':')
 	const [key, isOptional] = keyWithoutType.split('?') as [string, string | undefined]
-	return { k: key, i: type, n: isOptional !== '', f: formatterKeys }
+	return { k: key, i: type, n: isOptional === '', f: formatterKeys }
 }
 
 const parsePluralPart = (content: string, lastAccessor: string): PluralPart => {
