@@ -10,15 +10,21 @@ const getPath = (file) => path.resolve(__dirname, file)
 
 const config = [
 	{
-		input: getPath('src/index.ts'),
+		input: getPath('src/importer.ts'),
 		output: [
 			{
-				file: getPath('../../importer/index.cjs'),
+				file: getPath('../../importer/importer.cjs'),
 				format: 'cjs',
 				sourcemap: true,
 			},
 		],
-		plugins: [resolve({ preferBuiltins: true }), commonjs({ignoreDynamicRequires: true}), externals(), typescript()],
+		external: ['typescript'],
+		plugins: [
+			resolve({ preferBuiltins: true }),
+			commonjs({ ignoreDynamicRequires: true }),
+			externals(),
+			typescript(),
+		],
 	},
 ]
 

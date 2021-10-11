@@ -1,4 +1,3 @@
-import { watch } from 'chokidar'
 import { resolve, sep } from 'path'
 import { isTruthy } from 'typesafe-utils'
 import * as ts from 'typescript'
@@ -93,7 +92,7 @@ const transpileTypescriptFiles = async (
 	return resolve(tempPath, `${baseTranslationPath}index.js`)
 }
 
-const parseLanguageFile = async (
+export const parseLanguageFile = async (
 	outputPath: string,
 	locale: string,
 	tempPath: string,
@@ -178,6 +177,9 @@ const debounce = (callback: () => void) =>
 		++debounceCounter,
 	)
 
+const chokidar = 'chokidar' // has to be dynamic due to a rollup-bug
+const getWatch = async () => (await import(chokidar)).watch
+
 export const startGenerator = async (config?: GeneratorConfig, watchFiles = true): Promise<void> => {
 	logger = createLogger(console, !watchFiles)
 
@@ -193,6 +195,7 @@ export const startGenerator = async (config?: GeneratorConfig, watchFiles = true
 
 	await createPathIfNotExits(outputPath)
 
+	const watch = await getWatch()
 	watchFiles && watch(outputPath).on('all', () => debounce(onChange))
 
 	logger.info(

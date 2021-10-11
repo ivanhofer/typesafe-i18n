@@ -5,8 +5,8 @@ import { generateAngularAdapter } from './files/generate-adapter-angular'
 import { generateNodeAdapter } from './files/generate-adapter-node'
 import { generateReactAdapter } from './files/generate-adapter-react'
 import { generateSvelteAdapter } from './files/generate-adapter-svelte'
-import { generateBaseLocaleTemplate } from './files/generate-template-baseLocale'
 import { generateFormattersTemplate } from './files/generate-template-formatters'
+import { generateBaseLocaleTemplate, generateLocaleTemplate } from './files/generate-template-locale'
 import { generateCustomTypesTemplate } from './files/generate-template-types'
 import { generateTypes } from './files/generate-types'
 import { generateUtil } from './files/generate-util'
@@ -100,6 +100,44 @@ export const getConfigWithDefaultValues = async (
 	...(await readConfig(config)),
 })
 
+const generateDictionaryFiles = async (
+	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
+	forceOverride = false,
+	firstLaunchOfGenerator = false,
+) => {
+	if (!firstLaunchOfGenerator) {
+		await generateBaseLocaleTemplate(config, forceOverride)
+		return
+	}
+
+	const dummyTranslations = {
+		en: 'Hi {name}! Please leave a star if you like this project: https://github.com/ivanhofer/typesafe-i18n',
+		de: 'Hallo {name}! Bitte hinterlasse einen Stern, wenn dir das Projekt gefällt: https://github.com/ivanhofer/typesafe-i18n',
+	}
+
+	const primaryLocale = config.baseLocale === 'de' ? 'de' : 'en'
+	const secondaryLocale = primaryLocale === 'de' ? 'en' : 'de'
+
+	await generateBaseLocaleTemplate(
+		config,
+		forceOverride,
+		{
+			HI: dummyTranslations[primaryLocale].replace('{name}', '{name:string}'),
+		},
+		'TODO: your translations go here',
+	)
+
+	await generateLocaleTemplate(
+		config,
+		secondaryLocale,
+		forceOverride,
+		{
+			HI: dummyTranslations[secondaryLocale],
+		},
+		'this is an example Translation, just rename or delete this folder if you want',
+	)
+}
+
 export const generate = async (
 	translations: BaseTranslation,
 	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
@@ -110,7 +148,7 @@ export const generate = async (
 ): Promise<void> => {
 	configureOutputHandler(config, version)
 
-	await generateBaseLocaleTemplate(config, forceOverride, firstLaunchOfGenerator)
+	await generateDictionaryFiles(config, forceOverride, firstLaunchOfGenerator)
 
 	const hasCustomTypes = await generateTypes({ ...config, translations }, logger)
 

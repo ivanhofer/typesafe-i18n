@@ -1,4 +1,4 @@
-import { BaseTranslation } from 'packages/core/src/core'
+import { BaseTranslation, Locale } from 'packages/core/src/core'
 import { join } from 'path'
 import { isString } from 'typesafe-utils'
 import { writeFileIfContainsChanges, writeFileIfNotExists } from '../file-utils'
@@ -22,18 +22,21 @@ ${inset}},`
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const getBaseLocaleTemplate = (
-	{ baseLocale, banner }: GeneratorConfigWithDefaultValues,
+const getLocaleTemplate = (
+	{ banner }: GeneratorConfigWithDefaultValues,
+	locale: Locale,
+	isBaseLocale: boolean,
 	translations: BaseTranslation | undefined,
-	firstLaunchOfGenerator: boolean,
+	editHint: string,
 ) => {
-	const sanitizedLocale = sanitizeLocale(baseLocale)
+	const typeToImport = isBaseLocale ? 'BaseTranslation' : 'Translation'
+	const sanitizedLocale = sanitizeLocale(locale)
 
 	const translationsMap = translations && mapTranslationsToString(translations)
 
-	const dummyTranslations = firstLaunchOfGenerator
-		? `	// TODO: your translations go here
-	HI: "Hi {name}, welcome to 'typesafe-i18n'",`
+	const hint = editHint
+		? `	// ${editHint}
+`
 		: ''
 
 	const bannerIfNeeded = translationsMap
@@ -42,13 +45,13 @@ ${banner}`
 		: ''
 
 	return `${tsCheck}${bannerIfNeeded}
-${importTypes('typesafe-i18n', 'BaseTranslation')}
+${importTypes('../i18n-types', typeToImport)}
 
-${jsDocImports({ from: `typesafe-i18n`, type: 'BaseTranslation' })}
+${jsDocImports({ from: `../i18n-types`, type: typeToImport })}
 
 ${jsDocType('BaseTranslation')}
-${shouldGenerateJsDoc ? 'module.exports' : `const ${sanitizedLocale}${type('BaseTranslation')}`} = {
-${translationsMap || dummyTranslations}
+${shouldGenerateJsDoc ? 'module.exports' : `const ${sanitizedLocale}${type(typeToImport)}`} = {
+${hint}${translationsMap}
 }
 
 ${shouldGenerateJsDoc ? '' : `export default ${sanitizedLocale}`}
@@ -58,13 +61,23 @@ ${shouldGenerateJsDoc ? '' : `export default ${sanitizedLocale}`}
 export const generateBaseLocaleTemplate = async (
 	config: GeneratorConfigWithDefaultValues,
 	forceOverride: boolean,
-	firstLaunchOfGenerator: boolean,
 	translations: BaseTranslation | undefined = undefined,
+	editHint = '',
+): Promise<void> => generateLocaleTemplate(config, config.baseLocale, forceOverride, translations, editHint)
+
+export const generateLocaleTemplate = async (
+	config: GeneratorConfigWithDefaultValues,
+	locale: Locale,
+	forceOverride: boolean,
+	translations: BaseTranslation | undefined = undefined,
+	editHint = '',
 ): Promise<void> => {
 	const { outputPath, baseLocale } = config
 
-	const baseLocaleTemplate = getBaseLocaleTemplate(config, translations, firstLaunchOfGenerator)
+	const isBaseLocale = baseLocale === locale
+
+	const localeTemplate = getLocaleTemplate(config, locale, isBaseLocale, translations, editHint)
 
 	const write = forceOverride ? writeFileIfContainsChanges : writeFileIfNotExists
-	await write(join(outputPath, baseLocale), `index${fileEnding}`, prettify(baseLocaleTemplate))
+	await write(join(outputPath, locale), `index${fileEnding}`, prettify(localeTemplate))
 }
