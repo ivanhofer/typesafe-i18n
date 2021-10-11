@@ -69,7 +69,7 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-export const readConfig = async (config: GeneratorConfig | undefined): Promise<Config> => {
+export const readConfig = async (config?: GeneratorConfig | undefined): Promise<Config> => {
 	const generatorConfig = {
 		...config,
 		...((await importFile<GeneratorConfig>(path.resolve('.typesafe-i18n.json'), false)) || {}),
@@ -80,7 +80,7 @@ export const readConfig = async (config: GeneratorConfig | undefined): Promise<C
 }
 
 export const getConfigWithDefaultValues = async (
-	config: Config | undefined,
+	config?: Config | undefined,
 ): Promise<GeneratorConfigWithDefaultValues> => ({
 	baseLocale: 'en',
 	locales: [],
@@ -106,10 +106,11 @@ export const generate = async (
 	version: TypescriptVersion,
 	logger: Logger = defaultLogger,
 	forceOverride = false,
+	firstLaunchOfGenerator = false,
 ): Promise<void> => {
 	configureOutputHandler(config, version)
 
-	await generateBaseLocaleTemplate(config, forceOverride)
+	await generateBaseLocaleTemplate(config, forceOverride, firstLaunchOfGenerator)
 
 	const hasCustomTypes = await generateTypes({ ...config, translations }, logger)
 

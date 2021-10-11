@@ -140,12 +140,21 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 
 	const locales = await getAllLanguages(outputPath)
 
+	const firstLaunchOfGenerator = !locales.length
+
 	const languageFile =
 		(locale && (await parseLanguageFile(outputPath, locale, resolve(tempPath, `${debounceCounter}`)))) || {}
 
-	await generate(languageFile, { ...config, baseLocale: locale, locales }, version, logger)
+	await generate(
+		languageFile,
+		{ ...config, baseLocale: locale, locales },
+		version,
+		logger,
+		false,
+		firstLaunchOfGenerator,
+	)
 
-	if (!locales.length) {
+	if (firstLaunchOfGenerator) {
 		let message =
 			'Visit https://github.com/ivanhofer/typesafe-i18n#options and configure `typesafe-i18n` depending on your project-setup.'
 		if (!config.adapter) {
