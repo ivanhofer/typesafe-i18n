@@ -140,13 +140,13 @@ ${jsDocImports(
 	{ from: 'typesafe-i18n', type: 'LocaleTranslations<Locales, Translation>', alias: 'LocaleTranslations' },
 	!loadLocalesAsync ? { from: 'typesafe-i18n', type: 'LocaleTranslationFunctions' } : undefined,
 	{ from: 'typesafe-i18n/detectors', type: 'LocaleDetector' },
-	{ from: `./${typesFileName}`, type: 'Locales' },
-	{ from: `./${typesFileName}`, type: 'Translation' },
-	{ from: `./${typesFileName}`, type: 'TranslationFunctions' },
+	{ from: relativeFileImportPath(typesFileName), type: 'Locales' },
+	{ from: relativeFileImportPath(typesFileName), type: 'Translation' },
+	{ from: relativeFileImportPath(typesFileName), type: 'TranslationFunctions' },
 )}
 
 ${dynamicImports}
-${importTypes(`./${typesFileName}`, 'Translation', 'TranslationFunctions', 'Formatters', 'Locales')}
+${importTypes(relativeFileImportPath(typesFileName), 'Translation', 'TranslationFunctions', 'Formatters', 'Locales')}
 ${importTypes('typesafe-i18n/detectors', 'LocaleDetector')}
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
 import { initFormatters } from '${relativeFileImportPath(formattersTemplatePath)}'

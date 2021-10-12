@@ -1,0 +1,9 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"module": "CommonJS",
+		"rootDirs": ["./src","../generator/src"],
+		"outDir": "../../importer"
+	},
+	"include": ["./src/**/*.ts"]
+}

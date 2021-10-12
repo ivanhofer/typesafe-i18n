@@ -41,15 +41,18 @@
 			"import": "./formatters/index.mjs",
 			"require": "./formatters/index.cjs"
 		},
+		"./importer": {
+			"require": "./importer/index.cjs"
+		},
 		"./react/react-context": {
 			"import": "./react/react-context.mjs",
 			"require": "./react/react-context.cjs"
 		},
-		"./rollup/*": "./rollup/*.js",
 		"./svelte/svelte-store": {
 			"import": "./svelte/svelte-store.mjs",
 			"require": "./svelte/svelte-store.cjs"
 		},
+		"./rollup/*": "./rollup/*.js",
 		"./webpack/*": "./webpack/*.js",
 		"./esm/*": {
 			"import": "./esm/*.mjs"
@@ -83,10 +86,21 @@
 		"/webpack"
 	],
 	"scripts": {
+		"-- DEV -------------------------------------------------": "",
 		"dev:node": "rollup -c packages/node-process/rollup.config.js -w",
 		"dev:rollup": "rollup -c packages/rollup-plugin/rollup.config.js -w",
 		"dev:webpack": "rollup -c packages/webpack-plugin/rollup.config.js -w",
 		"dev:adapters": "rollup -c packages/adapters/rollup.config.js -w",
+		"dev:importer": "rollup -c packages/importer/rollup.config.js -w",
+		"clear": "rm -rf ./angular ./adapters ./cjs ./detectors ./dist ./esm ./formatters ./node ./react ./rollup ./svelte ./types ./webpack ./temp-output",
+		"-- TEST ------------------------------------------------": "",
+		"lint": "eslint packages",
+		"lint:fix": "eslint packages --fix",
+		"test": "require-self && uvu -r ts-node/register -i generated packages test",
+		"test:watch": "watchlist packages -- npm test",
+		"test:update-generated-files": "ts-node packages/generator/test/generated/update.ts",
+		"test:size": "size-limit",
+		"-- BUILD -----------------------------------------------": "",
 		"build": "concurrently -n w: npm:build:* && npm run link-typedefinitions && npm run fix-imports",
 		"build:adapters": "rollup -c packages/adapters/rollup.config.js && tsc -p packages/adapters/tsconfig.json --emitDeclarationOnly",
 		"build:angular": "rollup -c packages/adapter-angular/rollup.config.js && tsc -p packages/adapter-angular/tsconfig.json --emitDeclarationOnly",
@@ -96,20 +110,14 @@
 		"build:esm": "tsc -p packages/core/tsconfig-esm.json && ts-node ./packages/core/rename-esm.ts",
 		"build:formatters": "rollup -c packages/formatters/rollup.config.js && tsc -p packages/formatters/tsconfig.json --emitDeclarationOnly && node --loader ts-node/esm ./packages/formatters/generateTreeShakableIndexFile.ts",
 		"build:node": "rollup -c packages/node-process/rollup.config.js",
+		"build:importer": "rollup -c packages/importer/rollup.config.js",
 		"build:react": "rollup -c packages/adapter-react/rollup.config.js && tsc -p packages/adapter-react/tsconfig.json --emitDeclarationOnly",
 		"build:rollup": "rollup -c packages/rollup-plugin/rollup.config.js && tsc -p packages/rollup-plugin/tsconfig.json --emitDeclarationOnly",
 		"build:svelte": "rollup -c packages/adapter-svelte/rollup.config.js && tsc -p packages/adapter-svelte/tsconfig.json --emitDeclarationOnly",
 		"build:webpack": "rollup -c packages/webpack-plugin/rollup.config.js && tsc -p packages/webpack-plugin/tsconfig.json --emitDeclarationOnly",
 		"fix-imports": "ts-node ./packages/fix-imports.ts",
 		"link-typedefinitions": "ts-node ./packages/link-typedefinitions.ts",
-		"generate:json-schema": "mkdir schema && typescript-json-schema ./packages/rollup-plugin/tsconfig.json GeneratorConfig > ./schema/typesafe-i18n.json",
-		"lint": "eslint packages",
-		"lint:fix": "eslint packages --fix",
-		"test": "require-self && uvu -r ts-node/register -i generated packages test",
-		"test:watch": "watchlist packages -- npm test",
-		"test:update-generated-files": "ts-node packages/generator/test/generated/update.ts",
-		"test:size": "size-limit",
-		"clear": "rm -rf ./angular ./adapters ./cjs ./detectors ./dist ./esm ./formatters ./node ./react ./rollup ./svelte ./types ./webpack ./temp-output"
+		"generate:json-schema": "mkdir schema && typescript-json-schema ./packages/rollup-plugin/tsconfig.json GeneratorConfig > ./schema/typesafe-i18n.json"
 	},
 	"dependencies": {
 		"typesafe-utils": "^1.16.2"

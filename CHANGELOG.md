@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.43.0 (2021-10-12)
+
+Feature:
+ - add `importer` feature [#69](https://github.com/ivanhofer/typesafe-i18n/issues/69
+
 ## 2.42.0 (2021-10-02)
 
 Breaking:

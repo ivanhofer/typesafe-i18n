@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 import { getI18nSvelteStore } from 'typesafe-i18n/adapters/adapter-svelte';
-import type { Locales, Translation, TranslationFunctions, Formatters } from './types.actual'
+import type { Locales, Translation, TranslationFunctions, Formatters } from './types.actual.js'
 import { getTranslationForLocale } from './util.actual.js'
 import { initFormatters } from './formatters-template.actual.js'
 

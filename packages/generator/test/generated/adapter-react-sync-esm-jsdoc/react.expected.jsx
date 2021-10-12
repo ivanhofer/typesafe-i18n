@@ -4,10 +4,10 @@
 
 /**
  * @typedef { import('typesafe-i18n/adapters/adapter-react').ReactInit<Locales, Translation, TranslationFunctions> } ReactInit,
- * @typedef { import('./types.actual').Locales } Locales,
- * @typedef { import('./types.actual').Translation } Translation,
- * @typedef { import('./types.actual').TranslationFunctions } TranslationFunctions,
- * @typedef { import('./types.actual').Formatters } Formatters
+ * @typedef { import('./types.actual.js').Locales } Locales,
+ * @typedef { import('./types.actual.js').Translation } Translation,
+ * @typedef { import('./types.actual.js').TranslationFunctions } TranslationFunctions,
+ * @typedef { import('./types.actual.js').Formatters } Formatters
  */
 
 import { initI18nReact } from 'typesafe-i18n/adapters/adapter-react'

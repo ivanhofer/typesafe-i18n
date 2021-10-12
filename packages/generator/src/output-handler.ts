@@ -62,9 +62,11 @@ export const configureOutputHandler = (config: GeneratorConfigWithDefaultValues,
 
 	jsDocType = (type) => (shouldGenerateJsDoc ? `/** @type { ${type} } */` : '')
 
-	relativeFileImportPath = (fileName: string) => `./${fileName}${config.esmImports ? '.js' : ''}`
+	relativeFileImportPath = (fileName: string) =>
+		`${fileName.startsWith('..') ? '' : './'}${fileName}${config.esmImports ? '.js' : ''}`
 
-	relativeFolderImportPath = (folderName: string) => `./${folderName}${config.esmImports ? '/index.js' : ''}`
+	relativeFolderImportPath = (folderName: string) =>
+		`${folderName.startsWith('..') ? '' : './'}${folderName}${config.esmImports ? '/index.js' : ''}`
 }
 
 // --------------------------------------------------------------------------------------------------------------------

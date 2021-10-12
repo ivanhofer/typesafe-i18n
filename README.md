@@ -38,6 +38,7 @@
 - [Syntax](#syntax)
 - [Formatters](#formatters)
 - [Locale-detection](#locale-detection)
+- [Importer](#importer)
 - [Sizes](#sizes)
 - [Performance](#performance)
 - [FAQs](#faqs)
@@ -1184,6 +1185,50 @@ const detectedLocale = detectLocale(fallbackLocale, availableLocales, documentCo
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
+## Importer
+
+In order to import language files that come from an API, spreadsheet or JSON-files `typesafe-i18n` provides a `importer` functionality.
+You have to write your own logic to get the data, then map it to a dictionary-representation and then call the `storeTranslationToDisk` function. Here is an example how this could look like:
+
+> Please share your implementation in a PR. `typesafe-i18n` wants to provide built-in importer-packages in the future.
+
+```typescript
+import { storeTranslationToDisk } from 'typesafe-i18n/importer'
+
+const getDataFromAPI = async (locale: string) => {
+   // this is just an example that returns static content
+   // in a real-world application, you would load the content from an API or from disk
+   return {
+      HI: 'Hello {name:string}',
+      login: {
+         validation: {
+            username: 'Username "{username}" to short'
+         }
+      }
+   }
+}
+
+const updateTranslations = async (locale: string) => {
+   const translations = await getDataFromAPI(locale)
+
+   const result = await storeTranslationToDisk(locale, translations)
+   // result = 'en'
+}
+
+updateTranslations('en')
+```
+
+The `storeTranslationToDisk` will write the contents of your `translations`-object to the file `src/i18n/{locale}/index.ts` and will run the [`generator`](#typesafety) to update the types. The function will return a the locale as a string, if the import was successful.
+
+If you want to store multiple translations in one step, you can call the `storeTranslationsToDisk` function.
+
+
+
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
 ## Sizes
 
 The footprint of the `typesafe-i18n` package is smaller compared to other existing i18n packages. Most of the magic happens in development mode, where the generator creates TypeScript definitions for your translations. This means, you don't have to ship the whole package to your users. The only two parts, that are needed in production are:
@@ -1193,16 +1238,16 @@ The footprint of the `typesafe-i18n` package is smaller compared to other existi
 
 These parts are bundled into the [core functions](#general). The sizes of the core functionalities are:
 
-- [i18nString](#i18nString): 806 bytes gzipped
-- [i18nObject](#i18nObject): 911 bytes gzipped
-- [i18n](#i18n): 1016 bytes gzipped
+- [i18nString](#i18nString): 834 bytes gzipped
+- [i18nObject](#i18nObject): 939 bytes gzipped
+- [i18n](#i18n): 1044 bytes gzipped
 
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
 There also exists a useful wrapper for some frameworks:
-- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 1125 bytes gzipped
-- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react#usage-in-javascript-projects): 1184 bytes gzipped
-- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte#usage-in-javascript-projects): 1167 bytes gzipped
+- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 1152 bytes gzipped
+- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react#usage-in-javascript-projects): 1212 bytes gzipped
+- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte#usage-in-javascript-projects): 1191 bytes gzipped
 
 
 

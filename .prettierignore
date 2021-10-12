@@ -5,6 +5,7 @@ node_modules
 /dist
 /esm
 /formatters
+/importer
 /node
 /react
 /rollup

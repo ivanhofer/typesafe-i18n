@@ -29,14 +29,14 @@ ${jsDocImports(
 		type: 'SvelteStoreInit<Locales, Translation, TranslationFunctions>',
 		alias: 'SvelteStoreInit',
 	},
-	{ from: `./${typesFileName}`, type: 'Locales' },
-	{ from: `./${typesFileName}`, type: 'Translation' },
-	{ from: `./${typesFileName}`, type: 'TranslationFunctions' },
-	{ from: `./${typesFileName}`, type: 'Formatters' },
+	{ from: relativeFileImportPath(typesFileName), type: 'Locales' },
+	{ from: relativeFileImportPath(typesFileName), type: 'Translation' },
+	{ from: relativeFileImportPath(typesFileName), type: 'TranslationFunctions' },
+	{ from: relativeFileImportPath(typesFileName), type: 'Formatters' },
 )}
 
 import { getI18nSvelteStore } from 'typesafe-i18n/adapters/adapter-svelte';
-${importTypes(`./${typesFileName}`, 'Locales', 'Translation', 'TranslationFunctions', 'Formatters')}
+${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translation', 'TranslationFunctions', 'Formatters')}
 import { getTranslationForLocale } from '${relativeFileImportPath(utilFileName)}'
 import { initFormatters } from '${relativeFileImportPath(formattersTemplateFileName)}'
 

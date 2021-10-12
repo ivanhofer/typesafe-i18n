@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 import { initI18nReact } from 'typesafe-i18n/adapters/adapter-react'
-import type { Locales, Translation, TranslationFunctions, Formatters } from './types.actual'
+import type { Locales, Translation, TranslationFunctions, Formatters } from './types.actual.js'
 import { baseLocale, getTranslationForLocale } from './util.actual.js'
 import { initFormatters } from './formatters-template.actual.js'
 

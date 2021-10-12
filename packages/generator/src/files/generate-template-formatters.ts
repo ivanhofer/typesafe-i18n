@@ -1,7 +1,15 @@
 import { writeFileIfContainsChanges, writeFileIfNotExists } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generate-files'
 import { prettify } from '../generator-util'
-import { importTypes, jsDocFunction, jsDocImports, jsDocType, tsCheck, type } from '../output-handler'
+import {
+	importTypes,
+	jsDocFunction,
+	jsDocImports,
+	jsDocType,
+	relativeFileImportPath,
+	tsCheck,
+	type
+} from '../output-handler'
 
 const getFormattersTemplate = ({ typesFileName: typesFile, loadLocalesAsync }: GeneratorConfigWithDefaultValues) => {
 	const formattersInitializerType = `${loadLocalesAsync ? 'Async' : ''}FormattersInitializer`
@@ -9,12 +17,12 @@ const getFormattersTemplate = ({ typesFileName: typesFile, loadLocalesAsync }: G
 
 ${jsDocImports(
 	{ from: 'typesafe-i18n', type: 'FormattersInitializer<Locales, Formatters>', alias: 'FormattersInitializer' },
-	{ from: `./${typesFile}`, type: 'Locales' },
-	{ from: `./${typesFile}`, type: 'Formatters' },
+	{ from: relativeFileImportPath(typesFile), type: 'Locales' },
+	{ from: relativeFileImportPath(typesFile), type: 'Formatters' },
 )}
 
 ${importTypes('typesafe-i18n', formattersInitializerType)}
-${importTypes(`./${typesFile}`, 'Locales', 'Formatters')}
+${importTypes(relativeFileImportPath(typesFile), 'Locales', 'Formatters')}
 
 ${jsDocFunction(loadLocalesAsync ? 'Promise<Formatters>' : 'Formatters', { type: 'Locales', name: 'locale' })}
 export const initFormatters${type(`${formattersInitializerType}<Locales, Formatters>`)} = ${
