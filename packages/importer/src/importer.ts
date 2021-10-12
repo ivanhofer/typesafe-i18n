@@ -13,10 +13,10 @@ interface LocaleMapping {
 	translations: BaseTranslation
 }
 
-export const storeLocaleToDisk = async (localeMapping: LocaleMapping): Promise<Locale | undefined> =>
-	(await storeLocalesToDisk([localeMapping]))[0]
+export const storeTranslationToDisk = async (localeMapping: LocaleMapping): Promise<Locale | undefined> =>
+	(await storeTranslationsToDisk([localeMapping]))[0]
 
-export const storeLocalesToDisk = async (localeMappings: LocaleMapping[]): Promise<Locale[]> => {
+export const storeTranslationsToDisk = async (localeMappings: LocaleMapping[]): Promise<Locale[]> => {
 	const config = await getConfigWithDefaultValues()
 
 	const version = parseTypescriptVersion(ts.versionMajorMinor)
