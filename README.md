@@ -1211,7 +1211,7 @@ const getDataFromAPI = async (locale: string) => {
 const updateTranslations = async (locale: string) => {
    const translations = await getDataFromAPI(locale)
 
-   const result = await storeTranslationToDisk(locale, translations)
+   const result = await storeTranslationToDisk({ locale, translations })
    // result = 'en'
 }
 
