@@ -102,11 +102,9 @@ export const getConfigWithDefaultValues = async (
 
 const generateDictionaryFiles = async (
 	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
-	forceOverride = false,
-	firstLaunchOfGenerator = false,
+	forceOverride: boolean,
 ) => {
-	if (!firstLaunchOfGenerator) {
-		await generateBaseLocaleTemplate(config, forceOverride)
+	if (!forceOverride) {
 		return
 	}
 
@@ -115,12 +113,11 @@ const generateDictionaryFiles = async (
 		de: 'Hallo {name}! Bitte hinterlasse einen Stern, wenn dir das Projekt gefällt: https://github.com/ivanhofer/typesafe-i18n',
 	}
 
-	const primaryLocale = config.baseLocale === 'de' ? 'de' : 'en'
+	const primaryLocale = config.baseLocale.startsWith('de') ? 'de' : 'en'
 	const secondaryLocale = primaryLocale === 'de' ? 'en' : 'de'
 
 	await generateBaseLocaleTemplate(
 		config,
-		forceOverride,
 		{
 			HI: dummyTranslations[primaryLocale].replace('{name}', '{name:string}'),
 		},
@@ -130,7 +127,6 @@ const generateDictionaryFiles = async (
 	await generateLocaleTemplate(
 		config,
 		secondaryLocale,
-		forceOverride,
 		{
 			HI: dummyTranslations[secondaryLocale],
 		},
@@ -144,11 +140,10 @@ export const generate = async (
 	version: TypescriptVersion,
 	logger: Logger = defaultLogger,
 	forceOverride = false,
-	firstLaunchOfGenerator = false,
 ): Promise<void> => {
 	configureOutputHandler(config, version)
 
-	await generateDictionaryFiles(config, forceOverride, firstLaunchOfGenerator)
+	await generateDictionaryFiles(config, forceOverride)
 
 	const hasCustomTypes = await generateTypes({ ...config, translations }, logger)
 

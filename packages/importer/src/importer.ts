@@ -35,7 +35,7 @@ export const storeLocalesToDisk = async (localeMappings: LocaleMapping[]): Promi
 		logger.info(`importing translations for locale '${locale}'' ...`)
 		let error = undefined
 
-		await generateLocaleTemplate(config, locale, true, translations).catch((e) => (error = e))
+		await generateLocaleTemplate(config, locale, translations, undefined, true).catch((e) => (error = e))
 
 		if (error) {
 			logger.error(`importing translations for locale '${locale}'' failed:`, error)

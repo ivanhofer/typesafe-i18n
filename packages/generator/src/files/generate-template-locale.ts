@@ -4,7 +4,16 @@ import { isString } from 'typesafe-utils'
 import { writeFileIfContainsChanges, writeFileIfNotExists } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generate-files'
 import { prettify, sanitizeLocale } from '../generator-util'
-import { fileEnding, importTypes, jsDocImports, jsDocType, shouldGenerateJsDoc, tsCheck, type } from '../output-handler'
+import {
+	fileEnding,
+	importTypes,
+	jsDocImports,
+	jsDocType,
+	relativeFileImportPath,
+	shouldGenerateJsDoc,
+	tsCheck,
+	type
+} from '../output-handler'
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -23,11 +32,12 @@ ${inset}},`
 // --------------------------------------------------------------------------------------------------------------------
 
 const getLocaleTemplate = (
-	{ banner }: GeneratorConfigWithDefaultValues,
+	{ banner, typesFileName }: GeneratorConfigWithDefaultValues,
 	locale: Locale,
 	isBaseLocale: boolean,
 	translations: BaseTranslation | undefined,
 	editHint: string,
+	showBanner: boolean,
 ) => {
 	const typeToImport = isBaseLocale ? 'BaseTranslation' : 'Translation'
 	const sanitizedLocale = sanitizeLocale(locale)
@@ -39,15 +49,15 @@ const getLocaleTemplate = (
 `
 		: ''
 
-	const bannerIfNeeded = translationsMap
+	const bannerIfNeeded = showBanner
 		? `
 ${banner}`
 		: ''
 
 	return `${tsCheck}${bannerIfNeeded}
-${importTypes('../i18n-types', typeToImport)}
+${importTypes(relativeFileImportPath(`../${typesFileName}`), typeToImport)}
 
-${jsDocImports({ from: `../i18n-types`, type: typeToImport })}
+${jsDocImports({ from: relativeFileImportPath(`../${typesFileName}`), type: typeToImport })}
 
 ${jsDocType('BaseTranslation')}
 ${shouldGenerateJsDoc ? 'module.exports' : `const ${sanitizedLocale}${type(typeToImport)}`} = {
@@ -60,24 +70,23 @@ ${shouldGenerateJsDoc ? '' : `export default ${sanitizedLocale}`}
 
 export const generateBaseLocaleTemplate = async (
 	config: GeneratorConfigWithDefaultValues,
-	forceOverride: boolean,
 	translations: BaseTranslation | undefined = undefined,
 	editHint = '',
-): Promise<void> => generateLocaleTemplate(config, config.baseLocale, forceOverride, translations, editHint)
+	showBanner = false,
+): Promise<void> => generateLocaleTemplate(config, config.baseLocale, translations, editHint, showBanner)
 
 export const generateLocaleTemplate = async (
 	config: GeneratorConfigWithDefaultValues,
 	locale: Locale,
-	forceOverride: boolean,
 	translations: BaseTranslation | undefined = undefined,
 	editHint = '',
+	showBanner = false,
 ): Promise<void> => {
 	const { outputPath, baseLocale } = config
 
 	const isBaseLocale = baseLocale === locale
 
-	const localeTemplate = getLocaleTemplate(config, locale, isBaseLocale, translations, editHint)
+	const localeTemplate = getLocaleTemplate(config, locale, isBaseLocale, translations, editHint, showBanner)
 
-	const write = forceOverride ? writeFileIfContainsChanges : writeFileIfNotExists
-	await write(join(outputPath, locale), `index${fileEnding}`, prettify(localeTemplate))
+	await writeFileIfContainsChanges(join(outputPath, locale), `index${fileEnding}`, prettify(localeTemplate))
 }

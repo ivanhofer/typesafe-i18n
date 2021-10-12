@@ -15,7 +15,7 @@ ${banner}
 import { Injectable } from '@angular/core'
 import { I18nServiceRoot } from 'typesafe-i18n/angular/angular-service'
 import { initFormatters } from '${relativeFileImportPath(formattersTemplateFileName)}'
-${importTypes(`./${typesFileName}`, 'Locales', 'Translation', 'TranslationFunctions', 'Formatters')}
+${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translation', 'TranslationFunctions', 'Formatters')}
 import { baseLocale, getTranslationForLocale } from '${relativeFileImportPath(utilFileName)}'
 
 @Injectable({

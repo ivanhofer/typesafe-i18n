@@ -144,14 +144,7 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 	const languageFile =
 		(locale && (await parseLanguageFile(outputPath, locale, resolve(tempPath, `${debounceCounter}`)))) || {}
 
-	await generate(
-		languageFile,
-		{ ...config, baseLocale: locale, locales },
-		version,
-		logger,
-		false,
-		firstLaunchOfGenerator,
-	)
+	await generate(languageFile, { ...config, baseLocale: locale, locales }, version, logger, firstLaunchOfGenerator)
 
 	if (firstLaunchOfGenerator) {
 		let message =
@@ -177,7 +170,7 @@ const debounce = (callback: () => void) =>
 		++debounceCounter,
 	)
 
-const chokidar = 'chokidar' // has to be dynamic due to a rollup-bug
+const chokidar = 'chokidar' // has to be dynamic due to a rollup-bug that can't resolve 'chokidar' as a esm-package
 const getWatch = async () => (await import(chokidar)).watch
 
 export const startGenerator = async (config?: GeneratorConfig, watchFiles = true): Promise<void> => {

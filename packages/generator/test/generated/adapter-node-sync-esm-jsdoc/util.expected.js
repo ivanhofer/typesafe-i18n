@@ -7,9 +7,9 @@
  * @typedef { import('typesafe-i18n').LocaleTranslations<Locales, Translation> } LocaleTranslations,
  * @typedef { import('typesafe-i18n').LocaleTranslationFunctions } LocaleTranslationFunctions,
  * @typedef { import('typesafe-i18n/detectors').LocaleDetector } LocaleDetector,
- * @typedef { import('./types.actual').Locales } Locales,
- * @typedef { import('./types.actual').Translation } Translation,
- * @typedef { import('./types.actual').TranslationFunctions } TranslationFunctions
+ * @typedef { import('./types.actual.js').Locales } Locales,
+ * @typedef { import('./types.actual.js').Translation } Translation,
+ * @typedef { import('./types.actual.js').TranslationFunctions } TranslationFunctions
  */
 
 import { i18nString as initI18nString, i18nObjectLoader, i18n as initI18n } from 'typesafe-i18n'
