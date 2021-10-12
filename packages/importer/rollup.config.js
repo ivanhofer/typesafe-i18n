@@ -10,10 +10,10 @@ const getPath = (file) => path.resolve(__dirname, file)
 
 const config = [
 	{
-		input: getPath('src/importer.ts'),
+		input: getPath('src/index.ts'),
 		output: [
 			{
-				file: getPath('../../importer/importer.cjs'),
+				file: getPath('../../importer/index.cjs'),
 				format: 'cjs',
 				sourcemap: true,
 			},

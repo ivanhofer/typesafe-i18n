@@ -42,7 +42,7 @@
 			"require": "./formatters/index.cjs"
 		},
 		"./importer": {
-			"require": "./importer/importer.cjs"
+			"require": "./importer/index.cjs"
 		},
 		"./react/react-context": {
 			"import": "./react/react-context.mjs",
