@@ -26,7 +26,6 @@ Navigate to [http://localhost:5000](http://localhost:5000). You should see the e
  - [available Svelte stores](#stores)
  - [SvelteKit projects](#sveltekit)
  - [Sapper projects](#sapper)
- - [JavaScript projects](#usage-in-javascript-projects)
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -241,39 +240,6 @@ For more information about the stores you can use, see the [Svelte](#svelte) sec
 
  <!-- TODO: create example repository -->
 
-
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-
-# usage in JavaScript projects
-
-Since you can't take advantage of the generated types, you need to import the stores directly from 'typesafe-i18n/svelte/svelte-store'.\
-When initializing you need to pass a callback to load the translation and an optional callback to initialize your formatters.
-
-```typescript
-import LL, { initI18n } from 'typesafe-i18n/svelte/svelte-store'
-
-const localeTranslations = {
-   en: { TODAY: "Today is {date|weekday}" },
-   de: { TODAY: "Heute ist {date|weekday}" },
-   it: { TODAY: "Oggi è {date|weekday}" },
-}
-
-const loadLocale = (locale) => localeTranslations[locale]
-
-const initFormatters = (locale) => {
-   const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
-
-   return {
-      weekday: (value) => dateFormatter.format(value)
-   }
-}
-
-initI18n('en', loadLocale, initFormatters)
-
-$LL.TODAY(new Date()) // => 'Today is friday'
-```
 
 ---
 ---

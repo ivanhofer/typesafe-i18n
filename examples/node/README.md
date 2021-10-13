@@ -75,9 +75,6 @@ The file `i18n-node.ts` exports following function:
 An object of type [i18n](https://github.com/ivanhofer/typesafe-i18n#i18n) you can use inside your code.\
 This is also the default object of that file.
 
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
 
 ---
 ---

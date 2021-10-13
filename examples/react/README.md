@@ -18,7 +18,6 @@ Navigate to [http://localhost:3000](http://localhost:3000). You should see the e
 # Overview
  - [add `typesafe-i18n` to existing projects](#configure-typesafe-i18n-for-an-existing-react-project)
  - [generated component & context](#generated-component--context)
- - [JavaScript projects](#usage-in-javascript-projects)
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -194,58 +193,6 @@ function LanguageSelection(props) {
 export default LanguageSelection
 ```
 
-
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-
-# usage in JavaScript projects
-
-Since you can't take advantage of the generated types, you need to import the stores directly from 'typesafe-i18n/react/react-context'.\
-When initializing you need to pass a callback to load the translation and an optional callback to initialize your formatters.
-
-```jsx
-import { useContext } from 'react'
-import { initI18nReact } from 'typesafe-i18n/react/react-context'
-
-const localeTranslations = {
-   en: { TODAY: 'Today is {date|weekday}' },
-   de: { TODAY: 'Heute ist {date|weekday}' },
-   it: { TODAY: 'Oggi è {date|weekday}' },
-}
-
-const loadLocale = (locale) => localeTranslations[locale]
-
-const initFormatters = (locale) => {
-   const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
-
-   return {
-      weekday: (value) => dateFormatter.format(value),
-   }
-}
-
-const { component: TypesafeI18n, context: I18nContext } = initI18nReact('en', loadLocale, initFormatters)
-
-function Child() {
-   const { LL } = useContext(I18nContext)
-
-   return (
-      <div>
-         { LL.TODAY({ date: new Date() }) }
-      </div>
-   )
-}
-
-function App() {
-   return (
-      <TypesafeI18n>
-         <Child />
-      </TypesafeI18n>
-   )
-}
-
-export default App
-```
 
 ---
 ---
