@@ -39,31 +39,26 @@ Configure `typesafe-i18n` by creating the file `.typesafe-i18n.json` with follow
 
 ```json
 {
+   "$schema": "https://unpkg.com/typesafe-i18n@2.40.1/schema/typesafe-i18n.json",
+
    "adapter": "svelte",
    "loadLocalesAsync": false
 }
 ```
+> if in your 'rollup.config.js' file 'config.format' is set 'iife' , you need to set 'loadLocalesAsync' to 'false'
 
-Then, you need add a plugin inside `rollup.config.js` to listen for changes in your locales files.
+Run the generator e.g. by adding a new script inside your `package.json` file.
+You could configure your development script to run the generator in parallel to `rollup -c -w`.
 
-```javascript
-
-import { typesafeI18nPlugin } from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n'
-
-export default {
-   input: { /* ... */ },
-   output: { /* ... */ },
-   plugins: [
-
-      /* other plugins */
-
-      !production && typesafeI18nPlugin(),
-
-   ],
+```json
+{
+   "scripts": {
+      "dev": "npm-run-all --parallel rollup typesafe-i18n-generator",
+      "typesafe-i18n-generator": "typesafe-i18n",
+      "rollup": "rollup -c -w",
+   }
 }
-
 ```
-> make sure to set the `adapter`-option to `'svelte'`
 
 The generator will create some custom Svelte stores inside `i18n-svelte.ts` that you can use inside your components.
 
@@ -87,7 +82,6 @@ That's it. You can then start using `typesafe-i18n` inside your Svelte applicati
 </script>
 
 <h1>{$LL.HELLO({ name: 'Svelte' })}</h1> <!-- "Hello Svelte!" -->
-
 ```
 
 

@@ -33,7 +33,6 @@ For this you can add following line to the scripts-section of your `package.json
 
 ```json
 {
-
    "scripts": {
       "typesafe-i18n-generator": "typesafe-i18n"
    }
@@ -45,6 +44,8 @@ If you are running a node server it makes also sense to set the `loadLocalesAsyn
 
 ```json
 {
+   "$schema": "https://unpkg.com/typesafe-i18n@2.40.1/schema/typesafe-i18n.json",
+
    "adapter": "node",
    "loadLocalesAsync": false
 }

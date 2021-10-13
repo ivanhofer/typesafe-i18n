@@ -2,8 +2,10 @@
 	"name": "typesafe-i18n_svelte-demo",
 	"version": "1.0.0",
 	"scripts": {
+		"dev": "npm-run-all --parallel rollup typesafe-i18n-generator",
+		"typesafe-i18n-generator": "typesafe-i18n",
+		"rollup": "rollup -c -w",
 		"build": "rollup -c",
-		"dev": "rollup -c -w",
 		"start": "sirv public",
 		"validate": "svelte-check"
 	},
@@ -12,6 +14,7 @@
 		"@rollup/plugin-node-resolve": "^13.0.5",
 		"@rollup/plugin-typescript": "^8.2.5",
 		"@tsconfig/svelte": "^2.0.1",
+		"npm-run-all": "^4.1.5",
 		"rollup": "^2.57.0",
 		"rollup-plugin-css-only": "^3.1.0",
 		"rollup-plugin-livereload": "^2.0.5",

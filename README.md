@@ -53,7 +53,7 @@
 ## Installation
 
 ```bash
-$ npm install typesafe-i18n
+npm install typesafe-i18n
 ```
 
 
@@ -70,9 +70,10 @@ $ npm install typesafe-i18n
       "$schema": "https://unpkg.com/typesafe-i18n@2.40.1/schema/typesafe-i18n.json",
 
       "baseLocale": "en",
-      "adapter": "svelte" // or 'angular', 'node', 'react'
+      "adapter": "svelte"
    }
    ```
+
 2. :package: Add a new script to your package.json file
    ```json
    {
@@ -84,7 +85,7 @@ $ npm install typesafe-i18n
 
 3. :running: Run the generator
    ```bash
-   $ npm run typesafe-i18n-generator
+   npm run typesafe-i18n-generator
    ```
 
 4. :eyes: Take a look at the generated files and it's [folder-structure](#folder-structure)

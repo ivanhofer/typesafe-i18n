@@ -30,6 +30,8 @@ Configure `typesafe-i18n` by creating the file `.typesafe-i18n.json` with follow
 
 ```json
 {
+   "$schema": "https://unpkg.com/typesafe-i18n@2.40.1/schema/typesafe-i18n.json",
+
    "adapter": "react"
 }
 ```
@@ -38,12 +40,12 @@ Run the generator e.g. by adding a new script inside your `package.json` file.
 You could configure your development script to run the generator in parallel to `react-scripts start`.
 
 ```json
-// ... other options
-
-"scripts": {
-   "dev": "npm-run-all --parallel start typesafe-i18n-generator",
-   "typesafe-i18n-generator": "typesafe-i18n",
-   "start": "react-scripts start"
+{
+   "scripts": {
+      "dev": "npm-run-all --parallel start typesafe-i18n-generator",
+      "typesafe-i18n-generator": "typesafe-i18n",
+      "start": "react-scripts start"
+   }
 }
 ```
 
