@@ -40,10 +40,10 @@ You could configure your development script to run the generator in parallel to 
 
 ```json
 {
-	"scripts": {
-	   "dev": "npm-run-all --parallel start typesafe-i18n-generator",
-	   "typesafe-i18n-generator": "typesafe-i18n",
-	   "start": "ng serve",
+   "scripts": {
+      "dev": "npm-run-all --parallel start typesafe-i18n-generator",
+      "typesafe-i18n-generator": "typesafe-i18n",
+      "start": "ng serve",
   }
 }
 ```
@@ -58,15 +58,15 @@ import { TranslationFunctions } from '../i18n/i18n-types'
 import { I18nService } from '../i18n/i18n.service'
 
 @Component({
-	selector: 'app-greeting',
-	templateUrl: './greeting.component.html',
+   selector: 'app-greeting',
+   templateUrl: './greeting.component.html',
 })
 export class GreetingComponent {
-	constructor(private i18nService: I18nService) {	}
+   constructor(private i18nService: I18nService) {	}
 
-	get LL(): TranslationFunctions {
-		return this.i18nService.LL
-	}
+   get LL(): TranslationFunctions {
+      return this.i18nService.LL
+   }
 }
 ```
 
@@ -100,17 +100,18 @@ import { locales } from '../i18n/i18n-util'
 import { I18nService } from '../i18n/i18n.service'
 
 @Component({
-	selector: 'app-language-switcher',
-	templateUrl: './language-switcher.component.html',
+   selector: 'app-language-switcher',
+   templateUrl: './language-switcher.component.html',
 })
 export class LanguageSwitcherComponent {
-	constructor(private i18nService: I18nService) {	}
+   constructor(private i18nService: I18nService) {	}
 
-	setLocale(locale: Locales): void {
-		this.i18nService.setLocale(locale)
-	}
+   setLocale(locale: Locales): void {
+      this.i18nService.setLocale(locale)
+   }
 }
 ```
+
 
 ---
 ---
