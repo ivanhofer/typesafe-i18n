@@ -33,6 +33,7 @@
 ## Table of Contents
 
 - [Installation](#installation)
+- [Get started](#get-started)
 - [Usage](#usage)
 - [Typesafety](#typesafety)
 - [Syntax](#syntax)
@@ -51,9 +52,49 @@
 
 ## Installation
 
-```
+```bash
 $ npm install typesafe-i18n
 ```
+
+
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+## Get started
+
+1. :gear: Create a `.typesafe-i18n.json`-file to [configure](#options) the generator
+   ```json
+   {
+      "$schema": "https://unpkg.com/typesafe-i18n@2.40.1/schema/typesafe-i18n.json",
+
+      "baseLocale": "en",
+      "adapter": "svelte" // or 'angular', 'node', 'react'
+   }
+   ```
+2. :package: Add a new script to your package.json file
+   ```json
+   {
+      "scripts": {
+         "typesafe-i18n-generator": "typesafe-i18n"
+      }
+   }
+   ```
+
+3. :running: Run the generator
+   ```bash
+   $ npm run typesafe-i18n-generator
+   ```
+
+4. :eyes: Take a look at the generated files and it's [folder-structure](#folder-structure)
+
+5. :open_book: Explore the docs
+   > `typesafe-i18n` offers a lot. Just press `cmd + F` to search on this page.
+
+6. :star: Star this project on [GitHub](https://github.com/ivanhofer/typesafe-i18n)
+   > Thanks! This helps the project to grow.
+
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -91,6 +132,8 @@ In order to get full typechecking support, you should use the exported functions
 
 #### i18nString
 
+> use case: string interpolation for selected parts of an application
+
 The `i18nString` contains the core of the localization engine. To initialize it, you need to pass your desired `locale` and the `formatters` (optional) you want to use.\
 You will get an object back that can be used to transform your translation strings.
 
@@ -108,6 +151,8 @@ LLL('Hello {name|uppercase}!', { name: 'world' }) // => 'Hello WORLD!'
 ```
 
 #### i18nObject
+
+> use case: for frontend-applications or projects that only load a single locale per user
 
 The `i18nObject` wraps your translations for a certain locale. To initialize it, you need to pass your desired `locale`, your `translations`-object and the `formatters` (optional) you want to use.\
 You will get an object back that can be used to access and apply your translations.
@@ -158,6 +203,8 @@ LL.projects.count(3) // => '3 projects'
 
 
 #### i18n
+
+> use case: for APIs or backend-applications that need to handle multiple locales
 
 Wrap all your locales with `i18n`. To initialize it, you need to pass a callback to get the `translations`-object for a given locale and a callback to initialize the `formatters` you want to use (optional).\
 You will get an object back that can be used to access all your locales and apply your translations.
@@ -1305,7 +1352,7 @@ The [generator](#typesafety) will only look for changes in your base locale file
  - define the type of your base locale as `BaseTranslation`
    ```typescript
    // file 'src/i18n/it/index.ts'
-   import type { BaseTranslation } from 'typesafe-i18n'
+   import type { BaseTranslation } from '../i18n-types'
 
    const it: BaseTranslation = {
       WELCOME: "Benvenuto!"
@@ -1412,7 +1459,7 @@ Your locale translation files can be any kind of JavaScript object. So you can m
  - create your `BaseTranslation`
    ```typescript
    // file 'src/i18n/en/index.ts'
-   import type { BaseTranslation } from 'typesafe-i18n'
+   import type { BaseTranslation } from '../i18n-types'
 
    const en: BaseTranslation = {
       WELCOME: "Welcome to XYZ",
@@ -1447,7 +1494,7 @@ The generated types are really strict. It helps you from making unintentional mi
  - create your `BaseTranslation` with a translation containing a parameter
    ```typescript
    // file 'src/i18n/en/index.ts'
-   import type { BaseTranslation } from 'typesafe-i18n'
+   import type { BaseTranslation } from '../i18n-types'
 
    const en: BaseTranslation = {
       HELLO: "Hi {name}!",
@@ -1475,7 +1522,7 @@ A better approach would be to create a custom formatter e.g.
  - create your translation and add a formatter to your variable
    ```typescript
    // file 'src/i18n/en/index.ts'
-   import type { BaseTranslation } from 'typesafe-i18n'
+   import type { BaseTranslation } from '../i18n-types'
 
    const en: BaseTranslation = {
       HELLO: "Hi {name|nameFormatter}!",
