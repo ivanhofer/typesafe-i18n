@@ -22,6 +22,7 @@
 :stopwatch: supports SSR (Server-Side Rendering)\
 :handshake: can be used for [frontend, backend and API](#usage) projects\
 :mag: [locale-detection](#locale-detection) for browser and server environments\
+:arrow_down: [import](#importer) translations from files or services\
 :no_entry: no external dependencies\
 
 <!-- list of supported emojis on GitHub: https://github.com/ikatyang/emoji-cheat-sheet -->
@@ -1241,7 +1242,7 @@ const detectedLocale = detectLocale(fallbackLocale, availableLocales, documentCo
 
 ## Importer
 
-In order to import language files that come from an API, spreadsheet or JSON-files `typesafe-i18n` provides a `importer` functionality.
+In order to import language files that come from an API, spreadsheet or JSON-files `typesafe-i18n` provides an `importer` functionality.
 You have to write your own logic to get the data, then map it to a dictionary-representation and then call the `storeTranslationToDisk` function. Here is an example how this could look like:
 
 > Please share your implementation in a PR. `typesafe-i18n` wants to provide built-in importer-packages in the future.
@@ -1271,6 +1272,8 @@ const updateTranslations = async (locale: string) => {
 
 updateTranslations('en')
 ```
+
+> you need to run this script during development or as a CI-process and **not** at runtime
 
 The `storeTranslationToDisk` will write the contents of your `translations`-object to the file `src/i18n/{locale}/index.ts` and will run the [`generator`](#typesafety) to update the types. The function will return a the locale as a string, if the import was successful.
 
