@@ -2,9 +2,9 @@
 	"name": "typesafe-i18n_node-demo",
 	"version": "1.0.0",
 	"scripts": {
-		"dev": "npm-run-all --parallel nodemon typesafe-i18n-generator",
+		"dev": "npm-run-all --parallel nodemon typesafe-i18n",
 		"nodemon": "nodemon src/index.ts",
-		"typesafe-i18n-generator": "typesafe-i18n"
+		"typesafe-i18n": "typesafe-i18n"
 	},
 	"devDependencies": {
 		"@types/express": "^4.17.13",

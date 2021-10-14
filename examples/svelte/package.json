@@ -2,8 +2,8 @@
 	"name": "typesafe-i18n_svelte-demo",
 	"version": "1.0.0",
 	"scripts": {
-		"dev": "npm-run-all --parallel rollup typesafe-i18n-generator",
-		"typesafe-i18n-generator": "typesafe-i18n",
+		"dev": "npm-run-all --parallel rollup typesafe-i18n",
+		"typesafe-i18n": "typesafe-i18n",
 		"rollup": "rollup -c -w",
 		"build": "rollup -c",
 		"start": "sirv public",

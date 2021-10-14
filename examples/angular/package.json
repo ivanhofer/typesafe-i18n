@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "dev": "npm-run-all --parallel start typesafe-i18n-generator",
-    "typesafe-i18n-generator": "typesafe-i18n",
+    "dev": "npm-run-all --parallel start typesafe-i18n",
+    "typesafe-i18n": "typesafe-i18n",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development"

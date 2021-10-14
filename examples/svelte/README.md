@@ -52,8 +52,8 @@ You could configure your development script to run the generator in parallel to 
 ```json
 {
    "scripts": {
-      "dev": "npm-run-all --parallel rollup typesafe-i18n-generator",
-      "typesafe-i18n-generator": "typesafe-i18n",
+      "dev": "npm-run-all --parallel rollup typesafe-i18n",
+      "typesafe-i18n": "typesafe-i18n",
       "rollup": "rollup -c -w",
    }
 }

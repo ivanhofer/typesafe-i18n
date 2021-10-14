@@ -78,14 +78,14 @@ npm install typesafe-i18n
    ```json
    {
       "scripts": {
-         "typesafe-i18n-generator": "typesafe-i18n"
+         "typesafe-i18n": "typesafe-i18n"
       }
    }
    ```
 
 3. :running: Run the generator
    ```bash
-   npm run typesafe-i18n-generator
+   npm run typesafe-i18n
    ```
 
 4. :eyes: Take a look at the generated files and it's [folder-structure](#folder-structure)
@@ -317,7 +317,7 @@ or define a script in your `package.json` file:
 ```json
 {
    "scripts": {
-      "typesafe-i18n-generator": "typesafe-i18n"
+      "typesafe-i18n": "typesafe-i18n"
    }
 }
 ```
@@ -334,6 +334,12 @@ Passing [options](#options) to the generator is possible by creating a `.typesaf
 ```
 
 > You could use a npm-package like `npm-run-all` in order to start the generator and you development-server in parallel.
+
+To start the generator and watch for changes in your translation you can run:
+
+```bash
+> npm run typesafe-i18n
+```
 
 Take a look at this [demo repository](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/node) to see how to run the generator node process.
 

@@ -34,7 +34,7 @@ For this you can add following line to the scripts-section of your `package.json
 ```json
 {
    "scripts": {
-      "typesafe-i18n-generator": "typesafe-i18n"
+      "typesafe-i18n": "typesafe-i18n"
    }
 }
 ```
