@@ -22,6 +22,15 @@ const getAllLanguages = async (path: string) => {
 let logger: Logger
 let first = true
 
+const getDefaultExport = (languageFile: BaseTranslation): BaseTranslation => {
+	const keys = Object.keys(languageFile)
+	if (keys.includes('__esModule') || (keys.length === 1 && keys.includes('default'))) {
+		languageFile = languageFile.default as BaseTranslation
+	}
+
+	return languageFile
+}
+
 const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, version: TypescriptVersion) => {
 	if (first) {
 		first = false
@@ -35,14 +44,12 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 
 	const firstLaunchOfGenerator = !locales.length
 
-	let languageFile =
+	const languageFile =
 		(locale && (await parseLanguageFile(outputPath, locale, resolve(tempPath, `${debounceCounter}`)))) || {}
 
-	if (Object.keys(languageFile).includes('__esModule')) {
-		languageFile = languageFile.default as BaseTranslation
-	}
+	const translations = getDefaultExport(languageFile)
 
-	await generate(languageFile, { ...config, baseLocale: locale, locales }, version, logger, firstLaunchOfGenerator)
+	await generate(translations, { ...config, baseLocale: locale, locales }, version, logger, firstLaunchOfGenerator)
 
 	if (firstLaunchOfGenerator) {
 		let message =

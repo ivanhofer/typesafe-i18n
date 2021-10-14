@@ -69,7 +69,7 @@ const transpileTypescriptFiles = async (
 	locale: string,
 	tempPath: string,
 ): Promise<string> => {
-	const program = ts.createProgram([languageFilePath], { outDir: tempPath })
+	const program = ts.createProgram([languageFilePath], { outDir: tempPath, allowJs: true })
 	program.emit()
 
 	const baseTranslationPath = await detectLocationOfCompiledBaseTranslation(outputPath, locale, tempPath)
@@ -89,11 +89,9 @@ export const parseLanguageFile = async (
 		return null
 	}
 
-	!shouldGenerateJsDoc && (await createPathIfNotExits(tempPath))
+	await createPathIfNotExits(tempPath)
 
-	const importPath = shouldGenerateJsDoc
-		? originalPath
-		: await transpileTypescriptFiles(outputPath, originalPath, locale, tempPath)
+	const importPath = await transpileTypescriptFiles(outputPath, originalPath, locale, tempPath)
 
 	if (!importPath) {
 		return null
@@ -101,7 +99,7 @@ export const parseLanguageFile = async (
 
 	const languageImport = await importFile<BaseTranslation>(importPath)
 
-	!shouldGenerateJsDoc && (await deleteFolderRecursive(tempPath))
+	await deleteFolderRecursive(tempPath)
 
 	if (!languageImport) {
 		logger.error(`could not read default export from language file '${locale}'`)

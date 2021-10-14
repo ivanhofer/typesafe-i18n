@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.44.3 (2021-10-15)
+
+Fix:
+ - detect changes to base translation when using outputFormat: 'JavaScript' [#105](https://github.com/ivanhofer/typesafe-i18n/issues/105)
+
 ## 2.44.2 (2021-10-14)
 
 Bugfix:

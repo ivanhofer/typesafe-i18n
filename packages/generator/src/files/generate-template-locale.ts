@@ -10,6 +10,7 @@ import {
 	jsDocImports,
 	jsDocType,
 	relativeFileImportPath,
+	shouldGenerateJsDoc,
 	tsCheck,
 	type
 } from '../output-handler'
@@ -31,7 +32,7 @@ ${inset}},`
 // --------------------------------------------------------------------------------------------------------------------
 
 const getLocaleTemplate = (
-	{ banner, typesFileName }: GeneratorConfigWithDefaultValues,
+	{ banner, typesFileName, esmImports }: GeneratorConfigWithDefaultValues,
 	locale: Locale,
 	isBaseLocale: boolean,
 	translations: BaseTranslation | undefined,
@@ -42,6 +43,8 @@ const getLocaleTemplate = (
 	const sanitizedLocale = sanitizeLocale(locale)
 
 	const translationsMap = translations && mapTranslationsToString(translations)
+
+	const defaultExport = shouldGenerateJsDoc && !esmImports ? 'module.exports =' : 'export default'
 
 	const hint = editHint
 		? `	// ${editHint}
@@ -63,7 +66,7 @@ const ${sanitizedLocale}${type(typeToImport)} = {
 ${hint}${translationsMap}
 }
 
-export default ${sanitizedLocale}
+${defaultExport} ${sanitizedLocale}
 `
 }
 
