@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.44.0 (2021-10-14)
+
+Feature:
+ - export generator as `esm` module to make it compatible with `SvelteKit` in `JavaScript` mode
+
 ## 2.43.1 (2021-10-14)
 
 Fix:

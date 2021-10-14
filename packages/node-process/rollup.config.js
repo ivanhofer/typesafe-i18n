@@ -1,10 +1,10 @@
 // @ts-check
 
+import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
-import externals from 'rollup-plugin-node-externals'
-import commonjs from '@rollup/plugin-commonjs'
 import path from 'path'
+import externals from 'rollup-plugin-node-externals'
 
 const getPath = (file) => path.resolve(__dirname, file)
 
@@ -14,8 +14,8 @@ const config = [
 		output: [
 			{
 				banner: '#!/usr/bin/env node\n',
-				file: getPath('../../node/generator.js'),
-				format: 'cjs',
+				file: getPath('../../node/generator.mjs'),
+				format: 'esm',
 				sourcemap: true,
 			},
 		],

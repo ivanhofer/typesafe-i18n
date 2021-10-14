@@ -129,10 +129,16 @@ export const getDirectoryStructure = async (path: string): Promise<Record<string
 	return Object.fromEntries(await Promise.all(promises))
 }
 
-export const importFile = async <T = unknown>(file: string, outputError = true): Promise<T> =>
-	(
+export const importFile = async <T = unknown>(file: string, outputError = true): Promise<T> => {
+	if (file.endsWith('.json')) {
+		const jsonFile = await readFile(file)
+		return jsonFile ? JSON.parse(jsonFile) : undefined
+	}
+
+	return (
 		await import(file).catch((e) => {
 			outputError && logger.error(`import failed for ${file}`, e)
 			return null
 		})
 	)?.default
+}

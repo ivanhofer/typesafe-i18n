@@ -1,6 +1,7 @@
 import { watch } from 'chokidar'
+import { BaseTranslation } from 'packages/core/src'
 import { resolve } from 'path'
-import * as ts from 'typescript'
+import ts from 'typescript'
 import { createPathIfNotExits, getFiles } from './file-utils'
 import {
 	generate,
@@ -34,8 +35,12 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 
 	const firstLaunchOfGenerator = !locales.length
 
-	const languageFile =
+	let languageFile =
 		(locale && (await parseLanguageFile(outputPath, locale, resolve(tempPath, `${debounceCounter}`)))) || {}
+
+	if (Object.keys(languageFile).includes('__esModule')) {
+		languageFile = languageFile.default as BaseTranslation
+	}
 
 	await generate(languageFile, { ...config, baseLocale: locale, locales }, version, logger, firstLaunchOfGenerator)
 

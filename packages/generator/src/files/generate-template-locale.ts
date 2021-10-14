@@ -44,6 +44,10 @@ const getLocaleTemplate = (
 
 	const translationsMap = translations && mapTranslationsToString(translations)
 
+	const variableDeclaration = shouldGenerateJsDoc
+		? 'export default'
+		: `const ${sanitizedLocale}${type(typeToImport)} =`
+
 	const hint = editHint
 		? `	// ${editHint}
 `
@@ -59,8 +63,8 @@ ${importTypes(relativeFileImportPath(`../${typesFileName}`), typeToImport)}
 
 ${jsDocImports({ from: relativeFileImportPath(`../${typesFileName}`), type: typeToImport })}
 
-${jsDocType('BaseTranslation')}
-${shouldGenerateJsDoc ? 'module.exports' : `const ${sanitizedLocale}${type(typeToImport)}`} = {
+${jsDocType(typeToImport)}
+${variableDeclaration} {
 ${hint}${translationsMap}
 }
 
