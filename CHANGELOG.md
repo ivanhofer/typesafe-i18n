@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.44.1 (2021-10-14)
+
+Fix:
+ - fix variable declaration of `JavaScript` locale template to be able to display type errors
+
 ## 2.44.0 (2021-10-14)
 
 Feature:

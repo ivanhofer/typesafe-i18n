@@ -10,7 +10,6 @@ import {
 	jsDocImports,
 	jsDocType,
 	relativeFileImportPath,
-	shouldGenerateJsDoc,
 	tsCheck,
 	type
 } from '../output-handler'
@@ -44,10 +43,6 @@ const getLocaleTemplate = (
 
 	const translationsMap = translations && mapTranslationsToString(translations)
 
-	const variableDeclaration = shouldGenerateJsDoc
-		? 'export default'
-		: `const ${sanitizedLocale}${type(typeToImport)} =`
-
 	const hint = editHint
 		? `	// ${editHint}
 `
@@ -64,11 +59,11 @@ ${importTypes(relativeFileImportPath(`../${typesFileName}`), typeToImport)}
 ${jsDocImports({ from: relativeFileImportPath(`../${typesFileName}`), type: typeToImport })}
 
 ${jsDocType(typeToImport)}
-${variableDeclaration} {
+const ${sanitizedLocale}${type(typeToImport)} = {
 ${hint}${translationsMap}
 }
 
-${shouldGenerateJsDoc ? '' : `export default ${sanitizedLocale}`}
+export default ${sanitizedLocale}
 `
 }
 
