@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.44.2 (2021-10-14)
+
+Bugfix:
+ - generate types for `importer`
+
 ## 2.44.1 (2021-10-14)
 
 Fix:
