@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.43.1 (2021-10-14)
+
+Fix:
+ - actually include `importer` in `npm` package
+
 ## 2.43.0 (2021-10-12)
 
 Feature:
@@ -528,7 +533,7 @@ Readme:
 ## 2.6.2 (2021-02-28)
 
 Readme:
- - link immages to correct raw file
+ - link images to correct raw file
 
 ## 2.6.1 (2021-02-28)
 
