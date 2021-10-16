@@ -8,7 +8,7 @@ import {
 	GeneratorConfig,
 	GeneratorConfigWithDefaultValues,
 	getConfigWithDefaultValues,
-	readConfig
+	readConfig,
 } from './generate-files'
 import { createLogger, Logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
 import { configureOutputHandler, fileEnding, shouldGenerateJsDoc } from './output-handler'

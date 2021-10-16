@@ -8,7 +8,7 @@ import {
 	jsDocType,
 	relativeFileImportPath,
 	tsCheck,
-	type
+	type,
 } from '../output-handler'
 
 const getFormattersTemplate = ({ typesFileName: typesFile, loadLocalesAsync }: GeneratorConfigWithDefaultValues) => {

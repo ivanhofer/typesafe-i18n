@@ -8,10 +8,10 @@ import {
 	deleteFolderRecursive,
 	doesPathExist,
 	getDirectoryStructure,
-	importFile
+	importFile,
 } from './file-utils'
 import { logger } from './generator-util'
-import { fileEnding, shouldGenerateJsDoc } from './output-handler'
+import { fileEnding } from './output-handler'
 
 /**
  * looks for the location of the compiled 'index.js' file

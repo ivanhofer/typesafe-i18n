@@ -5,7 +5,7 @@ import {
 	AsyncFormattersInitializer,
 	FormattersInitializer,
 	TranslationLoader,
-	TranslationLoaderAsync
+	TranslationLoaderAsync,
 } from '../../core/src/util.loader'
 import { i18nObject } from '../../core/src/util.object'
 

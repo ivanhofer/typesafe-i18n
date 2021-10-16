@@ -12,12 +12,12 @@ module.exports = [
 	{
 		name: 'i18n-instance',
 		path: 'dist/i18n.min.js',
-		limit: '1044 b',
+		limit: '970 b',
 	},
 	{
 		name: 'all together',
 		path: 'dist/i18n.all.min.js',
-		limit: '1096 b',
+		limit: '1026 b',
 	},
 	{
 		name: 'angular-adapter',

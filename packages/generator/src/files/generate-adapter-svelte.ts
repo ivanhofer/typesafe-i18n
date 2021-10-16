@@ -10,7 +10,7 @@ import {
 	OVERRIDE_WARNING,
 	relativeFileImportPath,
 	tsCheck,
-	type
+	type,
 } from '../output-handler'
 
 const getSvelteUtils = ({

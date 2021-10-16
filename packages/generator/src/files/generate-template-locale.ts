@@ -12,7 +12,7 @@ import {
 	relativeFileImportPath,
 	shouldGenerateJsDoc,
 	tsCheck,
-	type
+	type,
 } from '../output-handler'
 
 // --------------------------------------------------------------------------------------------------------------------

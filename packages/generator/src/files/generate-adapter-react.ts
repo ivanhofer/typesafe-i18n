@@ -9,7 +9,7 @@ import {
 	jsDocType,
 	OVERRIDE_WARNING,
 	relativeFileImportPath,
-	tsCheck
+	tsCheck,
 } from '../output-handler'
 
 const getReactUtils = ({

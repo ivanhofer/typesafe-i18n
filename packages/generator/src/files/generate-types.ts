@@ -15,7 +15,7 @@ import {
 	sortStringASC,
 	sortStringPropertyASC,
 	TypeGuard,
-	uniqueArray
+	uniqueArray,
 } from 'typesafe-utils'
 import { BaseTranslation, isPluralPart } from '../../../core/src/core'
 import { partAsStringWithoutTypes, partsAsStringWithoutTypes, removeEmptyValues } from '../../../core/src/core-utils'
@@ -28,7 +28,7 @@ import {
 	fileEndingForTypesFile,
 	importTypeStatement,
 	OVERRIDE_WARNING,
-	supportsTemplateLiteralTypes
+	supportsTemplateLiteralTypes,
 } from '../output-handler'
 
 // --------------------------------------------------------------------------------------------------------------------

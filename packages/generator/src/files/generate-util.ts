@@ -14,7 +14,7 @@ import {
 	relativeFolderImportPath,
 	tsCheck,
 	type,
-	typeCast
+	typeCast,
 } from '../output-handler'
 
 const getLocalesTranslationRowAsync = (locale: Locale): string => {

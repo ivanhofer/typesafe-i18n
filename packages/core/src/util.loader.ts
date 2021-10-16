@@ -31,10 +31,6 @@ export type AsyncFormattersInitializer<L extends Locale, F extends BaseFormatter
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const i18nObjectInstancesCache = {} as LocaleTranslationFunctions<Locale, any>
 
-const throwError = (locale: Locale) => {
-	throw new Error(`[typesafe-i18n] ERROR: could not find locale '${locale}'`)
-}
-
 // async --------------------------------------------------------------------------------------------------------------
 
 export const i18nObjectLoaderAsync = async <
@@ -46,21 +42,13 @@ export const i18nObjectLoaderAsync = async <
 	locale: L,
 	getTranslationForLocale: TranslationLoaderAsync<L, T>,
 	formattersInitializer: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F>,
-): Promise<TF> => {
-	if (i18nObjectInstancesCache[locale]) {
-		return i18nObjectInstancesCache[locale]
-	}
-
-	const foundTranslation = await getTranslationForLocale(locale)
-	if (!foundTranslation) {
-		throwError(locale)
-	}
-
-	const i18nObjectInstance = i18nObject<L, T, TF, F>(locale, foundTranslation, await formattersInitializer(locale))
-	i18nObjectInstancesCache[locale] = i18nObjectInstance
-
-	return i18nObjectInstance as TF
-}
+): Promise<TF> =>
+	i18nObjectInstancesCache[locale] ||
+	(i18nObjectInstancesCache[locale] = i18nObject<L, T, TF, F>(
+		locale,
+		await getTranslationForLocale(locale),
+		await formattersInitializer(locale),
+	))
 
 // sync ---------------------------------------------------------------------------------------------------------------
 
@@ -73,18 +61,10 @@ export const i18nObjectLoader = <
 	locale: L,
 	getTranslationForLocale: TranslationLoader<L, T>,
 	formattersInitializer: FormattersInitializer<L, F>,
-): TF => {
-	if (i18nObjectInstancesCache[locale]) {
-		return i18nObjectInstancesCache[locale]
-	}
-
-	const foundTranslation = getTranslationForLocale(locale)
-	if (!foundTranslation) {
-		throwError(locale)
-	}
-
-	const i18nObjectInstance = i18nObject<L, T, TF, F>(locale, foundTranslation, formattersInitializer(locale))
-	i18nObjectInstancesCache[locale] = i18nObjectInstance
-
-	return i18nObjectInstance as TF
-}
+): TF =>
+	i18nObjectInstancesCache[locale] ||
+	(i18nObjectInstancesCache[locale] = i18nObject<L, T, TF, F>(
+		locale,
+		getTranslationForLocale(locale),
+		formattersInitializer(locale),
+	))

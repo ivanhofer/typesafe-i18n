@@ -7,7 +7,7 @@ import type {
 	ImportDeclaration,
 	Property,
 	SimpleLiteral,
-	VariableDeclarator
+	VariableDeclarator,
 } from 'estree'
 import { walk } from 'estree-walker'
 import type { AcornNode, Plugin } from 'rollup'

@@ -1297,7 +1297,7 @@ These parts are bundled into the [core functions](#general). The sizes of the co
 
 - [i18nString](#i18nString): 834 bytes gzipped
 - [i18nObject](#i18nObject): 939 bytes gzipped
-- [i18n](#i18n): 1044 bytes gzipped
+- [i18n](#i18n): 970 bytes gzipped
 
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
