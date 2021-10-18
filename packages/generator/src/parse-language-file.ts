@@ -8,7 +8,8 @@ import {
 	deleteFolderRecursive,
 	doesPathExist,
 	getDirectoryStructure,
-	importFile,
+	getFiles,
+	importFile
 } from './file-utils'
 import { logger } from './generator-util'
 import { fileEnding } from './output-handler'
@@ -107,4 +108,9 @@ export const parseLanguageFile = async (
 	}
 
 	return languageImport
+}
+
+export const getAllLanguages = async (path: string): Promise<string[]> => {
+	const files = await getFiles(path, 1)
+	return files.filter(({ folder, name }) => folder && name === `index${fileEnding}`).map(({ folder }) => folder)
 }

@@ -2,22 +2,17 @@ import { watch } from 'chokidar'
 import { BaseTranslation } from 'packages/core/src'
 import { resolve } from 'path'
 import ts from 'typescript'
-import { createPathIfNotExits, getFiles } from './file-utils'
+import { createPathIfNotExits } from './file-utils'
 import {
 	generate,
 	GeneratorConfig,
 	GeneratorConfigWithDefaultValues,
 	getConfigWithDefaultValues,
-	readConfig,
+	readConfig
 } from './generate-files'
 import { createLogger, Logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
-import { configureOutputHandler, fileEnding, shouldGenerateJsDoc } from './output-handler'
-import { parseLanguageFile } from './parse-language-file'
-
-const getAllLanguages = async (path: string) => {
-	const files = await getFiles(path, 1)
-	return files.filter(({ folder, name }) => folder && name === `index${fileEnding}`).map(({ folder }) => folder)
-}
+import { configureOutputHandler, shouldGenerateJsDoc } from './output-handler'
+import { getAllLanguages, parseLanguageFile } from './parse-language-file'
 
 let logger: Logger
 let first = true

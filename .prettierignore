@@ -4,6 +4,7 @@ node_modules
 /cjs
 /dist
 /esm
+/exporter
 /formatters
 /importer
 /node

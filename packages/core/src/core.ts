@@ -31,6 +31,11 @@ export type BaseTranslation = {
 	[key: string]: string | BaseTranslation
 }
 
+export interface LocaleMapping {
+	locale: string
+	translations: BaseTranslation
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type FormatterFunction<T = any, U = unknown> = (value: T) => U
 

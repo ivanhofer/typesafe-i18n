@@ -5,6 +5,7 @@ node_modules
 /detectors
 /dist
 /esm
+/exporter
 /formatters
 /importer
 /node
