@@ -1295,16 +1295,17 @@ You have to write your own logic to send the data. Here is an example how this c
 > Please share your implementation in a PR. `typesafe-i18n` wants to provide built-in exporter-packages in the future.
 
 ```typescript
+import type { BaseTranslation } from 'typesafe-i18n'
 import { readTranslationFromDisk } from 'typesafe-i18n/exporter'
 
-const sendDataToAPI = async (locale: string) => {
+const sendDataToAPI = async ({ locale, translations }: { locale: string; translations: BaseTranslation }) => {
    // custom implementation to store the data to a service
 }
 
 const sendTranslationsToService = async (locale: string) => {
    const translations = await readTranslationFromDisk(locale)
 
-   await storeTranslationToDisk({ locale, translations })
+   await sendDataToAPI({ locale, translations })
 }
 
 sendTranslationsToService('en')
