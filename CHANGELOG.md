@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.46.0 (2021-10-18)
+
+Feature:
+ - add `exporter` feature [#106](https://github.com/ivanhofer/typesafe-i18n/issues/106
+
 ## 2.45.0 (2021-10-16)
 
 Feature:

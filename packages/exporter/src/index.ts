@@ -1,2 +1,1 @@
-export { readTranslationFromDisk, readTranslationsFromDisk } from './exporter';
-
+export { readTranslationFromDisk, readTranslationsFromDisk } from './exporter'

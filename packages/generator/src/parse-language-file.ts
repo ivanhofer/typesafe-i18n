@@ -9,7 +9,7 @@ import {
 	doesPathExist,
 	getDirectoryStructure,
 	getFiles,
-	importFile
+	importFile,
 } from './file-utils'
 import { logger } from './generator-util'
 import { fileEnding } from './output-handler'
