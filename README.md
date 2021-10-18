@@ -18,12 +18,12 @@
 :safety_vest: [prevents you from making mistakes](#typesafety)\
 :speech_balloon: [supports plural rules](#plural)\
 :date: allows [formatting of values](#formatters) e.g. locale-dependent date or number formats\
-:arrows_counterclockwise: option for [asynchronous loading of locales](#loadLocalesAsync)\
+:arrow_down: option for [asynchronous loading of locales](#loadLocalesAsync)\
 :stopwatch: supports SSR (Server-Side Rendering)\
 :handshake: can be used for [frontend, backend and API](#usage) projects\
 :mag: [locale-detection](#locale-detection) for browser and server environments\
-:arrow_down: [import](#importer) translations from files or services\
-:no_entry: no external dependencies\
+:arrows_counterclockwise: [import](#importer) and [export](#exporter) translations from/to files or services\
+:no_entry: no external dependencies
 
 <!-- list of supported emojis on GitHub: https://github.com/ikatyang/emoji-cheat-sheet -->
 
@@ -40,7 +40,7 @@
 - [Syntax](#syntax)
 - [Formatters](#formatters)
 - [Locale-detection](#locale-detection)
-- [Importer](#importer)
+- [Integration with other Services](#integration-with-other-services)
 - [Sizes](#sizes)
 - [Performance](#performance)
 - [FAQs](#faqs)
@@ -1240,9 +1240,11 @@ const detectedLocale = detectLocale(fallbackLocale, availableLocales, documentCo
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
-## Importer
+## Integration with other services
 
-In order to import language files that come from an API, spreadsheet or JSON-files `typesafe-i18n` provides an `importer` functionality.
+### Importer
+
+In order to import language files that come from an API, spreadsheet or JSON-files, `typesafe-i18n` provides an `importer` functionality.
 You have to write your own logic to get the data, then map it to a dictionary-representation and then call the `storeTranslationToDisk` function. Here is an example how this could look like:
 
 > Please share your implementation in a PR. `typesafe-i18n` wants to provide built-in importer-packages in the future.
@@ -1279,6 +1281,40 @@ The `storeTranslationToDisk` will write the contents of your `translations`-obje
 
 If you want to store multiple translations in one step, you can call the `storeTranslationsToDisk` function.
 
+
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+### Exporter
+
+In order to export language files to a service or an API, `typesafe-i18n` provides an `exporter` functionality.
+You have to write your own logic to send the data. Here is an example how this could look like:
+
+> Please share your implementation in a PR. `typesafe-i18n` wants to provide built-in exporter-packages in the future.
+
+```typescript
+import { readTranslationFromDisk } from 'typesafe-i18n/exporter'
+
+const sendDataToAPI = async (locale: string) => {
+   // custom implementation to store the data to a service
+}
+
+const sendTranslationsToService = async (locale: string) => {
+   const translations = await readTranslationFromDisk(locale)
+
+   await storeTranslationToDisk({ locale, translations })
+}
+
+sendTranslationsToService('en')
+```
+
+> you need to run this script during development or as a CI-process and **not** at runtime
+
+The `readTranslationFromDisk` will load the contents of your `translations`-object from the file `src/i18n/{locale}/index.ts` if the file exists.
+
+If you want to read multiple translations in one step, you can call the `readTranslationsFromDisk` function.
 
 
 

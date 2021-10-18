@@ -13,6 +13,7 @@ const mappings: [FromWheretoImport, OutputPath?, FilterFunction?][] = [
 	['adapter-react', 'react', (file) => file === 'react-context.d.ts'],
 	['core', 'cjs'],
 	['core', 'esm'],
+	['exporter', 'exporter', (file) => file === 'index.d.ts'],
 	['formatters'],
 	['importer', 'importer', (file) => file === 'index.d.ts'],
 	['locale-detector', 'detectors'],

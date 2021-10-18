@@ -1,4 +1,4 @@
-import { BaseTranslation, Locale } from 'packages/core/src/core'
+import { BaseTranslation, Locale, LocaleMapping } from 'packages/core/src/core'
 import { generateLocaleTemplate } from 'packages/generator/src/files/generate-template-locale'
 import { generate, getConfigWithDefaultValues } from 'packages/generator/src/generate-files'
 import { createLogger, parseTypescriptVersion } from 'packages/generator/src/generator-util'
@@ -8,13 +8,12 @@ import * as ts from 'typescript'
 
 const logger = createLogger(console, true)
 
-interface LocaleMapping {
-	locale: string
-	translations: BaseTranslation
-}
+// --------------------------------------------------------------------------------------------------------------------
 
 export const storeTranslationToDisk = async (localeMapping: LocaleMapping): Promise<Locale | undefined> =>
 	(await storeTranslationsToDisk([localeMapping]))[0]
+
+// --------------------------------------------------------------------------------------------------------------------
 
 export const storeTranslationsToDisk = async (localeMappings: LocaleMapping[]): Promise<Locale[]> => {
 	const config = await getConfigWithDefaultValues()
@@ -32,17 +31,17 @@ export const storeTranslationsToDisk = async (localeMappings: LocaleMapping[]): 
 			baseTranslation = translations
 		}
 
-		logger.info(`importing translations for locale '${locale}'' ...`)
+		logger.info(`importing translations for locale '${locale}' ...`)
 		let error = undefined
 
 		await generateLocaleTemplate(config, locale, translations, undefined, true).catch((e) => (error = e))
 
 		if (error) {
-			logger.error(`importing translations for locale '${locale}'' failed:`, error)
+			logger.error(`importing translations for locale '${locale}' failed:`, error)
 			continue
 		}
 
-		logger.info(`importing translations for locale '${locale}'' completed`)
+		logger.info(`importing translations for locale '${locale}' completed`)
 
 		createdLocales.push(locale)
 	}

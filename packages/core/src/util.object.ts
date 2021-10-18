@@ -5,7 +5,7 @@ import type {
 	Cache,
 	Locale,
 	TranslationFunctions,
-	TranslationKey
+	TranslationKey,
 } from './core'
 import { translate } from './core'
 import { getPartsFromString } from './util.string'
