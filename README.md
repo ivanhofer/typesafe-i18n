@@ -1275,7 +1275,7 @@ const updateTranslations = async (locale: string) => {
 updateTranslations('en')
 ```
 
-> you need to run this script during development or as a CI-process and **not** at runtime
+> you need to run this script during development or as a CI-process and **not** at runtime. Create an own file and run it with [`ts-node`](https://github.com/TypeStrong/ts-node) or something similar.
 
 The `storeTranslationToDisk` will write the contents of your `translations`-object to the file `src/i18n/{locale}/index.ts` and will run the [`generator`](#typesafety) to update the types. The function will return a the locale as a string, if the import was successful.
 
@@ -1311,7 +1311,7 @@ const sendTranslationsToService = async (locale: string) => {
 sendTranslationsToService('en')
 ```
 
-> you need to run this script during development or as a CI-process and **not** at runtime
+> you need to run this script during development or as a CI-process and **not** at runtime. Create an own file and run it with [`ts-node`](https://github.com/TypeStrong/ts-node) or something similar.
 
 The `readTranslationFromDisk` will load the contents of your `translations`-object from the file `src/i18n/{locale}/index.ts` if the file exists.
 

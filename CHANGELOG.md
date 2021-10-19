@@ -5,6 +5,7 @@
 
 Fix:
  - show warning when trying to import empty locale
+ - expose `importer` and `exporter` as `esm` and `cjs` module
 
 ## 2.46.1 (2021-10-19)
 
