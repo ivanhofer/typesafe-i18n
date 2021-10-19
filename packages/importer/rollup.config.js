@@ -8,13 +8,13 @@ import externals from 'rollup-plugin-node-externals'
 
 const getPath = (file) => path.resolve(__dirname, file)
 
-const config = [
+const config = ['esm', 'cjs'].map((format) => (
 	{
 		input: getPath('src/index.ts'),
 		output: [
 			{
-				file: getPath('../../importer/index.cjs'),
-				format: 'cjs',
+				file: getPath(`../../importer/index.${format === 'esm' ? 'm' : 'c'}js`),
+				format,
 				sourcemap: true,
 			},
 		],
@@ -25,7 +25,6 @@ const config = [
 			externals(),
 			typescript(),
 		],
-	},
-]
+	}))
 
 export default config
