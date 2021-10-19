@@ -98,7 +98,7 @@
 		"dev:adapters": "rollup -c packages/adapters/rollup.config.js -w",
 		"dev:exporter": "rollup -c packages/exporter/rollup.config.js -w",
 		"dev:importer": "rollup -c packages/importer/rollup.config.js -w",
-		"clear": "rm -rf ./angular ./adapters ./cjs ./detectors ./dist ./esm ./formatters ./importer ./node ./react ./rollup ./schema ./svelte ./types ./webpack ./temp-output",
+		"clear": "rm -rf ./angular ./adapters ./cjs ./detectors ./dist ./esm ./exporter ./formatters ./importer ./node ./react ./rollup ./schema ./svelte ./types ./webpack ./temp-output",
 		"-- TEST ------------------------------------------------": "",
 		"lint": "eslint packages",
 		"lint:fix": "eslint packages --fix",
