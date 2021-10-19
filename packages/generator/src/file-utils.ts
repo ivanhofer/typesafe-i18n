@@ -1,5 +1,6 @@
 import { promises as fsPromises } from 'fs'
 import { dirname, join, resolve } from 'path'
+import { pathToFileURL } from 'url'
 import { logger } from './generator-util'
 import { fileEnding } from './output-handler'
 
@@ -135,9 +136,10 @@ export const importFile = async <T = unknown>(file: string, outputError = true):
 		return jsonFile ? JSON.parse(jsonFile) : undefined
 	}
 
+	const absoluteFilePath = pathToFileURL(file).href
 	return (
-		await import(file).catch((e) => {
-			outputError && logger.error(`import failed for ${file}`, e)
+		await import(absoluteFilePath).catch((e) => {
+			outputError && logger.error(`import failed for ${absoluteFilePath}`, e)
 			return null
 		})
 	)?.default

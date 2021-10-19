@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.46.1 (2021-10-19)
+
+Bugfix:
+ - fix import path on windows [#108](https://github.com/ivanhofer/typesafe-i18n/issues/108)
+
 ## 2.46.0 (2021-10-18)
 
 Feature:
