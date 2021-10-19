@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.46.2 (2021-10-19)
+
+Fix:
+ - show warning when trying to import empty locale
+
 ## 2.46.1 (2021-10-19)
 
 Bugfix:

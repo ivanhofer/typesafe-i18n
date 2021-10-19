@@ -25,6 +25,8 @@ export const storeTranslationsToDisk = async (localeMappings: LocaleMapping[]): 
 	let baseTranslation: BaseTranslation | undefined = undefined
 
 	for (const { locale, translations } of localeMappings) {
+		if (!locale) continue
+
 		const isBaseLocale = locale === config.baseLocale
 
 		if (isBaseLocale) {
@@ -44,6 +46,11 @@ export const storeTranslationsToDisk = async (localeMappings: LocaleMapping[]): 
 		logger.info(`importing translations for locale '${locale}' completed`)
 
 		createdLocales.push(locale)
+	}
+
+	if (!createdLocales.length) {
+		logger.warn(`nothing to import`)
+		return []
 	}
 
 	if (!baseTranslation) {
