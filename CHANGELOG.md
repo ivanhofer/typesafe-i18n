@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.46.3 (2021-10-19)
+
+Bugfix:
+ - wrap imported keys with string [#110](https://github.com/ivanhofer/typesafe-i18n/issues/110)
+
 ## 2.46.2 (2021-10-19)
 
 Fix:

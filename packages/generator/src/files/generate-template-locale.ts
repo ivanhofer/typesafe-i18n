@@ -22,9 +22,9 @@ const mapTranslationsToString = (translations: BaseTranslation, level = 1) =>
 
 const mapTranslationToString = (level: number, [key, value]: [string, BaseTranslation | string]): string => {
 	const inset = new Array(level).fill(`	`).join('')
-	if (isString(value)) return `${inset}${key}: '${value.replace(/'/g, "\\'")}',`
+	if (isString(value)) return `${inset}'${key}': '${value.replace(/'/g, "\\'")}',`
 	else
-		return `${inset}${key}: {
+		return `${inset}'${key}': {
 ${mapTranslationsToString(value, level + 1)}
 ${inset}},`
 }
