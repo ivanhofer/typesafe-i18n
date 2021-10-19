@@ -130,16 +130,19 @@ export const getDirectoryStructure = async (path: string): Promise<Record<string
 	return Object.fromEntries(await Promise.all(promises))
 }
 
+const isWindows = process.platform === 'win32'
+const isEsm = import.meta.url.endsWith('.mjs')
+
 export const importFile = async <T = unknown>(file: string, outputError = true): Promise<T> => {
 	if (file.endsWith('.json')) {
 		const jsonFile = await readFile(file)
 		return jsonFile ? JSON.parse(jsonFile) : undefined
 	}
 
-	const absoluteFilePath = pathToFileURL(file).href
+	const importPath = isWindows && isEsm ? pathToFileURL(file).href : file
 	return (
-		await import(absoluteFilePath).catch((e) => {
-			outputError && logger.error(`import failed for ${absoluteFilePath}`, e)
+		await import(importPath).catch((e) => {
+			outputError && logger.error(`import failed for ${importPath}`, e)
 			return null
 		})
 	)?.default

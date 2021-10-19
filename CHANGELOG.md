@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.46.4 (2021-10-19)
+
+Bugfix:
+ - fix import path for windows/other and esm/cjs matrix
+
 ## 2.46.3 (2021-10-19)
 
 Bugfix:
