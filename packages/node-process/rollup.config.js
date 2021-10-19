@@ -20,7 +20,12 @@ const config = [
 			},
 		],
 		external: ['typescript', 'chokidar'],
-		plugins: [resolve({ preferBuiltins: true }), commonjs(), externals(), typescript()],
+		plugins: [
+			resolve({ preferBuiltins: true }),
+			commonjs(),
+			externals(),
+			typescript()
+		],
 	},
 ]
 

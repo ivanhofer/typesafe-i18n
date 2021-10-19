@@ -131,7 +131,7 @@ export const getDirectoryStructure = async (path: string): Promise<Record<string
 }
 
 const isWindows = process.platform === 'win32'
-const isEsm = import.meta.url.endsWith('.mjs')
+const isEsm = (import.meta.url || '').endsWith('.mjs')
 
 export const importFile = async <T = unknown>(file: string, outputError = true): Promise<T> => {
 	if (file.endsWith('.json')) {
