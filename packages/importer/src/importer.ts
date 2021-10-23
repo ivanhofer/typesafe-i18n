@@ -1,10 +1,10 @@
-import { BaseTranslation, Locale, LocaleMapping } from 'packages/core/src/core'
-import { generateLocaleTemplate } from 'packages/generator/src/files/generate-template-locale'
-import { generate, getConfigWithDefaultValues } from 'packages/generator/src/generate-files'
-import { createLogger, parseTypescriptVersion } from 'packages/generator/src/generator-util'
-import { configureOutputHandler } from 'packages/generator/src/output-handler'
-import { parseLanguageFile } from 'packages/generator/src/parse-language-file'
 import * as ts from 'typescript'
+import { BaseTranslation, Locale, LocaleMapping } from '../../core/src/core'
+import { generateLocaleTemplate } from '../../generator/src/files/generate-template-locale'
+import { generate, getConfigWithDefaultValues } from '../../generator/src/generate-files'
+import { createLogger, parseTypescriptVersion } from '../../generator/src/generator-util'
+import { configureOutputHandler } from '../../generator/src/output-handler'
+import { parseLanguageFile } from '../../generator/src/parse-language-file'
 
 const logger = createLogger(console, true)
 
