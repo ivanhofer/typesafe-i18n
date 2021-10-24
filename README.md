@@ -68,7 +68,7 @@ npm install typesafe-i18n
 1. :gear: Create a `.typesafe-i18n.json`-file to [configure](#options) the generator
    ```json
    {
-      "$schema": "https://unpkg.com/typesafe-i18n@2.40.1/schema/typesafe-i18n.json",
+      "$schema": "https://unpkg.com/typesafe-i18n@2.46.5/schema/typesafe-i18n.json",
 
       "baseLocale": "en",
       "adapter": "svelte"
@@ -486,7 +486,7 @@ You can set options for the [generator](#typesafety) inside a `.typesafe-i18n.js
 
 ```json
 {
-   "$schema": "https://unpkg.com/typesafe-i18n@2.40.1/schema/typesafe-i18n.json",
+   "$schema": "https://unpkg.com/typesafe-i18n@2.46.5/schema/typesafe-i18n.json",
 
    "baseLocale": "de",
    "adapter": "svelte"
