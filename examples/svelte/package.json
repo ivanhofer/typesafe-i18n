@@ -28,6 +28,6 @@
 		"typescript": "^4.4.3"
 	},
 	"dependencies": {
-		"typesafe-i18n": "^2.40.1"
+		"typesafe-i18n": "^2.46.5"
 	}
 }
