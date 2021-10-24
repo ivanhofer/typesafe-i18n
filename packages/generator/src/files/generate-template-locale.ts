@@ -1,6 +1,6 @@
-import { BaseTranslation, Locale } from 'packages/core/src/core'
 import { join } from 'path'
 import { isString } from 'typesafe-utils'
+import { BaseTranslation, Locale } from '../../../core/src/core'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { GeneratorConfigWithDefaultValues } from '../generate-files'
 import { prettify, sanitizeLocale } from '../generator-util'
