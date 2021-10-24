@@ -1,5 +1,5 @@
-import { logger } from 'packages/generator/src/generator-util'
 import { startGenerator } from '../../generator/src/generator'
+import { logger } from '../../generator/src/generator-util'
 
 type AllowedArguments = '--no-watch'
 

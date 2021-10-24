@@ -1,7 +1,7 @@
 import { watch } from 'chokidar'
-import { BaseTranslation } from 'packages/core/src'
 import { resolve } from 'path'
 import ts from 'typescript'
+import { BaseTranslation } from '../../core/src'
 import { createPathIfNotExits } from './file-utils'
 import {
 	generate,
