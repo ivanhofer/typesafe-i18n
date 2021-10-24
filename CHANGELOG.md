@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.46.5 (2021-10-24)
+
+Fix:
+ - change everything to relative imports so types are resolved correctly
+
 ## 2.46.4 (2021-10-19)
 
 Bugfix:
