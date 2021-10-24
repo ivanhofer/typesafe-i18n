@@ -322,19 +322,7 @@ or define a script in your `package.json` file:
    }
 }
 ```
-
-Passing [options](#options) to the generator is possible by creating a `.typesafe-i18n.json` file in the root of your workspace e.g.
-
-```json
-{
-   "$schema": "https://unpkg.com/typesafe-i18n@2.40.1/schema/typesafe-i18n.json",
-
-   "baseLocale": "de",
-   "adapter": "svelte"
-}
-```
-
-> You could use a npm-package like `npm-run-all` in order to start the generator and you development-server in parallel.
+> You could use a npm-package like [`npm-run-all`](https://github.com/mysticatea/npm-run-all/blob/master/docs/npm-run-all.md#run-scripts-in-parallel) in order to start the generator and you development-server in parallel.
 
 To start the generator and watch for changes in your translation you can run:
 
@@ -342,7 +330,7 @@ To start the generator and watch for changes in your translation you can run:
 > npm run typesafe-i18n
 ```
 
-Take a look at this [demo repository](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/node) to see how to run the generator node process.
+Passing [options](#options) to the generator is possible by creating a `.typesafe-i18n.json` file in the root of your workspace.
 
 #### running the generator in CI/CD
 
@@ -494,7 +482,20 @@ export type Sum = {
 
 ### Options
 
-You can set options for the [generator](#typesafety) inside the `.typesafe-i18n.json`-file in order to get optimized output for your specific project. The available options are:
+You can set options for the [generator](#typesafety) inside a `.typesafe-i18n.json`-file in your project's root folder e.g.
+
+```json
+{
+   "$schema": "https://unpkg.com/typesafe-i18n@2.40.1/schema/typesafe-i18n.json",
+
+   "baseLocale": "de",
+   "adapter": "svelte"
+}
+```
+
+> if you add the `$schema` inside your config, you will get hints and auto-completion suggestions inside your IDE. Just make sure the link points to the version you are currently using.
+
+The available options are:
 
 | key                                                       | type                                                           | default value                                 |
 | --------------------------------------------------------- | -------------------------------------------------------------- | --------------------------------------------- |
