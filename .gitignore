@@ -18,3 +18,4 @@ packages/generator/test/generated/console*
 /typesafe-i18n-*.tgz
 /types
 /webpack
+/.eslintcache
