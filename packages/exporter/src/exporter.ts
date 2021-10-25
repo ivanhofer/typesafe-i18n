@@ -1,5 +1,5 @@
 import { resolve } from 'path'
-import * as ts from 'typescript'
+import ts from 'typescript'
 import { BaseTranslation, Locale, LocaleMapping } from '../../core/src/core'
 import { GeneratorConfigWithDefaultValues, getConfigWithDefaultValues } from '../../generator/src/generate-files'
 import { createLogger, parseTypescriptVersion } from '../../generator/src/generator-util'

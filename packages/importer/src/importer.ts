@@ -1,4 +1,4 @@
-import * as ts from 'typescript'
+import ts from 'typescript'
 import { BaseTranslation, Locale, LocaleMapping } from '../../core/src/core'
 import { generateLocaleTemplate } from '../../generator/src/files/generate-template-locale'
 import { generate, getConfigWithDefaultValues } from '../../generator/src/generate-files'

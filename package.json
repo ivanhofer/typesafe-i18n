@@ -109,7 +109,7 @@
 		"test:update-generated-files": "ts-node packages/generator/test/generated/update.ts",
 		"test:size": "size-limit",
 		"-- BUILD -----------------------------------------------": "",
-		"build": "concurrently -n w: npm:build:* && npm run link-typedefinitions && npm run fix-imports",
+		"build": "npm run clear && concurrently -n w: npm:build:* && npm run link-typedefinitions && npm run fix-imports",
 		"build:adapters": "rollup -c packages/adapters/rollup.config.js && tsc -p packages/adapters/tsconfig.json --emitDeclarationOnly",
 		"build:angular": "rollup -c packages/adapter-angular/rollup.config.js && tsc -p packages/adapter-angular/tsconfig.json --emitDeclarationOnly",
 		"build:browser": "rollup -c packages/browser/rollup.config.js",

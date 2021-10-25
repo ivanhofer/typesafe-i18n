@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.46.6 (2021-10-25)
+
+Bugfix:
+ - fix `typescript` import inside `importer` and `exporter`
+
 ## 2.46.5 (2021-10-24)
 
 Fix:
