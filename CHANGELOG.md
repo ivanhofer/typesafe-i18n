@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.46.7 (2021-10-25)
+
+Fix:
+ - expose type `LocaleMapping` inside `importer` and `exporter`
+
 ## 2.46.6 (2021-10-25)
 
 Bugfix:
