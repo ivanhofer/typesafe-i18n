@@ -1,0 +1,3 @@
+{
+	"*.(j|t)s": "eslint --cache --fix"
+}

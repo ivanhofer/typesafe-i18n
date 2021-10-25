@@ -126,7 +126,9 @@
 		"build:webpack": "rollup -c packages/webpack-plugin/rollup.config.js && tsc -p packages/webpack-plugin/tsconfig.json --emitDeclarationOnly",
 		"fix-imports": "ts-node ./packages/fix-imports.ts",
 		"link-typedefinitions": "ts-node ./packages/link-typedefinitions.ts",
-		"generate:json-schema": "mkdir schema && typescript-json-schema ./packages/rollup-plugin/tsconfig.json GeneratorConfig > ./schema/typesafe-i18n.json"
+		"generate:json-schema": "mkdir schema && typescript-json-schema ./packages/rollup-plugin/tsconfig.json GeneratorConfig > ./schema/typesafe-i18n.json",
+		"-- OTHER -----------------------------------------------": "",
+		"prepare": "husky install"
 	},
 	"dependencies": {
 		"typesafe-utils": "^1.16.2"
@@ -150,7 +152,9 @@
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-prettier": "^4.0.0",
 		"glob": "^7.2.0",
+		"husky": "^7.0.4",
 		"kleur": "^4.1.4",
+		"lint-staged": "^11.2.4",
 		"prettier": "^2.4.1",
 		"require-self": "^0.2.3",
 		"rollup": "^2.58.0",
