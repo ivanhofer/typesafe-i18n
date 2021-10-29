@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.46.8 (2021-10-29)
+
+Bugfix:
+ - wrap translation with correct characters [#114](https://github.com/ivanhofer/typesafe-i18n/issues/114)
+
 ## 2.46.7 (2021-10-25)
 
 Fix:

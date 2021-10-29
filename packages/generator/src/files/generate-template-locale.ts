@@ -22,11 +22,26 @@ const mapTranslationsToString = (translations: BaseTranslation, level = 1) =>
 
 const mapTranslationToString = (level: number, [key, value]: [string, BaseTranslation | string]): string => {
 	const inset = new Array(level).fill(`	`).join('')
-	if (isString(value)) return `${inset}'${key}': '${value.replace(/'/g, "\\'")}',`
+	if (isString(value)) return `${inset}'${key}': ${getWrappedString(value)},`
 	else
 		return `${inset}'${key}': {
 ${mapTranslationsToString(value, level + 1)}
 ${inset}},`
+}
+
+export const getWrappedString = (text: string): string => {
+	const containsSingleQuotes = text.includes("'")
+	const containsDoubleQuotes = text.includes('"')
+	const containsNewLines = text.includes('\n')
+
+	let wrappingString = "'"
+	if (containsNewLines || (containsSingleQuotes && containsDoubleQuotes)) {
+		wrappingString = '`'
+	} else if (containsSingleQuotes) {
+		wrappingString = '"'
+	}
+
+	return `${wrappingString}${text.replace(new RegExp(`${wrappingString}/g`), `\${wrappingString}`)}${wrappingString}`
 }
 
 // --------------------------------------------------------------------------------------------------------------------
