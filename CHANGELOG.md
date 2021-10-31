@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.47.0 (2021-10-31)
+
+Feature:
+ - add option to prevent type updates when importing translations
+
 ## 2.46.8 (2021-10-29)
 
 Bugfix:

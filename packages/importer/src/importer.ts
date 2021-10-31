@@ -10,12 +10,17 @@ const logger = createLogger(console, true)
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const storeTranslationToDisk = async (localeMapping: LocaleMapping): Promise<Locale | undefined> =>
-	(await storeTranslationsToDisk([localeMapping]))[0]
+export const storeTranslationToDisk = async (
+	localeMapping: LocaleMapping,
+	generateTypes = true,
+): Promise<Locale | undefined> => (await storeTranslationsToDisk([localeMapping], generateTypes))[0]
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const storeTranslationsToDisk = async (localeMappings: LocaleMapping[]): Promise<Locale[]> => {
+export const storeTranslationsToDisk = async (
+	localeMappings: LocaleMapping[],
+	generateTypes = true,
+): Promise<Locale[]> => {
 	const config = await getConfigWithDefaultValues()
 
 	const version = parseTypescriptVersion(ts.versionMajorMinor)
@@ -51,6 +56,10 @@ export const storeTranslationsToDisk = async (localeMappings: LocaleMapping[]): 
 	if (!createdLocales.length) {
 		logger.warn(`nothing to import`)
 		return []
+	}
+
+	if (!generateTypes) {
+		return createdLocales
 	}
 
 	if (!baseTranslation) {
