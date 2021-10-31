@@ -1,6 +1,7 @@
 // @ts-check
 
 import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 import path from 'path'
@@ -10,13 +11,13 @@ const getPath = (file) => path.resolve(__dirname, file)
 
 const config = [
 	{
-		input: getPath('src/node-generator.ts'),
+		input: getPath('src/cli.ts'),
 		output: [
 			{
 				banner: '#!/usr/bin/env node\n',
-				file: getPath('../../node/generator.mjs'),
+				file: getPath('../../cli/typesafe-i18n.mjs'),
 				format: 'esm',
-				sourcemap: true,
+				sourcemap: false,
 			},
 		],
 		external: ['typescript', 'chokidar'],
@@ -24,7 +25,13 @@ const config = [
 			resolve({ preferBuiltins: true }),
 			commonjs(),
 			externals(),
-			typescript()
+			json(),
+			typescript({
+				tsconfig: getPath('./tsconfig.json'),
+				sourceMap: false,
+				declaration: false,
+				declarationDir: null,
+			}),
 		],
 	},
 ]

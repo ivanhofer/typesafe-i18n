@@ -2,12 +2,12 @@ node_modules
 /adapters
 /angular
 /cjs
+/cli
 /dist
 /esm
 /exporter
 /formatters
 /importer
-/node
 /react
 /rollup
 /svelte

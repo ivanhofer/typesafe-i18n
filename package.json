@@ -79,12 +79,12 @@
 		"/angular",
 		"/detectors",
 		"/cjs",
+		"/cli",
 		"/dist",
 		"/esm",
 		"/exporter",
 		"/formatters",
 		"/importer",
-		"/node",
 		"/react",
 		"/rollup",
 		"/schema",
@@ -94,13 +94,13 @@
 	],
 	"scripts": {
 		"-- DEV -------------------------------------------------": "",
-		"dev:node": "rollup -c packages/node-process/rollup.config.js -w",
+		"dev:cli": "rollup -c packages/cli/rollup.config.js -w",
 		"dev:rollup": "rollup -c packages/rollup-plugin/rollup.config.js -w",
 		"dev:webpack": "rollup -c packages/webpack-plugin/rollup.config.js -w",
 		"dev:adapters": "rollup -c packages/adapters/rollup.config.js -w",
 		"dev:exporter": "rollup -c packages/exporter/rollup.config.js -w",
 		"dev:importer": "rollup -c packages/importer/rollup.config.js -w",
-		"clear": "rm -rf ./angular ./adapters ./cjs ./detectors ./dist ./esm ./exporter ./formatters ./importer ./node ./react ./rollup ./schema ./svelte ./types ./webpack ./temp-output",
+		"clear": "rm -rf ./angular ./adapters ./cjs ./cli ./detectors ./dist ./esm ./exporter ./formatters ./importer ./react ./rollup ./schema ./svelte ./types ./webpack ./temp-output",
 		"-- TEST ------------------------------------------------": "",
 		"lint": "eslint packages --cache",
 		"lint:fix": "eslint packages --cache --fix",
@@ -118,7 +118,7 @@
 		"build:esm": "tsc -p packages/core/tsconfig-esm.json && ts-node ./packages/core/rename-esm.ts",
 		"build:exporter": "rollup -c packages/exporter/rollup.config.js && tsc -p packages/exporter/tsconfig.json --emitDeclarationOnly",
 		"build:formatters": "rollup -c packages/formatters/rollup.config.js && tsc -p packages/formatters/tsconfig.json --emitDeclarationOnly && node --loader ts-node/esm ./packages/formatters/generateTreeShakableIndexFile.ts",
-		"build:node": "rollup -c packages/node-process/rollup.config.js",
+		"build:cli": "rollup -c packages/cli/rollup.config.js",
 		"build:importer": "rollup -c packages/importer/rollup.config.js && tsc -p packages/importer/tsconfig.json --emitDeclarationOnly",
 		"build:react": "rollup -c packages/adapter-react/rollup.config.js && tsc -p packages/adapter-react/tsconfig.json --emitDeclarationOnly",
 		"build:rollup": "rollup -c packages/rollup-plugin/rollup.config.js && tsc -p packages/rollup-plugin/tsconfig.json --emitDeclarationOnly",
@@ -135,6 +135,7 @@
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^21.0.1",
+		"@rollup/plugin-json": "^4.1.0",
 		"@rollup/plugin-node-resolve": "^13.0.6",
 		"@rollup/plugin-typescript": "^8.3.0",
 		"@size-limit/preset-small-lib": "^5.0.5",
@@ -147,6 +148,7 @@
 		"@typescript-eslint/parser": "^5.2.0",
 		"astring": "^1.7.5",
 		"chokidar": "^3.5.2",
+		"commander": "^7.2.0",
 		"concurrently": "^6.3.0",
 		"eslint": "^8.1.0",
 		"eslint-config-prettier": "^8.3.0",
@@ -173,6 +175,6 @@
 		"watchlist": "^0.3.1"
 	},
 	"bin": {
-		"typesafe-i18n": "node/generator.mjs"
+		"typesafe-i18n": "cli/typesafe-i18n.mjs"
 	}
 }

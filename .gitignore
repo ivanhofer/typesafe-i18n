@@ -2,13 +2,13 @@ node_modules
 /adapters
 /angular
 /cjs
+/cli
 /detectors
 /dist
 /esm
 /exporter
 /formatters
 /importer
-/node
 /react
 /rollup
 /schema
