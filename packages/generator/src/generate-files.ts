@@ -17,7 +17,7 @@ import { configureOutputHandler } from './output-handler'
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-type Adapters = 'angular' | 'node' | 'react' | 'svelte'
+export type Adapters = 'angular' | 'node' | 'react' | 'svelte'
 
 export type OutputFormats = 'TypeScript' | 'JavaScript'
 
@@ -81,6 +81,7 @@ export const readConfig = async (config?: GeneratorConfig | undefined): Promise<
 
 export const getConfigWithDefaultValues = async (
 	config?: Config | undefined,
+	shouldReadConfig = true,
 ): Promise<GeneratorConfigWithDefaultValues> => ({
 	baseLocale: 'en',
 	locales: [],
@@ -97,7 +98,7 @@ export const getConfigWithDefaultValues = async (
 	loadLocalesAsync: true,
 	generateOnlyTypes: false,
 	banner: '/* eslint-disable */',
-	...(await readConfig(config)),
+	...(shouldReadConfig ? await readConfig(config) : {}),
 })
 
 const generateDictionaryFiles = async (
