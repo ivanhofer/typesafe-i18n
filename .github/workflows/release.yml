@@ -33,9 +33,6 @@ jobs:
          #      name: coverage-report
          #      path: coverage-report.txt
 
-         - name: build package
-           run: npm run build
-
          - name: bump version and create tag
            uses: 'phips28/gh-action-bump-version@master'
            env:
@@ -43,6 +40,9 @@ jobs:
            with:
               minor-wording: 'feat,feature'
               major-wording: 'major'
+
+         - name: build package
+           run: npm run build
 
          - name: create browser artifacts
            uses: actions/upload-artifact@v2

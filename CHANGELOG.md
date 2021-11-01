@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.48.0 (2021-11-01)
+
+Feature:
+ - create typesafe-i18n `CLI`
+
 ## 2.47.0 (2021-10-31)
 
 Feature:
