@@ -1,6 +1,7 @@
 import { Command } from 'commander'
-import { startGenerator } from 'packages/generator/src/generator'
 import { version } from '../../../package.json'
+import { startGenerator } from '../../generator/src/generator'
+import { logger } from '../../generator/src/generator-util'
 
 const program = new Command()
 
@@ -14,6 +15,8 @@ program.version(version)
 
 program.parse(process.argv)
 const options = program.opts()
+
+logger.info(`version ${version}`)
 
 if (options.setup) {
 	// TODO
