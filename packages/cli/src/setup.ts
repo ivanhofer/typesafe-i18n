@@ -7,7 +7,12 @@ import prompts from 'prompts'
 import type { PackageJson } from 'type-fest'
 import { isPropertyNotUndefined } from 'typesafe-utils'
 import { importFile } from '../../generator/src/file-utils'
-import { Adapters, GeneratorConfig, getConfigWithDefaultValues } from '../../generator/src/generate-files'
+import {
+	Adapters,
+	GeneratorConfig,
+	getConfigWithDefaultValues,
+	writeConfigToFile,
+} from '../../generator/src/generate-files'
 import { logger } from '../../generator/src/generator-util'
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -176,7 +181,6 @@ export const setup = async (autoSetup: boolean) => {
 
 	const config = await getConfigDiff(options)
 
-	// TODO: write config to disk
-	// eslint-disable-next-line no-console
-	console.log(config)
+	await writeConfigToFile(config)
+	logger.info('setup complete')
 }

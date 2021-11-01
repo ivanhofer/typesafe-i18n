@@ -1,6 +1,7 @@
 import path from 'path'
 import type { BaseTranslation } from '../../core/src/core'
-import { importFile } from './file-utils'
+import { version } from '../../version'
+import { importFile, writeConfigFile } from './file-utils'
 import { generateAngularAdapter } from './files/generate-adapter-angular'
 import { generateNodeAdapter } from './files/generate-adapter-node'
 import { generateReactAdapter } from './files/generate-adapter-react'
@@ -68,6 +69,9 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 // --------------------------------------------------------------------------------------------------------------------
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
+
+export const writeConfigToFile = async (config: GeneratorConfig) =>
+	writeConfigFile({ $schema: `https://unpkg.com/typesafe-i18n@${version}/schema/typesafe-i18n.json`, ...config })
 
 export const readConfig = async (config?: GeneratorConfig | undefined): Promise<Config> => {
 	const generatorConfig = {

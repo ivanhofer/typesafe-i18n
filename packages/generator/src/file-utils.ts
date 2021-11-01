@@ -1,5 +1,6 @@
 import { promises as fsPromises } from 'fs'
 import { dirname, join, resolve } from 'path'
+import type { JsonObject } from 'type-fest'
 import { pathToFileURL } from 'url'
 import { logger } from './generator-util'
 import { fileEnding } from './output-handler'
@@ -61,6 +62,11 @@ export const deleteFolderRecursive = async (path: string): Promise<boolean> => {
 		logger.error(`deleteFolderRecursive: ${path}`, e)
 		return false
 	}
+}
+
+export const writeConfigFile = async (content: JsonObject) => {
+	writeFile(resolve('./', '.typesafe-i18n.json'), JSON.stringify(content, undefined, 3), { encoding: 'utf-8' })
+	logger.info(`generated config file: '.typesafe-i18n.json'`)
 }
 
 const getFileName = (path: string, file: string) => {

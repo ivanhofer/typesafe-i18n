@@ -27,7 +27,7 @@
 		"jsx": "react"
 	},
 	"include": ["packages/**/*"],
-	"exclude": ["node_modules", "packages/**/test/generated/**/*", "packages/cli/**/*"],
+	"exclude": ["node_modules", "packages/**/test/generated/**/*"],
 	"ts-node": {
 		"compilerOptions": {
 			"module": "commonjs"
