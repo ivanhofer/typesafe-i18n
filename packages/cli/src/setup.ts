@@ -7,7 +7,7 @@ import path from 'path'
 import prompts from 'prompts'
 import type { PackageJson } from 'type-fest'
 import { isBoolean, isPropertyNotUndefined } from 'typesafe-utils'
-import { importFile } from '../../generator/src/file-utils'
+import { doesPathExist, importFile } from '../../generator/src/file-utils'
 import {
 	Adapters,
 	doesConfigFileExist,
@@ -78,7 +78,8 @@ const getDefaultValues = async () => {
 
 	const [adapter, loadLocalesAsync] = getAdapterInfo(allDependencyList)
 	const isEsmProject = pck.type === 'module'
-	const isTypeScriptProject = allDependencyList.includes('typescript')
+	const isTypeScriptProject =
+		allDependencyList.includes('typescript') || (await doesPathExist(path.resolve('tsconfig.json')))
 
 	const defaultConfig = await getConfigWithDefaultValues()
 	const config: GeneratorConfig = {
@@ -188,6 +189,8 @@ const askOverrideQuestion = () =>
 		initial: 0,
 	})
 
+// --------------------------------------------------------------------------------------------------------------------
+
 const getConfigDiff = async (options: GeneratorConfig) => {
 	const { baseLocale, adapter, loadLocalesAsync, esmImports, outputFormat, outputPath } =
 		await getConfigWithDefaultValues({}, false)
@@ -208,6 +211,8 @@ const getConfigDiff = async (options: GeneratorConfig) => {
 
 	return Object.fromEntries(Object.entries(changedValues).filter(isPropertyNotUndefined('1')))
 }
+
+// --------------------------------------------------------------------------------------------------------------------
 
 export const setup = async (autoSetup: boolean) => {
 	const exists = await doesConfigFileExist()
