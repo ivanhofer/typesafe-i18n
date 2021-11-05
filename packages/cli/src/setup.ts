@@ -5,7 +5,7 @@ import kleur from 'kleur'
 import path from 'path'
 import prompts from 'prompts'
 import type { PackageJson } from 'type-fest'
-import { isPropertyNotUndefined } from 'typesafe-utils'
+import { isBoolean, isPropertyNotUndefined } from 'typesafe-utils'
 import { importFile } from '../../generator/src/file-utils'
 import {
 	Adapters,
@@ -17,25 +17,54 @@ import { logger } from '../../generator/src/generator-util'
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const getAdapterInfo = (allDependencyList: string[]): [Adapters | undefined, boolean] => {
-	if (allDependencyList.includes('@angular/core')) {
-		return ['angular', true]
+const useAdapter =
+	(syncDependencies: string[], asyncDependencies: string[] | false = false) =>
+	(dependencies: string[]): [boolean, boolean] => {
+		const useAsync = isBoolean(asyncDependencies)
+			? asyncDependencies
+			: asyncDependencies.reduce((prev, dep) => prev || dependencies.includes(dep), false)
+
+		const use =
+			useAsync ||
+			(syncDependencies.reduce((prev, dep) => prev || dependencies.includes(dep), false) as unknown as boolean)
+		// casting needed because of https://github.com/microsoft/TypeScript/issues/46707
+
+		return [use, useAsync]
 	}
 
-	if (allDependencyList.includes('react')) {
-		return ['react', true] // TODO: set 'loadLocalesAsync' correctly
+const useAngularAdapter = useAdapter([], ['@angular/core'])
+
+const useReactAdapter = useAdapter([], ['react', 'next'])
+
+const useSvelteAdapter = useAdapter(['svelte'], ['@sveltejs/kit', 'sapper'])
+
+const useNodeAdapter = useAdapter(['express', 'fastify'])
+
+const getAdapterInfo = (deps: string[]): [Adapters | undefined, boolean] => {
+	const [useAngular, useAngularAsync] = useAngularAdapter(deps)
+	if (useAngular) {
+		return ['angular', useAngularAsync]
 	}
 
-	if (allDependencyList.includes('svelte')) {
-		return ['svelte', true] // TODO: set 'loadLocalesAsync' correctly
+	const [useReact, useReactAsync] = useReactAdapter(deps)
+	if (useReact) {
+		return ['react', useReactAsync]
 	}
 
-	if (allDependencyList.includes('express') || allDependencyList.includes('fastify')) {
-		return ['node', false]
+	const [useSvelte, useSvelteAsync] = useSvelteAdapter(deps)
+	if (useSvelte) {
+		return ['svelte', useSvelteAsync]
+	}
+
+	const [useNode, useNodeAsync] = useNodeAdapter(deps)
+	if (useNode) {
+		return ['node', useNodeAsync]
 	}
 
 	return [undefined, true]
 }
+
+// --------------------------------------------------------------------------------------------------------------------
 
 const getDefaultValues = async () => {
 	const pck = (await importFile<PackageJson>(path.resolve('package.json'), false)) || ({} as PackageJson)
