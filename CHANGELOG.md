@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.49.0 (2021-11-06)
+
+Feature:
+ - setup CLI
+
 ## 2.48.0 (2021-11-01)
 
 Feature:
