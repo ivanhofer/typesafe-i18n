@@ -2,7 +2,7 @@ import { Command } from 'commander'
 import { startGenerator } from '../../generator/src/generator'
 import { logger } from '../../generator/src/generator-util'
 import { version } from '../../version'
-import { setup } from './setup'
+import { setup } from './setup/setup'
 
 const program = new Command()
 
