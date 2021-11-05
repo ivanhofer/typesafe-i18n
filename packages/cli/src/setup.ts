@@ -2,6 +2,7 @@
 import { diff as justDiff } from 'just-diff'
 import justDiffApply from 'just-diff-apply'
 import kleur from 'kleur'
+import { startGenerator } from 'packages/generator/src/generator'
 import path from 'path'
 import prompts from 'prompts'
 import type { PackageJson } from 'type-fest'
@@ -9,6 +10,7 @@ import { isBoolean, isPropertyNotUndefined } from 'typesafe-utils'
 import { importFile } from '../../generator/src/file-utils'
 import {
 	Adapters,
+	doesConfigFileExist,
 	GeneratorConfig,
 	getConfigWithDefaultValues,
 	writeConfigToFile,
@@ -93,7 +95,7 @@ const getDefaultValues = async () => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const askQuestions = ({
+const askConfigQuestions = ({
 	baseLocale,
 	adapter,
 	loadLocalesAsync,
@@ -174,6 +176,18 @@ const askQuestions = ({
 		},
 	])
 
+const askOverrideQuestion = () =>
+	prompts({
+		name: 'override',
+		type: 'select',
+		message: `Config file '.typesafe-i18n.json' exists already. Do you want to override it?`,
+		choices: [
+			{ title: 'No', value: false },
+			{ title: 'Yes', value: true },
+		],
+		initial: 0,
+	})
+
 const getConfigDiff = async (options: GeneratorConfig) => {
 	const { baseLocale, adapter, loadLocalesAsync, esmImports, outputFormat, outputPath } =
 		await getConfigWithDefaultValues({}, false)
@@ -196,7 +210,19 @@ const getConfigDiff = async (options: GeneratorConfig) => {
 }
 
 export const setup = async (autoSetup: boolean) => {
-	const defaultValues = await getDefaultValues()
+	const exists = await doesConfigFileExist()
+	if (exists) {
+		if (autoSetup) {
+			logger.warn(`Config file '.typesafe-i18n.json' exists already. Nothing to set up.`)
+			return
+		}
+
+		const { override } = await askOverrideQuestion()
+		if (!override) {
+			logger.info('setup aborted')
+			return
+		}
+	}
 
 	!autoSetup &&
 		logger.info(
@@ -205,11 +231,16 @@ export const setup = async (autoSetup: boolean) => {
 			),
 		)
 
-	const answers: GeneratorConfig = autoSetup ? defaultValues : await askQuestions(defaultValues)
+	const defaultValues = await getDefaultValues()
+
+	const answers: GeneratorConfig = autoSetup ? defaultValues : await askConfigQuestions(defaultValues)
 	const options = { ...defaultValues, ...answers }
 
 	const config = await getConfigDiff(options)
 
 	await writeConfigToFile(config)
+
+	await startGenerator(undefined, false)
+
 	logger.info('setup complete')
 }

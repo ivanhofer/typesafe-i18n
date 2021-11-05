@@ -73,6 +73,9 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 export const writeConfigToFile = async (config: GeneratorConfig) =>
 	writeConfigFile({ $schema: `https://unpkg.com/typesafe-i18n@${version}/schema/typesafe-i18n.json`, ...config })
 
+export const doesConfigFileExist = async () =>
+	!!(await importFile<GeneratorConfig>(path.resolve('.typesafe-i18n.json'), false))
+
 export const readConfig = async (config?: GeneratorConfig | undefined): Promise<Config> => {
 	const generatorConfig = {
 		...config,
