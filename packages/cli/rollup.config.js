@@ -20,7 +20,7 @@ const config = [
 				sourcemap: false,
 			},
 		],
-		external: ['typescript', 'chokidar'],
+		external: ['typescript'],
 		plugins: [
 			resolve({ preferBuiltins: true }),
 			commonjs(),

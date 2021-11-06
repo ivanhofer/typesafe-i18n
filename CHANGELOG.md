@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.49.2 (2021-11-06)
+
+Bugfix:
+ - include `chokidar` into bundle
+
 ## 2.49.1 (2021-11-06)
 
 Fix:

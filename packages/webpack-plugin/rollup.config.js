@@ -1,10 +1,10 @@
 // @ts-check
 
+import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
-import externals from 'rollup-plugin-node-externals'
-import commonjs from '@rollup/plugin-commonjs'
 import path from 'path'
+import externals from 'rollup-plugin-node-externals'
 
 const getPath = (file) => path.resolve(__dirname, file)
 
@@ -18,7 +18,7 @@ const config = {
 			exports: 'named',
 		},
 	],
-	external: ['typescript', 'chokidar'],
+	external: ['typescript'],
 	plugins: [
 		commonjs(),
 		resolve({ preferBuiltins: true }),
