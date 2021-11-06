@@ -180,6 +180,9 @@
 		"uvu": "^0.5.2",
 		"watchlist": "^0.3.1"
 	},
+	"peerDependencies": {
+		"typescript": ">=3.5.1"
+	},
 	"bin": {
 		"typesafe-i18n": "cli/typesafe-i18n.mjs"
 	}

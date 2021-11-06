@@ -279,7 +279,7 @@ In order to get get full typesafety for your locales, you can start the generato
 
 > You will also benefit from full typesafe JavaScript code via [JSDoc-annotations](#jsdoc).
 
-Make sure you have installed `node` version `> 12.x` and are using a `typescript` version `> 3.x.x`.
+Make sure you have installed `node` version `> 12.x` and are using a `typescript` version `>= 3.5.1`.
 
  > The generator will create a different output depending on your TypeScript version. Older versions don't support all the features `typesafe-i18n` need to provide you with the best types. Make sure to use a TypeScript version `> 4.1.x` to benefit from all the typechecking features.
 

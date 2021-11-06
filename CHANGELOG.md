@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.49.3 (2021-11-06)
+
+Bugfix:
+ - add `typescript` as peer dependency
+
 ## 2.49.2 (2021-11-06)
 
 Bugfix:
