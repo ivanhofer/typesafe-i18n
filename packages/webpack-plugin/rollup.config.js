@@ -18,7 +18,7 @@ const config = {
 			exports: 'named',
 		},
 	],
-	external: ['typescript'],
+	external: ['typescript', 'chokidar'],
 	plugins: [
 		commonjs(),
 		resolve({ preferBuiltins: true }),

@@ -22,7 +22,7 @@ const config = files.map((file) => ({
 			exports: 'named',
 		},
 	],
-	external: ['typescript'],
+	external: ['typescript', 'chokidar'],
 	plugins: [
 		commonjs(),
 		resolve({ preferBuiltins: true }),
