@@ -48,8 +48,8 @@ export const askConfigQuestions = ({
 			type: 'select',
 			message: 'Do you want your locales to be loaded asynchronously?',
 			choices: [
-				{ title: 'No', value: false, description: 'TODO' },
-				{ title: 'Yes', value: true, description: 'TODO' },
+				{ title: 'No', value: false, description: 'Load all locales into memory at start of application' },
+				{ title: 'Yes', value: true, description: 'lazy-load locales as soon as they are needed' },
 			],
 			initial: loadLocalesAsync === false ? 0 : 1,
 		},
@@ -58,8 +58,12 @@ export const askConfigQuestions = ({
 			type: 'select',
 			message: 'Are you using esm modules in your project?',
 			choices: [
-				{ title: 'No', value: false, description: 'TODO' },
-				{ title: 'Yes', value: true, description: 'TODO' },
+				{
+					title: 'No / not sure',
+					value: false,
+					description: 'resolves module paths via Node.js resolution schemantics',
+				},
+				{ title: 'Yes', value: true, description: `requires modules to be imported via '.js' extension` },
 			],
 			initial: esmImports === false ? 0 : 1,
 		},

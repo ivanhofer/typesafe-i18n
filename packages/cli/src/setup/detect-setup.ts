@@ -60,12 +60,15 @@ export const getDefaultConfig = async () => {
 	const isTypeScriptProject =
 		dependencies.includes('typescript') || (await doesPathExist(path.resolve('tsconfig.json')))
 
+	// vite currently has some SSR issues (https://github.com/vitejs/vite/discussions/4230) so we have to disable esmImports
+	const esmImports = (await isEsmProject()) && adapter !== 'svelte'
+
 	const defaultConfig = await getConfigWithDefaultValues()
 	const config: GeneratorConfig = {
 		baseLocale: defaultConfig.baseLocale,
 		adapter,
 		loadLocalesAsync,
-		esmImports: await isEsmProject(),
+		esmImports,
 		outputFormat: isTypeScriptProject ? 'TypeScript' : 'JavaScript',
 		outputPath: defaultConfig.outputPath,
 	}

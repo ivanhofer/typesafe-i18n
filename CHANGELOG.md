@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.49.1 (2021-11-06)
+
+Fix:
+ - SvelteKit workaround for `esmModule` setup detection
+
 ## 2.49.0 (2021-11-06)
 
 Feature:
