@@ -52,15 +52,15 @@ Then inside your `routes/__layout.svelte` file, you need to call `initI18n` insi
 
 ```html
 <script context="module">
-	import LL, { initI18n, setLocale } from '../i18n/i18n-svelte';
+   import LL, { initI18n, setLocale } from '../i18n/i18n-svelte';
 
-	export async function load({ page, fetch, session, context }) {
-      // detect locale of user (see https://github.com/ivanhofer/typesafe-i18n#locale-detection)
-      const locale = 'en'
-		await initI18n(locale)
+   export async function load({ page, fetch, session, context }) {
+   // detect locale of user (see https://github.com/ivanhofer/typesafe-i18n#locale-detection)
+   const locale = 'en'
+      await initI18n(locale)
 
-		return {}
-	}
+      return {}
+   }
 </script>
 ```
 
