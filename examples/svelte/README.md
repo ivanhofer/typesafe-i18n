@@ -194,25 +194,7 @@ Svelte store that returns a `boolean`. It can be used to wait for the locale to 
 
 # SvelteKit
 
-For your SvelteKit projects, you should call `initI18n` inside the `load` function in your `routes/__layout.svelte` file:
-
-```html
-<script context="module">
-	import LL, { initI18n, setLocale } from '../i18n/i18n-svelte';
-
-	export async function load({ page, fetch, session, context }) {
-      // detect locale of user (see https://github.com/ivanhofer/typesafe-i18n#locale-detection)
-      const locale = 'en'
-		await initI18n(locale)
-
-		return {}
-	}
-</script>
-```
-
-For more information about the stores you can use, see the [Svelte](#svelte) section.
-
- <!-- TODO: create example repository -->
+See [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/sveltekit)
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -240,6 +222,10 @@ For more information about the stores you can use, see the [Svelte](#svelte) sec
 
  <!-- TODO: create example repository -->
 
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
 
 ---
 ---

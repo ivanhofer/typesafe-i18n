@@ -1,0 +1,1 @@
+<!-- empty file. This file never get's accessed, since '__layout.svelte' will make a redirect to a subpath -->
