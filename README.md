@@ -65,36 +65,21 @@ npm install typesafe-i18n
 
 ## Get started
 
-1. :gear: Create a `.typesafe-i18n.json`-file to [configure](#options) the generator
-   ```json
-   {
-      "$schema": "https://unpkg.com/typesafe-i18n@2.46.5/schema/typesafe-i18n.json",
-
-      "baseLocale": "en",
-      "adapter": "svelte"
-   }
-   ```
-
-2. :package: Add a new script to your package.json file
-   ```json
-   {
-      "scripts": {
-         "typesafe-i18n": "typesafe-i18n"
-      }
-   }
-   ```
-
-3. :running: Run the generator
+1. run the setup process and answer all questions
    ```bash
-   npm run typesafe-i18n
+   npx typesafe-i18n --setup
    ```
 
-4. :eyes: Take a look at the generated files and it's [folder-structure](#folder-structure)
+   > (BETA) or automatically detect which config your project requires: **`npx typesafe-i18n --setup-auto`**\
+   > please let us know if something does not get detected correctly
 
-5. :open_book: Explore the docs
+
+2. :eyes: Take a look at the generated files and it's [folder-structure](#folder-structure)
+
+3. :open_book: Explore the docs
    > `typesafe-i18n` offers a lot. Just press `cmd + F` to search on this page.
 
-6. :star: Star this project on [GitHub](https://github.com/ivanhofer/typesafe-i18n)
+4. :star: Star this project on [GitHub](https://github.com/ivanhofer/typesafe-i18n)
    > Thanks! This helps the project to grow.
 
 

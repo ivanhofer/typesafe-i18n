@@ -1,6 +1,7 @@
 import path from 'path'
 import type { BaseTranslation } from '../../core/src/core'
-import { importFile } from './file-utils'
+import { version } from '../../version'
+import { doesPathExist, importFile, writeConfigFile } from './file-utils'
 import { generateAngularAdapter } from './files/generate-adapter-angular'
 import { generateNodeAdapter } from './files/generate-adapter-node'
 import { generateReactAdapter } from './files/generate-adapter-react'
@@ -17,7 +18,7 @@ import { configureOutputHandler } from './output-handler'
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-type Adapters = 'angular' | 'node' | 'react' | 'svelte'
+export type Adapters = 'angular' | 'node' | 'react' | 'svelte'
 
 export type OutputFormats = 'TypeScript' | 'JavaScript'
 
@@ -69,6 +70,11 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
+export const writeConfigToFile = async (config: GeneratorConfig) =>
+	writeConfigFile({ $schema: `https://unpkg.com/typesafe-i18n@${version}/schema/typesafe-i18n.json`, ...config })
+
+export const doesConfigFileExist = async () => doesPathExist(path.resolve('.typesafe-i18n.json'))
+
 export const readConfig = async (config?: GeneratorConfig | undefined): Promise<Config> => {
 	const generatorConfig = {
 		...config,
@@ -81,6 +87,7 @@ export const readConfig = async (config?: GeneratorConfig | undefined): Promise<
 
 export const getConfigWithDefaultValues = async (
 	config?: Config | undefined,
+	shouldReadConfig = true,
 ): Promise<GeneratorConfigWithDefaultValues> => ({
 	baseLocale: 'en',
 	locales: [],
@@ -97,7 +104,7 @@ export const getConfigWithDefaultValues = async (
 	loadLocalesAsync: true,
 	generateOnlyTypes: false,
 	banner: '/* eslint-disable */',
-	...(await readConfig(config)),
+	...(shouldReadConfig ? await readConfig(config) : {}),
 })
 
 const generateDictionaryFiles = async (

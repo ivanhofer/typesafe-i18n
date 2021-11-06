@@ -1,10 +1,11 @@
 import { promises as fsPromises } from 'fs'
 import { dirname, join, resolve } from 'path'
+import type { JsonObject } from 'type-fest'
 import { pathToFileURL } from 'url'
 import { logger } from './generator-util'
 import { fileEnding } from './output-handler'
 
-const { readFile: read, readdir, writeFile, mkdir, stat, rm } = fsPromises
+const { readFile: read, readdir, writeFile: write, mkdir, stat, rm } = fsPromises
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -63,6 +64,13 @@ export const deleteFolderRecursive = async (path: string): Promise<boolean> => {
 	}
 }
 
+export const writeFile = (filePath: string, content: string) => write(filePath, content, { encoding: 'utf-8' })
+
+export const writeConfigFile = async (content: JsonObject) => {
+	writeFile(resolve('./', '.typesafe-i18n.json'), JSON.stringify(content, undefined, 3))
+	logger.info(`generated config file: '.typesafe-i18n.json'`)
+}
+
 const getFileName = (path: string, file: string) => {
 	const ext = file.endsWith(fileEnding) || file.endsWith(`${fileEnding}x`) || file.endsWith('.d.ts') ? '' : fileEnding
 	return join(path, `${file}${ext}`)
@@ -71,7 +79,7 @@ const getFileName = (path: string, file: string) => {
 export const writeNewFile = async (path: string, file: string, content: string): Promise<void> => {
 	await createPathIfNotExits(path)
 
-	writeFile(getFileName(path, file), content, { encoding: 'utf-8' })
+	writeFile(getFileName(path, file), content)
 
 	logger.info(`generated file: ${file}`)
 }
