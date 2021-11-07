@@ -1231,14 +1231,16 @@ const detectedLocale = detectLocale(fallbackLocale, availableLocales, documentCo
 `typesafe-i18n` comes with an API that allows other services to read and update translations. 
 
 Services that work with `typesafe-i18n`:
-- [inlang](https://github.com/inlang/inlang): An open source translation management dashboard with machine translations and automatic sync. Inlang allows non-technical team members, or external translators to adjust translations without touching the source code. 
+- [inlang](https://github.com/inlang/inlang): An open source translation management dashboard with machine translations and automatic sync. Inlang allows non-technical team members, or external translators to adjust translations without touching the source code.
+
+But you can also connect other services by using the `importer` and `exporter` functionality:
+
 
 ### Importer
 
 In order to import language files that come from an API, spreadsheet or JSON-files, `typesafe-i18n` provides an `importer` functionality.
 You have to write your own logic to get the data, then map it to a dictionary-representation and then call the `storeTranslationToDisk` function. Here is an example how this could look like:
 
-> Please share your implementation in a PR. `typesafe-i18n` wants to provide built-in importer-packages in the future.
 
 ```typescript
 import { storeTranslationToDisk } from 'typesafe-i18n/importer'
