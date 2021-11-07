@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.49.4 (2021-11-06)
+
+Fix:
+ - don't run the generator on CLI setup; show info instead
+
 ## 2.49.3 (2021-11-06)
 
 Bugfix:

@@ -2,7 +2,6 @@
 import { diff as justDiff } from 'just-diff'
 import justDiffApply from 'just-diff-apply'
 import kleur from 'kleur'
-import { startGenerator } from 'packages/generator/src/generator'
 import { isPropertyNotUndefined } from 'typesafe-utils'
 import {
 	doesConfigFileExist,
@@ -40,6 +39,8 @@ const getConfigDiff = async (options: GeneratorConfig) => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
+const highlightedInfoLog = (message: string) => logger.info(kleur.yellow(message))
+
 export const setup = async (autoSetup: boolean) => {
 	const exists = await doesConfigFileExist()
 	if (exists) {
@@ -56,10 +57,8 @@ export const setup = async (autoSetup: boolean) => {
 	}
 
 	!autoSetup &&
-		logger.info(
-			kleur.yellow(
-				'See this link for more information on how to setup this project: https://github.com/ivanhofer/typesafe-i18n#options',
-			),
+		highlightedInfoLog(
+			'See this link for more information on how to setup this project: https://github.com/ivanhofer/typesafe-i18n#options',
 		)
 
 	const defaultConfig = await getDefaultConfig()
@@ -73,7 +72,7 @@ export const setup = async (autoSetup: boolean) => {
 
 	await updatePackageJson()
 
-	await startGenerator(undefined, false)
-
 	logger.info('setup complete')
+
+	highlightedInfoLog(`You can now run 'npm run typesafe-i18n' to start the generator`)
 }
