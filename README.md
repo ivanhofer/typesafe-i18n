@@ -1228,6 +1228,11 @@ const detectedLocale = detectLocale(fallbackLocale, availableLocales, documentCo
 
 ## Integration with other services
 
+Typesafe-i18n comes with an API that allows other services to read and write translations. 
+
+Services that work with typesafe-i18n:
+- [inlang](https://github.com/inlang/inlang): An open source translation management dashboard with machine translations and automatic sync. Inlang allows allows non-technical team members, or external translators to adjust translations without touching the source code. 
+
 ### Importer
 
 In order to import language files that come from an API, spreadsheet or JSON-files, `typesafe-i18n` provides an `importer` functionality.
