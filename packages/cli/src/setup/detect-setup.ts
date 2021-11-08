@@ -14,7 +14,7 @@ const useAdapter =
 		const use =
 			useAsync ||
 			// casting needed because of https://github.com/microsoft/TypeScript/issues/46707
-			(syncDependencies.reduce((prev, dep) => prev || dependencies.includes(dep), false) as unknown as boolean)
+			syncDependencies.reduce((prev, dep) => prev || dependencies.includes(dep), false as boolean)
 
 		return [use, useAsync]
 	}
