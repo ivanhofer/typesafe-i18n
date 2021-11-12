@@ -13,6 +13,7 @@ node_modules
 /runtime
 /schema
 /svelte
+/vue
 packages/generator/test/generated/**/*.actual.*
 packages/generator/test/generated/console*
 /typesafe-i18n-*.tgz

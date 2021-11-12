@@ -61,6 +61,10 @@
 			"import": "./svelte/svelte-store.mjs",
 			"require": "./svelte/svelte-store.cjs"
 		},
+		"./vue/vue-adapter": {
+			"import": "./svelte/svelte-store.mjs",
+			"require": "./svelte/svelte-store.cjs"
+		},
 		"./rollup/*": "./rollup/*.js",
 		"./webpack/*": "./webpack/*.js",
 		".": {
@@ -85,6 +89,7 @@
 		"/schema",
 		"/svelte",
 		"/types",
+		"/vue",
 		"/webpack"
 	],
 	"scripts": {
@@ -92,6 +97,10 @@
 		"dev:cli": "rollup -c packages/cli/rollup.config.js -w",
 		"dev:rollup": "rollup -c packages/rollup-plugin/rollup.config.js -w",
 		"dev:webpack": "rollup -c packages/webpack-plugin/rollup.config.js -w",
+		"dev:adapter-angular": "rollup -c packages/adapter-angular/rollup.config.js -w",
+		"dev:adapter-react": "rollup -c packages/adapter-react/rollup.config.js -w",
+		"dev:adapter-svelte": "rollup -c packages/adapter-svelte/rollup.config.js -w",
+		"dev:adapter-vue": "rollup -c packages/adapter-vue/rollup.config.js -w",
 		"dev:adapters": "rollup -c packages/adapters/rollup.config.js -w",
 		"dev:exporter": "rollup -c packages/exporter/rollup.config.js -w",
 		"dev:importer": "rollup -c packages/importer/rollup.config.js -w",
@@ -141,6 +150,7 @@
 		"@types/node": "^16.11.17",
 		"@types/prompts": "^2.0.14",
 		"@types/react": "^17.0.38",
+		"@types/vue": "^2.0.0",
 		"@types/webpack": "^5.28.0",
 		"@typescript-eslint/eslint-plugin": "^5.8.0",
 		"@typescript-eslint/parser": "^5.8.0",
@@ -177,6 +187,7 @@
 		"typescript": "^4.5.4",
 		"typescript-json-schema": "^0.52.0",
 		"uvu": "^0.5.2",
+		"vue": "^2.6.14",
 		"watchlist": "^0.3.1"
 	},
 	"peerDependencies": {

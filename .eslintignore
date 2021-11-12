@@ -12,6 +12,7 @@ node_modules
 /runtime
 /svelte
 /types
+/vue
 /webpack
 rollup.config.js
 /packages/generator/test/generated
