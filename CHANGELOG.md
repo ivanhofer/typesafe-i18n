@@ -1,7 +1,9 @@
 # CHANGELOG.md
 
 
-## 2.49.5 (2021-11-12)
+## 2.50.0 (2021-11-12)
+
+ - upgrade to node 16
 
 Fix:
  - default export of generated Locale template file for SvelteKit
