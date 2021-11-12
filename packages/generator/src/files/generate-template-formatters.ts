@@ -1,4 +1,4 @@
-import type { GeneratorConfigWithDefaultValues } from '../config-types'
+import type { GeneratorConfigWithDefaultValues } from '../../../config/src/config'
 import { writeFileIfContainsChanges, writeFileIfNotExists } from '../file-utils'
 import { prettify } from '../generator-util'
 import {
@@ -8,7 +8,7 @@ import {
 	jsDocType,
 	relativeFileImportPath,
 	tsCheck,
-	type,
+	type
 } from '../output-handler'
 
 const getFormattersTemplate = ({ typesFileName: typesFile, loadLocalesAsync }: GeneratorConfigWithDefaultValues) => {

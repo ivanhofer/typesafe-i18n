@@ -1,5 +1,5 @@
 import type { Plugin } from 'rollup'
-import type { RollupConfig } from '../../generator/src/config-types'
+import type { RollupConfig } from '../../config/src/config'
 import { typesafeI18nGeneratorPlugin } from './rollup-plugin-typesafe-i18n-generator'
 import { typesafeI18nOptimizerPlugin } from './rollup-plugin-typesafe-i18n-optimizer'
 

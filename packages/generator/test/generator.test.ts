@@ -2,9 +2,14 @@ import { promises } from 'fs'
 import { resolve } from 'path'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
+import {
+	Config,
+	GeneratorConfigWithDefaultValues,
+	getConfigWithDefaultValues,
+	OutputFormats
+} from '../../config/src/config'
 import type { BaseTranslation } from '../../core/src/core'
-import type { Config, GeneratorConfigWithDefaultValues, OutputFormats } from '../src/config-types'
-import { generate, getConfigWithDefaultValues } from '../src/generate-files'
+import { generate } from '../src/generate-files'
 import { parseTypescriptVersion, TypescriptVersion } from '../src/generator-util'
 
 const { readFile } = promises

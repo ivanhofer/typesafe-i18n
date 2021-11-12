@@ -8,7 +8,7 @@ import {
 	doesConfigFileExist,
 	getConfigWithDefaultValues,
 	writeConfigToFile,
-} from '../../../generator/src/generate-files'
+} from '../../../config/src/config'
 import { logger } from '../../../generator/src/generator-util'
 import { getDefaultConfig } from './detect-setup'
 import { updatePackageJson } from './package-json'

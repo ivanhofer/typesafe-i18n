@@ -1,5 +1,5 @@
 import prompts from 'prompts'
-import type { GeneratorConfig } from '../../../generator/src/config-types'
+import type { GeneratorConfig } from '../../../config/src/config'
 
 export const askConfigQuestions = ({
 	baseLocale,

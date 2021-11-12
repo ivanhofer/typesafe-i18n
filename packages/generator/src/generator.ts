@@ -1,10 +1,15 @@
 import { watch } from 'chokidar'
 import { resolve } from 'path'
 import ts from 'typescript'
+import {
+	GeneratorConfig,
+	GeneratorConfigWithDefaultValues,
+	getConfigWithDefaultValues,
+	readConfig
+} from '../../config/src/config'
 import { BaseTranslation } from '../../core/src'
-import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './config-types'
 import { createPathIfNotExits } from './file-utils'
-import { generate, getConfigWithDefaultValues, readConfig } from './generate-files'
+import { generate } from './generate-files'
 import { createLogger, Logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
 import { configureOutputHandler, shouldGenerateJsDoc } from './output-handler'
 import { getAllLanguages, parseLanguageFile } from './parse-language-file'

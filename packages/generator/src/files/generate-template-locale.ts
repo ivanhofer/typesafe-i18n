@@ -1,5 +1,6 @@
 import { join } from 'path'
 import { isString } from 'typesafe-utils'
+import { GeneratorConfigWithDefaultValues } from '../../../config/src/config'
 import { BaseTranslation, Locale } from '../../../core/src/core'
 import type { GeneratorConfigWithDefaultValues } from '../config-types'
 import { writeFileIfContainsChanges } from '../file-utils'

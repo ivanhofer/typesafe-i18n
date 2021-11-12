@@ -17,6 +17,7 @@ import {
 	TypeGuard,
 	uniqueArray,
 } from 'typesafe-utils'
+import { GeneratorConfigWithDefaultValues } from '../../../config/src/config'
 import { BaseTranslation, isPluralPart } from '../../../core/src/core'
 import { partAsStringWithoutTypes, partsAsStringWithoutTypes } from '../../../core/src/core-utils'
 import type { ArgumentPart } from '../../../core/src/parser'

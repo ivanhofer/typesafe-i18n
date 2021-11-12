@@ -1,4 +1,4 @@
-import type { GeneratorConfigWithDefaultValues } from '../config-types'
+import type { GeneratorConfigWithDefaultValues } from '../../../config/src/config'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { prettify } from '../generator-util'
 import {
@@ -9,7 +9,7 @@ import {
 	jsDocType,
 	OVERRIDE_WARNING,
 	relativeFileImportPath,
-	tsCheck,
+	tsCheck
 } from '../output-handler'
 
 const getReactUtils = ({

@@ -1,7 +1,7 @@
 import path from 'path'
+import { Config, GeneratorConfig, GeneratorConfigWithDefaultValues } from '../../config/src/config'
 import type { BaseTranslation } from '../../core/src/core'
 import { version } from '../../version'
-import { Config, GeneratorConfig, GeneratorConfigWithDefaultValues } from './config-types'
 import { doesPathExist, importFile, writeConfigFile } from './file-utils'
 import { generateAngularAdapter } from './files/generate-adapter-angular'
 import { generateNodeAdapter } from './files/generate-adapter-node'
