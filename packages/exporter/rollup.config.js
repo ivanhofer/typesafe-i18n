@@ -23,7 +23,12 @@ const config = ['esm', 'cjs'].map(format =>(
 			resolve({ preferBuiltins: true }),
 			commonjs({ ignoreDynamicRequires: true }),
 			externals(),
-			typescript(),
+			typescript({
+				tsconfig: getPath('./tsconfig.json'),
+				sourceMap: true,
+				declaration: false,
+				declarationDir: null,
+			}),
 		],
 	}))
 
