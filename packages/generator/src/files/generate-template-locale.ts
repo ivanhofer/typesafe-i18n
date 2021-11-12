@@ -47,7 +47,7 @@ export const getWrappedString = (text: string): string => {
 // --------------------------------------------------------------------------------------------------------------------
 
 const getLocaleTemplate = (
-	{ banner, typesFileName, esmImports }: GeneratorConfigWithDefaultValues,
+	{ banner, typesFileName, esmImports, adapter }: GeneratorConfigWithDefaultValues,
 	locale: Locale,
 	isBaseLocale: boolean,
 	translations: BaseTranslation | undefined,
@@ -59,7 +59,8 @@ const getLocaleTemplate = (
 
 	const translationsMap = translations && mapTranslationsToString(translations)
 
-	const defaultExport = shouldGenerateJsDoc && !esmImports ? 'module.exports =' : 'export default'
+	const defaultExport =
+		shouldGenerateJsDoc && adapter !== 'svelte' && !esmImports ? 'module.exports =' : 'export default'
 
 	const hint = editHint
 		? `	// ${editHint}

@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.49.5 (2021-11-12)
+
+Fix:
+ - default export of generated Locale template file for SvelteKit
+
 ## 2.49.4 (2021-11-07)
 
 Fix:
