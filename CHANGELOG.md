@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.50.1 (2021-11-12)
+
+Bugfix:
+ - fix CLI setup
+
 ## 2.50.0 (2021-11-12)
 
  - upgrade to node 16

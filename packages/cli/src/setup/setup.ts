@@ -22,7 +22,7 @@ const getConfigDiff = async (options: GeneratorConfig) => {
 
 	const diff = justDiff({ baseLocale, adapter, loadLocalesAsync, esmImports, outputFormat, outputPath }, options)
 
-	const changedValues = justDiffApply.diffApply(
+	const changedValues = justDiffApply(
 		{
 			baseLocale: undefined,
 			adapter: undefined,
