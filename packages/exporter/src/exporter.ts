@@ -34,7 +34,7 @@ const readTranslation = async (locale: Locale, outputPath: string, tempPath: str
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const readTranslationFromDisk = async (locale: Locale): Promise<BaseTranslation> => {
+export const readTranslationFromDisk = async (locale: Locale): Promise<BaseTranslation | BaseTranslation[]> => {
 	const config = await setup()
 	const { outputPath, tempPath } = config
 

@@ -142,7 +142,7 @@ const generateDictionaryFiles = async (
 }
 
 export const generate = async (
-	translations: BaseTranslation,
+	translations: BaseTranslation | BaseTranslation[],
 	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
 	version: TypescriptVersion,
 	logger: Logger = defaultLogger,

@@ -5,7 +5,7 @@ import {
 	AsyncFormattersInitializer,
 	FormattersInitializer,
 	TranslationLoader,
-	TranslationLoaderAsync,
+	TranslationLoaderAsync
 } from '../../core/src/util.loader'
 import { i18nObject } from '../../core/src/util.object'
 
@@ -15,8 +15,8 @@ import { i18nObject } from '../../core/src/util.object'
 
 export type I18nContextType<
 	L extends string = string,
-	T extends BaseTranslation = BaseTranslation,
-	TF extends TranslationFunctions = TranslationFunctions<T>,
+	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
+	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 > = {
 	setLocale: (locale: L) => Promise<void>
 	isLoadingLocale: boolean
@@ -30,8 +30,8 @@ export type TypesafeI18nProps<L extends string> = {
 
 export type ReactInit<
 	L extends string = string,
-	T extends BaseTranslation = BaseTranslation,
-	TF extends TranslationFunctions = TranslationFunctions<T>,
+	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
+	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 > = {
 	component: React.FunctionComponent<TypesafeI18nProps<L>>
 	context: React.Context<I18nContextType<L, T, TF>>
@@ -93,5 +93,5 @@ export const initI18nReact = <
 const getI18nContext = <
 	L extends string = string,
 	T extends BaseTranslation = BaseTranslation,
-	TF extends TranslationFunctions = TranslationFunctions<T>,
+	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 >() => React.createContext({} as I18nContextType<L, T, TF>)

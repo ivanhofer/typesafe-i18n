@@ -8,7 +8,7 @@ export type TranslateByString =
 	| ((text: string, ...args: Arguments) => LocalizedString)
 
 export const getPartsFromString = (cache: Cache, text: string): Part[] =>
-	cache[text] || (cache[text] = parseRawText(text))
+	cache[text as unknown as number] || ((cache as Record<string, Part[]>)[text] = parseRawText(text))
 
 const translateString = <F extends BaseFormatters>(
 	cache: Cache,

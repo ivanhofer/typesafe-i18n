@@ -20,7 +20,7 @@ let first = true
 const getDefaultExport = (languageFile: BaseTranslation): BaseTranslation => {
 	const keys = Object.keys(languageFile)
 	if (keys.includes('__esModule') || (keys.length === 1 && keys.includes('default'))) {
-		languageFile = languageFile.default as BaseTranslation
+		languageFile = (languageFile as Record<string, BaseTranslation>).default as BaseTranslation
 	}
 
 	return languageFile

@@ -27,7 +27,7 @@ export const storeTranslationsToDisk = async (
 	configureOutputHandler(config, version)
 
 	const createdLocales: Locale[] = []
-	let baseTranslation: BaseTranslation | undefined = undefined
+	let baseTranslation: BaseTranslation | BaseTranslation[] | undefined = undefined
 
 	for (const { locale, translations } of localeMappings) {
 		if (!locale) continue

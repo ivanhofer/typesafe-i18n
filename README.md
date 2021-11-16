@@ -107,8 +107,16 @@ You can use `typesafe-i18n` in a variety of project-setups:
 The library should work in all **modern browsers**. It uses some functionality from the [`Intl` namespace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl). You can see the list of supported browsers [here](https://caniuse.com/intl-pluralrules). If you want to support older browsers that don't include these functions, you would need to include a polyfill like https://formatjs.io/docs/polyfills/intl-pluralrules/.
 
 
-### General
+### Other frameworks
 
+All you need is inside the [generated](#typesafety) file `i18n-utils.ts`. You can use the functions in there to create a small wrapper for your application.
+
+> Feel free to open a new [discussion](https://github.com/ivanhofer/typesafe-i18n/discussions) if you need a guide for a specific framework.
+
+
+### Custom usage
+
+If the provided wrappers don't fit your needs, you can use these raw functions to implement a custom i18n integration.
 The `typesafe-i18n` package exports a few different objects you can use to localize your applications:
 
  - [i18nString (LLL)](#i18nString)
@@ -239,13 +247,6 @@ function doSomething(session) {
 
 ```
 
-### Other frameworks
-
-All you need is inside the [generated](#typesafety) file `i18n-utils.ts`. You can use the functions in there to create a small wrapper for your application.
-
-> Feel free to open an [issue](https://github.com/ivanhofer/typesafe-i18n/issues), if you need a guide for a specific framework.
-
-
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -275,7 +276,7 @@ The `typesafe-i18n` package allows us to be 100% typesafe for our translation fu
 ![typesafe arguments in translation](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/06_typesafe-arguments-in-translation.png)
 
 
-In order to get get full typesafety for your locales, you can start the generator during development. The generator listens for changes you make to your [base locale file](#folder-structure) and creates the corresponding TypeScript types.
+In order to get get full typesafety for your locales, you can start the generator during development. The generator listens for changes you make to your [base locale file](#base-translation) and creates the corresponding TypeScript types.
 
 > You will also benefit from full typesafe JavaScript code via [JSDoc-annotations](#jsdoc).
 
@@ -325,7 +326,7 @@ When running tests or scripts you can disable the watcher by passing the argumen
 > npx typesafe-i18n --no-watch
 ```
 
-This will only generate types once and **not** listen to changes in your locale files. The process will throw an `TypesafeI18nParseError` if a wrong syntax is detected in your base locale file.
+This will only generate types once and **not** listen to changes in your locale files. The process will throw an `TypesafeI18nParseError` if a wrong syntax is detected in your [base locale file](#base-translation).
 
 #### rollup-plugin
 
@@ -408,7 +409,7 @@ src/
       i18n-util.ts
 ```
 
- > Some files are auto-generated on every change of your base locale file; please don't make manual changes to them, since they will be overwritten.
+ > Some files are auto-generated on every change of your [base locale file](#base-translation); please don't make manual changes to them, since they will be overwritten.
 
  - `en/index.ts`\
   	If 'en' is your [base locale](#baselocale), the file `src/i18n/en/index.ts` will contain your translations. Whenever you make changes to this file, the generator will create updated type definitions.
@@ -423,14 +424,14 @@ src/
 	Type definitions are generated in this file. You don't have to understand them. They are just here to help TypeScript understand, how you need to call the translation functions.
 
  - `i18n-util.ts`\
-   This file contains wrappers with type-information around the [base i18n functions](#general).
+   This file contains wrappers with type-information around the [base i18n functions](#custom-usage).
 
 
 ### locales
 
-Locales must follow a specific file pattern. For each locale, you have to create a folder with the name of the locale inside your `src/i18n` folder e.g. 'en', 'en-us', 'en-GB'. The name of the folder is also the name of the locale you use inside your code. Each locales folder needs to have an `index.ts` file with a default export. The file should export an object with string key-values pairs and should look something like:
+Locales must follow a specific file pattern. For each locale, you have to create a folder with the name of the locale inside your `src/i18n` folder e.g. 'en', 'en-us', 'en-GB'. The name of the folder is also the name of the locale you use inside your code. Each locales folder needs to have an `index.ts` file with a default export. The file should export an object with key-values pairs or arrays and should look something like:
 
-```javascript
+```typescript
 import type { Translation } from '../i18n-types';
 
 const de: Translation = {
@@ -449,7 +450,7 @@ If you want to pass arguments with your own types to the translation function, y
 
 If you have a translation with e.g. the type `Sum`,
 
-```javascript
+```typescript
 const translations: BaseTranslation = {
    RESULT: 'The result is: {0:Sum|calculate}'
 }
@@ -457,7 +458,7 @@ const translations: BaseTranslation = {
 
 you need to export `Sum` as a type in your `custom-types.ts` file
 
-```javascript
+```typescript
 export type Sum = {
    n1: number
    n2: number
@@ -482,22 +483,22 @@ You can set options for the [generator](#typesafety) inside a `.typesafe-i18n.js
 
 The available options are:
 
-| key                                                       | type                                                           | default value                                 |
-| --------------------------------------------------------- | -------------------------------------------------------------- | --------------------------------------------- |
-| [baseLocale](#baseLocale)                                 | `string`                                                       | `'en'`                                        |
-| [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`                                                      | `true`                                        |
+| key                                                       | type                                                                              | default value                                 |
+| --------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------- |
+| [baseLocale](#baseLocale)                                 | `string`                                                                          | `'en'`                                        |
+| [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`                                                                         | `true`                                        |
 | [adapter](#adapter)                                       | `'angular'` &#124; `'node'` &#124; `'react'` &#124; `'svelte'` &#124; `undefined` | `undefined`                                   |
-| [outputPath](#outputPath)                                 | `string`                                                       | `'./src/i18n/'`                               |
-| [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                           | `'TypeScript'`                                |
-| [typesFileName](#typesFileName)                           | `string`                                                       | `'i18n-types'`                                |
-| [esmImports](#esmImports)                                 | `boolean`                                                      | `false`                                       |
-| [utilFileName](#utilFileName)                             | `string`                                                       | `'i18n-util'`                                 |
-| [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                                       | `'formatters'`                                |
-| [typesTemplateFileName](#typesTemplateFileName)           | `string`                                                       | `'custom-types'`                              |
-| [adapterFileName](#adapterFileName)                       | `string` &#124; `undefined`                                    | `undefined`                                   |
-| [generateOnlyTypes](#generateOnlyTypes)                   | `boolean`                                                      | `false`                                       |
-| [tempPath](#tempPath)                                     | `string`                                                       | `'./node_modules/typesafe-i18n/temp-output/'` |
-| [banner](#banner)                                         | `string`                                                       | `'/* eslint-disable */'`                      |
+| [outputPath](#outputPath)                                 | `string`                                                                          | `'./src/i18n/'`                               |
+| [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                                              | `'TypeScript'`                                |
+| [typesFileName](#typesFileName)                           | `string`                                                                          | `'i18n-types'`                                |
+| [esmImports](#esmImports)                                 | `boolean`                                                                         | `false`                                       |
+| [utilFileName](#utilFileName)                             | `string`                                                                          | `'i18n-util'`                                 |
+| [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                                                          | `'formatters'`                                |
+| [typesTemplateFileName](#typesTemplateFileName)           | `string`                                                                          | `'custom-types'`                              |
+| [adapterFileName](#adapterFileName)                       | `string` &#124; `undefined`                                                       | `undefined`                                   |
+| [generateOnlyTypes](#generateOnlyTypes)                   | `boolean`                                                                         | `false`                                       |
+| [tempPath](#tempPath)                                     | `string`                                                                          | `'./node_modules/typesafe-i18n/temp-output/'` |
+| [banner](#banner)                                         | `string`                                                                          | `'/* eslint-disable */'`                      |
 
 
 #### `baseLocale`
@@ -570,7 +571,7 @@ If you want to use `typesafe-i18n` inside your JavaScript code, you can get also
 
 In order to get typesafety for your locales files, you need to annotate it like this:
 
-```javascript
+```typescript
 // @ts-check
 
 /**
@@ -803,6 +804,84 @@ Or if you are using the [i18nObject (LL)](#i18nObject):
 </div>
 ```
 
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+## Base Translation
+
+To define your base translation you need to create a `index.ts` file inside `src/i18n/{baseLocale}`, where `baseLocale` can be defined inside the [`options`](#baselocale).
+This file must have an `default export` that should have the type of `BaseTranslation`. Something like this:
+
+```typescript
+import type { BaseTranslation } from '../i18n-types'
+
+const en: BaseTranslation = { }
+
+export default en
+```
+
+You are really flexible how you want to define your translations. You could define them:
+
+ - as key-value pairs:
+   ```typescript
+   const en: BaseTranslation = {
+      HI: 'Hello',
+      LOGIN: 'click here to login'
+      LOGOUT: 'logout'
+   }
+   ```
+   > keys can also be lowercase
+
+ - as nested key-value pairs **(recommended)**:
+   ```typescript
+   const en: BaseTranslation = {
+      hi: 'Hello',
+      auth: {
+         login: 'click here to login'
+         logout: 'logout'
+      }
+   }
+   ```
+   > can be nested as deep as you want
+
+ - as an array:
+   ```typescript
+   const en: BaseTranslation = [
+      'Hello',
+      'click here to login'
+      'logout'
+   ]
+   ```
+
+ - as a nested array:
+   ```typescript
+   const en: BaseTranslation = [
+      'Hello',
+      [
+         'click here to login'
+         'logout'
+      ]
+   ]
+   ```
+   > can be nested as deep as you want
+
+ - mixed:
+   ```typescript
+   const en: BaseTranslation = {
+      HI: 'Hello',
+      auth: [
+         {
+            login: 'click here to login'
+         },
+         'logout'
+      ]
+   }
+   ```
+
+You are really flexible how you define your translations. You can define the translations how it fits best to your application and i18n workflow.
+It is recommended to use `nested key-value pairs` since it offers flexibility and is easy to read, but if your translations come from an external service like a CMS, it is possible that you also have to use the array syntax to define your translations.
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -1228,7 +1307,7 @@ const detectedLocale = detectLocale(fallbackLocale, availableLocales, documentCo
 
 ## Integration with other services
 
-`typesafe-i18n` comes with an API that allows other services to read and update translations. 
+`typesafe-i18n` comes with an API that allows other services to read and update translations.
 
 Services that work with `typesafe-i18n`:
 - [inlang](https://github.com/inlang/inlang): An open source translation management dashboard with machine translations and automatic sync. Inlang allows non-technical team members, or external translators to adjust translations without touching the source code.
@@ -1323,7 +1402,7 @@ The footprint of the `typesafe-i18n` package is smaller compared to other existi
 - string-parser: detects variables, formatters and plural-rules in your localized strings
 - translation function: injects arguments, formats them and finds the correct plural form for the given arguments
 
-These parts are bundled into the [core functions](#general). The sizes of the core functionalities are:
+These parts are bundled into the [core functions](#custom-usage). The sizes of the core functionalities are:
 
 - [i18nString](#i18nString): 834 bytes gzipped
 - [i18nObject](#i18nObject): 939 bytes gzipped
@@ -1374,7 +1453,7 @@ Make sure to run the [generator](#typesafety) after you make changes to your bas
 
 ### I don't use TypeScript, can I also use `typesafe-i18n` inside JavaScript applications?
 
-Yes, you can. See the [usage](#general) section for instructions. Even if you don't use TypeScript you can still improve from some typesafety features via [JSDoc-annotations](#jsdoc).
+Yes, you can. See the [usage](#custom-usage) section for instructions. Even if you don't use TypeScript you can still improve from some typesafety features via [JSDoc-annotations](#jsdoc).
 
 
 ### I added a new translation to my locale file, but the generator will not create new types

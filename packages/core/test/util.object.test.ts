@@ -29,7 +29,7 @@ const translation = {
 
 const LL = i18nObject('en', translation)
 
-//@ts-ignore
+//@ts-expect-error
 test('wrong key', () => assert.is(LL.WRONG_KEY(), 'WRONG_KEY'))
 
 test('no param', () => assert.is(LL.NO_PARAM(), translation.NO_PARAM))
@@ -121,6 +121,30 @@ test('nested 0', () => assert.is(LL3.z(), 'nested 0'))
 test('nested 1', () => assert.is(LL3.a.b(), 'nested 1'))
 test('nested 2', () => assert.is(LL3.d.e.f(), 'nested 2'))
 test('nested 3', () => assert.is(LL3.o.p.q.r.s.t.u(), 'nested 3'))
+
+// --------------------------------------------------------------------------------------------------------------------
+
+const LL4 = i18nObject('en', [{ HI: 'test-1' }, { HO: 'test-2' }] as const)
+
+test('array root 0', () => assert.is(LL4[0].HI(), 'test-1'))
+test('array root 1', () => assert.is(LL4[1].HO(), 'test-2'))
+
+const LL5 = i18nObject('en', { test1: [{ a: 'test-a' }, { b: 'test-b' }, { c: 'test-c' }, { d: 'test-d' }] } as const)
+
+test('array nested 0', () => assert.is(LL5.test1['0'].a(), 'test-a'))
+test('array nested 3', () => assert.is(LL5.test1['3'].d(), 'test-d'))
+
+const LL6 = i18nObject('en', {
+	test1: [{ a: 'test-a', a1: ['test', { aa1: 'test-aa1' }] }],
+} as const)
+
+test('array deeply nested 0.a1.a', () => assert.is(LL6.test1[0].a1[0](), 'test'))
+test('array deeply nested 0.a1.[1].aa1', () => assert.is(LL6.test1[0].a1[1].aa1(), 'test-aa1'))
+
+const LL7 = i18nObject('en', ['test-1', 'test-2'] as const)
+
+test('array root strings', () => assert.is(LL7[0](), 'test-1'))
+test('array root strings', () => assert.is(LL7[1](), 'test-2'))
 
 // --------------------------------------------------------------------------------------------------------------------
 

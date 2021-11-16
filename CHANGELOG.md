@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.51.0 (2021-11-16)
+
+Feature:
+ - add support for arrays [#123](https://github.com/ivanhofer/typesafe-i18n/discussions/123)
+
 ## 2.50.1 (2021-11-12)
 
 Bugfix:

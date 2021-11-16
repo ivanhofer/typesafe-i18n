@@ -17,10 +17,18 @@ import {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const mapTranslationsToString = (translations: BaseTranslation, level = 1) =>
-	Object.entries(translations).map(mapTranslationToString.bind(null, level)).join('\n')
+const mapTranslationsToString = (
+	translations: BaseTranslation | BaseTranslation[] | Readonly<BaseTranslation> | Readonly<BaseTranslation[]>,
+	level = 1,
+) => Object.entries(translations).map(mapTranslationToString.bind(null, level)).join('\n')
 
-const mapTranslationToString = (level: number, [key, value]: [string, BaseTranslation | string]): string => {
+const mapTranslationToString = (
+	level: number,
+	[key, value]: [
+		string,
+		BaseTranslation | BaseTranslation[] | Readonly<BaseTranslation> | Readonly<BaseTranslation[]> | string,
+	],
+): string => {
 	const inset = new Array(level).fill(`	`).join('')
 	if (isString(value)) return `${inset}'${key}': ${getWrappedString(value)},`
 	else
@@ -50,7 +58,7 @@ const getLocaleTemplate = (
 	{ banner, typesFileName, esmImports, adapter }: GeneratorConfigWithDefaultValues,
 	locale: Locale,
 	isBaseLocale: boolean,
-	translations: BaseTranslation | undefined,
+	translations: BaseTranslation | BaseTranslation[] | undefined,
 	editHint: string,
 	showBanner: boolean,
 ) => {
@@ -96,7 +104,7 @@ export const generateBaseLocaleTemplate = async (
 export const generateLocaleTemplate = async (
 	config: GeneratorConfigWithDefaultValues,
 	locale: Locale,
-	translations: BaseTranslation | undefined = undefined,
+	translations: BaseTranslation | BaseTranslation[] | undefined = undefined,
 	editHint = '',
 	showBanner = false,
 ): Promise<void> => {
