@@ -4,14 +4,14 @@ import { i18nObjectLoader } from './util.loader'
 
 export const i18n = <
 	L extends Locale,
-	T extends BaseTranslation,
+	T extends BaseTranslation | BaseTranslation[] | Readonly<BaseTranslation> | Readonly<BaseTranslation[]>,
 	TF extends TranslationFunctions<T>,
 	F extends BaseFormatters,
 >(
 	getTranslationForLocale: (locale: L) => T,
 	formattersInitializer: FormattersInitializer<L, F>,
-): LocaleTranslationFunctions<L, TF> => {
-	return new Proxy<LocaleTranslationFunctions<L, TF>>({} as LocaleTranslationFunctions<L, TF>, {
+): LocaleTranslationFunctions<L, T, TF> => {
+	return new Proxy<LocaleTranslationFunctions<L, T, TF>>({} as LocaleTranslationFunctions<L, T, TF>, {
 		get: (_target, locale: L): TF | null =>
 			i18nObjectLoader<L, T, TF, F>(locale, getTranslationForLocale, formattersInitializer),
 	})

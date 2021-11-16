@@ -10,7 +10,7 @@ import { i18nObject } from '../../core/src/util.object'
 
 export class I18nServiceRoot<
 	L extends string = string,
-	T extends BaseTranslation = BaseTranslation,
+	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 	F extends BaseFormatters = BaseFormatters,
 > {

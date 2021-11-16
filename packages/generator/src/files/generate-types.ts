@@ -23,7 +23,7 @@ import type { ArgumentPart } from '../../../core/src/parser'
 import { parseRawText } from '../../../core/src/parser'
 import { writeFileIfContainsChanges } from '../file-utils'
 import type { GeneratorConfigWithDefaultValues } from '../generate-files'
-import { getPermutations, Logger, prettify } from '../generator-util'
+import { getPermutations, logger, Logger, prettify } from '../generator-util'
 import {
 	fileEndingForTypesFile,
 	importTypeStatement,
@@ -132,7 +132,7 @@ const flattenToParsedResultEntry = (parsedResults: ParsedResult[]): ParsedResult
 // --------------------------------------------------------------------------------------------------------------------
 
 const parseTranslations = (
-	translations: BaseTranslation,
+	translations: BaseTranslation | BaseTranslation[] | Readonly<BaseTranslation> | Readonly<BaseTranslation[]>,
 	logger: Logger,
 	parentKeys = [] as string[],
 ): ParsedResult[] =>
@@ -192,7 +192,7 @@ const parseTranslationEntry = (
 
 	if (!isValid) return null
 
-	return removeEmptyValues({ key, text, textWithoutTypes, args, types, parentKeys })
+	return { key, text, textWithoutTypes, args, types, parentKeys }
 }
 
 const validateTranslation = (key: string, types: Types, logger: Logger): boolean => {
@@ -543,7 +543,7 @@ ${paramsType}`
 // --------------------------------------------------------------------------------------------------------------------
 
 type GenerateTypesType = GeneratorConfigWithDefaultValues & {
-	translations: BaseTranslation
+	translations: BaseTranslation | BaseTranslation[]
 }
 
 export const generateTypes = async (config: GenerateTypesType, logger: Logger): Promise<boolean> => {

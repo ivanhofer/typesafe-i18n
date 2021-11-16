@@ -1,2 +1,2 @@
 // this file gets auto-generated
-export const version = '2.49.4'
+export const version = '2.50.1'

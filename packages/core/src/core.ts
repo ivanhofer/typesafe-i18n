@@ -5,20 +5,27 @@ import type { ArgumentPart, Part, PluralPart } from './parser'
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-type TranslationParts<T = BaseTranslation> = {
+type TranslationParts<T extends BaseTranslation | BaseTranslation[] = BaseTranslation> = {
 	[key in keyof T]: Part[]
 }
 
-export type Cache<T = BaseTranslation> = TranslationParts<T>
+export type Cache<T extends BaseTranslation | BaseTranslation[] = BaseTranslation> = TranslationParts<T>
 
-export type TranslationKey<T extends BaseTranslation> = keyof T
+export type TranslationKey<T extends BaseTranslation | BaseTranslation[] = BaseTranslation> = keyof T
 
 declare const localized: unique symbol
 export type LocalizedString = string & { readonly [localized]: unknown }
 
 type BaseTranslationFunction = (...args: Arguments) => LocalizedString
 
-export type TranslationFunctions<T = BaseTranslation> = {
+export type TranslationFunctions<
+	T extends
+		| BaseTranslation
+		| BaseTranslation[]
+		| Readonly<BaseTranslation>
+		| Readonly<BaseTranslation[]> = BaseTranslation,
+> = {
+	//@ts-ignore
 	[key in keyof T]: T[key] extends string ? BaseTranslationFunction : TranslationFunctions<T[key]>
 }
 
@@ -27,13 +34,31 @@ export type Locale = string
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Arguments = any[]
 
-export type BaseTranslation = {
-	[key: string]: string | BaseTranslation
-}
+export type BaseTranslation =
+	| {
+			[key: number]:
+				| string
+				| BaseTranslation
+				| BaseTranslation[]
+				| Readonly<string>
+				| Readonly<BaseTranslation>
+				| Readonly<BaseTranslation[]>
+	  }
+	| {
+			[key: number | string]:
+				| string
+				| BaseTranslation
+				| BaseTranslation[]
+				| Readonly<string>
+				| Readonly<BaseTranslation>
+				| Readonly<BaseTranslation[]>
+	  }
+	| string[]
+	| Readonly<string[]>
 
 export interface LocaleMapping {
 	locale: string
-	translations: BaseTranslation
+	translations: BaseTranslation | BaseTranslation[]
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,8 +78,8 @@ export const isPluralPart = (part: Part): part is TypeGuard<PluralPart, Part> =>
 const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], value: unknown) =>
 	formatterKeys.reduce((prev, formatterKey) => formatters[formatterKey]?.(prev) ?? prev, value)
 
-const getPlural = (pluraRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPart, value: unknown) => {
-	switch (z && value == 0 ? 'zero' : pluraRules.select(value as number)) {
+const getPlural = (pluralRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPart, value: unknown) => {
+	switch (z && value == 0 ? 'zero' : pluralRules.select(value as number)) {
 		case 'zero':
 			return z
 		case 'one':
