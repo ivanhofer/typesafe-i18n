@@ -103,8 +103,9 @@
 		"update-version": "tsm ./update-version.ts",
 		"clear": "rm -rf ./angular ./adapters ./cjs ./cli ./detectors ./dist ./esm ./exporter ./formatters ./importer ./react ./rollup ./schema ./svelte ./types ./webpack ./temp-output",
 		"-- TEST ------------------------------------------------": "",
-		"lint": "eslint packages --cache",
-		"lint:fix": "eslint packages --cache --fix",
+		"lint": "eslint --cache packages",
+		"lint:ci": "eslint --cache --fix",
+		"lint:fix": "npm run lint:ci -- packages",
 		"test": "require-self && uvu -r tsm -i generated packages test",
 		"test:watch": "watchlist packages -- npm test",
 		"test:update-generated-files": "ts-node packages/generator/test/generated/update.ts",
@@ -129,6 +130,7 @@
 		"link-typedefinitions": "ts-node ./packages/link-typedefinitions.ts",
 		"generate:json-schema": "mkdir schema && typescript-json-schema ./json-schema.tsconfig.json GeneratorConfig > ./schema/typesafe-i18n.json",
 		"-- OTHER -----------------------------------------------": "",
+		"lint-staged": "lint-staged",
 		"prepare": "husky install"
 	},
 	"dependencies": {
