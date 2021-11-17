@@ -14,7 +14,8 @@ import type { AcornNode, Plugin } from 'rollup'
 import sourceMap from 'source-map'
 import { partsAsStringWithoutTypes } from '../../core/src/core-utils'
 import { parseRawText } from '../../core/src/parser'
-import { getConfigWithDefaultValues, RollupConfig } from '../../generator/src/generate-files'
+import type { RollupConfig } from '../../generator/src/config-types'
+import { getConfigWithDefaultValues } from '../../generator/src/generate-files'
 import { validateConfig } from './_validateConfig'
 
 //@ts-ignore

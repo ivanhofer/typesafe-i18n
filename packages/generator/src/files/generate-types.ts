@@ -18,12 +18,12 @@ import {
 	uniqueArray,
 } from 'typesafe-utils'
 import { BaseTranslation, isPluralPart } from '../../../core/src/core'
-import { partAsStringWithoutTypes, partsAsStringWithoutTypes, removeEmptyValues } from '../../../core/src/core-utils'
+import { partAsStringWithoutTypes, partsAsStringWithoutTypes } from '../../../core/src/core-utils'
 import type { ArgumentPart } from '../../../core/src/parser'
 import { parseRawText } from '../../../core/src/parser'
+import type { GeneratorConfigWithDefaultValues } from '../config-types'
 import { writeFileIfContainsChanges } from '../file-utils'
-import type { GeneratorConfigWithDefaultValues } from '../generate-files'
-import { getPermutations, logger, Logger, prettify } from '../generator-util'
+import { getPermutations, Logger, prettify } from '../generator-util'
 import {
 	fileEndingForTypesFile,
 	importTypeStatement,

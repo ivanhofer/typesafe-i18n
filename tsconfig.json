@@ -6,7 +6,7 @@
 		"declaration": true,
 		"sourceMap": true,
 		"baseUrl": "./",
-		"outDir": "./",
+		"outDir": "./out",
 		"rootDir": "./packages",
 		"declarationDir": "./types",
 		"strict": true,

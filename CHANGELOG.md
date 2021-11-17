@@ -1,7 +1,7 @@
 # CHANGELOG.md
 
 
-## 2.51.0 (2021-11-16)
+## 2.51.1 (2021-11-17)
 
 Feature:
  - add support for arrays [#123](https://github.com/ivanhofer/typesafe-i18n/discussions/123)

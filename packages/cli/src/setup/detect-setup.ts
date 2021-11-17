@@ -1,7 +1,8 @@
-import { doesPathExist } from 'packages/generator/src/file-utils'
-import { Adapters, GeneratorConfig, getConfigWithDefaultValues } from 'packages/generator/src/generate-files'
 import path from 'path'
 import { isBoolean } from 'typesafe-utils'
+import type { Adapters, GeneratorConfig } from '../../../generator/src/config-types'
+import { doesPathExist } from '../../../generator/src/file-utils'
+import { getConfigWithDefaultValues } from '../../../generator/src/generate-files'
 import { getDependencyList, isEsmProject } from './package-json'
 
 const useAdapter =

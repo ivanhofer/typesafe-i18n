@@ -3,13 +3,8 @@ import { resolve } from 'path'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 import type { BaseTranslation } from '../../core/src/core'
-import {
-	Config,
-	generate,
-	GeneratorConfigWithDefaultValues,
-	getConfigWithDefaultValues,
-	OutputFormats,
-} from '../src/generate-files'
+import type { Config, GeneratorConfigWithDefaultValues, OutputFormats } from '../src/config-types'
+import { generate, getConfigWithDefaultValues } from '../src/generate-files'
 import { parseTypescriptVersion, TypescriptVersion } from '../src/generator-util'
 
 const { readFile } = promises
@@ -143,124 +138,124 @@ const testGeneratedConsoleOutput = async (
 
 // --------------------------------------------------------------------------------------------------------------------
 
-// testGeneratedOutput('empty', {})
+testGeneratedOutput('empty', {})
 
-// testGeneratedOutput('empty-jsdoc', {}, { outputFormat: 'JavaScript' })
+testGeneratedOutput('empty-jsdoc', {}, { outputFormat: 'JavaScript' })
 
-// testGeneratedOutput('simple', {
-// 	TEST: 'This is a test',
-// })
+testGeneratedOutput('simple', {
+	TEST: 'This is a test',
+})
 
-// testGeneratedOutput('with-params', {
-// 	PARAM: '{0} apple{{s}}',
-// 	PARAMS: '{0} apple{{s}} and {1} banana{{s}}',
-// })
+testGeneratedOutput('with-params', {
+	PARAM: '{0} apple{{s}}',
+	PARAMS: '{0} apple{{s}} and {1} banana{{s}}',
+})
 
-// testGeneratedOutput('keyed-params', {
-// 	KEYED_PARAM: '{nrOfApples} apple{{s}}',
-// 	KEYED_PARAMS: '{nrOfApples} apple{{s}} and {nrOfBananas} banana{{s}}',
-// })
+testGeneratedOutput('keyed-params', {
+	KEYED_PARAM: '{nrOfApples} apple{{s}}',
+	KEYED_PARAMS: '{nrOfApples} apple{{s}} and {nrOfBananas} banana{{s}}',
+})
 
-// testGeneratedOutput('with-formatters', {
-// 	FORMATTER_1: '{0|timesTen} apple{{s}}',
-// 	FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
-// })
+testGeneratedOutput('with-formatters', {
+	FORMATTER_1: '{0|timesTen} apple{{s}}',
+	FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
+})
 
-// testGeneratedOutput(
-// 	'with-formatters-jsdoc',
-// 	{
-// 		FORMATTER_1: '{0|timesTen} apple{{s}}',
-// 		FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
-// 	},
-// 	{ outputFormat: 'JavaScript' },
-// )
+testGeneratedOutput(
+	'with-formatters-jsdoc',
+	{
+		FORMATTER_1: '{0|timesTen} apple{{s}}',
+		FORMATTER_2: '{0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}',
+	},
+	{ outputFormat: 'JavaScript' },
+)
 
-// testGeneratedOutput('formatters-with-dashes', { FORMATTER: '{0|custom-formatter|and-another}' })
+testGeneratedOutput('formatters-with-dashes', { FORMATTER: '{0|custom-formatter|and-another}' })
 
-// testGeneratedOutput('formatters-with-spaces', { FORMATTER: '{0| custom formatter | and another }' })
+testGeneratedOutput('formatters-with-spaces', { FORMATTER: '{0| custom formatter | and another }' })
 
-// testGeneratedOutput('formatter-chaining', { CHAINING: '{count:number|sqrt|round}' })
+testGeneratedOutput('formatter-chaining', { CHAINING: '{count:number|sqrt|round}' })
 
-// testGeneratedOutput('base-locale-de', {}, { baseLocale: 'de' })
+testGeneratedOutput('base-locale-de', {}, { baseLocale: 'de' })
 
-// testGeneratedOutput('multiple-locales', {}, { locales: ['de', 'en', 'it'] })
+testGeneratedOutput('multiple-locales', {}, { locales: ['de', 'en', 'it'] })
 
-// testGeneratedOutput('locale-with-dash', {}, { baseLocale: 'de-at' })
-// testGeneratedOutput('locale-with-dash-sync', {}, { baseLocale: 'de-at', loadLocalesAsync: false })
-// testGeneratedOutput('locales-with-dash', {}, { locales: ['it-it', 'en-us', 'fr-be'] })
+testGeneratedOutput('locale-with-dash', {}, { baseLocale: 'de-at' })
+testGeneratedOutput('locale-with-dash-sync', {}, { baseLocale: 'de-at', loadLocalesAsync: false })
+testGeneratedOutput('locales-with-dash', {}, { locales: ['it-it', 'en-us', 'fr-be'] })
 
-// testGeneratedOutput('arg-types', { STRING_TYPE: 'Hi {name:string}!', NUMBER_TYPE: '{0:number} apple{{s}}' })
+testGeneratedOutput('arg-types', { STRING_TYPE: 'Hi {name:string}!', NUMBER_TYPE: '{0:number} apple{{s}}' })
 
-// testGeneratedOutput('arg-order', {
-// 	ORDER_INDEX: '{1} {0} {2} {0}',
-// 	ORDER_KEYED: '{b} {z} {a}',
-// 	ORDER_FORMATTER: '{0|z} {1|a}',
-// 	ORDER_TYPES: '{0:B} {1:A}',
-// })
+testGeneratedOutput('arg-order', {
+	ORDER_INDEX: '{1} {0} {2} {0}',
+	ORDER_KEYED: '{b} {z} {a}',
+	ORDER_FORMATTER: '{0|z} {1|a}',
+	ORDER_TYPES: '{0:B} {1:A}',
+})
 
-// testGeneratedOutput('arg-type-localized-string', {
-// 	localized: 'Click on the button: <button>{buttonText:LocalizedString}</button>',
-// })
+testGeneratedOutput('arg-type-localized-string', {
+	localized: 'Click on the button: <button>{buttonText:LocalizedString}</button>',
+})
 
-// testGeneratedOutput('formatter-with-different-arg-types', { A: '{0:number|calculate}!', B: '{0:Date|calculate}' })
+testGeneratedOutput('formatter-with-different-arg-types', { A: '{0:number|calculate}!', B: '{0:Date|calculate}' })
 
-// testGeneratedOutput('formatter-with-multiple-usage', {
-// 	A: '{0:number|calculate}!',
-// 	B: '{0} {1:number|calculate}',
-// 	C: '{0} {2:number|calculate} {1}',
-// })
+testGeneratedOutput('formatter-with-multiple-usage', {
+	A: '{0:number|calculate}!',
+	B: '{0} {1:number|calculate}',
+	C: '{0} {2:number|calculate} {1}',
+})
 
-// testGeneratedOutput('arg-types-with-external-type', { EXTERNAL_TYPE: 'The result is {0:Result|calculate}!' })
+testGeneratedOutput('arg-types-with-external-type', { EXTERNAL_TYPE: 'The result is {0:Result|calculate}!' })
 
-// testGeneratedOutput('same-param', { SAME_PARAM: '{0} {0} {0}' })
+testGeneratedOutput('same-param', { SAME_PARAM: '{0} {0} {0}' })
 
-// testGeneratedOutput('same-keyed-param', { SAME_KEYED_PARAM: '{name} {name} {name}' })
+testGeneratedOutput('same-keyed-param', { SAME_KEYED_PARAM: '{name} {name} {name}' })
 
-// testGeneratedOutput('only-plural-rules', { ONLY_PLURAL: 'apple{{s}}', ONLY_SINGULAR_PLURAL: '{{Afpel|Äpfel}}' })
+testGeneratedOutput('only-plural-rules', { ONLY_PLURAL: 'apple{{s}}', ONLY_SINGULAR_PLURAL: '{{Afpel|Äpfel}}' })
 
-// testGeneratedOutput('plural-part-before-key', { PLURAL_BEFORE_KEY: 'apple{{s}}: {nrOfApples:number}' })
+testGeneratedOutput('plural-part-before-key', { PLURAL_BEFORE_KEY: 'apple{{s}}: {nrOfApples:number}' })
 
-// testGeneratedOutput('plural-part-without-output', {
-// 	PLURAL_WITHOUT_OUTPUT: 'New message{{nrOfMessages:s}} in {inbox:InboxType}',
-// })
+testGeneratedOutput('plural-part-without-output', {
+	PLURAL_WITHOUT_OUTPUT: 'New message{{nrOfMessages:s}} in {inbox:InboxType}',
+})
 
-// const dictionary_optionals = {
-// 	index: 'Hi {0?}',
-// 	keyed: 'Hi {name?}',
-// 	typed: 'Hi {name?:string}',
-// 	multiple: 'Hi {name1?} and {name2?}',
-// 	multiple1: 'Hi {name1} and {name2?}',
-// 	multiple2: 'Hi {name1?} and {name2}',
-// 	formatter: 'Hi {name1?|uppercase}',
-// }
+const dictionary_optionals = {
+	index: 'Hi {0?}',
+	keyed: 'Hi {name?}',
+	typed: 'Hi {name?:string}',
+	multiple: 'Hi {name1?} and {name2?}',
+	multiple1: 'Hi {name1} and {name2?}',
+	multiple2: 'Hi {name1?} and {name2}',
+	formatter: 'Hi {name1?|uppercase}',
+}
 
-// testGeneratedOutput('optional-parameters', dictionary_optionals)
-// testGeneratedOutput('optional-parameters-esm', dictionary_optionals, { outputFormat: 'JavaScript' })
+testGeneratedOutput('optional-parameters', dictionary_optionals)
+testGeneratedOutput('optional-parameters-esm', dictionary_optionals, { outputFormat: 'JavaScript' })
 
-// // --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
-// testGeneratedOutput(
-// 	'generate-only-types',
-// 	{ TEST: 'This is a test {0:CustomType|someFormatter}' },
-// 	{ generateOnlyTypes: true },
-// )
+testGeneratedOutput(
+	'generate-only-types',
+	{ TEST: 'This is a test {0:CustomType|someFormatter}' },
+	{ generateOnlyTypes: true },
+)
 
-// // --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
-// testGeneratedOutput('nested-deep', {
-// 	a: { b: { c: { d: { e: { f: { g: { h: { i: { j: { k: { l: { m: 'I am deeply nested' } } } } } } } } } } } },
-// })
+testGeneratedOutput('nested-deep', {
+	a: { b: { c: { d: { e: { f: { g: { h: { i: { j: { k: { l: { m: 'I am deeply nested' } } } } } } } } } } } },
+})
 
-// testGeneratedOutput('nested-with-arguments', {
-// 	a: { APPLES: '{0} apple{{s}}' },
-// 	b: { APPLES: '{0:number} apple{{s}}' },
-// 	c: { APPLES: '{nrOfApples:number} apple{{s}}' },
-// })
+testGeneratedOutput('nested-with-arguments', {
+	a: { APPLES: '{0} apple{{s}}' },
+	b: { APPLES: '{0:number} apple{{s}}' },
+	c: { APPLES: '{nrOfApples:number} apple{{s}}' },
+})
 
-// testGeneratedOutput('nested-formatters', {
-// 	'some-key': { 'other-key': 'format {me:string|custom-formatter}' },
-// 	'another-key': '{0|format}',
-// })
+testGeneratedOutput('nested-formatters', {
+	'some-key': { 'other-key': 'format {me:string|custom-formatter}' },
+	'another-key': '{0|format}',
+})
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -272,139 +267,139 @@ testGeneratedOutput('arrays-nested', [['test 123'], [{ nested: { test: ['{name:s
 
 // --------------------------------------------------------------------------------------------------------------------
 
-// testGeneratedOutput('banner-tslint', { HI: 'Hi {0:name}' }, { banner: '/* tslint:disable */' })
+testGeneratedOutput('banner-tslint', { HI: 'Hi {0:name}' }, { banner: '/* tslint:disable */' })
 
-// // --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
-// const testAdapterMatrix = (prefix: string, translation: BaseTranslation, config: Config = {}) => {
-// 	testGeneratedOutput(`${prefix}-async`, translation, { ...config })
-// 	testGeneratedOutput(`${prefix}-sync`, translation, { ...config, loadLocalesAsync: false })
-// 	testGeneratedOutput(`${prefix}-async-esm`, translation, { ...config, esmImports: true })
-// 	testGeneratedOutput(`${prefix}-sync-esm`, translation, { ...config, loadLocalesAsync: false, esmImports: true })
-// 	testGeneratedOutput(`${prefix}-async-jsdoc`, translation, { ...config, outputFormat: 'JavaScript' })
-// 	testGeneratedOutput(`${prefix}-sync-jsdoc`, translation, {
-// 		...config,
-// 		loadLocalesAsync: false,
-// 		outputFormat: 'JavaScript',
-// 	})
-// 	testGeneratedOutput(`${prefix}-async-esm-jsdoc`, translation, {
-// 		...config,
-// 		esmImports: true,
-// 		outputFormat: 'JavaScript',
-// 	})
-// 	testGeneratedOutput(`${prefix}-sync-esm-jsdoc`, translation, {
-// 		...config,
-// 		loadLocalesAsync: false,
-// 		esmImports: true,
-// 		outputFormat: 'JavaScript',
-// 	})
-// }
+const testAdapterMatrix = (prefix: string, translation: BaseTranslation, config: Config = {}) => {
+	testGeneratedOutput(`${prefix}-async`, translation, { ...config })
+	testGeneratedOutput(`${prefix}-sync`, translation, { ...config, loadLocalesAsync: false })
+	testGeneratedOutput(`${prefix}-async-esm`, translation, { ...config, esmImports: true })
+	testGeneratedOutput(`${prefix}-sync-esm`, translation, { ...config, loadLocalesAsync: false, esmImports: true })
+	testGeneratedOutput(`${prefix}-async-jsdoc`, translation, { ...config, outputFormat: 'JavaScript' })
+	testGeneratedOutput(`${prefix}-sync-jsdoc`, translation, {
+		...config,
+		loadLocalesAsync: false,
+		outputFormat: 'JavaScript',
+	})
+	testGeneratedOutput(`${prefix}-async-esm-jsdoc`, translation, {
+		...config,
+		esmImports: true,
+		outputFormat: 'JavaScript',
+	})
+	testGeneratedOutput(`${prefix}-sync-esm-jsdoc`, translation, {
+		...config,
+		loadLocalesAsync: false,
+		esmImports: true,
+		outputFormat: 'JavaScript',
+	})
+}
 
-// testAdapterMatrix(
-// 	'adapter-node',
-// 	{ HELLO_NODE: 'Hi {0:string}' },
-// 	{ adapter: 'node', adapterFileName: getFileName('node') },
-// )
+testAdapterMatrix(
+	'adapter-node',
+	{ HELLO_NODE: 'Hi {0:string}' },
+	{ adapter: 'node', adapterFileName: getFileName('node') },
+)
 
-// testAdapterMatrix(
-// 	'adapter-react',
-// 	{ HELLO_REACT: 'Hi {0:string}' },
-// 	{ adapter: 'react', adapterFileName: getFileName('react') },
-// )
+testAdapterMatrix(
+	'adapter-react',
+	{ HELLO_REACT: 'Hi {0:string}' },
+	{ adapter: 'react', adapterFileName: getFileName('react') },
+)
 
-// testAdapterMatrix(
-// 	'adapter-svelte',
-// 	{ HELLO_SVELTE: 'Hi {0:string}' },
-// 	{ adapter: 'svelte', adapterFileName: getFileName('svelte') },
-// )
+testAdapterMatrix(
+	'adapter-svelte',
+	{ HELLO_SVELTE: 'Hi {0:string}' },
+	{ adapter: 'svelte', adapterFileName: getFileName('svelte') },
+)
 
-// testAdapterMatrix(
-// 	'adapter-angular',
-// 	{ HELLO_ANGULAR: 'Hi {0:string}' },
-// 	{ adapter: 'angular', adapterFileName: getFileName('angular.service') },
-// )
+testAdapterMatrix(
+	'adapter-angular',
+	{ HELLO_ANGULAR: 'Hi {0:string}' },
+	{ adapter: 'angular', adapterFileName: getFileName('angular.service') },
+)
 
-// // --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
-// testGeneratedOutput('esm-imports-async', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true })
+testGeneratedOutput('esm-imports-async', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true })
 
-// testGeneratedOutput('esm-imports-sync', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true, loadLocalesAsync: false })
+testGeneratedOutput('esm-imports-sync', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true, loadLocalesAsync: false })
 
-// testGeneratedOutput(
-// 	'esm-imports-async-jsdoc',
-// 	{ HELLO_ESM: 'Hi {0:name}' },
-// 	{ esmImports: true, outputFormat: 'JavaScript' },
-// )
+testGeneratedOutput(
+	'esm-imports-async-jsdoc',
+	{ HELLO_ESM: 'Hi {0:name}' },
+	{ esmImports: true, outputFormat: 'JavaScript' },
+)
 
-// testGeneratedOutput(
-// 	'esm-imports-sync-jsdoc',
-// 	{ HELLO_ESM: 'Hi {0:name}' },
-// 	{ esmImports: true, loadLocalesAsync: false, outputFormat: 'JavaScript' },
-// )
+testGeneratedOutput(
+	'esm-imports-sync-jsdoc',
+	{ HELLO_ESM: 'Hi {0:name}' },
+	{ esmImports: true, loadLocalesAsync: false, outputFormat: 'JavaScript' },
+)
 
-// // --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
-// const tsTestTranslation = { TEST: 'Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}' }
+const tsTestTranslation = { TEST: 'Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}' }
 
-// testGeneratedOutput('typescript-3.0', tsTestTranslation, {}, parseTypescriptVersion('3.0'))
-// testGeneratedOutput(
-// 	'typescript-3.0-jsdoc',
-// 	tsTestTranslation,
-// 	{ outputFormat: 'JavaScript' },
-// 	parseTypescriptVersion('3.0'),
-// )
-// testGeneratedOutput('typescript-3.8', tsTestTranslation, {}, parseTypescriptVersion('3.8'))
-// testGeneratedOutput(
-// 	'typescript-3.8-jsdoc',
-// 	tsTestTranslation,
-// 	{ outputFormat: 'JavaScript' },
-// 	parseTypescriptVersion('3.8'),
-// )
-// testGeneratedOutput('typescript-4.1', tsTestTranslation, {}, parseTypescriptVersion('4.1'))
-// testGeneratedOutput(
-// 	'typescript-4.1-jsdoc',
-// 	tsTestTranslation,
-// 	{ outputFormat: 'JavaScript' },
-// 	parseTypescriptVersion('4.1'),
-// )
+testGeneratedOutput('typescript-3.0', tsTestTranslation, {}, parseTypescriptVersion('3.0'))
+testGeneratedOutput(
+	'typescript-3.0-jsdoc',
+	tsTestTranslation,
+	{ outputFormat: 'JavaScript' },
+	parseTypescriptVersion('3.0'),
+)
+testGeneratedOutput('typescript-3.8', tsTestTranslation, {}, parseTypescriptVersion('3.8'))
+testGeneratedOutput(
+	'typescript-3.8-jsdoc',
+	tsTestTranslation,
+	{ outputFormat: 'JavaScript' },
+	parseTypescriptVersion('3.8'),
+)
+testGeneratedOutput('typescript-4.1', tsTestTranslation, {}, parseTypescriptVersion('4.1'))
+testGeneratedOutput(
+	'typescript-4.1-jsdoc',
+	tsTestTranslation,
+	{ outputFormat: 'JavaScript' },
+	parseTypescriptVersion('4.1'),
+)
 
-// // --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
-// testGeneratedConsoleOutput('console-no-translations', {}, async (outputs) => {
-// 	assert.is(outputs.info.length, 0)
-// 	assert.is(outputs.error.length, 0)
-// 	assert.is(outputs.warn.length, 0)
-// })
+testGeneratedConsoleOutput('console-no-translations', {}, async (outputs) => {
+	assert.is(outputs.info.length, 0)
+	assert.is(outputs.error.length, 0)
+	assert.is(outputs.warn.length, 0)
+})
 
-// testGeneratedConsoleOutput('console-wrong-index', { TEST: '{0} {2}' }, async (outputs) => {
-// 	assert.is(outputs.info.length, 0)
-// 	assert.is(outputs.warn.length, 0)
-// 	assert.is(outputs.error.length, 1)
-// 	assert.is(
-// 		outputs.error[0],
-// 		"translation 'TEST' => argument {1} expected, but {2} found. Make sure to not skip an index for your arguments.",
-// 	)
-// })
+testGeneratedConsoleOutput('console-wrong-index', { TEST: '{0} {2}' }, async (outputs) => {
+	assert.is(outputs.info.length, 0)
+	assert.is(outputs.warn.length, 0)
+	assert.is(outputs.error.length, 1)
+	assert.is(
+		outputs.error[0],
+		"translation 'TEST' => argument {1} expected, but {2} found. Make sure to not skip an index for your arguments.",
+	)
+})
 
-// testGeneratedConsoleOutput('console-keyed-and-index-based-keys', { TEST: '{hi} {0}' }, async (outputs) => {
-// 	assert.is(outputs.info.length, 0)
-// 	assert.is(outputs.warn.length, 0)
-// 	assert.is(outputs.error.length, 1)
-// 	assert.is(
-// 		outputs.error[0],
-// 		"translation 'TEST' => argument {1} expected, but {hi} found. You can't mix keyed and index-based arguments.",
-// 	)
-// })
+testGeneratedConsoleOutput('console-keyed-and-index-based-keys', { TEST: '{hi} {0}' }, async (outputs) => {
+	assert.is(outputs.info.length, 0)
+	assert.is(outputs.warn.length, 0)
+	assert.is(outputs.error.length, 1)
+	assert.is(
+		outputs.error[0],
+		"translation 'TEST' => argument {1} expected, but {hi} found. You can't mix keyed and index-based arguments.",
+	)
+})
 
-// testGeneratedConsoleOutput('console-translation-key-with-dot', { 'i.am.wrongly.nested': 'ohhh' }, async (outputs) => {
-// 	assert.is(outputs.info.length, 0)
-// 	assert.is(outputs.warn.length, 0)
-// 	assert.is(outputs.error.length, 1)
-// 	assert.is(
-// 		outputs.error[0],
-// 		"translation 'i.am.wrongly.nested' => key can't contain the '.' character. Please remove it. If you want to nest keys, you should look at https://github.com/ivanhofer/typesafe-i18n#nested-translations",
-// 	)
-// })
+testGeneratedConsoleOutput('console-translation-key-with-dot', { 'i.am.wrongly.nested': 'ohhh' }, async (outputs) => {
+	assert.is(outputs.info.length, 0)
+	assert.is(outputs.warn.length, 0)
+	assert.is(outputs.error.length, 1)
+	assert.is(
+		outputs.error[0],
+		"translation 'i.am.wrongly.nested' => key can't contain the '.' character. Please remove it. If you want to nest keys, you should look at https://github.com/ivanhofer/typesafe-i18n#nested-translations",
+	)
+})
 
 // --------------------------------------------------------------------------------------------------------------------
 

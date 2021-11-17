@@ -3,9 +3,9 @@ import { diff as justDiff } from 'just-diff'
 import { diffApply as justDiffApply } from 'just-diff-apply'
 import kleur from 'kleur'
 import { isPropertyNotUndefined } from 'typesafe-utils'
+import type { GeneratorConfig } from '../../../generator/src/config-types'
 import {
 	doesConfigFileExist,
-	GeneratorConfig,
 	getConfigWithDefaultValues,
 	writeConfigToFile,
 } from '../../../generator/src/generate-files'
