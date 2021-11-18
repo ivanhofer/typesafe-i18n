@@ -1,4 +1,4 @@
-import { Locale } from '../../../core/src/core'
+import type { Locale } from '../../../core/src/core'
 
 export const parseValueFromCookie = (cookieValue: string, key: string): Locale[] => {
 	const value = cookieValue

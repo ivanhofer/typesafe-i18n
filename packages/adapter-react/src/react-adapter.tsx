@@ -1,11 +1,11 @@
 import React from 'react'
 import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../core/src/core'
 import { getFallbackProxy } from '../../core/src/core-utils'
-import {
+import type {
 	AsyncFormattersInitializer,
 	FormattersInitializer,
 	TranslationLoader,
-	TranslationLoaderAsync,
+	TranslationLoaderAsync
 } from '../../core/src/util.loader'
 import { i18nObject } from '../../core/src/util.object'
 

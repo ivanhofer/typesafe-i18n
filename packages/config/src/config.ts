@@ -1,7 +1,7 @@
 import path from 'path'
 import { doesPathExist, importFile, writeConfigFile } from '../../generator/src/file-utils'
 import { version } from '../../version'
-import { Config, GeneratorConfig, GeneratorConfigWithDefaultValues } from './types'
+import type { Config, GeneratorConfig, GeneratorConfigWithDefaultValues } from './types'
 
 export const writeConfigToFile = async (config: GeneratorConfig) =>
 	writeConfigFile({ $schema: `https://unpkg.com/typesafe-i18n@${version}/schema/typesafe-i18n.json`, ...config })

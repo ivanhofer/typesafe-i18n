@@ -1,6 +1,6 @@
 import ts from 'typescript'
 import { getConfigWithDefaultValues } from '../../config/src/config'
-import { BaseTranslation, Locale, LocaleMapping } from '../../core/src/core'
+import type { BaseTranslation, Locale, LocaleMapping } from '../../core/src/core'
 import { generateLocaleTemplate } from '../../generator/src/files/generate-template-locale'
 import { generate } from '../../generator/src/generate-files'
 import { createLogger, parseTypescriptVersion } from '../../generator/src/generator-util'

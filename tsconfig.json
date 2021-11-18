@@ -24,7 +24,8 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,
-		"jsx": "react"
+		"jsx": "react",
+		"importsNotUsedAsValues": "error"
 	},
 	"include": ["packages/**/*"],
 	"exclude": ["node_modules", "packages/**/test/generated/**/*"],

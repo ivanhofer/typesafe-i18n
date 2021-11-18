@@ -1,6 +1,6 @@
 import { execSync } from 'child_process'
 import path from 'path'
-import { PackageJson } from 'type-fest'
+import type { PackageJson } from 'type-fest'
 import { importFile, readFile, writeFile } from '../../../generator/src/file-utils'
 import { logger } from '../../../generator/src/generator-util'
 

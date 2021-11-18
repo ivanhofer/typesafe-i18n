@@ -1,4 +1,4 @@
-import { Request } from 'express'
+import type { Request } from 'express'
 import type { Locale } from '../../../../core/src/core'
 import type { LocaleDetector } from '../../detect'
 import { parseValueFromCookie } from '../_cookie.util'

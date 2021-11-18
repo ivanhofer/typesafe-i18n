@@ -2,7 +2,7 @@ import type { Readable, Writable } from 'svelte/store'
 import { derived, writable } from 'svelte/store'
 import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../core/src/core'
 import { getFallbackProxy } from '../../core/src/core-utils'
-import {
+import type {
 	AsyncFormattersInitializer,
 	FormattersInitializer,
 	TranslationLoader,
