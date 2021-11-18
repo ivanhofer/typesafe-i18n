@@ -106,7 +106,7 @@
 		"lint": "eslint --cache packages",
 		"lint:ci": "eslint --cache --fix",
 		"lint:fix": "npm run lint:ci -- packages",
-		"test": "require-self && uvu -r tsm -i generated packages test",
+		"test": "require-self && npm run generate:json-schema && uvu -r tsm -i generated packages test",
 		"test:watch": "watchlist packages -- npm test",
 		"test:update-generated-files": "ts-node packages/generator/test/generated/update.ts",
 		"test:size": "size-limit",
