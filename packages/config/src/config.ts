@@ -2,6 +2,7 @@ import path from 'path'
 import { doesPathExist, importFile, writeConfigFile } from '../../generator/src/file-utils'
 import { version } from '../../version'
 import type { Config, GeneratorConfig, GeneratorConfigWithDefaultValues } from './types'
+import { validateConfig } from './validation'
 
 export const writeConfigToFile = async (config: GeneratorConfig) =>
 	writeConfigFile({ $schema: `https://unpkg.com/typesafe-i18n@${version}/schema/typesafe-i18n.json`, ...config })
@@ -15,7 +16,13 @@ export const readConfig = async (config?: GeneratorConfig | undefined): Promise<
 	}
 
 	// remove "$schema" property
-	return Object.fromEntries(Object.entries(generatorConfig).filter(([key]) => key !== '$schema'))
+	const configWithoutSchemaAttribute = Object.fromEntries(
+		Object.entries(generatorConfig).filter(([key]) => key !== '$schema'),
+	)
+
+	await validateConfig(configWithoutSchemaAttribute)
+
+	return configWithoutSchemaAttribute
 }
 
 export const getConfigWithDefaultValues = async (

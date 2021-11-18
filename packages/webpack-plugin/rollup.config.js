@@ -1,6 +1,7 @@
 // @ts-check
 
 import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 import path from 'path'
@@ -23,7 +24,8 @@ const config = {
 		commonjs(),
 		resolve({ preferBuiltins: true }),
 		externals(),
-		typescript({
+			json(),
+			typescript({
 			tsconfig: getPath('./tsconfig.json'),
 			declaration: false,
 			declarationDir: null,
