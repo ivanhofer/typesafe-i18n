@@ -3,7 +3,7 @@ import kleur from 'kleur'
 import { inspect } from 'util'
 //@ts-ignore
 import schema from '../../../schema/typesafe-i18n.json'
-import type { Config } from './types'
+import type { GeneratorConfig } from './types'
 const validate = new Ajv({ allErrors: true }).compile(schema as object)
 
 const formatMessage = ({ keyword, message, params, dataPath }: ErrorObject) => {
@@ -33,7 +33,7 @@ See here for all available options: https://github.com/ivanhofer/typesafe-i18n#o
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const validateConfig = async (config: Config) => {
+export const validateConfig = async (config: GeneratorConfig) => {
 	const valid = await validate(config)
 	if (valid) return true
 

@@ -40,7 +40,7 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 
 	const translations = getDefaultExport(languageFile)
 
-	await generate(translations, { ...config, baseLocale: locale, locales }, version, logger, firstLaunchOfGenerator)
+	await generate(translations, { ...config, baseLocale: locale }, version, logger, firstLaunchOfGenerator, locales)
 
 	if (firstLaunchOfGenerator) {
 		let message =
@@ -69,7 +69,10 @@ const debounce = (callback: () => void) =>
 export const startGenerator = async (config?: GeneratorConfig, watchFiles = true): Promise<void> => {
 	logger = createLogger(console, !watchFiles)
 
-	const parsedConfig = await readConfig(config)
+	const parsedConfig = {
+		...(await readConfig()),
+		...config,
+	}
 
 	const configWithDefaultValues = await getConfigWithDefaultValues(parsedConfig)
 	const { outputPath } = configWithDefaultValues

@@ -26,11 +26,8 @@ export type RollupConfig = {
 	locales?: string[]
 }
 
-export type Config = GeneratorConfig & RollupConfig
-
 export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 	baseLocale: string
-	locales: string[]
 
 	tempPath: string
 	outputPath: string

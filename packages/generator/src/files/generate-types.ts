@@ -18,7 +18,7 @@ import {
 	uniqueArray,
 } from 'typesafe-utils'
 import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
-import { BaseTranslation, isPluralPart } from '../../../core/src/core'
+import { BaseTranslation, isPluralPart, Locale } from '../../../core/src/core'
 import { partAsStringWithoutTypes, partsAsStringWithoutTypes } from '../../../core/src/core-utils'
 import type { ArgumentPart } from '../../../core/src/parser'
 import { parseRawText } from '../../../core/src/parser'
@@ -542,8 +542,9 @@ ${paramsType}`
 
 // --------------------------------------------------------------------------------------------------------------------
 
-type GenerateTypesType = GeneratorConfigWithDefaultValues & {
+export type GenerateTypesType = GeneratorConfigWithDefaultValues & {
 	translations: BaseTranslation | BaseTranslation[]
+	locales: Locale[]
 }
 
 export const generateTypes = async (config: GenerateTypesType, logger: Logger): Promise<boolean> => {

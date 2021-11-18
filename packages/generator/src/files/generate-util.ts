@@ -27,7 +27,7 @@ const getLocalesTranslationRowAsync = (locale: Locale): string => {
 	${wrappedLocale}: () => import('${relativeFolderImportPath(locale)}'),`
 }
 
-const getAsyncCode = ({ locales }: GeneratorConfigWithDefaultValues) => {
+const getAsyncCode = (locales: Locale[]) => {
 	const localesTranslationLoaders = locales.map(getLocalesTranslationRowAsync).join('')
 
 	return `
@@ -69,7 +69,7 @@ const getLocalesTranslationRowSync = (locale: Locale, baseLocale: string): strin
 	${wrappedLocale}${postfix},`
 }
 
-const getSyncCode = ({ baseLocale, locales }: GeneratorConfigWithDefaultValues) => {
+const getSyncCode = ({ baseLocale }: GeneratorConfigWithDefaultValues, locales: Locale[]) => {
 	const localesImports = locales
 		.map(
 			(locale) => `
@@ -107,13 +107,12 @@ export const i18n = () => initI18n${generics(
 `
 }
 
-const getUtil = (config: GeneratorConfigWithDefaultValues): string => {
+const getUtil = (config: GeneratorConfigWithDefaultValues, locales: Locale[]): string => {
 	const {
 		typesFileName,
 		formattersTemplateFileName: formattersTemplatePath,
 		loadLocalesAsync,
 		baseLocale,
-		locales,
 		banner,
 	} = config
 
@@ -122,7 +121,7 @@ const getUtil = (config: GeneratorConfigWithDefaultValues): string => {
 		: `${importTypes('typesafe-i18n', 'LocaleTranslations')}
 import { i18nString as initI18nString, i18nObjectLoader, i18n as initI18n } from 'typesafe-i18n'`
 
-	const dynamicCode = loadLocalesAsync ? getAsyncCode(config) : getSyncCode(config)
+	const dynamicCode = loadLocalesAsync ? getAsyncCode(locales) : getSyncCode(config, locales)
 
 	const localesEnum = `
 ${jsDocType('Locales[]')}
@@ -173,9 +172,9 @@ export const detectLocale = (...detectors${type('LocaleDetector[]')}) => detectL
 `
 }
 
-export const generateUtil = async (config: GeneratorConfigWithDefaultValues): Promise<void> => {
+export const generateUtil = async (config: GeneratorConfigWithDefaultValues, locales: Locale[]): Promise<void> => {
 	const { outputPath, utilFileName: utilFile } = config
 
-	const util = getUtil(config)
+	const util = getUtil(config, locales)
 	await writeFileIfContainsChanges(outputPath, utilFile, prettify(util))
 }

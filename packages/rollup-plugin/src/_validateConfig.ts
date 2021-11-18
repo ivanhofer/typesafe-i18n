@@ -3,7 +3,7 @@ import { createLogger } from '../../generator/src/generator-util'
 const logger = createLogger(console, true)
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const validateConfig = (config?: {}): void => {
+export const validateRollupConfig = (config?: {}): void => {
 	if (!config) {
 		return
 	}

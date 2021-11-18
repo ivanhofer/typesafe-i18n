@@ -1,7 +1,7 @@
 import path from 'path'
 import { doesPathExist, importFile, writeConfigFile } from '../../generator/src/file-utils'
 import { version } from '../../version'
-import type { Config, GeneratorConfig, GeneratorConfigWithDefaultValues } from './types'
+import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './types'
 import { validateConfig } from './validation'
 
 export const writeConfigToFile = async (config: GeneratorConfig) =>
@@ -12,11 +12,8 @@ export const doesConfigFileExist = async () => doesPathExist(path.resolve('.type
 export const readRawConfig = async () =>
 	(await importFile<GeneratorConfig & { $schema?: string }>(path.resolve('.typesafe-i18n.json'), false)) || {}
 
-export const readConfig = async (config?: GeneratorConfig | undefined): Promise<Config> => {
-	const generatorConfig = {
-		...config,
-		...(await readRawConfig()),
-	}
+export const readConfig = async (): Promise<GeneratorConfig> => {
+	const generatorConfig = await readRawConfig()
 
 	// remove "$schema" property
 	const configWithoutSchemaAttribute = Object.fromEntries(
@@ -29,11 +26,10 @@ export const readConfig = async (config?: GeneratorConfig | undefined): Promise<
 }
 
 export const getConfigWithDefaultValues = async (
-	config?: Config | undefined,
+	config?: GeneratorConfig | undefined,
 	shouldReadConfig = true,
 ): Promise<GeneratorConfigWithDefaultValues> => ({
 	baseLocale: 'en',
-	locales: [],
 
 	tempPath: './node_modules/typesafe-i18n/temp-output/',
 	outputPath: './src/i18n/',
@@ -47,5 +43,6 @@ export const getConfigWithDefaultValues = async (
 	loadLocalesAsync: true,
 	generateOnlyTypes: false,
 	banner: '/* eslint-disable */',
-	...(shouldReadConfig ? await readConfig(config) : {}),
+	...config,
+	...(shouldReadConfig ? await readConfig() : {}),
 })

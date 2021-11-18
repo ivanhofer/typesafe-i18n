@@ -16,7 +16,7 @@ import { getConfigWithDefaultValues } from '../../config/src/config'
 import type { RollupConfig } from '../../config/src/types'
 import { partsAsStringWithoutTypes } from '../../core/src/core-utils'
 import { parseRawText } from '../../core/src/parser'
-import { validateConfig } from './_validateConfig'
+import { validateRollupConfig } from './_validateConfig'
 
 //@ts-ignore
 const isLiteralNode = <T extends BaseNode>(node: T): node is SimpleLiteral => node.type === 'Literal'
@@ -163,13 +163,13 @@ const plugin = (config?: RollupConfig): Plugin => {
 	let locales: string[]
 	let locale: string
 
-	validateConfig(config)
+	validateRollupConfig(config)
 
 	const initFilters = async () => {
-		const configWithDefaultValues = await getConfigWithDefaultValues(config)
+		const configWithDefaultValues = await getConfigWithDefaultValues()
 
 		const { outputPath, baseLocale, utilFileName } = configWithDefaultValues
-		locales = configWithDefaultValues.locales
+		locales = config?.locales || []
 		locale = (locales.length && locales.includes(baseLocale) ? baseLocale : locales[0]) || baseLocale
 
 		filterForBaseLocale = createFilter([`${outputPath}/${baseLocale}/index.ts`])
