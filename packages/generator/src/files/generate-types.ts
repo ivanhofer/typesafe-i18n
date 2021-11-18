@@ -17,11 +17,11 @@ import {
 	TypeGuard,
 	uniqueArray,
 } from 'typesafe-utils'
-import { BaseTranslation, isPluralPart } from '../../../core/src/core'
+import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
+import { BaseTranslation, isPluralPart, Locale } from '../../../core/src/core'
 import { partAsStringWithoutTypes, partsAsStringWithoutTypes } from '../../../core/src/core-utils'
 import type { ArgumentPart } from '../../../core/src/parser'
 import { parseRawText } from '../../../core/src/parser'
-import type { GeneratorConfigWithDefaultValues } from '../config-types'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { getPermutations, Logger, prettify } from '../generator-util'
 import {
@@ -542,8 +542,9 @@ ${paramsType}`
 
 // --------------------------------------------------------------------------------------------------------------------
 
-type GenerateTypesType = GeneratorConfigWithDefaultValues & {
+export type GenerateTypesType = GeneratorConfigWithDefaultValues & {
 	translations: BaseTranslation | BaseTranslation[]
+	locales: Locale[]
 }
 
 export const generateTypes = async (config: GenerateTypesType, logger: Logger): Promise<boolean> => {

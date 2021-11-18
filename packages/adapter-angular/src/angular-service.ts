@@ -1,6 +1,6 @@
-import { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../core/src/core'
+import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../core/src/core'
 import { getFallbackProxy } from '../../core/src/core-utils'
-import {
+import type {
 	AsyncFormattersInitializer,
 	FormattersInitializer,
 	TranslationLoader,

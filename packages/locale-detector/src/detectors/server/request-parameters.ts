@@ -1,4 +1,4 @@
-import { Request } from 'express'
+import type { Request } from 'express'
 import { isTruthy } from 'typesafe-utils'
 import type { Locale } from '../../../../core/src/core'
 import type { LocaleDetector } from '../../detect'

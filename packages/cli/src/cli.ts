@@ -1,4 +1,5 @@
 import { Command } from 'commander'
+import { checkAndUpdateSchemaVersion } from '../../config/src/update-schema-version'
 import { startGenerator } from '../../generator/src/generator'
 import { logger } from '../../generator/src/generator-util'
 import { version } from '../../version'
@@ -20,6 +21,8 @@ const run = async () => {
 	const options = program.opts()
 
 	logger.info(`version ${version}`)
+
+	await checkAndUpdateSchemaVersion()
 
 	if (options.setup || options.setupAuto) {
 		await setup(options.setupAuto)

@@ -1,5 +1,5 @@
 import { isTruthy } from 'typesafe-utils'
-import type { GeneratorConfigWithDefaultValues, OutputFormats } from './config-types'
+import type { GeneratorConfigWithDefaultValues, OutputFormats } from '../../config/src/types'
 import { parseTypescriptVersion, TypescriptVersion } from './generator-util'
 
 export const OVERRIDE_WARNING =

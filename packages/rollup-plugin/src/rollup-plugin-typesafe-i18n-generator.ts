@@ -1,6 +1,6 @@
 import type { Plugin } from 'rollup'
 import { startGenerator } from '../../generator/src/generator'
-import { validateConfig } from './_validateConfig'
+import { validateRollupConfig } from './_validateConfig'
 
 let started = false
 
@@ -10,7 +10,7 @@ const plugin = (config?: never): Plugin => {
 		buildStart() {
 			if (started) return
 
-			validateConfig(config)
+			validateRollupConfig(config)
 
 			startGenerator(config)
 			started = true

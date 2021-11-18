@@ -1,10 +1,11 @@
 import { watch } from 'chokidar'
 import { resolve } from 'path'
 import ts from 'typescript'
-import { BaseTranslation } from '../../core/src'
-import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './config-types'
+import { getConfigWithDefaultValues, readConfig } from '../../config/src/config'
+import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../../config/src/types'
+import type { BaseTranslation } from '../../core/src'
 import { createPathIfNotExits } from './file-utils'
-import { generate, getConfigWithDefaultValues, readConfig } from './generate-files'
+import { generate } from './generate-files'
 import { createLogger, Logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
 import { configureOutputHandler, shouldGenerateJsDoc } from './output-handler'
 import { getAllLanguages, parseLanguageFile } from './parse-language-file'
@@ -39,7 +40,7 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 
 	const translations = getDefaultExport(languageFile)
 
-	await generate(translations, { ...config, baseLocale: locale, locales }, version, logger, firstLaunchOfGenerator)
+	await generate(translations, { ...config, baseLocale: locale }, version, logger, firstLaunchOfGenerator, locales)
 
 	if (firstLaunchOfGenerator) {
 		let message =
@@ -68,7 +69,10 @@ const debounce = (callback: () => void) =>
 export const startGenerator = async (config?: GeneratorConfig, watchFiles = true): Promise<void> => {
 	logger = createLogger(console, !watchFiles)
 
-	const parsedConfig = await readConfig(config)
+	const parsedConfig = {
+		...(await readConfig()),
+		...config,
+	}
 
 	const configWithDefaultValues = await getConfigWithDefaultValues(parsedConfig)
 	const { outputPath } = configWithDefaultValues

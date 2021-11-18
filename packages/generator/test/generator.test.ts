@@ -2,9 +2,10 @@ import { promises } from 'fs'
 import { resolve } from 'path'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import type { BaseTranslation } from '../../core/src/core'
-import type { Config, GeneratorConfigWithDefaultValues, OutputFormats } from '../src/config-types'
-import { generate, getConfigWithDefaultValues } from '../src/generate-files'
+import { getConfigWithDefaultValues } from '../../config/src/config'
+import type { GeneratorConfig, GeneratorConfigWithDefaultValues, OutputFormats } from '../../config/src/types'
+import type { BaseTranslation, Locale } from '../../core/src/core'
+import { generate } from '../src/generate-files'
 import { parseTypescriptVersion, TypescriptVersion } from '../src/generator-util'
 
 const { readFile } = promises
@@ -19,7 +20,7 @@ const defaultVersion = parseTypescriptVersion('4.1')
 
 const getFileName = (name: string) => name + actualPostfix
 
-const createConfig = async (prefix: string, config?: Config): Promise<GeneratorConfigWithDefaultValues> =>
+const createConfig = async (prefix: string, config?: GeneratorConfig): Promise<GeneratorConfigWithDefaultValues> =>
 	getConfigWithDefaultValues({
 		outputPath: resolve(outputPath, prefix),
 
@@ -29,7 +30,6 @@ const createConfig = async (prefix: string, config?: Config): Promise<GeneratorC
 		typesTemplateFileName: getFileName('types-template'),
 
 		...config,
-		locales: config?.locales?.length ? config?.locales : [config?.baseLocale || 'en'],
 	})
 
 type FileToCheck = 'types' | 'util' | 'formatters-template' | 'types-template' | 'svelte' | 'react'
@@ -77,13 +77,21 @@ const check = async (prefix: string, file: FileToCheck, outputFormat: OutputForm
 const testGeneratedOutput = async (
 	prefix: string,
 	translation: BaseTranslation,
-	config: Config = {},
+	config: GeneratorConfig = {},
 	version: TypescriptVersion = defaultVersion,
+	locales: Locale[] = [],
 ) =>
 	test(`generate ${prefix}`, async () => {
 		const configWithDefaultValues = await createConfig(prefix, config)
 		const { outputFormat } = configWithDefaultValues
-		await generate(translation, configWithDefaultValues, version, undefined, true)
+		await generate(
+			translation,
+			configWithDefaultValues,
+			version,
+			undefined,
+			true,
+			locales.length ? locales : [configWithDefaultValues.baseLocale],
+		)
 		await check(prefix, 'types', outputFormat)
 		await check(prefix, 'util', outputFormat)
 		await check(prefix, 'formatters-template', outputFormat)
@@ -178,11 +186,11 @@ testGeneratedOutput('formatter-chaining', { CHAINING: '{count:number|sqrt|round}
 
 testGeneratedOutput('base-locale-de', {}, { baseLocale: 'de' })
 
-testGeneratedOutput('multiple-locales', {}, { locales: ['de', 'en', 'it'] })
+testGeneratedOutput('multiple-locales', {}, {}, undefined, ['de', 'en', 'it'])
 
 testGeneratedOutput('locale-with-dash', {}, { baseLocale: 'de-at' })
 testGeneratedOutput('locale-with-dash-sync', {}, { baseLocale: 'de-at', loadLocalesAsync: false })
-testGeneratedOutput('locales-with-dash', {}, { locales: ['it-it', 'en-us', 'fr-be'] })
+testGeneratedOutput('locales-with-dash', {}, {}, undefined, ['it-it', 'en-us', 'fr-be'])
 
 testGeneratedOutput('arg-types', { STRING_TYPE: 'Hi {name:string}!', NUMBER_TYPE: '{0:number} apple{{s}}' })
 
@@ -271,7 +279,7 @@ testGeneratedOutput('banner-tslint', { HI: 'Hi {0:name}' }, { banner: '/* tslint
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const testAdapterMatrix = (prefix: string, translation: BaseTranslation, config: Config = {}) => {
+const testAdapterMatrix = (prefix: string, translation: BaseTranslation, config: GeneratorConfig = {}) => {
 	testGeneratedOutput(`${prefix}-async`, translation, { ...config })
 	testGeneratedOutput(`${prefix}-sync`, translation, { ...config, loadLocalesAsync: false })
 	testGeneratedOutput(`${prefix}-async-esm`, translation, { ...config, esmImports: true })

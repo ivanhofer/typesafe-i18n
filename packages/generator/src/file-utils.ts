@@ -66,10 +66,8 @@ export const deleteFolderRecursive = async (path: string): Promise<boolean> => {
 
 export const writeFile = (filePath: string, content: string) => write(filePath, content, { encoding: 'utf-8' })
 
-export const writeConfigFile = async (content: JsonObject) => {
+export const writeConfigFile = async (content: JsonObject) =>
 	writeFile(resolve('./', '.typesafe-i18n.json'), JSON.stringify(content, undefined, 3))
-	logger.info(`generated config file: '.typesafe-i18n.json'`)
-}
 
 const getFileName = (path: string, file: string) => {
 	const ext = file.endsWith(fileEnding) || file.endsWith(`${fileEnding}x`) || file.endsWith('.d.ts') ? '' : fileEnding
