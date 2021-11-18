@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.52.0 (2021-11-18)
+
+Feature:
+ - add validation of config [#112](https://github.com/ivanhofer/typesafe-i18n/discussions/112)
+
 ## 2.51.1 (2021-11-17)
 
 Feature:
