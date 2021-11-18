@@ -3,12 +3,8 @@ import { diff as justDiff } from 'just-diff'
 import { diffApply as justDiffApply } from 'just-diff-apply'
 import kleur from 'kleur'
 import { isPropertyNotUndefined } from 'typesafe-utils'
-import type { GeneratorConfig } from '../../../generator/src/config-types'
-import {
-	doesConfigFileExist,
-	getConfigWithDefaultValues,
-	writeConfigToFile,
-} from '../../../config/src/config'
+import { doesConfigFileExist, getConfigWithDefaultValues, writeConfigToFile } from '../../../config/src/config'
+import type { GeneratorConfig } from '../../../config/src/types'
 import { logger } from '../../../generator/src/generator-util'
 import { getDefaultConfig } from './detect-setup'
 import { updatePackageJson } from './package-json'

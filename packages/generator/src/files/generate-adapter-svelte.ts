@@ -1,4 +1,4 @@
-import type { GeneratorConfigWithDefaultValues } from '../../../config/src/config'
+import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { prettify } from '../generator-util'
 import {
@@ -10,7 +10,7 @@ import {
 	OVERRIDE_WARNING,
 	relativeFileImportPath,
 	tsCheck,
-	type
+	type,
 } from '../output-handler'
 
 const getSvelteUtils = ({

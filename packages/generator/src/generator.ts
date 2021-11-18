@@ -1,12 +1,8 @@
 import { watch } from 'chokidar'
 import { resolve } from 'path'
 import ts from 'typescript'
-import {
-	GeneratorConfig,
-	GeneratorConfigWithDefaultValues,
-	getConfigWithDefaultValues,
-	readConfig
-} from '../../config/src/config'
+import { getConfigWithDefaultValues, readConfig } from '../../config/src/config'
+import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../../config/src/types'
 import { BaseTranslation } from '../../core/src'
 import { createPathIfNotExits } from './file-utils'
 import { generate } from './generate-files'

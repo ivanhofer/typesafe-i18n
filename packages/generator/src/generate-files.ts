@@ -1,5 +1,5 @@
 import path from 'path'
-import { Config, GeneratorConfig, GeneratorConfigWithDefaultValues } from '../../config/src/config'
+import type { Config, GeneratorConfig, GeneratorConfigWithDefaultValues } from '../../config/src/types'
 import type { BaseTranslation } from '../../core/src/core'
 import { version } from '../../version'
 import { doesPathExist, importFile, writeConfigFile } from './file-utils'

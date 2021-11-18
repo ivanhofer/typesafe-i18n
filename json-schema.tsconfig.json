@@ -1,9 +1,0 @@
-{
-	"extends": "./tsconfig.json",
-	"compilerOptions": {
-		"noEmitOnError": false
-	},
-	"include": [
-		"./packages/generator/src/config-types.ts"
-	]
-}

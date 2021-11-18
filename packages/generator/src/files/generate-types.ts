@@ -17,12 +17,11 @@ import {
 	TypeGuard,
 	uniqueArray,
 } from 'typesafe-utils'
-import { GeneratorConfigWithDefaultValues } from '../../../config/src/config'
+import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
 import { BaseTranslation, isPluralPart } from '../../../core/src/core'
 import { partAsStringWithoutTypes, partsAsStringWithoutTypes } from '../../../core/src/core-utils'
 import type { ArgumentPart } from '../../../core/src/parser'
 import { parseRawText } from '../../../core/src/parser'
-import type { GeneratorConfigWithDefaultValues } from '../config-types'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { getPermutations, Logger, prettify } from '../generator-util'
 import {

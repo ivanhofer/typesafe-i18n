@@ -1,4 +1,4 @@
-import type { GeneratorConfigWithDefaultValues } from '../../../config/src/config'
+import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { prettify } from '../generator-util'
 import { OVERRIDE_WARNING, relativeFileImportPath, tsCheck } from '../output-handler'

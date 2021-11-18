@@ -1,4 +1,4 @@
-import type { GeneratorConfigWithDefaultValues } from '../../../config/src/config'
+import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
 import { writeFileIfContainsChanges, writeFileIfNotExists } from '../file-utils'
 import { prettify } from '../generator-util'
 import { fileEndingForTypesFile } from '../output-handler'
