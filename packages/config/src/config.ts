@@ -5,14 +5,17 @@ import type { Config, GeneratorConfig, GeneratorConfigWithDefaultValues } from '
 import { validateConfig } from './validation'
 
 export const writeConfigToFile = async (config: GeneratorConfig) =>
-	writeConfigFile({ $schema: `https://unpkg.com/typesafe-i18n@${version}/schema/typesafe-i18n.json`, ...config })
+	writeConfigFile({ ...config, $schema: `https://unpkg.com/typesafe-i18n@${version}/schema/typesafe-i18n.json` })
 
 export const doesConfigFileExist = async () => doesPathExist(path.resolve('.typesafe-i18n.json'))
+
+export const readRawConfig = async () =>
+	(await importFile<GeneratorConfig & { $schema?: string }>(path.resolve('.typesafe-i18n.json'), false)) || {}
 
 export const readConfig = async (config?: GeneratorConfig | undefined): Promise<Config> => {
 	const generatorConfig = {
 		...config,
-		...((await importFile<GeneratorConfig>(path.resolve('.typesafe-i18n.json'), false)) || {}),
+		...(await readRawConfig()),
 	}
 
 	// remove "$schema" property

@@ -65,6 +65,7 @@ export const setup = async (autoSetup: boolean) => {
 	const config = await getConfigDiff(options)
 
 	await writeConfigToFile(config)
+	logger.info(`generated config file: '.typesafe-i18n.json'`)
 
 	await updatePackageJson()
 
