@@ -26,7 +26,7 @@ You can also use `typesafe-i18n` without its typesafety as a lightweight i18n pa
 
 Load your desired function from the unpkg CDN and inject it into your HTML-code:
 
-  - [i18nString](https://github.com/ivanhofer/typesafe-i18n#i18nString) (765 bytes gzipped)
+  - [i18nString](https://github.com/ivanhofer/typesafe-i18n#i18nString) (941 bytes gzipped)
 	```html
   	<script src="https://unpkg.com/typesafe-i18n@2.46.5/dist/i18n.string.min.js"></script>
 
@@ -37,7 +37,7 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
 	</script>
   	```
 
-  - [i18nObject](https://github.com/ivanhofer/typesafe-i18n#i18nObject) (819 bytes gzipped)
+  - [i18nObject](https://github.com/ivanhofer/typesafe-i18n#i18nObject) (1054 bytes gzipped)
   	```html
   	<script src="https://unpkg.com/typesafe-i18n@2.46.5/dist/i18n.object.min.js"></script>
 
@@ -48,7 +48,7 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
 	</script>
   	```
 
-  - [i18n](https://github.com/ivanhofer/typesafe-i18n#i18n) (924 bytes gzipped)
+  - [i18n](https://github.com/ivanhofer/typesafe-i18n#i18n) (1092 bytes gzipped)
 
 	```html
   	<script src="https://unpkg.com/typesafe-i18n@2.46.5/dist/i18n.min.js"></script>
@@ -60,7 +60,7 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
 	</script>
   	```
 
-  - all together (975 bytes gzipped)
+  - all together (1154 bytes gzipped)
   	```html
   	<script src="https://unpkg.com/typesafe-i18n@2.46.5/dist/i18n.all.min.js"></script>
 

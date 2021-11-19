@@ -12,7 +12,7 @@
 
 ## Advantages
 
-:baby_chick: [lightweight](#sizes) (<1kb)\
+:baby_chick: [lightweight](#sizes) (~1kb)\
 :ok_hand: [easy to use syntax](#syntax)\
 :running: [fast and efficient](#performance)\
 :safety_vest: [prevents you from making mistakes](#typesafety)\
@@ -1404,16 +1404,16 @@ The footprint of the `typesafe-i18n` package is smaller compared to other existi
 
 These parts are bundled into the [core functions](#custom-usage). The sizes of the core functionalities are:
 
-- [i18nString](#i18nString): 834 bytes gzipped
-- [i18nObject](#i18nObject): 939 bytes gzipped
-- [i18n](#i18n): 970 bytes gzipped
+- [i18nString](#i18nString): 941 bytes gzipped
+- [i18nObject](#i18nObject): 1054 bytes gzipped
+- [i18n](#i18n): 1092 bytes gzipped
 
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
 There also exists a useful wrapper for some frameworks:
-- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 1152 bytes gzipped
-- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react#usage-in-javascript-projects): 1212 bytes gzipped
-- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte#usage-in-javascript-projects): 1191 bytes gzipped
+- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 1360 bytes gzipped
+- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react#usage-in-javascript-projects): 1545 bytes gzipped
+- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte#usage-in-javascript-projects): 1526 bytes gzipped
 
 
 
