@@ -67,7 +67,8 @@ export const setup = async (autoSetup: boolean) => {
 	await writeConfigToFile(config)
 	logger.info(`generated config file: '.typesafe-i18n.json'`)
 
-	await updatePackageJson()
+	const installed = await updatePackageJson()
+	if (!installed) return
 
 	logger.info('setup complete')
 

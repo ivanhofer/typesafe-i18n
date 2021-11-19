@@ -1,13 +1,16 @@
 import { execSync } from 'child_process'
 import path from 'path'
 import type { PackageJson } from 'type-fest'
-import { importFile, readFile, writeFile } from '../../../generator/src/file-utils'
+import { doesPathExist, importFile, readFile, writeFile } from '../../../generator/src/file-utils'
 import { logger } from '../../../generator/src/generator-util'
 
 const packageJsonPath = path.resolve('package.json')
+const yarnLockPath = path.resolve('yarn.lock')
+
 let pck: PackageJson | undefined = undefined
 
 const readPackageJson = async () => pck || (pck = await importFile<PackageJson | undefined>(packageJsonPath, false))
+const hasYarnLock = async () => doesPathExist(yarnLockPath)
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -33,19 +36,22 @@ export const getDependencyList = async () => {
 
 const installDependencies = async () => {
 	const dependencies = await getDependencyList()
-	if (dependencies.includes('typesafe-i18n')) return
+	if (dependencies.includes('typesafe-i18n')) return true
+
+	if (!pck) {
+		logger.error(`no 'package.json' found. You have to install 'typesafe-i18n' by yourself`)
+		return false
+	}
 
 	logger.info('installing dependencies ...')
 
-	if (!pck) {
-		const output = execSync('npm init -y').toString()
-		// eslint-disable-next-line no-console
-		console.log(output)
-	}
+	const installCommand: string = (await hasYarnLock()) ? 'yarn add typesafe-i18n' : 'npm install typesafe-i18n'
 
-	const output = execSync('npm i typesafe-i18n').toString()
+	const output = execSync(installCommand).toString()
 	// eslint-disable-next-line no-console
 	console.log(output)
+
+	return true
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -55,7 +61,7 @@ const REGEX_DETECT_SCRIPT_SECTION = /"scripts":\s*{(?<begin>\s*)("([^"]|\\")*":\
 
 const addTypesafeI18nScript = async () => {
 	const pck = await readPackageJson()
-	if (pck?.scripts?.['typesafe-i18n']) return
+	if (pck?.scripts?.['typesafe-i18n']) return true
 
 	const content = await readFile(packageJsonPath)
 
@@ -63,7 +69,7 @@ const addTypesafeI18nScript = async () => {
 
 	if (!begin || !end) {
 		logger.warn(`could not add 'typesafe-i18n' script to 'package.json'. You need to add it manually.`)
-		return
+		return false
 	}
 
 	const newContent = content.replace(REGEX_DETECT_SCRIPT_SECTION, (content) => {
@@ -74,11 +80,15 @@ const addTypesafeI18nScript = async () => {
 	await writeFile(packageJsonPath, newContent)
 
 	logger.info(`'typesafe-i18n' script added`)
+
+	return true
 }
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const updatePackageJson = async () => {
-	await installDependencies()
-	await addTypesafeI18nScript()
+export const updatePackageJson = async (): Promise<boolean> => {
+	let installed = await installDependencies()
+	installed = installed && (await addTypesafeI18nScript())
+
+	return installed
 }

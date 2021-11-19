@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.52.1 (2021-11-19)
+
+Fix:
+ - detect if project uses `npm` or `yarn` on CLI setup process
+
 ## 2.52.0 (2021-11-18)
 
 Feature:
