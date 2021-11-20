@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.52.2 (2021-11-20)
+
+Fix:
+ - add `$schema` to json schema definition
+
 ## 2.52.1 (2021-11-19)
 
 Fix:

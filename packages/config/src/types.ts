@@ -3,6 +3,8 @@ export type Adapters = 'angular' | 'node' | 'react' | 'svelte'
 export type OutputFormats = 'TypeScript' | 'JavaScript'
 
 export type GeneratorConfig = {
+	$schema?: string
+
 	baseLocale?: string
 
 	tempPath?: string
