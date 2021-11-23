@@ -1,3 +1,3 @@
-import { i18nObject } from '../../core/src/util.object'
+import { i18nObject } from '../../runtime/src/util.object'
 //@ts-ignore
 window.i18nObject = i18nObject

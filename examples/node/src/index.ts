@@ -4,7 +4,6 @@ import L from './i18n/i18n-node'
 import { Locales } from './i18n/i18n-types'
 import { detectLocale } from './i18n/i18n-util'
 
-
 const app: Application = express()
 
 const port = 3001

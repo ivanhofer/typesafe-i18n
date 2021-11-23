@@ -1,7 +1,7 @@
 import { resolve, sep } from 'path'
 import { isTruthy } from 'typesafe-utils'
 import ts from 'typescript'
-import type { BaseTranslation } from '../../core/src'
+import type { BaseTranslation } from '../../runtime/src'
 import {
 	containsFolders,
 	createPathIfNotExits,

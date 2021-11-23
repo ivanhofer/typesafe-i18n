@@ -11,17 +11,24 @@ const mappings: [FromWheretoImport, OutputPath?, FilterFunction?][] = [
 	['adapter-angular', 'angular', (file) => file === 'angular-service.d.ts'],
 	['adapter-svelte', 'svelte', (file) => file === 'svelte-store.d.ts'],
 	['adapter-react', 'react', (file) => file === 'react-context.d.ts'],
-	['core', 'cjs'],
-	['core', 'esm'],
 	['exporter', 'exporter', (file) => file === 'index.d.ts'],
 	['formatters'],
 	['importer', 'importer', (file) => file === 'index.d.ts'],
 	['locale-detector', 'detectors'],
+	['parser'],
+	['parser', 'runtime/cjs/parser/src'],
+	['parser', 'runtime/esm/parser/src'],
 	['rollup-plugin', 'rollup'],
+	['runtime', 'types'],
+	['runtime', 'runtime/cjs/runtime/src'],
+	['runtime', 'runtime/esm/runtime/src'],
 	['webpack-plugin', 'webpack'],
 ]
 
-const goToRoot = (file: string) => new Array(file.split('/').length).fill('../').join('')
+const goToRoot = (outputPath: string, file: string) => {
+	const goUpXTimes = outputPath.startsWith('runtime') ? 3 : 0
+	return new Array(file.split('/').length + goUpXTimes).fill('../').join('')
+}
 
 mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, mapperFunction]) => {
 	const files = glob(resolve(__dirname, `../types/${fromWheretoImport}/src/**/*.d.ts`)).map((file) =>
@@ -34,8 +41,8 @@ mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, mapperFunc
 	files.forEach((file) => {
 		const fullFilePath = resolve(__dirname, `../types/${fromWheretoImport}/src/${file}`)
 		const content = readFileSync(fullFilePath).toString()
-		if (content.includes('core/src/core')) {
-			writeFileSync(fullFilePath, content.replace('core/src/core', 'core'), { encoding: 'utf8' })
+		if (content.includes('runtime/src/core')) {
+			writeFileSync(fullFilePath, content.replace('runtime/src/core', 'core'), { encoding: 'utf8' })
 		}
 	})
 
@@ -47,7 +54,7 @@ mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, mapperFunc
 
 		writeFileSync(
 			resolve(__dirname, `../${outputPath}/${file}`),
-			`export * from '${goToRoot(file)}types/${fromWheretoImport}/src/${fileName}'`,
+			`export * from '${goToRoot(outputPath, file)}types/${fromWheretoImport}/src/${fileName}'`,
 			{ encoding: 'utf8' },
 		)
 	})

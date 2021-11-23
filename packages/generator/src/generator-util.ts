@@ -1,5 +1,5 @@
 import kleur from 'kleur'
-import type { Arguments, Locale } from '../../core/src/core'
+import type { Arguments, Locale } from '../../runtime/src/core'
 
 export const getPermutations = <T>(rest: T[], permutedArray: T[] = []): T[][] => {
 	if (rest.length === 0) {

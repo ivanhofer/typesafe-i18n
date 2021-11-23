@@ -1,5 +1,5 @@
 import { isNotEmpty } from 'typesafe-utils'
-import type { Locale } from '../../../../core/src/core'
+import type { Locale } from '../../../../runtime/src/core'
 import type { LocaleDetector } from '../../detect'
 
 type ObjectWithHeaders = { headers: Record<string, string | string[] | undefined> }

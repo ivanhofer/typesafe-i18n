@@ -1,6 +1,6 @@
-import { Locale } from '../../core/src/core'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
+import type { Locale } from '../../runtime/src/core'
 import { detectLocale, LocaleDetector } from '../src/detect'
 
 const test = suite('detector')

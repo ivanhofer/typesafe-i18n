@@ -1,12 +1,12 @@
-import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../core/src/core'
-import { getFallbackProxy } from '../../core/src/core-utils'
+import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../runtime/src/core'
+import { getFallbackProxy } from '../../runtime/src/core-utils'
 import type {
 	AsyncFormattersInitializer,
 	FormattersInitializer,
 	TranslationLoader,
 	TranslationLoaderAsync,
-} from '../../core/src/util.loader'
-import { i18nObject } from '../../core/src/util.object'
+} from '../../runtime/src/util.loader'
+import { i18nObject } from '../../runtime/src/util.object'
 
 export class I18nServiceRoot<
 	L extends string = string,

@@ -1,35 +1,28 @@
-import { removeEmptyValues, trimAllValues } from './core-utils'
+import type { ArgumentPart, Part, PluralPart } from './types'
 
 // --------------------------------------------------------------------------------------------------------------------
-// types --------------------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------------------------------------
 
-export type TextPart = string
-
-export type ArgumentPart = {
-	k: string // key
-	i?: string // type
-	n?: boolean // non-mandatory (optional)
-	f?: string[] // formatterFunctionKey
-}
-
-export type PluralPart = {
-	k: string // key
-	z?: string // zero
-	o: string // one
-	t?: string // two
-	f?: string // few
-	m?: string // many
-	r: string // other
-}
-
-export type Part = TextPart | ArgumentPart | PluralPart
+export const removeEmptyValues = <T>(object: T): T =>
+	Object.fromEntries(
+		Object.entries(object)
+			.map(([key, value]) => key !== 'i' && value && value != '0' && [key, value])
+			.filter(Boolean),
+	) as T
 
 // --------------------------------------------------------------------------------------------------------------------
-// implementation -----------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------------------------------------
 
-const REGEX_BRACKETS_SPLIT = /({?{[^\\}]+}}?)/g
+export const trimAllValues = <T extends ArgumentPart | PluralPart>(part: T): T =>
+	Object.fromEntries(
+		Object.keys(part).map((key) => {
+			const val = part[key as keyof T] as unknown as boolean | string | string[]
+			return [
+				key,
+				Array.isArray(val) ? val.map((v) => v?.trim()) : val === !!val ? val : (val as string)?.trim(),
+			] as const
+		}),
+	) as T
+
+// --------------------------------------------------------------------------------------------------------------------
 
 const parseArgumentPart = (text: string): ArgumentPart => {
 	const [keyPart = '', ...formatterKeys] = text.split('|')
@@ -38,6 +31,8 @@ const parseArgumentPart = (text: string): ArgumentPart => {
 	const [key, isOptional] = keyWithoutType.split('?') as [string, string | undefined]
 	return { k: key, i: type, n: isOptional === '', f: formatterKeys }
 }
+
+// --------------------------------------------------------------------------------------------------------------------
 
 const parsePluralPart = (content: string, lastAccessor: string): PluralPart => {
 	let [key, values] = content.split(':') as [string, string?]
@@ -63,6 +58,10 @@ const parsePluralPart = (content: string, lastAccessor: string): PluralPart => {
 
 	return { k: key, z: zero, o: one, t: two, f: few, m: many, r: rest } as PluralPart
 }
+
+// --------------------------------------------------------------------------------------------------------------------
+
+const REGEX_BRACKETS_SPLIT = /({?{[^\\}]+}}?)/g
 
 export const parseRawText = (rawText: string, optimize = true, firstKey = '', lastKey = ''): Part[] =>
 	rawText
