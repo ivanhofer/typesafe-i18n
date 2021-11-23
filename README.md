@@ -1407,7 +1407,7 @@ The footprint of the `typesafe-i18n` package is smaller compared to other existi
 
 These parts are bundled into the [core functions](#custom-usage). The sizes of the core functionalities are:
 
-- [i18nString](#i18nString): 941 bytes gzipped
+- [i18nString](#i18nString): 938 bytes gzipped
 - [i18nObject](#i18nObject): 1054 bytes gzipped
 - [i18n](#i18n): 1092 bytes gzipped
 
