@@ -1,6 +1,6 @@
 {
 	"name": "typesafe-i18n",
-	"version": "2.52.2",
+	"version": "2.53.0",
 	"description": "An opinionated, fully type-safe, lightweight localization library for TypeScript and JavaScript projects with no external dependencies.",
 	"author": "ivanhofer",
 	"homepage": "https://github.com/ivanhofer/typesafe-i18n",
@@ -110,7 +110,6 @@
 		"build:adapters": "rollup -c packages/adapters/rollup.config.js && tsc -p packages/adapters/tsconfig.json --emitDeclarationOnly",
 		"build:angular": "rollup -c packages/adapter-angular/rollup.config.js && tsc -p packages/adapter-angular/tsconfig.json --emitDeclarationOnly",
 		"build:browser": "rollup -c packages/browser/rollup.config.js",
-
 		"build:detectors": "rollup -c packages/locale-detector/rollup.config.js && tsc -p packages/locale-detector/tsconfig.json --emitDeclarationOnly && node --loader ts-node/esm ./packages/locale-detector/generateTreeShakableIndexFile.ts",
 		"build:exporter": "rollup -c packages/exporter/rollup.config.js && tsc -p packages/exporter/tsconfig.json --emitDeclarationOnly",
 		"build:formatters": "rollup -c packages/formatters/rollup.config.js && tsc -p packages/formatters/tsconfig.json --emitDeclarationOnly && node --loader ts-node/esm ./packages/formatters/generateTreeShakableIndexFile.ts",
