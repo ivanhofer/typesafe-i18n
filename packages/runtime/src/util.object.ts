@@ -19,7 +19,7 @@ const getTextFromTranslationKey = <T extends BaseTranslation | BaseTranslation[]
 	translations: T,
 	key: TranslationKey<T>,
 ): string => {
-	;(key as string).split('.').forEach((k) => (translations = translations[k as unknown as number] as T))
+	;(key as string).split('.').forEach((k) => (translations = translations[k as keyof T] as unknown as T))
 	return (translations as unknown as string) ?? (key as string)
 }
 
