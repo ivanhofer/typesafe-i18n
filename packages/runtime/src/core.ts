@@ -25,8 +25,7 @@ export type TranslationFunctions<
 		| Readonly<BaseTranslation>
 		| Readonly<BaseTranslation[]> = BaseTranslation,
 > = {
-	//@ts-ignore
-	[key in keyof T]: T[key] extends string ? BaseTranslationFunction : TranslationFunctions<T[key]>
+	[key in keyof T]: T[key] extends Record<any, any> ? TranslationFunctions<T[key]> : BaseTranslationFunction
 }
 
 export type Locale = string
@@ -45,7 +44,7 @@ export type BaseTranslation =
 				| Readonly<BaseTranslation[]>
 	  }
 	| {
-			[key: number | string]:
+			[key: string]:
 				| string
 				| BaseTranslation
 				| BaseTranslation[]
