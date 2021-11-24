@@ -1,7 +1,7 @@
 # CHANGELOG.md
 
 
-## 2.53.1 (2021-11-24)
+## 2.53.2 (2021-11-24)
 
 Fix:
  - `BaseTranslation` type for TypeScript version < 4.4.x [#127](https://github.com/ivanhofer/typesafe-i18n/issues/127)
