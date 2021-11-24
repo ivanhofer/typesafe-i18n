@@ -1501,6 +1501,11 @@ The [generator](#typesafety) will only look for changes in your base locale file
 The [generator](#typesafety) creates some helpful wrappers for you. If you want to write your own wrappers, you can disable the generation of these files by setting the [`generateOnlyTypes`](#generateonlytypes) option to `true`.
 
 
+### Is `typesafe-i18n` supported by `i18n-ally`?
+
+Yes, you can configure `i18n-ally` like [this](https://github.com/lokalise/i18n-ally/issues/678#issuecomment-947338325). There is currently also an open [`PR`](https://github.com/lokalise/i18n-ally/pull/681) that will add official support for `typesafe-i18n`.
+
+
 ### How do I render a component inside a Translation?
 
 By default `typesafe-i18n` at this time does not provide such a functionality. But you could easily write a function like this:
