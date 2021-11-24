@@ -2,7 +2,7 @@ module.exports = [
 	{
 		name: 'i18n-string',
 		path: 'dist/i18n.string.min.js',
-		limit: '941 b',
+		limit: '938 b',
 	},
 	{
 		name: 'i18n-object',

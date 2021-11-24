@@ -1,7 +1,7 @@
+import { parseRawText } from '../../parser/src/index'
+import type { Part } from '../../parser/src/types'
 import type { Arguments, BaseFormatters, Cache, Locale, LocalizedString } from './core'
 import { translate } from './core'
-import type { Part } from './parser'
-import { parseRawText } from './parser'
 
 export type TranslateByString =
 	| ((text: string) => LocalizedString)

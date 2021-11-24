@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.53.0 (2021-11-24)
+
+Feature:
+ - expose `parser` function
+
 ## 2.52.2 (2021-11-20)
 
 Fix:

@@ -1,5 +1,5 @@
 import type { TypeGuard } from 'typesafe-utils'
-import type { ArgumentPart, Part, PluralPart } from './parser'
+import type { ArgumentPart, Part, PluralPart } from '../../parser/src/types'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------

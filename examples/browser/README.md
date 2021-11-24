@@ -26,7 +26,7 @@ You can also use `typesafe-i18n` without its typesafety as a lightweight i18n pa
 
 Load your desired function from the unpkg CDN and inject it into your HTML-code:
 
-  - [i18nString](https://github.com/ivanhofer/typesafe-i18n#i18nString) (941 bytes gzipped)
+  - [i18nString](https://github.com/ivanhofer/typesafe-i18n#i18nString) (938 bytes gzipped)
 	```html
   	<script src="https://unpkg.com/typesafe-i18n@2.46.5/dist/i18n.string.min.js"></script>
 

@@ -1,5 +1,5 @@
-import type { Locale } from '../../../../core/src/core'
 import { isTruthy } from 'typesafe-utils'
+import type { Locale } from '../../../../runtime/src/core'
 import type { LocaleDetector } from '../../detect'
 
 export const htmlLangAttributeDetector: LocaleDetector = (): Locale[] =>

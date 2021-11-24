@@ -1,8 +1,6 @@
-import type { Locale } from '../../../core/src/core'
-
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-
+import type { Locale } from '../../../runtime/src/core'
 import { initSessionStorageDetector } from '../../src/detectors/browser/sessionstorage-detector'
 
 const test = suite('detector:sessionStorage')

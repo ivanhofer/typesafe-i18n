@@ -1,5 +1,5 @@
 import { isTruthy, uniqueArray } from 'typesafe-utils'
-import type { Locale } from '../../core/src/core'
+import type { Locale } from '../../runtime/src/core'
 
 export type LocaleDetector = () => string[]
 

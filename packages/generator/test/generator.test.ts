@@ -4,7 +4,7 @@ import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 import { getConfigWithDefaultValues } from '../../config/src/config'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues, OutputFormats } from '../../config/src/types'
-import type { BaseTranslation, Locale } from '../../core/src/core'
+import type { BaseTranslation, Locale } from '../../runtime/src/core'
 import { generate } from '../src/generate-files'
 import { parseTypescriptVersion, TypescriptVersion } from '../src/generator-util'
 

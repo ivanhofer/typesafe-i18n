@@ -1,9 +1,8 @@
 {
 	"extends": "../../tsconfig.json",
 	"compilerOptions": {
-		"module": "CommonJS",
 		"rootDir": "./src",
-		"outDir": "../../cjs"
+		"outDir": "../../parser"
 	},
 	"include": ["./src/**/*.ts"]
 }

@@ -1,6 +1,6 @@
-import { i18nString } from '../../core/src/util.string'
-import { i18nObject } from '../../core/src/util.object'
-import { i18n } from '../../core/src/util.instance'
+import { i18n } from '../../runtime/src/util.instance'
+import { i18nObject } from '../../runtime/src/util.object'
+import { i18nString } from '../../runtime/src/util.string'
 // import { i18nLoader, i18nLoaderAsync } from '../../core/src/util.loader'
 
 //@ts-ignore

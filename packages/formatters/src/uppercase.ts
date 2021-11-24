@@ -1,3 +1,3 @@
-import type { FormatterFunction } from '../../core/src/core'
+import type { FormatterFunction } from '../../runtime/src/core'
 
 export default ((value) => value?.toUpperCase()) as FormatterFunction<string, string>

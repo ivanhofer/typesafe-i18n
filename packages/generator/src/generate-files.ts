@@ -1,5 +1,5 @@
 import type { GeneratorConfigWithDefaultValues } from '../../config/src/types'
-import type { BaseTranslation, Locale } from '../../core/src/core'
+import type { BaseTranslation, Locale } from '../../runtime/src/core'
 import { generateAngularAdapter } from './files/generate-adapter-angular'
 import { generateNodeAdapter } from './files/generate-adapter-node'
 import { generateReactAdapter } from './files/generate-adapter-react'

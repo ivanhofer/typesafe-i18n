@@ -9,7 +9,18 @@ const formats = [
 	{ regex: /port .* from '\.(.*)'/g, fileEnding: 'mjs' },
 ]
 
-const folders = ['adapters', 'detectors', 'cjs', 'esm', 'exporter', 'formatters', 'importer', 'react', 'svelte']
+const folders = [
+	'adapters',
+	'detectors',
+	'runtime/cjs/runtime/src',
+	'runtime/esm/runtime/src',
+	'exporter',
+	'formatters',
+	'importer',
+	'parser',
+	'react',
+	'svelte',
+]
 
 formats.forEach(({ regex, fileEnding }) => {
 	const files = folders.flatMap((folder) => glob(resolve(__dirname, `../${folder}/**/*.${fileEnding}`)))
