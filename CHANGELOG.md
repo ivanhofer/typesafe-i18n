@@ -1,6 +1,10 @@
 # CHANGELOG.md
 
 
+## 2.54.0 (2021-11-25)
+
+ - decrease bundle size by a few bytes by removing Angular proxy wrapping on general Proxy instances
+
 ## 2.53.2 (2021-11-24)
 
 Fix:

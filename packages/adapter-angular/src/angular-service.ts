@@ -8,6 +8,17 @@ import type {
 } from '../../runtime/src/util.loader'
 import { i18nObject } from '../../runtime/src/util.object'
 
+const wrapProxy = <
+	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
+	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
+>(
+	proxyObject: TF,
+): TF =>
+	new Proxy(proxyObject as TF, {
+		get: (target, key: string) =>
+			!(target === proxyObject && key === 'then') && proxyObject[key as keyof typeof proxyObject],
+	})
+
 export class I18nServiceRoot<
 	L extends string = string,
 	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
@@ -16,7 +27,7 @@ export class I18nServiceRoot<
 > {
 	private _isLoadingLocale = false
 	private currentLocale: L = null as unknown as L
-	private _LL: TF | null = getFallbackProxy<TF>()
+	private _LL: TF | null = wrapProxy(getFallbackProxy<TF>())
 
 	constructor(
 		private baseLocale: L = '' as L,
@@ -43,10 +54,12 @@ export class I18nServiceRoot<
 	async setLocale(newLocale: L): Promise<void> {
 		const translation = this.getTranslationForLocale(newLocale)
 		const formatters = this.initFormatters(newLocale)
-		this._LL = i18nObject<L, T, TF, F>(
-			newLocale,
-			translation instanceof Promise ? await translation : translation,
-			formatters instanceof Promise ? await formatters : formatters,
+		this._LL = wrapProxy(
+			i18nObject<L, T, TF, F>(
+				newLocale,
+				translation instanceof Promise ? await translation : translation,
+				formatters instanceof Promise ? await formatters : formatters,
+			),
 		)
 		this.currentLocale = newLocale
 	}

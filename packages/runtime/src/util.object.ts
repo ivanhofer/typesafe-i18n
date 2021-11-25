@@ -4,16 +4,17 @@ import type {
 	BaseTranslation,
 	Cache,
 	Locale,
+	LocalizedString,
 	TranslationFunctions,
 	TranslationKey,
 } from './core'
 import { translate } from './core'
 import { getPartsFromString } from './util.string'
 
-type TranslateByKey<T extends BaseTranslation | BaseTranslation[]> = (
+export type TranslateByKey<T extends BaseTranslation | BaseTranslation[]> = (
 	key: TranslationKey<T>,
 	...args: Arguments
-) => string
+) => LocalizedString
 
 const getTextFromTranslationKey = <T extends BaseTranslation | BaseTranslation[]>(
 	translations: T,
@@ -59,9 +60,7 @@ export function i18nObject(locale: any, translations: any, formatters: any = {})
 const createProxy = <T extends BaseTranslation | BaseTranslation[]>(
 	fn: TranslateByKey<T>,
 	prefixKey?: string,
-	proxyObject = {},
 ): TranslationFunctions<T> =>
-	new Proxy((prefixKey ? fn.bind(null, prefixKey as keyof T) : proxyObject) as TranslationFunctions<T>, {
-		get: (target, key: string) =>
-			!(target === proxyObject && key === 'then') && createProxy(fn, prefixKey ? `${prefixKey}.${key}` : key),
+	new Proxy(fn.bind(null, prefixKey as keyof T) as unknown as TranslationFunctions<T>, {
+		get: (_target, key: string) => createProxy(fn, prefixKey ? `${prefixKey}.${key}` : key),
 	})
