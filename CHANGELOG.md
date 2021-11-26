@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.54.1 (2021-11-26)
+
+Bugfix:
+ - fix Proxy-access for CJS projects [#131](https://github.com/ivanhofer/typesafe-i18n/issues/131)
+
 ## 2.54.0 (2021-11-25)
 
  - decrease bundle size by a few bytes by removing Angular proxy wrapping on general Proxy instances
