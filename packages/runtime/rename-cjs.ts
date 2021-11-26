@@ -1,14 +1,10 @@
-import { readFileSync, rename, writeFileSync } from 'fs'
+import { readFileSync, renameSync, writeFileSync } from 'fs'
 import { sync as glob } from 'glob'
 import { resolve } from 'path'
 
 const files = glob(resolve(__dirname, `../../runtime/cjs/**/*.js`))
 
-files.forEach((file) =>
-	rename(file, file.replace('.js', '.cjs'), () => {
-		undefined
-	}),
-)
+files.forEach((file) => renameSync(file, file.replace('.js', '.cjs')))
 
 // eslint-disable-next-line no-console
 console.log(`renamed all '.js' file to '.cjs'`)

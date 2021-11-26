@@ -1,7 +1,7 @@
 # CHANGELOG.md
 
 
-## 2.54.1 (2021-11-26)
+## 2.54.2 (2021-11-26)
 
 Bugfix:
  - fix Proxy-access for CJS projects [#131](https://github.com/ivanhofer/typesafe-i18n/issues/131)
