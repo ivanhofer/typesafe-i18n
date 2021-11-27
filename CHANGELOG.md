@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.54.3 (2021-11-27)
+
+Bugfix:
+ - fix Proxy-access [#133](https://github.com/ivanhofer/typesafe-i18n/issues/133)
+
 ## 2.54.2 (2021-11-26)
 
 Bugfix:
