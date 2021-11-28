@@ -12,26 +12,18 @@ jobs:
       steps:
          - uses: actions/checkout@v2
 
+         - uses: pnpm/action-setup@v2.0.1
+
          - name: install node
            uses: actions/setup-node@v2
            with:
               node-version: 16
-              cache: 'npm'
+              cache: 'pnpm'
 
-         - run: npm install --no-save
+         - run: pnpm install --no-save
 
          - name: run test
-           run: npm test
-
-         # - run: npm run coverage
-
-         # - name: output test coverage
-         #   run: npm run coverage:output-report
-
-         # - uses: actions/upload-artifact@v2
-         #   with:
-         #      name: coverage-report
-         #      path: coverage-report.txt
+           run: pnpm run test
 
          - name: bump version and create tag
            uses: 'phips28/gh-action-bump-version@master'
@@ -42,7 +34,7 @@ jobs:
               major-wording: 'major'
 
          - name: build package
-           run: npm run build
+           run: pnpm run build
 
          - name: create browser artifacts
            uses: actions/upload-artifact@v2

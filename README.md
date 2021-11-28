@@ -1746,7 +1746,7 @@ With the type `LocalizedString` you can restrict your functions to only translat
 Node.JS, by default, does not come with the full [`intl`](https://nodejs.org/api/intl.html) support. To reduce the size of the node installment it will only include 'en' as locale. You would need to add it yourself. The easiest way is to install the `intl` package
 
 ```bash
-> npm i intl
+> npm install intl
 ```
 
 and then add following lines on top of your `src/i18n/formatters.ts` file:
