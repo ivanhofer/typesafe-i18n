@@ -1,3 +1,4 @@
+import { identity } from 'svelte/internal'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 import { i18nObject } from '../src/util.object'
@@ -145,6 +146,30 @@ const LL7 = i18nObject('en', ['test-1', 'test-2'] as const)
 
 test('array root strings', () => assert.is(LL7[0](), 'test-1'))
 test('array root strings', () => assert.is(LL7[1](), 'test-2'))
+
+// --------------------------------------------------------------------------------------------------------------------
+
+const LL8 = i18nObject(
+	'en',
+	{
+		identity: '{0|identity}',
+		trim: '{ 0 | ignore }',
+		chaining: '{ value | addA | addB | addC }',
+		order: '{ value | addC | addA | identity | addB }',
+	},
+	{
+		identity: (value) => value,
+		ignore: () => '',
+		addA: (value) => `${value}A`,
+		addB: (value) => `${value}B`,
+		addC: (value) => `${value}C`,
+	},
+)
+
+test('formatter identity', () => assert.is(LL8.identity('test'), 'test'))
+test('formatter trim', () => assert.is(LL8.trim('test'), ''))
+test('formatter chaining', () => assert.is(LL8.chaining({ value: '' }), 'ABC'))
+test('formatter order', () => assert.is(LL8.order({ value: '' }), 'CAB'))
 
 // --------------------------------------------------------------------------------------------------------------------
 
