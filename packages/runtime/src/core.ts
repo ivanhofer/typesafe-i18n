@@ -74,8 +74,21 @@ export type BaseFormatters = {
 export const isPluralPart = (part: Part): part is TypeGuard<PluralPart, Part> =>
 	!!((<PluralPart>part).o || (<PluralPart>part).r)
 
+const REGEX_SWITCH_CASE = /^\[.*\]$/
+
 const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], value: unknown) =>
-	formatterKeys.reduce((prev, formatterKey) => formatters[formatterKey]?.(prev) ?? prev, value)
+	formatterKeys.reduce(
+		(prev, formatterKey) =>
+			formatterKey.match(REGEX_SWITCH_CASE)
+				? Object.fromEntries(
+						formatterKey
+							.substring(1, formatterKey.length - 1)
+							.split(',')
+							.map((part) => part.split(':').map((value) => value.trim())),
+				  )[value as string]
+				: formatters[formatterKey]?.(prev) ?? prev,
+		value,
+	)
 
 const getPlural = (pluralRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPart, value: unknown) => {
 	switch (z && value == 0 ? 'zero' : pluralRules.select(value as number)) {
