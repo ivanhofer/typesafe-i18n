@@ -1,4 +1,5 @@
 import type { TypeGuard } from 'typesafe-utils'
+import { removeOuterBrackets } from '../../parser/src/index'
 import type { ArgumentPart, Part, PluralPart } from '../../parser/src/types'
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -82,8 +83,7 @@ const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], va
 		(prev, formatterKey) =>
 			formatterKey.match(REGEX_SWITCH_CASE)
 				? Object.fromEntries(
-						formatterKey
-							.substring(1, formatterKey.length - 1)
+						removeOuterBrackets(formatterKey)
 							.split(',')
 							.map((part) => part.split(':').map((value) => value.trim())),
 				  )[prev as string]

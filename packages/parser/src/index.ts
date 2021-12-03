@@ -63,18 +63,19 @@ const parsePluralPart = (content: string, lastAccessor: string): PluralPart => {
 
 const REGEX_BRACKETS_SPLIT = /(\{(?:[^{}]+|\{(?:[^{}]+)*\})*\})/g
 
+export const removeOuterBrackets = (text: string) => text.substring(1, text.length - 1)
+
 export const parseRawText = (rawText: string, optimize = true, firstKey = '', lastKey = ''): Part[] =>
 	rawText
 		.split(REGEX_BRACKETS_SPLIT)
-		.filter(Boolean)
 		.map((part) => {
 			if (!part.match(REGEX_BRACKETS_SPLIT)) {
 				return part
 			}
 
-			const content = part.substring(1, part.length - 1)
-			if (content.startsWith('{') && content.endsWith('}')) {
-				return parsePluralPart(content.substring(1, content.length - 1), lastKey)
+			const content = removeOuterBrackets(part)
+			if (content.startsWith('{')) {
+				return parsePluralPart(removeOuterBrackets(content), lastKey)
 			}
 
 			const parsedPart = parseArgumentPart(content)
