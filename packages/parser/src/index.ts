@@ -61,7 +61,7 @@ const parsePluralPart = (content: string, lastAccessor: string): PluralPart => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const REGEX_BRACKETS_SPLIT = /({?{[^\\}]+}}?)/g
+const REGEX_BRACKETS_SPLIT = /(\{(?:[^{}]+|\{(?:[^{}]+)*\})*\})/g
 
 export const parseRawText = (rawText: string, optimize = true, firstKey = '', lastKey = ''): Part[] =>
 	rawText
