@@ -1407,16 +1407,16 @@ The footprint of the `typesafe-i18n` package is smaller compared to other existi
 
 These parts are bundled into the [core functions](#custom-usage). The sizes of the core functionalities are:
 
-- [i18nString](#i18nString): 938 bytes gzipped
-- [i18nObject](#i18nObject): 1040 bytes gzipped
-- [i18n](#i18n): 1077 bytes gzipped
+- [i18nString](#i18nString): 978 bytes gzipped
+- [i18nObject](#i18nObject): 1071 bytes gzipped
+- [i18n](#i18n): 1108 bytes gzipped
 
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
 There also exists a useful wrapper for some frameworks:
-- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 1374 bytes gzipped
-- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react#usage-in-javascript-projects): 1531 bytes gzipped
-- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte#usage-in-javascript-projects): 1513 bytes gzipped
+- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 1405 bytes gzipped
+- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react#usage-in-javascript-projects): 1564 bytes gzipped
+- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte#usage-in-javascript-projects): 1543 bytes gzipped
 
 
 
