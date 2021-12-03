@@ -173,4 +173,29 @@ test('formatter order', () => assert.is(LL8.order({ value: '' }), 'CAB'))
 
 // --------------------------------------------------------------------------------------------------------------------
 
+const LL9 = i18nObject(
+	'en',
+	{
+		switch1: '{0|{yes:JA,no:NEIN}}',
+		keyed: '{option|{yes:JA,no:NEIN}}',
+		switch2: '{0| {  yes : JA , no : NEIN }}',
+		switchFormatter: '{0|{y: yes, n: no }|uppercase}',
+		formatterSwitch: '{0|uppercase|{Y: yes, N: no }}',
+		formatterSwitchFormatter: '{0|uppercase| {Y: yes, N: no } | uppercase }',
+	},
+	{
+		uppercase: (v: string) => v.toUpperCase(),
+	},
+)
+
+test('switch-case yes no', () => assert.is(LL9.switch1('yes'), 'JA'))
+test('switch-case keyed', () => assert.is(LL9.keyed({ option: 'yes' }), 'JA'))
+test('switch-case trim', () => assert.is(LL9.switch2('no'), 'NEIN'))
+test('switch-case wrong key', () => assert.is(LL9.switch1('test'), ''))
+test('switch-case switch formatter', () => assert.is(LL9.switchFormatter('y'), 'YES'))
+test('switch-case formatter switch', () => assert.is(LL9.formatterSwitch('n'), 'no'))
+test('switch-case formatter switch formatter', () => assert.is(LL9.formatterSwitchFormatter('n'), 'NO'))
+
+// --------------------------------------------------------------------------------------------------------------------
+
 test.run()
