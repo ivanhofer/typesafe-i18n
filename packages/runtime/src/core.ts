@@ -25,6 +25,7 @@ export type TranslationFunctions<
 		| Readonly<BaseTranslation>
 		| Readonly<BaseTranslation[]> = BaseTranslation,
 > = {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[key in keyof T]: T[key] extends Record<any, any> ? TranslationFunctions<T[key]> : BaseTranslationFunction
 }
 
@@ -74,7 +75,7 @@ export type BaseFormatters = {
 export const isPluralPart = (part: Part): part is TypeGuard<PluralPart, Part> =>
 	!!((<PluralPart>part).o || (<PluralPart>part).r)
 
-const REGEX_SWITCH_CASE = /^\[.*\]$/
+const REGEX_SWITCH_CASE = /^\{.*\}$/
 
 const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], value: unknown) =>
 	formatterKeys.reduce(
