@@ -86,7 +86,7 @@ const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], va
 							.substring(1, formatterKey.length - 1)
 							.split(',')
 							.map((part) => part.split(':').map((value) => value.trim())),
-				  )[value as string]
+				  )[prev as string]
 				: formatters[formatterKey]?.(prev) ?? prev,
 		value,
 	)
