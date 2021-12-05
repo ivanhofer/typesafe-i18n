@@ -12,7 +12,9 @@ jobs:
       steps:
          - uses: actions/checkout@v2
 
-         - uses: pnpm/action-setup@v2.0.1
+         - uses: pnpm/action-setup@v2
+           with:
+              version: 6.23.2
 
          - name: install node
            uses: actions/setup-node@v2
