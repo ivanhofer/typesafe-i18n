@@ -146,6 +146,22 @@ const parseTranslations = (
 		  })
 		: []
 
+const parseTypesFromSwitchCaseStatement = (formatters: string[] | undefined) => {
+	if (!formatters?.length) return undefined
+
+	const formatter = formatters[0] as string
+	if (!formatter.startsWith('{')) return undefined
+
+	const keys = formatter
+		.replace(REGEX_BRACKETS, '')
+		.split(',')
+		.map((s) => s.split(':'))
+		.map(([key]) => key?.trim())
+		.sort()
+
+	return keys.map((key) => (key === '*' ? 'string' : `'${key}'`)).join(' | ')
+}
+
 const parseTranslationEntry = (
 	[key, text]: [string, string],
 	logger: Logger,
@@ -163,8 +179,9 @@ const parseTranslationEntry = (
 
 	argumentParts.forEach(({ k, n, i, f }) => {
 		args.push({ key: k, formatters: f, optional: n })
+		const type = i ?? parseTypesFromSwitchCaseStatement(f)
 		types[k] = {
-			types: uniqueArray([...(types[k]?.types || []), i]).filter(isNotUndefined),
+			types: uniqueArray([...(types[k]?.types || []), type]).filter(isNotUndefined),
 			optional: types[k]?.optional || n,
 		}
 	})
@@ -245,7 +262,7 @@ const BASE_TYPES = [
 	'null',
 	'unknown',
 	'LocalizedString',
-].flatMap((t: string) => [t, `${t}[]`])
+].flatMap((t: string) => [t, `${t}[]`, `Array<${t}>`])
 
 const isParsedResultEntry = <T extends ParsedResult>(entry: T): entry is TypeGuard<ParsedResultEntry, T> =>
 	isArray(entry.parentKeys) && isObject(entry.types)
@@ -265,12 +282,14 @@ const createTypeImports = (parsedTranslations: ParsedResult[], typesTemplatePath
 	const types = extractTypes(parsedTranslations).filter(filterDuplicates)
 
 	const externalTypes = Array.from(types)
-		.filter((type) => !BASE_TYPES.includes(type))
+		.filter(
+			(type) => !BASE_TYPES.includes(type) && !(type.includes('|') || type.startsWith("'") || type.endsWith("'")),
+		)
 		.sort(sortStringASC)
 
-	return !externalTypes.length
-		? ''
-		: `
+	if (!externalTypes.length) return ''
+
+	return `
 ${importTypeStatement} { ${externalTypes.join(COMMA_SEPARATION)} } from './${typesTemplatePath.replace('.ts', '')}'
 `
 }

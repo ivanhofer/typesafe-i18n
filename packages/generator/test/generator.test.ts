@@ -267,6 +267,23 @@ testGeneratedOutput('nested-formatters', {
 
 // --------------------------------------------------------------------------------------------------------------------
 
+testGeneratedOutput('switch-case', {
+	switch1: '{0|{yes:JA,no:NEIN}}',
+	keyed: '{option|{yes:JA,no:NEIN}}',
+	switch2: '{0| {  yes : JA , no : NEIN }}',
+	switchFormatter: '{0|{y: yes, n: no }|uppercase}',
+	formatterSwitch: '{0|uppercase|{Y: yes, N: no }}',
+	formatterSwitchFormatter: '{0|uppercase| {Y: yes, N: no } | uppercase }',
+	number: '{0|{1: one, 2: two}}',
+	fallback: '{0|{yes:JA, * : NEIN}}',
+	emptyNoFallback: '{0|{test:, * : nothing}}',
+	spacesInKey: '{0|{a b c: begin, *:rest}}',
+	dashesInKey: '{0|{a-b-c: begin, *:rest}}',
+	withType: '{0:string|{y:yes,n:no}}',
+})
+
+// --------------------------------------------------------------------------------------------------------------------
+
 testGeneratedOutput('arrays-root-strings', ['hello', 'this is a test, {name: string}'])
 
 testGeneratedOutput('arrays-root', [{ HI: 'test' }])

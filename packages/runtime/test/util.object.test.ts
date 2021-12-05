@@ -185,6 +185,9 @@ const LL9 = i18nObject(
 		number: '{0|{1: one, 2: two}}',
 		fallback: '{0|{yes:JA, * : NEIN}}',
 		emptyNoFallback: '{0|{test:, * : nothing}}',
+		spacesInKey: '{0|{a b c: begin, *:rest}}',
+		dashesInKey: '{0|{a-b-c: begin, *:rest}}',
+		withType: '{0:string|{y:yes,n:no}}',
 	},
 	{
 		uppercase: (v: string) => v.toUpperCase(),
@@ -201,6 +204,9 @@ test('switch-case formatter switch formatter', () => assert.is(LL9.formatterSwit
 test('switch-case number', () => assert.is(LL9.number('1'), 'one'))
 test('switch-case fallback', () => assert.is(LL9.fallback('something'), 'NEIN'))
 test('switch-case fallback empty', () => assert.is(LL9.emptyNoFallback('test'), ''))
+test('switch-case spaces in key', () => assert.is(LL9.spacesInKey('a b c'), 'begin'))
+test('switch-case dashes in key', () => assert.is(LL9.dashesInKey('a-b-c'), 'begin'))
+test('switch-case with type', () => assert.is(LL9.withType('y'), 'yes'))
 
 // --------------------------------------------------------------------------------------------------------------------
 
