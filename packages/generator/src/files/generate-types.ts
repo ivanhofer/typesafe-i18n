@@ -511,19 +511,16 @@ const getTypes = (
 
 	const paramsType = supportsTemplateLiteralTypes ? createParamsType(paramTypesToGenerate) : ''
 
-	const imports = parsedTranslations.length
-		? `${importTypeStatement} { LocalizedString } from 'typesafe-i18n'
-`
-		: ''
-
 	const translationArgsType = createTranslationsArgsType(parsedTranslations, jsDocsInfo)
 
 	const formattersType = createFormattersType(parsedTranslations)
 
 	const type = `${OVERRIDE_WARNING}
 ${banner}
-${importTypeStatement} { BaseTranslation as BaseTranslationType } from 'typesafe-i18n'
-${imports}${typeImports}
+${importTypeStatement} { BaseTranslation as BaseTranslationType${
+		parsedTranslations.length ? ', LocalizedString' : ''
+	} } from 'typesafe-i18n'
+${typeImports}
 export type BaseTranslation = BaseTranslationType
 export type BaseLocale = '${baseLocale}'
 
