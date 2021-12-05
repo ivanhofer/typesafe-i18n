@@ -182,6 +182,9 @@ const LL9 = i18nObject(
 		switchFormatter: '{0|{y: yes, n: no }|uppercase}',
 		formatterSwitch: '{0|uppercase|{Y: yes, N: no }}',
 		formatterSwitchFormatter: '{0|uppercase| {Y: yes, N: no } | uppercase }',
+		number: '{0|{1: one, 2: two}}',
+		fallback: '{0|{yes:JA, * : NEIN}}',
+		emptyNoFallback: '{0|{test:, * : nothing}}',
 	},
 	{
 		uppercase: (v: string) => v.toUpperCase(),
@@ -191,10 +194,13 @@ const LL9 = i18nObject(
 test('switch-case yes no', () => assert.is(LL9.switch1('yes'), 'JA'))
 test('switch-case keyed', () => assert.is(LL9.keyed({ option: 'yes' }), 'JA'))
 test('switch-case trim', () => assert.is(LL9.switch2('no'), 'NEIN'))
-test('switch-case wrong key', () => assert.is(LL9.switch1('test'), ''))
+test('switch-case wrong key', () => assert.is(LL9.switch1('test'), 'test'))
 test('switch-case switch formatter', () => assert.is(LL9.switchFormatter('y'), 'YES'))
 test('switch-case formatter switch', () => assert.is(LL9.formatterSwitch('n'), 'no'))
 test('switch-case formatter switch formatter', () => assert.is(LL9.formatterSwitchFormatter('n'), 'NO'))
+test('switch-case number', () => assert.is(LL9.number('1'), 'one'))
+test('switch-case fallback', () => assert.is(LL9.fallback('something'), 'NEIN'))
+test('switch-case fallback empty', () => assert.is(LL9.emptyNoFallback('test'), ''))
 
 // --------------------------------------------------------------------------------------------------------------------
 

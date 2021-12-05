@@ -78,17 +78,21 @@ export const isPluralPart = (part: Part): part is TypeGuard<PluralPart, Part> =>
 
 const REGEX_SWITCH_CASE = /^\{.*\}$/
 
-const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], value: unknown) =>
+const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], initialValue: unknown) =>
 	formatterKeys.reduce(
-		(prev, formatterKey) =>
-			formatterKey.match(REGEX_SWITCH_CASE)
-				? Object.fromEntries(
-						removeOuterBrackets(formatterKey)
-							.split(',')
-							.map((part) => part.split(':').map((value) => value.trim())),
-				  )[prev as string]
-				: formatters[formatterKey]?.(prev) ?? prev,
-		value,
+		(value, formatterKey) =>
+			(formatterKey.match(REGEX_SWITCH_CASE)
+				? (() => {
+						const cases = Object.fromEntries(
+							removeOuterBrackets(formatterKey)
+								.split(',')
+								.map((part) => part.split(':').map((value) => value.trim())),
+						)
+
+						return cases[value as string] ?? cases['*']
+				  })()
+				: formatters[formatterKey]?.(value)) ?? value,
+		initialValue,
 	)
 
 const getPlural = (pluralRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPart, value: unknown) => {
