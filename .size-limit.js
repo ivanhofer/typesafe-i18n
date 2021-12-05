@@ -37,5 +37,4 @@ module.exports = [
 		limit: '1567 b',
 		ignore: ['svelte'],
 	},
-
 ]
