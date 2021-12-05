@@ -30,6 +30,7 @@ import {
 	OVERRIDE_WARNING,
 	supportsTemplateLiteralTypes,
 } from '../output-handler'
+import { getWrappedString } from './generate-template-locale'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -145,6 +146,22 @@ const parseTranslations = (
 		  })
 		: []
 
+const parseTypesFromSwitchCaseStatement = (formatters: string[] | undefined) => {
+	if (!formatters?.length) return undefined
+
+	const formatter = formatters[0] as string
+	if (!formatter.startsWith('{')) return undefined
+
+	const keys = formatter
+		.replace(REGEX_BRACKETS, '')
+		.split(',')
+		.map((s) => s.split(':'))
+		.map(([key]) => key?.trim())
+		.sort()
+
+	return keys.map((key) => (key === '*' ? 'string' : `'${key}'`)).join(' | ')
+}
+
 const parseTranslationEntry = (
 	[key, text]: [string, string],
 	logger: Logger,
@@ -162,8 +179,9 @@ const parseTranslationEntry = (
 
 	argumentParts.forEach(({ k, n, i, f }) => {
 		args.push({ key: k, formatters: f, optional: n })
+		const type = i ?? parseTypesFromSwitchCaseStatement(f)
 		types[k] = {
-			types: uniqueArray([...(types[k]?.types || []), i]).filter(isNotUndefined),
+			types: uniqueArray([...(types[k]?.types || []), type]).filter(isNotUndefined),
 			optional: types[k]?.optional || n,
 		}
 	})
@@ -244,7 +262,7 @@ const BASE_TYPES = [
 	'null',
 	'unknown',
 	'LocalizedString',
-].flatMap((t: string) => [t, `${t}[]`])
+].flatMap((t: string) => [t, `${t}[]`, `Array<${t}>`])
 
 const isParsedResultEntry = <T extends ParsedResult>(entry: T): entry is TypeGuard<ParsedResultEntry, T> =>
 	isArray(entry.parentKeys) && isObject(entry.types)
@@ -264,12 +282,14 @@ const createTypeImports = (parsedTranslations: ParsedResult[], typesTemplatePath
 	const types = extractTypes(parsedTranslations).filter(filterDuplicates)
 
 	const externalTypes = Array.from(types)
-		.filter((type) => !BASE_TYPES.includes(type))
+		.filter(
+			(type) => !BASE_TYPES.includes(type) && !(type.includes('|') || type.startsWith("'") || type.endsWith("'")),
+		)
 		.sort(sortStringASC)
 
-	return !externalTypes.length
-		? ''
-		: `
+	if (!externalTypes.length) return ''
+
+	return `
 ${importTypeStatement} { ${externalTypes.join(COMMA_SEPARATION)} } from './${typesTemplatePath.replace('.ts', '')}'
 `
 }
@@ -350,20 +370,37 @@ const createTranslationTypeEntry = (
 	)
 }
 
-const REGEX_BRACKETS = /[{}]/g
+const REGEX_BRACKETS = /(^{)|(}$)/g
+
+const getFormatterType = (formatter: string) => {
+	if (!formatter.startsWith('{')) return formatter
+
+	const cases = formatter
+		.replace(REGEX_BRACKETS, '')
+		.split(',')
+		.map((part) => part.split(':'))
+		.map(([key]) => [key, `\${string}`])
+		.map((part) => part.join(':'))
+		.join(',')
+
+	return `{${cases}}`
+}
 
 const generateTranslationType = (paramTypesToGenerate: number[], args: Arg[]) => {
 	const argStrings = args
 		.filter(isPropertyFalsy('pluralOnly'))
 		.map(({ key, optional, formatters }) =>
-			partAsStringWithoutTypes({ k: key, n: optional, f: formatters }).replace(REGEX_BRACKETS, ''),
+			partAsStringWithoutTypes({ k: key, n: optional, f: formatters?.map(getFormatterType) }).replace(
+				REGEX_BRACKETS,
+				'',
+			),
 		)
 
 	const nrOfArgs = argStrings.length
 	paramTypesToGenerate.push(nrOfArgs)
 
 	return supportsTemplateLiteralTypes && nrOfArgs
-		? `RequiredParams${nrOfArgs}<${argStrings.map((arg) => `'${arg}'`).join(COMMA_SEPARATION)}>`
+		? `RequiredParams${nrOfArgs}<${argStrings.map((arg) => getWrappedString(arg, true)).join(COMMA_SEPARATION)}>`
 		: 'string'
 }
 
@@ -383,7 +420,7 @@ const createParamsType = (paramTypesToGenerate: number[]) => {
 
 	return `
 type Param<P extends string> = \`{\${P}}\`
-${baseTypes?.join(NEW_LINE)}
+${baseTypes.join(NEW_LINE)}
 ${permutationTypes?.join(NEW_LINE)}
 `
 }
@@ -470,9 +507,9 @@ const getUniqueFormatters = (parsedTranslations: ParsedResult[]): [string, strin
 	flattenToParsedResultEntry(parsedTranslations).forEach((parsedResult) => {
 		const { types, args } = parsedResult
 		args.forEach(({ key, formatters }) =>
-			(formatters || []).forEach(
-				(formatter) => (map[formatter] = [...(map[formatter] || []), ...(types[key]?.types || [])]),
-			),
+			(formatters || [])
+				.filter((formatter) => !formatter.startsWith('{'))
+				.forEach((formatter) => (map[formatter] = [...(map[formatter] || []), ...(types[key]?.types || [])])),
 		)
 	})
 
@@ -511,19 +548,16 @@ const getTypes = (
 
 	const paramsType = supportsTemplateLiteralTypes ? createParamsType(paramTypesToGenerate) : ''
 
-	const imports = parsedTranslations.length
-		? `${importTypeStatement} { LocalizedString } from 'typesafe-i18n'
-`
-		: ''
-
 	const translationArgsType = createTranslationsArgsType(parsedTranslations, jsDocsInfo)
 
 	const formattersType = createFormattersType(parsedTranslations)
 
 	const type = `${OVERRIDE_WARNING}
 ${banner}
-${importTypeStatement} { BaseTranslation as BaseTranslationType } from 'typesafe-i18n'
-${imports}${typeImports}
+${importTypeStatement} { BaseTranslation as BaseTranslationType${
+		parsedTranslations.length ? ', LocalizedString' : ''
+	} } from 'typesafe-i18n'
+${typeImports}
 export type BaseTranslation = BaseTranslationType
 export type BaseLocale = '${baseLocale}'
 

@@ -5,6 +5,7 @@ specifiers:
   '@rollup/plugin-json': ^4.1.0
   '@rollup/plugin-node-resolve': ^13.0.6
   '@rollup/plugin-typescript': ^8.3.0
+  '@rollup/pluginutils': ^4.1.1
   '@size-limit/preset-small-lib': ^7.0.3
   '@types/express': ^4.17.13
   '@types/glob': ^7.2.0
@@ -54,6 +55,7 @@ devDependencies:
   '@rollup/plugin-json': 4.1.0_rollup@2.60.1
   '@rollup/plugin-node-resolve': 13.0.6_rollup@2.60.1
   '@rollup/plugin-typescript': 8.3.0_b13ef2726f6c50b174fe2dc72f675942
+  '@rollup/pluginutils': 4.1.1
   '@size-limit/preset-small-lib': 7.0.3_size-limit@7.0.3
   '@types/express': 4.17.13
   '@types/glob': 7.2.0
@@ -251,6 +253,14 @@ packages:
       estree-walker: 1.0.1
       picomatch: 2.3.0
       rollup: 2.60.1
+    dev: true
+
+  /@rollup/pluginutils/4.1.1:
+    resolution: {integrity: sha512-clDjivHqWGXi7u+0d2r2sBi4Ie6VLEAzWMIkvJLnDmxoOhBYOTfzGbOQBA32THHm11/LiJbd01tJUpJsbshSWQ==}
+    engines: {node: '>= 8.0.0'}
+    dependencies:
+      estree-walker: 2.0.2
+      picomatch: 2.3.0
     dev: true
 
   /@size-limit/esbuild/7.0.3_size-limit@7.0.3:

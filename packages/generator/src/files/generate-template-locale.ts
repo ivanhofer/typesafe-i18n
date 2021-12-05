@@ -37,19 +37,20 @@ ${mapTranslationsToString(value, level + 1)}
 ${inset}},`
 }
 
-export const getWrappedString = (text: string): string => {
+export const getWrappedString = (text: string, lookForStringType = false): string => {
 	const containsSingleQuotes = text.includes("'")
 	const containsDoubleQuotes = text.includes('"')
 	const containsNewLines = text.includes('\n')
+	const containsVariables = text.includes('${string}')
 
 	let wrappingString = "'"
-	if (containsNewLines || (containsSingleQuotes && containsDoubleQuotes)) {
+	if (containsNewLines || (containsSingleQuotes && containsDoubleQuotes) || (lookForStringType && containsVariables)) {
 		wrappingString = '`'
 	} else if (containsSingleQuotes) {
 		wrappingString = '"'
 	}
 
-	return `${wrappingString}${text.replace(new RegExp(`${wrappingString}/g`), `\${wrappingString}`)}${wrappingString}`
+	return `${wrappingString}${text.replace(new RegExp(`${wrappingString}/g`), `\\${wrappingString}`)}${wrappingString}`
 }
 
 // --------------------------------------------------------------------------------------------------------------------

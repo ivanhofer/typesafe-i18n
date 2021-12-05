@@ -1,4 +1,5 @@
 import type { TypeGuard } from 'typesafe-utils'
+import { removeOuterBrackets } from '../../parser/src/index'
 import type { ArgumentPart, Part, PluralPart } from '../../parser/src/types'
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -25,6 +26,7 @@ export type TranslationFunctions<
 		| Readonly<BaseTranslation>
 		| Readonly<BaseTranslation[]> = BaseTranslation,
 > = {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[key in keyof T]: T[key] extends Record<any, any> ? TranslationFunctions<T[key]> : BaseTranslationFunction
 }
 
@@ -74,8 +76,24 @@ export type BaseFormatters = {
 export const isPluralPart = (part: Part): part is TypeGuard<PluralPart, Part> =>
 	!!((<PluralPart>part).o || (<PluralPart>part).r)
 
-const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], value: unknown) =>
-	formatterKeys.reduce((prev, formatterKey) => formatters[formatterKey]?.(prev) ?? prev, value)
+const REGEX_SWITCH_CASE = /^\{.*\}$/
+
+const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], initialValue: unknown) =>
+	formatterKeys.reduce(
+		(value, formatterKey) =>
+			(formatterKey.match(REGEX_SWITCH_CASE)
+				? (() => {
+						const cases = Object.fromEntries(
+							removeOuterBrackets(formatterKey)
+								.split(',')
+								.map((part) => part.split(':').map((value) => value.trim())),
+						)
+
+						return cases[value as string] ?? cases['*']
+				  })()
+				: formatters[formatterKey]?.(value)) ?? value,
+		initialValue,
+	)
 
 const getPlural = (pluralRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPart, value: unknown) => {
 	switch (z && value == 0 ? 'zero' : pluralRules.select(value as number)) {

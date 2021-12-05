@@ -1,3 +1,4 @@
+import { identity } from 'svelte/internal'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 import { i18nObject } from '../src/util.object'
@@ -145,6 +146,67 @@ const LL7 = i18nObject('en', ['test-1', 'test-2'] as const)
 
 test('array root strings', () => assert.is(LL7[0](), 'test-1'))
 test('array root strings', () => assert.is(LL7[1](), 'test-2'))
+
+// --------------------------------------------------------------------------------------------------------------------
+
+const LL8 = i18nObject(
+	'en',
+	{
+		identity: '{0|identity}',
+		trim: '{ 0 | ignore }',
+		chaining: '{ value | addA | addB | addC }',
+		order: '{ value | addC | addA | identity | addB }',
+	},
+	{
+		identity: (value) => value,
+		ignore: () => '',
+		addA: (value) => `${value}A`,
+		addB: (value) => `${value}B`,
+		addC: (value) => `${value}C`,
+	},
+)
+
+test('formatter identity', () => assert.is(LL8.identity('test'), 'test'))
+test('formatter trim', () => assert.is(LL8.trim('test'), ''))
+test('formatter chaining', () => assert.is(LL8.chaining({ value: '' }), 'ABC'))
+test('formatter order', () => assert.is(LL8.order({ value: '' }), 'CAB'))
+
+// --------------------------------------------------------------------------------------------------------------------
+
+const LL9 = i18nObject(
+	'en',
+	{
+		switch1: '{0|{yes:JA,no:NEIN}}',
+		keyed: '{option|{yes:JA,no:NEIN}}',
+		switch2: '{0| {  yes : JA , no : NEIN }}',
+		switchFormatter: '{0|{y: yes, n: no }|uppercase}',
+		formatterSwitch: '{0|uppercase|{Y: yes, N: no }}',
+		formatterSwitchFormatter: '{0|uppercase| {Y: yes, N: no } | uppercase }',
+		number: '{0|{1: one, 2: two}}',
+		fallback: '{0|{yes:JA, * : NEIN}}',
+		emptyNoFallback: '{0|{test:, * : nothing}}',
+		spacesInKey: '{0|{a b c: begin, *:rest}}',
+		dashesInKey: '{0|{a-b-c: begin, *:rest}}',
+		withType: '{0:string|{y:yes,n:no}}',
+	},
+	{
+		uppercase: (v: string) => v.toUpperCase(),
+	},
+)
+
+test('switch-case yes no', () => assert.is(LL9.switch1('yes'), 'JA'))
+test('switch-case keyed', () => assert.is(LL9.keyed({ option: 'yes' }), 'JA'))
+test('switch-case trim', () => assert.is(LL9.switch2('no'), 'NEIN'))
+test('switch-case wrong key', () => assert.is(LL9.switch1('test'), 'test'))
+test('switch-case switch formatter', () => assert.is(LL9.switchFormatter('y'), 'YES'))
+test('switch-case formatter switch', () => assert.is(LL9.formatterSwitch('n'), 'no'))
+test('switch-case formatter switch formatter', () => assert.is(LL9.formatterSwitchFormatter('n'), 'NO'))
+test('switch-case number', () => assert.is(LL9.number('1'), 'one'))
+test('switch-case fallback', () => assert.is(LL9.fallback('something'), 'NEIN'))
+test('switch-case fallback empty', () => assert.is(LL9.emptyNoFallback('test'), ''))
+test('switch-case spaces in key', () => assert.is(LL9.spacesInKey('a b c'), 'begin'))
+test('switch-case dashes in key', () => assert.is(LL9.dashesInKey('a-b-c'), 'begin'))
+test('switch-case with type', () => assert.is(LL9.withType('y'), 'yes'))
 
 // --------------------------------------------------------------------------------------------------------------------
 
