@@ -35,18 +35,17 @@
 
 ## Table of Contents
 
-- [Get started](#get-started)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Typesafety](#typesafety)
-- [Syntax](#syntax)
-- [Formatters](#formatters)
-- [Switch-Case](#switch-case)
-- [Locale-detection](#locale-detection)
-- [Integration with other Services](#integration-with-other-services)
-- [Sizes](#sizes)
-- [Performance](#performance)
-- [FAQs](#faqs)
+- [**Get started**](#get-started) - how to add `typesafe-i18n` to your project
+- [**Usage**](#usage) - how to implement different use-cases
+- [**Typesafety**](#typesafety) - how to get the best typesafety features
+- [**Syntax**](#syntax) - how to write your translations
+- [**Formatters**](#formatters) - how to format dates and numbers
+- [**Switch-Case**](#switch-case) - how to output different words depending on an argument
+- [**Locale-detection**](#locale-detection) - how to detect an user's locale
+- [**Integrations**](#integration-with-other-services) - how to integrate other i18n services
+- [**Sizes**](#sizes) - how much does `typesafe-i18n` add to your bundle size
+- [**Performance**](#performance) - how efficient is `typesafe-i18n` implemented
+- [**FAQs**](#faqs) - how to get your questions answered
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -77,12 +76,7 @@
 *Having trouble setting up `typesafe-i18n`? Reach out to us via [Github Discussions](https://github.com/ivanhofer/typesafe-i18n/discussions) or on [Discord](https://discord.gg/T27AHfaADK).*
 
 
-
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-
-## Installation
+### manual installation
 
 ```bash
 npm install typesafe-i18n
@@ -109,7 +103,7 @@ You can use `typesafe-i18n` in a variety of project-setups:
 
 ### Browser Support
 
-The library should work in all **modern browsers**. It uses some functionality from the [`Intl` namespace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl). You can see the list of supported browsers [here](https://caniuse.com/intl-pluralrules). If you want to support older browsers that don't include these functions, you would need to include a polyfill like https://formatjs.io/docs/polyfills/intl-pluralrules/.
+The library should work in all **modern browsers**. It uses some functionality from the [`Intl` namespace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl). You can see the list of supported browsers [here](https://caniuse.com/intl-pluralrules). If you want to support older browsers that don't include these functions, you would need to include a polyfill like [intl-pluralrules](https://formatjs.io/docs/polyfills/intl-pluralrules/).
 
 
 ### Other frameworks
@@ -1497,16 +1491,21 @@ If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n 
 
 ## FAQs
 
+---
+Dou you still have some questions? Reach out to us via [Github Discussions](https://github.com/ivanhofer/typesafe-i18n/discussions) or on [Discord](https://discord.gg/T27AHfaADK).
+
+---
+
 ### I added a new translation to my locale file, but TypeScript gives me the Error `Property 'XYZ' does not exist on type 'TranslationFunctions'`
 
 Make sure to run the [generator](#typesafety) after you make changes to your base translation file. The generator will [generate and update the types](#folder-structure) for you.
 
-
+---
 ### I don't use TypeScript, can I also use `typesafe-i18n` inside JavaScript applications?
 
 Yes, you can. See the [usage](#custom-usage) section for instructions. Even if you don't use TypeScript you can still improve from some typesafety features via [JSDoc-annotations](#jsdoc).
 
-
+---
 ### I added a new translation to my locale file, but the generator will not create new types
 
 The [generator](#typesafety) will only look for changes in your base locale file. Make sure to always update your base locale file first, in order to get the correct auto-generated types. If you want to [change your base locale file](#baselocale), make sure to give it the type of `BaseTranslation`. All other locales should have the type of `Translation`. E.g. if you set your base locale to italian, you would need to do it like this:
@@ -1543,17 +1542,17 @@ The [generator](#typesafety) will only look for changes in your base locale file
    export default en
    ```
 
-
+---
 ### The generator keeps overriding my changes I make to the i18n-files
 
 The [generator](#typesafety) creates some helpful wrappers for you. If you want to write your own wrappers, you can disable the generation of these files by setting the [`generateOnlyTypes`](#generateonlytypes) option to `true`.
 
-
+---
 ### Is `typesafe-i18n` supported by `i18n-ally`?
 
 Yes, you can configure `i18n-ally` like [this](https://github.com/lokalise/i18n-ally/issues/678#issuecomment-947338325). There is currently also an open [`PR`](https://github.com/lokalise/i18n-ally/pull/681) that will add official support for `typesafe-i18n`.
 
-
+---
 ### How do I render a component inside a Translation?
 
 By default `typesafe-i18n` at this time does not provide such a functionality. But you could easily write a function like this:
@@ -1626,7 +1625,7 @@ export function App() {
 
 Basically you will need to write a function that splits the translated message and renders a component between the parts. You can define your split characters yourself but you would always need to make sure you add them in any translation since `typesafe-i18n` doesn't provide any typesafety for these characters (yet).
 
-
+---
 ### I have two similar locales (only a few translations are different) but I don't want to duplicate my translations
 
 Your locale translation files can be any kind of JavaScript object. So you can make object-transformations inside your translation file. The only restriction is: in the end it has to contain a default export with type `Translation`. You could do something like this:
@@ -1661,7 +1660,7 @@ Your locale translation files can be any kind of JavaScript object. So you can m
    export default en_US
    ```
 
-
+---
 ### For certain locales I don't want to output a variable, but due to the strict typing I have to specify it in my translation
 
 The generated types are really strict. It helps you from making unintentional mistakes. If you want to opt-out for certain translations, you can use the `any` keyword.
@@ -1741,7 +1740,7 @@ A better approach would be to create a custom formatter e.g.
    }
    ```
 
-
+---
 ### Why does the translation function return a type of `LocalizedString` and not the type `string` itself?
 
 With the help of `LocalizedString` you could enforce texts in your application to be translated. Lets take an Error message as example:
@@ -1788,7 +1787,7 @@ const createUser = (name: string, password: string) => {
 
 With the type `LocalizedString` you can restrict your functions to only translated strings.
 
-
+---
 ### With Node.JS the `Intl` package does not work with locales other than 'en'
 
 Node.JS, by default, does not come with the full [`intl`](https://nodejs.org/api/intl.html) support. To reduce the size of the node installment it will only include 'en' as locale. You would need to add it yourself. The easiest way is to install the `intl` package
