@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.55.0 (2021-12-05)
+
+Feature:
+ - add switch-case support [#135](https://github.com/ivanhofer/typesafe-i18n/discussions/135)
+
 ## 2.54.3 (2021-11-27)
 
 Bugfix:
