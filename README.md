@@ -711,6 +711,18 @@ LLL(PLURAL, 6) // => 'I have a few apples'
 LLL(PLURAL, 18) // => 'I have many apples'
 ```
 
+### plural (key reference):
+
+Sometimes you may need to specify the key you want to use for defining the plural output.
+
+ > Syntax: `{{key:[plural-syntax]}}`
+
+```typescript
+const BANANAS = 'banana{{nrOfBananas:s}}'
+
+LLL(BANANAS, { nrOfBananas: 1 }) // => 'banana'
+LLL(BANANAS, { nrOfBananas: 3 }) // => 'bananas'
+```
 
 <!-- ------------------------------------------------------------------------------------------ -->
 
