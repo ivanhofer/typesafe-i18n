@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.55.1 (2021-12-06)
+
+Fix:
+ - fix type definition of TranslationFunction for Typescript > 4.5.x [#136][https://github.com/ivanhofer/typesafe-i18n/issues/136)
+
 ## 2.55.0 (2021-12-05)
 
 Feature:

@@ -26,8 +26,12 @@ export type TranslationFunctions<
 		| Readonly<BaseTranslation>
 		| Readonly<BaseTranslation[]> = BaseTranslation,
 > = {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	[key in keyof T]: T[key] extends Record<any, any> ? TranslationFunctions<T[key]> : BaseTranslationFunction
+	[key in keyof T]: T[key] extends string
+		? BaseTranslationFunction
+		: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+		T[key] extends Record<any, any>
+		? TranslationFunctions<T[key]>
+		: never
 }
 
 export type Locale = string
