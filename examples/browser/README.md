@@ -28,7 +28,7 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
 
   - [i18nString](https://github.com/ivanhofer/typesafe-i18n#i18nString)
 	```html
-  	<script src="https://unpkg.com/typesafe-i18n@2.46.5/dist/i18n.string.min.js"></script>
+  	<script src="https://unpkg.com/typesafe-i18n@2.55.1/dist/i18n.string.min.js"></script>
 
 	<script>
 	   const LLL = i18n( /* i18nString parameters */ )
@@ -39,7 +39,7 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
 
   - [i18nObject](https://github.com/ivanhofer/typesafe-i18n#i18nObject)
   	```html
-  	<script src="https://unpkg.com/typesafe-i18n@2.46.5/dist/i18n.object.min.js"></script>
+  	<script src="https://unpkg.com/typesafe-i18n@2.55.1/dist/i18n.object.min.js"></script>
 
 	<script>
 	   const LL = i18n( /* i18nObject parameters */ )
@@ -51,7 +51,7 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
   - [i18n](https://github.com/ivanhofer/typesafe-i18n#i18n)
 
 	```html
-  	<script src="https://unpkg.com/typesafe-i18n@2.46.5/dist/i18n.min.js"></script>
+  	<script src="https://unpkg.com/typesafe-i18n@2.55.1/dist/i18n.min.js"></script>
 
 	<script>
 	   const L = i18n( /* i18n parameters */ )
@@ -62,7 +62,7 @@ Load your desired function from the unpkg CDN and inject it into your HTML-code:
 
   - all together
   	```html
-  	<script src="https://unpkg.com/typesafe-i18n@2.46.5/dist/i18n.all.min.js"></script>
+  	<script src="https://unpkg.com/typesafe-i18n@2.55.1/dist/i18n.all.min.js"></script>
 
 	<script>
 	   const LLL = i18n.initString( /* i18nString parameters */ )

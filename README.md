@@ -471,7 +471,7 @@ You can set options for the [generator](#typesafety) inside a `.typesafe-i18n.js
 
 ```json
 {
-   "$schema": "https://unpkg.com/typesafe-i18n@2.46.5/schema/typesafe-i18n.json",
+   "$schema": "https://unpkg.com/typesafe-i18n@2.55.1/schema/typesafe-i18n.json",
 
    "baseLocale": "de",
    "adapter": "svelte"

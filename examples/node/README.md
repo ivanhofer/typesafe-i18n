@@ -44,7 +44,7 @@ If you are running a node server it makes also sense to set the `loadLocalesAsyn
 
 ```json
 {
-   "$schema": "https://unpkg.com/typesafe-i18n@2.46.5/schema/typesafe-i18n.json",
+   "$schema": "https://unpkg.com/typesafe-i18n@2.55.1/schema/typesafe-i18n.json",
 
    "adapter": "node",
    "loadLocalesAsync": false

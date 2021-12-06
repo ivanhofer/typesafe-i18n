@@ -29,7 +29,7 @@ Configure `typesafe-i18n` by creating the file `.typesafe-i18n.json` with follow
 
 ```json
 {
-   "$schema": "https://unpkg.com/typesafe-i18n@2.46.5/schema/typesafe-i18n.json",
+   "$schema": "https://unpkg.com/typesafe-i18n@2.55.1/schema/typesafe-i18n.json",
 
    "adapter": "angular"
 }
