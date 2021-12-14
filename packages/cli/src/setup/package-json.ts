@@ -4,13 +4,13 @@ import type { PackageJson } from 'type-fest'
 import { doesPathExist, importFile, readFile, writeFile } from '../../../generator/src/file-utils'
 import { logger } from '../../../generator/src/generator-util'
 
+// --------------------------------------------------------------------------------------------------------------------
+
 const packageJsonPath = path.resolve('package.json')
-const yarnLockPath = path.resolve('yarn.lock')
 
 let pck: PackageJson | undefined = undefined
 
 const readPackageJson = async () => pck || (pck = await importFile<PackageJson | undefined>(packageJsonPath, false))
-const hasYarnLock = async () => doesPathExist(yarnLockPath)
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -32,6 +32,31 @@ export const getDependencyList = async () => {
 }
 
 // --------------------------------------------------------------------------------------------------------------------
+
+const npmLockPath = path.resolve('package-lock.json')
+const yarnLockPath = path.resolve('yarn.lock')
+const pnpmLockPath = path.resolve('pnpm-lock.yaml')
+
+const getInstallCommand = async (): Promise<string | undefined> => {
+	if (await doesPathExist(npmLockPath)) {
+		return 'npm install typesafe-i18n'
+	}
+
+	if (await doesPathExist(yarnLockPath)) {
+		return 'yarn add typesafe-i18n'
+	}
+
+	if (await doesPathExist(pnpmLockPath)) {
+		return 'pnpm add typesafe-i18n'
+	}
+
+	logger.error(
+		`Unsupported package manager. Please install the 'typesafe-i18n' npm-package manually and open a new issue at https://github.com/ivanhofer/typesafe-i18n/issues and tell us what package manager you are using.`,
+	)
+
+	return undefined
+}
+
 // --------------------------------------------------------------------------------------------------------------------
 
 const installDependencies = async () => {
@@ -45,7 +70,8 @@ const installDependencies = async () => {
 
 	logger.info('installing dependencies ...')
 
-	const installCommand: string = (await hasYarnLock()) ? 'yarn add typesafe-i18n' : 'npm install typesafe-i18n'
+	const installCommand = await getInstallCommand()
+	if (!installCommand) return false
 
 	const output = execSync(installCommand).toString()
 	// eslint-disable-next-line no-console
