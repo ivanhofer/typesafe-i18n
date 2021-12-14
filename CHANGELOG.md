@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.56.0 (2021-12-14)
+
+Feature:
+ - support `pnpm` as package manager when running the setup-cli [#138](https://github.com/ivanhofer/typesafe-i18n/issues/138)
+
 ## 2.55.1 (2021-12-06)
 
 Fix:
