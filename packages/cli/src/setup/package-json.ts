@@ -12,7 +12,7 @@ const pnpmLockPath = path.resolve('pnpm-lock.yaml')
 let pck: PackageJson | undefined = undefined
 
 const readPackageJson = async () => pck || (pck = await importFile<PackageJson | undefined>(packageJsonPath, false))
-const getInstallCommand = async (): Promise<string> => {
+const getInstallCommand = async (): Promise<string | undefined> => {
 	if (await doesPathExist(npmLockPath)) {
 		return 'npm install typesafe-i18n'
 	}
@@ -25,9 +25,11 @@ const getInstallCommand = async (): Promise<string> => {
 		return 'pnpm add typesafe-i18n'
 	}
 
-	throw new Error(
-		'Unsupported package manager. Please open a new issue at https://github.com/ivanhofer/typesafe-i18n/issues and tell what package manager you are using.',
+	logger.error(
+		`Unsupported package manager. Please install the 'typesafe-i18n' npm-package manually and open a new issue at https://github.com/ivanhofer/typesafe-i18n/issues and tell us what package manager you are using.`,
 	)
+
+	return undefined
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -63,7 +65,8 @@ const installDependencies = async () => {
 
 	logger.info('installing dependencies ...')
 
-	const installCommand: string = await getInstallCommand()
+	const installCommand = await getInstallCommand()
+	if (!installCommand) return false
 
 	const output = execSync(installCommand).toString()
 	// eslint-disable-next-line no-console
