@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 import { diff as justDiff } from 'just-diff'
-import { diffApply as justDiffApply } from 'just-diff-apply'
+import justDiffApply from 'just-diff-apply'
 import kleur from 'kleur'
 import { isPropertyNotUndefined } from 'typesafe-utils'
 import { doesConfigFileExist, getConfigWithDefaultValues, writeConfigToFile } from '../../../config/src/config'
