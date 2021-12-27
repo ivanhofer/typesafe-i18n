@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 import { diff as justDiff } from 'just-diff'
-import justDiffApply from 'just-diff-apply'
+import justDiffApplyImport from 'just-diff-apply'
 import kleur from 'kleur'
 import { isPropertyNotUndefined } from 'typesafe-utils'
 import { doesConfigFileExist, getConfigWithDefaultValues, writeConfigToFile } from '../../../config/src/config'
@@ -9,6 +9,7 @@ import { logger } from '../../../generator/src/generator-util'
 import { getDefaultConfig } from './detect-setup'
 import { updatePackageJson } from './package-json'
 import { askConfigQuestions, askOverrideQuestion } from './questions'
+const { diffApply: justDiffApply } = justDiffApplyImport
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -18,7 +19,7 @@ const getConfigDiff = async (options: GeneratorConfig) => {
 
 	const diff = justDiff({ baseLocale, adapter, loadLocalesAsync, esmImports, outputFormat, outputPath }, options)
 
-	const changedValues = justDiffApply(
+	const changedValues = <GeneratorConfig>justDiffApply(
 		{
 			baseLocale: undefined,
 			adapter: undefined,
