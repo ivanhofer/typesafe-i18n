@@ -11,7 +11,7 @@ const mappings: [FromWheretoImport, OutputPath?, FilterFunction?][] = [
 	['adapter-angular', 'angular', (file) => file === 'angular-service.d.ts'],
 	['adapter-react', 'react', (file) => file === 'react-context.d.ts'],
 	['adapter-svelte', 'svelte', (file) => file === 'svelte-store.d.ts'],
-	['adapter-vue', 'vue', (file) => file === 'vue-adapter.d.ts'], // TODO
+	['adapter-vue', 'vue', (file) => file === 'vue-plugin.d.ts'],
 	['core', 'cjs'],
 	['core', 'esm'],
 	['exporter', 'exporter', (file) => file === 'index.d.ts'],

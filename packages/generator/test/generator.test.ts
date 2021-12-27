@@ -32,7 +32,7 @@ const createConfig = async (prefix: string, config?: GeneratorConfig): Promise<G
 		...config,
 	})
 
-type FileToCheck = 'types' | 'util' | 'formatters-template' | 'types-template' | 'svelte' | 'react'
+type FileToCheck = 'types' | 'util' | 'formatters-template' | 'types-template' | 'react' | 'svelte' | 'vue'
 
 const getPathOfOutputFile = (
 	prefix: string,
@@ -96,8 +96,9 @@ const testGeneratedOutput = async (
 		await check(prefix, 'util', outputFormat)
 		await check(prefix, 'formatters-template', outputFormat)
 		await check(prefix, 'types-template', outputFormat)
-		await check(prefix, 'svelte', outputFormat)
 		await check(prefix, 'react', outputFormat)
+		await check(prefix, 'svelte', outputFormat)
+		await check(prefix, 'vue', outputFormat)
 	})
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -336,6 +337,12 @@ testAdapterMatrix(
 	'adapter-svelte',
 	{ HELLO_SVELTE: 'Hi {0:string}' },
 	{ adapter: 'svelte', adapterFileName: getFileName('svelte') },
+)
+
+testAdapterMatrix(
+	'adapter-vue',
+	{ HELLO_VUE: 'Hi {0:string}' },
+	{ adapter: 'vue', adapterFileName: getFileName('vue') },
 )
 
 testAdapterMatrix(

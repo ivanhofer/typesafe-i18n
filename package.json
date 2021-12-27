@@ -130,6 +130,7 @@
 		"build:svelte": "rollup -c packages/adapter-svelte/rollup.config.js && tsc -p packages/adapter-svelte/tsconfig.json --emitDeclarationOnly",
 		"build:runtime-cjs": "tsc -p packages/runtime/tsconfig-cjs.json && ts-node ./packages/runtime/rename-cjs.ts",
 		"build:runtime-esm": "tsc -p packages/runtime/tsconfig-esm.json && ts-node ./packages/runtime/rename-esm.ts",
+		"build:vue": "rollup -c packages/adapter-vue/rollup.config.js && tsc -p packages/adapter-vue/tsconfig.json --emitDeclarationOnly",
 		"build:webpack": "rollup -c packages/webpack-plugin/rollup.config.js && tsc -p packages/webpack-plugin/tsconfig.json --emitDeclarationOnly",
 		"fix-imports": "ts-node ./packages/fix-imports.ts",
 		"link-typedefinitions": "ts-node ./packages/link-typedefinitions.ts",
@@ -186,7 +187,7 @@
 		"typescript": "^4.5.4",
 		"typescript-json-schema": "^0.52.0",
 		"uvu": "^0.5.2",
-		"vue": "^2.6.14",
+		"vue": "^3.2.26",
 		"watchlist": "^0.3.1"
 	},
 	"peerDependencies": {

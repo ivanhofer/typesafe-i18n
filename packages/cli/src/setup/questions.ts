@@ -26,6 +26,7 @@ export const askConfigQuestions = ({
 				{ title: 'Node.js', value: 'node', description: 'for Backends, APIs' },
 				{ title: 'React', value: 'react', description: 'this is a React/Next.js application' },
 				{ title: 'Svelte', value: 'svelte', description: 'this is a Svelte/SvelteKit application' },
+				{ title: 'Vue.js', value: 'vue', description: 'this is a Vue.js application' },
 			],
 			initial: () => {
 				switch (adapter) {
@@ -37,6 +38,8 @@ export const askConfigQuestions = ({
 						return 3
 					case 'svelte':
 						return 4
+					case 'vue':
+						return 5
 					default:
 						return 0
 				}
@@ -61,7 +64,7 @@ export const askConfigQuestions = ({
 				{
 					title: 'No / not sure',
 					value: false,
-					description: 'resolves module paths via Node.js resolution schemantics',
+					description: 'resolves module paths via Node.js module resolution',
 				},
 				{ title: 'Yes', value: true, description: `requires modules to be imported via '.js' extension` },
 			],

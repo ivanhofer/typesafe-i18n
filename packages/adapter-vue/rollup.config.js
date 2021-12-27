@@ -10,10 +10,10 @@ import { terser } from 'rollup-plugin-terser'
 const getPath = (file) => path.resolve(__dirname, file)
 
 const createConfig = (format, minify) => ({
-	input: getPath('src/vue-adapter.ts'), // TODO
+	input: getPath('src/vue-plugin.ts'),
 	output: [
 		{
-			file: getPath(`../../vue/vue-adapter${minify ? '.min' : ''}.${format === 'esm' ? 'm' : 'c'}js`), // TODO
+			file: getPath(`../../vue/vue-plugin${minify ? '.min' : ''}.${format === 'esm' ? 'm' : 'c'}js`),
 			format,
 			sourcemap: !minify,
 			exports: 'named',
