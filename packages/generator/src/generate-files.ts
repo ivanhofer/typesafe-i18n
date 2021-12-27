@@ -4,6 +4,7 @@ import { generateAngularAdapter } from './files/generate-adapter-angular'
 import { generateNodeAdapter } from './files/generate-adapter-node'
 import { generateReactAdapter } from './files/generate-adapter-react'
 import { generateSvelteAdapter } from './files/generate-adapter-svelte'
+import { generateVueAdapter } from './files/generate-adapter-vue'
 import { generateFormattersTemplate } from './files/generate-template-formatters'
 import { generateBaseLocaleTemplate, generateLocaleTemplate } from './files/generate-template-locale'
 import { generateCustomTypesTemplate } from './files/generate-template-types'
@@ -82,6 +83,9 @@ export const generate = async (
 			break
 		case 'svelte':
 			await generateSvelteAdapter(config)
+			break
+		case 'vue':
+			await generateVueAdapter(config)
 			break
 	}
 }

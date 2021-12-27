@@ -14,7 +14,6 @@ import {
 } from '../output-handler'
 
 const getSvelteUtils = ({
-	baseLocale,
 	formattersTemplateFileName,
 	typesFileName,
 	utilFileName,
@@ -37,7 +36,7 @@ ${jsDocImports(
 
 import { getI18nSvelteStore } from 'typesafe-i18n/adapters/adapter-svelte';
 ${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translation', 'TranslationFunctions', 'Formatters')}
-import { getTranslationForLocale } from '${relativeFileImportPath(utilFileName)}'
+import { baseLocale, getTranslationForLocale } from '${relativeFileImportPath(utilFileName)}'
 import { initFormatters } from '${relativeFileImportPath(formattersTemplateFileName)}'
 
 ${jsDocType('SvelteStoreInit')}
@@ -49,7 +48,7 @@ const { initI18n: init, setLocale, isLoadingLocale, locale, LL } = getI18nSvelte
 	)}()
 
 ${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' })}
-const initI18n = (locale${type('Locales')} = '${baseLocale}') => init(locale, getTranslationForLocale, initFormatters)
+const initI18n = (locale${type('Locales')} = baseLocale) => init(locale, getTranslationForLocale, initFormatters)
 
 export { initI18n, setLocale, isLoadingLocale, locale, LL }
 

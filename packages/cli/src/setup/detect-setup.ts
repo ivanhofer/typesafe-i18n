@@ -26,6 +26,8 @@ const useReactAdapter = useAdapter([], ['react', 'next'])
 
 const useSvelteAdapter = useAdapter(['svelte'], ['@sveltejs/kit', 'sapper'])
 
+const useVueAdapter = useAdapter(['vue'])
+
 const useNodeAdapter = useAdapter(['express', 'fastify'])
 
 const getAdapterInfo = (deps: string[]): [Adapters | undefined, boolean] => {
@@ -42,6 +44,11 @@ const getAdapterInfo = (deps: string[]): [Adapters | undefined, boolean] => {
 	const [useSvelte, useSvelteAsync] = useSvelteAdapter(deps)
 	if (useSvelte) {
 		return ['svelte', useSvelteAsync]
+	}
+
+	const [useVue, useVueAsync] = useVueAdapter(deps)
+	if (useVue) {
+		return ['vue', useVueAsync]
 	}
 
 	const [useNode, useNodeAsync] = useNodeAdapter(deps)

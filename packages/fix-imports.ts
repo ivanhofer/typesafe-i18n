@@ -20,6 +20,7 @@ const folders = [
 	'parser',
 	'react',
 	'svelte',
+	'vue',
 ]
 
 formats.forEach(({ regex, fileEnding }) => {

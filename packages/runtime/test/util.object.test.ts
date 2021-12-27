@@ -1,4 +1,3 @@
-import { identity } from 'svelte/internal'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
 import { i18nObject } from '../src/util.object'

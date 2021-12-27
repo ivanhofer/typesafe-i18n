@@ -3,5 +3,5 @@
 	"compilerOptions": {
 		"outDir": "../../adapters"
 	},
-	"include": ["./src/**/*.ts", "../core/src/**/*.ts", "../adapter-react/src/**/*.ts", "../adapter-svelte/src/**/*.ts"]
+	"include": ["./src/**/*.ts", "../core/src/**/*.ts", "../adapter-react/src/**/*.ts", "../adapter-svelte/src/**/*.ts", "../adapter-vue/src/**/*.ts"]
 }
