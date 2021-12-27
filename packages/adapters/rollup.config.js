@@ -30,8 +30,10 @@ const createConfig = (format, file) => ({
 })
 
 export default [
-	createConfig('esm', 'svelte'),
 	createConfig('esm', 'react'),
-	createConfig('cjs', 'svelte'),
+	createConfig('esm', 'svelte'),
+	createConfig('esm', 'vue'),
 	createConfig('cjs', 'react'),
+	createConfig('cjs', 'svelte'),
+	createConfig('cjs', 'vue'),
 ]

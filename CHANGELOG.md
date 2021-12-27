@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.57.0 (2021-12-27)
+
+Feature:
+ - add `vue` adapter (for vue@3)
+
 ## 2.56.0 (2021-12-14)
 
 Feature:

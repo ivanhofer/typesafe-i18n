@@ -12,7 +12,7 @@
 
 import { getI18nSvelteStore } from 'typesafe-i18n/adapters/adapter-svelte';
 
-import { getTranslationForLocale } from './util.actual.js'
+import { baseLocale, getTranslationForLocale } from './util.actual.js'
 import { initFormatters } from './formatters-template.actual.js'
 
 /** @type { SvelteStoreInit } */
@@ -22,7 +22,7 @@ const { initI18n: init, setLocale, isLoadingLocale, locale, LL } = getI18nSvelte
  * @param { Locales } locale
  * @return { Promise<void> }
  */
-const initI18n = (locale = 'en') => init(locale, getTranslationForLocale, initFormatters)
+const initI18n = (locale = baseLocale) => init(locale, getTranslationForLocale, initFormatters)
 
 export { initI18n, setLocale, isLoadingLocale, locale, LL }
 

@@ -1,4 +1,4 @@
-export type Adapters = 'angular' | 'node' | 'react' | 'svelte'
+export type Adapters = 'angular' | 'node' | 'react' | 'svelte' | 'vue'
 
 export type OutputFormats = 'TypeScript' | 'JavaScript'
 

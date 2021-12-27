@@ -5,7 +5,7 @@ import type {
 	AsyncFormattersInitializer,
 	FormattersInitializer,
 	TranslationLoader,
-	TranslationLoaderAsync,
+	TranslationLoaderAsync
 } from '../../runtime/src/util.loader'
 import { i18nObject } from '../../runtime/src/util.object'
 
@@ -84,6 +84,7 @@ export const initI18nReact = <
 
 		const ctx = { setLocale, isLoadingLocale, locale: currentLocale, LL } as I18nContextType<L, T, TF>
 
+		// @ts-ignore
 		return <context.Provider value={ctx}>{props.children}</context.Provider>
 	}
 
