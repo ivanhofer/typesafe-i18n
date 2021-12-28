@@ -3,7 +3,6 @@
 This is a small project demonstrating a `typesafe-i18n` integration with Vue.js version 3.
 
 >This repository was set up using [`vite`](https://vitejs.dev) with the `vue-ts` template.
-
 >```bash
 > npm init vite@latest my-vue-app -- --template vue-ts
 >```
