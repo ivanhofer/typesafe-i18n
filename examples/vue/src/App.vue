@@ -4,9 +4,9 @@
 import { ref } from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
 import { locales } from './i18n/i18n-util'
-import { i18n } from './i18n/i18n-vue'
+import { typesafeI18n } from './i18n/i18n-vue'
 
-const { LL, locale, setLocale } = i18n()
+const { LL, locale, setLocale } = typesafeI18n()
 
 let selectedLocale = ref(locale.value)
 </script>

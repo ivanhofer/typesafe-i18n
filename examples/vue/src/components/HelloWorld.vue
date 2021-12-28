@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { i18n } from '../i18n/i18n-vue'
+import { typesafeI18n } from '../i18n/i18n-vue'
 
 defineProps<{ msg: string }>()
 
-const { LL } = i18n()
+const { LL } = typesafeI18n()
 
 console.log(LL.value.STARTUP())
 
