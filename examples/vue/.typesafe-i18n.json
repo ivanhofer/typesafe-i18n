@@ -1,0 +1,5 @@
+{
+   "adapter": "vue",
+   "loadLocalesAsync": false,
+   "$schema": "https://unpkg.com/typesafe-i18n@2.57.1/schema/typesafe-i18n.json"
+}
