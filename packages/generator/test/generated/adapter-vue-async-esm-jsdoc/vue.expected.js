@@ -17,7 +17,7 @@ import { baseLocale, getTranslationForLocale } from './util.actual.js'
 import { initFormatters } from './formatters-template.actual.js'
 
 /** @type { VuePluginInit } */
-const { i18n, plugin } = initI18nVuePlugin(
+const { typesafeI18n, i18nPlugin } = initI18nVuePlugin(
 	inject,
 	ref,
 	baseLocale,
@@ -25,4 +25,4 @@ const { i18n, plugin } = initI18nVuePlugin(
 	initFormatters,
 )
 
-export { i18n, plugin }
+export { typesafeI18n, i18nPlugin }

@@ -7,7 +7,7 @@ import type { Locales, Translation, TranslationFunctions, Formatters } from './t
 import { baseLocale, getTranslationForLocale } from './util.actual.js'
 import { initFormatters } from './formatters-template.actual.js'
 
-const { i18n, plugin } = initI18nVuePlugin<Locales, Translation, TranslationFunctions, Formatters>(
+const { typesafeI18n, i18nPlugin } = initI18nVuePlugin<Locales, Translation, TranslationFunctions, Formatters>(
 	inject,
 	ref,
 	baseLocale,
@@ -15,4 +15,4 @@ const { i18n, plugin } = initI18nVuePlugin<Locales, Translation, TranslationFunc
 	initFormatters,
 )
 
-export { i18n, plugin }
+export { typesafeI18n, i18nPlugin }

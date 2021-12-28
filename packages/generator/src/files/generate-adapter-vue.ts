@@ -39,7 +39,12 @@ import { baseLocale, getTranslationForLocale } from '${relativeFileImportPath(ut
 import { initFormatters } from '${relativeFileImportPath(formattersTemplateFileName)}'
 
 ${jsDocType('VuePluginInit')}
-const { i18n, plugin } = initI18nVuePlugin${generics('Locales', 'Translation', 'TranslationFunctions', 'Formatters')}(
+const { typesafeI18n, i18nPlugin } = initI18nVuePlugin${generics(
+		'Locales',
+		'Translation',
+		'TranslationFunctions',
+		'Formatters',
+	)}(
 	inject,
 	ref,
 	baseLocale,
@@ -47,7 +52,7 @@ const { i18n, plugin } = initI18nVuePlugin${generics('Locales', 'Translation', '
 	initFormatters,
 )
 
-export { i18n, plugin }
+export { typesafeI18n, i18nPlugin }
 `
 }
 

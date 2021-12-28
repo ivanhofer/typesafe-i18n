@@ -98,7 +98,8 @@ You can use `typesafe-i18n` in a variety of project-setups:
  - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/node) apis, backends, scripts, ...
  - [React / Next.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react) applications
  - [Svelte / SvelteKit / Sapper](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte) applications
- - [other frameworks](#other-frameworks) like VueJS and others ...
+ - [Vue.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue) applications
+ - [other frameworks](#other-frameworks)
 
 
 ### Browser Support
@@ -486,7 +487,7 @@ The available options are:
 | --------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------- |
 | [baseLocale](#baseLocale)                                 | `string`                                                                          | `'en'`                                        |
 | [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`                                                                         | `true`                                        |
-| [adapter](#adapter)                                       | `'angular'` &#124; `'node'` &#124; `'react'` &#124; `'svelte'` &#124; `undefined` | `undefined`                                   |
+| [adapter](#adapter)                                       | `'angular'` &#124; `'node'` &#124; `'react'` &#124; `'svelte'` &#124; `'vue'` &#124; `undefined` | `undefined`                                   |
 | [outputPath](#outputPath)                                 | `string`                                                                          | `'./src/i18n/'`                               |
 | [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                                              | `'TypeScript'`                                |
 | [typesFileName](#typesFileName)                           | `string`                                                                          | `'i18n-types'`                                |
@@ -1469,9 +1470,9 @@ Apart from that there can be a small overhead depending on which utilities and w
 
 There also exists a useful wrapper for some frameworks:
 - [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 1432 bytes gzipped
-- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react#usage-in-javascript-projects): 1596 bytes gzipped
-- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte#usage-in-javascript-projects): 1571 bytes gzipped
-
+- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react): 1596 bytes gzipped
+- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte): 1571 bytes gzipped
+- [typesafe-i18n vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue): 1408 bytes gzipped
 
 
 
