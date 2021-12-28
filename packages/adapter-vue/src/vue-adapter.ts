@@ -31,8 +31,8 @@ export type VuePluginInit<
 	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 > = {
-	i18n: () => Provider<L, T, TF>
-	plugin: I18nPlugin<L>
+	typesafeI18n: () => Provider<L, T, TF>
+	i18nPlugin: I18nPlugin<L>
 }
 
 export const initI18nVuePlugin = <
@@ -47,14 +47,14 @@ export const initI18nVuePlugin = <
 	getTranslationForLocaleCallback: TranslationLoader<L, T> | TranslationLoaderAsync<L, T>,
 	initFormattersCallback?: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F>,
 ): VuePluginInit<L, T, TF> => {
-	const i18nKey: InjectionKey<Provider<L, T, TF>> = Symbol('i18n')
+	const i18nKey: InjectionKey<Provider<L, T, TF>> = Symbol('typesafe-i18n')
 
-	const i18n: () => Provider<L, T, TF> = () => vueInject(i18nKey) as Provider<L, T, TF>
+	const typesafeI18n: () => Provider<L, T, TF> = () => vueInject(i18nKey) as Provider<L, T, TF>
 
 	const getTranslationForLocale = getTranslationForLocaleCallback
 	const initFormatters = initFormattersCallback || (() => ({} as F))
 
-	const plugin: I18nPlugin<L> = {
+	const i18nPlugin: I18nPlugin<L> = {
 		install: (app: App, locale?: L) => {
 			const LLref: Ref<TF> = vueRef(wrapProxy(getFallbackProxy())) as Ref<TF>
 			const isLoadingLocaleRef: Ref<boolean> = vueRef(true)
@@ -83,5 +83,5 @@ export const initI18nVuePlugin = <
 		},
 	}
 
-	return { i18n, plugin }
+	return { typesafeI18n, i18nPlugin }
 }

@@ -1,10 +1,20 @@
 # CHANGELOG.md
 
 
+## 2.57.2 (2021-12-28)
+
+Fix:
+- rename Vue.js exports
+
+## 2.57.1 (2021-12-27)
+
+Bugfix:
+- fix CLI script
+
 ## 2.57.0 (2021-12-27)
 
 Feature:
- - add `vue` adapter (for vue@3)
+ - add `vue` adapter (for vue@3) [#121](https://github.com/ivanhofer/typesafe-i18n/discussions/121)
 
 ## 2.56.0 (2021-12-14)
 
