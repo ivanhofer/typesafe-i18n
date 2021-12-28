@@ -15,28 +15,27 @@ npm run dev
 
 Navigate to [http://localhost:3000](http://localhost:3000). You should see the example app running.
 
-# Overview
+---
+
+## Overview
  - [add `typesafe-i18n` to existing projects](#configure-typesafe-i18n-for-an-existing-react-project)
  - [generated component & context](#generated-component--context)
 
+
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
-# Configure `typesafe-i18n` for an existing React project
+## Configure `typesafe-i18n` for an existing React project
 
-Configure `typesafe-i18n` by creating the file `.typesafe-i18n.json` with following contents:
 
-```json
-{
-   "$schema": "https://unpkg.com/typesafe-i18n@2.55.1/schema/typesafe-i18n.json",
+Initialize `typesafe-i18n` by running
 
-   "adapter": "react"
-}
+```bash
+npx typesafe-i18n --setup-auto
 ```
 
-Run the generator e.g. by adding a new script inside your `package.json` file.
-You could configure your development script to run the generator in parallel to `react-scripts start`.
+You could configure your development script to run the generator in parallel to `react-scripts start` by using [`npm-run-all`](https://github.com/mysticatea/npm-run-all).
 
 ```json
 {
@@ -85,12 +84,12 @@ function Greeting(props) {
 export default Greeting
 ```
 
+
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
 ## generated component & context
-
 
 ### TypesafeI18n
 

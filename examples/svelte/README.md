@@ -21,7 +21,9 @@ npm run dev
 
 Navigate to [http://localhost:5000](http://localhost:5000). You should see the example app running.
 
-# Overview
+---
+
+## Overview
  - [add `typesafe-i18n` to existing projects](#configure-typesafe-i18n-for-an-existing-svelte-project)
  - [available Svelte stores](#stores)
  - [SvelteKit projects](#sveltekit)
@@ -32,22 +34,15 @@ Navigate to [http://localhost:5000](http://localhost:5000). You should see the e
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
-# Configure `typesafe-i18n` for an existing Svelte project
+## Configure `typesafe-i18n` for an existing Svelte project
 
-Configure `typesafe-i18n` by creating the file `.typesafe-i18n.json` with following contents:
+Initialize `typesafe-i18n` by running
 
-```json
-{
-   "$schema": "https://unpkg.com/typesafe-i18n@2.55.1/schema/typesafe-i18n.json",
-
-   "adapter": "svelte",
-   "loadLocalesAsync": false
-}
+```bash
+npx typesafe-i18n --setup-auto
 ```
-> if in your 'rollup.config.js' file 'config.format' is set 'iife' , you need to set 'loadLocalesAsync' to 'false'
 
-Run the generator e.g. by adding a new script inside your `package.json` file.
-You could configure your development script to run the generator in parallel to `rollup -c -w`.
+You could configure your development script to run the generator in parallel to `rollup -c -w` by using [`npm-run-all`](https://github.com/mysticatea/npm-run-all).
 
 ```json
 {

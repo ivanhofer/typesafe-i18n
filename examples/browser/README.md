@@ -15,12 +15,13 @@ npm run dev
 
 Navigate to [http://localhost:5000](http://localhost:5000). You should see the example app running.
 
+---
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
-# Add `typesafe-i18n` for an existing JavaScript project
+## Add `typesafe-i18n` for an existing JavaScript project
 
 You can also use `typesafe-i18n` without its typesafety as a lightweight i18n package.
 

@@ -12,7 +12,9 @@ npm run dev
 
 Navigate to [http://localhost:3000](http://localhost:3000). You should see the example app running.
 
-# Overview
+---
+
+## Overview
  - [add `typesafe-i18n` to existing projects](#configure-typesafe-i18n-for-an-existing-sveltekit-project)
  - [available Svelte stores](#svelte-stores)
 
@@ -21,20 +23,15 @@ Navigate to [http://localhost:3000](http://localhost:3000). You should see the e
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
-# Configure `typesafe-i18n` for an existing SvelteKit project
+## Configure `typesafe-i18n` for an existing SvelteKit project
 
-Configure `typesafe-i18n` by creating the file `.typesafe-i18n.json` with following contents:
+Initialize `typesafe-i18n` by running
 
-```json
-{
-   "$schema": "https://unpkg.com/typesafe-i18n@2.55.1/schema/typesafe-i18n.json",
-
-   "adapter": "svelte"
-}
+```bash
+npx typesafe-i18n --setup-auto
 ```
 
-Run the generator e.g. by adding a new script inside your `package.json` file.
-You could configure your development script to run the generator in parallel to `svelte-kit dev`.
+You could configure your development script to run the generator in parallel to `svelte-kit dev` by using [`npm-run-all`](https://github.com/mysticatea/npm-run-all).
 
 ```json
 {

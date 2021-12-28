@@ -15,7 +15,9 @@ npm run dev
 
 Navigate to [http://localhost:3001](http://localhost:3001). You should see the example app running.
 
-# Overview
+---
+
+## Overview
  - [add `typesafe-i18n` to existing projects](#configure-typesafe-i18n-for-an-existing-nodejs-project)
  - [available exports](#exports)
 
@@ -24,30 +26,25 @@ Navigate to [http://localhost:3001](http://localhost:3001). You should see the e
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
-# Configure `typesafe-i18n` for an existing Node.js project
+## Configure `typesafe-i18n` for an existing Node.js project
 
 > requires a node version >= 12.x
 
-First, you need to configure the generator to listen for changes in your locales files.
-For this you can add following line to the scripts-section of your `package.json` file.
+Initialize `typesafe-i18n` by running
+
+```bash
+npx typesafe-i18n --setup-auto
+```
+
+You could configure your development script to run the generator in parallel to `nodemon` by using [`npm-run-all`](https://github.com/mysticatea/npm-run-all).
 
 ```json
 {
    "scripts": {
-      "typesafe-i18n": "typesafe-i18n"
+		"dev": "npm-run-all --parallel nodemon typesafe-i18n",
+		"nodemon": "nodemon src/index.ts",
+		"typesafe-i18n": "typesafe-i18n"
    }
-}
-```
-
-Create the `.typesafe-i18n.json` config file in your projects root folder and specify `'node'` as [adapter](https://github.com/ivanhofer/typesafe-i18n#adapter).\
-If you are running a node server it makes also sense to set the `loadLocalesAsync` [option](https://github.com/ivanhofer/typesafe-i18n#options) to false:
-
-```json
-{
-   "$schema": "https://unpkg.com/typesafe-i18n@2.55.1/schema/typesafe-i18n.json",
-
-   "adapter": "node",
-   "loadLocalesAsync": false
 }
 ```
 
