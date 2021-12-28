@@ -27,7 +27,7 @@ Navigate to [http://localhost:3000](http://localhost:3000). You should see the e
 
 ## Overview
  - [add `typesafe-i18n` to existing projects](#configure-typesafe-i18n-for-an-existing-vuejs-project)
- - [generated component & context](#generated-component--context)
+ - [provided functions & variables](#provided-functions--variables)
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -47,9 +47,9 @@ You could configure your development script to run the generator in parallel to 
 ```json
 {
    "scripts": {
-		"dev": "npm-run-all --parallel vite typesafe-i18n",
-		"vite": "vite",
-		"typesafe-i18n": "typesafe-i18n"
+      "dev": "npm-run-all --parallel vite typesafe-i18n",
+      "vite": "vite",
+      "typesafe-i18n": "typesafe-i18n"
    }
 }
 ```
@@ -76,7 +76,7 @@ const { LL } = typesafeI18n()
 </script>
 
 <template>
-	{{ LL.HI({ name: 'Vue.js' })}}}
+   {{ LL.HI({ name: 'Vue.js' })}}}
 </template>
 ```
 
@@ -85,7 +85,7 @@ const { LL } = typesafeI18n()
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
-## provided functions and variables
+## provided functions & variables
 
 When running the [generator](https://github.com/ivanhofer/typesafe-i18n#typesafety), the file `i18n-vue.ts` will export following functions:
 
@@ -128,7 +128,7 @@ const { LL } = typesafeI18n()
 </script>
 
 <template>
-	{{ LL.HI({ name: 'Vue.js' })}}} // will output e.g => 'Hi Vue.js!'
+   {{ LL.HI({ name: 'Vue.js' })}}} // will output e.g => 'Hi Vue.js!'
 </template>
 ```
 
@@ -152,16 +152,16 @@ const { locale, setLocale } = typesafeI18n()
 </script>
 
 <template>
-	<ul className="language-selection">
-		<li :class="'en' === locale ? 'selected' : ''" @click="setLocale('en')">
-			english
-		</li>
-		<li :class="'de' === locale ? 'selected' : ''" @click="setLocale('de')">
-			deutsch
-		</li>
-		<li :class="'it' === locale ? 'selected' : ''" @click="setLocale('it')">
-			italiano
-		</li>
-	</ul>
+   <ul className="language-selection">
+      <li :class="'en' === locale ? 'selected' : ''" @click="setLocale('en')">
+         english
+      </li>
+      <li :class="'de' === locale ? 'selected' : ''" @click="setLocale('de')">
+         deutsch
+      </li>
+      <li :class="'it' === locale ? 'selected' : ''" @click="setLocale('it')">
+         italiano
+      </li>
+   </ul>
 </template>
 ```
