@@ -45,7 +45,7 @@ label {
 	font-weight: bold;
 }
 
-p >>> code {
+p :v-deep(code)  {
 	background-color: #eee;
 	padding: 2px 4px;
 	border-radius: 4px;
