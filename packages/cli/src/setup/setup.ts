@@ -38,6 +38,13 @@ const getConfigDiff = async (options: GeneratorConfig) => {
 
 const highlightedInfoLog = (message: string) => logger.info(kleur.yellow(message))
 
+const showSponsoringMessage = () =>
+	// eslint-disable-next-line no-console
+	console.log(`
+If you are using this project in a commercial environment please consider sponsoring 'typesafe-i18n':
+https://github.com/sponsors/ivanhofer
+`)
+
 export const setup = async (autoSetup: boolean) => {
 	const exists = await doesConfigFileExist()
 	if (exists) {
@@ -69,9 +76,14 @@ export const setup = async (autoSetup: boolean) => {
 	logger.info(`generated config file: '.typesafe-i18n.json'`)
 
 	const installed = await updatePackageJson()
-	if (!installed) return
+	if (!installed) {
+		showSponsoringMessage()
+		return
+	}
 
 	logger.info('setup complete')
 
 	highlightedInfoLog(`You can now run 'npm run typesafe-i18n' to start the generator`)
+
+	showSponsoringMessage()
 }

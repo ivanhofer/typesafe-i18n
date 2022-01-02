@@ -1,6 +1,11 @@
 # CHANGELOG.md
 
 
+## 2.57.5 (2022-01-02)
+
+- show sponsorship message after running the setup-process
+
+## 2.57.4 (2021-12-28)
 ## 2.57.3 (2021-12-28)
 ## 2.57.2 (2021-12-28)
 
