@@ -1,8 +1,0 @@
-# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-
-version: 2
-updates:
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "weekly"
