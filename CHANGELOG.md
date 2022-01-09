@@ -1,6 +1,10 @@
 # CHANGELOG.md
 
 
+## 2.57.6 (2022-01-09)
+
+- add troubleshoot section for installing issues
+
 ## 2.57.5 (2022-01-02)
 
 - show sponsorship message after running the setup-process

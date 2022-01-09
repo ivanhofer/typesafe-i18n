@@ -62,7 +62,7 @@
    ```bash
    npx typesafe-i18n --setup
    ```
-
+   > It didn't work? See [here](#installing-typesafe-i18n-fails) for possible troubleshooting.
 
 2. :eyes: Take a look at the generated files and it's [folder-structure](#folder-structure)
 
@@ -1509,7 +1509,25 @@ If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n 
 Dou you still have some questions? Reach out to us via [Github Discussions](https://github.com/ivanhofer/typesafe-i18n/discussions) or on [Discord](https://discord.gg/T27AHfaADK).
 
 ---
+### Installing `typesafe-i18n` fails
 
+Running the `npx` command with a `npm` version `<7.0.0` will probably fail because it [**will not include** `peerDependencies`](https://github.blog/2020-10-13-presenting-v7-0-0-of-the-npm-cli).
+
+You could try installing it locally via:
+
+```bash
+npm install typesafe-i18n
+```
+
+and then run  the setup-command from within the `node_modules` folder via:
+
+```bash
+./node_modules/typesafe-i18n/cli/typesafe-i18n.mjs --setup-auto
+```
+
+> here is the original issue with some additional information: [#142](https://github.com/ivanhofer/typesafe-i18n/issues/142)
+
+---
 ### I added a new translation to my locale file, but TypeScript gives me the Error `Property 'XYZ' does not exist on type 'TranslationFunctions'`
 
 Make sure to run the [generator](#typesafety) after you make changes to your base translation file. The generator will [generate and update the types](#folder-structure) for you.
