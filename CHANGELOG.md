@@ -1,9 +1,13 @@
 # CHANGELOG.md
 
 
+## 2.57.7 (2022-01-09)
+
+- add troubleshoot section for jest issues [#140](https://github.com/ivanhofer/typesafe-i18n/issues/#140)
+
 ## 2.57.6 (2022-01-09)
 
-- add troubleshoot section for installing issues
+- add troubleshoot section for installing issues [#142](https://github.com/ivanhofer/typesafe-i18n/issues/142)
 
 ## 2.57.5 (2022-01-02)
 

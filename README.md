@@ -483,22 +483,22 @@ You can set options for the [generator](#typesafety) inside a `.typesafe-i18n.js
 
 The available options are:
 
-| key                                                       | type                                                                              | default value                                 |
-| --------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------- |
-| [baseLocale](#baseLocale)                                 | `string`                                                                          | `'en'`                                        |
-| [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`                                                                         | `true`                                        |
+| key                                                       | type                                                                                             | default value                                 |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------- |
+| [baseLocale](#baseLocale)                                 | `string`                                                                                         | `'en'`                                        |
+| [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`                                                                                        | `true`                                        |
 | [adapter](#adapter)                                       | `'angular'` &#124; `'node'` &#124; `'react'` &#124; `'svelte'` &#124; `'vue'` &#124; `undefined` | `undefined`                                   |
-| [outputPath](#outputPath)                                 | `string`                                                                          | `'./src/i18n/'`                               |
-| [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                                              | `'TypeScript'`                                |
-| [typesFileName](#typesFileName)                           | `string`                                                                          | `'i18n-types'`                                |
-| [esmImports](#esmImports)                                 | `boolean`                                                                         | `false`                                       |
-| [utilFileName](#utilFileName)                             | `string`                                                                          | `'i18n-util'`                                 |
-| [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                                                          | `'formatters'`                                |
-| [typesTemplateFileName](#typesTemplateFileName)           | `string`                                                                          | `'custom-types'`                              |
-| [adapterFileName](#adapterFileName)                       | `string` &#124; `undefined`                                                       | `undefined`                                   |
-| [generateOnlyTypes](#generateOnlyTypes)                   | `boolean`                                                                         | `false`                                       |
-| [tempPath](#tempPath)                                     | `string`                                                                          | `'./node_modules/typesafe-i18n/temp-output/'` |
-| [banner](#banner)                                         | `string`                                                                          | `'/* eslint-disable */'`                      |
+| [outputPath](#outputPath)                                 | `string`                                                                                         | `'./src/i18n/'`                               |
+| [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                                                             | `'TypeScript'`                                |
+| [typesFileName](#typesFileName)                           | `string`                                                                                         | `'i18n-types'`                                |
+| [esmImports](#esmImports)                                 | `boolean`                                                                                        | `false`                                       |
+| [utilFileName](#utilFileName)                             | `string`                                                                                         | `'i18n-util'`                                 |
+| [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                                                                         | `'formatters'`                                |
+| [typesTemplateFileName](#typesTemplateFileName)           | `string`                                                                                         | `'custom-types'`                              |
+| [adapterFileName](#adapterFileName)                       | `string` &#124; `undefined`                                                                      | `undefined`                                   |
+| [generateOnlyTypes](#generateOnlyTypes)                   | `boolean`                                                                                        | `false`                                       |
+| [tempPath](#tempPath)                                     | `string`                                                                                         | `'./node_modules/typesafe-i18n/temp-output/'` |
+| [banner](#banner)                                         | `string`                                                                                         | `'/* eslint-disable */'`                      |
 
 
 #### `baseLocale`
@@ -1542,9 +1542,8 @@ Yes, you can. See the [usage](#custom-usage) section for instructions. Even if y
 
 The [generator](#typesafety) will only look for changes in your base locale file. Make sure to always update your base locale file first, in order to get the correct auto-generated types. If you want to [change your base locale file](#baselocale), make sure to give it the type of `BaseTranslation`. All other locales should have the type of `Translation`. E.g. if you set your base locale to italian, you would need to do it like this:
 
- - set your base locale to italian (`it`):
+ - set your base locale to italian (`it`) in ´.typesafe-i18n.json`:
    ```json
-   // file '.typesafe-i18n.json'
    {
       "baseLocale": "it"
    }
@@ -1818,6 +1817,26 @@ const createUser = (name: string, password: string) => {
 ```
 
 With the type `LocalizedString` you can restrict your functions to only translated strings.
+
+---
+
+### Tests are not running with `Jest`
+
+Unfortunately there are some open issues in the [`Jest`](https://jestjs.io/) repository regarding modern package export formats so `jest` doesn't know where to load files from.
+
+You need to manually tell `jest` where these files should be loaded from, by defining [`moduleNameMapper`](https://jestjs.io/docs/configuration#modulenamemapper-objectstring-string--arraystring) inside your `jest.config.js`:
+
+```js
+// jest.config.js
+module.exports = {
+   moduleNameMapper: {
+      "typesafe-i18n/adapters/(.*)": "typesafe-i18n/adapters/$1.cjs",
+      "typesafe-i18n/detectors": "typesafe-i18n/detectors/index.cjs",
+   }
+};
+```
+
+> here is the original issue with some additional information: [#140](https://github.com/ivanhofer/typesafe-i18n/issues/140)
 
 ---
 ### With Node.JS the `Intl` package does not work with locales other than 'en'
