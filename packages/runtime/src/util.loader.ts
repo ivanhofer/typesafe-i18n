@@ -39,43 +39,52 @@ export type AsyncFormattersInitializer<L extends Locale, F extends BaseFormatter
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const i18nObjectInstancesCache = {} as LocaleTranslationFunctions<Locale, BaseTranslation | BaseTranslation[], any>
-
 // async --------------------------------------------------------------------------------------------------------------
 
-export const i18nObjectLoaderAsync = async <
-	L extends Locale,
-	T extends BaseTranslation | BaseTranslation[],
-	TF extends TranslationFunctions<T>,
-	F extends BaseFormatters,
->(
-	locale: L,
-	getTranslationForLocale: TranslationLoaderAsync<L, T>,
-	formattersInitializer: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F>,
-): Promise<TF> =>
-	i18nObjectInstancesCache[locale] ||
-	(i18nObjectInstancesCache[locale] = i18nObject<L, T, TF, F>(
-		locale,
-		await getTranslationForLocale(locale),
-		await formattersInitializer(locale),
-	))
+export const initI18nObjectLoaderAsync = () => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const cache: LocaleTranslationFunctions<Locale, BaseTranslation | BaseTranslation[], any> = {}
+
+	return async <
+		L extends Locale,
+		T extends BaseTranslation | BaseTranslation[],
+		TF extends TranslationFunctions<T>,
+		F extends BaseFormatters,
+	>(
+		locale: L,
+		getTranslationForLocale: TranslationLoaderAsync<L, T>,
+		formattersInitializer: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F>,
+	): Promise<TF> =>
+		cache[locale] ||
+		(cache[locale] = i18nObject<L, T, TF, F>(
+			locale,
+			await getTranslationForLocale(locale),
+			await formattersInitializer(locale),
+		))
+}
+
+// @deprecated
+export const i18nObjectLoaderAsync = initI18nObjectLoaderAsync()
 
 // sync ---------------------------------------------------------------------------------------------------------------
 
-export const i18nObjectLoader = <
-	L extends Locale,
-	T extends BaseTranslation | BaseTranslation[] | Readonly<BaseTranslation> | Readonly<BaseTranslation[]>,
-	TF extends TranslationFunctions<T>,
-	F extends BaseFormatters,
->(
-	locale: L,
-	getTranslationForLocale: TranslationLoader<L, T>,
-	formattersInitializer: FormattersInitializer<L, F>,
-): TF =>
-	i18nObjectInstancesCache[locale] ||
-	(i18nObjectInstancesCache[locale] = i18nObject<L, T, TF, F>(
-		locale,
-		getTranslationForLocale(locale),
-		formattersInitializer(locale),
-	))
+export const initI18nObjectLoader = () => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const cache: LocaleTranslationFunctions<Locale, BaseTranslation | BaseTranslation[], any> = {}
+
+	return <
+		L extends Locale,
+		T extends BaseTranslation | BaseTranslation[] | Readonly<BaseTranslation> | Readonly<BaseTranslation[]>,
+		TF extends TranslationFunctions<T>,
+		F extends BaseFormatters,
+	>(
+		locale: L,
+		getTranslationForLocale: TranslationLoader<L, T>,
+		formattersInitializer: FormattersInitializer<L, F>,
+	): TF =>
+		cache[locale] ||
+		(cache[locale] = i18nObject<L, T, TF, F>(locale, getTranslationForLocale(locale), formattersInitializer(locale)))
+}
+
+// @deprecated
+export const i18nObjectLoader = initI18nObjectLoader()

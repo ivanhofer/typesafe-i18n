@@ -1464,7 +1464,7 @@ These parts are bundled into the [core functions](#custom-usage). The sizes of t
 
 - [i18nString](#i18nString): 1000 bytes gzipped
 - [i18nObject](#i18nObject): 1097 bytes gzipped
-- [i18n](#i18n): 1132 bytes gzipped
+- [i18n](#i18n): 1143 bytes gzipped
 
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 

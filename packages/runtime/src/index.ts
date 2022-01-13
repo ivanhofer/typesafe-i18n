@@ -5,6 +5,8 @@ export {
 	FormattersInitializer,
 	i18nObjectLoader,
 	i18nObjectLoaderAsync,
+	initI18nObjectLoader,
+	initI18nObjectLoaderAsync,
 	LocaleTranslationFunctions,
 	LocaleTranslations,
 } from './util.loader'
