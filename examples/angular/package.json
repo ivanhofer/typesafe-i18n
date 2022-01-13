@@ -21,7 +21,7 @@
     "@angular/router": "~12.1.5",
     "rxjs": "~6.6.7",
     "tslib": "^2.2.0",
-    "typesafe-i18n": "^2.55.1",
+    "typesafe-i18n": "^2.58.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
