@@ -1,9 +1,14 @@
 # CHANGELOG.md
 
 
+## 2.58.0 (2022-01-09)
+
+Feat:
+ - add better support for monorepos [#149](https://github.com/ivanhofer/typesafe-i18n/discussions/149)
+
 ## 2.57.7 (2022-01-09)
 
-- add troubleshoot section for jest issues [#140](https://github.com/ivanhofer/typesafe-i18n/issues/#140)
+- add troubleshoot section for jest issues [#140](https://github.com/ivanhofer/typesafe-i18n/issues/140)
 
 ## 2.57.6 (2022-01-09)
 

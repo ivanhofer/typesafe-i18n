@@ -31,6 +31,8 @@ const getAsyncCode = (locales: Locale[]) => {
 	const localesTranslationLoaders = locales.map(getLocalesTranslationRowAsync).join('')
 
 	return `
+const i18nObjectLoaderAsync = initI18nObjectLoaderAsync()
+
 ${jsDocType('Record<Locales, () => Promise<any>>')}
 const localeTranslationLoaders = {${localesTranslationLoaders}
 }
@@ -80,6 +82,8 @@ import ${sanitizeLocale(locale)} from '${relativeFolderImportPath(locale)}'`,
 	const localesTranslations = locales.map((locale) => getLocalesTranslationRowSync(locale, baseLocale)).join('')
 	return `${localesImports}
 
+const i18nObjectLoader = initI18nObjectLoader()
+
 ${jsDocType('LocaleTranslations')}
 const localeTranslations${type('LocaleTranslations<Locales, Translation>')} = {${localesTranslations}
 }
@@ -117,9 +121,9 @@ const getUtil = (config: GeneratorConfigWithDefaultValues, locales: Locale[]): s
 	} = config
 
 	const dynamicImports = loadLocalesAsync
-		? `import { i18nString as initI18nString, i18nObjectLoaderAsync } from 'typesafe-i18n'`
+		? `import { i18nString as initI18nString, initI18nObjectLoaderAsync } from 'typesafe-i18n'`
 		: `${importTypes('typesafe-i18n', 'LocaleTranslations')}
-import { i18nString as initI18nString, i18nObjectLoader, i18n as initI18n } from 'typesafe-i18n'`
+import { i18nString as initI18nString, initI18nObjectLoader, i18n as initI18n } from 'typesafe-i18n'`
 
 	const dynamicCode = loadLocalesAsync ? getAsyncCode(locales) : getSyncCode(config, locales)
 

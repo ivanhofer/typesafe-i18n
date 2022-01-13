@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 import type { LocaleTranslations } from 'typesafe-i18n'
-import { i18nString as initI18nString, i18nObjectLoader, i18n as initI18n } from 'typesafe-i18n'
+import { i18nString as initI18nString, initI18nObjectLoader, i18n as initI18n } from 'typesafe-i18n'
 import type { Translation, TranslationFunctions, Formatters, Locales } from './types.actual'
 import type { LocaleDetector } from 'typesafe-i18n/detectors'
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
@@ -15,6 +15,8 @@ export const locales: Locales[] = [
 ]
 
 import de_at from './de-at'
+
+const i18nObjectLoader = initI18nObjectLoader()
 
 const localeTranslations: LocaleTranslations<Locales, Translation> = {
 	'de-at': de_at as Translation,
