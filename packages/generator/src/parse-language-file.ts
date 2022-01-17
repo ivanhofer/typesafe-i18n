@@ -70,7 +70,7 @@ const transpileTypescriptFiles = async (
 	locale: string,
 	tempPath: string,
 ): Promise<string> => {
-	const program = ts.createProgram([languageFilePath], { outDir: tempPath, allowJs: true })
+	const program = ts.createProgram([languageFilePath], { outDir: tempPath, allowJs: true, resolveJsonModule: true })
 	program.emit()
 
 	const baseTranslationPath = await detectLocationOfCompiledBaseTranslation(outputPath, locale, tempPath)
