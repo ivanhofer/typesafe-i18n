@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [Unreleased]
+
+Feature:
+- add support for JSON files [#151](https://github.com/ivanhofer/typesafe-i18n/discussions/151)
 
 ## 2.58.0 (2022-01-09)
 
