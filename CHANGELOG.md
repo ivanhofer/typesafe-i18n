@@ -1,13 +1,15 @@
 # CHANGELOG.md
 
-## [Unreleased]
+
+
+## 2.59.0 (2022-01-18)
 
 Feature:
 - add support for JSON files [#151](https://github.com/ivanhofer/typesafe-i18n/discussions/151)
 
 ## 2.58.0 (2022-01-09)
 
-Feat:
+Feature:
  - add better support for monorepos [#149](https://github.com/ivanhofer/typesafe-i18n/discussions/149)
 
 ## 2.57.7 (2022-01-09)
