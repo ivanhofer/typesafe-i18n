@@ -24,5 +24,7 @@ export const partAsStringWithoutTypes = (part: Part): string => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getFallbackProxy = <TF extends TranslationFunctions<any>>(prefixKey?: string): TF =>
 	new Proxy((prefixKey ? () => prefixKey : {}) as TF, {
-		get: (_target, key: string) => getFallbackProxy(prefixKey ? `${prefixKey}.${key}` : key),
+		get: (_target, key: string) => {
+			key === 'length' ? 0 : getFallbackProxy(prefixKey ? `${prefixKey}.${key}` : key)
+		},
 	})
