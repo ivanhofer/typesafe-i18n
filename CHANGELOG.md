@@ -2,15 +2,20 @@
 
 
 
+## 2.60.0 (2022-01-22)
+
+Feature:
+ - add functionality to loop over arrays [#152](https://github.com/ivanhofer/typesafe-i18n/discussions/152)
+
 ## 2.59.0 (2022-01-18)
 
 Feature:
-- add support for JSON files [#151](https://github.com/ivanhofer/typesafe-i18n/discussions/151)
+ - add support for JSON files [#151](https://github.com/ivanhofer/typesafe-i18n/discussions/151)
 
 ## 2.58.0 (2022-01-09)
 
 Feature:
- - add better support for monorepos [#149](https://github.com/ivanhofer/typesafe-i18n/discussions/149)
+  add better support for monorepos [#149](https://github.com/ivanhofer/typesafe-i18n/discussions/149)
 
 ## 2.57.7 (2022-01-09)
 
