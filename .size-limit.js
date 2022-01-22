@@ -22,25 +22,25 @@ module.exports = [
 	{
 		name: 'angular-adapter',
 		path: 'angular/angular-service.min.cjs',
-		limit: '1410 b',
+		limit: '1407 b',
 		ignore: ['angular'],
 	},
 	{
 		name: 'react-context',
 		path: 'react/react-context.min.cjs',
-		limit: '1574 b',
+		limit: '1578 b',
 		ignore: ['react'],
 	},
 	{
 		name: 'svelte-store',
 		path: 'svelte/svelte-store.min.cjs',
-		limit: '1549 b',
+		limit: '1554 b',
 		ignore: ['svelte'],
 	},
 	{
 		name: 'vue-plugin',
 		path: 'vue/vue-plugin.min.cjs',
-		limit: '1388 b',
+		limit: '1391 b',
 		ignore: ['vue'],
 	},
 ]

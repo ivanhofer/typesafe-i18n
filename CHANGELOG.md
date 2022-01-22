@@ -2,7 +2,7 @@
 
 
 
-## 2.60.0 (2022-01-22)
+## 2.60.1 (2022-01-22)
 
 Feature:
  - add functionality to loop over arrays [#152](https://github.com/ivanhofer/typesafe-i18n/discussions/152)
