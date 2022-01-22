@@ -30,7 +30,9 @@ const translation = {
 const LL = i18nObject('en', translation)
 
 //@ts-expect-error
-test('wrong key', () => assert.is(LL.WRONG_KEY(), 'WRONG_KEY'))
+test('wrong key', () => assert.throws(() => LL.WRONG_KEY()))
+//@ts-expect-error
+test('wrong nested key', () => assert.throws(() => LL.WRONG_KEY.NESTED()))
 
 test('no param', () => assert.is(LL.NO_PARAM(), translation.NO_PARAM))
 
@@ -145,6 +147,24 @@ const LL7 = i18nObject('en', ['test-1', 'test-2'] as const)
 
 test('array root strings', () => assert.is(LL7[0](), 'test-1'))
 test('array root strings', () => assert.is(LL7[1](), 'test-2'))
+
+LL7.forEach((entry, index) => {
+	test(`array forEach ${index}`, () => assert.is(LL7[index]?.(), entry()))
+})
+
+let index = 0
+for (const entry of LL7) {
+	const i = index
+	test(`array for of ${i}`, () => assert.is(LL7[i]?.(), entry()))
+	index++
+}
+index = 0
+
+for (const entry in LL7) {
+	const i = index
+	test(`array for in ${i}`, () => assert.is(LL7[i]?.(), LL7[entry]?.()))
+	index++
+}
 
 // --------------------------------------------------------------------------------------------------------------------
 
