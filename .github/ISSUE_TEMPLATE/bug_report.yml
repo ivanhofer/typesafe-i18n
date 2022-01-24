@@ -5,6 +5,15 @@ body:
    - type: markdown
      attributes:
         value: Thanks for taking the time to fill out this bug report!
+   - type: input
+     id: version
+     attributes:
+        label: Version
+        description: What version of `typesafe-i18n` are you using?
+           Can be checked by running `typesafe-i18n --version`
+        placeholder: 2.60.1
+     validations:
+        required: true
    - type: textarea
      id: bug-description
      attributes:
