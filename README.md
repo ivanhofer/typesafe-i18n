@@ -97,7 +97,7 @@ You can use `typesafe-i18n` in a variety of project-setups:
  - [Browser (Vanilla JS)](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/browser) projects
  - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/node) apis, backends, scripts, ...
  - [React / Next.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react) applications
- - [Svelte / SvelteKit / Sapper](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte) applications
+ - [Svelte](https://github.com/ivanhofer/typesafe-i18n-demo-svelte) / [SvelteKit](https://github.com/ivanhofer/typesafe-i18n-demo-sveltekit) / [Sapper](https://github.com/ivanhofer/typesafe-i18n-demo-svelte) applications
  - [Vue.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue) applications
  - [other frameworks](#other-frameworks)
 
