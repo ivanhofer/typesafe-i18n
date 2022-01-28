@@ -2,6 +2,11 @@
 
 
 
+## 2.60.2 (2022-01-28)
+
+Fix:
+ - revert changes made to fallbackProxy [#157](https://github.com/ivanhofer/typesafe-i18n/issues/157)
+
 ## 2.60.1 (2022-01-22)
 
 Feature:
