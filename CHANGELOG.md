@@ -1,6 +1,19 @@
 # CHANGELOG.md
 
+# Version 3
 
+## 3.0.0 (2022-01-29)
+
+BREAKING:
+ - locales have to be loaded in a separate step
+ - remove `loadLocalesAsync` option from generator
+ - formatters have to be initialized synchronously
+
+closes:
+ - [#159](https://github.com/ivanhofer/typesafe-i18n/issues/159)
+ - [#64](https://github.com/ivanhofer/typesafe-i18n/issues/64)
+
+# Version 2
 
 ## 2.60.2 (2022-01-28)
 
