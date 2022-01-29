@@ -1460,15 +1460,15 @@ These parts are bundled into the [core functions](#custom-usage). The sizes of t
 
 - [i18nString](#i18nString): 1000 bytes gzipped
 - [i18nObject](#i18nObject): 1070 bytes gzipped
-- [i18n](#i18n): 1119 bytes gzipped
+- [i18n](#i18n): 1099 bytes gzipped
 
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
 There also exists a useful wrapper for some frameworks:
-- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 1415 bytes gzipped
-- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react): 1578 bytes gzipped
-- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte): 1552 bytes gzipped
-- [typesafe-i18n vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue): 1395 bytes gzipped
+- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 2017 bytes gzipped
+- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react): 1478 bytes gzipped
+- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte): 1414 bytes gzipped
+- [typesafe-i18n vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue): 1332 bytes gzipped
 
 
 
