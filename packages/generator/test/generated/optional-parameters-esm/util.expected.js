@@ -5,16 +5,17 @@
 /**
  * @typedef { import('typesafe-i18n').TranslateByString } TranslateByString,
  * @typedef { import('typesafe-i18n').LocaleTranslations<Locales, Translation> } LocaleTranslations,
+ * @typedef { import('typesafe-i18n').LocaleTranslationFunctions<Locales, Translation, TranslationFunctions> } LocaleTranslationFunctions,
  * @typedef { import('typesafe-i18n/detectors').LocaleDetector } LocaleDetector,
  * @typedef { import('./types.actual').Locales } Locales,
+ * @typedef { import('./types.actual').Formatters } Formatters,
  * @typedef { import('./types.actual').Translation } Translation,
  * @typedef { import('./types.actual').TranslationFunctions } TranslationFunctions
  */
 
-import { i18nString as initI18nString, initI18nObjectLoaderAsync } from 'typesafe-i18n'
+import { i18n as initI18n, i18nObject as initI18nObject, i18nString as initI18nString } from 'typesafe-i18n'
 
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
-import { initFormatters } from './formatters-template.actual'
 
 /** @type { Locales } */
 export const baseLocale = 'en'
@@ -24,30 +25,27 @@ export const locales = [
 	'en'
 ]
 
-const i18nObjectLoaderAsync = initI18nObjectLoaderAsync()
+export const loadedLocales = /** @type { Record<Locales, Translation> } */ ({})
 
-/** @type { Record<Locales, () => Promise<any>> } */
-const localeTranslationLoaders = {
-	en: () => import('./en'),
-}
+export const loadedFormatters = /** @type { Record<Locales, Formatters> } */ ({})
 
 /**
  * @param { Locales } locale
- * @return { Promise<Translation> }
+ * @return { TranslateByString }
  */
-export const getTranslationForLocale = async (locale) => (await (localeTranslationLoaders[locale] || localeTranslationLoaders[baseLocale])()).default
+export const i18nString = (locale) => initI18nString(locale, loadedFormatters[locale])
 
 /**
  * @param { Locales } locale
- * @return { Promise<TranslationFunctions> }
+ * @return { TranslationFunctions }
  */
-export const i18nObject = (locale) => i18nObjectLoaderAsync(locale, getTranslationForLocale, initFormatters)
+export const i18nObject = (locale) =>
+	initI18nObject(locale, loadedLocales[locale], loadedFormatters[locale])
 
 /**
- * @param { Locales } locale
- * @return { Promise<TranslateByString> }
+ * @return { LocaleTranslationFunctions }
  */
-export const i18nString = async (locale) => initI18nString(locale, await initFormatters(locale))
+export const i18n = () => initI18n(loadedLocales, loadedFormatters)
 
 /**
  * @param { LocaleDetector[] } detectors

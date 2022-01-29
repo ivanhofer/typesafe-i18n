@@ -22,7 +22,7 @@ export type SvelteStoreInit<
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-export const getI18nSvelteStore = <
+export const initI18nSvelte = <
 	L extends string = string,
 	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,

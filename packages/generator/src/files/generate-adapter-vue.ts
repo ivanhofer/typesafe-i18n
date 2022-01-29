@@ -11,12 +11,7 @@ import {
 	tsCheck,
 } from '../output-handler'
 
-const getVueUtils = ({
-	formattersTemplateFileName,
-	typesFileName,
-	utilFileName,
-	banner,
-}: GeneratorConfigWithDefaultValues) => {
+const getVueUtils = ({ typesFileName, utilFileName, banner }: GeneratorConfigWithDefaultValues) => {
 	return `${OVERRIDE_WARNING}${tsCheck}
 ${banner}
 
@@ -35,8 +30,7 @@ ${jsDocImports(
 import { inject, ref } from 'vue'
 import { initI18nVuePlugin } from 'typesafe-i18n/adapters/adapter-vue';
 ${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translation', 'TranslationFunctions', 'Formatters')}
-import { baseLocale, getTranslationForLocale } from '${relativeFileImportPath(utilFileName)}'
-import { initFormatters } from '${relativeFileImportPath(formattersTemplateFileName)}'
+import { typesafeI18n, i18nPlugin } from '${relativeFileImportPath(utilFileName)}'
 
 ${jsDocType('VuePluginInit')}
 const { typesafeI18n, i18nPlugin } = initI18nVuePlugin${generics(
@@ -44,13 +38,7 @@ const { typesafeI18n, i18nPlugin } = initI18nVuePlugin${generics(
 		'Translation',
 		'TranslationFunctions',
 		'Formatters',
-	)}(
-	inject,
-	ref,
-	baseLocale,
-	getTranslationForLocale,
-	initFormatters,
-)
+	)}(inject, ref, translations, formatters)
 
 export { typesafeI18n, i18nPlugin }
 `

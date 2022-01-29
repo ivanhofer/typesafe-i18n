@@ -21,6 +21,7 @@
 :date: allows [formatting of values](#formatters) e.g. locale-dependent date or number formats\
 :left_right_arrow: supports [switch-case statements](#switch-case) e.g. for gender-specific output\
 :arrow_down: option for [asynchronous loading of locales](#loadLocalesAsync)\
+<!-- TOD: link to correct section -->
 :stopwatch: supports SSR (Server-Side Rendering)\
 :handshake: can be used for [frontend, backend and API](#usage) projects\
 :mag: [locale-detection](#locale-detection) for browser and server environments\
@@ -486,7 +487,6 @@ The available options are:
 | key                                                       | type                                                                                             | default value                                 |
 | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------- |
 | [baseLocale](#baseLocale)                                 | `string`                                                                                         | `'en'`                                        |
-| [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`                                                                                        | `true`                                        |
 | [adapter](#adapter)                                       | `'angular'` &#124; `'node'` &#124; `'react'` &#124; `'svelte'` &#124; `'vue'` &#124; `undefined` | `undefined`                                   |
 | [outputPath](#outputPath)                                 | `string`                                                                                         | `'./src/i18n/'`                               |
 | [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                                                             | `'TypeScript'`                                |
@@ -504,10 +504,6 @@ The available options are:
 #### `baseLocale`
 
 Defines which locale to use for the types generation. You can find more information on how to structure your locales [here](#locales).
-
-#### `loadLocalesAsync`
-
-Whether to generate code that loads the locales asynchronously. If set to `true`, a locale will be loaded, when you first access it. If set to `false` all locales will be loaded when you init the i18n-functions.
 
 #### `adapter`
 
@@ -1484,7 +1480,8 @@ There also exists a useful wrapper for some frameworks:
 
 The package was optimized for performance:
  - **the amount of network traffic is kept small**\
-   The translation functions are [small](#sizes). Only the locales that are currently used are [loaded](#loadLocalesAsync).
+   The translation functions are [small](#sizes). Only the locales that are used are loaded
+   <!-- TODO: explain `loadLocaleAsync` option -->
  - **no unnecessary workload**\
    Parsing your translation file for variables and formatters will only be performed when you access a translation for the first time. The result of that parsing process will be stored in an optimized object and kept in memory.
  - **fast translations**\

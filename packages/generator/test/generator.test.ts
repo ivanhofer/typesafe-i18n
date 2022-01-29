@@ -32,7 +32,18 @@ const createConfig = async (prefix: string, config?: GeneratorConfig): Promise<G
 		...config,
 	})
 
-type FileToCheck = 'types' | 'util' | 'formatters-template' | 'types-template' | 'react' | 'svelte' | 'vue'
+type FileToCheck =
+	| 'types'
+	| 'util'
+	| 'util.sync'
+	| 'util.async'
+	| 'formatters-template'
+	| 'types-template'
+	| 'angular.service'
+	| 'node'
+	| 'react'
+	| 'svelte'
+	| 'vue'
 
 const getPathOfOutputFile = (
 	prefix: string,
@@ -40,9 +51,10 @@ const getPathOfOutputFile = (
 	type: 'actual' | 'expected',
 	outputFormat: OutputFormats,
 ) => {
+	const fileName = file.endsWith('sync') ? file.replace('sync', `.${type}.`) : `${file}.${type}`
 	const fileEnding =
 		outputFormat === 'TypeScript' ? '.ts' : file === 'types' || file === 'types-template' ? '.d.ts' : '.js'
-	return `${outputPath}/${prefix}/${file}.${type}${fileEnding}`
+	return `${outputPath}/${prefix}/${fileName}${fileEnding}`
 }
 
 const REGEX_NEW_LINE = /\n/g
@@ -94,9 +106,13 @@ const testGeneratedOutput = async (
 		)
 		await check(prefix, 'types', outputFormat)
 		await check(prefix, 'util', outputFormat)
+		await check(prefix, 'util.sync', outputFormat)
+		await check(prefix, 'util.async', outputFormat)
 		await check(prefix, 'formatters-template', outputFormat)
 		await check(prefix, 'types-template', outputFormat)
 		await check(prefix, 'react', outputFormat)
+		await check(prefix, 'angular.service', outputFormat)
+		await check(prefix, 'node', outputFormat)
 		await check(prefix, 'svelte', outputFormat)
 		await check(prefix, 'vue', outputFormat)
 	})
@@ -190,7 +206,7 @@ testGeneratedOutput('base-locale-de', {}, { baseLocale: 'de' })
 testGeneratedOutput('multiple-locales', {}, {}, undefined, ['de', 'en', 'it'])
 
 testGeneratedOutput('locale-with-dash', {}, { baseLocale: 'de-at' })
-testGeneratedOutput('locale-with-dash-sync', {}, { baseLocale: 'de-at', loadLocalesAsync: false })
+
 testGeneratedOutput('locales-with-dash', {}, {}, undefined, ['it-it', 'en-us', 'fr-be'])
 
 testGeneratedOutput('arg-types', { STRING_TYPE: 'Hi {name:string}!', NUMBER_TYPE: '{0:number} apple{{s}}' })
@@ -298,28 +314,17 @@ testGeneratedOutput('banner-tslint', { HI: 'Hi {0:name}' }, { banner: '/* tslint
 // --------------------------------------------------------------------------------------------------------------------
 
 const testAdapterMatrix = (prefix: string, translation: BaseTranslation, config: GeneratorConfig = {}) => {
-	testGeneratedOutput(`${prefix}-async`, translation, { ...config })
-	testGeneratedOutput(`${prefix}-sync`, translation, { ...config, loadLocalesAsync: false })
-	testGeneratedOutput(`${prefix}-async-esm`, translation, { ...config, esmImports: true })
-	testGeneratedOutput(`${prefix}-sync-esm`, translation, { ...config, loadLocalesAsync: false, esmImports: true })
-	testGeneratedOutput(`${prefix}-async-jsdoc`, translation, { ...config, outputFormat: 'JavaScript' })
-	testGeneratedOutput(`${prefix}-sync-jsdoc`, translation, {
-		...config,
-		loadLocalesAsync: false,
-		outputFormat: 'JavaScript',
-	})
-	testGeneratedOutput(`${prefix}-async-esm-jsdoc`, translation, {
-		...config,
-		esmImports: true,
-		outputFormat: 'JavaScript',
-	})
-	testGeneratedOutput(`${prefix}-sync-esm-jsdoc`, translation, {
-		...config,
-		loadLocalesAsync: false,
-		esmImports: true,
-		outputFormat: 'JavaScript',
-	})
+	testGeneratedOutput(`${prefix}`, translation, { ...config })
+	testGeneratedOutput(`${prefix}-esm`, translation, { ...config, esmImports: true })
+	testGeneratedOutput(`${prefix}-jsdoc`, translation, { ...config, outputFormat: 'JavaScript' })
+	testGeneratedOutput(`${prefix}-esm-jsdoc`, translation, { ...config, esmImports: true, outputFormat: 'JavaScript' })
 }
+
+testAdapterMatrix(
+	'adapter-angular',
+	{ HELLO_ANGULAR: 'Hi {0:string}' },
+	{ adapter: 'angular', adapterFileName: getFileName('angular.service') },
+)
 
 testAdapterMatrix(
 	'adapter-node',
@@ -345,29 +350,11 @@ testAdapterMatrix(
 	{ adapter: 'vue', adapterFileName: getFileName('vue') },
 )
 
-testAdapterMatrix(
-	'adapter-angular',
-	{ HELLO_ANGULAR: 'Hi {0:string}' },
-	{ adapter: 'angular', adapterFileName: getFileName('angular.service') },
-)
-
 // --------------------------------------------------------------------------------------------------------------------
 
-testGeneratedOutput('esm-imports-async', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true })
+testGeneratedOutput('esm-imports', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true })
 
-testGeneratedOutput('esm-imports-sync', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true, loadLocalesAsync: false })
-
-testGeneratedOutput(
-	'esm-imports-async-jsdoc',
-	{ HELLO_ESM: 'Hi {0:name}' },
-	{ esmImports: true, outputFormat: 'JavaScript' },
-)
-
-testGeneratedOutput(
-	'esm-imports-sync-jsdoc',
-	{ HELLO_ESM: 'Hi {0:name}' },
-	{ esmImports: true, loadLocalesAsync: false, outputFormat: 'JavaScript' },
-)
+testGeneratedOutput('esm-imports-jsdoc', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true, outputFormat: 'JavaScript' })
 
 // --------------------------------------------------------------------------------------------------------------------
 

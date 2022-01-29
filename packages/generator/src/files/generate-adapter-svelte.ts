@@ -4,21 +4,14 @@ import { prettify } from '../generator-util'
 import {
 	generics,
 	importTypes,
-	jsDocFunction,
 	jsDocImports,
 	jsDocType,
 	OVERRIDE_WARNING,
 	relativeFileImportPath,
 	tsCheck,
-	type,
 } from '../output-handler'
 
-const getSvelteUtils = ({
-	formattersTemplateFileName,
-	typesFileName,
-	utilFileName,
-	banner,
-}: GeneratorConfigWithDefaultValues) => {
+const getSvelteUtils = ({ typesFileName, utilFileName, banner }: GeneratorConfigWithDefaultValues) => {
 	return `${OVERRIDE_WARNING}${tsCheck}
 ${banner}
 
@@ -34,23 +27,19 @@ ${jsDocImports(
 	{ from: relativeFileImportPath(typesFileName), type: 'Formatters' },
 )}
 
-import { getI18nSvelteStore } from 'typesafe-i18n/adapters/adapter-svelte';
+import { initI18nSvelte } from 'typesafe-i18n/adapters/adapter-svelte';
 ${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translation', 'TranslationFunctions', 'Formatters')}
-import { baseLocale, getTranslationForLocale } from '${relativeFileImportPath(utilFileName)}'
-import { initFormatters } from '${relativeFileImportPath(formattersTemplateFileName)}'
+import { translations, formatters } from '${relativeFileImportPath(utilFileName)}'
 
 ${jsDocType('SvelteStoreInit')}
-const { initI18n: init, setLocale, isLoadingLocale, locale, LL } = getI18nSvelteStore${generics(
+const { locale, LL, setLocale } = initI18nSvelte${generics(
 		'Locales',
 		'Translation',
 		'TranslationFunctions',
 		'Formatters',
-	)}()
+	)}(translations, formatters)
 
-${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' })}
-const initI18n = (locale${type('Locales')} = baseLocale) => init(locale, getTranslationForLocale, initFormatters)
-
-export { initI18n, setLocale, isLoadingLocale, locale, LL }
+export { locale, LL, setLocale }
 
 export default LL
 `

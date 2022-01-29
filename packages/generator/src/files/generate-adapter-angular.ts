@@ -3,27 +3,21 @@ import { writeFileIfContainsChanges } from '../file-utils'
 import { prettify } from '../generator-util'
 import { importTypes, OVERRIDE_WARNING, relativeFileImportPath, tsCheck } from '../output-handler'
 
-const getAngularUtils = ({
-	utilFileName,
-	formattersTemplateFileName,
-	banner,
-	typesFileName,
-}: GeneratorConfigWithDefaultValues) => {
+const getAngularUtils = ({ utilFileName, banner, typesFileName }: GeneratorConfigWithDefaultValues) => {
 	return `${OVERRIDE_WARNING}${tsCheck}
 ${banner}
 
 import { Injectable } from '@angular/core'
 import { I18nServiceRoot } from 'typesafe-i18n/angular/angular-service'
-import { initFormatters } from '${relativeFileImportPath(formattersTemplateFileName)}'
 ${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translation', 'TranslationFunctions', 'Formatters')}
-import { baseLocale, getTranslationForLocale } from '${relativeFileImportPath(utilFileName)}'
+import { translations, formatters } from '${relativeFileImportPath(utilFileName)}'
 
 @Injectable({
 	providedIn: 'root',
 })
 export class I18nService extends I18nServiceRoot<Locales, Translation, TranslationFunctions, Formatters> {
 	constructor() {
-		super(baseLocale, getTranslationForLocale, initFormatters)
+		super(translations, formatters)
 	}
 }
 `

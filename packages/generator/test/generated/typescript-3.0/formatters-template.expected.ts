@@ -1,7 +1,7 @@
-import { AsyncFormattersInitializer } from 'typesafe-i18n'
+import { FormattersInitializer } from 'typesafe-i18n'
 import { Locales, Formatters } from './types.actual'
 
-export const initFormatters: AsyncFormattersInitializer<Locales, Formatters> = async (locale: Locales) => {
+export const initFormatters: FormattersInitializer<Locales, Formatters> = (locale: Locales) => {
 	
 	const formatters: Formatters = {
 		// add your formatter functions here

@@ -12,16 +12,14 @@ import { askConfigQuestions, askOverrideQuestion } from './questions'
 // --------------------------------------------------------------------------------------------------------------------
 
 const getConfigDiff = async (options: GeneratorConfig) => {
-	const { baseLocale, adapter, loadLocalesAsync, esmImports, outputFormat, outputPath } =
-		await getConfigWithDefaultValues({}, false)
+	const { baseLocale, adapter, esmImports, outputFormat, outputPath } = await getConfigWithDefaultValues({}, false)
 
-	const diff = justDiff({ baseLocale, adapter, loadLocalesAsync, esmImports, outputFormat, outputPath }, options)
+	const diff = justDiff({ baseLocale, adapter, esmImports, outputFormat, outputPath }, options)
 
 	const changedValues = <GeneratorConfig>justDiffApply(
 		{
 			baseLocale: undefined,
 			adapter: undefined,
-			loadLocalesAsync: undefined,
 			esmImports: undefined,
 			outputFormat: undefined,
 			outputPath: undefined,

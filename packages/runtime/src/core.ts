@@ -67,8 +67,6 @@ export type LocaleTranslations<L extends Locale, T = unknown> = {
 
 export type FormattersInitializer<L extends Locale, F extends BaseFormatters> = (locale: L) => F
 
-export type AsyncFormattersInitializer<L extends Locale, F extends BaseFormatters> = (locale: L) => Promise<F>
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type FormatterFunction<T = any, U = unknown> = (value: T) => U
 

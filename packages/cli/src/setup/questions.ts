@@ -1,14 +1,7 @@
 import prompts from 'prompts'
 import type { GeneratorConfig } from '../../../config/src/types'
 
-export const askConfigQuestions = ({
-	baseLocale,
-	adapter,
-	loadLocalesAsync,
-	esmImports,
-	outputFormat,
-	outputPath,
-}: GeneratorConfig) =>
+export const askConfigQuestions = ({ baseLocale, adapter, esmImports, outputFormat, outputPath }: GeneratorConfig) =>
 	prompts([
 		{
 			name: 'baseLocale',
@@ -45,16 +38,6 @@ export const askConfigQuestions = ({
 				}
 			},
 			format: (value) => (value === 0 ? undefined : value),
-		},
-		{
-			name: 'loadLocalesAsync',
-			type: 'select',
-			message: 'Do you want your locales to be loaded asynchronously?',
-			choices: [
-				{ title: 'No', value: false, description: 'Load all locales into memory at start of application' },
-				{ title: 'Yes', value: true, description: 'lazy-load locales as soon as they are needed' },
-			],
-			initial: loadLocalesAsync === false ? 0 : 1,
 		},
 		{
 			name: 'esmImports',
