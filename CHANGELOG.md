@@ -4,6 +4,8 @@
 
 ## 3.0.0 (2022-01-29)
 
+Please visit the [release post](https://github.com/ivanhofer/typesafe-i18n/discussions/163) for more information.
+
 BREAKING:
  - locales have to be loaded in a separate step
  - remove `loadLocalesAsync` option from generator
