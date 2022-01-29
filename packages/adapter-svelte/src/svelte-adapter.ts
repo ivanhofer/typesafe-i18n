@@ -14,7 +14,7 @@ export type SvelteStoreInit<
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 > = {
 	locale: Readable<L>
-	LL: Readable<TF> & TF
+	LL: Readable<TF>
 	setLocale: (locale: L) => void
 }
 
