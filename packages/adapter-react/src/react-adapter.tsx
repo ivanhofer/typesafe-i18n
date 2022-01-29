@@ -54,7 +54,7 @@ export const initI18nReact = <
 			setLL(i18nObject<L, T, TF, F>(newLocale, translations[newLocale], formatters[newLocale]))
 		}
 
-		setLocale(props.locale)
+		!locale && setLocale(props.locale)
 
 		const ctx = { setLocale, locale, LL } as I18nContextType<L, T, TF>
 
