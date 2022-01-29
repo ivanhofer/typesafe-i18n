@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import { loadLocaleAsync } from 'src/i18n/i18n-util.async'
 import { localStorageDetector } from 'typesafe-i18n/detectors'
 import { Locales, TranslationFunctions } from '../i18n/i18n-types'
 import { detectLocale, locales } from '../i18n/i18n-util'
@@ -23,7 +24,7 @@ export class AppComponent {
 
 	constructor(private i18nService: I18nService) {
 		this.selectedLocale = detectLocale(localStorageDetector)
-		i18nService.initI18n(this.selectedLocale).then(() => {
+		this.setLocale().then(() => {
 			// eslint-disable-next-line no-console
 			console.log(this.LL.STARTUP())
 		})
@@ -33,7 +34,8 @@ export class AppComponent {
 		return this.i18nService.LL
 	}
 
-	setLocale(): void {
+	async setLocale(): Promise<void> {
+		await loadLocaleAsync(this.selectedLocale)
 		this.i18nService.setLocale(this.selectedLocale)
 		localStorage.setItem('lang', this.selectedLocale)
 	}

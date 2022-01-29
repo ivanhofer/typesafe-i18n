@@ -3,15 +3,14 @@
 
 import { Injectable } from '@angular/core'
 import { I18nServiceRoot } from 'typesafe-i18n/angular/angular-service'
-import { initFormatters } from './formatters'
 import type { Locales, Translation, TranslationFunctions, Formatters } from './i18n-types'
-import { baseLocale, getTranslationForLocale } from './i18n-util'
+import { loadedLocales, loadedFormatters } from './i18n-util'
 
 @Injectable({
 	providedIn: 'root',
 })
 export class I18nService extends I18nServiceRoot<Locales, Translation, TranslationFunctions, Formatters> {
 	constructor() {
-		super(baseLocale, getTranslationForLocale, initFormatters)
+		super(loadedLocales, loadedFormatters)
 	}
 }

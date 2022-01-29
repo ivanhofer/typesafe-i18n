@@ -9,8 +9,8 @@
     "typesafe-i18n": "typesafe-i18n"
   },
   "dependencies": {
-    "typesafe-i18n": "^2.58.0",
-    "vue": "^3.2.25"
+    "typesafe-i18n": "^3.0.0",
+    "vue": "^3.2.29"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.0.0",

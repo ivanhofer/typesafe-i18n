@@ -1,18 +1,20 @@
 import React, { ChangeEventHandler, useContext, useState } from 'react'
-import logo from './logo.svg'
 import './App.css'
-import { locales } from './i18n/i18n-util'
-import { Locales } from './i18n/i18n-types'
 import { I18nContext } from './i18n/i18n-react'
+import { Locales } from './i18n/i18n-types'
+import { locales } from './i18n/i18n-util'
+import { loadLocaleAsync } from './i18n/i18n-util.async'
+import logo from './logo.svg'
 
 function Child() {
-	const { setLocale, LL, locale } = useContext(I18nContext)
+	const { locale, LL, setLocale } = useContext(I18nContext)
 
 	const [name, setName] = useState('John')
 
-	const onLocaleSelected: ChangeEventHandler<HTMLSelectElement> = ({ target }) => {
+	const onLocaleSelected: ChangeEventHandler<HTMLSelectElement> = async ({ target }) => {
 		const locale = target.value as Locales
 		localStorage.setItem('lang', locale)
+		await loadLocaleAsync(locale)
 		setLocale(locale)
 	}
 

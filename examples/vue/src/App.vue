@@ -3,10 +3,17 @@
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import { ref } from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
+import type { Locales } from './i18n/i18n-types'
 import { locales } from './i18n/i18n-util'
+import { loadLocaleAsync } from './i18n/i18n-util.async'
 import { typesafeI18n } from './i18n/i18n-vue'
 
 const { LL, locale, setLocale } = typesafeI18n()
+
+const chooseLocale = async (locale: Locales) => {
+	await loadLocaleAsync(locale)
+	setLocale(locale)
+}
 
 let selectedLocale = ref(locale.value)
 </script>
@@ -14,15 +21,15 @@ let selectedLocale = ref(locale.value)
 <template>
 	<div>
 		{{ LL.CHOOSE_LOCALE() }}
-		<select v-model="selectedLocale" @change="setLocale(selectedLocale)">
-			<option v-for="locale in locales" :value="locale">{{ locale }}</option>
+		<select v-model="selectedLocale" @change="chooseLocale(selectedLocale)">
+			<option v-for="locale in locales" :value="locale" v-bind:key="locale">{{ locale }}</option>
 		</select>
 	</div>
 
-  <hr>
+	<hr />
 
 	<img alt="Vue logo" src="./assets/logo.png" />
-	<HelloWorld msg="Hello Vue 3 + TypeScript + Vite + typesafe-i18n" />
+	<HelloWorld msg="Vue 3 + TypeScript + Vite + typesafe-i18n" />
 </template>
 
 <style>
@@ -41,6 +48,6 @@ div {
 	text-align: center;
 	margin: 0 auto 50px auto;
 	display: inline-flex;
-  gap: 15px;
+	gap: 15px;
 }
 </style>

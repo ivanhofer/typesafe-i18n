@@ -3,6 +3,7 @@ import { initAcceptLanguageHeaderDetector, initRequestParametersDetector } from 
 import L from './i18n/i18n-node'
 import { Locales } from './i18n/i18n-types'
 import { detectLocale } from './i18n/i18n-util'
+import { loadAllLocales } from './i18n/i18n-util.sync'
 
 const app: Application = express()
 
@@ -45,6 +46,8 @@ const getPreferredLocale = (req: Request): Locales => {
 
 	return detectLocale(requestParametersDetector, acceptLanguageDetector)
 }
+
+loadAllLocales()
 
 // eslint-disable-next-line no-console
 app.listen(port, () => console.log(`App is listening on port ${port}`))

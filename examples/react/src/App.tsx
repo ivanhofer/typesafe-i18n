@@ -1,17 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { localStorageDetector } from 'typesafe-i18n/detectors'
 import './App.css'
 import Child from './Child'
 import TypesafeI18n from './i18n/i18n-react'
-import { localStorageDetector } from 'typesafe-i18n/detectors'
 import { detectLocale } from './i18n/i18n-util'
+import { loadLocaleAsync } from './i18n/i18n-util.async'
+
+const detectedLocale = detectLocale(localStorageDetector)
 
 function App() {
-	const detectedLocale = detectLocale(localStorageDetector)
+	const [wasLoaded, setWasLoaded] = useState(false)
+
+	useEffect(() => {
+		loadLocaleAsync(detectedLocale).then(() => setWasLoaded(true))
+	}, [])
+
+	if (!wasLoaded) return null
 
 	return (
-		<TypesafeI18n initialLocale={detectedLocale}>
+		<TypesafeI18n locale={detectedLocale}>
 			<div className="App">
-				<Child></Child>
+				<Child />
 			</div>
 		</TypesafeI18n>
 	)

@@ -4,15 +4,8 @@
 import { inject, ref } from 'vue'
 import { initI18nVuePlugin } from 'typesafe-i18n/adapters/adapter-vue';
 import type { Locales, Translation, TranslationFunctions, Formatters } from './i18n-types'
-import { baseLocale, getTranslationForLocale } from './i18n-util'
-import { initFormatters } from './formatters'
+import { loadedLocales, loadedFormatters } from './i18n-util'
 
-const { typesafeI18n, i18nPlugin } = initI18nVuePlugin<Locales, Translation, TranslationFunctions, Formatters>(
-	inject,
-	ref,
-	baseLocale,
-	getTranslationForLocale,
-	initFormatters,
-)
+const { typesafeI18n, i18nPlugin } = initI18nVuePlugin<Locales, Translation, TranslationFunctions, Formatters>(inject, ref, loadedLocales, loadedFormatters)
 
 export { typesafeI18n, i18nPlugin }
