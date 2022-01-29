@@ -18,7 +18,6 @@ export type GeneratorConfig = {
 
 	adapter?: Adapters
 	adapterFileName?: string
-	loadLocalesAsync?: boolean
 	generateOnlyTypes?: boolean
 
 	banner?: string
@@ -40,7 +39,6 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 	typesTemplateFileName: string
 	esmImports: boolean
 
-	loadLocalesAsync: boolean
 	generateOnlyTypes: boolean
 	banner: string
 }

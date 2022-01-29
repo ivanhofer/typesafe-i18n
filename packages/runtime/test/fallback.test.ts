@@ -9,14 +9,14 @@ const LL = getFallbackProxy()
 // @ts-expect-error
 test('nothing', () => assert.is(LL(), ''))
 // @ts-expect-error
-test('property', () => assert.is(LL.test(), 'test'))
+test('property', () => assert.is(LL.test(), ''))
 // @ts-expect-error
-test('nested', () => assert.is(LL.nested.test(), 'nested.test'))
+test('nested', () => assert.is(LL.nested.test(), ''))
 // @ts-expect-error
-test('array', () => assert.is(LL[0](), '0'))
+test('array', () => assert.is(LL[0](), ''))
 test('array length', () => assert.is(LL.length, 0))
 // @ts-expect-error
-test('array nested', () => assert.is(LL.test[0](), 'test.0'))
+test('array nested', () => assert.is(LL.test[0](), ''))
 // @ts-expect-error
 test('array nested length', () => assert.is(LL.test.length, 0))
 

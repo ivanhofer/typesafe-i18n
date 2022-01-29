@@ -35,10 +35,8 @@ const iifeConfig = (type, minify = false) => ({
 const getIifeConfigs = (type) => [iifeConfig(type), iifeConfig(type, true)]
 
 export default [
-	...getIifeConfigs(''),
+	...getIifeConfigs('instance'),
 	...getIifeConfigs('string'),
 	...getIifeConfigs('object'),
 	...getIifeConfigs('all'),
-	// ...getIifeConfigs('loader'),
-	// ...getIifeConfigs('loader.async'),
 ]

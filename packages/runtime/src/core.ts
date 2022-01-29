@@ -61,16 +61,22 @@ export type BaseTranslation =
 	| string[]
 	| Readonly<string[]>
 
-export interface LocaleMapping {
-	locale: string
-	translations: BaseTranslation | BaseTranslation[]
+export type LocaleTranslations<L extends Locale, T = unknown> = {
+	[key in L]: T
 }
+
+export type FormattersInitializer<L extends Locale, F extends BaseFormatters> = (locale: L) => F
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type FormatterFunction<T = any, U = unknown> = (value: T) => U
 
 export type BaseFormatters = {
 	[formatter: string]: FormatterFunction
+}
+
+export interface LocaleMapping {
+	locale: string
+	translations: BaseTranslation | BaseTranslation[]
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -116,7 +122,7 @@ const getPlural = (pluralRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPa
 	}
 }
 
-const REGEX_PLURAL = /\?\?/g
+const REGEX_PLURAL_VALUE_INJECTION = /\?\?/g
 
 const applyArguments = (
 	textParts: Part[],
@@ -136,7 +142,7 @@ const applyArguments = (
 			if (isPluralPart(part)) {
 				return (
 					(typeof value === 'boolean' ? (value ? part.o : part.r) : getPlural(pluralRules, part, value)) || ''
-				).replace(REGEX_PLURAL, value as string)
+				).replace(REGEX_PLURAL_VALUE_INJECTION, value as string)
 			}
 
 			const formattedValue = formatterKeys.length ? applyFormatters(formatters, formatterKeys, value) : value

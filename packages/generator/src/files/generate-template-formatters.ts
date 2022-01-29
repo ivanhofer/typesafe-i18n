@@ -11,8 +11,7 @@ import {
 	type,
 } from '../output-handler'
 
-const getFormattersTemplate = ({ typesFileName: typesFile, loadLocalesAsync }: GeneratorConfigWithDefaultValues) => {
-	const formattersInitializerType = `${loadLocalesAsync ? 'Async' : ''}FormattersInitializer`
+const getFormattersTemplate = ({ typesFileName: typesFile }: GeneratorConfigWithDefaultValues) => {
 	return `${tsCheck}
 
 ${jsDocImports(
@@ -21,13 +20,11 @@ ${jsDocImports(
 	{ from: relativeFileImportPath(typesFile), type: 'Formatters' },
 )}
 
-${importTypes('typesafe-i18n', formattersInitializerType)}
+${importTypes('typesafe-i18n', 'FormattersInitializer')}
 ${importTypes(relativeFileImportPath(typesFile), 'Locales', 'Formatters')}
 
-${jsDocFunction(loadLocalesAsync ? 'Promise<Formatters>' : 'Formatters', { type: 'Locales', name: 'locale' })}
-export const initFormatters${type(`${formattersInitializerType}<Locales, Formatters>`)} = ${
-		loadLocalesAsync ? 'async ' : ''
-	}(locale${type('Locales')}) => {
+${jsDocFunction('Formatters', { type: 'Locales', name: 'locale' })}
+export const initFormatters${type(`FormattersInitializer<Locales, Formatters>`)} = (locale${type('Locales')}) => {
 	${jsDocType('Formatters')}
 	const formatters${type('Formatters')} = {
 		// add your formatter functions here

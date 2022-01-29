@@ -12,12 +12,7 @@ import {
 	tsCheck,
 } from '../output-handler'
 
-const getReactUtils = ({
-	utilFileName,
-	typesFileName,
-	formattersTemplateFileName,
-	banner,
-}: GeneratorConfigWithDefaultValues) => {
+const getReactUtils = ({ utilFileName, typesFileName, banner }: GeneratorConfigWithDefaultValues) => {
 	return `${OVERRIDE_WARNING}${tsCheck}
 ${banner}
 
@@ -35,8 +30,7 @@ ${jsDocImports(
 
 import { initI18nReact } from 'typesafe-i18n/adapters/adapter-react'
 ${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translation', 'TranslationFunctions', 'Formatters')}
-import { baseLocale, getTranslationForLocale } from '${relativeFileImportPath(utilFileName)}'
-import { initFormatters } from '${relativeFileImportPath(formattersTemplateFileName)}'
+import { loadedLocales, loadedFormatters } from '${relativeFileImportPath(utilFileName)}'
 
 ${jsDocType('ReactInit')}
 const { component: TypesafeI18n, context: I18nContext } = initI18nReact${generics(
@@ -44,7 +38,7 @@ const { component: TypesafeI18n, context: I18nContext } = initI18nReact${generic
 		'Translation',
 		'TranslationFunctions',
 		'Formatters',
-	)}(baseLocale, getTranslationForLocale, initFormatters)
+	)}(loadedLocales, loadedFormatters)
 
 export { I18nContext }
 

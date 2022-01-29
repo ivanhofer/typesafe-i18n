@@ -11,36 +11,36 @@ module.exports = [
 	},
 	{
 		name: 'i18n-instance',
-		path: 'dist/i18n.min.js',
-		limit: '1119 b',
+		path: 'dist/i18n.instance.min.js',
+		limit: '1099 b',
 	},
 	{
 		name: 'all together',
 		path: 'dist/i18n.all.min.js',
-		limit: '1171 b',
+		limit: '1153 b',
 	},
 	{
 		name: 'angular-adapter',
 		path: 'angular/angular-service.min.cjs',
-		limit: '1415 b',
+		limit: '2017 b',
 		ignore: ['angular'],
 	},
 	{
 		name: 'react-context',
 		path: 'react/react-context.min.cjs',
-		limit: '1578 b',
+		limit: '1480 b',
 		ignore: ['react'],
 	},
 	{
 		name: 'svelte-store',
 		path: 'svelte/svelte-store.min.cjs',
-		limit: '1552 b',
+		limit: '1414 b',
 		ignore: ['svelte'],
 	},
 	{
 		name: 'vue-plugin',
 		path: 'vue/vue-plugin.min.cjs',
-		limit: '1395 b',
+		limit: '1332 b',
 		ignore: ['vue'],
 	},
 ]

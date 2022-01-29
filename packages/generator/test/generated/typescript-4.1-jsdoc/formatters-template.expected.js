@@ -8,9 +8,9 @@
 
 /**
  * @param { Locales } locale
- * @return { Promise<Formatters> }
+ * @return { Formatters }
  */
-export const initFormatters = async (locale) => {
+export const initFormatters = (locale) => {
 	/** @type { Formatters } */
 	const formatters = {
 		// add your formatter functions here

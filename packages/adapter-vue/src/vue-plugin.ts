@@ -1,1 +1,1 @@
-export { initI18nVuePlugin } from './vue-adapter'
+export * from './vue-adapter'

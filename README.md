@@ -20,7 +20,7 @@
 :speech_balloon: [supports plural rules](#plural)\
 :date: allows [formatting of values](#formatters) e.g. locale-dependent date or number formats\
 :left_right_arrow: supports [switch-case statements](#switch-case) e.g. for gender-specific output\
-:arrow_down: option for [asynchronous loading of locales](#loadLocalesAsync)\
+:arrow_down: option for [asynchronous loading of locales](#asynchronous-loading-of-locales)\
 :stopwatch: supports SSR (Server-Side Rendering)\
 :handshake: can be used for [frontend, backend and API](#usage) projects\
 :mag: [locale-detection](#locale-detection) for browser and server environments\
@@ -119,15 +119,13 @@ All you need is inside the [generated](#typesafety) file `i18n-utils.ts`. You ca
 If the provided wrappers don't fit your needs, you can use these raw functions to implement a custom i18n integration.
 The `typesafe-i18n` package exports a few different objects you can use to localize your applications:
 
- - [i18nString (LLL)](#i18nString)
- - [i18nObject (LL)](#i18nObject)
- - [i18n (L)](#i18n)
+ - [i18nString (LLL)](#i18nString): string interpolation for selected parts of an application
+ - [i18nObject (LL)](#i18nObject): for frontend-applications or projects that only load a single locale per user
+ - [i18n (L)](#i18n): for APIs or backend-applications that need to handle multiple locales
 
 In order to get full typechecking support, you should use the exported functions in `i18n-utils.ts` created by the [generator](#typesafety). It contains fully typed wrappers for the following core functionalities.
 
 #### i18nString
-
-> use case: string interpolation for selected parts of an application
 
 The `i18nString` contains the core of the localization engine. To initialize it, you need to pass your desired `locale` and the `formatters` (optional) you want to use.\
 You will get an object back that can be used to transform your translation strings.
@@ -146,8 +144,6 @@ LLL('Hello {name|uppercase}!', { name: 'world' }) // => 'Hello WORLD!'
 ```
 
 #### i18nObject
-
-> use case: for frontend-applications or projects that only load a single locale per user
 
 The `i18nObject` wraps your translations for a certain locale. To initialize it, you need to pass your desired `locale`, your `translations`-object and the `formatters` (optional) you want to use.\
 You will get an object back that can be used to access and apply your translations.
@@ -198,8 +194,6 @@ LL.projects.count(3) // => '3 projects'
 
 
 #### i18n
-
-> use case: for APIs or backend-applications that need to handle multiple locales
 
 Wrap all your locales with `i18n`. To initialize it, you need to pass a callback to get the `translations`-object for a given locale and a callback to initialize the `formatters` you want to use (optional).\
 You will get an object back that can be used to access all your locales and apply your translations.
@@ -406,6 +400,8 @@ src/
       custom-types.ts
       formatters.ts
       i18n-types.ts
+      i18n-util.async.ts
+      i18n-util.sync.ts
       i18n-util.ts
 ```
 
@@ -423,8 +419,52 @@ src/
  - `i18n-types.ts`\
 	Type definitions are generated in this file. You don't have to understand them. They are just here to help TypeScript understand, how you need to call the translation functions.
 
+ - `i18n-util.async.ts`\
+   This file contains the logic to load individual locales asynchronously.
+
+ - `i18n-util.ts`\
+   This file contains the logic to load your locales in a synchronous way.
+
  - `i18n-util.ts`\
    This file contains wrappers with type-information around the [base i18n functions](#custom-usage).
+
+
+### loading locales
+
+You can choose how you want to load locales depending on your application use-case
+ - [asynchronously](#asynchronous-loading-of-locales): load each locale as a separate network request *(recommended)*
+ - [synchronous](#synchronous-loading-of-locales): load all locales at once
+
+#### asynchronous loading of locales
+
+If your app get's loaded via a network request (probably most websites and -applications) you should use the `loadLocaleAsync` function provided by `src/i18n/i18n-util.async.ts`. It only loads the locale that is currently needed to render the page. No unnecessary data from other locales is transferred to your users. The function returns a `Promise` that loads the dictionary and initializes your [`formatters`](#formatters).
+
+```ts
+import { loadLocaleAsync } from './i18n/i18n-util.async'
+import { i18nObject } from './i18n/i18n-util'
+
+let LL
+
+const switchLocale = async (locale) => {
+   await loadLocaleAsync(locale)
+   LL = i18nObject(locale)
+}
+```
+
+#### synchronous loading of locales
+
+If you are using `typesafe-i18n` in a server or API context, you can load all locales when the app starts by using the `loadAllLocales` function provided by `src/i18n/i18n-util.sync.ts`. The function loads all dictionaries and initializes the [`formatters`](#formatters) for each locale.
+
+```ts
+import { loadAllLocales } from './i18n/i18n-util.sync'
+import { i18n } from './i18n/i18n-util'
+
+const locale = 'en'
+
+loadAllLocales(locale)
+
+const L = i18n(locale)
+```
 
 
 ### locales
@@ -486,7 +526,6 @@ The available options are:
 | key                                                       | type                                                                                             | default value                                 |
 | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------- |
 | [baseLocale](#baseLocale)                                 | `string`                                                                                         | `'en'`                                        |
-| [loadLocalesAsync](#loadLocalesAsync)                     | `boolean`                                                                                        | `true`                                        |
 | [adapter](#adapter)                                       | `'angular'` &#124; `'node'` &#124; `'react'` &#124; `'svelte'` &#124; `'vue'` &#124; `undefined` | `undefined`                                   |
 | [outputPath](#outputPath)                                 | `string`                                                                                         | `'./src/i18n/'`                               |
 | [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                                                             | `'TypeScript'`                                |
@@ -504,10 +543,6 @@ The available options are:
 #### `baseLocale`
 
 Defines which locale to use for the types generation. You can find more information on how to structure your locales [here](#locales).
-
-#### `loadLocalesAsync`
-
-Whether to generate code that loads the locales asynchronously. If set to `true`, a locale will be loaded, when you first access it. If set to `false` all locales will be loaded when you init the i18n-functions.
 
 #### `adapter`
 
@@ -1464,15 +1499,15 @@ These parts are bundled into the [core functions](#custom-usage). The sizes of t
 
 - [i18nString](#i18nString): 1000 bytes gzipped
 - [i18nObject](#i18nObject): 1070 bytes gzipped
-- [i18n](#i18n): 1119 bytes gzipped
+- [i18n](#i18n): 1099 bytes gzipped
 
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
 There also exists a useful wrapper for some frameworks:
-- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 1415 bytes gzipped
-- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react): 1578 bytes gzipped
-- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte): 1552 bytes gzipped
-- [typesafe-i18n vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue): 1395 bytes gzipped
+- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 2017 bytes gzipped
+- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react): 1480 bytes gzipped
+- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte): 1414 bytes gzipped
+- [typesafe-i18n vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue): 1332 bytes gzipped
 
 
 
@@ -1484,7 +1519,7 @@ There also exists a useful wrapper for some frameworks:
 
 The package was optimized for performance:
  - **the amount of network traffic is kept small**\
-   The translation functions are [small](#sizes). Only the locales that are currently used are [loaded](#loadLocalesAsync).
+   The translation functions are [small](#sizes). Only the locales that are used are [loaded](#asynchronous-loading-of-locales)
  - **no unnecessary workload**\
    Parsing your translation file for variables and formatters will only be performed when you access a translation for the first time. The result of that parsing process will be stored in an optimized object and kept in memory.
  - **fast translations**\

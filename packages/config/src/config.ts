@@ -40,7 +40,6 @@ export const getConfigWithDefaultValues = async (
 	typesTemplateFileName: 'custom-types',
 	esmImports: false,
 
-	loadLocalesAsync: true,
 	generateOnlyTypes: false,
 	banner: '/* eslint-disable */',
 	...config,

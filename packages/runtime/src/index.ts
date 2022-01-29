@@ -1,14 +1,4 @@
-export { BaseTranslation, LocalizedString } from './core'
-export { i18n } from './util.instance'
-export {
-	AsyncFormattersInitializer,
-	FormattersInitializer,
-	i18nObjectLoader,
-	i18nObjectLoaderAsync,
-	initI18nObjectLoader,
-	initI18nObjectLoaderAsync,
-	LocaleTranslationFunctions,
-	LocaleTranslations,
-} from './util.loader'
+export { BaseTranslation, FormattersInitializer, LocaleTranslations, LocalizedString } from './core'
+export { i18n, LocaleTranslationFunctions } from './util.instance'
 export { i18nObject } from './util.object'
 export { i18nString, TranslateByString } from './util.string'

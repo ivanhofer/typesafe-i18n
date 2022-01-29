@@ -10,6 +10,8 @@ import { generateBaseLocaleTemplate, generateLocaleTemplate } from './files/gene
 import { generateCustomTypesTemplate } from './files/generate-template-types'
 import { generateTypes } from './files/generate-types'
 import { generateUtil } from './files/generate-util'
+import { generateAsyncUtil } from './files/generate-util-async'
+import { generateSyncUtil } from './files/generate-util-sync'
 import { logger as defaultLogger, Logger, TypescriptVersion } from './generator-util'
 import { configureOutputHandler } from './output-handler'
 
@@ -57,19 +59,23 @@ export const generate = async (
 ): Promise<void> => {
 	configureOutputHandler(config, version)
 
+	// TODO: process generation in parallel
+
 	await generateDictionaryFiles(config, forceOverride)
 
 	const hasCustomTypes = await generateTypes({ ...config, translations, locales }, logger)
 
-	if (!config.generateOnlyTypes) {
-		await generateFormattersTemplate(config, forceOverride)
-
-		if (hasCustomTypes) {
-			await generateCustomTypesTemplate(config, forceOverride)
-		}
-
-		await generateUtil(config, locales)
+	if (hasCustomTypes) {
+		await generateCustomTypesTemplate(config, forceOverride)
 	}
+
+	if (config.generateOnlyTypes) return
+
+	await generateFormattersTemplate(config, forceOverride)
+
+	await generateUtil(config, locales)
+	await generateSyncUtil(config, locales)
+	await generateAsyncUtil(config, locales)
 
 	switch (config.adapter) {
 		case 'angular':
