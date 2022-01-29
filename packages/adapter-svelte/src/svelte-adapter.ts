@@ -2,12 +2,6 @@ import type { Readable, Writable } from 'svelte/store'
 import { derived, writable } from 'svelte/store'
 import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../runtime/src/core'
 import { getFallbackProxy } from '../../runtime/src/core-utils'
-import type {
-	AsyncFormattersInitializer,
-	FormattersInitializer,
-	TranslationLoader,
-	TranslationLoaderAsync,
-} from '../../runtime/src/util.loader'
 import { i18nObject } from '../../runtime/src/util.object'
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -18,17 +12,10 @@ export type SvelteStoreInit<
 	L extends string = string,
 	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
-	F extends BaseFormatters = BaseFormatters,
 > = {
-	initI18n: (
-		newLocale: L,
-		getTranslationForLocaleCallback: TranslationLoader<L, T> | TranslationLoaderAsync<L, T>,
-		initFormattersCallback?: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F>,
-	) => Promise<void>
-	setLocale: (locale: L) => Promise<void>
-	isLoadingLocale: Readable<boolean>
 	locale: Readable<L>
 	LL: Readable<TF> & TF
+	setLocale: (locale: L) => void
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -41,57 +28,26 @@ export const getI18nSvelteStore = <
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 	F extends BaseFormatters = BaseFormatters,
 >(
-	baseLocale: L = '' as L,
-): SvelteStoreInit<L, T, TF, F> => {
-	const currentLocale = writable<L>(baseLocale)
+	translations: Record<L, T>,
+	formatters: Record<L, F> = {} as Record<L, F>,
+): SvelteStoreInit<L, T, TF> => {
+	const _locale = writable<L>()
+	const _LL = writable<TF>(getFallbackProxy<TF>())
 
-	const isLoading = writable<boolean>(false)
-
-	let i18nObjectInstance = getFallbackProxy<TF>()
-
-	const i18nObjectInstanceStore = writable<TF>(i18nObjectInstance)
-
-	let getTranslationForLocale: TranslationLoader<L, T> | TranslationLoaderAsync<L, T>
-	let initFormatters: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F>
-
-	const initI18n = async (
-		newLocale: L,
-		getTranslationForLocaleCallback: TranslationLoader<L, T> | TranslationLoaderAsync<L, T>,
-		initFormattersCallback?: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F>,
-	): Promise<void> => {
-		getTranslationForLocale = getTranslationForLocaleCallback
-		initFormatters = initFormattersCallback || (() => ({} as F))
-		await setLocale(newLocale)
-	}
-
-	const setLocale = async (newLocale: L): Promise<void> => {
-		if (!newLocale || !getTranslationForLocale) return
-
-		isLoading.set(true)
-
-		const translation: T = await (getTranslationForLocale as TranslationLoaderAsync<L, T>)(newLocale)
-		i18nObjectInstance = i18nObject<L, T, TF, F>(newLocale, translation, await initFormatters(newLocale))
-		i18nObjectInstanceStore.set(i18nObjectInstance)
-
-		currentLocale.set(newLocale)
-
-		isLoading.set(false)
-	}
-
-	const locale = derived<Writable<L>, L>(currentLocale, (newLocale, set) => set(newLocale))
-
-	const isLoadingLocale = derived<Writable<boolean>, boolean>(isLoading, (loading, set) => set(loading))
+	const locale = derived<Writable<L>, L>(_locale, (newLocale, set) => set(newLocale))
 
 	const LL = new Proxy({} as Readable<TF> & TF, {
-		get: (_target, key: keyof TF & 'subscribe') =>
-			key === 'subscribe' ? i18nObjectInstanceStore.subscribe : i18nObjectInstance[key],
+		get: (_target, key: keyof TF & 'subscribe') => (key === 'subscribe' ? _LL.subscribe : _LL[key]),
 	})
 
+	const setLocale = (newLocale: L): void => {
+		_locale.set(newLocale)
+		_LL.set(i18nObject<L, T, TF, F>(newLocale, translations[newLocale], formatters[newLocale]))
+	}
+
 	return {
-		initI18n,
-		setLocale,
-		isLoadingLocale,
 		locale,
 		LL,
+		setLocale,
 	}
 }

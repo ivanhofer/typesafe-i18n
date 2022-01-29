@@ -1,1 +1,1 @@
-export { initI18nReact } from './react-adapter'
+export * from './react-adapter'

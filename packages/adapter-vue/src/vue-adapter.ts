@@ -1,12 +1,6 @@
 import type { App, inject, InjectionKey, Ref, ref } from 'vue'
 import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../runtime/src/core'
 import { getFallbackProxy } from '../../runtime/src/core-utils'
-import type {
-	AsyncFormattersInitializer,
-	FormattersInitializer,
-	TranslationLoader,
-	TranslationLoaderAsync,
-} from '../../runtime/src/util.loader'
 import { i18nObject } from '../../runtime/src/util.object'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,14 +10,13 @@ const wrapProxy = <TF extends TranslationFunctions<any>>(proxy: TF): TF =>
 	})
 
 type Provider<L extends string, T extends BaseTranslation | BaseTranslation[], TF extends TranslationFunctions<T>> = {
-	setLocale: (locale: L) => Promise<void>
-	isLoadingLocale: Ref<boolean>
 	locale: Ref<L>
 	LL: Ref<TF>
+	setLocale: (locale: L) => void
 }
 
 type I18nPlugin<L extends string> = {
-	install: (app: App, locale?: L) => void
+	install: (app: App, locale: L) => void
 }
 
 export type VuePluginInit<
@@ -43,42 +36,29 @@ export const initI18nVuePlugin = <
 >(
 	vueInject: typeof inject,
 	vueRef: typeof ref,
-	baseLocale: L = '' as L,
-	getTranslationForLocaleCallback: TranslationLoader<L, T> | TranslationLoaderAsync<L, T>,
-	initFormattersCallback?: FormattersInitializer<L, F> | AsyncFormattersInitializer<L, F>,
+	translations: Record<L, T>,
+	formatters: Record<L, F> = {} as Record<L, F>,
 ): VuePluginInit<L, T, TF> => {
 	const i18nKey: InjectionKey<Provider<L, T, TF>> = Symbol('typesafe-i18n')
 
 	const typesafeI18n: () => Provider<L, T, TF> = () => vueInject(i18nKey) as Provider<L, T, TF>
 
-	const getTranslationForLocale = getTranslationForLocaleCallback
-	const initFormatters = initFormattersCallback || (() => ({} as F))
-
 	const i18nPlugin: I18nPlugin<L> = {
-		install: (app: App, locale?: L) => {
-			const LLref: Ref<TF> = vueRef(wrapProxy(getFallbackProxy())) as Ref<TF>
-			const isLoadingLocaleRef: Ref<boolean> = vueRef(true)
+		install: (app: App, locale: L) => {
 			const localeRef: Ref<L> = vueRef(locale) as Ref<L>
+			const LLref: Ref<TF> = vueRef(wrapProxy(getFallbackProxy())) as Ref<TF>
 
-			const init = async (locale: L) => {
-				isLoadingLocaleRef.value = true
-
-				const translations = await getTranslationForLocale(locale)
-				const formatters = await initFormatters(locale)
-
-				const LL = i18nObject<L, T, TF, F>(locale, translations, formatters)
-				LLref.value = wrapProxy(LL)
-				localeRef.value = locale
-				isLoadingLocaleRef.value = false
+			const setLocale = (newLocale: L) => {
+				localeRef.value = newLocale
+				LLref.value = wrapProxy(i18nObject<L, T, TF, F>(newLocale, translations[newLocale], formatters[newLocale]))
 			}
 
-			init(locale || baseLocale)
+			setLocale(locale)
 
 			app.provide(i18nKey, {
-				setLocale: init,
-				isLoadingLocale: isLoadingLocaleRef,
 				locale: localeRef,
 				LL: LLref,
+				setLocale: setLocale,
 			})
 		},
 	}

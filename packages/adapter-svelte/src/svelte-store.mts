@@ -1,1 +1,2 @@
-export * from './svelte-store';
+export * from './svelte-adapter';
+

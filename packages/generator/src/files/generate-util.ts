@@ -80,6 +80,7 @@ import ${sanitizeLocale(locale)} from '${relativeFolderImportPath(locale)}'`,
 		.join('')
 
 	const localesTranslations = locales.map((locale) => getLocalesTranslationRowSync(locale, baseLocale)).join('')
+
 	return `${localesImports}
 
 const i18nObjectLoader = initI18nObjectLoader()
