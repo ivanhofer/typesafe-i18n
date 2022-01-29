@@ -30,7 +30,7 @@ ${jsDocImports(
 
 import { initI18nReact } from 'typesafe-i18n/adapters/adapter-react'
 ${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translation', 'TranslationFunctions', 'Formatters')}
-import { translations, formatters } from '${relativeFileImportPath(utilFileName)}'
+import { loadedLocales, loadedFormatters } from '${relativeFileImportPath(utilFileName)}'
 
 ${jsDocType('ReactInit')}
 const { component: TypesafeI18n, context: I18nContext } = initI18nReact${generics(
@@ -38,7 +38,7 @@ const { component: TypesafeI18n, context: I18nContext } = initI18nReact${generic
 		'Translation',
 		'TranslationFunctions',
 		'Formatters',
-	)}(translations, formatters)
+	)}(loadedLocales, loadedFormatters)
 
 export { I18nContext }
 

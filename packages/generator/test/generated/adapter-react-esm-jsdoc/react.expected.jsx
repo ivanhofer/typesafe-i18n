@@ -12,10 +12,10 @@
 
 import { initI18nReact } from 'typesafe-i18n/adapters/adapter-react'
 
-import { translations, formatters } from './util.actual.js'
+import { loadedLocales, loadedFormatters } from './util.actual.js'
 
 /** @type { ReactInit } */
-const { component: TypesafeI18n, context: I18nContext } = initI18nReact(translations, formatters)
+const { component: TypesafeI18n, context: I18nContext } = initI18nReact(loadedLocales, loadedFormatters)
 
 export { I18nContext }
 

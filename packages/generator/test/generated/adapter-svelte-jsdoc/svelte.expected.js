@@ -12,10 +12,10 @@
 
 import { initI18nSvelte } from 'typesafe-i18n/adapters/adapter-svelte';
 
-import { translations, formatters } from './util.actual'
+import { loadedLocales, loadedFormatters } from './util.actual'
 
 /** @type { SvelteStoreInit } */
-const { locale, LL, setLocale } = initI18nSvelte(translations, formatters)
+const { locale, LL, setLocale } = initI18nSvelte(loadedLocales, loadedFormatters)
 
 export { locale, LL, setLocale }
 

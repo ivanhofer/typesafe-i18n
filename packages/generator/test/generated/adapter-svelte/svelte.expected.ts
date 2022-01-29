@@ -3,9 +3,9 @@
 
 import { initI18nSvelte } from 'typesafe-i18n/adapters/adapter-svelte';
 import type { Locales, Translation, TranslationFunctions, Formatters } from './types.actual'
-import { translations, formatters } from './util.actual'
+import { loadedLocales, loadedFormatters } from './util.actual'
 
-const { locale, LL, setLocale } = initI18nSvelte<Locales, Translation, TranslationFunctions, Formatters>(translations, formatters)
+const { locale, LL, setLocale } = initI18nSvelte<Locales, Translation, TranslationFunctions, Formatters>(loadedLocales, loadedFormatters)
 
 export { locale, LL, setLocale }
 
