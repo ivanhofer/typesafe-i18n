@@ -1,5 +1,4 @@
 import { build } from 'esbuild'
-import { readdirSync } from 'fs'
 import { dirname, resolve } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -11,19 +10,19 @@ const __dirname = dirname(__filename)
 
 const getPath = (file: string) => resolve(__dirname, file)
 
-const files = readdirSync(getPath('./src')).filter((file) => !file.startsWith('_'))
-
 const formats = ['esm', 'cjs'] as const
 
-files.forEach((file) =>
-	formats.forEach((format) =>
+formats.forEach((format) =>
+	[false, true].forEach((minify) =>
 		build({
-			entryPoints: [`./src/${file}`],
+			entryPoints: [`./src/svelte-store.ts`],
 			bundle: true,
-			outfile: getPath(`../../formatters/${file.replace('.ts', `.${format === 'esm' ? 'm' : 'c'}js`)}`),
-			platform: 'neutral',
+			outfile: getPath(`../../svelte/svelte-store${minify ? '.min' : ''}.${format === 'esm' ? 'm' : 'c'}js`),
+			external: ['svelte/store'],
+			platform: 'browser',
 			format,
-			minify: true,
+			sourcemap: !minify,
+			minify,
 			watch,
 		}).catch(() => process.exit(1)),
 	),

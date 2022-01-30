@@ -33,8 +33,8 @@ module.exports = [
 	},
 	{
 		name: 'svelte-store',
-		path: 'svelte/svelte-store.min.cjs',
-		limit: '1414 b',
+		path: 'svelte/svelte-store.min.mjs',
+		limit: '1286 b',
 		ignore: ['svelte'],
 	},
 	{
