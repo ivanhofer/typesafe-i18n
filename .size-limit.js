@@ -2,22 +2,22 @@ module.exports = [
 	{
 		name: 'i18n-string',
 		path: 'dist/i18n.string.min.js',
-		limit: '1000 b',
+		limit: '950 b',
 	},
 	{
 		name: 'i18n-object',
 		path: 'dist/i18n.object.min.js',
-		limit: '1070 b',
+		limit: '1020 b',
 	},
 	{
 		name: 'i18n-instance',
 		path: 'dist/i18n.instance.min.js',
-		limit: '1099 b',
+		limit: '1051 b',
 	},
 	{
 		name: 'all together',
 		path: 'dist/i18n.all.min.js',
-		limit: '1153 b',
+		limit: '1101 b',
 	},
 	{
 		name: 'angular-adapter',

@@ -1,15 +1,12 @@
 {
   "name": "@typesafe-i18n/browser",
   "scripts": {
-    "dev": "rollup -c rollup.config.js -w",
-    "build": "rollup -c rollup.config.js"
+    "dev": "tsm esbuild.ts --watch",
+    "build": "tsm esbuild.ts"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^13.1.3",
-    "@rollup/plugin-typescript": "^8.3.0",
-    "rollup": "^2.66.1",
-    "rollup-plugin-terser": "^7.0.2",
-    "tslib": "^2.3.1",
+    "esbuild": "^0.14.14",
+    "tsm": "^2.2.1",
     "typescript": "^4.5.5"
   }
 }
