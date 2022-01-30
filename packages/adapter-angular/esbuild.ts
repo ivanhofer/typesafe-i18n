@@ -23,6 +23,7 @@ formats.forEach((format) =>
 			sourcemap: !minify,
 			minify,
 			watch,
+			tsconfig: './tsconfig.json',
 		}).catch(() => process.exit(1)),
 	),
 )

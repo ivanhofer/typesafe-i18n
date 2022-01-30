@@ -26,6 +26,7 @@ files.forEach((file) =>
 			minify: true,
 			sourcemap: true,
 			watch,
+			tsconfig: './tsconfig.json',
 		}).catch(() => process.exit(1)),
 	),
 )
