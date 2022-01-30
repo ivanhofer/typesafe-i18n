@@ -1,6 +1,11 @@
 import { readFileSync, writeFileSync } from 'fs'
-import { sync as glob } from 'glob'
-import { resolve } from 'path'
+import globPkg from 'glob'
+import { dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
+const { sync: glob } = globPkg
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 type FromWheretoImport = string
 type OutputPath = string
@@ -17,7 +22,7 @@ const mappings: [FromWheretoImport, OutputPath?, FilterFunction?][] = [
 	['exporter', 'exporter', (file) => file === 'index.d.ts'],
 	['formatters'],
 	['importer', 'importer', (file) => file === 'index.d.ts'],
-	['locale-detector', 'detectors'],
+	['detectors'],
 	['parser'],
 	['parser', 'runtime/cjs/parser/src'],
 	['parser', 'runtime/esm/parser/src'],

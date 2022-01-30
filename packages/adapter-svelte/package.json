@@ -1,0 +1,13 @@
+{
+  "name": "@typesafe-i18n/adapter-svelte",
+  "scripts": {
+    "dev": "tsm esbuild.ts --watch",
+    "build": "tsm esbuild.ts && tsc -p tsconfig.json --emitDeclarationOnly"
+  },
+  "devDependencies": {
+    "esbuild": "^0.14.14",
+    "svelte": "^3.46.3",
+    "tsm": "^2.2.1",
+    "typescript": "^4.5.5"
+  }
+}

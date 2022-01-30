@@ -1,12 +1,17 @@
 import { readFileSync, renameSync, writeFileSync } from 'fs'
-import { sync as glob } from 'glob'
-import { resolve } from 'path'
+import globPkg from 'glob'
+import { dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
+const { sync: glob } = globPkg
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const files = glob(resolve(__dirname, `../../runtime/cjs/**/*.js`))
 
 files.forEach((file) => renameSync(file, file.replace('.js', '.cjs')))
 
-// eslint-disable-next-line no-console
+// eslint-disable-next-line no-console, no-undef
 console.log(`renamed all '.js' file to '.cjs'`)
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -33,5 +38,5 @@ newContent = newContent.replace(/createCjsProxy/g, 'createProxy')
 
 writeFileSync(fullFilePath, newContent, { encoding: 'utf8' })
 
-// eslint-disable-next-line no-console
+// eslint-disable-next-line no-console, no-undef
 console.log('ESM Proxy removed')

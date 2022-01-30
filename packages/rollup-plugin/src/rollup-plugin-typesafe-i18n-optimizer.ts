@@ -16,10 +16,9 @@ import { getConfigWithDefaultValues } from '../../config/src/config'
 import type { RollupConfig } from '../../config/src/types'
 import { parseRawText } from '../../parser/src/index'
 import { partsAsStringWithoutTypes } from '../../runtime/src/core-utils'
-import { validateRollupConfig } from './_validateConfig'
 
 //@ts-ignore
-const isLiteralNode = <T extends BaseNode>(node: T): node is SimpleLiteral => node.type === 'Literal'
+const isLiteralNode = <T>(node: T): node is SimpleLiteral => node.type === 'Literal'
 
 const removeTypesFromStrings = (ast: AcornNode) =>
 	walk(ast, {
@@ -162,8 +161,6 @@ const plugin = (config?: RollupConfig): Plugin => {
 	let filterForUtilFile: (id: unknown) => boolean = () => false
 	let locales: string[]
 	let locale: string
-
-	validateRollupConfig(config)
 
 	const initFilters = async () => {
 		const configWithDefaultValues = await getConfigWithDefaultValues()

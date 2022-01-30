@@ -1,0 +1,12 @@
+{
+  "name": "@typesafe-i18n/generator",
+  "devDependencies": {
+    "chokidar": "^3.5.3",
+    "kleur": "^4.1.4",
+    "require-self": "^0.2.3",
+    "tiny-glob": "^0.2.9",
+    "type-fest": "^2.11.0",
+    "typesafe-utils": "^1.16.2",
+    "typescript": "^4.5.5"
+  }
+}

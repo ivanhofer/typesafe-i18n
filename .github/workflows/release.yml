@@ -25,10 +25,10 @@ jobs:
          - run: pnpm install --no-save
 
          - name: run linting
-           run: pnpm run lint
+           run: pnpm lint
 
          - name: run tests
-           run: pnpm run test
+           run: pnpm test
 
          - name: bump version and create tag
            uses: 'phips28/gh-action-bump-version@master'
@@ -39,7 +39,7 @@ jobs:
               major-wording: 'major'
 
          - name: build package
-           run: pnpm run build
+           run: pnpm build
 
          - name: create browser artifacts
            uses: actions/upload-artifact@v2

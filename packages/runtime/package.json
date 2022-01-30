@@ -1,0 +1,11 @@
+{
+  "name": "@typesafe-i18n/runtime",
+  "scripts": {
+    "build": "pnpm build:cjs && pnpm build:esm",
+    "build:cjs": "tsc -p tsconfig-cjs.json && tsm ./rename-cjs.ts",
+    "build:esm": "tsc -p tsconfig-esm.json && tsm ./rename-esm.ts"
+  },
+  "devDependencies": {
+    "typesafe-utils": "^1.16.2"
+  }
+}

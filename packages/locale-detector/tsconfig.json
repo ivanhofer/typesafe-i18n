@@ -1,7 +1,0 @@
-{
-	"extends": "../../tsconfig.json",
-	"compilerOptions": {
-		"outDir": "../../detectors"
-	},
-	"include": ["./src/**/*.ts", "./src/**/*.mts"]
-}

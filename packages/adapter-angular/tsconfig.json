@@ -1,8 +1,7 @@
 {
 	"extends": "../../tsconfig.json",
 	"compilerOptions": {
-		"outDir": "../../angular",
-		"experimentalDecorators": true
+		"outDir": "../../angular"
 	},
-	"include": ["./src/**/*.ts", "../core/src/**/*.ts", "./src/**/*.mts"]
+	"include": ["./src/**/*"]
 }

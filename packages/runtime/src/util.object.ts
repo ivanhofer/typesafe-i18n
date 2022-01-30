@@ -61,7 +61,6 @@ const createProxy = <T extends BaseTranslation | BaseTranslation[]>(
 /* PROXY-END */
 
 /* PROXY-CJS-START */
-// eslint-disable-next-line
 const createCjsProxy = <T extends BaseTranslation | BaseTranslation[]>(
 	proxyObject: T,
 	translateFn: TranslateFn,
@@ -74,6 +73,7 @@ const createCjsProxy = <T extends BaseTranslation | BaseTranslation[]>(
 			const value: unknown = target[key]
 			if (Array.isArray(target) && key === 'length') return value
 
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			return typeof value === 'string' ? translateFn.bind(null, value) : createCjsProxy(value as T, translateFn)
 		},
 	})
