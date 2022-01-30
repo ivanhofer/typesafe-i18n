@@ -1,5 +1,5 @@
-import type { Locale } from 'packages/runtime/src/core'
 import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
+import type { Locale } from '../../../runtime/src/core'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { prettify, sanitizeLocale } from '../generator-util'
 import {

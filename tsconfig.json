@@ -28,11 +28,5 @@
 		"importsNotUsedAsValues": "error"
 	},
 	"include": ["packages/**/*"],
-	"exclude": ["node_modules", "packages/**/test/generated/**/*"],
-	"ts-node": {
-		"compilerOptions": {
-			"module": "commonjs"
-		},
-		"include": ["test/*.ts"]
-	}
+	"exclude": ["node_modules", "packages/**/test/generated/**/*"]
 }

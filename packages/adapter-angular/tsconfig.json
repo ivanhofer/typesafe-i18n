@@ -4,5 +4,5 @@
 		"outDir": "../../angular",
 		"experimentalDecorators": true
 	},
-	"include": ["./src/**/*.ts", "../core/src/**/*.ts", "./src/**/*.mts"]
+	"include": ["./src/**/*"]
 }

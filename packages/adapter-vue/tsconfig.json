@@ -3,5 +3,5 @@
 	"compilerOptions": {
 		"outDir": "../../vue"
 	},
-	"include": ["./src/**/*.ts", "../core/src/**/*.ts", "./src/**/*.mts"]
+	"include": ["./src/**/*"]
 }

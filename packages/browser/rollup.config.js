@@ -9,17 +9,6 @@ const getPath = (file) => path.resolve(__dirname, file)
 
 const wrap = (type) => (type ? `.${type}` : '')
 
-const getPlugins = (minify) => [
-	resolve(),
-	typescript({
-		tsconfig: getPath('./tsconfig.json'),
-		sourceMap: !minify,
-		declaration: false,
-		declarationDir: null,
-	}),
-	minify && terser()
-]
-
 const iifeConfig = (type, minify = false) => ({
 	input: getPath(`src/browser${wrap(type)}.ts`),
 	output: [
@@ -29,7 +18,16 @@ const iifeConfig = (type, minify = false) => ({
 			sourcemap: !minify,
 		},
 	],
-	plugins: getPlugins(minify),
+	plugins: [
+		resolve(),
+		typescript({
+			tsconfig: getPath('./tsconfig.json'),
+			sourceMap: !minify,
+			declaration: false,
+			declarationDir: null,
+		}),
+		minify && terser()
+	]
 })
 
 const getIifeConfigs = (type) => [iifeConfig(type), iifeConfig(type, true)]

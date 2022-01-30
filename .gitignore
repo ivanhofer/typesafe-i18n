@@ -20,3 +20,4 @@ packages/generator/test/generated/console*
 /types
 /webpack
 /.eslintcache
+.pnpm-debug.log

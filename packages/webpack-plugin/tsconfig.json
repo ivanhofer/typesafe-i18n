@@ -3,5 +3,5 @@
 	"compilerOptions": {
 		"outDir": "../../webpack"
 	},
-	"include": ["./src/**/*.ts", "../core/src/**/*.ts", "../generator/src/**/*.ts"]
+	"include": ["./src/**/*.ts"]
 }

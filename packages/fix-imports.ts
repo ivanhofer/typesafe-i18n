@@ -1,6 +1,11 @@
 import { readFileSync, writeFileSync } from 'fs'
-import { sync as glob } from 'glob'
-import { resolve } from 'path'
+import globPkg from 'glob'
+import { dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
+const { sync: glob } = globPkg
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const rootPath = resolve(__dirname, '..')
 

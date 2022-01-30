@@ -3,5 +3,5 @@
 	"compilerOptions": {
 		"outDir": "../../detectors"
 	},
-	"include": ["./src/**/*.ts", "./src/**/*.mts"]
+	"include": ["./src/**/*.ts"]
 }

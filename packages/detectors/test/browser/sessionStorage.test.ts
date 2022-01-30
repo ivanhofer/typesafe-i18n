@@ -1,9 +1,9 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import type { Locale } from '../../../runtime/src/core'
-import { initLocalStorageDetector } from '../../src/detectors/browser/localstorage-detector'
+import type { Locale } from '../../runtime/src/core'
+import { initSessionStorageDetector } from '../../src/detectors/browser/sessionstorage-detector'
 
-const test = suite('detector:localStorage')
+const test = suite('detector:sessionStorage')
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -13,15 +13,15 @@ const testDetector = (
 	expected: Locale[],
 	itemKey: string | undefined = undefined,
 ) =>
-	test(`localStorage ${name}`, () => {
+	test(`sessionStorage ${name}`, () => {
 		//@ts-ignore
 		globalThis.window = {
-			localStorage: {
+			sessionStorage: {
 				getItem: (key: string) => items?.[key],
 			} as Storage,
 		}
 
-		const detector = initLocalStorageDetector(itemKey)
+		const detector = initSessionStorageDetector(itemKey)
 		assert.equal(detector(), expected)
 	})
 

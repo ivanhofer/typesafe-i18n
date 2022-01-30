@@ -1,22 +1,27 @@
-import type { Request } from 'express'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import type { Locale } from '../../../runtime/src/core'
-import { initRequestParametersDetector } from '../../src/detectors/server/request-parameters'
+import type { Locale } from '../../runtime/src/core'
+import { initLocalStorageDetector } from '../../src/detectors/browser/localstorage-detector'
 
-const test = suite('detector:request-parameters')
+const test = suite('detector:localStorage')
 
 // --------------------------------------------------------------------------------------------------------------------
 
 const testDetector = (
 	name: string,
-	params: Record<string, string> | undefined,
+	items: Record<string, string> | undefined,
 	expected: Locale[],
-	parameterName: string | undefined = undefined,
+	itemKey: string | undefined = undefined,
 ) =>
-	test(`request-parameters ${name}`, () => {
-		const req = { params } as Request
-		const detector = initRequestParametersDetector(req, parameterName)
+	test(`localStorage ${name}`, () => {
+		//@ts-ignore
+		globalThis.window = {
+			localStorage: {
+				getItem: (key: string) => items?.[key],
+			} as Storage,
+		}
+
+		const detector = initLocalStorageDetector(itemKey)
 		assert.equal(detector(), expected)
 	})
 
