@@ -21,8 +21,8 @@ module.exports = [
 	},
 	{
 		name: 'angular-adapter',
-		path: 'angular/angular-service.min.cjs',
-		limit: '2017 b',
+		path: 'angular/angular-service.min.mjs',
+		limit: '1328 b',
 		ignore: ['angular'],
 	},
 	{
