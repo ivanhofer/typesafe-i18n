@@ -11,7 +11,12 @@ const __dirname = dirname(__filename)
 console.log(`
 creating tree-shakable index files ...`)
 
-const content = readFileSync(resolve(__dirname, './src/index.ts')).toString()
+const content = readFileSync(resolve(__dirname, './src/index.ts'))
+	.toString()
+	.split(/\r?\n/)
+	.filter((line) => !line.startsWith('export type'))
+	.map((line) => (line.startsWith('export') ? line.substring(0, line.length - 1) + ".mjs'" : line))
+	.join('\r\n')
 
 writeFileSync(resolve(__dirname, '../../formatters/index.mjs'), content, { encoding: 'utf8' })
 
