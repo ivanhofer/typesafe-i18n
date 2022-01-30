@@ -88,18 +88,12 @@ importers:
 
   packages/adapters:
     specifiers:
-      '@rollup/plugin-node-resolve': ^13.1.3
-      '@rollup/plugin-typescript': ^8.3.0
-      rollup: ^2.66.1
-      rollup-plugin-terser: ^7.0.2
-      tslib: ^2.3.1
+      esbuild: ^0.14.14
+      tsm: ^2.2.1
       typescript: ^4.5.5
     devDependencies:
-      '@rollup/plugin-node-resolve': 13.1.3_rollup@2.66.1
-      '@rollup/plugin-typescript': 8.3.0_a652e97aea7ea04fb4c9edbfa5b475e6
-      rollup: 2.66.1
-      rollup-plugin-terser: 7.0.2_rollup@2.66.1
-      tslib: 2.3.1
+      esbuild: 0.14.14
+      tsm: 2.2.1
       typescript: 4.5.5
 
   packages/browser:
