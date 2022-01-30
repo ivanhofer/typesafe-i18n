@@ -39,8 +39,8 @@ module.exports = [
 	},
 	{
 		name: 'vue-plugin',
-		path: 'vue/vue-plugin.min.cjs',
-		limit: '1332 b',
+		path: 'vue/vue-plugin.min.mjs',
+		limit: '1192 b',
 		ignore: ['vue'],
 	},
 ]
