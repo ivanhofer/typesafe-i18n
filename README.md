@@ -82,7 +82,6 @@
 npm install typesafe-i18n
 ```
 
-
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -1930,3 +1929,28 @@ globalThis.Intl.DateTimeFormat = intl.DateTimeFormat
 ```
 
 Then you should be able to use formatters from the `Intl` namespace with all locales.
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+## Sponsors
+
+[Become a sponsor :heart:](https://github.com/sponsors/ivanhofer) if you want to support my open source contributions.
+
+<h3 align="center">
+   Backers
+</h3>
+
+<p align="center">
+   <a href="https://github.com/Kraftwurm">
+      <img src="https://github.com/Kraftwurm.png" width="50px" alt="Kraftwurm" style="border-radius: 50%"/>
+   </a>
+   <a href="https://github.com/Badlapje">
+      <img src="https://github.com/Badlapje.png" width="50px" alt="Badlapje" style="border-radius: 50%"/>
+   </a>
+</p>
+
+<p align="center">
+   Thanks for sponsoring my open source work!
+</p>

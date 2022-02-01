@@ -2,6 +2,12 @@
 
 # Version 3
 
+## 3.1.1 (2022-02-01)
+
+New Backers:
+ - [Kraftwurm](https://github.com/Kraftwurm)
+ - [Badlapje](https://github.com/Badlapje)
+
 ## 3.1.0 (2022-02-01)
 
 Feature:
