@@ -30,9 +30,9 @@ const translation = {
 const LL = i18nObject('en', translation)
 
 //@ts-expect-error
-test('wrong key', () => assert.throws(() => LL.WRONG_KEY()))
+test('wrong key', () => assert.is(LL.WRONG_KEY(), ''))
 //@ts-expect-error
-test('wrong nested key', () => assert.throws(() => LL.WRONG_KEY.NESTED()))
+test('wrong nested key', () => assert.is(LL.WRONG_KEY.NESTED(), ''))
 
 test('no param', () => assert.is(LL.NO_PARAM(), translation.NO_PARAM))
 
@@ -148,23 +148,47 @@ const LL7 = i18nObject('en', ['test-1', 'test-2'] as const)
 test('array root strings', () => assert.is(LL7[0](), 'test-1'))
 test('array root strings', () => assert.is(LL7[1](), 'test-2'))
 
-LL7.forEach((entry, index) => {
-	test(`array forEach ${index}`, () => assert.is(LL7[index]?.(), entry()))
-})
+test('array length should return correct value', () => assert.is(Array.from(LL7).length, 2))
+// @ts-expect-error
+test('array length on non-array should return 0', () => assert.is(Array.from(LL7['0']).length, 0))
+
+let forWasCalled = 0
 
 let index = 0
+for (let idx = 0; idx < Array.from(LL7).length; idx++) {
+	const i = index
+	test(`array for ${i}`, () => assert.is(LL7[i]?.(), LL7[idx]?.()))
+	index++
+	forWasCalled++
+}
+test(`array for wasCalled 2x`, () => assert.is(forWasCalled, 2))
+
+let forEachWasCalled = 0
+Array.from(LL7).forEach((entry, index) => {
+	test(`array forEach ${index}`, () => assert.is(LL7[index]?.(), entry()))
+	forEachWasCalled++
+})
+test(`array forEach wasCalled 2x`, () => assert.is(forEachWasCalled, 2))
+
+index = 0
+let forOfWasCalled = 0
 for (const entry of LL7) {
 	const i = index
 	test(`array for of ${i}`, () => assert.is(LL7[i]?.(), entry()))
 	index++
+	forOfWasCalled++
 }
-index = 0
+test(`array forOf wasCalled 2x`, () => assert.is(forOfWasCalled, 2))
 
+index = 0
+let forInWasCalled = 0
 for (const entry in LL7) {
 	const i = index
 	test(`array for in ${i}`, () => assert.is(LL7[i]?.(), LL7[entry]?.()))
 	index++
+	forInWasCalled++
 }
+test(`array forIn wasCalled 2x`, () => assert.is(forInWasCalled, 2))
 
 // --------------------------------------------------------------------------------------------------------------------
 

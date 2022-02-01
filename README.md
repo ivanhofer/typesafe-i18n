@@ -851,6 +851,46 @@ Or if you are using the [i18nObject (LL)](#i18nObject):
 </div>
 ```
 
+### arrays:
+
+`typesafe-i18n` also supports [`Arrays` as a dictionary](#base-translation).\
+Here are some example how you can iterate over them:
+
+```html
+<script>
+   const translation = [
+      'first item',
+      'second item'
+   ]
+
+   // calling translation
+   console.log(LL[0]()) // => 'first item'
+
+   // get length of array
+   const length = Array.from(LL).length
+
+   // for loop
+   for (let i = 0; i < Array.from(LL).length; i++) {
+      console.log(LL[i]())
+   }
+
+   // forEach loop
+   Array.from(LL).forEach((entry) => {
+      console.log(entry())
+   })
+
+   // for of loop
+   for (const entry of LL) {
+      console.log(entry())
+   }
+
+   // for in loop
+   for (const entry in LL7) {
+      console.log(LL[entry]())
+   }
+<script>
+```
+
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -929,7 +969,6 @@ You are really flexible how you want to define your translations. You could defi
 
 You are really flexible how you define your translations. You can define the translations how it fits best to your application and i18n workflow.
 It is recommended to use `nested key-value pairs` since it offers flexibility and is easy to read, but if your translations come from an external service like a CMS, it is possible that you also have to use the array syntax to define your translations.
-
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -1498,16 +1537,16 @@ The footprint of the `typesafe-i18n` package is smaller compared to other existi
 These parts are bundled into the [core functions](#custom-usage). The sizes of the core functionalities are:
 
 - [i18nString](#i18nString): 950 bytes gzipped
-- [i18nObject](#i18nObject): 1020 bytes gzipped
-- [i18n](#i18n): 1051 bytes gzipped
+- [i18nObject](#i18nObject): 1065 bytes gzipped
+- [i18n](#i18n): 1093 bytes gzipped
 
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
 There also exists a useful wrapper for some frameworks:
-- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 1328 bytes gzipped
-- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react): 1538 bytes gzipped
-- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte): 1286 bytes gzipped
-- [typesafe-i18n vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue): 1192 bytes gzipped
+- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 1371 bytes gzipped
+- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react): 1582 bytes gzipped
+- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte): 1323 bytes gzipped
+- [typesafe-i18n vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue): 1228 bytes gzipped
 
 
 

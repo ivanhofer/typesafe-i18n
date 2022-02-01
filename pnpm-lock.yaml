@@ -22,6 +22,7 @@ importers:
       typescript: ^4.5.5
       typescript-json-schema: ^0.53.0
       uvu: ^0.5.3
+      watchlist: ^0.3.1
     devDependencies:
       '@size-limit/preset-small-lib': 7.0.5_size-limit@7.0.5
       '@types/glob': 7.2.0
@@ -41,6 +42,7 @@ importers:
       typescript: 4.5.5
       typescript-json-schema: 0.53.0
       uvu: 0.5.3
+      watchlist: 0.3.1
 
   packages/adapter-angular:
     specifiers:
@@ -2828,6 +2830,14 @@ packages:
       '@vue/runtime-dom': 3.2.29
       '@vue/server-renderer': 3.2.29_vue@3.2.29
       '@vue/shared': 3.2.29
+    dev: true
+
+  /watchlist/0.3.1:
+    resolution: {integrity: sha512-m5r4bzxJ9eg07TT/O0Q49imFPD45ZTuQ3kaHwSpUJj1QwVd3pzit4UYOmySdmAP5Egkz6mB6hcAPuPfhIbNo0g==}
+    engines: {node: '>=8'}
+    hasBin: true
+    dependencies:
+      mri: 1.2.0
     dev: true
 
   /watchpack/2.3.1:

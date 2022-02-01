@@ -44,37 +44,41 @@ export function i18nObject(locale: any, translations: any, formatters: any = {})
 	return createProxy(translations, getTranslateInstance(locale, formatters))
 }
 
+const wrap = <T extends BaseTranslation | BaseTranslation[]>(proxyObject: T = {} as T, translateFn: TranslateFn) =>
+	(typeof proxyObject === 'string'
+		? translateFn.bind(null, proxyObject)
+		: Object.assign(() => '', proxyObject)) as unknown as TranslationFunctions<T>
+
 /* PROXY-START */
 const createProxy = <T extends BaseTranslation | BaseTranslation[]>(
 	proxyObject: T,
 	translateFn: TranslateFn,
 ): TranslationFunctions<T> =>
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	new Proxy(proxyObject as any, {
-		get: (target, key: string) => {
-			const value: unknown = target[key]
-			if (Array.isArray(target) && key === 'length') return value
+	new Proxy(wrap(proxyObject, translateFn), {
+		get: (target, key) => {
+			if (key === Symbol.iterator)
+				return [][Symbol.iterator].bind(Object.values(target).map((entry) => wrap(entry, translateFn)))
 
-			return typeof value === 'string' ? translateFn.bind(null, value) : createProxy(value as T, translateFn)
+			return createProxy(target[key as keyof typeof target] as unknown as T, translateFn)
 		},
 	})
+
 /* PROXY-END */
 
 /* PROXY-CJS-START */
 const createCjsProxy = <T extends BaseTranslation | BaseTranslation[]>(
-	proxyObject: T,
+	proxyObject: T = {} as T,
 	translateFn: TranslateFn,
 ): TranslationFunctions<T> =>
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	new Proxy(proxyObject as any, {
-		get: (target, key: string) => {
-			if (target === proxyObject && key === 'then') return null
+	new Proxy(wrap(proxyObject, translateFn), {
+		get: (target, key) => {
+			if (key === 'then') return null
 
-			const value: unknown = target[key]
-			if (Array.isArray(target) && key === 'length') return value
+			if (key === Symbol.iterator)
+				return [][Symbol.iterator].bind(Object.values(target).map((entry) => wrap(entry, translateFn)))
 
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			return typeof value === 'string' ? translateFn.bind(null, value) : createCjsProxy(value as T, translateFn)
+			return createCjsProxy(target[key as keyof typeof target] as unknown as T, translateFn)
 		},
 	})
 /* PROXY-CJS-END */
