@@ -1,11 +1,10 @@
 import type { AdditionalPropertiesParams, EnumParams, ErrorObject } from 'ajv'
+import Ajv from 'ajv'
 import kleur from 'kleur'
 import { inspect } from 'util'
 //@ts-ignore
 import schema from '../../../schema/typesafe-i18n.json'
 import type { GeneratorConfig } from './types'
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Ajv = require('ajv')
 
 const validate = new Ajv({ allErrors: true }).compile(schema as object)
 
