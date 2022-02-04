@@ -2,7 +2,7 @@
   "name": "@typesafe-i18n/importer",
   "scripts": {
     "dev": "rollup -c rollup.config.js -w",
-    "build": "rollup -c rollup.config.js"
+    "build": "rollup -c rollup.config.js && tsc -p tsconfig.json --emitDeclarationOnly"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",
