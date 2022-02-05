@@ -8,7 +8,11 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
 	/**
 	 * {name} {name} {name}
 	 * @param {unknown} name

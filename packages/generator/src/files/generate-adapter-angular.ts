@@ -9,13 +9,13 @@ ${banner}
 
 import { Injectable } from '@angular/core'
 import { I18nServiceRoot } from 'typesafe-i18n/angular/angular-service'
-${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translation', 'TranslationFunctions', 'Formatters')}
+${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translations', 'TranslationFunctions', 'Formatters')}
 import { loadedLocales, loadedFormatters } from '${relativeFileImportPath(utilFileName)}'
 
 @Injectable({
 	providedIn: 'root',
 })
-export class I18nService extends I18nServiceRoot<Locales, Translation, TranslationFunctions, Formatters> {
+export class I18nService extends I18nServiceRoot<Locales, Translations, TranslationFunctions, Formatters> {
 	constructor() {
 		super(loadedLocales, loadedFormatters)
 	}

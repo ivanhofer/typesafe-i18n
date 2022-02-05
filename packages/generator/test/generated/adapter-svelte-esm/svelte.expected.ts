@@ -3,10 +3,10 @@
 
 import { get } from 'svelte/store'
 import { initI18nSvelte } from 'typesafe-i18n/adapters/adapter-svelte'
-import type { Locales, Translation, TranslationFunctions, Formatters } from './types.actual.js'
+import type { Locales, Translations, TranslationFunctions, Formatters } from './types.actual.js'
 import { loadedLocales, loadedFormatters } from './util.actual.js'
 
-const { locale, LL, setLocale } = initI18nSvelte<Locales, Translation, TranslationFunctions, Formatters>(loadedLocales, loadedFormatters)
+const { locale, LL, setLocale } = initI18nSvelte<Locales, Translations, TranslationFunctions, Formatters>(loadedLocales, loadedFormatters)
 
 const refresh = () => setLocale(get(locale))
 

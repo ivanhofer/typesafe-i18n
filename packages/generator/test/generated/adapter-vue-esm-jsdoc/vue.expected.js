@@ -3,9 +3,9 @@
 /* eslint-disable */
 
 /**
- * @typedef { import('typesafe-i18n/adapters/adapter-vue').VuePluginInit<Locales, Translation, TranslationFunctions> } VuePluginInit,
+ * @typedef { import('typesafe-i18n/adapters/adapter-vue').VuePluginInit<Locales, Translations, TranslationFunctions> } VuePluginInit,
  * @typedef { import('./types.actual.js').Locales } Locales,
- * @typedef { import('./types.actual.js').Translation } Translation,
+ * @typedef { import('./types.actual.js').Translations } Translations,
  * @typedef { import('./types.actual.js').TranslationFunctions } TranslationFunctions,
  * @typedef { import('./types.actual.js').Formatters } Formatters
  */

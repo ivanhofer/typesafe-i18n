@@ -8,23 +8,27 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
-	'0': {	
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
+	'0': {
 		/**
 		 * test 123
 		 */
 		'0': string
 	}
-	'1': {	
-		'0': {	
-			'nested': {	
-				'test': {	
+	'1': {
+		'0': {
+			'nested': {
+				'test': {
 					/**
 					 * {name}
 					 * @param {string} name
 					 */
 					'0': RequiredParams1<'name'>
-					'1': {	
+					'1': {
 						/**
 						 * test
 						 */
@@ -37,21 +41,21 @@ export type Translation = {
 }
 
 export type TranslationFunctions = {
-	'0': {	
+	'0': {
 		/**
 		 * test 123
 		 */
 		'0': () => LocalizedString
 	}
-	'1': {	
-		'0': {	
-			'nested': {	
-				'test': {	
+	'1': {
+		'0': {
+			'nested': {
+				'test': {
 					/**
 					 * {name}
 					 */
 					'0': (arg: { name: string }) => LocalizedString
-					'1': {	
+					'1': {
 						/**
 						 * test
 						 */

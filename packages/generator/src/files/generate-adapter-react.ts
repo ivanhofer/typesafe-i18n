@@ -19,23 +19,23 @@ ${banner}
 ${jsDocImports(
 	{
 		from: 'typesafe-i18n/adapters/adapter-react',
-		type: 'ReactInit<Locales, Translation, TranslationFunctions>',
+		type: 'ReactInit<Locales, Translations, TranslationFunctions>',
 		alias: 'ReactInit',
 	},
 	{ from: relativeFileImportPath(typesFileName), type: 'Locales' },
-	{ from: relativeFileImportPath(typesFileName), type: 'Translation' },
+	{ from: relativeFileImportPath(typesFileName), type: 'Translations' },
 	{ from: relativeFileImportPath(typesFileName), type: 'TranslationFunctions' },
 	{ from: relativeFileImportPath(typesFileName), type: 'Formatters' },
 )}
 
 import { initI18nReact } from 'typesafe-i18n/adapters/adapter-react'
-${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translation', 'TranslationFunctions', 'Formatters')}
+${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translations', 'TranslationFunctions', 'Formatters')}
 import { loadedLocales, loadedFormatters } from '${relativeFileImportPath(utilFileName)}'
 
 ${jsDocType('ReactInit')}
 const { component: TypesafeI18n, context: I18nContext } = initI18nReact${generics(
 		'Locales',
-		'Translation',
+		'Translations',
 		'TranslationFunctions',
 		'Formatters',
 	)}(loadedLocales, loadedFormatters)

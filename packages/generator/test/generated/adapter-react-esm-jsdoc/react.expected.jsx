@@ -3,9 +3,9 @@
 /* eslint-disable */
 
 /**
- * @typedef { import('typesafe-i18n/adapters/adapter-react').ReactInit<Locales, Translation, TranslationFunctions> } ReactInit,
+ * @typedef { import('typesafe-i18n/adapters/adapter-react').ReactInit<Locales, Translations, TranslationFunctions> } ReactInit,
  * @typedef { import('./types.actual.js').Locales } Locales,
- * @typedef { import('./types.actual.js').Translation } Translation,
+ * @typedef { import('./types.actual.js').Translations } Translations,
  * @typedef { import('./types.actual.js').TranslationFunctions } TranslationFunctions,
  * @typedef { import('./types.actual.js').Formatters } Formatters
  */

@@ -338,25 +338,28 @@ const createJsDocsParamString = ([paramName, { types, optional }]: [string, Type
 
 // --------------------------------------------------------------------------------------------------------------------
 
+const getTypeNameForNamespace = (namespace: string) =>
+	`Namespace${namespace.substring(0, 1).toUpperCase()}${namespace.substring(1)}Translation`
+
+// TODO: create global `Translation` type
+
 const createTranslationType = (
 	parsedTranslations: ParsedResult[],
 	jsDocInfo: JsDocInfos,
 	paramTypesToGenerate: number[],
-	namespaces: string[],
-	prefix = '',
+	nameOfType: string,
+	namespaces: string[] = [],
 ): string => {
 	const parsedTranslationsWithoutNamespaces = parsedTranslations.filter((parsedResult) => {
 		const keys = Object.keys(parsedResult)
 		return keys.length > 1 || !namespaces.includes(keys[0] as string)
 	})
 
-	const translationType = `export type ${prefix}Translation = ${wrapObjectType(
-		parsedTranslationsWithoutNamespaces,
-		() =>
-			mapToString(parsedTranslationsWithoutNamespaces, (parsedResultEntry) =>
-				createTranslationTypeEntry(parsedResultEntry, jsDocInfo, paramTypesToGenerate),
-			),
-	)}${namespaces.length ? ' & DisallowNamespaces' : ''}`
+	const translationType = `type ${nameOfType} = ${wrapObjectType(parsedTranslationsWithoutNamespaces, () =>
+		mapToString(parsedTranslationsWithoutNamespaces, (parsedResultEntry) =>
+			createTranslationTypeEntry(parsedResultEntry, jsDocInfo, paramTypesToGenerate),
+		),
+	)}`
 
 	const parsedNamespaceTranslations = parsedTranslations.filter((parsedResult) => {
 		const keys = Object.keys(parsedResult)
@@ -365,10 +368,16 @@ const createTranslationType = (
 
 	const namespaceTranslationsTypes = parsedNamespaceTranslations
 		.map((value) => Object.entries(value).flat() as [string, ParsedResult[]])
-		.map(([key, value]) => {
-			const typeName = `Namespace${key.substring(0, 1).toUpperCase()}${key.substring(1)}`
-			return createTranslationType(value, jsDocInfo, paramTypesToGenerate, [], typeName)
-		})
+		.map(
+			([namespace, parsedTranslations]) =>
+				'export ' +
+				createTranslationType(
+					parsedTranslations,
+					jsDocInfo,
+					paramTypesToGenerate,
+					getTypeNameForNamespace(namespace),
+				),
+		)
 
 	return `${translationType}
 
@@ -378,17 +387,18 @@ ${namespaceTranslationsTypes.join(NEW_LINE + NEW_LINE)}`
 const createNamespacesTypes = (namespaces: string[]) => `
 export type Namespaces =${wrapUnionType(namespaces)}
 
-type DisallowNamespaces = {${namespaces.map(
-	(namespace) => `
+type DisallowNamespaces = {${namespaces
+	.map(
+		(namespace) => `
 	/**
 	 * reserved for '${namespace}'-namespace\\
 	 * you need to use the \`./${namespace}/index.ts\` file instead
 	 */
-	 '${wrapObjectKeyIfNeeded(
-			namespace,
-		)}'?: "[typesafe-i18n] reserved for '${namespace}'-namespace. You need to use the \`./${namespace}/index.ts\` file instead."
-`,
-)}
+	'${wrapObjectKeyIfNeeded(
+		namespace,
+	)}'?: "[typesafe-i18n] reserved for '${namespace}'-namespace. You need to use the \`./${namespace}/index.ts\` file instead."`,
+	)
+	.join(NEW_LINE)}
 }`
 
 const createTranslationTypeEntry = (
@@ -588,7 +598,13 @@ const getTypes = (
 	const jsDocsInfo = createJsDocsMapping(parsedTranslations)
 
 	const paramTypesToGenerate: number[] = []
-	const translationType = createTranslationType(parsedTranslations, jsDocsInfo, paramTypesToGenerate, namespaces)
+	const translationType = createTranslationType(
+		parsedTranslations,
+		jsDocsInfo,
+		paramTypesToGenerate,
+		'RootTranslation',
+		namespaces,
+	)
 
 	const namespacesType = usesNamespaces ? createNamespacesTypes(namespaces) : ''
 
@@ -608,6 +624,20 @@ export type BaseTranslation = BaseTranslationType${usesNamespaces ? ' & Disallow
 export type BaseLocale = '${baseLocale}'
 
 ${localesType}
+
+export type Translation = RootTranslation${usesNamespaces ? ' & DisallowNamespaces' : ''}
+
+export type Translations = RootTranslation${
+		usesNamespaces
+			? ` &
+{${namespaces.map(
+					(namespace) => `
+	${wrapObjectKeyIfNeeded(namespace)}: ${getTypeNameForNamespace(namespace)}`,
+			  )}
+}
+`
+			: ''
+	}
 
 ${translationType}
 

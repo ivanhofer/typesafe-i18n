@@ -8,8 +8,12 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
-	'0': {	
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
+	'0': {
 		/**
 		 * test
 		 */
@@ -18,7 +22,7 @@ export type Translation = {
 }
 
 export type TranslationFunctions = {
-	'0': {	
+	'0': {
 		/**
 		 * test
 		 */

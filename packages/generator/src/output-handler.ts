@@ -20,10 +20,6 @@ export const configureOutputHandler = (config: GeneratorConfigWithDefaultValues,
 		? `
 // @ts-check`
 		: ''
-	jsDocTsIgnore = shouldGenerateJsDoc
-		? `
-	// @ts-ignore`
-		: ''
 
 	tsVersion = version
 	supportsTemplateLiteralTypes =
@@ -60,7 +56,9 @@ export const configureOutputHandler = (config: GeneratorConfigWithDefaultValues,
  */`
 			: ''
 
-	jsDocType = (type) => (shouldGenerateJsDoc ? `/** @type { ${type} } */` : '')
+	jsDocType = (type, toWrap = '') =>
+		(shouldGenerateJsDoc ? `/** @type { ${type} } */` : '') +
+		(toWrap ? (shouldGenerateJsDoc ? ` (${toWrap})` : toWrap) : '')
 
 	relativeFileImportPath = (fileName: string) =>
 		`${fileName.startsWith('..') ? '' : './'}${fileName}${config.esmImports ? '.js' : ''}`
@@ -78,7 +76,6 @@ export let fileEnding: FileEnding
 export let fileEndingForTypesFile: FileEnding
 export let tsCheck: string
 export let importTypeStatement: string
-export let jsDocTsIgnore: string
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -94,7 +91,7 @@ export let jsDocImports: (...imports: ({ from: string; type: string; alias?: str
 
 export let jsDocFunction: (returnType: string, ...params: { type: string; name: string }[]) => string
 
-export let jsDocType: (type: string) => string
+export let jsDocType: (type: string, toWrap?: string) => string
 
 export let relativeFileImportPath: (fileName: string) => string
 

@@ -8,8 +8,12 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
-	'some-key': {	
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
+	'some-key': {
 		/**
 		 * format {me|custom-formatter}
 		 * @param {string} me
@@ -24,7 +28,7 @@ export type Translation = {
 }
 
 export type TranslationFunctions = {
-	'some-key': {	
+	'some-key': {
 		/**
 		 * format {me|custom-formatter}
 		 */

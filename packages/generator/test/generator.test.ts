@@ -92,6 +92,7 @@ const testGeneratedOutput = async (
 	config: GeneratorConfig = {},
 	version: TypescriptVersion = defaultVersion,
 	locales: Locale[] = [],
+	namespaces: string[] = [],
 ) =>
 	test(`generate ${prefix}`, async () => {
 		const configWithDefaultValues = await createConfig(prefix, config)
@@ -103,6 +104,7 @@ const testGeneratedOutput = async (
 			undefined,
 			true,
 			locales.length ? locales : [configWithDefaultValues.baseLocale],
+			namespaces,
 		)
 		await check(prefix, 'types', outputFormat)
 		await check(prefix, 'util', outputFormat)
@@ -316,6 +318,8 @@ testGeneratedOutput('banner-tslint', { HI: 'Hi {0:name}' }, { banner: '/* tslint
 const testAdapterMatrix = (prefix: string, translation: BaseTranslation, config: GeneratorConfig = {}) => {
 	testGeneratedOutput(`${prefix}`, translation, { ...config })
 	testGeneratedOutput(`${prefix}-esm`, translation, { ...config, esmImports: true })
+	if (config.adapter == 'angular') return
+
 	testGeneratedOutput(`${prefix}-jsdoc`, translation, { ...config, outputFormat: 'JavaScript' })
 	testGeneratedOutput(`${prefix}-esm-jsdoc`, translation, { ...config, esmImports: true, outputFormat: 'JavaScript' })
 }
@@ -355,6 +359,14 @@ testAdapterMatrix(
 testGeneratedOutput('esm-imports', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true })
 
 testGeneratedOutput('esm-imports-jsdoc', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true, outputFormat: 'JavaScript' })
+
+// --------------------------------------------------------------------------------------------------------------------
+
+testGeneratedOutput('namespaces', { wow: 'some text', test: { hi: 'hello' } }, undefined, undefined, undefined, [
+	'test',
+])
+
+testGeneratedOutput('namespaces-only', { test: { hi: 'hello' } }, undefined, undefined, undefined, ['test'])
 
 // --------------------------------------------------------------------------------------------------------------------
 

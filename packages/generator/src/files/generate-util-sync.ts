@@ -1,28 +1,27 @@
 import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
 import type { Locale } from '../../../runtime/src/core'
 import { writeFileIfContainsChanges } from '../file-utils'
-import { prettify, sanitizePath } from '../generator-util'
+import { prettify, sanitizePath, wrapObjectKeyIfNeeded } from '../generator-util'
 import {
 	importTypes,
+	jsDocFunction,
 	jsDocImports,
-	jsDocTsIgnore,
+	jsDocType,
 	OVERRIDE_WARNING,
 	relativeFileImportPath,
 	relativeFolderImportPath,
 	tsCheck,
+	type,
 	typeCast,
 } from '../output-handler'
 
 const getLocalesTranslationRowSync = (locale: Locale, baseLocale: string): string => {
 	const sanitizedLocale = sanitizePath(locale)
 	const needsEscaping = locale !== sanitizedLocale
-
 	const postfix = needsEscaping ? `: ${sanitizedLocale}` : ''
 
-	const wrappedLocale = needsEscaping ? `'${locale}'` : locale
-
-	return `${locale === baseLocale ? jsDocTsIgnore : ''}
-	${wrappedLocale}${postfix},`
+	return `
+	${wrapObjectKeyIfNeeded(locale)}${postfix},`
 }
 
 const getSyncCode = (
@@ -43,11 +42,11 @@ ${banner}
 
 ${jsDocImports(
 	{ from: relativeFileImportPath(typesFileName), type: 'Locales' },
-	{ from: relativeFileImportPath(typesFileName), type: 'Translation' },
+	{ from: relativeFileImportPath(typesFileName), type: 'Translations' },
 )}
 
 import { initFormatters } from './${formattersTemplateFileName}'
-${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translation')}
+${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translations')}
 import { loadedFormatters, loadedLocales, locales } from './${utilFileName}'
 
 ${localesImports}
@@ -55,17 +54,23 @@ ${localesImports}
 const localeTranslations = {${localesTranslations}
 }
 
-export const loadLocale = (locale: Locales) => {
+${jsDocFunction('void', { type: 'Locales', name: 'locale' })}
+export const loadLocale = (locale${type('Locales')}) => {
 	if (loadedLocales[locale]) return
 
-	loadedLocales[locale] = localeTranslations[locale]${typeCast('Translation')}
+	loadedLocales[locale] = ${jsDocType(
+		'Translations',
+		jsDocType('unknown', `localeTranslations[locale]${typeCast('unknown')}${typeCast('Translations')}`),
+	)}
 	loadFormatters(locale)
 }
 
 export const loadAllLocales = () => locales.forEach(loadLocale)
 
-export const loadFormatters = (locale: Locales) =>
+${jsDocFunction('void', { type: 'Locales', name: 'locale' })}
+export const loadFormatters = (locale${type('Locales')}) => {
 	loadedFormatters[locale] = initFormatters(locale)
+}
 `
 }
 

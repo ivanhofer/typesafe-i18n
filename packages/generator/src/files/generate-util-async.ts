@@ -7,6 +7,7 @@ import {
 	importTypes,
 	jsDocFunction,
 	jsDocImports,
+	jsDocType,
 	OVERRIDE_WARNING,
 	relativeFileImportPath,
 	relativeFolderImportPath,
@@ -40,7 +41,7 @@ export const loadNamespaceAsync = async ${generics('Namespace extends Namespaces
 		'Locales',
 	)}, namespace${type('Namespace')}) =>
 	loadedLocales[locale][namespace] = (await (localeNamespaceLoaders[locale][namespace])()).default${typeCast(
-		'Translation[Namespace]',
+		'Translations[Namespace]',
 	)}
 `
 	return [namespaceImports, namespaceLoader]
@@ -59,28 +60,36 @@ ${banner}
 
 ${jsDocImports(
 	{ from: relativeFileImportPath(typesFileName), type: 'Locales' },
-	{ from: relativeFileImportPath(typesFileName), type: 'Translation' },
+	{ from: relativeFileImportPath(typesFileName), type: 'Translations' },
 )}
 
 import { initFormatters } from './${formattersTemplateFileName}'
-${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translation', usesNamespaces && 'Namespaces')}
+${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translations', usesNamespaces && 'Namespaces')}
 import { loadedFormatters, loadedLocales, locales } from './${utilFileName}'
 
 const localeTranslationLoaders = {${localesTranslationLoaders}
 }
 ${namespaceImports}
-${jsDocFunction('Promise<Translation>', { type: 'Locales', name: 'locale' })}
+${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' })}
 export const loadLocaleAsync = async (locale${type('Locales')}) => {
 	if (loadedLocales[locale]) return
 
-	loadedLocales[locale] = (await (localeTranslationLoaders[locale])()).default${typeCast('Translation')}
+	loadedLocales[locale] = ${jsDocType(
+		'Translations',
+		jsDocType(
+			'unknown',
+			`(await (localeTranslationLoaders[locale])()).default${typeCast('unknown')}${typeCast('Translations')}`,
+		),
+	)}
 	loadFormatters(locale)
 }
 
 export const loadAllLocalesAsync = () => Promise.all(locales.map(loadLocaleAsync))
 
-export const loadFormatters = (locale${type('Locales')}) =>
+${jsDocFunction('void', { type: 'Locales', name: 'locale' })}
+export const loadFormatters = (locale${type('Locales')}) => {
 	loadedFormatters[locale] = initFormatters(locale)
+}
 ${namespaceLoader}`
 }
 

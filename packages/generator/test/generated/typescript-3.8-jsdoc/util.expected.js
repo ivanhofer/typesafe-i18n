@@ -4,12 +4,12 @@
 
 /**
  * @typedef { import('typesafe-i18n').TranslateByString } TranslateByString,
- * @typedef { import('typesafe-i18n').LocaleTranslations<Locales, Translation> } LocaleTranslations,
- * @typedef { import('typesafe-i18n').LocaleTranslationFunctions<Locales, Translation, TranslationFunctions> } LocaleTranslationFunctions,
+ * @typedef { import('typesafe-i18n').LocaleTranslations<Locales, Translations> } LocaleTranslations,
+ * @typedef { import('typesafe-i18n').LocaleTranslationFunctions<Locales, Translations, TranslationFunctions> } LocaleTranslationFunctions,
  * @typedef { import('typesafe-i18n/detectors').LocaleDetector } LocaleDetector,
  * @typedef { import('./types.actual').Locales } Locales,
  * @typedef { import('./types.actual').Formatters } Formatters,
- * @typedef { import('./types.actual').Translation } Translation,
+ * @typedef { import('./types.actual').Translations } Translations,
  * @typedef { import('./types.actual').TranslationFunctions } TranslationFunctions
  */
 
@@ -25,7 +25,7 @@ export const locales = [
 	'en'
 ]
 
-export const loadedLocales = /** @type { Record<Locales, Translation> } */ ({})
+export const loadedLocales = /** @type { Record<Locales, Translations> } */ ({})
 
 export const loadedFormatters = /** @type { Record<Locales, Formatters> } */ ({})
 

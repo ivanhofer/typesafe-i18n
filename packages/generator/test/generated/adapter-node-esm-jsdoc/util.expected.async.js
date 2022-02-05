@@ -4,7 +4,7 @@
 
 /**
  * @typedef { import('./types.actual.js').Locales } Locales,
- * @typedef { import('./types.actual.js').Translation } Translation
+ * @typedef { import('./types.actual.js').Translations } Translations
  */
 
 import { initFormatters } from './formatters-template.actual'
@@ -17,16 +17,21 @@ const localeTranslationLoaders = {
 
 /**
  * @param { Locales } locale
- * @return { Promise<Translation> }
+ * @return { Promise<void> }
  */
 export const loadLocaleAsync = async (locale) => {
 	if (loadedLocales[locale]) return
 
-	loadedLocales[locale] = (await (localeTranslationLoaders[locale])()).default
+	loadedLocales[locale] = /** @type { Translations } */ (/** @type { unknown } */ ((await (localeTranslationLoaders[locale])()).default))
 	loadFormatters(locale)
 }
 
 export const loadAllLocalesAsync = () => Promise.all(locales.map(loadLocaleAsync))
 
-export const loadFormatters = (locale) =>
+/**
+ * @param { Locales } locale
+ * @return { void }
+ */
+export const loadFormatters = (locale) => {
 	loadedFormatters[locale] = initFormatters(locale)
+}

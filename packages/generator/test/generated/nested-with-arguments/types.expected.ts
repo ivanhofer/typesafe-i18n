@@ -8,22 +8,26 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
-	'a': {	
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
+	'a': {
 		/**
 		 * {0} apple{{s}}
 		 * @param {string | number | boolean} 0
 		 */
 		'APPLES': RequiredParams1<'0'>
 	}
-	'b': {	
+	'b': {
 		/**
 		 * {0} apple{{s}}
 		 * @param {number} 0
 		 */
 		'APPLES': RequiredParams1<'0'>
 	}
-	'c': {	
+	'c': {
 		/**
 		 * {nrOfApples} apple{{s}}
 		 * @param {number} nrOfApples
@@ -33,19 +37,19 @@ export type Translation = {
 }
 
 export type TranslationFunctions = {
-	'a': {	
+	'a': {
 		/**
 		 * {0} apple{{s}}
 		 */
 		'APPLES': (arg0: string | number | boolean) => LocalizedString
 	}
-	'b': {	
+	'b': {
 		/**
 		 * {0} apple{{s}}
 		 */
 		'APPLES': (arg0: number) => LocalizedString
 	}
-	'c': {	
+	'c': {
 		/**
 		 * {nrOfApples} apple{{s}}
 		 */

@@ -4,7 +4,7 @@
 import { i18n as initI18n, i18nObject as initI18nObject, i18nString as initI18nString } from 'typesafe-i18n'
 import type { LocaleDetector } from 'typesafe-i18n/detectors'
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
-import type { Formatters, Locales, Translation, TranslationFunctions } from './types.actual.js'
+import type { Formatters, Locales, Translations, TranslationFunctions } from './types.actual.js'
 
 export const baseLocale: Locales = 'en'
 
@@ -12,15 +12,15 @@ export const locales: Locales[] = [
 	'en'
 ]
 
-export const loadedLocales = {} as Record<Locales, Translation>
+export const loadedLocales = {} as Record<Locales, Translations>
 
 export const loadedFormatters = {} as Record<Locales, Formatters>
 
 export const i18nString = (locale: Locales) => initI18nString<Locales, Formatters>(locale, loadedFormatters[locale])
 
 export const i18nObject = (locale: Locales) =>
-	initI18nObject<Locales, Translation, TranslationFunctions, Formatters>(locale, loadedLocales[locale], loadedFormatters[locale])
+	initI18nObject<Locales, Translations, TranslationFunctions, Formatters>(locale, loadedLocales[locale], loadedFormatters[locale])
 
-export const i18n = () => initI18n<Locales, Translation, TranslationFunctions, Formatters>(loadedLocales, loadedFormatters)
+export const i18n = () => initI18n<Locales, Translations, TranslationFunctions, Formatters>(loadedLocales, loadedFormatters)
 
 export const detectLocale = (...detectors: LocaleDetector[]) => detectLocaleFn<Locales>(baseLocale, locales, ...detectors)

@@ -4,7 +4,7 @@
 
 /**
  * @typedef { import('./types.actual.js').Locales } Locales,
- * @typedef { import('./types.actual.js').Translation } Translation
+ * @typedef { import('./types.actual.js').Translations } Translations
  */
 
 import { initFormatters } from './formatters-template.actual'
@@ -14,18 +14,26 @@ import { loadedFormatters, loadedLocales, locales } from './util.actual'
 import en from './en/index.js'
 
 const localeTranslations = {
-	// @ts-ignore
 	en,
 }
 
-export const loadLocale = (locale: Locales) => {
+/**
+ * @param { Locales } locale
+ * @return { void }
+ */
+export const loadLocale = (locale) => {
 	if (loadedLocales[locale]) return
 
-	loadedLocales[locale] = localeTranslations[locale]
+	loadedLocales[locale] = /** @type { Translations } */ (/** @type { unknown } */ (localeTranslations[locale]))
 	loadFormatters(locale)
 }
 
 export const loadAllLocales = () => locales.forEach(loadLocale)
 
-export const loadFormatters = (locale: Locales) =>
+/**
+ * @param { Locales } locale
+ * @return { void }
+ */
+export const loadFormatters = (locale) => {
 	loadedFormatters[locale] = initFormatters(locale)
+}

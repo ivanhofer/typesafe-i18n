@@ -10,7 +10,11 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
 	/**
 	 * The result is {0|calculate}!
 	 * @param {Result} 0
