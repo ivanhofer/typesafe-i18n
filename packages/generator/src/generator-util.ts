@@ -1,5 +1,5 @@
 import kleur from 'kleur'
-import type { Arguments, Locale } from '../../runtime/src/core'
+import type { Arguments } from '../../runtime/src/core'
 
 export const getPermutations = <T>(rest: T[], permutedArray: T[] = []): T[][] => {
 	if (rest.length === 0) {
@@ -33,7 +33,14 @@ export const parseTypescriptVersion = (versionMajorMinor: `${number}.${number}`)
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const sanitizeLocale = (locale: Locale): Locale => locale.replace(/-/g, '_')
+export const sanitizePath = <Type extends string>(part: Type): Type => part.replace(/[-\s]/g, '_') as Type
+
+export const wrapObjectKeyIfNeeded = (key: string) => {
+	const sanitized = sanitizePath(key)
+	const needsEscaping = key !== sanitized
+
+	return needsEscaping ? `'${key}'` : key
+}
 
 export const prettify = (content: string): string =>
 	content

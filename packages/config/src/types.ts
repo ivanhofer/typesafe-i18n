@@ -1,3 +1,5 @@
+import type { Locale } from '../../runtime/src/core'
+
 export type Adapters = 'angular' | 'node' | 'react' | 'svelte' | 'vue'
 
 export type OutputFormats = 'TypeScript' | 'JavaScript'
@@ -5,7 +7,7 @@ export type OutputFormats = 'TypeScript' | 'JavaScript'
 export type GeneratorConfig = {
 	$schema?: string
 
-	baseLocale?: string
+	baseLocale?: Locale
 
 	tempPath?: string
 	outputPath?: string
@@ -24,11 +26,11 @@ export type GeneratorConfig = {
 }
 
 export type RollupConfig = {
-	locales?: string[]
+	locales?: Locale[]
 }
 
 export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
-	baseLocale: string
+	baseLocale: Locale
 
 	tempPath: string
 	outputPath: string

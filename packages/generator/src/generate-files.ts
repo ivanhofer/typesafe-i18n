@@ -56,6 +56,7 @@ export const generate = async (
 	logger: Logger = defaultLogger,
 	forceOverride = false,
 	locales: Locale[] = [],
+	namespaces: string[] = [],
 ): Promise<void> => {
 	configureOutputHandler(config, version)
 
@@ -63,7 +64,9 @@ export const generate = async (
 
 	await generateDictionaryFiles(config, forceOverride)
 
-	const hasCustomTypes = await generateTypes({ ...config, translations, locales }, logger)
+	// TODO: write empty namespace files to disc
+
+	const hasCustomTypes = await generateTypes({ ...config, translations, locales, namespaces }, logger)
 
 	if (hasCustomTypes) {
 		await generateCustomTypesTemplate(config, forceOverride)
@@ -75,23 +78,23 @@ export const generate = async (
 
 	await generateUtil(config, locales)
 	await generateSyncUtil(config, locales)
-	await generateAsyncUtil(config, locales)
+	await generateAsyncUtil(config, locales, namespaces)
 
 	switch (config.adapter) {
 		case 'angular':
-			await generateAngularAdapter(config)
+			await generateAngularAdapter(config) // TODO: add namespace support
 			break
 		case 'node':
-			await generateNodeAdapter(config)
+			await generateNodeAdapter(config) // TODO: add namespace support
 			break
 		case 'react':
-			await generateReactAdapter(config)
+			await generateReactAdapter(config) // TODO: add namespace support
 			break
 		case 'svelte':
 			await generateSvelteAdapter(config)
 			break
 		case 'vue':
-			await generateVueAdapter(config)
+			await generateVueAdapter(config) // TODO: add namespace support
 			break
 	}
 }

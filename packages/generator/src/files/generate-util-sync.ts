@@ -1,7 +1,7 @@
 import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
 import type { Locale } from '../../../runtime/src/core'
 import { writeFileIfContainsChanges } from '../file-utils'
-import { prettify, sanitizeLocale } from '../generator-util'
+import { prettify, sanitizePath } from '../generator-util'
 import {
 	importTypes,
 	jsDocImports,
@@ -14,7 +14,7 @@ import {
 } from '../output-handler'
 
 const getLocalesTranslationRowSync = (locale: Locale, baseLocale: string): string => {
-	const sanitizedLocale = sanitizeLocale(locale)
+	const sanitizedLocale = sanitizePath(locale)
 	const needsEscaping = locale !== sanitizedLocale
 
 	const postfix = needsEscaping ? `: ${sanitizedLocale}` : ''
@@ -32,7 +32,7 @@ const getSyncCode = (
 	const localesImports = locales
 		.map(
 			(locale) => `
-import ${sanitizeLocale(locale)} from '${relativeFolderImportPath(locale)}'`,
+import ${sanitizePath(locale)} from '${relativeFolderImportPath(locale)}'`,
 		)
 		.join('')
 

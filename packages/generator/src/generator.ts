@@ -1,9 +1,11 @@
 import { watch } from 'chokidar'
+import { sync as glob } from 'glob'
 import { resolve } from 'path'
 import ts from 'typescript'
 import { getConfigWithDefaultValues, readConfig } from '../../config/src/config'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../../config/src/types'
 import type { BaseTranslation } from '../../runtime/src'
+import type { Locale } from '../../runtime/src/core'
 import { createPathIfNotExits } from './file-utils'
 import { generate } from './generate-files'
 import { createLogger, Logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
@@ -13,13 +15,29 @@ import { getAllLanguages, parseLanguageFile } from './parse-language-file'
 let logger: Logger
 let first = true
 
-const getDefaultExport = (languageFile: BaseTranslation): BaseTranslation => {
-	const keys = Object.keys(languageFile)
-	if (keys.includes('__esModule') || (keys.length === 1 && keys.includes('default'))) {
-		languageFile = (languageFile as Record<string, BaseTranslation>).default as BaseTranslation
+const findAllNamespaces = (baseLocale: Locale, outputPath: string): string[] =>
+	glob(`${outputPath}/${baseLocale}/*/index.*s`).map((file) => {
+		// TODO: check if this split also works for windows-paths
+		const parts = file.split('/')
+		return parts[parts.length - 2] as string
+	})
+
+const getBaseTranslations = async (
+	baseLocale: Locale,
+	tempPath: string,
+	outputPath: string,
+	namespaces: string[],
+): Promise<BaseTranslation> => {
+	const translations = (await parseLanguageFile(outputPath, resolve(tempPath, `${debounceCounter}`), baseLocale)) || {}
+
+	for await (const namespace of namespaces) {
+		const namespaceTranslations =
+			(await parseLanguageFile(outputPath, resolve(tempPath, `${debounceCounter}`), baseLocale, namespace)) || {}
+
+		;(translations as Record<string, BaseTranslation>)[namespace] = namespaceTranslations
 	}
 
-	return languageFile
+	return translations
 }
 
 const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, version: TypescriptVersion) => {
@@ -29,18 +47,16 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 		logger.info('files were modified => looking for changes ...')
 	}
 
-	const { baseLocale: locale, tempPath, outputPath } = config
+	const { baseLocale, tempPath, outputPath } = config
 
 	const locales = await getAllLanguages(outputPath)
+	const namespaces = findAllNamespaces(baseLocale, outputPath)
 
 	const firstLaunchOfGenerator = !locales.length
 
-	const languageFile =
-		(locale && (await parseLanguageFile(outputPath, locale, resolve(tempPath, `${debounceCounter}`)))) || {}
+	const translations = await getBaseTranslations(baseLocale, tempPath, outputPath, namespaces)
 
-	const translations = getDefaultExport(languageFile)
-
-	await generate(translations, { ...config, baseLocale: locale }, version, logger, firstLaunchOfGenerator, locales)
+	await generate(translations, { ...config, baseLocale }, version, logger, firstLaunchOfGenerator, locales, namespaces)
 
 	if (firstLaunchOfGenerator) {
 		let message =

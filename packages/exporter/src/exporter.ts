@@ -23,7 +23,7 @@ const setup = async (): Promise<GeneratorConfigWithDefaultValues> => {
 const readTranslation = async (locale: Locale, outputPath: string, tempPath: string): Promise<LocaleMapping> => {
 	logger.info(`exporting translations for locale '${locale}' ...`)
 
-	const translations = await parseLanguageFile(outputPath, locale, resolve(tempPath, locale))
+	const translations = await parseLanguageFile(outputPath, resolve(tempPath, locale), locale)
 	if (!translations) {
 		logger.error(`could not find locale file '${locale}'`)
 	}

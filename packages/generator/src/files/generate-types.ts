@@ -23,7 +23,7 @@ import type { ArgumentPart } from '../../../parser/src/types'
 import { BaseTranslation, isPluralPart, Locale } from '../../../runtime/src/core'
 import { partAsStringWithoutTypes, partsAsStringWithoutTypes } from '../../../runtime/src/core-utils'
 import { writeFileIfContainsChanges } from '../file-utils'
-import { getPermutations, Logger, prettify } from '../generator-util'
+import { getPermutations, Logger, prettify, wrapObjectKeyIfNeeded } from '../generator-util'
 import {
 	fileEndingForTypesFile,
 	importTypeStatement,
@@ -342,12 +342,54 @@ const createTranslationType = (
 	parsedTranslations: ParsedResult[],
 	jsDocInfo: JsDocInfos,
 	paramTypesToGenerate: number[],
-): string =>
-	`export type Translation = ${wrapObjectType(parsedTranslations, () =>
-		mapToString(parsedTranslations, (parsedResultEntry) =>
-			createTranslationTypeEntry(parsedResultEntry, jsDocInfo, paramTypesToGenerate),
-		),
-	)}`
+	namespaces: string[],
+	prefix = '',
+): string => {
+	const parsedTranslationsWithoutNamespaces = parsedTranslations.filter((parsedResult) => {
+		const keys = Object.keys(parsedResult)
+		return keys.length > 1 || !namespaces.includes(keys[0] as string)
+	})
+
+	const translationType = `export type ${prefix}Translation = ${wrapObjectType(
+		parsedTranslationsWithoutNamespaces,
+		() =>
+			mapToString(parsedTranslationsWithoutNamespaces, (parsedResultEntry) =>
+				createTranslationTypeEntry(parsedResultEntry, jsDocInfo, paramTypesToGenerate),
+			),
+	)}${namespaces.length ? ' & DisallowNamespaces' : ''}`
+
+	const parsedNamespaceTranslations = parsedTranslations.filter((parsedResult) => {
+		const keys = Object.keys(parsedResult)
+		return keys.length === 1 && namespaces.includes(keys[0] as string)
+	})
+
+	const namespaceTranslationsTypes = parsedNamespaceTranslations
+		.map((value) => Object.entries(value).flat() as [string, ParsedResult[]])
+		.map(([key, value]) => {
+			const typeName = `Namespace${key.substring(0, 1).toUpperCase()}${key.substring(1)}`
+			return createTranslationType(value, jsDocInfo, paramTypesToGenerate, [], typeName)
+		})
+
+	return `${translationType}
+
+${namespaceTranslationsTypes.join(NEW_LINE + NEW_LINE)}`
+}
+
+const createNamespacesTypes = (namespaces: string[]) => `
+export type Namespaces = ${wrapUnionType(namespaces)}
+
+type DisallowNamespaces = {${namespaces.map(
+	(namespace) => `
+	/**
+	 * reserved for '${namespace}'-namespace\\
+	 * you need to use the \`./${namespace}/index.ts\` file instead
+	 */
+	 '${wrapObjectKeyIfNeeded(
+			namespace,
+		)}'?: "[typesafe-i18n] reserved for '${namespace}'-namespace. You need to use the \`./${namespace}/index.ts\` file instead."
+`,
+)}
+}`
 
 const createTranslationTypeEntry = (
 	resultEntry: ParsedResult,
@@ -532,9 +574,11 @@ const createFormattersType = (parsedTranslations: ParsedResult[]) => {
 // --------------------------------------------------------------------------------------------------------------------
 
 const getTypes = (
-	{ translations, baseLocale, locales, typesTemplateFileName, banner }: GenerateTypesType,
+	{ translations, baseLocale, locales, typesTemplateFileName, banner, namespaces }: GenerateTypesType,
 	logger: Logger,
 ) => {
+	const usesNamespaces = !!namespaces.length
+
 	const parsedTranslations = parseTranslations(translations, logger).filter(isTruthy)
 
 	const typeImports = createTypeImports(parsedTranslations, typesTemplateFileName)
@@ -544,7 +588,9 @@ const getTypes = (
 	const jsDocsInfo = createJsDocsMapping(parsedTranslations)
 
 	const paramTypesToGenerate: number[] = []
-	const translationType = createTranslationType(parsedTranslations, jsDocsInfo, paramTypesToGenerate)
+	const translationType = createTranslationType(parsedTranslations, jsDocsInfo, paramTypesToGenerate, namespaces)
+
+	const namespacesType = createNamespacesTypes(namespaces)
 
 	const paramsType = supportsTemplateLiteralTypes ? createParamsType(paramTypesToGenerate) : ''
 
@@ -558,12 +604,14 @@ ${importTypeStatement} { BaseTranslation as BaseTranslationType${
 		parsedTranslations.length ? ', LocalizedString' : ''
 	} } from 'typesafe-i18n'
 ${typeImports}
-export type BaseTranslation = BaseTranslationType
+export type BaseTranslation = BaseTranslationType${usesNamespaces ? ' & DisallowNamespaces' : ''}
 export type BaseLocale = '${baseLocale}'
 
 ${localesType}
 
 ${translationType}
+
+${namespacesType}
 
 ${translationArgsType}
 
@@ -579,6 +627,7 @@ ${paramsType}`
 export type GenerateTypesType = GeneratorConfigWithDefaultValues & {
 	translations: BaseTranslation | BaseTranslation[]
 	locales: Locale[]
+	namespaces: string[]
 }
 
 export const generateTypes = async (config: GenerateTypesType, logger: Logger): Promise<boolean> => {

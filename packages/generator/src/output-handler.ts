@@ -33,7 +33,7 @@ export const configureOutputHandler = (config: GeneratorConfigWithDefaultValues,
 	importTypeStatement = `import${supportsImportType ? ' type' : ''}`
 
 	importTypes = (from, ...types) =>
-		shouldGenerateJsDoc ? '' : `${importTypeStatement} { ${types.join(', ')} } from '${from}'`
+		shouldGenerateJsDoc ? '' : `${importTypeStatement} { ${types.filter(isTruthy).join(', ')} } from '${from}'`
 	type = (type) => (shouldGenerateJsDoc ? '' : `: ${type}`)
 	typeCast = (type) => (shouldGenerateJsDoc ? '' : ` as ${type}`)
 	generics = (...generics) => (shouldGenerateJsDoc ? '' : `<${generics.join(', ')}>`)
@@ -82,7 +82,7 @@ export let jsDocTsIgnore: string
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export let importTypes: (from: string, ...types: string[]) => string
+export let importTypes: (from: string, ...types: (string | false)[]) => string
 
 export let type: (type: string) => string
 
