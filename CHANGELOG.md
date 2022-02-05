@@ -2,7 +2,7 @@
 
 # Version 3
 
-## 3.1.2 (2022-02-01)
+## 3.1.2 (2022-02-04)
 
 Fix:
  - missing index.d.ts in importer [#167](https://github.com/ivanhofer/typesafe-i18n/issues/167)
