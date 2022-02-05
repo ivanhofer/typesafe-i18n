@@ -376,7 +376,7 @@ ${namespaceTranslationsTypes.join(NEW_LINE + NEW_LINE)}`
 }
 
 const createNamespacesTypes = (namespaces: string[]) => `
-export type Namespaces = ${wrapUnionType(namespaces)}
+export type Namespaces =${wrapUnionType(namespaces)}
 
 type DisallowNamespaces = {${namespaces.map(
 	(namespace) => `
@@ -590,7 +590,7 @@ const getTypes = (
 	const paramTypesToGenerate: number[] = []
 	const translationType = createTranslationType(parsedTranslations, jsDocsInfo, paramTypesToGenerate, namespaces)
 
-	const namespacesType = createNamespacesTypes(namespaces)
+	const namespacesType = usesNamespaces ? createNamespacesTypes(namespaces) : ''
 
 	const paramsType = supportsTemplateLiteralTypes ? createParamsType(paramTypesToGenerate) : ''
 
