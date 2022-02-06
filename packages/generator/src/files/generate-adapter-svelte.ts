@@ -27,7 +27,6 @@ ${jsDocImports(
 	{ from: relativeFileImportPath(typesFileName), type: 'Formatters' },
 )}
 
-import { get } from 'svelte/store'
 import { initI18nSvelte } from 'typesafe-i18n/adapters/adapter-svelte'
 ${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translations', 'TranslationFunctions', 'Formatters')}
 import { loadedLocales, loadedFormatters } from '${relativeFileImportPath(utilFileName)}'
@@ -40,9 +39,7 @@ const { locale, LL, setLocale } = initI18nSvelte${generics(
 		'Formatters',
 	)}(loadedLocales, loadedFormatters)
 
-const refresh = () => setLocale(get(locale))
-
-export { locale, LL, setLocale, refresh }
+export { locale, LL, setLocale }
 
 export default LL
 `

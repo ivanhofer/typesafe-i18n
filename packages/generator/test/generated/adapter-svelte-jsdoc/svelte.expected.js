@@ -10,7 +10,6 @@
  * @typedef { import('./types.actual').Formatters } Formatters
  */
 
-import { get } from 'svelte/store'
 import { initI18nSvelte } from 'typesafe-i18n/adapters/adapter-svelte'
 
 import { loadedLocales, loadedFormatters } from './util.actual'
@@ -18,8 +17,6 @@ import { loadedLocales, loadedFormatters } from './util.actual'
 /** @type { SvelteStoreInit } */
 const { locale, LL, setLocale } = initI18nSvelte(loadedLocales, loadedFormatters)
 
-const refresh = () => setLocale(get(locale))
-
-export { locale, LL, setLocale, refresh }
+export { locale, LL, setLocale }
 
 export default LL

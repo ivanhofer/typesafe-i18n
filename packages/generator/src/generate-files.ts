@@ -47,19 +47,19 @@ export const generate = async (
 
 	switch (config.adapter) {
 		case 'angular':
-			promises.push(generateAngularAdapter(config)) // TODO: add namespace support
+			promises.push(generateAngularAdapter(config))
 			break
 		case 'node':
-			promises.push(generateNodeAdapter(config)) // TODO: add namespace support
+			promises.push(generateNodeAdapter(config))
 			break
 		case 'react':
-			promises.push(generateReactAdapter(config)) // TODO: add namespace support
+			promises.push(generateReactAdapter(config))
 			break
 		case 'svelte':
 			promises.push(generateSvelteAdapter(config))
 			break
 		case 'vue':
-			promises.push(generateVueAdapter(config)) // TODO: add namespace support
+			promises.push(generateVueAdapter(config))
 			break
 	}
 
