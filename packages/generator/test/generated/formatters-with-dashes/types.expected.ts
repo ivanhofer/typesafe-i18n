@@ -17,14 +17,14 @@ type RootTranslation = {
 	 * {0|custom-formatter|and-another}
 	 * @param {unknown} 0
 	 */
-	'FORMATTER': RequiredParams1<'0|custom-formatter|and-another'>
+	FORMATTER: RequiredParams1<'0|custom-formatter|and-another'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * {0|custom-formatter|and-another}
 	 */
-	'FORMATTER': (arg0: unknown) => LocalizedString
+	FORMATTER: (arg0: unknown) => LocalizedString
 }
 
 export type Formatters = {

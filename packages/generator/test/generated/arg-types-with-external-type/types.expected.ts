@@ -19,18 +19,18 @@ type RootTranslation = {
 	 * The result is {0|calculate}!
 	 * @param {Result} 0
 	 */
-	'EXTERNAL_TYPE': RequiredParams1<'0|calculate'>
+	EXTERNAL_TYPE: RequiredParams1<'0|calculate'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * The result is {0|calculate}!
 	 */
-	'EXTERNAL_TYPE': (arg0: Result) => LocalizedString
+	EXTERNAL_TYPE: (arg0: Result) => LocalizedString
 }
 
 export type Formatters = {
-	'calculate': (value: Result) => unknown
+	calculate: (value: Result) => unknown
 }
 
 type Param<P extends string> = `{${P}}`

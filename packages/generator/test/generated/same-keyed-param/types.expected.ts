@@ -17,14 +17,14 @@ type RootTranslation = {
 	 * {name} {name} {name}
 	 * @param {unknown} name
 	 */
-	'SAME_KEYED_PARAM': RequiredParams3<'name', 'name', 'name'>
+	SAME_KEYED_PARAM: RequiredParams3<'name', 'name', 'name'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * {name} {name} {name}
 	 */
-	'SAME_KEYED_PARAM': (arg: { name: unknown }) => LocalizedString
+	SAME_KEYED_PARAM: (arg: { name: unknown }) => LocalizedString
 }
 
 export type Formatters = {}

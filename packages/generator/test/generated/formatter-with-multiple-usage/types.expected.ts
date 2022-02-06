@@ -17,39 +17,39 @@ type RootTranslation = {
 	 * {0|calculate}!
 	 * @param {number} 0
 	 */
-	'A': RequiredParams1<'0|calculate'>
+	A: RequiredParams1<'0|calculate'>
 	/**
 	 * {0} {1|calculate}
 	 * @param {unknown} 0
 	 * @param {number} 1
 	 */
-	'B': RequiredParams2<'0', '1|calculate'>
+	B: RequiredParams2<'0', '1|calculate'>
 	/**
 	 * {0} {2|calculate} {1}
 	 * @param {unknown} 0
 	 * @param {unknown} 1
 	 * @param {number} 2
 	 */
-	'C': RequiredParams3<'0', '1', '2|calculate'>
+	C: RequiredParams3<'0', '1', '2|calculate'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * {0|calculate}!
 	 */
-	'A': (arg0: number) => LocalizedString
+	A: (arg0: number) => LocalizedString
 	/**
 	 * {0} {1|calculate}
 	 */
-	'B': (arg0: unknown, arg1: number) => LocalizedString
+	B: (arg0: unknown, arg1: number) => LocalizedString
 	/**
 	 * {0} {2|calculate} {1}
 	 */
-	'C': (arg0: unknown, arg1: unknown, arg2: number) => LocalizedString
+	C: (arg0: unknown, arg1: unknown, arg2: number) => LocalizedString
 }
 
 export type Formatters = {
-	'calculate': (value: number) => unknown
+	calculate: (value: number) => unknown
 }
 
 type Param<P extends string> = `{${P}}`

@@ -19,14 +19,14 @@ type RootTranslation = {
 	 * Hi {0}
 	 * @param {name} 0
 	 */
-	'HI': RequiredParams1<'0'>
+	HI: RequiredParams1<'0'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * Hi {0}
 	 */
-	'HI': (arg0: name) => LocalizedString
+	HI: (arg0: name) => LocalizedString
 }
 
 export type Formatters = {}

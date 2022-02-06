@@ -17,27 +17,27 @@ type RootTranslation = {
 	 * {0|calculate}!
 	 * @param {number} 0
 	 */
-	'A': RequiredParams1<'0|calculate'>
+	A: RequiredParams1<'0|calculate'>
 	/**
 	 * {0|calculate}
 	 * @param {Date} 0
 	 */
-	'B': RequiredParams1<'0|calculate'>
+	B: RequiredParams1<'0|calculate'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * {0|calculate}!
 	 */
-	'A': (arg0: number) => LocalizedString
+	A: (arg0: number) => LocalizedString
 	/**
 	 * {0|calculate}
 	 */
-	'B': (arg0: Date) => LocalizedString
+	B: (arg0: Date) => LocalizedString
 }
 
 export type Formatters = {
-	'calculate': (value: number | Date) => unknown
+	calculate: (value: number | Date) => unknown
 }
 
 type Param<P extends string> = `{${P}}`

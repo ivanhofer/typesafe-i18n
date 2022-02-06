@@ -13,22 +13,22 @@ export type Translation = RootTranslation
 export type Translations = RootTranslation
 
 type RootTranslation = {
-	'a': {
-		'b': {
-			'c': {
-				'd': {
-					'e': {
-						'f': {
-							'g': {
-								'h': {
-									'i': {
-										'j': {
-											'k': {
-												'l': {
+	a: {
+		b: {
+			c: {
+				d: {
+					e: {
+						f: {
+							g: {
+								h: {
+									i: {
+										j: {
+											k: {
+												l: {
 													/**
 													 * I am deeply nested
 													 */
-													'm': string
+													m: string
 												}
 											}
 										}
@@ -44,22 +44,22 @@ type RootTranslation = {
 }
 
 export type TranslationFunctions = {
-	'a': {
-		'b': {
-			'c': {
-				'd': {
-					'e': {
-						'f': {
-							'g': {
-								'h': {
-									'i': {
-										'j': {
-											'k': {
-												'l': {
+	a: {
+		b: {
+			c: {
+				d: {
+					e: {
+						f: {
+							g: {
+								h: {
+									i: {
+										j: {
+											k: {
+												l: {
 													/**
 													 * I am deeply nested
 													 */
-													'm': () => LocalizedString
+													m: () => LocalizedString
 												}
 											}
 										}

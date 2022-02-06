@@ -17,24 +17,24 @@ type RootTranslation = {
 	 * {0} apple{{s}}
 	 * @param {string | number | boolean} 0
 	 */
-	'PARAM': RequiredParams1<'0'>
+	PARAM: RequiredParams1<'0'>
 	/**
 	 * {0} apple{{s}} and {1} banana{{s}}
 	 * @param {string | number | boolean} 0
 	 * @param {string | number | boolean} 1
 	 */
-	'PARAMS': RequiredParams2<'0', '1'>
+	PARAMS: RequiredParams2<'0', '1'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * {0} apple{{s}}
 	 */
-	'PARAM': (arg0: string | number | boolean) => LocalizedString
+	PARAM: (arg0: string | number | boolean) => LocalizedString
 	/**
 	 * {0} apple{{s}} and {1} banana{{s}}
 	 */
-	'PARAMS': (arg0: string | number | boolean, arg1: string | number | boolean) => LocalizedString
+	PARAMS: (arg0: string | number | boolean, arg1: string | number | boolean) => LocalizedString
 }
 
 export type Formatters = {}

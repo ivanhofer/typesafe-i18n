@@ -19,18 +19,18 @@ type RootTranslation = {
 	 * This is a test {0|someFormatter}
 	 * @param {CustomType} 0
 	 */
-	'TEST': RequiredParams1<'0|someFormatter'>
+	TEST: RequiredParams1<'0|someFormatter'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * This is a test {0|someFormatter}
 	 */
-	'TEST': (arg0: CustomType) => LocalizedString
+	TEST: (arg0: CustomType) => LocalizedString
 }
 
 export type Formatters = {
-	'someFormatter': (value: CustomType) => unknown
+	someFormatter: (value: CustomType) => unknown
 }
 
 type Param<P extends string> = `{${P}}`

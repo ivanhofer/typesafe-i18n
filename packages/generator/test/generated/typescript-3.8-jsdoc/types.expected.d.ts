@@ -18,14 +18,14 @@ type RootTranslation = {
 	 * @param {unknown} name
 	 * @param {string | number | boolean} nrOfApples
 	 */
-	'TEST': RequiredParams2<'name', 'nrOfApples'>
+	TEST: RequiredParams2<'name', 'nrOfApples'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}
 	 */
-	'TEST': (arg: { name: unknown, nrOfApples: string | number | boolean }) => LocalizedString
+	TEST: (arg: { name: unknown, nrOfApples: string | number | boolean }) => LocalizedString
 }
 
 export type Formatters = {}

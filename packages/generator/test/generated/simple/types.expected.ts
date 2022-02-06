@@ -16,14 +16,14 @@ type RootTranslation = {
 	/**
 	 * This is a test
 	 */
-	'TEST': string
+	TEST: string
 }
 
 export type TranslationFunctions = {
 	/**
 	 * This is a test
 	 */
-	'TEST': () => LocalizedString
+	TEST: () => LocalizedString
 }
 
 export type Formatters = {}

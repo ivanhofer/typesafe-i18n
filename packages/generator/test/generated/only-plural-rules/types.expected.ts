@@ -16,22 +16,22 @@ type RootTranslation = {
 	/**
 	 * apple{{s}}
 	 */
-	'ONLY_PLURAL': string
+	ONLY_PLURAL: string
 	/**
 	 * {{Afpel|Äpfel}}
 	 */
-	'ONLY_SINGULAR_PLURAL': string
+	ONLY_SINGULAR_PLURAL: string
 }
 
 export type TranslationFunctions = {
 	/**
 	 * apple{{s}}
 	 */
-	'ONLY_PLURAL': (arg0: string | number | boolean) => LocalizedString
+	ONLY_PLURAL: (arg0: string | number | boolean) => LocalizedString
 	/**
 	 * {{Afpel|Äpfel}}
 	 */
-	'ONLY_SINGULAR_PLURAL': (arg0: string | number | boolean) => LocalizedString
+	ONLY_SINGULAR_PLURAL: (arg0: string | number | boolean) => LocalizedString
 }
 
 export type Formatters = {}

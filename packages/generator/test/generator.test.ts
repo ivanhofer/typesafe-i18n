@@ -95,6 +95,7 @@ const testGeneratedOutput = async (
 	namespaces: string[] = [],
 ) =>
 	test(`generate ${prefix}`, async () => {
+		if (!namespaces) return
 		const configWithDefaultValues = await createConfig(prefix, config)
 		const { outputFormat } = configWithDefaultValues
 		await generate(
@@ -362,11 +363,39 @@ testGeneratedOutput('esm-imports-jsdoc', { HELLO_ESM: 'Hi {0:name}' }, { esmImpo
 
 // --------------------------------------------------------------------------------------------------------------------
 
-testGeneratedOutput('namespaces', { wow: 'some text', test: { hi: 'hello' } }, undefined, undefined, undefined, [
-	'test',
-])
+const testNamespacesMatrix = (
+	prefix: string,
+	translation: BaseTranslation,
+	config: GeneratorConfig = {},
+	namespaces: string[],
+) => {
+	testGeneratedOutput(`${prefix}`, translation, { ...config }, undefined, undefined, namespaces)
+	testGeneratedOutput(
+		`${prefix}-jsdoc`,
+		translation,
+		{ ...config, outputFormat: 'JavaScript' },
+		undefined,
+		undefined,
+		namespaces,
+	)
+}
 
-testGeneratedOutput('namespaces-only', { test: { hi: 'hello' } }, undefined, undefined, undefined, ['test'])
+testNamespacesMatrix('namespaces', { wow: 'some text', test: { hi: 'hello' } }, undefined, ['test'])
+
+testNamespacesMatrix('namespaces-only', { test: { hi: 'hello' } }, undefined, ['test'])
+
+testNamespacesMatrix(
+	'namespaces-multiple',
+	{
+		wow: 'some text',
+		test: { hi: 'hello' },
+		a: ['some', 'value'],
+		'and-another': { b: { c: { d: { e: 'heyyy' } } } },
+		'x y': { b: 'some long text' },
+	},
+	undefined,
+	['test', 'a', 'and-another', 'x y'],
+)
 
 // --------------------------------------------------------------------------------------------------------------------
 

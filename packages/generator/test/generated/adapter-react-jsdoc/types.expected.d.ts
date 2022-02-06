@@ -17,14 +17,14 @@ type RootTranslation = {
 	 * Hi {0}
 	 * @param {string} 0
 	 */
-	'HELLO_REACT': RequiredParams1<'0'>
+	HELLO_REACT: RequiredParams1<'0'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * Hi {0}
 	 */
-	'HELLO_REACT': (arg0: string) => LocalizedString
+	HELLO_REACT: (arg0: string) => LocalizedString
 }
 
 export type Formatters = {}

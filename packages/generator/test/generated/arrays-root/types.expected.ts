@@ -13,20 +13,20 @@ export type Translation = RootTranslation
 export type Translations = RootTranslation
 
 type RootTranslation = {
-	'0': {
+	0: {
 		/**
 		 * test
 		 */
-		'HI': string
+		HI: string
 	}
 }
 
 export type TranslationFunctions = {
-	'0': {
+	0: {
 		/**
 		 * test
 		 */
-		'HI': () => LocalizedString
+		HI: () => LocalizedString
 	}
 }
 

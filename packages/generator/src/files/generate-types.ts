@@ -23,7 +23,7 @@ import type { ArgumentPart } from '../../../parser/src/types'
 import { BaseTranslation, isPluralPart, Locale } from '../../../runtime/src/core'
 import { partAsStringWithoutTypes, partsAsStringWithoutTypes } from '../../../runtime/src/core-utils'
 import { writeFileIfContainsChanges } from '../file-utils'
-import { getPermutations, Logger, prettify, wrapObjectKeyIfNeeded } from '../generator-util'
+import { getPermutations, logger, Logger, prettify, wrapObjectKeyIfNeeded } from '../generator-util'
 import {
 	fileEndingForTypesFile,
 	importTypeStatement,
@@ -81,6 +81,8 @@ type ParsedResult =
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
+// TODO: refactor file into multiple smaller files
+
 const wrapObjectType = <T>(array: T[], callback: () => string) =>
 	!array.length
 		? '{}'
@@ -112,7 +114,7 @@ const processNestedParsedResult = (
 	mapToString(
 		Object.entries(items),
 		([key, parsedResults]) =>
-			`'${key}': {${mapToString(parsedResults, mappingFunction)
+			`${wrapObjectKeyIfNeeded(key)}: {${mapToString(parsedResults, mappingFunction)
 				.split(/\r?\n/)
 				.map((line) => `	${line}`)
 				.join(NEW_LINE)}
@@ -338,10 +340,14 @@ const createJsDocsParamString = ([paramName, { types, optional }]: [string, Type
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const getTypeNameForNamespace = (namespace: string) =>
-	`Namespace${namespace.substring(0, 1).toUpperCase()}${namespace.substring(1)}Translation`
+const getTypeNameForNamespace = (namespace: string) => {
+	const transformedNamespace = namespace
+		.split(/[\s_-]/g)
+		.map((part) => `${part.substring(0, 1).toUpperCase()}${part.substring(1)}`)
+		.join('')
 
-// TODO: create global `Translation` type
+	return `Namespace${transformedNamespace}Translation`
+}
 
 const createTranslationType = (
 	parsedTranslations: ParsedResult[],
@@ -367,21 +373,36 @@ const createTranslationType = (
 	})
 
 	const namespaceTranslationsTypes = parsedNamespaceTranslations
-		.map((value) => Object.entries(value).flat() as [string, ParsedResult[]])
-		.map(
-			([namespace, parsedTranslations]) =>
+		.map((value) => {
+			return Object.entries(value).flat() as [string, ParsedResult[]]
+		})
+		.map(([namespace, parsedTranslations]) => {
+			if (!isArray(parsedTranslations)) return ''
+
+			return (
 				'export ' +
 				createTranslationType(
-					parsedTranslations,
+					isArray(parsedTranslations) ? parsedTranslations : [parsedTranslations],
 					jsDocInfo,
 					paramTypesToGenerate,
 					getTypeNameForNamespace(namespace),
-				),
-		)
+				)
+			)
+		})
 
 	return `${translationType}
 
 ${namespaceTranslationsTypes.join(NEW_LINE + NEW_LINE)}`
+}
+
+const validateNamespaces = (translations: BaseTranslation | BaseTranslation[], namespaces: string[]) => {
+	if (!namespaces.length) return
+
+	namespaces.forEach((namespace) => {
+		if (isString((translations as Record<string, unknown>)[namespace])) {
+			logger.error(`namespace '${namespace}' cant be a \`string\`. Must be an \`object\` or \`Array\`.`)
+		}
+	})
 }
 
 const createNamespacesTypes = (namespaces: string[]) => `
@@ -394,9 +415,9 @@ type DisallowNamespaces = {${namespaces
 	 * reserved for '${namespace}'-namespace\\
 	 * you need to use the \`./${namespace}/index.ts\` file instead
 	 */
-	'${wrapObjectKeyIfNeeded(
+	${wrapObjectKeyIfNeeded(
 		namespace,
-	)}'?: "[typesafe-i18n] reserved for '${namespace}'-namespace. You need to use the \`./${namespace}/index.ts\` file instead."`,
+	)}?: "[typesafe-i18n] reserved for '${namespace}'-namespace. You need to use the \`./${namespace}/index.ts\` file instead."`,
 	)
 	.join(NEW_LINE)}
 }`
@@ -414,7 +435,7 @@ const createTranslationTypeEntry = (
 		const translationType = generateTranslationType(paramTypesToGenerate, args)
 
 		return `
-	${jsDocString}'${key}': ${translationType}`
+	${jsDocString}${wrapObjectKeyIfNeeded(key)}: ${translationType}`
 	}
 
 	return processNestedParsedResult(resultEntry, (parsedResultEntry) =>
@@ -523,7 +544,7 @@ const createTranslationArgsType = (parsedResult: ParsedResult, jsDocInfo: JsDocI
 		const jsDocString = createJsDocsString(jsDocInfo[nestedKey] as JsDocInfo)
 
 		return `
-	${jsDocString}'${key}': (${mapTranslationArgs(args, types)}) => LocalizedString`
+	${jsDocString}${wrapObjectKeyIfNeeded(key)}: (${mapTranslationArgs(args, types)}) => LocalizedString`
 	}
 
 	return processNestedParsedResult(parsedResult, (parsedResultEntry) =>
@@ -576,7 +597,7 @@ const createFormattersType = (parsedTranslations: ParsedResult[]) => {
 			formatters,
 			([key, types]) =>
 				`
-	'${key}': (value: ${uniqueArray(types).join(' | ')}) => unknown`,
+	${wrapObjectKeyIfNeeded(key)}: (value: ${uniqueArray(types).join(' | ')}) => unknown`,
 		),
 	)}`
 }
@@ -588,6 +609,7 @@ const getTypes = (
 	logger: Logger,
 ) => {
 	const usesNamespaces = !!namespaces.length
+	validateNamespaces(translations, namespaces)
 
 	const parsedTranslations = parseTranslations(translations, logger).filter(isTruthy)
 

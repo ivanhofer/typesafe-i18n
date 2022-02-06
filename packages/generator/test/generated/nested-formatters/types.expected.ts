@@ -42,7 +42,7 @@ export type TranslationFunctions = {
 
 export type Formatters = {
 	'custom-formatter': (value: string) => unknown
-	'format': (value: unknown) => unknown
+	format: (value: unknown) => unknown
 }
 
 type Param<P extends string> = `{${P}}`
