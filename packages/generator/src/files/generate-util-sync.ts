@@ -15,7 +15,7 @@ import {
 	typeCast,
 } from '../output-handler'
 
-const getLocalesTranslationRowSync = (locale: Locale, baseLocale: string): string => {
+const getLocalesTranslationRowSync = (locale: Locale): string => {
 	const sanitizedLocale = sanitizePath(locale)
 	const needsEscaping = locale !== sanitizedLocale
 	const postfix = needsEscaping ? `: ${sanitizedLocale}` : ''
@@ -25,7 +25,7 @@ const getLocalesTranslationRowSync = (locale: Locale, baseLocale: string): strin
 }
 
 const getSyncCode = (
-	{ utilFileName, formattersTemplateFileName, typesFileName, banner, baseLocale }: GeneratorConfigWithDefaultValues,
+	{ utilFileName, formattersTemplateFileName, typesFileName, banner }: GeneratorConfigWithDefaultValues,
 	locales: Locale[],
 ) => {
 	const localesImports = locales
@@ -35,7 +35,7 @@ import ${sanitizePath(locale)} from '${relativeFolderImportPath(locale)}'`,
 		)
 		.join('')
 
-	const localesTranslations = locales.map((locale) => getLocalesTranslationRowSync(locale, baseLocale)).join('')
+	const localesTranslations = locales.map((locale) => getLocalesTranslationRowSync(locale)).join('')
 
 	return `${OVERRIDE_WARNING}${tsCheck}
 ${banner}

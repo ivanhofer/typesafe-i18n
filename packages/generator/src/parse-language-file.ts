@@ -97,7 +97,7 @@ export const parseLanguageFile = async (
 
 	await createPathIfNotExits(tempPath)
 
-	const importPath = await transpileTypescriptFiles(outputPath, originalPath, locale, tempPath)
+	const importPath = await transpileTypescriptFiles(outputPath, originalPath, fileName, tempPath)
 
 	if (!importPath) {
 		return null
