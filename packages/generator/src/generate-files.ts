@@ -6,48 +6,14 @@ import { generateReactAdapter } from './files/generate-adapter-react'
 import { generateSvelteAdapter } from './files/generate-adapter-svelte'
 import { generateVueAdapter } from './files/generate-adapter-vue'
 import { generateFormattersTemplate } from './files/generate-template-formatters'
-import { generateBaseLocaleTemplate, generateLocaleTemplate } from './files/generate-template-locale'
 import { generateCustomTypesTemplate } from './files/generate-template-types'
 import { generateTypes } from './files/generate-types'
 import { generateUtil } from './files/generate-util'
 import { generateAsyncUtil } from './files/generate-util-async'
 import { generateSyncUtil } from './files/generate-util-sync'
+import { generateDictionaryFiles } from './generate-dictionary'
 import { logger as defaultLogger, Logger, TypescriptVersion } from './generator-util'
 import { configureOutputHandler } from './output-handler'
-
-const generateDictionaryFiles = async (
-	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
-	forceOverride: boolean,
-) => {
-	if (!forceOverride) {
-		return
-	}
-
-	const dummyTranslations = {
-		en: 'Hi {name}! Please leave a star if you like this project: https://github.com/ivanhofer/typesafe-i18n',
-		de: 'Hallo {name}! Bitte hinterlasse einen Stern, wenn dir das Projekt gefällt: https://github.com/ivanhofer/typesafe-i18n',
-	}
-
-	const primaryLocale = config.baseLocale.startsWith('de') ? 'de' : 'en'
-	const secondaryLocale = primaryLocale === 'de' ? 'en' : 'de'
-
-	await generateBaseLocaleTemplate(
-		config,
-		{
-			HI: dummyTranslations[primaryLocale].replace('{name}', '{name:string}'),
-		},
-		'TODO: your translations go here',
-	)
-
-	await generateLocaleTemplate(
-		config,
-		secondaryLocale,
-		{
-			HI: dummyTranslations[secondaryLocale],
-		},
-		'this is an example Translation, just rename or delete this folder if you want',
-	)
-}
 
 export const generate = async (
 	translations: BaseTranslation | BaseTranslation[],
@@ -60,41 +26,41 @@ export const generate = async (
 ): Promise<void> => {
 	configureOutputHandler(config, version)
 
-	// TODO: process generation in parallel
-
-	await generateDictionaryFiles(config, forceOverride)
-
-	// TODO: write empty namespace files to disc
-
 	const hasCustomTypes = await generateTypes({ ...config, translations, locales, namespaces }, logger)
 
+	const promises: Promise<unknown>[] = []
+
 	if (hasCustomTypes) {
-		await generateCustomTypesTemplate(config, forceOverride)
+		promises.push(generateCustomTypesTemplate(config, forceOverride))
 	}
+
+	promises.push(generateDictionaryFiles(config, forceOverride))
 
 	if (config.generateOnlyTypes) return
 
-	await generateFormattersTemplate(config, forceOverride)
+	promises.push(generateFormattersTemplate(config, forceOverride))
 
-	await generateUtil(config, locales)
-	await generateSyncUtil(config, locales)
-	await generateAsyncUtil(config, locales, namespaces)
+	promises.push(generateUtil(config, locales))
+	promises.push(generateSyncUtil(config, locales))
+	promises.push(generateAsyncUtil(config, locales, namespaces))
 
 	switch (config.adapter) {
 		case 'angular':
-			await generateAngularAdapter(config) // TODO: add namespace support
+			promises.push(generateAngularAdapter(config)) // TODO: add namespace support
 			break
 		case 'node':
-			await generateNodeAdapter(config) // TODO: add namespace support
+			promises.push(generateNodeAdapter(config)) // TODO: add namespace support
 			break
 		case 'react':
-			await generateReactAdapter(config) // TODO: add namespace support
+			promises.push(generateReactAdapter(config)) // TODO: add namespace support
 			break
 		case 'svelte':
-			await generateSvelteAdapter(config)
+			promises.push(generateSvelteAdapter(config))
 			break
 		case 'vue':
-			await generateVueAdapter(config) // TODO: add namespace support
+			promises.push(generateVueAdapter(config)) // TODO: add namespace support
 			break
 	}
+
+	await Promise.all(promises)
 }
