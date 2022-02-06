@@ -35,7 +35,7 @@ export const generate = async (
 	}
 
 	promises.push(generateDictionaryFiles(config, forceOverride))
-	promises.push(generateNamespaceFiles(config, locales, namespaces))
+	promises.push(generateNamespaceFiles(config, locales, namespaces, forceOverride))
 
 	if (config.generateOnlyTypes) return
 

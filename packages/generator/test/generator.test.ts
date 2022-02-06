@@ -368,6 +368,7 @@ const testNamespacesMatrix = (
 	translation: BaseTranslation,
 	config: GeneratorConfig = {},
 	namespaces: string[],
+	locales: string[] = [],
 ) => {
 	testGeneratedOutput(`${prefix}`, translation, { ...config }, undefined, undefined, namespaces)
 	testGeneratedOutput(
@@ -375,7 +376,7 @@ const testNamespacesMatrix = (
 		translation,
 		{ ...config, outputFormat: 'JavaScript' },
 		undefined,
-		undefined,
+		locales,
 		namespaces,
 	)
 }
@@ -395,6 +396,14 @@ testNamespacesMatrix(
 	},
 	undefined,
 	['test', 'a', 'and-another', 'x y'],
+)
+
+testNamespacesMatrix(
+	'namespaces-with-locales',
+	{ test: { hi: 'hello' }, 'some-other_namespace': { a: 'abc' } },
+	{ baseLocale: 'de' },
+	['test', 'some-other_namespace'],
+	['en-us', 'de_at', 'it'],
 )
 
 // --------------------------------------------------------------------------------------------------------------------

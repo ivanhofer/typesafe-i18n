@@ -58,13 +58,14 @@ export const generateNamespaceFiles = async (
 	config: GeneratorConfigWithDefaultValues,
 	locales: Locale[] = [],
 	namespaces: string[] = [],
+	forceOverride: boolean,
 ): Promise<void> => {
 	const localesToCheck = locales.filter((locale) => locale !== config.baseLocale)
 
 	const promises: Promise<unknown>[] = []
 	localesToCheck.forEach((locale) => {
 		const foundNamespaces = findAllNamespacesForLocale(locale, config.outputPath)
-		const missingNamespaces = namespaces.filter((namespace) => !foundNamespaces.includes(namespace))
+		const missingNamespaces = namespaces.filter((namespace) => forceOverride || !foundNamespaces.includes(namespace))
 
 		missingNamespaces.forEach((missingNamespace) =>
 			promises.push(generateNamespaceTemplate(config, locale, missingNamespace)),
