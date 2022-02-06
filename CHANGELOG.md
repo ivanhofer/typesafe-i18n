@@ -1,5 +1,15 @@
 # CHANGELOG.md
 
+# Version 4
+
+## 4.0.0 (2022-02-07)
+
+Feature:
+ - add 'namespaces' functionality [#113](https://github.com/ivanhofer/typesafe-i18n/discussions/113)
+
+BREAKING:
+ - if you have a `index`-file in a subfolder of your translation files, it will be treated as a `namespace`
+
 # Version 3
 
 ## 3.1.3 (2022-02-07)

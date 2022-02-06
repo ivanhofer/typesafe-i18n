@@ -17,10 +17,12 @@
 :ok_hand: [easy to use syntax](#syntax)\
 :running: [fast and efficient](#performance)\
 :safety_vest: [prevents you from making mistakes](#typesafety)\
+:construction_worker: [creates boilerplate code](#folder-structure) for you\
 :speech_balloon: [supports plural rules](#plural)\
 :date: allows [formatting of values](#formatters) e.g. locale-dependent date or number formats\
 :left_right_arrow: supports [switch-case statements](#switch-case) e.g. for gender-specific output\
 :arrow_down: option for [asynchronous loading of locales](#asynchronous-loading-of-locales)\
+:books: supports multiple [namespaces](#namespaces)\
 :stopwatch: supports SSR (Server-Side Rendering)\
 :handshake: can be used for [frontend, backend and API](#usage) projects\
 :mag: [locale-detection](#locale-detection) for browser and server environments\
@@ -39,6 +41,8 @@
 - [**Usage**](#usage) - how to implement different use-cases
 - [**Typesafety**](#typesafety) - how to get the best typesafety features
 - [**Syntax**](#syntax) - how to write your translations
+- [**Dictionary**](#dictionary) - how to structure your translations
+- [**Namespaces**](#namespaces) - how to optimize loading of your translations
 - [**Formatters**](#formatters) - how to format dates and numbers
 - [**Switch-Case**](#switch-case) - how to output different words depending on an argument
 - [**Locale-detection**](#locale-detection) - how to detect an user's locale
@@ -269,7 +273,7 @@ The `typesafe-i18n` package allows us to be 100% typesafe for our translation fu
 ![typesafe arguments in translation](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/06_typesafe-arguments-in-translation.png)
 
 
-In order to get get full typesafety for your locales, you can start the generator during development. The generator listens for changes you make to your [base locale file](#base-translation) and creates the corresponding TypeScript types.
+In order to get get full typesafety for your locales, you can start the generator during development. The generator listens for changes you make to your [base locale file](#dictionary) and creates the corresponding TypeScript types.
 
 > You will also benefit from full typesafe JavaScript code via [JSDoc-annotations](#jsdoc).
 
@@ -319,7 +323,7 @@ When running tests or scripts you can disable the watcher by passing the argumen
 > npx typesafe-i18n --no-watch
 ```
 
-This will only generate types once and **not** listen to changes in your locale files. The process will throw an `TypesafeI18nParseError` if a wrong syntax is detected in your [base locale file](#base-translation).
+This will only generate types once and **not** listen to changes in your locale files. The process will throw an `TypesafeI18nParseError` if a wrong syntax is detected in your [base locale file](#dictionary).
 
 #### rollup-plugin
 
@@ -404,7 +408,7 @@ src/
       i18n-util.ts
 ```
 
- > Some files are auto-generated on every change of your [base locale file](#base-translation); please don't make manual changes to them, since they will be overwritten.
+ > Some files are auto-generated on every change of your [base locale file](#dictionary); please don't make manual changes to them, since they will be overwritten.
 
  - `en/index.ts`\
   	If 'en' is your [base locale](#baselocale), the file `src/i18n/en/index.ts` will contain your translations. Whenever you make changes to this file, the generator will create updated type definitions.
@@ -852,7 +856,7 @@ Or if you are using the [i18nObject (LL)](#i18nObject):
 
 ### arrays:
 
-`typesafe-i18n` also supports [`Arrays` as a dictionary](#base-translation).\
+`typesafe-i18n` also supports [`Arrays` as a dictionary](#dictionary).\
 Here are some example how you can iterate over them:
 
 ```html
@@ -895,10 +899,10 @@ Here are some example how you can iterate over them:
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
-## Base Translation
+## Dictionary
 
 To define your base translation you need to create a `index.ts` file inside `src/i18n/{baseLocale}`, where `baseLocale` can be defined inside the [`options`](#baselocale).
-This file must have an `default export` that should have the type of `BaseTranslation`. Something like this:
+This file must have an `default export` that should have the type of `BaseTranslation | BaseTranslation[]`. Something like this:
 
 ```typescript
 import type { BaseTranslation } from '../i18n-types'
@@ -968,6 +972,48 @@ You are really flexible how you want to define your translations. You could defi
 
 You are really flexible how you define your translations. You can define the translations how it fits best to your application and i18n workflow.
 It is recommended to use `nested key-value pairs` since it offers flexibility and is easy to read, but if your translations come from an external service like a CMS, it is possible that you also have to use the array syntax to define your translations.
+
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+## Namespaces
+
+Namespaces allows you to split your translations in multiple files and only load them on demand. e.g. you could store all translations that are displayed on the `settings`-page in it's own namespace and only load them when a user visits the settings-page.
+
+To create a namespace, you have to create a folder within your bas translations with the name of your namespace that contains a `index.ts` file.
+```
+src/
+   i18n/
+      en/
+         settings/index.ts
+         index.ts
+```
+In this example the base locale is `en` and we want to have a namespace called `settings`. The `index.ts` file has to export a [`Dictionary`](#dictionary).
+e.g.
+```typescript
+import type { BaseTranslation } from '../../i18n-types'
+
+const en_settings: BaseTranslation = { }
+
+export default en_settings
+```
+
+Once you have created that file, the [`generator`](#typesafety) will automatically create boilerplate namespace files for all your other locales and assign the correct type to them.
+
+By default translations inside namespaces are not loaded. You have to manually load them via `loadNamespaceAsync`.
+
+```ts
+const displaySettingsPage = async (locale) => {
+   await loadNamespaceAsync(locale, 'settings')
+   setLocale(locale)
+
+   // goto settings page
+}
+```
+> make sure to call `setLocale` after you load new namespaces !
+
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
