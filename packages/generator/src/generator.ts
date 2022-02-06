@@ -1,5 +1,4 @@
 import { watch } from 'chokidar'
-import { sync as glob } from 'glob'
 import { resolve } from 'path'
 import ts from 'typescript'
 import { getConfigWithDefaultValues, readConfig } from '../../config/src/config'
@@ -7,6 +6,7 @@ import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../../co
 import type { BaseTranslation } from '../../runtime/src'
 import type { Locale } from '../../runtime/src/core'
 import { createPathIfNotExits } from './file-utils'
+import { findAllNamespacesForLocale } from './generate-dictionary'
 import { generate } from './generate-files'
 import { createLogger, Logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
 import { configureOutputHandler, shouldGenerateJsDoc } from './output-handler'
@@ -14,13 +14,6 @@ import { getAllLanguages, parseLanguageFile } from './parse-language-file'
 
 let logger: Logger
 let first = true
-
-const findAllNamespaces = (baseLocale: Locale, outputPath: string): string[] =>
-	glob(`${outputPath}/${baseLocale}/*/index.*s`).map((file) => {
-		// TODO: check if this split also works for windows-paths
-		const parts = file.split('/')
-		return parts[parts.length - 2] as string
-	})
 
 const getBaseTranslations = async (
 	baseLocale: Locale,
@@ -50,7 +43,7 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 	const { baseLocale, tempPath, outputPath } = config
 
 	const locales = await getAllLanguages(outputPath)
-	const namespaces = findAllNamespaces(baseLocale, outputPath)
+	const namespaces = findAllNamespacesForLocale(baseLocale, outputPath)
 
 	const firstLaunchOfGenerator = !locales.length
 

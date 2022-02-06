@@ -79,7 +79,7 @@ export const writeNewFile = async (path: string, file: string, content: string):
 
 	writeFile(getFileName(path, file), content)
 
-	logger.info(`generated file: ${file}`)
+	logger.info(`generated file: '${path}/${file}'`)
 }
 
 export const writeFileIfContainsChanges = async (path: string, file: string, content: string): Promise<void> => {

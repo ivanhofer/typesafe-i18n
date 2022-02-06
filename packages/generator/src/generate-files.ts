@@ -11,7 +11,7 @@ import { generateTypes } from './files/generate-types'
 import { generateUtil } from './files/generate-util'
 import { generateAsyncUtil } from './files/generate-util-async'
 import { generateSyncUtil } from './files/generate-util-sync'
-import { generateDictionaryFiles } from './generate-dictionary'
+import { generateDictionaryFiles, generateNamespaceFiles } from './generate-dictionary'
 import { logger as defaultLogger, Logger, TypescriptVersion } from './generator-util'
 import { configureOutputHandler } from './output-handler'
 
@@ -35,6 +35,7 @@ export const generate = async (
 	}
 
 	promises.push(generateDictionaryFiles(config, forceOverride))
+	promises.push(generateNamespaceFiles(config, locales, namespaces))
 
 	if (config.generateOnlyTypes) return
 

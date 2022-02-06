@@ -95,13 +95,6 @@ ${defaultExport} ${sanitizedLocale}
 `
 }
 
-export const generateBaseLocaleTemplate = async (
-	config: GeneratorConfigWithDefaultValues,
-	translations: BaseTranslation | undefined = undefined,
-	editHint = '',
-	showBanner = false,
-): Promise<void> => generateLocaleTemplate(config, config.baseLocale, translations, editHint, showBanner)
-
 export const generateLocaleTemplate = async (
 	config: GeneratorConfigWithDefaultValues,
 	locale: Locale,

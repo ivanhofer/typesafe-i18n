@@ -340,7 +340,7 @@ const createJsDocsParamString = ([paramName, { types, optional }]: [string, Type
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const getTypeNameForNamespace = (namespace: string) => {
+export const getTypeNameForNamespace = (namespace: string) => {
 	const transformedNamespace = namespace
 		.split(/[\s_-]/g)
 		.map((part) => `${part.substring(0, 1).toUpperCase()}${part.substring(1)}`)
