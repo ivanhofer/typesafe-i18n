@@ -6,13 +6,23 @@ import type { Locales, Translations, Namespaces } from './types.actual'
 import { loadedFormatters, loadedLocales, locales } from './util.actual'
 
 const localeTranslationLoaders = {
-	de: () => import('./de'),
+	'en-us': () => import('./en-us'),
+	de_at: () => import('./de_at'),
+	it: () => import('./it'),
 }
 
 const localeNamespaceLoaders = {
-	de: {
-		test: () => import('./de/test'),
-		'some-other_namespace': () => import('./de/some-other_namespace')
+	'en-us': {
+		test: () => import('./en-us/test'),
+		'some-other_namespace': () => import('./en-us/some-other_namespace')
+	},
+	de_at: {
+		test: () => import('./de_at/test'),
+		'some-other_namespace': () => import('./de_at/some-other_namespace')
+	},
+	it: {
+		test: () => import('./it/test'),
+		'some-other_namespace': () => import('./it/some-other_namespace')
 	}
 }
 

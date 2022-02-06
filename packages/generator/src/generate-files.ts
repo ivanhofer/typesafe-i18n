@@ -42,7 +42,7 @@ export const generate = async (
 	promises.push(generateFormattersTemplate(config, forceOverride))
 
 	promises.push(generateUtil(config, locales))
-	promises.push(generateSyncUtil(config, locales))
+	promises.push(generateSyncUtil(config, locales, namespaces))
 	promises.push(generateAsyncUtil(config, locales, namespaces))
 
 	switch (config.adapter) {

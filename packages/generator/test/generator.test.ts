@@ -51,7 +51,16 @@ const getPathOfOutputFile = (
 	type: 'actual' | 'expected',
 	outputFormat: OutputFormats,
 ) => {
-	const fileName = file.endsWith('sync') ? file.replace('sync', `.${type}.`) : `${file}.${type}`
+	let fileName
+
+	if (file.endsWith('sync')) {
+		const x = file.split('.')
+		const a = x.pop()
+		fileName = `${x.join('.')}.${type}.${a}`
+	} else {
+		fileName = `${file}.${type}`
+	}
+
 	const fileEnding =
 		outputFormat === 'TypeScript' ? '.ts' : file === 'types' || file === 'types-template' ? '.d.ts' : '.js'
 	return `${outputPath}/${prefix}/${fileName}${fileEnding}`
@@ -95,7 +104,6 @@ const testGeneratedOutput = async (
 	namespaces: string[] = [],
 ) =>
 	test(`generate ${prefix}`, async () => {
-		if (!namespaces) return
 		const configWithDefaultValues = await createConfig(prefix, config)
 		const { outputFormat } = configWithDefaultValues
 		await generate(
@@ -319,7 +327,7 @@ testGeneratedOutput('banner-tslint', { HI: 'Hi {0:name}' }, { banner: '/* tslint
 const testAdapterMatrix = (prefix: string, translation: BaseTranslation, config: GeneratorConfig = {}) => {
 	testGeneratedOutput(`${prefix}`, translation, { ...config })
 	testGeneratedOutput(`${prefix}-esm`, translation, { ...config, esmImports: true })
-	if (config.adapter == 'angular') return
+	if (config.adapter === 'angular') return
 
 	testGeneratedOutput(`${prefix}-jsdoc`, translation, { ...config, outputFormat: 'JavaScript' })
 	testGeneratedOutput(`${prefix}-esm-jsdoc`, translation, { ...config, esmImports: true, outputFormat: 'JavaScript' })
@@ -370,7 +378,7 @@ const testNamespacesMatrix = (
 	namespaces: string[],
 	locales: string[] = [],
 ) => {
-	testGeneratedOutput(`${prefix}`, translation, { ...config }, undefined, undefined, namespaces)
+	testGeneratedOutput(`${prefix}`, translation, { ...config }, undefined, locales, namespaces)
 	testGeneratedOutput(
 		`${prefix}-jsdoc`,
 		translation,

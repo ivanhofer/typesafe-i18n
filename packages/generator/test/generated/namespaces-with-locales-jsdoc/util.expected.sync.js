@@ -15,10 +15,29 @@ import en_us from './en-us'
 import de_at from './de_at'
 import it from './it'
 
+import en_us_test from './en-us/test'
+import en_us_some_other_namespace from './en-us/some-other_namespace'
+import de_at_test from './de_at/test'
+import de_at_some_other_namespace from './de_at/some-other_namespace'
+import it_test from './it/test'
+import it_some_other_namespace from './it/some-other_namespace'
+
 const localeTranslations = {
-	'en-us': en_us,
-	de_at,
-	it,
+	'en-us': {
+		...en_us,
+		test: en_us_test,
+		'some-other_namespace': en_us_some_other_namespace
+	},
+	de_at: {
+		...de_at,
+		test: de_at_test,
+		'some-other_namespace': de_at_some_other_namespace
+	},
+	it: {
+		...it,
+		test: it_test,
+		'some-other_namespace': it_some_other_namespace
+	},
 }
 
 /**

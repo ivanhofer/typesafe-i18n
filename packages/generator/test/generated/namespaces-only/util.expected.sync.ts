@@ -7,8 +7,13 @@ import { loadedFormatters, loadedLocales, locales } from './util.actual'
 
 import en from './en'
 
+import en_test from './en/test'
+
 const localeTranslations = {
-	en,
+	en: {
+		...en,
+		test: en_test
+	},
 }
 
 export const loadLocale = (locale: Locales) => {

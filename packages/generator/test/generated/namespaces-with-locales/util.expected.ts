@@ -9,7 +9,9 @@ import type { Formatters, Locales, Translations, TranslationFunctions } from './
 export const baseLocale: Locales = 'de'
 
 export const locales: Locales[] = [
-	'de'
+	'en-us',
+	'de_at',
+	'it'
 ]
 
 export const loadedLocales = {} as Record<Locales, Translations>

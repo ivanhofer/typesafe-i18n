@@ -13,8 +13,19 @@ import { loadedFormatters, loadedLocales, locales } from './util.actual'
 
 import en from './en'
 
+import en_test from './en/test'
+import en_a from './en/a'
+import en_and_another from './en/and-another'
+import en_x_y from './en/x y'
+
 const localeTranslations = {
-	en,
+	en: {
+		...en,
+		test: en_test,
+		a: en_a,
+		'and-another': en_and_another,
+		'x y': en_x_y
+	},
 }
 
 /**
