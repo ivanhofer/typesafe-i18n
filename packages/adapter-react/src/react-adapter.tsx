@@ -51,7 +51,7 @@ export const initI18nReact = <
 
 		const setLocale = (newLocale: L): void => {
 			_setLocale(newLocale)
-			setLL(i18nObject<L, T, TF, F>(newLocale, translations[newLocale], formatters[newLocale]))
+			setLL(() => i18nObject<L, T, TF, F>(newLocale, translations[newLocale], formatters[newLocale]))
 		}
 
 		!locale && setLocale(props.locale)

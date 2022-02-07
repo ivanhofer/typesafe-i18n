@@ -2,6 +2,11 @@
 
 # Version 3
 
+## 3.1.3 (2022-02-07)
+
+Bugfix:
+ - fix react adapter
+
 ## 3.1.2 (2022-02-04)
 
 Fix:
