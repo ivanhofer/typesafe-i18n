@@ -8,24 +8,28 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
 	/**
 	 * {count|sqrt|round}
 	 * @param {number} count
 	 */
-	'CHAINING': RequiredParams1<'count|sqrt|round'>
+	CHAINING: RequiredParams1<'count|sqrt|round'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * {count|sqrt|round}
 	 */
-	'CHAINING': (arg: { count: number }) => LocalizedString
+	CHAINING: (arg: { count: number }) => LocalizedString
 }
 
 export type Formatters = {
-	'round': (value: number) => unknown
-	'sqrt': (value: number) => unknown
+	round: (value: number) => unknown
+	sqrt: (value: number) => unknown
 }
 
 type Param<P extends string> = `{${P}}`

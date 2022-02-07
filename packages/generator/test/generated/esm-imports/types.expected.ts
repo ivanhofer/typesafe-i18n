@@ -10,19 +10,23 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
 	/**
 	 * Hi {0}
 	 * @param {name} 0
 	 */
-	'HELLO_ESM': RequiredParams1<'0'>
+	HELLO_ESM: RequiredParams1<'0'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * Hi {0}
 	 */
-	'HELLO_ESM': (arg0: name) => LocalizedString
+	HELLO_ESM: (arg0: name) => LocalizedString
 }
 
 export type Formatters = {}

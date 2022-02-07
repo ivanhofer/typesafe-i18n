@@ -8,27 +8,31 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
 	/**
 	 * hello
 	 */
-	'0': string
+	0: string
 	/**
 	 * this is a test, {name}
 	 * @param {string} name
 	 */
-	'1': RequiredParams1<'name'>
+	1: RequiredParams1<'name'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * hello
 	 */
-	'0': () => LocalizedString
+	0: () => LocalizedString
 	/**
 	 * this is a test, {name}
 	 */
-	'1': (arg: { name: string }) => LocalizedString
+	1: (arg: { name: string }) => LocalizedString
 }
 
 export type Formatters = {}

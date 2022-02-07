@@ -8,7 +8,11 @@ export type BaseLocale = 'de'
 export type Locales =
 	| 'de'
 
-export type Translation = {}
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {}
 
 export type TranslationFunctions = {}
 

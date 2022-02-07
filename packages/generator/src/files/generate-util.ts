@@ -32,23 +32,23 @@ ${banner}
 
 ${jsDocImports(
 	{ from: 'typesafe-i18n', type: 'TranslateByString' },
-	{ from: 'typesafe-i18n', type: 'LocaleTranslations<Locales, Translation>', alias: 'LocaleTranslations' },
+	{ from: 'typesafe-i18n', type: 'LocaleTranslations<Locales, Translations>', alias: 'LocaleTranslations' },
 	{
 		from: 'typesafe-i18n',
-		type: 'LocaleTranslationFunctions<Locales, Translation, TranslationFunctions>',
+		type: 'LocaleTranslationFunctions<Locales, Translations, TranslationFunctions>',
 		alias: 'LocaleTranslationFunctions',
 	},
 	{ from: 'typesafe-i18n/detectors', type: 'LocaleDetector' },
 	{ from: relativeFileImportPath(typesFileName), type: 'Locales' },
 	{ from: relativeFileImportPath(typesFileName), type: 'Formatters' },
-	{ from: relativeFileImportPath(typesFileName), type: 'Translation' },
+	{ from: relativeFileImportPath(typesFileName), type: 'Translations' },
 	{ from: relativeFileImportPath(typesFileName), type: 'TranslationFunctions' },
 )}
 
 import { i18n as initI18n, i18nObject as initI18nObject, i18nString as initI18nString } from 'typesafe-i18n'
 ${importTypes('typesafe-i18n/detectors', 'LocaleDetector')}
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
-${importTypes(relativeFileImportPath(typesFileName), 'Formatters', 'Locales', 'Translation', 'TranslationFunctions')}
+${importTypes(relativeFileImportPath(typesFileName), 'Formatters', 'Locales', 'Translations', 'TranslationFunctions')}
 
 ${jsDocType('Locales')}
 export const baseLocale${type('Locales')} = '${baseLocale}'
@@ -57,8 +57,8 @@ ${localesEnum}
 
 export const loadedLocales = ${
 		shouldGenerateJsDoc
-			? `${jsDocType('Record<Locales, Translation>')} ({})`
-			: `{}${typeCast('Record<Locales, Translation>')}`
+			? `${jsDocType('Record<Locales, Translations>')} ({})`
+			: `{}${typeCast('Record<Locales, Translations>')}`
 	}
 
 export const loadedFormatters = ${
@@ -80,7 +80,7 @@ ${jsDocFunction('TranslationFunctions', { type: 'Locales', name: 'locale' })}
 export const i18nObject = (locale${type('Locales')}) =>
 	initI18nObject${generics(
 		'Locales',
-		'Translation',
+		'Translations',
 		'TranslationFunctions',
 		'Formatters',
 	)}(locale, loadedLocales[locale], loadedFormatters[locale])
@@ -88,7 +88,7 @@ export const i18nObject = (locale${type('Locales')}) =>
 ${jsDocFunction('LocaleTranslationFunctions')}
 export const i18n = () => initI18n${generics(
 		'Locales',
-		'Translation',
+		'Translations',
 		'TranslationFunctions',
 		'Formatters',
 	)}(loadedLocales, loadedFormatters)

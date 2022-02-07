@@ -8,19 +8,23 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
 	/**
 	 * Hi {0}
 	 * @param {string} 0
 	 */
-	'HELLO_VUE': RequiredParams1<'0'>
+	HELLO_VUE: RequiredParams1<'0'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * Hi {0}
 	 */
-	'HELLO_VUE': (arg0: string) => LocalizedString
+	HELLO_VUE: (arg0: string) => LocalizedString
 }
 
 export type Formatters = {}

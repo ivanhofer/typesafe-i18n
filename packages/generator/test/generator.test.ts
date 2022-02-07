@@ -51,7 +51,16 @@ const getPathOfOutputFile = (
 	type: 'actual' | 'expected',
 	outputFormat: OutputFormats,
 ) => {
-	const fileName = file.endsWith('sync') ? file.replace('sync', `.${type}.`) : `${file}.${type}`
+	let fileName
+
+	if (file.endsWith('sync')) {
+		const x = file.split('.')
+		const a = x.pop()
+		fileName = `${x.join('.')}.${type}.${a}`
+	} else {
+		fileName = `${file}.${type}`
+	}
+
 	const fileEnding =
 		outputFormat === 'TypeScript' ? '.ts' : file === 'types' || file === 'types-template' ? '.d.ts' : '.js'
 	return `${outputPath}/${prefix}/${fileName}${fileEnding}`
@@ -92,6 +101,7 @@ const testGeneratedOutput = async (
 	config: GeneratorConfig = {},
 	version: TypescriptVersion = defaultVersion,
 	locales: Locale[] = [],
+	namespaces: string[] = [],
 ) =>
 	test(`generate ${prefix}`, async () => {
 		const configWithDefaultValues = await createConfig(prefix, config)
@@ -103,6 +113,7 @@ const testGeneratedOutput = async (
 			undefined,
 			true,
 			locales.length ? locales : [configWithDefaultValues.baseLocale],
+			namespaces,
 		)
 		await check(prefix, 'types', outputFormat)
 		await check(prefix, 'util', outputFormat)
@@ -316,6 +327,8 @@ testGeneratedOutput('banner-tslint', { HI: 'Hi {0:name}' }, { banner: '/* tslint
 const testAdapterMatrix = (prefix: string, translation: BaseTranslation, config: GeneratorConfig = {}) => {
 	testGeneratedOutput(`${prefix}`, translation, { ...config })
 	testGeneratedOutput(`${prefix}-esm`, translation, { ...config, esmImports: true })
+	if (config.adapter === 'angular') return
+
 	testGeneratedOutput(`${prefix}-jsdoc`, translation, { ...config, outputFormat: 'JavaScript' })
 	testGeneratedOutput(`${prefix}-esm-jsdoc`, translation, { ...config, esmImports: true, outputFormat: 'JavaScript' })
 }
@@ -355,6 +368,51 @@ testAdapterMatrix(
 testGeneratedOutput('esm-imports', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true })
 
 testGeneratedOutput('esm-imports-jsdoc', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true, outputFormat: 'JavaScript' })
+
+// --------------------------------------------------------------------------------------------------------------------
+
+const testNamespacesMatrix = (
+	prefix: string,
+	translation: BaseTranslation,
+	config: GeneratorConfig = {},
+	namespaces: string[],
+	locales: string[] = [],
+) => {
+	testGeneratedOutput(`${prefix}`, translation, { ...config }, undefined, locales, namespaces)
+	testGeneratedOutput(
+		`${prefix}-jsdoc`,
+		translation,
+		{ ...config, outputFormat: 'JavaScript' },
+		undefined,
+		locales,
+		namespaces,
+	)
+}
+
+testNamespacesMatrix('namespaces', { wow: 'some text', test: { hi: 'hello' } }, undefined, ['test'])
+
+testNamespacesMatrix('namespaces-only', { test: { hi: 'hello' } }, undefined, ['test'])
+
+testNamespacesMatrix(
+	'namespaces-multiple',
+	{
+		wow: 'some text',
+		test: { hi: 'hello' },
+		a: ['some', 'value'],
+		'and-another': { b: { c: { d: { e: 'heyyy' } } } },
+		'x y': { b: 'some long text' },
+	},
+	undefined,
+	['test', 'a', 'and-another', 'x y'],
+)
+
+testNamespacesMatrix(
+	'namespaces-with-locales',
+	{ test: { hi: 'hello' }, 'some-other_namespace': { a: 'abc' } },
+	{ baseLocale: 'de' },
+	['test', 'some-other_namespace'],
+	['en-us', 'de_at', 'it'],
+)
 
 // --------------------------------------------------------------------------------------------------------------------
 

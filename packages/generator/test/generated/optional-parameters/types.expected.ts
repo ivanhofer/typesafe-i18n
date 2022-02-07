@@ -8,80 +8,84 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
 	/**
 	 * Hi {0?}
 	 * @param {unknown} [0]
 	 */
-	'index': RequiredParams1<'0?'>
+	index: RequiredParams1<'0?'>
 	/**
 	 * Hi {name?}
 	 * @param {unknown} [name]
 	 */
-	'keyed': RequiredParams1<'name?'>
+	keyed: RequiredParams1<'name?'>
 	/**
 	 * Hi {name?}
 	 * @param {string} [name]
 	 */
-	'typed': RequiredParams1<'name?'>
+	typed: RequiredParams1<'name?'>
 	/**
 	 * Hi {name1?} and {name2?}
 	 * @param {unknown} [name1]
 	 * @param {unknown} [name2]
 	 */
-	'multiple': RequiredParams2<'name1?', 'name2?'>
+	multiple: RequiredParams2<'name1?', 'name2?'>
 	/**
 	 * Hi {name1} and {name2?}
 	 * @param {unknown} name1
 	 * @param {unknown} [name2]
 	 */
-	'multiple1': RequiredParams2<'name1', 'name2?'>
+	multiple1: RequiredParams2<'name1', 'name2?'>
 	/**
 	 * Hi {name1?} and {name2}
 	 * @param {unknown} [name1]
 	 * @param {unknown} name2
 	 */
-	'multiple2': RequiredParams2<'name1?', 'name2'>
+	multiple2: RequiredParams2<'name1?', 'name2'>
 	/**
 	 * Hi {name1?|uppercase}
 	 * @param {unknown} [name1]
 	 */
-	'formatter': RequiredParams1<'name1?|uppercase'>
+	formatter: RequiredParams1<'name1?|uppercase'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * Hi {0?}
 	 */
-	'index': (arg0?: unknown) => LocalizedString
+	index: (arg0?: unknown) => LocalizedString
 	/**
 	 * Hi {name?}
 	 */
-	'keyed': (arg: { name?: unknown }) => LocalizedString
+	keyed: (arg: { name?: unknown }) => LocalizedString
 	/**
 	 * Hi {name?}
 	 */
-	'typed': (arg: { name?: string }) => LocalizedString
+	typed: (arg: { name?: string }) => LocalizedString
 	/**
 	 * Hi {name1?} and {name2?}
 	 */
-	'multiple': (arg: { name1?: unknown, name2?: unknown }) => LocalizedString
+	multiple: (arg: { name1?: unknown, name2?: unknown }) => LocalizedString
 	/**
 	 * Hi {name1} and {name2?}
 	 */
-	'multiple1': (arg: { name1: unknown, name2?: unknown }) => LocalizedString
+	multiple1: (arg: { name1: unknown, name2?: unknown }) => LocalizedString
 	/**
 	 * Hi {name1?} and {name2}
 	 */
-	'multiple2': (arg: { name1?: unknown, name2: unknown }) => LocalizedString
+	multiple2: (arg: { name1?: unknown, name2: unknown }) => LocalizedString
 	/**
 	 * Hi {name1?|uppercase}
 	 */
-	'formatter': (arg: { name1?: unknown }) => LocalizedString
+	formatter: (arg: { name1?: unknown }) => LocalizedString
 }
 
 export type Formatters = {
-	'uppercase': (value: unknown) => unknown
+	uppercase: (value: unknown) => unknown
 }
 
 type Param<P extends string> = `{${P}}`

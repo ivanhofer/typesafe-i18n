@@ -10,57 +10,61 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
 	/**
 	 * {1} {0} {2} {0}
 	 * @param {unknown} 0
 	 * @param {unknown} 1
 	 * @param {unknown} 2
 	 */
-	'ORDER_INDEX': RequiredParams4<'0', '0', '1', '2'>
+	ORDER_INDEX: RequiredParams4<'0', '0', '1', '2'>
 	/**
 	 * {b} {z} {a}
 	 * @param {unknown} a
 	 * @param {unknown} b
 	 * @param {unknown} z
 	 */
-	'ORDER_KEYED': RequiredParams3<'a', 'b', 'z'>
+	ORDER_KEYED: RequiredParams3<'a', 'b', 'z'>
 	/**
 	 * {0|z} {1|a}
 	 * @param {unknown} 0
 	 * @param {unknown} 1
 	 */
-	'ORDER_FORMATTER': RequiredParams2<'0|z', '1|a'>
+	ORDER_FORMATTER: RequiredParams2<'0|z', '1|a'>
 	/**
 	 * {0} {1}
 	 * @param {B} 0
 	 * @param {A} 1
 	 */
-	'ORDER_TYPES': RequiredParams2<'0', '1'>
+	ORDER_TYPES: RequiredParams2<'0', '1'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * {1} {0} {2} {0}
 	 */
-	'ORDER_INDEX': (arg0: unknown, arg1: unknown, arg2: unknown) => LocalizedString
+	ORDER_INDEX: (arg0: unknown, arg1: unknown, arg2: unknown) => LocalizedString
 	/**
 	 * {b} {z} {a}
 	 */
-	'ORDER_KEYED': (arg: { a: unknown, b: unknown, z: unknown }) => LocalizedString
+	ORDER_KEYED: (arg: { a: unknown, b: unknown, z: unknown }) => LocalizedString
 	/**
 	 * {0|z} {1|a}
 	 */
-	'ORDER_FORMATTER': (arg0: unknown, arg1: unknown) => LocalizedString
+	ORDER_FORMATTER: (arg0: unknown, arg1: unknown) => LocalizedString
 	/**
 	 * {0} {1}
 	 */
-	'ORDER_TYPES': (arg0: B, arg1: A) => LocalizedString
+	ORDER_TYPES: (arg0: B, arg1: A) => LocalizedString
 }
 
 export type Formatters = {
-	'a': (value: unknown) => unknown
-	'z': (value: unknown) => unknown
+	a: (value: unknown) => unknown
+	z: (value: unknown) => unknown
 }
 
 type Param<P extends string> = `{${P}}`

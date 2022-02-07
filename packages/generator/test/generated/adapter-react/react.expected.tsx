@@ -2,10 +2,10 @@
 /* eslint-disable */
 
 import { initI18nReact } from 'typesafe-i18n/adapters/adapter-react'
-import type { Locales, Translation, TranslationFunctions, Formatters } from './types.actual'
+import type { Locales, Translations, TranslationFunctions, Formatters } from './types.actual'
 import { loadedLocales, loadedFormatters } from './util.actual'
 
-const { component: TypesafeI18n, context: I18nContext } = initI18nReact<Locales, Translation, TranslationFunctions, Formatters>(loadedLocales, loadedFormatters)
+const { component: TypesafeI18n, context: I18nContext } = initI18nReact<Locales, Translations, TranslationFunctions, Formatters>(loadedLocales, loadedFormatters)
 
 export { I18nContext }
 

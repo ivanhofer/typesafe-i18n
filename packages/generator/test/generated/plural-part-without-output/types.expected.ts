@@ -10,19 +10,23 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
 	/**
 	 * New message{{s}} in {inbox}
 	 * @param {InboxType} inbox
 	 */
-	'PLURAL_WITHOUT_OUTPUT': RequiredParams1<'inbox'>
+	PLURAL_WITHOUT_OUTPUT: RequiredParams1<'inbox'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * New message{{s}} in {inbox}
 	 */
-	'PLURAL_WITHOUT_OUTPUT': (arg: { inbox: InboxType, nrOfMessages: string | number | boolean }) => LocalizedString
+	PLURAL_WITHOUT_OUTPUT: (arg: { inbox: InboxType, nrOfMessages: string | number | boolean }) => LocalizedString
 }
 
 export type Formatters = {}

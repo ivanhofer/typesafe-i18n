@@ -3,9 +3,9 @@
 
 import { inject, ref } from 'vue'
 import { initI18nVuePlugin } from 'typesafe-i18n/adapters/adapter-vue';
-import type { Locales, Translation, TranslationFunctions, Formatters } from './types.actual'
+import type { Locales, Translations, TranslationFunctions, Formatters } from './types.actual'
 import { loadedLocales, loadedFormatters } from './util.actual'
 
-const { typesafeI18n, i18nPlugin } = initI18nVuePlugin<Locales, Translation, TranslationFunctions, Formatters>(inject, ref, loadedLocales, loadedFormatters)
+const { typesafeI18n, i18nPlugin } = initI18nVuePlugin<Locales, Translations, TranslationFunctions, Formatters>(inject, ref, loadedLocales, loadedFormatters)
 
 export { typesafeI18n, i18nPlugin }

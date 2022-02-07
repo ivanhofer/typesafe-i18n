@@ -10,7 +10,11 @@ export type Locales =
 	| 'en'
 	| 'it'
 
-export type Translation = {}
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {}
 
 export type TranslationFunctions = {}
 

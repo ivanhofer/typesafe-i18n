@@ -8,34 +8,38 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
 	/**
 	 * {0|timesTen} apple{{s}}
 	 * @param {string | number | boolean} 0
 	 */
-	'FORMATTER_1': RequiredParams1<'0|timesTen'>
+	FORMATTER_1: RequiredParams1<'0|timesTen'>
 	/**
 	 * {0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}
 	 * @param {string | number | boolean} 0
 	 * @param {string | number | boolean} 1
 	 */
-	'FORMATTER_2': RequiredParams2<'0', '1|wrapWithHtmlSpan'>
+	FORMATTER_2: RequiredParams2<'0', '1|wrapWithHtmlSpan'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * {0|timesTen} apple{{s}}
 	 */
-	'FORMATTER_1': (arg0: string | number | boolean) => LocalizedString
+	FORMATTER_1: (arg0: string | number | boolean) => LocalizedString
 	/**
 	 * {0} apple{{s}} and {1|wrapWithHtmlSpan} banana{{s}}
 	 */
-	'FORMATTER_2': (arg0: string | number | boolean, arg1: string | number | boolean) => LocalizedString
+	FORMATTER_2: (arg0: string | number | boolean, arg1: string | number | boolean) => LocalizedString
 }
 
 export type Formatters = {
-	'timesTen': (value: string | number | boolean) => unknown
-	'wrapWithHtmlSpan': (value: string | number | boolean) => unknown
+	timesTen: (value: string | number | boolean) => unknown
+	wrapWithHtmlSpan: (value: string | number | boolean) => unknown
 }
 
 type Param<P extends string> = `{${P}}`

@@ -3,7 +3,7 @@ import { isString } from 'typesafe-utils'
 import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
 import type { BaseTranslation, Locale } from '../../../runtime/src/core'
 import { writeFileIfContainsChanges } from '../file-utils'
-import { prettify, sanitizeLocale } from '../generator-util'
+import { prettify, sanitizePath } from '../generator-util'
 import {
 	fileEnding,
 	importTypes,
@@ -64,7 +64,7 @@ const getLocaleTemplate = (
 	showBanner: boolean,
 ) => {
 	const typeToImport = isBaseLocale ? 'BaseTranslation' : 'Translation'
-	const sanitizedLocale = sanitizeLocale(locale)
+	const sanitizedLocale = sanitizePath(locale)
 
 	const translationsMap = translations && mapTranslationsToString(translations)
 
@@ -94,13 +94,6 @@ ${hint}${translationsMap}
 ${defaultExport} ${sanitizedLocale}
 `
 }
-
-export const generateBaseLocaleTemplate = async (
-	config: GeneratorConfigWithDefaultValues,
-	translations: BaseTranslation | undefined = undefined,
-	editHint = '',
-	showBanner = false,
-): Promise<void> => generateLocaleTemplate(config, config.baseLocale, translations, editHint, showBanner)
 
 export const generateLocaleTemplate = async (
 	config: GeneratorConfigWithDefaultValues,

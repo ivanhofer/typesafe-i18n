@@ -8,18 +8,22 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
 	/**
 	 * This is a test
 	 */
-	'TEST': string
+	TEST: string
 }
 
 export type TranslationFunctions = {
 	/**
 	 * This is a test
 	 */
-	'TEST': () => LocalizedString
+	TEST: () => LocalizedString
 }
 
 export type Formatters = {}

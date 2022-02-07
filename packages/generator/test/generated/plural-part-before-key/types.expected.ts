@@ -8,19 +8,23 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
 	/**
 	 * apple{{s}}: {nrOfApples}
 	 * @param {number} nrOfApples
 	 */
-	'PLURAL_BEFORE_KEY': RequiredParams1<'nrOfApples'>
+	PLURAL_BEFORE_KEY: RequiredParams1<'nrOfApples'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * apple{{s}}: {nrOfApples}
 	 */
-	'PLURAL_BEFORE_KEY': (arg: { nrOfApples: number }) => LocalizedString
+	PLURAL_BEFORE_KEY: (arg: { nrOfApples: number }) => LocalizedString
 }
 
 export type Formatters = {}

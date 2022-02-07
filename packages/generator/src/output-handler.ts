@@ -20,10 +20,6 @@ export const configureOutputHandler = (config: GeneratorConfigWithDefaultValues,
 		? `
 // @ts-check`
 		: ''
-	jsDocTsIgnore = shouldGenerateJsDoc
-		? `
-	// @ts-ignore`
-		: ''
 
 	tsVersion = version
 	supportsTemplateLiteralTypes =
@@ -33,7 +29,7 @@ export const configureOutputHandler = (config: GeneratorConfigWithDefaultValues,
 	importTypeStatement = `import${supportsImportType ? ' type' : ''}`
 
 	importTypes = (from, ...types) =>
-		shouldGenerateJsDoc ? '' : `${importTypeStatement} { ${types.join(', ')} } from '${from}'`
+		shouldGenerateJsDoc ? '' : `${importTypeStatement} { ${types.filter(isTruthy).join(', ')} } from '${from}'`
 	type = (type) => (shouldGenerateJsDoc ? '' : `: ${type}`)
 	typeCast = (type) => (shouldGenerateJsDoc ? '' : ` as ${type}`)
 	generics = (...generics) => (shouldGenerateJsDoc ? '' : `<${generics.join(', ')}>`)
@@ -60,7 +56,9 @@ export const configureOutputHandler = (config: GeneratorConfigWithDefaultValues,
  */`
 			: ''
 
-	jsDocType = (type) => (shouldGenerateJsDoc ? `/** @type { ${type} } */` : '')
+	jsDocType = (type, toWrap = '') =>
+		(shouldGenerateJsDoc ? `/** @type { ${type} } */` : '') +
+		(toWrap ? (shouldGenerateJsDoc ? ` (${toWrap})` : toWrap) : '')
 
 	relativeFileImportPath = (fileName: string) =>
 		`${fileName.startsWith('..') ? '' : './'}${fileName}${config.esmImports ? '.js' : ''}`
@@ -78,11 +76,10 @@ export let fileEnding: FileEnding
 export let fileEndingForTypesFile: FileEnding
 export let tsCheck: string
 export let importTypeStatement: string
-export let jsDocTsIgnore: string
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export let importTypes: (from: string, ...types: string[]) => string
+export let importTypes: (from: string, ...types: (string | false)[]) => string
 
 export let type: (type: string) => string
 
@@ -94,7 +91,7 @@ export let jsDocImports: (...imports: ({ from: string; type: string; alias?: str
 
 export let jsDocFunction: (returnType: string, ...params: { type: string; name: string }[]) => string
 
-export let jsDocType: (type: string) => string
+export let jsDocType: (type: string, toWrap?: string) => string
 
 export let relativeFileImportPath: (fileName: string) => string
 

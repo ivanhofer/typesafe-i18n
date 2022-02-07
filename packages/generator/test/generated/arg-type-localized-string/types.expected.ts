@@ -8,19 +8,23 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
 	/**
 	 * Click on the button: <button>{buttonText}</button>
 	 * @param {LocalizedString} buttonText
 	 */
-	'localized': RequiredParams1<'buttonText'>
+	localized: RequiredParams1<'buttonText'>
 }
 
 export type TranslationFunctions = {
 	/**
 	 * Click on the button: <button>{buttonText}</button>
 	 */
-	'localized': (arg: { buttonText: LocalizedString }) => LocalizedString
+	localized: (arg: { buttonText: LocalizedString }) => LocalizedString
 }
 
 export type Formatters = {}

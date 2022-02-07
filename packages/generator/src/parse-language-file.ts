@@ -2,6 +2,7 @@ import { resolve, sep } from 'path'
 import { isTruthy } from 'typesafe-utils'
 import ts from 'typescript'
 import type { BaseTranslation } from '../../runtime/src'
+import type { Locale } from '../../runtime/src/core'
 import {
 	containsFolders,
 	createPathIfNotExits,
@@ -80,19 +81,23 @@ const transpileTypescriptFiles = async (
 
 export const parseLanguageFile = async (
 	outputPath: string,
-	locale: string,
 	tempPath: string,
+	locale: Locale,
+	workspace = '',
 ): Promise<BaseTranslation | null> => {
-	const originalPath = resolve(outputPath, locale, `index${fileEnding}`)
+	const fileName = workspace ? `${locale}/${workspace}` : locale
+	const type = workspace ? 'workspace' : 'base locale'
+
+	const originalPath = resolve(outputPath, fileName, `index${fileEnding}`)
 
 	if (!(await doesPathExist(originalPath))) {
-		logger.info(`could not load base locale file '${locale}'`)
+		logger.info(`could not load ${type} file '${fileName}'`)
 		return null
 	}
 
 	await createPathIfNotExits(tempPath)
 
-	const importPath = await transpileTypescriptFiles(outputPath, originalPath, locale, tempPath)
+	const importPath = await transpileTypescriptFiles(outputPath, originalPath, fileName, tempPath)
 
 	if (!importPath) {
 		return null
@@ -103,11 +108,20 @@ export const parseLanguageFile = async (
 	await deleteFolderRecursive(tempPath)
 
 	if (!languageImport) {
-		logger.error(`could not read default export from language file '${locale}'`)
+		logger.error(`could not read default export from ${type} file '${fileName}'`)
 		return null
 	}
 
-	return languageImport
+	return getDefaultExport(languageImport)
+}
+
+const getDefaultExport = (languageFile: BaseTranslation): BaseTranslation => {
+	const keys = Object.keys(languageFile)
+	if (keys.includes('__esModule') || (keys.length === 1 && keys.includes('default'))) {
+		return (languageFile as Record<string, BaseTranslation>).default as BaseTranslation
+	}
+
+	return languageFile
 }
 
 export const getAllLanguages = async (path: string): Promise<string[]> => {

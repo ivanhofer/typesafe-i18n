@@ -8,20 +8,24 @@ export type BaseLocale = 'en'
 export type Locales =
 	| 'en'
 
-export type Translation = {
+export type Translation = RootTranslation
+
+export type Translations = RootTranslation
+
+type RootTranslation = {
 	/**
 	 * Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}
 	 * @param {unknown} name
 	 * @param {string | number | boolean} nrOfApples
 	 */
-	'TEST': string
+	TEST: string
 }
 
 export type TranslationFunctions = {
 	/**
 	 * Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}
 	 */
-	'TEST': (arg: { name: unknown, nrOfApples: string | number | boolean }) => LocalizedString
+	TEST: (arg: { name: unknown, nrOfApples: string | number | boolean }) => LocalizedString
 }
 
 export type Formatters = {}
