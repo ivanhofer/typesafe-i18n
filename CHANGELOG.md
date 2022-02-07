@@ -5,6 +5,8 @@
 
 ## 4.0.0 (2022-02-07)
 
+Please visit the [release post](https://github.com/ivanhofer/typesafe-i18n/discussions/169) for more information.
+
 Feature:
  - add 'namespaces' functionality [#113](https://github.com/ivanhofer/typesafe-i18n/discussions/113)
 
