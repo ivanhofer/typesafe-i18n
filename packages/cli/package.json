@@ -7,13 +7,13 @@
   "devDependencies": {
     "@types/prompts": "^2.0.14",
     "commander": "^9.0.0",
-    "esbuild": "^0.14.18",
+    "esbuild": "^0.14.20",
     "glob": "^7.2.0",
     "just-diff": "^5.0.1",
     "just-diff-apply": "^5.1.1",
     "kleur": "^4.1.4",
     "prompts": "^2.4.2",
-    "type-fest": "^2.11.0",
+    "type-fest": "^2.11.1",
     "typesafe-utils": "^1.16.2",
     "typescript": "^4.5.5"
   }
