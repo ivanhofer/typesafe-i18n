@@ -17,7 +17,9 @@ import {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const mapTranslationsToString = (
+// TODO: move to helper file
+
+export const mapTranslationsToString = (
 	translations: BaseTranslation | BaseTranslation[] | Readonly<BaseTranslation> | Readonly<BaseTranslation[]>,
 	level = 1,
 ) => Object.entries(translations).map(mapTranslationToString.bind(null, level)).join('\n')
@@ -63,7 +65,7 @@ const getLocaleTemplate = (
 	editHint: string,
 	showBanner: boolean,
 ) => {
-	const typeToImport = isBaseLocale ? 'BaseTranslation' : 'Translation'
+	const typeOfDictionary = isBaseLocale ? 'BaseTranslation' : 'Translation'
 	const sanitizedLocale = sanitizePath(locale)
 
 	const translationsMap = translations && mapTranslationsToString(translations)
@@ -82,12 +84,12 @@ ${banner}`
 		: ''
 
 	return `${tsCheck}${bannerIfNeeded}
-${importTypes(relativeFileImportPath(`../${typesFileName}`), typeToImport)}
+${importTypes(relativeFileImportPath(`../${typesFileName}`), typeOfDictionary)}
 
-${jsDocImports({ from: relativeFileImportPath(`../${typesFileName}`), type: typeToImport })}
+${jsDocImports({ from: relativeFileImportPath(`../${typesFileName}`), type: typeOfDictionary })}
 
-${jsDocType(typeToImport)}
-const ${sanitizedLocale}${type(typeToImport)} = {
+${jsDocType(typeOfDictionary)}
+const ${sanitizedLocale}${type(typeOfDictionary)} = {
 ${hint}${translationsMap}
 }
 
