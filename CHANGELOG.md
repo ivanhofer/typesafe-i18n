@@ -3,6 +3,11 @@
 
 # Version 4
 
+## 4.1.1 (2022-02-11)
+
+Bugfix:
+ - translation breaks with key called name `name` #170(https://github.com/ivanhofer/typesafe-i18n/issues/170)
+
 ## 4.1.0 (2022-02-11)
 
 Feature:

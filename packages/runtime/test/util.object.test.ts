@@ -25,6 +25,8 @@ const translation = {
 	ONLY_SINGULAR: '{{singular|}}',
 	ZERO: '{{zero|one|other}}',
 	PLURAL_VALUE: '{{ no items | one item | ?? items }}',
+	name: 'fn name',
+	apply: 'fn apply',
 }
 
 const LL = i18nObject('en', translation)
@@ -84,6 +86,9 @@ test('zero 7', () => assert.is(LL.ZERO(7), 'other'))
 test('plural zero: no', () => assert.is(LL.PLURAL_VALUE(0), 'no items'))
 test('plural zero: one', () => assert.is(LL.PLURAL_VALUE(1), 'one item'))
 test('plural zero: ??', () => assert.is(LL.PLURAL_VALUE(99), '99 items'))
+
+test('function attribute name', () => assert.is(LL.name(), 'fn name'))
+test('function attribute apply', () => assert.is(LL.apply(), 'fn apply'))
 
 // --------------------------------------------------------------------------------------------------------------------
 

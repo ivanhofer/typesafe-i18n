@@ -47,7 +47,10 @@ export function i18nObject(locale: any, translations: any, formatters: any = {})
 const wrap = <T extends BaseTranslation | BaseTranslation[]>(proxyObject: T = {} as T, translateFn: TranslateFn) =>
 	(typeof proxyObject === 'string'
 		? translateFn.bind(null, proxyObject)
-		: Object.assign(() => '', proxyObject)) as unknown as TranslationFunctions<T>
+		: Object.assign(
+				Object.defineProperty(() => '', 'name', { writable: true }),
+				proxyObject,
+		  )) as unknown as TranslationFunctions<T>
 
 /* PROXY-START */
 const createProxy = <T extends BaseTranslation | BaseTranslation[]>(
