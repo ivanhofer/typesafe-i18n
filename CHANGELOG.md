@@ -3,6 +3,11 @@
 
 # Version 4
 
+## 4.1.0 (2022-02-11)
+
+Feature:
+ - add `namespaces` support for `importer` and `exporter`
+
 ## 4.0.0 (2022-02-07)
 
 Please visit the [release post](https://github.com/ivanhofer/typesafe-i18n/discussions/169) for more information.

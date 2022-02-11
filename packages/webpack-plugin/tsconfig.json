@@ -1,6 +1,7 @@
 {
 	"extends": "../../tsconfig.json",
 	"compilerOptions": {
+		"target": "ESNext",
 		"outDir": "../../webpack"
 	},
 	"include": ["./src/**/*.ts"]

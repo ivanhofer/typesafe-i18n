@@ -1,6 +1,8 @@
 import kleur from 'kleur'
 import type { Arguments } from '../../runtime/src/core'
 
+// TODO: use a single TypeScript permutation type
+
 export const getPermutations = <T>(rest: T[], permutedArray: T[] = []): T[][] => {
 	if (rest.length === 0) {
 		return [permutedArray]

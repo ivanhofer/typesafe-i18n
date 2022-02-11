@@ -1,6 +1,6 @@
 import { join } from 'path'
 import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
-import type { Locale } from '../../../runtime/src/core'
+import type { BaseTranslation, Locale } from '../../../runtime/src/core'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { logger, prettify, sanitizePath } from '../generator-util'
 import {
@@ -13,33 +13,52 @@ import {
 	tsCheck,
 	type,
 } from '../output-handler'
+import { mapTranslationsToString } from './generate-template-locale'
 import { getTypeNameForNamespace } from './generate-types'
 
 // --------------------------------------------------------------------------------------------------------------------
 
 const getNamespaceTemplate = (
-	{ typesFileName, adapter, esmImports }: GeneratorConfigWithDefaultValues,
+	{ typesFileName, adapter, esmImports, banner }: GeneratorConfigWithDefaultValues,
 	locale: string,
 	namespace: string,
+	isBaseLocale: boolean,
+	translations: BaseTranslation | BaseTranslation[] | undefined = undefined,
+	editHint = '',
+	showBanner = false,
 ) => {
-	const namespaceTypeName = getTypeNameForNamespace(namespace)
+	const typeOfDictionary = isBaseLocale ? 'BaseTranslation' : getTypeNameForNamespace(namespace)
 
 	const sanitizedLocale = sanitizePath(locale)
 	const sanitizedNamespace = sanitizePath(namespace)
 
 	const variableName = `${sanitizedLocale}_${sanitizedNamespace}`
 
+	const translationsMap =
+		(translations &&
+			`${mapTranslationsToString(translations)}
+`) ||
+		''
+
+	const hint = editHint || !translationsMap ? `	// ${editHint || 'TODO: insert translations'}` : ''
+
+	// TODO: move to `output-handler`
 	const defaultExport =
 		shouldGenerateJsDoc && adapter !== 'svelte' && !esmImports ? 'module.exports =' : 'export default'
 
-	return `${tsCheck}
-${importTypes(relativeFileImportPath(`../../${typesFileName}`), namespaceTypeName)}
+	const bannerIfNeeded = showBanner
+		? `
+${banner}`
+		: ''
 
-${jsDocImports({ from: relativeFileImportPath(`../../${typesFileName}`), type: namespaceTypeName })}
+	return `${tsCheck}${bannerIfNeeded}
+${importTypes(relativeFileImportPath(`../../${typesFileName}`), typeOfDictionary)}
 
-${jsDocType(namespaceTypeName)}
-const ${variableName}${type(namespaceTypeName)} = {
-	// TODO: insert translations
+${jsDocImports({ from: relativeFileImportPath(`../../${typesFileName}`), type: typeOfDictionary })}
+
+${jsDocType(typeOfDictionary)}
+const ${variableName}${type(typeOfDictionary)} = {
+${hint}${translationsMap}
 }
 
 ${defaultExport} ${variableName}
@@ -50,10 +69,23 @@ export const generateNamespaceTemplate = async (
 	config: GeneratorConfigWithDefaultValues,
 	locale: Locale,
 	namespace: string,
+	translations: BaseTranslation | BaseTranslation[] | undefined = undefined,
+	editHint = '',
+	showBanner = false,
 ): Promise<void> => {
-	const { outputPath } = config
+	const { outputPath, baseLocale } = config
 
-	const localeTemplate = getNamespaceTemplate(config, locale, namespace)
+	const isBaseLocale = baseLocale === locale
+
+	const localeTemplate = getNamespaceTemplate(
+		config,
+		locale,
+		namespace,
+		isBaseLocale,
+		translations,
+		editHint,
+		showBanner,
+	)
 
 	logger.info(`creating boilerplate for locale '${locale}' and namespace '${namespace}'`)
 

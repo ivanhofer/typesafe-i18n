@@ -1,3 +1,4 @@
+import { generateNamespaceTemplate } from 'packages/generator/src/files/generate-template-namespace'
 import ts from 'typescript'
 import { getConfigWithDefaultValues } from '../../config/src/config'
 import { generateLocaleTemplate } from '../../generator/src/files/generate-template-locale'
@@ -5,21 +6,21 @@ import { generate } from '../../generator/src/generate-files'
 import { createLogger, parseTypescriptVersion } from '../../generator/src/generator-util'
 import { configureOutputHandler } from '../../generator/src/output-handler'
 import { parseLanguageFile } from '../../generator/src/parse-language-file'
-import type { BaseTranslation, Locale, LocaleMapping } from '../../runtime/src/core'
+import type { BaseTranslation, ImportLocaleMapping, Locale } from '../../runtime/src/core'
 
 const logger = createLogger(console, true)
 
 // --------------------------------------------------------------------------------------------------------------------
 
 export const storeTranslationToDisk = async (
-	localeMapping: LocaleMapping,
+	localeMapping: ImportLocaleMapping,
 	generateTypes = true,
 ): Promise<Locale | undefined> => (await storeTranslationsToDisk([localeMapping], generateTypes))[0]
 
 // --------------------------------------------------------------------------------------------------------------------
 
 export const storeTranslationsToDisk = async (
-	localeMappings: LocaleMapping[],
+	localeMappings: ImportLocaleMapping[],
 	generateTypes = true,
 ): Promise<Locale[]> => {
 	const config = await getConfigWithDefaultValues()
@@ -30,23 +31,43 @@ export const storeTranslationsToDisk = async (
 	const createdLocales: Locale[] = []
 	let baseTranslation: BaseTranslation | BaseTranslation[] | undefined = undefined
 
-	for (const { locale, translations } of localeMappings) {
+	let baseNamespaces: string[] = []
+	for (const { locale, translations, namespaces } of localeMappings) {
 		if (!locale) continue
 
 		const isBaseLocale = locale === config.baseLocale
 
 		if (isBaseLocale) {
 			baseTranslation = translations
+			baseNamespaces = namespaces || []
 		}
 
 		logger.info(`importing translations for locale '${locale}' ...`)
 		let error = undefined
 
-		await generateLocaleTemplate(config, locale, translations, undefined, true).catch((e) => (error = e))
+		const translationsWithoutNamespaces = Object.entries(translations).filter(
+			([key]) => !baseNamespaces.includes(key),
+		)
+		await generateLocaleTemplate(config, locale, translationsWithoutNamespaces, undefined, true).catch(
+			(e) => (error = e),
+		)
 
 		if (error) {
 			logger.error(`importing translations for locale '${locale}' failed:`, error)
 			continue
+		}
+
+		for (const namespace of baseNamespaces) {
+			logger.info(`creating namespace '${locale}/${namespace}' ...`)
+
+			await generateNamespaceTemplate(
+				config,
+				locale,
+				namespace,
+				(translations as Record<string, BaseTranslation>)[namespace],
+				undefined,
+				true,
+			)
 		}
 
 		logger.info(`importing translations for locale '${locale}' completed`)
@@ -72,7 +93,7 @@ export const storeTranslationsToDisk = async (
 	}
 
 	logger.info(`updating types ...`)
-	await generate(baseTranslation, config, version)
+	await generate(baseTranslation, config, version, undefined, undefined, undefined, baseNamespaces)
 	logger.info(`updating types completed`)
 
 	return createdLocales

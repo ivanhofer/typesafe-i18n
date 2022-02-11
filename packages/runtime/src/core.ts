@@ -74,9 +74,22 @@ export type BaseFormatters = {
 	[formatter: string]: FormatterFunction
 }
 
-export interface LocaleMapping {
+type LocaleMappingBase = {
 	locale: string
 	translations: BaseTranslation | BaseTranslation[]
+}
+
+/**
+ * @deprecated
+ */
+export type LocaleMapping = ExportLocaleMapping
+
+export interface ExportLocaleMapping extends LocaleMappingBase {
+	namespaces: string[]
+}
+
+export interface ImportLocaleMapping extends LocaleMappingBase {
+	namespaces?: string[]
 }
 
 // --------------------------------------------------------------------------------------------------------------------

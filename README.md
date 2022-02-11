@@ -86,6 +86,11 @@
 npm install typesafe-i18n
 ```
 
+#### migrations
+
+ - to version `4.x.x`: see the [`release post`](https://github.com/ivanhofer/typesafe-i18n/discussions/169)
+ - to version `3.x.x`: see the [`release post`](https://github.com/ivanhofer/typesafe-i18n/discussions/163)
+
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -528,32 +533,28 @@ The available options are:
 
 | key                                                       | type                                                                                             | default value                                 |
 | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------- |
-| [baseLocale](#baseLocale)                                 | `string`                                                                                         | `'en'`                                        |
 | [adapter](#adapter)                                       | `'angular'` &#124; `'node'` &#124; `'react'` &#124; `'svelte'` &#124; `'vue'` &#124; `undefined` | `undefined`                                   |
-| [outputPath](#outputPath)                                 | `string`                                                                                         | `'./src/i18n/'`                               |
+| [baseLocale](#baseLocale)                                 | `string`                                                                                         | `'en'`                                        |
 | [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                                                             | `'TypeScript'`                                |
-| [typesFileName](#typesFileName)                           | `string`                                                                                         | `'i18n-types'`                                |
 | [esmImports](#esmImports)                                 | `boolean`                                                                                        | `false`                                       |
+| [generateOnlyTypes](#generateOnlyTypes)                   | `boolean`                                                                                        | `false`                                       |
+| [banner](#banner)                                         | `string`                                                                                         | `'/* eslint-disable */'`                      |
+| [outputPath](#outputPath)                                 | `string`                                                                                         | `'./src/i18n/'`                               |
+| [typesFileName](#typesFileName)                           | `string`                                                                                         | `'i18n-types'`                                |
 | [utilFileName](#utilFileName)                             | `string`                                                                                         | `'i18n-util'`                                 |
 | [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                                                                         | `'formatters'`                                |
 | [typesTemplateFileName](#typesTemplateFileName)           | `string`                                                                                         | `'custom-types'`                              |
 | [adapterFileName](#adapterFileName)                       | `string` &#124; `undefined`                                                                      | `undefined`                                   |
-| [generateOnlyTypes](#generateOnlyTypes)                   | `boolean`                                                                                        | `false`                                       |
 | [tempPath](#tempPath)                                     | `string`                                                                                         | `'./node_modules/typesafe-i18n/temp-output/'` |
-| [banner](#banner)                                         | `string`                                                                                         | `'/* eslint-disable */'`                      |
 
-
-#### `baseLocale`
-
-Defines which locale to use for the types generation. You can find more information on how to structure your locales [here](#locales).
 
 #### `adapter`
 
 If this config is set, code will be generated that wraps i18n functions into useful helpers for that environment e.g. a `svelte`-store.
 
-#### `outputPath`
+#### `baseLocale`
 
-Folder in which the files should be generated and where your locale files are located.
+Defines which locale to use for the types generation. You can find more information on how to structure your locales [here](#locales).
 
 #### `outputFormat`
 
@@ -562,6 +563,18 @@ The programming language you use inside your code. If 'TypeScript' is selected, 
 #### `esmImports`
 
 If `true` generated files will import other files with the `.js` file extension. This makes it compatible with ESM packages that have specified `"type": "module"` in their `package.json` file.
+
+#### `generateOnlyTypes`
+
+If you don't want to use the auto-generated helpers and instead write your own wrappers, you can set this option to `true`.
+
+#### `banner`
+
+This text will be output on top of all auto-generated files. It is meant to add a custom disable-linter comment. Since every project can have different lint rules, we want to disable linting on those files.
+
+#### `outputPath`
+
+Folder in which the files should be generated and where your locale files are located.
 
 #### `typesFileName`
 
@@ -583,17 +596,9 @@ Name for the file where you can configure your custom-types.
 
 Name for the file when generating output for an adapter. The default filename is `i18n-[adapter]`.
 
-#### `generateOnlyTypes`
-
-If you don't want to use the auto-generated helpers and instead write your own wrappers, you can set this option to `true`.
-
 #### `tempPath`
 
 Folder where the generator can store temporary files. These files are generated when your base locale is analyzed and the types are generated. The folder will be cleared, after the types were generated. So make sure you use an empty folder, if you change this option.
-
-#### `banner`
-
-This text will be output on top of all auto-generated files. It is meant to add a custom disable-linter comment. Since every project can have different lint rules, we want to disable linting on those files.
 
 
 
