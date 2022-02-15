@@ -176,6 +176,7 @@ importers:
 
   packages/generator:
     specifiers:
+      '@types/esutils': ^2.0.0
       chokidar: ^3.5.3
       esutils: ^2.0.3
       kleur: ^4.1.4
@@ -185,6 +186,7 @@ importers:
       typesafe-utils: ^1.16.2
       typescript: ^4.5.5
     devDependencies:
+      '@types/esutils': 2.0.0
       chokidar: 3.5.3
       esutils: 2.0.3
       kleur: 4.1.4
@@ -403,6 +405,10 @@ packages:
 
   /@types/estree/0.0.50:
     resolution: {integrity: sha512-C6N5s2ZFtuZRj54k2/zyRhNDjJwwcViAM3Nbm8zjBpbqAdZ00mr0CFxvSKeO8Y/e03WVFLpQMdHYVfUd6SB+Hw==}
+    dev: true
+
+  /@types/esutils/2.0.0:
+    resolution: {integrity: sha512-YutwmJZ/lRoNVk1Xi1tDghLYjQ56yCLdo/RaFV0g57GGodoap/fJQRKhOW7Kx1k7scuN53tVXUNKsPlfel+Lhw==}
     dev: true
 
   /@types/express-serve-static-core/4.17.28:
