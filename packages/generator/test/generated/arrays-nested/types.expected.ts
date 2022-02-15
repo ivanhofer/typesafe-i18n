@@ -13,22 +13,22 @@ export type Translation = RootTranslation
 export type Translations = RootTranslation
 
 type RootTranslation = {
-	0: {
+	'0': {
 		/**
 		 * test 123
 		 */
-		0: string
+		'0': string
 	}
-	1: {
-		0: {
+	'1': {
+		'0': {
 			nested: {
 				test: {
 					/**
 					 * {name}
 					 * @param {string} name
 					 */
-					0: RequiredParams1<'name'>
-					1: {
+					'0': RequiredParams1<'name'>
+					'1': {
 						/**
 						 * test
 						 */
@@ -41,21 +41,21 @@ type RootTranslation = {
 }
 
 export type TranslationFunctions = {
-	0: {
+	'0': {
 		/**
 		 * test 123
 		 */
-		0: () => LocalizedString
+		'0': () => LocalizedString
 	}
-	1: {
-		0: {
+	'1': {
+		'0': {
 			nested: {
 				test: {
 					/**
 					 * {name}
 					 */
-					0: (arg: { name: string }) => LocalizedString
-					1: {
+					'0': (arg: { name: string }) => LocalizedString
+					'1': {
 						/**
 						 * test
 						 */

@@ -1,3 +1,4 @@
+import { keyword } from 'esutils'
 import kleur from 'kleur'
 import type { Arguments } from '../../runtime/src/core'
 
@@ -37,12 +38,8 @@ export const parseTypescriptVersion = (versionMajorMinor: `${number}.${number}`)
 
 export const sanitizePath = <Type extends string>(part: Type): Type => part.replace(/[-\s]/g, '_') as Type
 
-export const wrapObjectKeyIfNeeded = (key: string) => {
-	const sanitized = sanitizePath(key)
-	const needsEscaping = key !== sanitized
-
-	return needsEscaping ? `'${key}'` : key
-}
+export const wrapObjectKeyIfNeeded = (key: string) =>
+	keyword.isIdentifierES6(key, true) ? key : `'${key.replace(/'/g, "\\'")}'`
 
 export const prettify = (content: string): string =>
 	content

@@ -276,6 +276,24 @@ testGeneratedOutput(
 	{ generateOnlyTypes: true },
 )
 
+testGeneratedOutput(
+	'uncommon-keys',
+	{
+		'*': 'text',
+		'': 'text',
+		0: 'text',
+		1234: 'text',
+		'a key': 'text',
+		'a/key': 'text',
+		'a\\key': 'text',
+		a_key: 'text',
+		'a-key': 'text',
+		'k"e"y': 'text',
+		"k'e'y": 'text',
+	},
+	{ generateOnlyTypes: true },
+)
+
 // --------------------------------------------------------------------------------------------------------------------
 
 testGeneratedOutput('nested-deep', {

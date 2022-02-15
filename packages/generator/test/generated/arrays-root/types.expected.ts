@@ -13,7 +13,7 @@ export type Translation = RootTranslation
 export type Translations = RootTranslation
 
 type RootTranslation = {
-	0: {
+	'0': {
 		/**
 		 * test
 		 */
@@ -22,7 +22,7 @@ type RootTranslation = {
 }
 
 export type TranslationFunctions = {
-	0: {
+	'0': {
 		/**
 		 * test
 		 */

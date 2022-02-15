@@ -3,6 +3,11 @@
 
 # Version 4
 
+## 4.1.2 (2022-02-15)
+
+Bugfix:
+ - generate valid types for uncommon identifiers [#177](https://github.com/ivanhofer/typesafe-i18n/issues/177)
+
 ## 4.1.1 (2022-02-11)
 
 Bugfix:

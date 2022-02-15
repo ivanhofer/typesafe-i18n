@@ -36,11 +36,11 @@ export type NamespaceATranslation = {
 	/**
 	 * some
 	 */
-	0: string
+	'0': string
 	/**
 	 * value
 	 */
-	1: string
+	'1': string
 }
 
 export type NamespaceAndAnotherTranslation = {
@@ -110,11 +110,11 @@ export type TranslationFunctions = {
 		/**
 		 * some
 		 */
-		0: () => LocalizedString
+		'0': () => LocalizedString
 		/**
 		 * value
 		 */
-		1: () => LocalizedString
+		'1': () => LocalizedString
 	}
 	'and-another': {
 		b: {

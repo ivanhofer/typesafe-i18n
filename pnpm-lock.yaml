@@ -177,6 +177,7 @@ importers:
   packages/generator:
     specifiers:
       chokidar: ^3.5.3
+      esutils: ^2.0.3
       kleur: ^4.1.4
       require-self: ^0.2.3
       tiny-glob: ^0.2.9
@@ -185,6 +186,7 @@ importers:
       typescript: ^4.5.5
     devDependencies:
       chokidar: 3.5.3
+      esutils: 2.0.3
       kleur: 4.1.4
       require-self: 0.2.3
       tiny-glob: 0.2.9
