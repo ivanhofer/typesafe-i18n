@@ -24,15 +24,6 @@ jobs:
          - name: update dependencies
            run: pnpm update:dependencies
 
-         - name: run linting
-           run: pnpm lint
-
-         - name: run tests
-           run: pnpm test
-
-         - name: build package
-           run: pnpm build
-
          - name: Create Pull Request
            id: createpr
            uses: peter-evans/create-pull-request@v3
