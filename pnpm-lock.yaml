@@ -199,9 +199,11 @@ importers:
   packages/importer:
     specifiers:
       esbuild: ^0.14.21
+      tiny-glob: ^0.2.9
       typescript: ^4.5.5
     devDependencies:
       esbuild: 0.14.21
+      tiny-glob: 0.2.9
       typescript: 4.5.5
 
   packages/parser:

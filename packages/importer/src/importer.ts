@@ -1,7 +1,7 @@
-import { generateNamespaceTemplate } from 'packages/generator/src/files/generate-template-namespace'
 import ts from 'typescript'
 import { getConfigWithDefaultValues } from '../../config/src/config'
 import { generateLocaleTemplate } from '../../generator/src/files/generate-template-locale'
+import { generateNamespaceTemplate } from '../../generator/src/files/generate-template-namespace'
 import { generate } from '../../generator/src/generate-files'
 import { createLogger, parseTypescriptVersion } from '../../generator/src/generator-util'
 import { configureOutputHandler } from '../../generator/src/output-handler'
@@ -45,8 +45,8 @@ export const storeTranslationsToDisk = async (
 		logger.info(`importing translations for locale '${locale}' ...`)
 		let error = undefined
 
-		const translationsWithoutNamespaces = Object.entries(translations).filter(
-			([key]) => !baseNamespaces.includes(key),
+		const translationsWithoutNamespaces = Object.fromEntries(
+			Object.entries(translations).filter(([key]) => !baseNamespaces.includes(key)),
 		)
 		await generateLocaleTemplate(config, locale, translationsWithoutNamespaces, undefined, true).catch(
 			(e) => (error = e),

@@ -1,6 +1,6 @@
 import { sync as glob } from 'glob'
-import type { Locale } from 'packages/runtime/src/core'
 import type { GeneratorConfigWithDefaultValues } from '../../config/src/types'
+import type { Locale } from '../../runtime/src/core'
 import { generateLocaleTemplate } from './files/generate-template-locale'
 import { generateNamespaceTemplate } from './files/generate-template-namespace'
 

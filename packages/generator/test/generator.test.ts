@@ -1,4 +1,4 @@
-import { promises } from 'fs'
+import { readFile } from 'fs/promises'
 import { resolve } from 'path'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
@@ -7,8 +7,6 @@ import type { GeneratorConfig, GeneratorConfigWithDefaultValues, OutputFormats }
 import type { BaseTranslation, Locale } from '../../runtime/src/core'
 import { generate } from '../src/generate-files'
 import { parseTypescriptVersion, TypescriptVersion } from '../src/generator-util'
-
-const { readFile } = promises
 
 const test = suite('types')
 

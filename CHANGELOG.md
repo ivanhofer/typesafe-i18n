@@ -3,6 +3,11 @@
 
 # Version 4
 
+## 4.1.3 (2022-02-16)
+
+Bugfix:
+ - fix `importer` creating incorrect translations
+
 ## 4.1.2 (2022-02-15)
 
 Bugfix:
