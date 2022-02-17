@@ -3,6 +3,11 @@
 
 # Version 4
 
+## 4.1.4 (2022-02-17)
+
+Fix:
+ - remove sourcemaps from generated bundle [179](https://github.com/ivanhofer/typesafe-i18n/issues/179)
+
 ## 4.1.3 (2022-02-16)
 
 Bugfix:

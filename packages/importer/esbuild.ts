@@ -33,7 +33,7 @@ const __dirname = dirname(__filename)`,
 				  }
 				: {},
 		format,
-		sourcemap: true,
+		sourcemap: watch,
 		watch,
 		tsconfig: './tsconfig.json',
 	}).catch(() => process.exit(1))

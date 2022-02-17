@@ -24,7 +24,7 @@ files.forEach((file) =>
 			platform: 'browser',
 			format,
 			minify: true,
-			sourcemap: true,
+			sourcemap: watch,
 			watch,
 			tsconfig: './tsconfig.json',
 		}).catch(() => process.exit(1)),

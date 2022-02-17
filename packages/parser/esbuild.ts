@@ -20,7 +20,7 @@ formats.forEach((format) =>
 			outfile: getPath(`../../parser/index${minify ? '.min' : ''}.${format === 'esm' ? 'm' : 'c'}js`),
 			platform: 'browser',
 			format,
-			sourcemap: !minify,
+			sourcemap: watch,
 			minify,
 			watch,
 			tsconfig: './tsconfig.json',

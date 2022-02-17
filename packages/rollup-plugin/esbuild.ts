@@ -21,7 +21,7 @@ files.forEach((file) => {
 		platform: 'node',
 		external: ['typescript', 'chokidar'],
 		format: 'cjs',
-		sourcemap: true,
+		sourcemap: watch,
 		watch,
 		tsconfig: './tsconfig.json',
 	}).catch(() => process.exit(1))

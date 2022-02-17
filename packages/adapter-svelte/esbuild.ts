@@ -21,7 +21,7 @@ formats.forEach((format) =>
 			external: ['svelte/store'],
 			platform: 'browser',
 			format,
-			sourcemap: !minify,
+			sourcemap: watch,
 			minify,
 			watch,
 			tsconfig: './tsconfig.json',
