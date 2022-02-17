@@ -2,7 +2,8 @@
 	"extends": "../../tsconfig.json",
 	"compilerOptions": {
 		"rootDirs": ["./src", "../parser/src"],
-		"outDir": "../../runtime/esm"
+		"outDir": "../../runtime/esm",
+		"sourceMap": false
 	},
 	"include": ["./src/**/*.ts"]
 }
