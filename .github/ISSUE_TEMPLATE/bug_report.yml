@@ -10,9 +10,8 @@ body:
      attributes:
         label: Version
         description: |
-           What version of `typesafe-i18n` are you using?
-           Can be checked by running `typesafe-i18n --version`
-           *please check if the issue is fixed in a newer version if available*
+           What version of `typesafe-i18n` are you using? (can be checked by running `typesafe-i18n --version`)
+           *please check if the issue is fixed in a newer version (if available)*
         placeholder: 4.1.5
      validations:
         required: true
