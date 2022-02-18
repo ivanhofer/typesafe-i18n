@@ -62,6 +62,9 @@ import { i18nPlugin } from './i18n/i18n-vue'
 
 const app = createApp(App)
 app.use(i18nPlugin, 'en') // activate plugin
+
+// TODO: load locales (https://github.com/ivanhofer/typesafe-i18n#loading-locales)
+
 app.mount('#app')
 ```
 

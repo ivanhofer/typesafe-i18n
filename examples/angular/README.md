@@ -61,7 +61,7 @@ import { I18nService } from '../i18n/i18n.service'
    templateUrl: './greeting.component.html',
 })
 export class GreetingComponent {
-   constructor(private i18nService: I18nService) {	}
+   constructor(private i18nService: I18nService) { }
 
    get LL(): TranslationFunctions {
       return this.i18nService.LL
@@ -106,6 +106,8 @@ export class LanguageSwitcherComponent {
    constructor(private i18nService: I18nService) {	}
 
    setLocale(locale: Locales): void {
+      // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n#loading-locales)
+
       this.i18nService.setLocale(locale)
    }
 }

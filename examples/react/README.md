@@ -57,8 +57,10 @@ import TypesafeI18n from './i18n/i18n-react'
 
 function App() {
 
+   // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n#loading-locales)
+
    return (
-      <TypesafeI18n initialLocale="en">
+      <TypesafeI18n locale="en">
 
          <!-- your app goes here -->
 
@@ -93,7 +95,7 @@ export default Greeting
 
 ### TypesafeI18n
 
-When running the [generator](https://github.com/ivanhofer/typesafe-i18n#typesafety), the file `i18n-react.tsx` will export a React component you can wrap around your application. It accepts the (optional) prop `initialLocale` where you can pass a locale to initialize the context.
+When running the [generator](https://github.com/ivanhofer/typesafe-i18n#typesafety), the file `i18n-react.tsx` will export a React component you can wrap around your application. It accepts the (optional) prop `locale` where you can pass a locale to initialize the context.
 
 ```jsx
 import React from 'react'
@@ -101,8 +103,10 @@ import TypesafeI18n from './i18n/i18n-react'
 
 function App() {
 
+   // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n#loading-locales)
+
    return (
-      <TypesafeI18n initialLocale="en">
+      <TypesafeI18n locale="en">
 
          <!-- your app goes here -->
 
