@@ -7,9 +7,9 @@
   "devDependencies": {
     "@rollup/pluginutils": "^4.1.2",
     "astring": "^1.8.1",
-    "esbuild": "^0.14.21",
+    "esbuild": "^0.14.23",
     "estree-walker": "^3.0.1",
-    "rollup": "^2.67.2",
+    "rollup": "^2.67.3",
     "source-map": "^0.7.3",
     "typescript": "^4.5.5"
   }
