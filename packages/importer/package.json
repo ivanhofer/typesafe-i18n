@@ -8,7 +8,7 @@
     "test:update-generated-files": "tsm test/snapshots/update.ts"
   },
   "devDependencies": {
-    "esbuild": "^0.14.21",
+    "esbuild": "^0.14.23",
     "tiny-glob": "^0.2.9",
     "typescript": "^4.5.5"
   }
