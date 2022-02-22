@@ -16,7 +16,7 @@
 :baby_chick: [lightweight](#sizes) (~1kb)\
 :ok_hand: [easy to use syntax](#syntax)\
 :running: [fast and efficient](#performance)\
-:safety_vest: [prevents you from making mistakes](#typesafety)\
+:safety_vest: [prevents you from making mistakes](#typesafety) (also in [plain JavaScript projects](#jsdoc))\
 :construction_worker: [creates boilerplate code](#folder-structure) for you\
 :speech_balloon: [supports plural rules](#plural)\
 :date: allows [formatting of values](#formatters) e.g. locale-dependent date or number formats\
@@ -85,6 +85,10 @@
 ```bash
 npm install typesafe-i18n
 ```
+
+### changelog
+
+The changelog can be found [here](https://github.com/ivanhofer/typesafe-i18n/blob/main/CHANGELOG.md)
 
 #### migrations
 
