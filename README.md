@@ -1717,6 +1717,54 @@ The [generator](#typesafety) creates some helpful wrappers for you. If you want 
 Yes, you can configure `i18n-ally` like [this](https://github.com/lokalise/i18n-ally/issues/678#issuecomment-947338325). There is currently also an open [`PR`](https://github.com/lokalise/i18n-ally/pull/681) that will add official support for `typesafe-i18n`.
 
 ---
+### How can I access a translation dynamically?
+
+When you want to dynamically access a translation, you can use the usual JavaScript syntax to access a property via a variable (`myObject[myVariable]`).
+
+1. define your translations
+```ts
+// i18n/en.ts
+import type { BaseTranslation } from '../i18n-types'
+
+const en: BaseTranslation = {
+   category: {
+      simple: {
+         title: 'Simple title',
+         description: 'I am a description for the "simple" category',
+      },
+      advanced: {
+         title: 'Advanced title',
+         description: 'I am a description for the "advanced" category',
+      }
+   }
+}
+
+export default en
+```
+
+2. use it in your components
+
+```svelte
+<script lang="ts">
+   // Component.svelte
+
+   import LL from '$i18n/i18n-svelte'
+   import type { Translation } from '$i18n/i18n-types'
+
+   // ! do not type it as `string`
+   // by restricting the type, you don't loose the typesafety features
+   export let category: keyof Translation['category'] = 'simple'
+</script>
+
+<h2>{$LL.category[category].title()}
+
+<p>
+   {$LL.category[category].description()}
+<p>
+```
+
+
+---
 ### How do I render a component inside a Translation?
 
 By default `typesafe-i18n` at this time does not provide such a functionality. But you could easily write a function like this:
