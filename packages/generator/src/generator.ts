@@ -1,3 +1,4 @@
+import { execSync } from 'child_process'
 import { watch } from 'chokidar'
 import { resolve } from 'path'
 import ts from 'typescript'
@@ -33,14 +34,30 @@ const getBaseTranslations = async (
 	return translations
 }
 
+const runCommandAfterGenerator = (runAfterGenerator: string) => {
+	logger.info(`running command '${runAfterGenerator}'`)
+
+	const output = execSync(runAfterGenerator).toString()
+	logger.info(
+		'output: \n>\n' +
+			output
+				.split('\n')
+				.map((line) => `> ${line}`)
+				.join('\n'),
+	)
+}
+
 const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, version: TypescriptVersion) => {
+	const currentDebounceCounter = debounceCounter
+	disableChangeDetection = true
+
 	if (first) {
 		first = false
 	} else {
 		logger.info('files were modified => looking for changes ...')
 	}
 
-	const { baseLocale, tempPath, outputPath } = config
+	const { baseLocale, tempPath, outputPath, runAfterGenerator } = config
 
 	const locales = await getAllLanguages(outputPath)
 	const namespaces = findAllNamespacesForLocale(baseLocale, outputPath)
@@ -61,10 +78,15 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 		logger.warn(message)
 	}
 
+	runAfterGenerator && runCommandAfterGenerator(runAfterGenerator)
+
 	logger.info('... all files are up to date')
+
+	setTimeout(() => currentDebounceCounter === debounceCounter && (disableChangeDetection = false), 1000)
 }
 
 let debounceCounter = 0
+let disableChangeDetection = false
 
 const debounce = (callback: () => void) =>
 	setTimeout(
@@ -93,7 +115,7 @@ export const startGenerator = async (config?: GeneratorConfig, watchFiles = true
 
 	await createPathIfNotExits(outputPath)
 
-	watchFiles && watch(outputPath).on('all', () => debounce(onChange))
+	watchFiles && watch(outputPath).on('all', () => !disableChangeDetection && debounce(onChange))
 
 	logger.info(
 		`generating files for ${
