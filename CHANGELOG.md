@@ -3,11 +3,16 @@
 
 # Version 4
 
+## 4.2.0 (2022-02-22)
+
+Feature:
+ - provide a `runAfterGenerator` hook [#185](https://github.com/ivanhofer/typesafe-i18n/discussions/185)
+
 ## 4.1.5 (2022-02-17)
 ## 4.1.4 (2022-02-17)
 
 Fix:
- - remove sourcemaps from generated bundle [179](https://github.com/ivanhofer/typesafe-i18n/issues/179)
+ - remove sourcemaps from generated bundle [#179](https://github.com/ivanhofer/typesafe-i18n/issues/179)
 
 ## 4.1.3 (2022-02-16)
 
@@ -22,7 +27,7 @@ Bugfix:
 ## 4.1.1 (2022-02-11)
 
 Bugfix:
- - translation breaks with key called name `name` #170(https://github.com/ivanhofer/typesafe-i18n/issues/170)
+ - translation breaks with key called name `name` [#170](https://github.com/ivanhofer/typesafe-i18n/issues/170)
 
 ## 4.1.0 (2022-02-11)
 

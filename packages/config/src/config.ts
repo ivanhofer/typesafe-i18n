@@ -42,6 +42,7 @@ export const getConfigWithDefaultValues = async (
 
 	generateOnlyTypes: false,
 	banner: '/* eslint-disable */',
+	runAfterGenerator: undefined,
 	...config,
 	...(shouldReadConfig ? await readConfig() : {}),
 })

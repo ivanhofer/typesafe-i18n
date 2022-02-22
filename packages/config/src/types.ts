@@ -23,6 +23,7 @@ export type GeneratorConfig = {
 	generateOnlyTypes?: boolean
 
 	banner?: string
+	runAfterGenerator?: string | undefined
 }
 
 export type RollupConfig = {
@@ -43,4 +44,5 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 
 	generateOnlyTypes: boolean
 	banner: string
+	runAfterGenerator: string | undefined
 }
