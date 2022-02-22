@@ -538,6 +538,7 @@ The available options are:
 | [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                                                             | `'TypeScript'`                                |
 | [esmImports](#esmImports)                                 | `boolean`                                                                                        | `false`                                       |
 | [generateOnlyTypes](#generateOnlyTypes)                   | `boolean`                                                                                        | `false`                                       |
+| [runAfterGenerator](#runAfterGenerator)                   | `string` &#124; `undefined`                                                                      | `undefined`                                   |
 | [banner](#banner)                                         | `string`                                                                                         | `'/* eslint-disable */'`                      |
 | [outputPath](#outputPath)                                 | `string`                                                                                         | `'./src/i18n/'`                               |
 | [typesFileName](#typesFileName)                           | `string`                                                                                         | `'i18n-types'`                                |
@@ -567,6 +568,10 @@ If `true` generated files will import other files with the `.js` file extension.
 #### `generateOnlyTypes`
 
 If you don't want to use the auto-generated helpers and instead write your own wrappers, you can set this option to `true`.
+
+#### `runAfterGenerator`
+
+This hook allows you to e.g. run a code formatting/linting command after the generator completes. When a command is provided, a [`child_process`](https://nodejs.org/api/child_process.html#child_processexeccommand-options-callback) gets spawned with that command e.g. `npm run prettier --write "src/i18n"`
 
 #### `banner`
 
