@@ -3,6 +3,11 @@
 
 # Version 4
 
+## 4.2.1 (2022-02-23)
+
+Fix:
+ - remove double slash ('//') from generator logs
+
 ## 4.2.0 (2022-02-22)
 
 Feature:
