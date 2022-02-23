@@ -6,7 +6,7 @@
 ## 4.2.2 (2022-02-23)
 
 Fix:
- -
+ - add missing await on writes of new files
 
 ## 4.2.1 (2022-02-23)
 
