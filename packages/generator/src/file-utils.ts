@@ -77,7 +77,7 @@ const getFileName = (path: string, file: string) => {
 export const writeNewFile = async (path: string, file: string, content: string): Promise<void> => {
 	await createPathIfNotExits(path)
 
-	writeFile(getFileName(path, file), content)
+	await writeFile(getFileName(path, file), content)
 
 	logger.info(`generated file: '${path}${path.endsWith('/') ? '' : '/'}${file}'`)
 }
