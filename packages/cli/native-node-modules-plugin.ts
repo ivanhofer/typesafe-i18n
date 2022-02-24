@@ -1,4 +1,4 @@
-import { Plugin } from 'esbuild'
+import type { Plugin } from 'esbuild'
 import path from 'path'
 
 // Source: https://github.com/evanw/esbuild/issues/1051#issuecomment-806325487
