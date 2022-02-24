@@ -146,5 +146,9 @@
 	"funding": {
 		"type": "github",
 		"url": "https://github.com/sponsors/ivanhofer"
+	},
+	"volta": {
+		"node": "16.14.0",
+		"npm": "8.5.1"
 	}
 }
