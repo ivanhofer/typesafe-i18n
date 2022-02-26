@@ -78,7 +78,7 @@ export const loadLocaleAsync = async (locale${type('Locales')}) => {
 		'Translations',
 		jsDocType(
 			'unknown',
-			`(await (localeTranslationLoaders[locale])()).default${typeCast('unknown')}${typeCast('Translations')}`,
+			`(await localeTranslationLoaders[locale]()).default${typeCast('unknown')}${typeCast('Translations')}`,
 		),
 	)}
 	loadFormatters(locale)

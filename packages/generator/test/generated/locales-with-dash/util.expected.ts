@@ -21,7 +21,11 @@ export const loadedFormatters = {} as Record<Locales, Formatters>
 export const i18nString = (locale: Locales) => initI18nString<Locales, Formatters>(locale, loadedFormatters[locale])
 
 export const i18nObject = (locale: Locales) =>
-	initI18nObject<Locales, Translations, TranslationFunctions, Formatters>(locale, loadedLocales[locale], loadedFormatters[locale])
+	initI18nObject<Locales, Translations, TranslationFunctions, Formatters>(
+		locale,
+		loadedLocales[locale],
+		loadedFormatters[locale]
+	)
 
 export const i18n = () => initI18n<Locales, Translations, TranslationFunctions, Formatters>(loadedLocales, loadedFormatters)
 

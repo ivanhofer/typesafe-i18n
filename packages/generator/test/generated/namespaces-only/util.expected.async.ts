@@ -18,7 +18,7 @@ const localeNamespaceLoaders = {
 export const loadLocaleAsync = async (locale: Locales) => {
 	if (loadedLocales[locale]) return
 
-	loadedLocales[locale] = (await (localeTranslationLoaders[locale])()).default as unknown as Translations
+	loadedLocales[locale] = (await localeTranslationLoaders[locale]()).default as unknown as Translations
 	loadFormatters(locale)
 }
 

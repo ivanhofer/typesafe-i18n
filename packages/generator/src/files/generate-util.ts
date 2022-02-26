@@ -78,12 +78,11 @@ export const i18nString = (locale${type('Locales')}) => initI18nString${generics
 
 ${jsDocFunction('TranslationFunctions', { type: 'Locales', name: 'locale' })}
 export const i18nObject = (locale${type('Locales')}) =>
-	initI18nObject${generics(
-		'Locales',
-		'Translations',
-		'TranslationFunctions',
-		'Formatters',
-	)}(locale, loadedLocales[locale], loadedFormatters[locale])
+	initI18nObject${generics('Locales', 'Translations', 'TranslationFunctions', 'Formatters')}(
+		locale,
+		loadedLocales[locale],
+		loadedFormatters[locale]
+	)
 
 ${jsDocFunction('LocaleTranslationFunctions')}
 export const i18n = () => initI18n${generics(

@@ -42,7 +42,11 @@ export const i18nString = (locale) => initI18nString(locale, loadedFormatters[lo
  * @return { TranslationFunctions }
  */
 export const i18nObject = (locale) =>
-	initI18nObject(locale, loadedLocales[locale], loadedFormatters[locale])
+	initI18nObject(
+		locale,
+		loadedLocales[locale],
+		loadedFormatters[locale]
+	)
 
 /**
  * @return { LocaleTranslationFunctions }
