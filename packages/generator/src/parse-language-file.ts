@@ -3,6 +3,7 @@ import { isTruthy } from 'typesafe-utils'
 import ts from 'typescript'
 import type { BaseTranslation } from '../../runtime/src'
 import type { Locale } from '../../runtime/src/core'
+import { fileEnding } from './output-handler'
 import {
 	containsFolders,
 	createPathIfNotExits,
@@ -11,9 +12,10 @@ import {
 	getDirectoryStructure,
 	getFiles,
 	importFile,
-} from './file-utils'
-import { logger } from './generator-util'
-import { fileEnding } from './output-handler'
+} from './utils/file.utils'
+import { logger } from './utils/logger'
+
+// TODO: use esbuild instead of tsc
 
 /**
  * looks for the location of the compiled 'index.js' file

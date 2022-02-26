@@ -1,7 +1,5 @@
 import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
 import type { Locale } from '../../../runtime/src/core'
-import { writeFileIfContainsChanges } from '../file-utils'
-import { prettify } from '../generator-util'
 import {
 	generics,
 	importTypes,
@@ -15,6 +13,8 @@ import {
 	type,
 	typeCast,
 } from '../output-handler'
+import { writeFileIfContainsChanges } from '../utils/file.utils'
+import { prettify } from '../utils/generator.utils'
 
 const getUtil = (config: GeneratorConfigWithDefaultValues, locales: Locale[]): string => {
 	const { typesFileName, baseLocale, banner } = config

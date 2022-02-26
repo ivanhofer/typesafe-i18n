@@ -6,14 +6,81 @@ import { generateReactAdapter } from './files/generate-adapter-react'
 import { generateSvelteAdapter } from './files/generate-adapter-svelte'
 import { generateVueAdapter } from './files/generate-adapter-vue'
 import { generateFormattersTemplate } from './files/generate-template-formatters'
+import { generateLocaleTemplate } from './files/generate-template-locale'
+import { generateNamespaceTemplate } from './files/generate-template-namespace'
 import { generateCustomTypesTemplate } from './files/generate-template-types'
 import { generateTypes } from './files/generate-types'
 import { generateUtil } from './files/generate-util'
 import { generateAsyncUtil } from './files/generate-util-async'
 import { generateSyncUtil } from './files/generate-util-sync'
-import { generateDictionaryFiles, generateNamespaceFiles } from './generate-dictionary'
-import { logger as defaultLogger, Logger, TypescriptVersion } from './generator-util'
 import { configureOutputHandler } from './output-handler'
+import type { TypescriptVersion } from './utils/generator.utils'
+import { logger as defaultLogger, Logger } from './utils/logger'
+import { findAllNamespacesForLocale } from './utils/namespaces.utils'
+
+export const generateNamespaceFiles = async (
+	config: GeneratorConfigWithDefaultValues,
+	locales: Locale[] = [],
+	namespaces: string[] = [],
+	forceOverride: boolean,
+): Promise<void> => {
+	const localesToCheck = locales.filter((locale) => locale !== config.baseLocale)
+
+	const promises: Promise<unknown>[] = []
+	localesToCheck.forEach((locale) => {
+		const foundNamespaces = findAllNamespacesForLocale(locale, config.outputPath)
+		const missingNamespaces = namespaces.filter((namespace) => forceOverride || !foundNamespaces.includes(namespace))
+
+		missingNamespaces.forEach((missingNamespace) =>
+			promises.push(
+				generateNamespaceTemplate(config, locale, missingNamespace, undefined, 'TODO: insert translations'),
+			),
+		)
+	})
+
+	await Promise.all(promises)
+}
+
+const generateDictionaryFiles = async (
+	config: GeneratorConfigWithDefaultValues = {} as GeneratorConfigWithDefaultValues,
+	forceOverride: boolean,
+) => {
+	if (!forceOverride) return
+
+	const dummyTranslations = {
+		en: 'Hi {name}! Please leave a star if you like this project: https://github.com/ivanhofer/typesafe-i18n',
+		de: 'Hallo {name}! Bitte hinterlasse einen Stern, wenn dir das Projekt gefällt: https://github.com/ivanhofer/typesafe-i18n',
+	}
+
+	const primaryLocale = config.baseLocale.startsWith('de') ? 'de' : 'en'
+	const secondaryLocale = primaryLocale === 'de' ? 'en' : 'de'
+
+	const promises: Promise<unknown>[] = []
+
+	promises.push(
+		generateLocaleTemplate(
+			config,
+			config.baseLocale,
+			{
+				HI: dummyTranslations[primaryLocale].replace('{name}', '{name:string}'),
+			},
+			'TODO: your translations go here',
+		),
+	)
+
+	promises.push(
+		generateLocaleTemplate(
+			config,
+			secondaryLocale,
+			{
+				HI: dummyTranslations[secondaryLocale],
+			},
+			'this is an example Translation, just rename or delete this folder if you want',
+		),
+	)
+
+	await Promise.all(promises)
+}
 
 export const generate = async (
 	translations: BaseTranslation | BaseTranslation[],

@@ -1,7 +1,7 @@
 import path from 'path'
 import { getConfigWithDefaultValues } from '../../../config/src/config'
 import type { Adapters, GeneratorConfig } from '../../../config/src/types'
-import { doesPathExist } from '../../../generator/src/file-utils'
+import { doesPathExist } from '../../../generator/src/utils/file.utils'
 import { getDependencyList, isEsmProject } from './package-json'
 
 const useAdapterWhenDependenciesContain =

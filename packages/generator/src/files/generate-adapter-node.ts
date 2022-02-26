@@ -1,7 +1,7 @@
 import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
-import { writeFileIfContainsChanges } from '../file-utils'
-import { prettify } from '../generator-util'
 import { OVERRIDE_WARNING, relativeFileImportPath, tsCheck } from '../output-handler'
+import { writeFileIfContainsChanges } from '../utils/file.utils'
+import { prettify } from '../utils/generator.utils'
 
 const getNodeUtils = ({ utilFileName, banner }: GeneratorConfigWithDefaultValues) => {
 	return `${OVERRIDE_WARNING}${tsCheck}

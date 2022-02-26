@@ -6,12 +6,13 @@ import { getConfigWithDefaultValues, readConfig } from '../../config/src/config'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../../config/src/types'
 import type { BaseTranslation } from '../../runtime/src'
 import type { Locale } from '../../runtime/src/core'
-import { createPathIfNotExits } from './file-utils'
-import { findAllNamespacesForLocale } from './generate-dictionary'
 import { generate } from './generate-files'
-import { createLogger, Logger, parseTypescriptVersion, TypescriptVersion } from './generator-util'
 import { configureOutputHandler, shouldGenerateJsDoc } from './output-handler'
 import { getAllLanguages, parseLanguageFile } from './parse-language-file'
+import { createPathIfNotExits } from './utils/file.utils'
+import { parseTypescriptVersion, TypescriptVersion } from './utils/generator.utils'
+import { createLogger, Logger } from './utils/logger'
+import { findAllNamespacesForLocale } from './utils/namespaces.utils'
 
 let logger: Logger
 let first = true

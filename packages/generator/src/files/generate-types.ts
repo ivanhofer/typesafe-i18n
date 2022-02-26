@@ -20,15 +20,17 @@ import { parseRawText } from '../../../parser/src/index'
 import type { ArgumentPart } from '../../../parser/src/types'
 import { BaseTranslation, isPluralPart, Locale } from '../../../runtime/src/core'
 import { partAsStringWithoutTypes, partsAsStringWithoutTypes } from '../../../runtime/src/core-utils'
-import { writeFileIfContainsChanges } from '../file-utils'
-import { logger, Logger, prettify, wrapObjectKeyIfNeeded } from '../generator-util'
 import {
 	fileEndingForTypesFile,
 	importTypeStatement,
 	OVERRIDE_WARNING,
 	supportsTemplateLiteralTypes,
 } from '../output-handler'
-import { getWrappedString } from './generate-template-locale'
+import { getWrappedString } from '../utils/dictionary.utils'
+import { writeFileIfContainsChanges } from '../utils/file.utils'
+import { prettify, wrapObjectKeyIfNeeded } from '../utils/generator.utils'
+import { logger, Logger } from '../utils/logger'
+import { getTypeNameForNamespace } from '../utils/namespaces.utils'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -338,15 +340,6 @@ const createJsDocsParamString = ([paramName, { types, optional }]: [string, Type
 	 * @param {${types.join(' | ')}} ${optional ? `[${paramName}]` : paramName}`
 
 // --------------------------------------------------------------------------------------------------------------------
-
-export const getTypeNameForNamespace = (namespace: string) => {
-	const transformedNamespace = namespace
-		.split(/[\s_-]/g)
-		.map((part) => `${part.substring(0, 1).toUpperCase()}${part.substring(1)}`)
-		.join('')
-
-	return `Namespace${transformedNamespace}Translation`
-}
 
 const createTranslationType = (
 	parsedTranslations: ParsedResult[],

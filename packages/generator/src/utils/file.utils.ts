@@ -2,8 +2,8 @@ import { promises as fsPromises } from 'fs'
 import { dirname, join, resolve } from 'path'
 import type { JsonObject } from 'type-fest'
 import { pathToFileURL } from 'url'
-import { logger } from './generator-util'
-import { fileEnding } from './output-handler'
+import { fileEnding } from '../output-handler'
+import { logger } from './logger'
 
 const { readFile: read, readdir, writeFile: write, mkdir, stat, rm } = fsPromises
 

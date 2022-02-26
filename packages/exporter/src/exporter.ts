@@ -2,10 +2,11 @@ import { resolve } from 'path'
 import ts from 'typescript'
 import { getConfigWithDefaultValues } from '../../config/src/config'
 import type { GeneratorConfigWithDefaultValues } from '../../config/src/types'
-import { findAllNamespacesForLocale } from '../../generator/src/generate-dictionary'
-import { createLogger, parseTypescriptVersion } from '../../generator/src/generator-util'
 import { configureOutputHandler } from '../../generator/src/output-handler'
 import { getAllLanguages, parseLanguageFile } from '../../generator/src/parse-language-file'
+import { parseTypescriptVersion } from '../../generator/src/utils/generator.utils'
+import { createLogger } from '../../generator/src/utils/logger'
+import { findAllNamespacesForLocale } from '../../generator/src/utils/namespaces.utils'
 import type { BaseTranslation, ExportLocaleMapping, Locale } from '../../runtime/src/core'
 
 const logger = createLogger(console, true)

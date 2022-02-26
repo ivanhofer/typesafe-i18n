@@ -6,7 +6,7 @@ import { getConfigWithDefaultValues } from '../../config/src/config'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues, OutputFormats } from '../../config/src/types'
 import type { BaseTranslation, Locale } from '../../runtime/src/core'
 import { generate } from '../src/generate-files'
-import { parseTypescriptVersion, TypescriptVersion } from '../src/generator-util'
+import { parseTypescriptVersion, TypescriptVersion } from '../src/utils/generator.utils'
 
 const test = suite('types')
 

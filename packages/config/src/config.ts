@@ -1,5 +1,5 @@
 import path from 'path'
-import { doesPathExist, importFile, writeConfigFile } from '../../generator/src/file-utils'
+import { doesPathExist, importFile, writeConfigFile } from '../../generator/src/utils/file.utils'
 import { version } from '../../version'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './types'
 import { validateConfig } from './validation'
