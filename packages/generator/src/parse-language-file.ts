@@ -1,84 +1,24 @@
-import { resolve, sep } from 'path'
-import { isTruthy } from 'typesafe-utils'
-import ts from 'typescript'
+import { build } from 'esbuild'
+import { resolve } from 'path'
 import type { BaseTranslation } from '../../runtime/src'
 import type { Locale } from '../../runtime/src/core'
 import { fileEnding } from './output-handler'
-import {
-	containsFolders,
-	createPathIfNotExits,
-	deleteFolderRecursive,
-	doesPathExist,
-	getDirectoryStructure,
-	getFiles,
-	importFile,
-} from './utils/file.utils'
+import { createPathIfNotExits, deleteFolderRecursive, doesPathExist, getFiles, importFile } from './utils/file.utils'
 import { logger } from './utils/logger'
 
-// TODO: use esbuild instead of tsc
+const transpileTypescriptFiles = async (languageFilePath: string, tempPath: string): Promise<string> => {
+	const outfile = resolve(tempPath, 'index.mjs')
 
-/**
- * looks for the location of the compiled 'index.js' file
- * if the 'index.ts' file imports something from outside it's directory, we need to find the correct path to the base location file
- */
-const detectLocationOfCompiledBaseTranslation = async (
-	outputPath: string,
-	locale: string,
-	tempPath: string,
-): Promise<string> => {
-	if (!containsFolders(tempPath)) return ''
+	await build({
+		entryPoints: [languageFilePath],
+		outfile,
+		bundle: true,
+		platform: 'node',
+		target: 'esnext',
+		format: 'esm',
+	}).catch(() => void 0)
 
-	const directory = await getDirectoryStructure(tempPath)
-
-	// contains the path from <root> to base locale file
-	const outputPathParts = resolve(outputPath, locale).replace(resolve(), '').split(sep).filter(isTruthy)
-
-	for (let i = 0; i < outputPathParts.length; i++) {
-		const part = outputPathParts[i] as string
-		const subDirectory = directory[part] as Record<string, unknown> | undefined
-		if (subDirectory) {
-			let outputPathPartsRest = [...outputPathParts].slice(i + 1)
-
-			let isPathValid = true
-			let subDirectoryOfCurrentSection = subDirectory
-			const subPaths = [part]
-			while (isPathValid && outputPathPartsRest.length) {
-				// we need to find the full matching path
-				// e.g. `src/path/i18n/en` is invalid if the base locale is located inside `src/i18n/en`
-				const subSubDirectoryOfCurrentSection = subDirectoryOfCurrentSection[
-					outputPathPartsRest[0] as string
-				] as Record<string, unknown>
-				if (subSubDirectoryOfCurrentSection) {
-					subPaths.push(outputPathPartsRest[0] as string)
-					outputPathPartsRest = outputPathPartsRest.slice(1)
-					subDirectoryOfCurrentSection = subSubDirectoryOfCurrentSection
-				} else {
-					isPathValid = false
-				}
-			}
-
-			if (isPathValid) {
-				i += outputPathPartsRest.length
-				return [...subPaths, ''].join('/')
-			}
-		}
-	}
-
-	return ''
-}
-
-const transpileTypescriptFiles = async (
-	outputPath: string,
-	languageFilePath: string,
-	locale: string,
-	tempPath: string,
-): Promise<string> => {
-	const program = ts.createProgram([languageFilePath], { outDir: tempPath, allowJs: true, resolveJsonModule: true })
-	program.emit()
-
-	const baseTranslationPath = await detectLocationOfCompiledBaseTranslation(outputPath, locale, tempPath)
-
-	return resolve(tempPath, `${baseTranslationPath}index.js`)
+	return outfile
 }
 
 export const parseLanguageFile = async (
@@ -99,7 +39,7 @@ export const parseLanguageFile = async (
 
 	await createPathIfNotExits(tempPath)
 
-	const importPath = await transpileTypescriptFiles(outputPath, originalPath, fileName, tempPath)
+	const importPath = await transpileTypescriptFiles(originalPath, tempPath)
 
 	if (!importPath) {
 		return null

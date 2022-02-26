@@ -17,7 +17,7 @@ build({
 	bundle: true,
 	outfile: getPath('../../cli/typesafe-i18n.mjs'),
 	platform: 'node',
-	external: ['typescript'],
+	external: ['typescript', 'esbuild'],
 	banner: {
 		js: `#!/usr/bin/env node
 import { createRequire } from 'module'

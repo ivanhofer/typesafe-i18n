@@ -3,6 +3,7 @@
   "devDependencies": {
     "@types/esutils": "^2.0.0",
     "chokidar": "^3.5.3",
+    "esbuild": "^0.14.23",
     "esutils": "^2.0.3",
     "kleur": "^4.1.4",
     "require-self": "^0.2.3",
