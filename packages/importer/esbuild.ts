@@ -18,7 +18,7 @@ formats.forEach((format) => {
 		bundle: true,
 		outfile: getPath(`../../importer/index.${format === 'esm' ? 'm' : 'c'}js`),
 		platform: 'node',
-		external: ['typescript'],
+		external: ['typescript', 'esbuild'],
 		banner:
 			format === 'esm'
 				? {

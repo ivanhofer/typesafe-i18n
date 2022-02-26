@@ -15,7 +15,7 @@ build({
 	bundle: true,
 	outfile: getPath('../../webpack/webpack-plugin-typesafe-i18n.js'),
 	platform: 'node',
-	external: ['typescript', 'chokidar'],
+	external: ['typescript', 'chokidar', 'esbuild'],
 	format: 'cjs',
 	sourcemap: watch,
 	watch,

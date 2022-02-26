@@ -19,7 +19,7 @@ files.forEach((file) => {
 		bundle: true,
 		outfile: getPath(`../../rollup/${file.replace('.ts', '.js')}`),
 		platform: 'node',
-		external: ['typescript', 'chokidar'],
+		external: ['typescript', 'chokidar', 'esbuild'],
 		format: 'cjs',
 		sourcemap: watch,
 		watch,
