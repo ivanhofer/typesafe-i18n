@@ -2,22 +2,6 @@ import { keyword } from 'esutils'
 import kleur from 'kleur'
 import type { Arguments } from '../../runtime/src/core'
 
-// TODO: use a single TypeScript permutation type
-
-export const getPermutations = <T>(rest: T[], permutedArray: T[] = []): T[][] => {
-	if (rest.length === 0) {
-		return [permutedArray]
-	}
-
-	return rest
-		.map((_, i) => {
-			const curr = rest.slice()
-			const next = curr.splice(i, 1)
-			return getPermutations(curr.slice(), permutedArray.concat(next))
-		})
-		.flat()
-}
-
 // --------------------------------------------------------------------------------------------------------------------
 
 export type TypescriptVersion = {

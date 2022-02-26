@@ -4,15 +4,12 @@ import {
 	isArray,
 	isArrayNotEmpty,
 	isNotUndefined,
-	isNotZero,
 	isObject,
 	isPropertyFalsy,
 	isPropertyTrue,
 	isString,
 	isTruthy,
 	not,
-	pick,
-	sortNumberASC,
 	sortStringASC,
 	sortStringPropertyASC,
 	TypeGuard,
@@ -24,7 +21,7 @@ import type { ArgumentPart } from '../../../parser/src/types'
 import { BaseTranslation, isPluralPart, Locale } from '../../../runtime/src/core'
 import { partAsStringWithoutTypes, partsAsStringWithoutTypes } from '../../../runtime/src/core-utils'
 import { writeFileIfContainsChanges } from '../file-utils'
-import { getPermutations, logger, Logger, prettify, wrapObjectKeyIfNeeded } from '../generator-util'
+import { logger, Logger, prettify, wrapObjectKeyIfNeeded } from '../generator-util'
 import {
 	fileEndingForTypesFile,
 	importTypeStatement,
