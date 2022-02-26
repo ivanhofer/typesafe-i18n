@@ -1,5 +1,4 @@
 import {
-	filterDuplicates,
 	filterDuplicatesByKey,
 	isArray,
 	isArrayNotEmpty,
@@ -12,7 +11,6 @@ import {
 	not,
 	sortStringASC,
 	sortStringPropertyASC,
-	TypeGuard,
 	uniqueArray,
 } from 'typesafe-utils'
 import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
@@ -20,62 +18,29 @@ import { parseRawText } from '../../../parser/src/index'
 import type { ArgumentPart } from '../../../parser/src/types'
 import { BaseTranslation, isPluralPart, Locale } from '../../../runtime/src/core'
 import { partAsStringWithoutTypes, partsAsStringWithoutTypes } from '../../../runtime/src/core-utils'
+import { COMMA_SEPARATION, NEW_LINE, NEW_LINE_INDENTED, PIPE_SEPARATION } from '../constants'
 import {
 	fileEndingForTypesFile,
 	importTypeStatement,
 	OVERRIDE_WARNING,
 	supportsTemplateLiteralTypes,
 } from '../output-handler'
+import {
+	Arg,
+	isParsedResultEntry,
+	JsDocInfo,
+	JsDocInfos,
+	ParsedResult,
+	ParsedResultEntry,
+	TypeInformation,
+	Types,
+} from '../types'
 import { getWrappedString } from '../utils/dictionary.utils'
 import { writeFileIfContainsChanges } from '../utils/file.utils'
 import { prettify, wrapObjectKeyIfNeeded } from '../utils/generator.utils'
 import { logger, Logger } from '../utils/logger'
 import { getTypeNameForNamespace } from '../utils/namespaces.utils'
-
-// --------------------------------------------------------------------------------------------------------------------
-// types --------------------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------------------------------------
-
-type Arg = {
-	key: string
-	formatters?: string[]
-	pluralOnly?: boolean
-	optional?: boolean
-}
-
-type TypeInformation = {
-	types: string[]
-	optional?: boolean
-}
-
-type Types = {
-	[key: string]: TypeInformation
-}
-
-type JsDocInfos = {
-	[key: string]: JsDocInfo
-}
-
-type JsDocInfo = {
-	text: string
-	types: Types
-	pluralOnlyArgs: string[]
-}
-
-type ParsedResultEntry = {
-	key: string
-	text: string
-	textWithoutTypes: string
-	args?: Arg[]
-	types: Types
-	parentKeys: string[]
-}
-
-type ParsedResult =
-	| ParsedResultEntry
-	| {
-			[key: string]: ParsedResult[]
-	  }
+import { createTypeImports } from './generate-types/external-type-imports'
 
 // --------------------------------------------------------------------------------------------------------------------
 // implementation -----------------------------------------------------------------------------------------------------
@@ -97,13 +62,6 @@ const createUnionType = (entries: string[]) =>
 		(locale) => `
 	| '${locale}'`,
 	)
-
-const NEW_LINE = `
-`
-const NEW_LINE_INDENTED = `
-	`
-const COMMA_SEPARATION = ', '
-const PIPE_SEPARATION = ' | '
 
 const mapToString = <T>(items: T[], mappingFunction: (item: T) => string): string => items.map(mappingFunction).join('')
 
@@ -250,51 +208,6 @@ const validateTranslation = (key: string, types: Types, logger: Logger): boolean
 const createLocalesType = (locales: string[], baseLocale: string) => {
 	const usedLocales = locales?.length ? locales : [baseLocale]
 	return `export type Locales =${wrapUnionType(usedLocales)}`
-}
-
-// --------------------------------------------------------------------------------------------------------------------
-
-const BASE_TYPES = [
-	'boolean',
-	'number',
-	'bigint',
-	'string',
-	'Date',
-	'object',
-	'undefined',
-	'null',
-	'unknown',
-	'LocalizedString',
-].flatMap((t: string) => [t, `${t}[]`, `Array<${t}>`])
-
-const isParsedResultEntry = <T extends ParsedResult>(entry: T): entry is TypeGuard<ParsedResultEntry, T> =>
-	isArray(entry.parentKeys) && isObject(entry.types)
-
-const extractTypes = (parsedTranslations: ParsedResult[]): string[] =>
-	parsedTranslations.flatMap((parsedTranslation) => {
-		if (isParsedResultEntry(parsedTranslation)) {
-			return Object.values(parsedTranslation.types)
-				.map(({ types }) => types)
-				.flat()
-		}
-
-		return extractTypes(Object.values(parsedTranslation).flat())
-	})
-
-const createTypeImports = (parsedTranslations: ParsedResult[], typesTemplatePath: string): string => {
-	const types = extractTypes(parsedTranslations).filter(filterDuplicates)
-
-	const externalTypes = Array.from(types)
-		.filter(
-			(type) => !BASE_TYPES.includes(type) && !(type.includes('|') || type.startsWith("'") || type.endsWith("'")),
-		)
-		.sort(sortStringASC)
-
-	if (!externalTypes.length) return ''
-
-	return `
-${importTypeStatement} { ${externalTypes.join(COMMA_SEPARATION)} } from './${typesTemplatePath.replace('.ts', '')}'
-`
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -550,7 +463,7 @@ const getTypes = (
 
 	const parsedTranslations = parseTranslations(translations, logger).filter(isTruthy)
 
-	const typeImports = createTypeImports(parsedTranslations, typesTemplateFileName)
+	const externalTypeImports = createTypeImports(parsedTranslations, typesTemplateFileName)
 
 	const localesType = createLocalesType(locales, baseLocale)
 
@@ -572,7 +485,7 @@ ${banner}
 ${importTypeStatement} { BaseTranslation as BaseTranslationType${parsedTranslations.length ? ', LocalizedString' : ''}${
 		shouldImportRequiredParamsType ? ', RequiredParams' : ''
 	} } from 'typesafe-i18n'
-${typeImports}
+${externalTypeImports}
 export type BaseTranslation = BaseTranslationType${usesNamespaces ? ' & DisallowNamespaces' : ''}
 export type BaseLocale = '${baseLocale}'
 
@@ -601,7 +514,7 @@ ${translationArgsType}
 ${formattersType}
 `
 
-	return [type, !!typeImports] as [string, boolean]
+	return [type, !!externalTypeImports] as [string, boolean]
 }
 
 // --------------------------------------------------------------------------------------------------------------------
