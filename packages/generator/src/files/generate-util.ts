@@ -1,7 +1,5 @@
 import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
 import type { Locale } from '../../../runtime/src/core'
-import { writeFileIfContainsChanges } from '../file-utils'
-import { prettify } from '../generator-util'
 import {
 	generics,
 	importTypes,
@@ -15,6 +13,8 @@ import {
 	type,
 	typeCast,
 } from '../output-handler'
+import { writeFileIfContainsChanges } from '../utils/file.utils'
+import { prettify } from '../utils/generator.utils'
 
 const getUtil = (config: GeneratorConfigWithDefaultValues, locales: Locale[]): string => {
 	const { typesFileName, baseLocale, banner } = config
@@ -78,12 +78,11 @@ export const i18nString = (locale${type('Locales')}) => initI18nString${generics
 
 ${jsDocFunction('TranslationFunctions', { type: 'Locales', name: 'locale' })}
 export const i18nObject = (locale${type('Locales')}) =>
-	initI18nObject${generics(
-		'Locales',
-		'Translations',
-		'TranslationFunctions',
-		'Formatters',
-	)}(locale, loadedLocales[locale], loadedFormatters[locale])
+	initI18nObject${generics('Locales', 'Translations', 'TranslationFunctions', 'Formatters')}(
+		locale,
+		loadedLocales[locale],
+		loadedFormatters[locale]
+	)
 
 ${jsDocFunction('LocaleTranslationFunctions')}
 export const i18n = () => initI18n${generics(

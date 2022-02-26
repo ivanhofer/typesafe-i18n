@@ -1,7 +1,7 @@
 import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
-import { writeFileIfContainsChanges, writeFileIfNotExists } from '../file-utils'
-import { prettify } from '../generator-util'
 import { fileEndingForTypesFile } from '../output-handler'
+import { writeFileIfContainsChanges, writeFileIfNotExists } from '../utils/file.utils'
+import { prettify } from '../utils/generator.utils'
 
 const getCustomTypesTemplate = ({ typesFileName: typesFile }: GeneratorConfigWithDefaultValues) => {
 	return `// use this file to export your custom types; these types will be imported by './${typesFile}${fileEndingForTypesFile}'`

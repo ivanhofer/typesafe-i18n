@@ -1,4 +1,4 @@
-import { logger } from '../../generator/src/generator-util'
+import { logger } from '../../generator/src/utils/logger'
 import { version } from '../../version'
 import { readRawConfig, writeConfigToFile } from './config'
 

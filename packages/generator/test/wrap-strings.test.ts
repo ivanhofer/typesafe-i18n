@@ -1,6 +1,6 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { getWrappedString } from '../src/files/generate-template-locale'
+import { getWrappedString } from '../src/utils/dictionary.utils'
 
 const test = suite('wrap-strings')
 

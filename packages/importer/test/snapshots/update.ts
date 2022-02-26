@@ -4,7 +4,7 @@ import { readFileSync, writeFileSync } from 'fs'
 import { dirname, resolve } from 'path'
 import glob from 'tiny-glob/sync.js'
 import { fileURLToPath } from 'url'
-import { createPathIfNotExits } from '../../../generator/src/file-utils'
+import { createPathIfNotExits } from '../../../generator/src/utils/file.utils'
 
 //@ts-ignore
 const __filename = fileURLToPath(import.meta.url)

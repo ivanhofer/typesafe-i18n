@@ -1,6 +1,6 @@
 import type { Compiler, node } from 'webpack'
 import { startGenerator } from '../../generator/src/generator'
-import { createLogger } from '../../generator/src/generator-util'
+import { createLogger } from '../../generator/src/utils/logger'
 
 const logger = createLogger(console, true)
 

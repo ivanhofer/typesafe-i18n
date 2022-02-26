@@ -1,6 +1,4 @@
 import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
-import { writeFileIfContainsChanges, writeFileIfNotExists } from '../file-utils'
-import { prettify } from '../generator-util'
 import {
 	importTypes,
 	jsDocFunction,
@@ -10,6 +8,8 @@ import {
 	tsCheck,
 	type,
 } from '../output-handler'
+import { writeFileIfContainsChanges, writeFileIfNotExists } from '../utils/file.utils'
+import { prettify } from '../utils/generator.utils'
 
 const getFormattersTemplate = ({ typesFileName: typesFile }: GeneratorConfigWithDefaultValues) => {
 	return `${tsCheck}

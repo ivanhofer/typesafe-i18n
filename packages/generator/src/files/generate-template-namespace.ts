@@ -1,69 +1,11 @@
 import { join } from 'path'
 import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
 import type { BaseTranslation, Locale } from '../../../runtime/src/core'
-import { writeFileIfContainsChanges } from '../file-utils'
-import { logger, prettify, sanitizePath } from '../generator-util'
-import {
-	fileEnding,
-	importTypes,
-	jsDocImports,
-	jsDocType,
-	relativeFileImportPath,
-	shouldGenerateJsDoc,
-	tsCheck,
-	type,
-} from '../output-handler'
-import { mapTranslationsToString } from './generate-template-locale'
-import { getTypeNameForNamespace } from './generate-types'
-
-// --------------------------------------------------------------------------------------------------------------------
-
-const getNamespaceTemplate = (
-	{ typesFileName, adapter, esmImports, banner }: GeneratorConfigWithDefaultValues,
-	locale: string,
-	namespace: string,
-	isBaseLocale: boolean,
-	translations: BaseTranslation | BaseTranslation[] | undefined = undefined,
-	editHint = '',
-	showBanner = false,
-) => {
-	const typeOfDictionary = isBaseLocale ? 'BaseTranslation' : getTypeNameForNamespace(namespace)
-
-	const sanitizedLocale = sanitizePath(locale)
-	const sanitizedNamespace = sanitizePath(namespace)
-
-	const variableName = `${sanitizedLocale}_${sanitizedNamespace}`
-
-	const translationsMap =
-		(translations &&
-			`${mapTranslationsToString(translations)}
-`) ||
-		''
-
-	const hint = editHint || !translationsMap ? `	// ${editHint || 'TODO: insert translations'}` : ''
-
-	// TODO: move to `output-handler`
-	const defaultExport =
-		shouldGenerateJsDoc && adapter !== 'svelte' && !esmImports ? 'module.exports =' : 'export default'
-
-	const bannerIfNeeded = showBanner
-		? `
-${banner}`
-		: ''
-
-	return `${tsCheck}${bannerIfNeeded}
-${importTypes(relativeFileImportPath(`../../${typesFileName}`), typeOfDictionary)}
-
-${jsDocImports({ from: relativeFileImportPath(`../../${typesFileName}`), type: typeOfDictionary })}
-
-${jsDocType(typeOfDictionary)}
-const ${variableName}${type(typeOfDictionary)} = {
-${hint}${translationsMap}
-}
-
-${defaultExport} ${variableName}
-`
-}
+import { fileEnding } from '../output-handler'
+import { getDictionaryTemplate } from '../utils/dictionary.utils'
+import { writeFileIfContainsChanges } from '../utils/file.utils'
+import { prettify } from '../utils/generator.utils'
+import { logger } from '../utils/logger'
 
 export const generateNamespaceTemplate = async (
 	config: GeneratorConfigWithDefaultValues,
@@ -77,7 +19,7 @@ export const generateNamespaceTemplate = async (
 
 	const isBaseLocale = baseLocale === locale
 
-	const localeTemplate = getNamespaceTemplate(
+	const localeTemplate = getDictionaryTemplate(
 		config,
 		locale,
 		namespace,

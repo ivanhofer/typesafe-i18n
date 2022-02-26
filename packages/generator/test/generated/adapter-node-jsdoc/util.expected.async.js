@@ -22,7 +22,7 @@ const localeTranslationLoaders = {
 export const loadLocaleAsync = async (locale) => {
 	if (loadedLocales[locale]) return
 
-	loadedLocales[locale] = /** @type { Translations } */ (/** @type { unknown } */ ((await (localeTranslationLoaders[locale])()).default))
+	loadedLocales[locale] = /** @type { Translations } */ (/** @type { unknown } */ ((await localeTranslationLoaders[locale]()).default))
 	loadFormatters(locale)
 }
 

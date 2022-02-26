@@ -3,6 +3,11 @@
 
 # Version 4
 
+## 4.3.0 (2022-02-26)
+
+Feature:
+ - use generic `RequiredParams` type instead of creating it for each params-permutation
+
 ## 4.2.2 (2022-02-23)
 
 Fix:
