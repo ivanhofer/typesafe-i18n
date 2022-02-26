@@ -3,7 +3,7 @@ import { isString } from 'typesafe-utils'
 import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
 import type { BaseTranslation, Locale } from '../../../runtime/src/core'
 import { writeFileIfContainsChanges } from '../file-utils'
-import { prettify, sanitizePath } from '../generator-util'
+import { prettify, sanitizePath, wrapObjectKeyIfNeeded } from '../generator-util'
 import {
 	fileEnding,
 	importTypes,
@@ -31,10 +31,10 @@ const mapTranslationToString = (
 		BaseTranslation | BaseTranslation[] | Readonly<BaseTranslation> | Readonly<BaseTranslation[]> | string,
 	],
 ): string => {
-	const inset = new Array(level).fill(`	`).join('')
-	if (isString(value)) return `${inset}'${key}': ${getWrappedString(value)},`
+	const inset = new Array(level).fill('	').join('')
+	if (isString(value)) return `${inset}${wrapObjectKeyIfNeeded(key)}: ${getWrappedString(value)},`
 	else
-		return `${inset}'${key}': {
+		return `${inset}${wrapObjectKeyIfNeeded(key)}: {
 ${mapTranslationsToString(value, level + 1)}
 ${inset}},`
 }
