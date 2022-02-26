@@ -41,18 +41,10 @@ import { prettify, wrapObjectKeyIfNeeded } from '../utils/generator.utils'
 import { logger, Logger } from '../utils/logger'
 import { getTypeNameForNamespace } from '../utils/namespaces.utils'
 import { createTypeImports } from './generate-types/external-type-imports'
-
-// --------------------------------------------------------------------------------------------------------------------
-// implementation -----------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------------------------------------
+import { createFormattersType } from './generate-types/formatters-type'
+import { flattenToParsedResultEntry, mapToString, wrapObjectType } from './generate-types/_utils'
 
 // TODO: refactor file into multiple smaller files
-
-const wrapObjectType = <T>(array: T[], callback: () => string) =>
-	!array.length
-		? '{}'
-		: `{${callback()}
-}`
 
 const wrapUnionType = (array: string[]) => (!array.length ? ' never' : `${createUnionType(array)}`)
 
@@ -62,8 +54,6 @@ const createUnionType = (entries: string[]) =>
 		(locale) => `
 	| '${locale}'`,
 	)
-
-const mapToString = <T>(items: T[], mappingFunction: (item: T) => string): string => items.map(mappingFunction).join('')
 
 const processNestedParsedResult = (
 	items: Exclude<ParsedResult, ParsedResultEntry>,
@@ -81,15 +71,6 @@ const processNestedParsedResult = (
 	)
 
 const getNestedKey = (key: string, parentKeys: string[]) => [...parentKeys, key].join('.')
-
-const flattenToParsedResultEntry = (parsedResults: ParsedResult[]): ParsedResultEntry[] =>
-	parsedResults.flatMap((parsedResult) =>
-		isParsedResultEntry(parsedResult)
-			? parsedResult
-			: Object.entries(parsedResult).flatMap(([_, nestedParsedResults]) =>
-					flattenToParsedResultEntry(nestedParsedResults),
-			  ),
-	)
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -413,36 +394,6 @@ const mapTranslationArgs = (args: Arg[] = [], types: Types) => {
 			.join(COMMA_SEPARATION) +
 		postfix
 	)
-}
-
-// --------------------------------------------------------------------------------------------------------------------
-
-const getUniqueFormatters = (parsedTranslations: ParsedResult[]): [string, string[]][] => {
-	const map = {} as { [key: string]: string[] }
-
-	flattenToParsedResultEntry(parsedTranslations).forEach((parsedResult) => {
-		const { types, args = [] } = parsedResult
-		args.forEach(({ key, formatters }) =>
-			(formatters || [])
-				.filter((formatter) => !formatter.startsWith('{'))
-				.forEach((formatter) => (map[formatter] = [...(map[formatter] || []), ...(types[key]?.types || [])])),
-		)
-	})
-
-	return Object.entries(map).sort(sortStringPropertyASC('0'))
-}
-
-const createFormattersType = (parsedTranslations: ParsedResult[]) => {
-	const formatters = getUniqueFormatters(parsedTranslations)
-
-	return `export type Formatters = ${wrapObjectType(formatters, () =>
-		mapToString(
-			formatters,
-			([key, types]) =>
-				`
-	${wrapObjectKeyIfNeeded(key)}: (value: ${uniqueArray(types).join(' | ')}) => unknown`,
-		),
-	)}`
 }
 
 // --------------------------------------------------------------------------------------------------------------------
