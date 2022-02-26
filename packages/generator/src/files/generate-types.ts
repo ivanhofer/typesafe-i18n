@@ -1,9 +1,7 @@
 import {
-	isArray,
 	isArrayNotEmpty,
 	isNotUndefined,
 	isObject,
-	isPropertyFalsy,
 	isPropertyTrue,
 	isString,
 	isTruthy,
@@ -16,42 +14,27 @@ import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types
 import { parseRawText } from '../../../parser/src/index'
 import type { ArgumentPart } from '../../../parser/src/types'
 import { BaseTranslation, isPluralPart, Locale } from '../../../runtime/src/core'
-import { partAsStringWithoutTypes, partsAsStringWithoutTypes } from '../../../runtime/src/core-utils'
-import { NEW_LINE, PIPE_SEPARATION } from '../constants'
+import { partsAsStringWithoutTypes } from '../../../runtime/src/core-utils'
+import { REGEX_BRACKETS } from '../constants'
 import {
 	fileEndingForTypesFile,
 	importTypeStatement,
 	OVERRIDE_WARNING,
 	supportsTemplateLiteralTypes,
 } from '../output-handler'
-import { Arg, isParsedResultEntry, JsDocInfo, JsDocInfos, ParsedResult, ParsedResultEntry, Types } from '../types'
-import { getWrappedString } from '../utils/dictionary.utils'
+import { Arg, isParsedResultEntry, JsDocInfos, ParsedResult, ParsedResultEntry, Types } from '../types'
 import { writeFileIfContainsChanges } from '../utils/file.utils'
 import { prettify, wrapObjectKeyIfNeeded } from '../utils/generator.utils'
-import { logger, Logger } from '../utils/logger'
+import type { Logger } from '../utils/logger'
 import { getTypeNameForNamespace } from '../utils/namespaces.utils'
 import { createTypeImports } from './generate-types/external-type-imports'
 import { createFormattersType } from './generate-types/formatters-type'
-import { createJsDocsString } from './generate-types/jsdoc'
+import { createNamespacesTypes, validateNamespaces } from './generate-types/namespaces'
 import { createTranslationFunctionsType } from './generate-types/translation-functions'
-import {
-	flattenToParsedResultEntry,
-	getNestedKey,
-	mapToString,
-	processNestedParsedResult,
-	wrapObjectType,
-} from './generate-types/_utils'
+import { createTranslationType } from './generate-types/translations'
+import { flattenToParsedResultEntry, getNestedKey, wrapUnionType } from './generate-types/_utils'
 
 // TODO: refactor file into multiple smaller files
-
-const wrapUnionType = (array: string[]) => (!array.length ? ' never' : `${createUnionType(array)}`)
-
-const createUnionType = (entries: string[]) =>
-	mapToString(
-		entries,
-		(locale) => `
-	| '${locale}'`,
-	)
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -191,125 +174,6 @@ const createJsDocsMapping = (parsedTranslations: ParsedResult[]) => {
 }
 
 // --------------------------------------------------------------------------------------------------------------------
-
-const createTranslationType = (
-	parsedTranslations: ParsedResult[],
-	jsDocInfo: JsDocInfos,
-	nameOfType: string,
-	namespaces: string[] = [],
-): string => {
-	const parsedTranslationsWithoutNamespaces = parsedTranslations.filter((parsedResult) => {
-		const keys = Object.keys(parsedResult)
-		return keys.length > 1 || !namespaces.includes(keys[0] as string)
-	})
-
-	const translationType = `type ${nameOfType} = ${wrapObjectType(parsedTranslationsWithoutNamespaces, () =>
-		mapToString(parsedTranslationsWithoutNamespaces, (parsedResultEntry) =>
-			createTranslationTypeEntry(parsedResultEntry, jsDocInfo),
-		),
-	)}`
-
-	const parsedNamespaceTranslations = parsedTranslations.filter((parsedResult) => {
-		const keys = Object.keys(parsedResult)
-		return keys.length === 1 && namespaces.includes(keys[0] as string)
-	})
-
-	const namespaceTranslationsTypes = parsedNamespaceTranslations
-		.map((value) => {
-			return Object.entries(value).flat() as [string, ParsedResult[]]
-		})
-		.map(([namespace, parsedTranslations]) => {
-			if (!isArray(parsedTranslations)) return ''
-
-			return (
-				'export ' +
-				createTranslationType(
-					isArray(parsedTranslations) ? parsedTranslations : [parsedTranslations],
-					jsDocInfo,
-					getTypeNameForNamespace(namespace),
-				)
-			)
-		})
-
-	return `${translationType}
-
-${namespaceTranslationsTypes.join(NEW_LINE + NEW_LINE)}`
-}
-
-const validateNamespaces = (translations: BaseTranslation | BaseTranslation[], namespaces: string[]) => {
-	if (!namespaces.length) return
-
-	namespaces.forEach((namespace) => {
-		if (isString((translations as Record<string, unknown>)[namespace])) {
-			logger.error(`namespace '${namespace}' cant be a \`string\`. Must be an \`object\` or \`Array\`.`)
-		}
-	})
-}
-
-const createNamespacesTypes = (namespaces: string[]) => `
-export type Namespaces =${wrapUnionType(namespaces)}
-
-type DisallowNamespaces = {${namespaces
-	.map(
-		(namespace) => `
-	/**
-	 * reserved for '${namespace}'-namespace\\
-	 * you need to use the \`./${namespace}/index.ts\` file instead
-	 */
-	${wrapObjectKeyIfNeeded(
-		namespace,
-	)}?: "[typesafe-i18n] reserved for '${namespace}'-namespace. You need to use the \`./${namespace}/index.ts\` file instead."`,
-	)
-	.join(NEW_LINE)}
-}`
-
-const createTranslationTypeEntry = (resultEntry: ParsedResult, jsDocInfo: JsDocInfos): string => {
-	if (isParsedResultEntry(resultEntry)) {
-		const { key, args, parentKeys } = resultEntry
-
-		const nestedKey = getNestedKey(key, parentKeys)
-		const jsDocString = createJsDocsString(jsDocInfo[nestedKey] as JsDocInfo, true, false)
-		const translationType = generateTranslationType(args)
-
-		return `
-	${jsDocString}${wrapObjectKeyIfNeeded(key)}: ${translationType}`
-	}
-
-	return processNestedParsedResult(resultEntry, (parsedResultEntry) =>
-		createTranslationTypeEntry(parsedResultEntry, jsDocInfo),
-	)
-}
-
-const REGEX_BRACKETS = /(^{)|(}$)/g
-
-const getFormatterType = (formatter: string) => {
-	if (!formatter.startsWith('{')) return formatter
-
-	const cases = formatter
-		.replace(REGEX_BRACKETS, '')
-		.split(',')
-		.map((part) => part.split(':'))
-		.map(([key]) => [key, `\${string}`])
-		.map((part) => part.join(':'))
-		.join(',')
-
-	return `{${cases}}`
-}
-
-const generateTranslationType = (args: Arg[] = []) => {
-	const argStrings = args
-		.filter(isPropertyFalsy('pluralOnly'))
-		.map(({ key, optional, formatters }) =>
-			partAsStringWithoutTypes({ k: key, n: optional, f: formatters?.map(getFormatterType) }).replace(
-				REGEX_BRACKETS,
-				'',
-			),
-		)
-
-	return supportsTemplateLiteralTypes && argStrings.length
-		? `RequiredParams<${argStrings.map((arg) => getWrappedString(arg, true)).join(PIPE_SEPARATION)}>`
-		: 'string'
-}
 
 // --------------------------------------------------------------------------------------------------------------------
 
