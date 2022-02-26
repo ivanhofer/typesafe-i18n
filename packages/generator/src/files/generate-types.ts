@@ -11,6 +11,7 @@ import {
 	isString,
 	isTruthy,
 	not,
+	pick,
 	sortNumberASC,
 	sortStringASC,
 	sortStringPropertyASC,
@@ -66,7 +67,7 @@ type ParsedResultEntry = {
 	key: string
 	text: string
 	textWithoutTypes: string
-	args: Arg[]
+	args?: Arg[]
 	types: Types
 	parentKeys: string[]
 }
@@ -103,6 +104,7 @@ const NEW_LINE = `
 const NEW_LINE_INDENTED = `
 	`
 const COMMA_SEPARATION = ', '
+const PIPE_SEPARATION = ' | '
 
 const mapToString = <T>(items: T[], mappingFunction: (item: T) => string): string => items.map(mappingFunction).join('')
 
@@ -302,7 +304,7 @@ const createJsDocsMapping = (parsedTranslations: ParsedResult[]) => {
 	const map = {} as JsDocInfos
 
 	flattenToParsedResultEntry(parsedTranslations).forEach((parsedResultEntry) => {
-		const { key, textWithoutTypes, types, args, parentKeys } = parsedResultEntry
+		const { key, textWithoutTypes, types, args = [], parentKeys } = parsedResultEntry
 		const nestedKey = getNestedKey(key, parentKeys)
 		map[nestedKey] = {
 			text: textWithoutTypes,
@@ -352,7 +354,6 @@ export const getTypeNameForNamespace = (namespace: string) => {
 const createTranslationType = (
 	parsedTranslations: ParsedResult[],
 	jsDocInfo: JsDocInfos,
-	paramTypesToGenerate: number[],
 	nameOfType: string,
 	namespaces: string[] = [],
 ): string => {
@@ -363,7 +364,7 @@ const createTranslationType = (
 
 	const translationType = `type ${nameOfType} = ${wrapObjectType(parsedTranslationsWithoutNamespaces, () =>
 		mapToString(parsedTranslationsWithoutNamespaces, (parsedResultEntry) =>
-			createTranslationTypeEntry(parsedResultEntry, jsDocInfo, paramTypesToGenerate),
+			createTranslationTypeEntry(parsedResultEntry, jsDocInfo),
 		),
 	)}`
 
@@ -384,7 +385,6 @@ const createTranslationType = (
 				createTranslationType(
 					isArray(parsedTranslations) ? parsedTranslations : [parsedTranslations],
 					jsDocInfo,
-					paramTypesToGenerate,
 					getTypeNameForNamespace(namespace),
 				)
 			)
@@ -422,24 +422,20 @@ type DisallowNamespaces = {${namespaces
 	.join(NEW_LINE)}
 }`
 
-const createTranslationTypeEntry = (
-	resultEntry: ParsedResult,
-	jsDocInfo: JsDocInfos,
-	paramTypesToGenerate: number[],
-): string => {
+const createTranslationTypeEntry = (resultEntry: ParsedResult, jsDocInfo: JsDocInfos): string => {
 	if (isParsedResultEntry(resultEntry)) {
 		const { key, args, parentKeys } = resultEntry
 
 		const nestedKey = getNestedKey(key, parentKeys)
 		const jsDocString = createJsDocsString(jsDocInfo[nestedKey] as JsDocInfo, true, false)
-		const translationType = generateTranslationType(paramTypesToGenerate, args)
+		const translationType = generateTranslationType(args)
 
 		return `
 	${jsDocString}${wrapObjectKeyIfNeeded(key)}: ${translationType}`
 	}
 
 	return processNestedParsedResult(resultEntry, (parsedResultEntry) =>
-		createTranslationTypeEntry(parsedResultEntry, jsDocInfo, paramTypesToGenerate),
+		createTranslationTypeEntry(parsedResultEntry, jsDocInfo),
 	)
 }
 
@@ -459,7 +455,7 @@ const getFormatterType = (formatter: string) => {
 	return `{${cases}}`
 }
 
-const generateTranslationType = (paramTypesToGenerate: number[], args: Arg[]) => {
+const generateTranslationType = (args: Arg[] = []) => {
 	const argStrings = args
 		.filter(isPropertyFalsy('pluralOnly'))
 		.map(({ key, optional, formatters }) =>
@@ -469,65 +465,9 @@ const generateTranslationType = (paramTypesToGenerate: number[], args: Arg[]) =>
 			),
 		)
 
-	const nrOfArgs = argStrings.length
-	paramTypesToGenerate.push(nrOfArgs)
-
-	return supportsTemplateLiteralTypes && nrOfArgs
-		? `RequiredParams${nrOfArgs}<${argStrings.map((arg) => getWrappedString(arg, true)).join(COMMA_SEPARATION)}>`
+	return supportsTemplateLiteralTypes && argStrings.length
+		? `RequiredParams<${argStrings.map((arg) => getWrappedString(arg, true)).join(PIPE_SEPARATION)}>`
 		: 'string'
-}
-
-// --------------------------------------------------------------------------------------------------------------------
-
-const createParamsType = (paramTypesToGenerate: number[]) => {
-	const filteredParamTypes = paramTypesToGenerate.filter(filterDuplicates).filter(isNotZero).sort(sortNumberASC)
-
-	if (filteredParamTypes.length === 0) {
-		return ''
-	}
-
-	const result = filteredParamTypes.map(generateParamType)
-
-	const baseTypes = result.map(([baseType]) => baseType)
-	const permutationTypes = result.map(([_, permutationTypes]) => permutationTypes)
-
-	return `
-type Param<P extends string> = \`{\${P}}\`
-${baseTypes.join(NEW_LINE)}
-${permutationTypes?.join(NEW_LINE)}
-`
-}
-
-const generateParamType = (nrOfParams: number): [string, string] => {
-	const args = new Array(nrOfParams).fill(0).map((_, i) => i + 1)
-
-	const baseType = generateBaseType(args)
-	const permutationType = generatePermutationType(args)
-
-	return [baseType, permutationType]
-}
-
-const generateBaseType = (args: number[]) => {
-	const generics = args.map((i) => `P${i} extends string`).join(COMMA_SEPARATION)
-	const params = args.map((i) => `\${Param<P${i}>}`).join(`\${string}`)
-
-	return `
-type Params${args.length}<${generics}> =
-	\`\${string}${params}\${string}\``
-}
-
-const generatePermutationType = (args: number[]) => {
-	const l = args.length
-	const generics = args.map((i) => `P${i} extends string`).join(COMMA_SEPARATION)
-
-	const permutations = getPermutations(args)
-
-	return `
-type RequiredParams${l}<${generics}> =${mapToString(
-		permutations,
-		(permutation) => `
-	| Params${l}<${permutation.map((p) => `P${p}`).join(COMMA_SEPARATION)}>`,
-	)}`
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -552,7 +492,7 @@ const createTranslationArgsType = (parsedResult: ParsedResult, jsDocInfo: JsDocI
 	)
 }
 
-const mapTranslationArgs = (args: Arg[], types: Types) => {
+const mapTranslationArgs = (args: Arg[] = [], types: Types) => {
 	if (!args.length) return ''
 
 	const uniqueArgs = args.filter(filterDuplicatesByKey('key'))
@@ -578,7 +518,7 @@ const getUniqueFormatters = (parsedTranslations: ParsedResult[]): [string, strin
 	const map = {} as { [key: string]: string[] }
 
 	flattenToParsedResultEntry(parsedTranslations).forEach((parsedResult) => {
-		const { types, args } = parsedResult
+		const { types, args = [] } = parsedResult
 		args.forEach(({ key, formatters }) =>
 			(formatters || [])
 				.filter((formatter) => !formatter.startsWith('{'))
@@ -604,6 +544,13 @@ const createFormattersType = (parsedTranslations: ParsedResult[]) => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
+const doesATranslationContainParams = (p: ParsedResult[]): boolean =>
+	p.some((parsedResult) =>
+		isParsedResultEntry(parsedResult)
+			? parsedResult.args?.some(({ pluralOnly }) => pluralOnly !== true)
+			: doesATranslationContainParams(Object.values(parsedResult).flat()),
+	)
+
 const getTypes = (
 	{ translations, baseLocale, locales, typesTemplateFileName, banner, namespaces }: GenerateTypesType,
 	logger: Logger,
@@ -619,18 +566,12 @@ const getTypes = (
 
 	const jsDocsInfo = createJsDocsMapping(parsedTranslations)
 
-	const paramTypesToGenerate: number[] = []
-	const translationType = createTranslationType(
-		parsedTranslations,
-		jsDocsInfo,
-		paramTypesToGenerate,
-		'RootTranslation',
-		namespaces,
-	)
+	const translationType = createTranslationType(parsedTranslations, jsDocsInfo, 'RootTranslation', namespaces)
+
+	const shouldImportRequiredParamsType =
+		supportsTemplateLiteralTypes && doesATranslationContainParams(parsedTranslations)
 
 	const namespacesType = usesNamespaces ? createNamespacesTypes(namespaces) : ''
-
-	const paramsType = supportsTemplateLiteralTypes ? createParamsType(paramTypesToGenerate) : ''
 
 	const translationArgsType = createTranslationsArgsType(parsedTranslations, jsDocsInfo)
 
@@ -638,8 +579,8 @@ const getTypes = (
 
 	const type = `${OVERRIDE_WARNING}
 ${banner}
-${importTypeStatement} { BaseTranslation as BaseTranslationType${
-		parsedTranslations.length ? ', LocalizedString' : ''
+${importTypeStatement} { BaseTranslation as BaseTranslationType${parsedTranslations.length ? ', LocalizedString' : ''}${
+		shouldImportRequiredParamsType ? ', RequiredParams' : ''
 	} } from 'typesafe-i18n'
 ${typeImports}
 export type BaseTranslation = BaseTranslationType${usesNamespaces ? ' & DisallowNamespaces' : ''}
@@ -668,8 +609,7 @@ ${namespacesType}
 ${translationArgsType}
 
 ${formattersType}
-
-${paramsType}`
+`
 
 	return [type, !!typeImports] as [string, boolean]
 }
