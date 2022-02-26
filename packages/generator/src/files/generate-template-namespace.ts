@@ -4,12 +4,12 @@ import type { BaseTranslation, Locale } from '../../../runtime/src/core'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { logger, prettify, sanitizePath } from '../generator-util'
 import {
+	defaultExportStatement,
 	fileEnding,
 	importTypes,
 	jsDocImports,
 	jsDocType,
 	relativeFileImportPath,
-	shouldGenerateJsDoc,
 	tsCheck,
 	type,
 } from '../output-handler'
@@ -19,7 +19,7 @@ import { getTypeNameForNamespace } from './generate-types'
 // --------------------------------------------------------------------------------------------------------------------
 
 const getNamespaceTemplate = (
-	{ typesFileName, adapter, esmImports, banner }: GeneratorConfigWithDefaultValues,
+	{ typesFileName, banner }: GeneratorConfigWithDefaultValues,
 	locale: string,
 	namespace: string,
 	isBaseLocale: boolean,
@@ -42,10 +42,6 @@ const getNamespaceTemplate = (
 
 	const hint = editHint || !translationsMap ? `	// ${editHint || 'TODO: insert translations'}` : ''
 
-	// TODO: move to `output-handler`
-	const defaultExport =
-		shouldGenerateJsDoc && adapter !== 'svelte' && !esmImports ? 'module.exports =' : 'export default'
-
 	const bannerIfNeeded = showBanner
 		? `
 ${banner}`
@@ -61,7 +57,7 @@ const ${variableName}${type(typeOfDictionary)} = {
 ${hint}${translationsMap}
 }
 
-${defaultExport} ${variableName}
+${defaultExportStatement} ${variableName}
 `
 }
 

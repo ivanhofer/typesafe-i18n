@@ -5,12 +5,12 @@ import type { BaseTranslation, Locale } from '../../../runtime/src/core'
 import { writeFileIfContainsChanges } from '../file-utils'
 import { prettify, sanitizePath, wrapObjectKeyIfNeeded } from '../generator-util'
 import {
+	defaultExportStatement,
 	fileEnding,
 	importTypes,
 	jsDocImports,
 	jsDocType,
 	relativeFileImportPath,
-	shouldGenerateJsDoc,
 	tsCheck,
 	type,
 } from '../output-handler'
@@ -58,7 +58,7 @@ export const getWrappedString = (text: string, lookForStringType = false): strin
 // --------------------------------------------------------------------------------------------------------------------
 
 const getLocaleTemplate = (
-	{ banner, typesFileName, esmImports, adapter }: GeneratorConfigWithDefaultValues,
+	{ banner, typesFileName }: GeneratorConfigWithDefaultValues,
 	locale: Locale,
 	isBaseLocale: boolean,
 	translations: BaseTranslation | BaseTranslation[] | undefined,
@@ -69,9 +69,6 @@ const getLocaleTemplate = (
 	const sanitizedLocale = sanitizePath(locale)
 
 	const translationsMap = translations && mapTranslationsToString(translations)
-
-	const defaultExport =
-		shouldGenerateJsDoc && adapter !== 'svelte' && !esmImports ? 'module.exports =' : 'export default'
 
 	const hint = editHint
 		? `	// ${editHint}
@@ -93,7 +90,7 @@ const ${sanitizedLocale}${type(typeOfDictionary)} = {
 ${hint}${translationsMap}
 }
 
-${defaultExport} ${sanitizedLocale}
+${defaultExportStatement} ${sanitizedLocale}
 `
 }
 

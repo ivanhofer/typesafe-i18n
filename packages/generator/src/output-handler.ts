@@ -28,6 +28,9 @@ export const configureOutputHandler = (config: GeneratorConfigWithDefaultValues,
 
 	importTypeStatement = `import${supportsImportType ? ' type' : ''}`
 
+	defaultExportStatement =
+		shouldGenerateJsDoc && config.adapter !== 'svelte' && !config.esmImports ? 'module.exports =' : 'export default'
+
 	importTypes = (from, ...types) =>
 		shouldGenerateJsDoc ? '' : `${importTypeStatement} { ${types.filter(isTruthy).join(', ')} } from '${from}'`
 	type = (type) => (shouldGenerateJsDoc ? '' : `: ${type}`)
@@ -76,6 +79,7 @@ export let fileEnding: FileEnding
 export let fileEndingForTypesFile: FileEnding
 export let tsCheck: string
 export let importTypeStatement: string
+export let defaultExportStatement: string
 
 // --------------------------------------------------------------------------------------------------------------------
 
