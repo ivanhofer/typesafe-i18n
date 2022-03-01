@@ -5,12 +5,13 @@ on:
       branches:
          - 'main'
 
+defaults:
+   run:
+      working-directory: packages/exporter/example
+
 jobs:
    check-exporter:
       runs-on: ubuntu-latest
-      defaults:
-         run:
-            working-directory: packages/exporter/example
       steps:
          - uses: actions/checkout@v2
 
@@ -25,7 +26,7 @@ jobs:
               cache: 'npm'
 
          - name: install dependencies
-         - run: npm install --no-save
+           run: npm install --no-save
 
          - name: update `typesafe-i18n` dependency
            run: npm up typesafe-i18n@latest
