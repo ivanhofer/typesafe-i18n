@@ -1,4 +1,4 @@
-name: build & run tests
+name: run tests
 
 on:
    pull_request:
@@ -23,11 +23,5 @@ jobs:
 
          - run: pnpm install --no-save
 
-         - name: run linting
-           run: pnpm lint
-
          - name: run tests
            run: pnpm test
-
-         - name: build package
-           run: pnpm build
