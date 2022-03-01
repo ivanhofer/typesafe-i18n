@@ -103,7 +103,7 @@
 		"lint:fix": "pnpm lint:ci -- packages",
 		"-- TEST ------------------------------------------------": "",
 		"test": "pnpm -r generate:json-schema && pnpm -r test && pnpm test:rest",
-		"test:rest": "require-self && uvu -r tsm -i generated -i importer/test packages test",
+		"test:rest": "require-self && uvu -r tsm -i generated -i importer/test -i example packages test",
 		"test:rest:watch": "watchlist packages -- pnpm test",
 		"test:update-generated-files": "tsm packages/generator/test/generated/update.ts",
 		"test:size": "size-limit",
