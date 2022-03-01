@@ -5,13 +5,12 @@ on:
       branches:
          - 'main'
 
-defaults:
-   run:
-      working-directory: packages/exporter/example
-
 jobs:
    check-exporter:
       runs-on: ubuntu-latest
+      defaults:
+         run:
+            working-directory: packages/exporter/example
       steps:
          - uses: actions/checkout@v2
 
