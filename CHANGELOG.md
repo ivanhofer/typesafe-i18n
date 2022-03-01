@@ -3,6 +3,11 @@
 
 # Version 4
 
+## 4.3.1 (2022-03-01)
+
+Fix:
+ - refactor `RequiredParams` to not use `// @ts-ignore` comments
+
 ## 4.3.0 (2022-02-26)
 
 Feature:
