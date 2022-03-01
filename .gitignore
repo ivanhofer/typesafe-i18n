@@ -16,6 +16,7 @@ node_modules
 /vue
 packages/generator/test/generated/**/*.actual.*
 packages/generator/test/generated/console*
+packages/**/CHANGELOG.md
 /typesafe-i18n-*.tgz
 /types
 /webpack
