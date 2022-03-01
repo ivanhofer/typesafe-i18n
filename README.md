@@ -1552,35 +1552,7 @@ If you want to store multiple translations in one step, you can call the `storeT
 
 ### Exporter
 
-In order to export language files to a service or an API, `typesafe-i18n` provides an `exporter` functionality.
-You have to write your own logic to send the data. Here is an example how this could look like:
-
-> Please share your implementation in a PR. `typesafe-i18n` wants to provide built-in exporter-packages in the future.
-
-```typescript
-import type { BaseTranslation } from 'typesafe-i18n'
-import { readTranslationFromDisk } from 'typesafe-i18n/exporter'
-
-const sendDataToAPI = async ({ locale, translations }: { locale: string; translations: BaseTranslation }) => {
-   // custom implementation to store the data to a service
-}
-
-const sendTranslationsToService = async (locale: string) => {
-   const translations = await readTranslationFromDisk(locale)
-
-   await sendDataToAPI({ locale, translations })
-}
-
-sendTranslationsToService('en')
-```
-
-> you need to run this script during development or as a CI-process and **not** at runtime. Create an own file and run it with [`ts-node`](https://github.com/TypeStrong/ts-node) or something similar.
-
-The `readTranslationFromDisk` will load the contents of your `translations`-object from the file `src/i18n/{locale}/index.ts` if the file exists.
-
-If you want to read multiple translations in one step, you can call the `readTranslationsFromDisk` function.
-
-
+This part of the documentation [was moved to a new location](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/exporter/examples/README.md)
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->

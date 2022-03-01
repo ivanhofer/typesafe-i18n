@@ -25,7 +25,6 @@ jobs:
            run: pnpm update:dependencies
 
          - name: Create Pull Request
-           id: createpr
            uses: peter-evans/create-pull-request@v3
            with:
               token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}

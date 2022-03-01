@@ -2,9 +2,9 @@ export type TextPart = string
 
 export type ArgumentPart = {
 	k: string // key
-	i?: string // type
-	n?: boolean // non-mandatory (optional)
-	f?: string[] // formatterFunctionKey
+	i?: string | undefined // type
+	n?: boolean | undefined // non-mandatory (optional)
+	f?: string[] | undefined // formatterFunctionKey
 }
 
 export type PluralPart = {
