@@ -95,20 +95,19 @@ export interface ImportLocaleMapping extends LocaleMappingBase {
 type Permutation<T extends string, U extends string = T> = [T] extends [never]
 	? Array<string>
 	: T extends U
-	? //@ts-ignore
-	  [T, ...Permutation<Exclude<U, T>>]
-	: T
+	? [T, ...Permutation<Exclude<U, T>>]
+	: [T]
 
-type WrapParam<P extends string> = `{${P}}`
+type WrapParam<P> = P extends string ? `{${P}}` : never
 
-type ConstructString<Params extends string[]> = Params extends []
+type ConstructString<Params extends unknown[]> = Params extends []
 	? `${string}`
 	: Params extends [infer Param, ...infer Rest]
-	? //@ts-ignores
-	  `${string}${WrapParam<Param>}${ConstructString<Rest>}`
-	: Params
+	? `${string}${WrapParam<Param>}${ConstructString<Rest>}`
+	: Params extends string
+	? Params
+	: `${string}`
 
-//@ts-ignore
 export type RequiredParams<Params extends string> = ConstructString<Permutation<Params>>
 
 // --------------------------------------------------------------------------------------------------------------------

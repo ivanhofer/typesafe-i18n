@@ -34,6 +34,9 @@ jobs:
          - name: run generator
            run: npm run typesafe-i18n -- --no-watch
 
+         - name: run TypeScript compiler
+           run: tsc --noEmit
+
          - name: run tests
            run: npm test
 
