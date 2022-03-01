@@ -1,4 +1,4 @@
-name: '@typesafe-i18n/exporter'
+name: '@typesafe-i18n/exporter example'
 
 on:
    schedule:
