@@ -2,14 +2,14 @@ import { isArray, isObject, TypeGuard } from 'typesafe-utils'
 
 export type Arg = {
 	key: string
-	formatters?: string[]
-	pluralOnly?: boolean
-	optional?: boolean
+	formatters?: string[] | undefined
+	pluralOnly?: boolean | undefined
+	optional?: boolean | undefined
 }
 
 export type TypeInformation = {
 	types: string[]
-	optional?: boolean
+	optional?: boolean | undefined
 }
 
 export type Types = {
