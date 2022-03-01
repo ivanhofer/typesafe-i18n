@@ -1,0 +1,27 @@
+name: run linters
+
+on:
+   pull_request:
+      branches:
+         - 'main'
+
+jobs:
+   lint:
+      runs-on: ubuntu-latest
+      steps:
+         - uses: actions/checkout@v2
+
+         - uses: pnpm/action-setup@v2
+           with:
+              version: 6.32.1
+
+         - name: install node
+           uses: actions/setup-node@v2
+           with:
+              node-version: 16.14.0
+              cache: 'pnpm'
+
+         - run: pnpm install --no-save
+
+         - name: run linters
+           run: pnpm lint
