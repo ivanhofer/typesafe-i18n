@@ -1,9 +1,9 @@
 name: '@typesafe-i18n/exporter'
 
 on:
-   pull_request:
-      branches:
-         - 'main'
+   schedule:
+      - cron: '0 0 * * *' # Runs everyday at 00:00
+   workflow_dispatch:
 
 defaults:
    run:
