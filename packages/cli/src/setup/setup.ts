@@ -17,15 +17,15 @@ const getConfigDiff = async (options: GeneratorConfig) => {
 	const diff = justDiff({ baseLocale, adapter, esmImports, outputFormat, outputPath }, options)
 
 	const changedValues = <GeneratorConfig>justDiffApply(
-		{
-			baseLocale: undefined,
-			adapter: undefined,
-			esmImports: undefined,
-			outputFormat: undefined,
-			outputPath: undefined,
-		} as GeneratorConfig,
-		diff,
-	)
+			{
+				baseLocale: undefined,
+				adapter: undefined,
+				esmImports: undefined,
+				outputFormat: undefined,
+				outputPath: undefined,
+			} as GeneratorConfig,
+			diff,
+		) || {}
 
 	return Object.fromEntries(Object.entries(changedValues).filter(isPropertyNotUndefined('1')))
 }

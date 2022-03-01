@@ -1,0 +1,16 @@
+{
+  "name": "typesafe-i18n_example_exporter",
+  "scripts": {
+    "i18n:export": "tsm export.ts",
+    "typesafe-i18n": "typesafe-i18n",
+    "test": "uvu -r tsm tests"
+  },
+  "devDependencies": {
+    "tsm": "^2.2.1",
+    "typescript": "^4.6.2",
+    "uvu": "^0.5.3"
+  },
+  "dependencies": {
+    "typesafe-i18n": "^4.3.1"
+  }
+}
