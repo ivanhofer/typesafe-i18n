@@ -162,21 +162,6 @@ importers:
       esbuild: 0.14.23
       typescript: 4.5.5
 
-  packages/exporter/example:
-    specifiers:
-      '@types/node': ^17.0.21
-      tsm: ^2.2.1
-      typesafe-i18n: ^4.3.1
-      typescript: ^4.6.2
-      uvu: ^0.5.3
-    dependencies:
-      typesafe-i18n: link:../../..
-    devDependencies:
-      '@types/node': 17.0.21
-      tsm: 2.2.1
-      typescript: 4.6.2
-      uvu: 0.5.3
-
   packages/formatters:
     specifiers:
       esbuild: ^0.14.23
@@ -2558,12 +2543,6 @@ packages:
 
   /typescript/4.5.5:
     resolution: {integrity: sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
-    dev: true
-
-  /typescript/4.6.2:
-    resolution: {integrity: sha512-HM/hFigTBHZhLXshn9sN37H085+hQGeJHJ/X7LpBWLID/fbc2acUMfU+lGD98X81sKP+pFa9f0DZmCwB9GnbAg==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
