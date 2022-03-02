@@ -24,7 +24,7 @@ jobs:
            run: npm install --no-save
 
          - name: update `typesafe-i18n` dependency
-           run: npm up typesafe-i18n@latest
+           run: npm i typesafe-i18n@latest
 
          - name: run generator
            run: npm run typesafe-i18n -- --no-watch

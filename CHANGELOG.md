@@ -3,6 +3,12 @@
 
 # Version 4
 
+## 4.3.3 (2022-03-02)
+
+Fix:
+ - mock `Request` type from `express` for detectors
+
+## 4.3.2 (2022-03-01)
 ## 4.3.1 (2022-03-01)
 
 Fix:

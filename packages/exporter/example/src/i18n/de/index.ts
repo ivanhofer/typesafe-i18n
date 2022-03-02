@@ -1,7 +1,7 @@
 import type { Translation } from '../i18n-types'
 
 const de: Translation = {
-	HI: 'Hallo {name:string}!',
+	HI: 'Hallo {name}!',
 	exporter: 'Das ist ein Beispiel um die export-Funktion zu demonstrieren',
 }
 
