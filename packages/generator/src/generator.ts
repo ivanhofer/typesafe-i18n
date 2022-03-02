@@ -15,7 +15,7 @@ import { createLogger, Logger } from './utils/logger'
 import { findAllNamespacesForLocale } from './utils/namespaces.utils'
 
 let logger: Logger
-let first = true
+let firstRunOfGenerator = true
 
 const getBaseTranslations = async (
 	baseLocale: Locale,
@@ -49,11 +49,13 @@ const runCommandAfterGenerator = (runAfterGenerator: string) => {
 }
 
 const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, version: TypescriptVersion) => {
+	if (disableChangeDetection) return
+
 	const currentDebounceCounter = debounceCounter
 	disableChangeDetection = true
 
-	if (first) {
-		first = false
+	if (firstRunOfGenerator) {
+		firstRunOfGenerator = false
 	} else {
 		logger.info('files were modified => looking for changes ...')
 	}
