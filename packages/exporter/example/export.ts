@@ -7,10 +7,10 @@ const sendDataToAPI = async (exportMapping: ExportLocaleMapping) => {
 	console.log(inspect(exportMapping, false, 999, true))
 }
 
-const sendTranslationsToService = async (locale: string) => {
+const exportTranslationsForLocale = async (locale: string) => {
 	const mapping = await readTranslationFromDisk(locale)
 
 	await sendDataToAPI(mapping)
 }
 
-sendTranslationsToService('en')
+exportTranslationsForLocale('en')
