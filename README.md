@@ -1508,51 +1508,11 @@ But you can also connect other services by using the `importer` and `exporter` f
 
 ### Importer
 
-In order to import language files that come from an API, spreadsheet or JSON-files, `typesafe-i18n` provides an `importer` functionality.
-You have to write your own logic to get the data, then map it to a dictionary-representation and then call the `storeTranslationToDisk` function. Here is an example how this could look like:
-
-
-```typescript
-import { storeTranslationToDisk } from 'typesafe-i18n/importer'
-
-const getDataFromAPI = async (locale: string) => {
-   // this is just an example that returns static content
-   // in a real-world application, you would load the content from an API or from disk
-   return {
-      HI: 'Hello {name:string}',
-      login: {
-         validation: {
-            username: 'Username "{username}" to short'
-         }
-      }
-   }
-}
-
-const updateTranslations = async (locale: string) => {
-   const translations = await getDataFromAPI(locale)
-
-   const result = await storeTranslationToDisk({ locale, translations })
-   // result = 'en'
-}
-
-updateTranslations('en')
-```
-
-> you need to run this script during development or as a CI-process and **not** at runtime. Create an own file and run it with [`ts-node`](https://github.com/TypeStrong/ts-node) or something similar.
-
-The `storeTranslationToDisk` will write the contents of your `translations`-object to the file `src/i18n/{locale}/index.ts` and will run the [`generator`](#typesafety) to update the types. The function will return a the locale as a string, if the import was successful.
-
-If you want to store multiple translations in one step, you can call the `storeTranslationsToDisk` function.
-
-
-
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
+This part of the documentation [was moved to a new location](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/importer)
 
 ### Exporter
 
-This part of the documentation [was moved to a new location](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/exporter/examples/README.md)
+This part of the documentation [was moved to a new location](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/exporter)
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->

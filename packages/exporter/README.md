@@ -47,11 +47,15 @@ interface ExportLocaleMapping {
 
 ### `readTranslationFromDisk` function
 
+Can be used to export translations from a single locale.
+
 ```ts
 (locale: Locale) => Promise<ExportLocaleMapping>
 ```
 
 ### `readTranslationsFromDisk` function
+
+Can be used to export translations from all locales.
 
 ```ts
 () => Promise<ExportLocaleMapping[]>

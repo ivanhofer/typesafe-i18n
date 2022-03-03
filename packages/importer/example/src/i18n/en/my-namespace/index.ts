@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { BaseTranslation } from '../../i18n-types'
 
 const en_my_namespace: BaseTranslation = {
