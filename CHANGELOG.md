@@ -3,8 +3,14 @@
 
 # Version 4
 
+## 4.3.5 (2022-03-04)
+
+Fix:
+ - allow to load only namespaces [#189](https://github.com/ivanhofer/typesafe-i18n/discussions/189)
+
 ## 4.3.4 (2022-03-02)
 
+Fix:
  - possible timeout fix for `runAfterGenerator` hook [#185](https://github.com/ivanhofer/typesafe-i18n/discussions/185)
 
 ## 4.3.3 (2022-03-02)

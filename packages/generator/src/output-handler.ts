@@ -91,7 +91,7 @@ export let typeCast: (type: string) => string
 
 export let generics: (...generic: string[]) => string
 
-export let jsDocImports: (...imports: ({ from: string; type: string; alias?: string } | undefined)[]) => string
+export let jsDocImports: (...imports: ({ from: string; type: string; alias?: string } | undefined | false)[]) => string
 
 export let jsDocFunction: (returnType: string, ...params: { type: string; name: string }[]) => string
 

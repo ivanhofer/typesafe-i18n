@@ -39,5 +39,7 @@ export const loadFormatters = (locale: Locales) => {
 	loadedFormatters[locale] = initFormatters(locale)
 }
 
-export const loadNamespaceAsync = async <Namespace extends Namespaces>(locale: Locales, namespace: Namespace) =>
+export const loadNamespaceAsync = async <Namespace extends Namespaces>(locale: Locales, namespace: Namespace) => {
+	if (!loadedLocales[locale]) loadedLocales[locale] = {} as Translations
 	loadedLocales[locale][namespace] = (await (localeNamespaceLoaders[locale][namespace])()).default as Translations[Namespace]
+}

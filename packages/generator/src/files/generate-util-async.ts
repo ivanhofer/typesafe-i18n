@@ -37,12 +37,16 @@ const localeNamespaceLoaders = {
 }`
 
 	const namespaceLoader = `
+${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' }, { type: 'Namespaces', name: 'namespace' })}
 export const loadNamespaceAsync = async ${generics('Namespace extends Namespaces')}(locale${type(
 		'Locales',
-	)}, namespace${type('Namespace')}) =>
-	loadedLocales[locale][namespace] = (await (localeNamespaceLoaders[locale][namespace])()).default${typeCast(
-		'Translations[Namespace]',
+	)}, namespace${type('Namespace')}) => {
+	if (!loadedLocales[locale]) loadedLocales[locale] = ${jsDocType('Translations', '{}')}${typeCast('Translations')}
+	loadedLocales[locale][namespace] = ${jsDocType(
+		'any',
+		`(await (localeNamespaceLoaders[locale][namespace])()).default${typeCast('Translations[Namespace]')}`,
 	)}
+}
 `
 	return [namespaceImports, namespaceLoader]
 }
@@ -61,6 +65,7 @@ ${banner}
 ${jsDocImports(
 	{ from: relativeFileImportPath(typesFileName), type: 'Locales' },
 	{ from: relativeFileImportPath(typesFileName), type: 'Translations' },
+	usesNamespaces && { from: relativeFileImportPath(typesFileName), type: 'Namespaces' },
 )}
 
 import { initFormatters } from './${formattersTemplateFileName}'

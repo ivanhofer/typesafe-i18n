@@ -4,7 +4,8 @@
 
 /**
  * @typedef { import('./types.actual').Locales } Locales,
- * @typedef { import('./types.actual').Translations } Translations
+ * @typedef { import('./types.actual').Translations } Translations,
+ * @typedef { import('./types.actual').Namespaces } Namespaces
  */
 
 import { initFormatters } from './formatters-template.actual'
@@ -53,5 +54,12 @@ export const loadFormatters = (locale) => {
 	loadedFormatters[locale] = initFormatters(locale)
 }
 
-export const loadNamespaceAsync = async (locale, namespace) =>
-	loadedLocales[locale][namespace] = (await (localeNamespaceLoaders[locale][namespace])()).default
+/**
+ * @param { Locales } locale,
+ * @param { Namespaces } namespace
+ * @return { Promise<void> }
+ */
+export const loadNamespaceAsync = async (locale, namespace) => {
+	if (!loadedLocales[locale]) loadedLocales[locale] = /** @type { Translations } */ ({})
+	loadedLocales[locale][namespace] = /** @type { any } */ ((await (localeNamespaceLoaders[locale][namespace])()).default)
+}
