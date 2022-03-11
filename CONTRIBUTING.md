@@ -17,7 +17,7 @@ This project uses [`pnpm`](https://pnpm.io/de/) as a package manager. You can in
 
 Tests are written using the [`uvu`](https://github.com/lukeed/uvu) test runner. If you make changes, please check if all tests are still passing by running `pnpm test`.
 
-To ensure the output-size of the core-library stays small, [`size-limit`](https://github.com/ai/size-limit) is used. By running `pnpm build` and then `pnpm test:size` a report get's generated to see if changes had negative impact to the bundle size of the translation runtime.
+To ensure the output-size of the core-library stays small, [`size-limit`](https://github.com/ai/size-limit) is used. By running `pnpm build` and then `pnpm test:size` a report gets generated to see if changes had negative impact to the bundle size of the translation runtime.
 
 ## submitting changes
 

@@ -18,16 +18,21 @@ let logger: Logger
 let firstRunOfGenerator = true
 
 const getBaseTranslations = async (
-	baseLocale: Locale,
-	tempPath: string,
-	outputPath: string,
+	{ baseLocale, tempPath, outputPath, typesFileName }: GeneratorConfigWithDefaultValues,
 	namespaces: string[],
 ): Promise<BaseTranslation> => {
-	const translations = (await parseLanguageFile(outputPath, resolve(tempPath, `${debounceCounter}`), baseLocale)) || {}
+	const translations =
+		(await parseLanguageFile(outputPath, typesFileName, resolve(tempPath, `${debounceCounter}`), baseLocale)) || {}
 
 	for await (const namespace of namespaces) {
 		const namespaceTranslations =
-			(await parseLanguageFile(outputPath, resolve(tempPath, `${debounceCounter}`), baseLocale, namespace)) || {}
+			(await parseLanguageFile(
+				outputPath,
+				typesFileName,
+				resolve(tempPath, `${debounceCounter}`),
+				baseLocale,
+				namespace,
+			)) || {}
 
 		;(translations as Record<string, BaseTranslation>)[namespace] = namespaceTranslations
 	}
@@ -60,14 +65,14 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 		logger.info('files were modified => looking for changes ...')
 	}
 
-	const { baseLocale, tempPath, outputPath, runAfterGenerator } = config
+	const { baseLocale, outputPath, runAfterGenerator } = config
 
 	const locales = await getAllLanguages(outputPath)
 	const namespaces = findAllNamespacesForLocale(baseLocale, outputPath)
 
 	const firstLaunchOfGenerator = !locales.length
 
-	const translations = await getBaseTranslations(baseLocale, tempPath, outputPath, namespaces)
+	const translations = await getBaseTranslations(config, namespaces)
 
 	await generate(translations, { ...config, baseLocale }, version, logger, firstLaunchOfGenerator, locales, namespaces)
 

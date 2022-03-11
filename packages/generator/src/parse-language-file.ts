@@ -25,10 +25,18 @@ const detectLocationOfCompiledBaseTranslation = async (
 	outputPath: string,
 	locale: string,
 	tempPath: string,
+	typesFileName: string,
 ): Promise<string> => {
 	if (!containsFolders(tempPath)) return ''
 
 	const directory = await getDirectoryStructure(tempPath)
+
+	if (!Object.keys(directory).length) {
+		logger.error(`in '${locale}'
+Make sure to import the type 'BaseTranslation' from the generated '${typesFileName}${fileEnding}' file.
+See the example in the official docs: https://github.com/ivanhofer/typesafe-i18n#namespaces
+`)
+	}
 
 	// contains the path from <root> to base locale file
 	const outputPathParts = resolve(outputPath, locale).replace(resolve(), '').split(sep).filter(isTruthy)
@@ -72,23 +80,30 @@ const transpileTypescriptFiles = async (
 	languageFilePath: string,
 	locale: string,
 	tempPath: string,
+	typesFileName: string,
 ): Promise<string> => {
 	const program = ts.createProgram([languageFilePath], { outDir: tempPath, allowJs: true, resolveJsonModule: true })
 	program.emit()
 
-	const baseTranslationPath = await detectLocationOfCompiledBaseTranslation(outputPath, locale, tempPath)
+	const baseTranslationPath = await detectLocationOfCompiledBaseTranslation(
+		outputPath,
+		locale,
+		tempPath,
+		typesFileName,
+	)
 
-	return resolve(tempPath, `${baseTranslationPath}index.js`)
+	return resolve(tempPath, baseTranslationPath, 'index.js')
 }
 
 export const parseLanguageFile = async (
 	outputPath: string,
+	typesFileName: string,
 	tempPath: string,
 	locale: Locale,
-	workspace = '',
+	namespace = '',
 ): Promise<BaseTranslation | null> => {
-	const fileName = workspace ? `${locale}/${workspace}` : locale
-	const type = workspace ? 'workspace' : 'base locale'
+	const fileName = namespace ? `${locale}/${namespace}` : locale
+	const type = namespace ? 'namespace' : 'base locale'
 
 	const originalPath = resolve(outputPath, fileName, `index${fileEnding}`)
 
@@ -99,7 +114,7 @@ export const parseLanguageFile = async (
 
 	await createPathIfNotExits(tempPath)
 
-	const importPath = await transpileTypescriptFiles(outputPath, originalPath, fileName, tempPath)
+	const importPath = await transpileTypescriptFiles(outputPath, originalPath, fileName, tempPath, typesFileName)
 
 	if (!importPath) {
 		return null

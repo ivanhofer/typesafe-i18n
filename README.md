@@ -449,7 +449,7 @@ You can choose how you want to load locales depending on your application use-ca
 
 #### asynchronous loading of locales
 
-If your app get's loaded via a network request (probably most websites and -applications) you should use the `loadLocaleAsync` function provided by `src/i18n/i18n-util.async.ts`. It only loads the locale that is currently needed to render the page. No unnecessary data from other locales is transferred to your users. The function returns a `Promise` that loads the dictionary and initializes your [`formatters`](#formatters).
+If your app gets loaded via a network request (probably most websites and -applications) you should use the `loadLocaleAsync` function provided by `src/i18n/i18n-util.async.ts`. It only loads the locale that is currently needed to render the page. No unnecessary data from other locales is transferred to your users. The function returns a `Promise` that loads the dictionary and initializes your [`formatters`](#formatters).
 
 ```ts
 import { loadLocaleAsync } from './i18n/i18n-util.async'

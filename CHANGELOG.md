@@ -3,6 +3,11 @@
 
 # Version 4
 
+## 4.3.6 (2022-03-11)
+
+Fix:
+ - show error message if `BaseTranslation` gets not imported from the generated `i18n-types` file
+
 ## 4.3.5 (2022-03-04)
 
 Fix:
