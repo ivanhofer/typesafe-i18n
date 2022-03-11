@@ -34,7 +34,7 @@ export type NamespaceMyNamespaceTranslation = {
 			inside: {
 				a: {
 					/**
-					 * Ich bin eine verschachtelte Übersetzung in einem namespace
+					 * I am a nested translation located inside a namespace
 					 */
 					namespace: string
 				}
@@ -69,7 +69,7 @@ export type TranslationFunctions = {
 				inside: {
 					a: {
 						/**
-						 * Ich bin eine verschachtelte Übersetzung in einem namespace
+						 * I am a nested translation located inside a namespace
 						 */
 						namespace: () => LocalizedString
 					}
