@@ -4,7 +4,7 @@ import { generateLocaleTemplate } from '../../generator/src/files/generate-templ
 import { generateNamespaceTemplate } from '../../generator/src/files/generate-template-namespace'
 import { generate } from '../../generator/src/generate-files'
 import { configureOutputHandler } from '../../generator/src/output-handler'
-import { parseLanguageFile } from '../../generator/src/parse-language-file'
+import { getAllLocales, parseLanguageFile } from '../../generator/src/parse-language-file'
 import { parseTypescriptVersion } from '../../generator/src/utils/generator.utils'
 import { createLogger } from '../../generator/src/utils/logger'
 import type { BaseTranslation, ImportLocaleMapping, Locale } from '../../runtime/src/core'
@@ -95,8 +95,10 @@ export const storeTranslationsToDisk = async (
 		}
 	}
 
+	const locales = await getAllLocales(config.outputPath)
+
 	logger.info(`updating types ...`)
-	await generate(baseTranslation, config, version, undefined, undefined, undefined, baseNamespaces)
+	await generate(baseTranslation, config, version, undefined, undefined, locales, baseNamespaces)
 	logger.info(`updating types completed`)
 
 	return createdLocales

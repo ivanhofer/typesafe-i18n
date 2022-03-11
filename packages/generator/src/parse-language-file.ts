@@ -141,7 +141,7 @@ const getDefaultExport = (languageFile: BaseTranslation): BaseTranslation => {
 	return languageFile
 }
 
-export const getAllLanguages = async (path: string): Promise<string[]> => {
+export const getAllLocales = async (path: string): Promise<string[]> => {
 	const files = await getFiles(path, 1)
 	return files.filter(({ folder, name }) => folder && name === `index${fileEnding}`).map(({ folder }) => folder)
 }

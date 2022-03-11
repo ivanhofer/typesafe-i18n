@@ -8,7 +8,7 @@ import type { BaseTranslation } from '../../runtime/src'
 import type { Locale } from '../../runtime/src/core'
 import { generate } from './generate-files'
 import { configureOutputHandler, shouldGenerateJsDoc } from './output-handler'
-import { getAllLanguages, parseLanguageFile } from './parse-language-file'
+import { getAllLocales, parseLanguageFile } from './parse-language-file'
 import { createPathIfNotExits } from './utils/file.utils'
 import { parseTypescriptVersion, TypescriptVersion } from './utils/generator.utils'
 import { createLogger, Logger } from './utils/logger'
@@ -67,7 +67,7 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 
 	const { baseLocale, outputPath, runAfterGenerator } = config
 
-	const locales = await getAllLanguages(outputPath)
+	const locales = await getAllLocales(outputPath)
 	const namespaces = findAllNamespacesForLocale(baseLocale, outputPath)
 
 	const firstLaunchOfGenerator = !locales.length

@@ -3,7 +3,7 @@ import ts from 'typescript'
 import { getConfigWithDefaultValues } from '../../config/src/config'
 import type { GeneratorConfigWithDefaultValues } from '../../config/src/types'
 import { configureOutputHandler } from '../../generator/src/output-handler'
-import { getAllLanguages, parseLanguageFile } from '../../generator/src/parse-language-file'
+import { getAllLocales, parseLanguageFile } from '../../generator/src/parse-language-file'
 import { parseTypescriptVersion } from '../../generator/src/utils/generator.utils'
 import { createLogger } from '../../generator/src/utils/logger'
 import { findAllNamespacesForLocale } from '../../generator/src/utils/namespaces.utils'
@@ -63,7 +63,7 @@ export const readTranslationsFromDisk = async (): Promise<ExportLocaleMapping[]>
 	const config = await setup()
 	const { outputPath, tempPath, typesFileName } = config
 
-	const locales = await getAllLanguages(outputPath)
+	const locales = await getAllLocales(outputPath)
 
 	const promises: Promise<ExportLocaleMapping>[] = locales.map((locale) =>
 		readTranslation(locale, outputPath, tempPath, typesFileName),
