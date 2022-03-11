@@ -3,7 +3,7 @@
 
 # Version 4
 
-## 4.3.7 (2022-03-11)
+## 4.4.0 (2022-03-11)
 
 Bugfix:
  - fix generation of types when using the `importer` feature
