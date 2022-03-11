@@ -30,7 +30,7 @@ const readTranslation = async (
 ): Promise<ExportLocaleMapping> => {
 	logger.info(`exporting translations for locale '${locale}' ...`)
 
-	const translations = await parseLanguageFile(outputPath, resolve(tempPath, locale), locale, typesFileName)
+	const translations = await parseLanguageFile(outputPath, typesFileName, resolve(tempPath, locale), locale)
 	if (!translations) {
 		logger.error(`could not find locale file '${locale}'`)
 		return { locale, translations: {}, namespaces: [] }
@@ -40,7 +40,13 @@ const readTranslation = async (
 	for (const namespace of namespaces) {
 		logger.info(`adding namespace '${locale}/${namespace}' ...`)
 		;(translations as Record<string, BaseTranslation>)[namespace] =
-			(await parseLanguageFile(outputPath, resolve(tempPath, locale, namespace), locale, namespace)) || {}
+			(await parseLanguageFile(
+				outputPath,
+				typesFileName,
+				resolve(tempPath, locale, namespace),
+				locale,
+				namespace,
+			)) || {}
 	}
 
 	logger.info(`exporting translations for locale '${locale}' completed`)
