@@ -4,7 +4,7 @@ In order to export language files to a service or an API, `typesafe-i18n` provid
 
 ## Setup
 
-See [here](https://github.com/ivanhofer/typesafe-i18n#get-started) on more information how to set up `typesafe-i18n`
+See [here](https://github.com/ivanhofer/typesafe-i18n#get-started) on more information how to set up `typesafe-i18n`.
 
 ### manual installation
 

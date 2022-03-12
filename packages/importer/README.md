@@ -5,7 +5,7 @@ You have to write your own logic to get the data, then map it to a dictionary-re
 
 ## Setup
 
-See [here](https://github.com/ivanhofer/typesafe-i18n#get-started) on more information how to set up `typesafe-i18n`
+See [here](https://github.com/ivanhofer/typesafe-i18n#get-started) on more information how to set up `typesafe-i18n`.
 
 ### manual installation
 
