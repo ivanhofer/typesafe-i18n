@@ -3,6 +3,11 @@
 
 # Version 4
 
+## 4.4.2 (2022-03-12)
+
+Bugfix:
+ - fix `importer` generating `.mjs` imports
+
 ## 4.4.1 (2022-03-11)
 
 Bugfix:
