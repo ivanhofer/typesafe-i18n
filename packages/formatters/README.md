@@ -26,6 +26,8 @@ npm run dev
 
 You can specify your own formatters, that take an argument as an input and returns another value.
 
+> For more information about the `LLL` object, read the [usage](https://github.com/ivanhofer/typesafe-i18n#i18nString) section of the main repository.
+
 ```typescript
 const formatters = {
    custom: (value) => (value * 4.2) - 7
@@ -65,7 +67,8 @@ const formatters = {
    weekday: date('en', { weekday: 'long' })
 }
 
-LLL('Today is {0|weekday}', new Date()) // => 'Today is friday'
+LLL('Today is {0|weekday}', new Date())
+// => 'Today is friday'
 ```
 
 > See [here](#with-nodejs-the-intl-package-does-not-work-with-locales-other-than-en) if you want to use this formatter in a Node.JS environment.
@@ -81,7 +84,8 @@ const formatters = {
    timeShort: time('en', { timeStyle: 'short' })
 }
 
-LLL('Next meeting: {0|timeShort}', meetingTime) // => 'Next meeting: 8:00 AM'
+LLL('Next meeting: {0|timeShort}', meetingTime)
+// => 'Next meeting: 8:00 AM'
 ```
 
 ### number
@@ -94,7 +98,8 @@ const formatters = {
    currency: number('en', { style: 'currency', currency: 'EUR' })
 }
 
-LLL('Your balance is {0|currency}', 12345) // => 'your balance is €12,345.00'
+LLL('Your balance is {0|currency}', 12345)
+// => 'your balance is €12,345.00'
 ```
 
 > See [here](#with-nodejs-the-intl-package-does-not-work-with-locales-other-than-en) if you want to use this formatter in a Node.JS environment.
@@ -151,7 +156,8 @@ const formatters = {
    upper: uppercase
 }
 
-LLL('I said: {0|upper}', 'hello') // => 'I said: HELLO'
+LLL('I said: {0|upper}', 'hello')
+// => 'I said: HELLO'
 ```
 
 ### lowercase
@@ -164,6 +170,7 @@ const formatters = {
    lower: lowercase
 }
 
-LLL('He said: {0|lower}', 'SOMETHING') // => 'He said: something'
+LLL('He said: {0|lower}', 'SOMETHING')
+// => 'He said: something'
 ```
 
