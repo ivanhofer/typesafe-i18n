@@ -1,0 +1,16 @@
+{
+	"name": "typesafe-i18n_example_importer",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview",
+		"typesafe-i18n": "typesafe-i18n"
+	},
+	"devDependencies": {
+		"typescript": "^4.5.4",
+		"vite": "^2.8.0"
+	},
+	"dependencies": {
+		"typesafe-i18n": "^4.4.2"
+	}
+}
