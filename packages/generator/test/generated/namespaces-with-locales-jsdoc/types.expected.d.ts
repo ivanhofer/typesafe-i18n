@@ -9,6 +9,7 @@ export type Locales =
 	| 'en-us'
 	| 'de_at'
 	| 'it'
+	| 'de'
 
 export type Translation = RootTranslation & DisallowNamespaces
 

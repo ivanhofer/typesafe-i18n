@@ -427,7 +427,7 @@ testNamespacesMatrix(
 	{ test: { hi: 'hello' }, 'some-other_namespace': { a: 'abc' } },
 	{ baseLocale: 'de' },
 	['test', 'some-other_namespace'],
-	['en-us', 'de_at', 'it'],
+	['en-us', 'de_at', 'it', 'de'],
 )
 
 // --------------------------------------------------------------------------------------------------------------------

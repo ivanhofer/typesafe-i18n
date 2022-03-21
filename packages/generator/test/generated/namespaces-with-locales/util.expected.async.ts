@@ -9,6 +9,7 @@ const localeTranslationLoaders = {
 	'en-us': () => import('./en-us'),
 	de_at: () => import('./de_at'),
 	it: () => import('./it'),
+	de: () => import('./de'),
 }
 
 const localeNamespaceLoaders = {
@@ -23,6 +24,10 @@ const localeNamespaceLoaders = {
 	it: {
 		test: () => import('./it/test'),
 		'some-other_namespace': () => import('./it/some-other_namespace')
+	},
+	de: {
+		test: () => import('./de/test'),
+		'some-other_namespace': () => import('./de/some-other_namespace')
 	}
 }
 

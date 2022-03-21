@@ -8,6 +8,7 @@
  * @typedef { import('typesafe-i18n').LocaleTranslationFunctions<Locales, Translations, TranslationFunctions> } LocaleTranslationFunctions,
  * @typedef { import('typesafe-i18n/detectors').LocaleDetector } LocaleDetector,
  * @typedef { import('./types.actual').Locales } Locales,
+ * @typedef { import('./types.actual').Namespaces } Namespaces,
  * @typedef { import('./types.actual').Formatters } Formatters,
  * @typedef { import('./types.actual').Translations } Translations,
  * @typedef { import('./types.actual').TranslationFunctions } TranslationFunctions
@@ -23,6 +24,11 @@ export const baseLocale = 'en'
 /** @type { Locales[] } */
 export const locales = [
 	'en'
+]
+
+/** @type { Namespaces[] } */
+export const namespaces = [
+	'test'
 ]
 
 export const loadedLocales = /** @type { Record<Locales, Translations> } */ ({})

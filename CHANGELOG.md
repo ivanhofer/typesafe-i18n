@@ -3,6 +3,11 @@
 
 # Version 4
 
+## 4.5.0 (2022-03-21)
+
+Feature:
+ - expose the list of available `namespaces` in `i18n-util.ts`
+
 ## 4.4.2 (2022-03-12)
 
 Bugfix:

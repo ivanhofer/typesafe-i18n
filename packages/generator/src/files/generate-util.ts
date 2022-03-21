@@ -16,8 +16,10 @@ import {
 import { writeFileIfContainsChanges } from '../utils/file.utils'
 import { prettify } from '../utils/generator.utils'
 
-const getUtil = (config: GeneratorConfigWithDefaultValues, locales: Locale[]): string => {
+const getUtil = (config: GeneratorConfigWithDefaultValues, locales: Locale[], namespaces: string[]): string => {
 	const { typesFileName, baseLocale, banner } = config
+
+	const usesNamespaces = !!namespaces.length
 
 	const localesEnum = `
 ${jsDocType('Locales[]')}
@@ -26,6 +28,18 @@ export const locales${type('Locales[]')} = [${locales.map(
 	'${locale}'`,
 	)}
 ]`
+
+	const namespacesEnum = usesNamespaces
+		? `
+
+${jsDocType('Namespaces[]')}
+export const namespaces${type('Namespaces[]')} = [${namespaces.map(
+				(namespace) => `
+	'${namespace}'`,
+		  )}
+]
+`
+		: ''
 
 	return `${OVERRIDE_WARNING}${tsCheck}
 ${banner}
@@ -40,6 +54,7 @@ ${jsDocImports(
 	},
 	{ from: 'typesafe-i18n/detectors', type: 'LocaleDetector' },
 	{ from: relativeFileImportPath(typesFileName), type: 'Locales' },
+	usesNamespaces && { from: relativeFileImportPath(typesFileName), type: 'Namespaces' },
 	{ from: relativeFileImportPath(typesFileName), type: 'Formatters' },
 	{ from: relativeFileImportPath(typesFileName), type: 'Translations' },
 	{ from: relativeFileImportPath(typesFileName), type: 'TranslationFunctions' },
@@ -48,13 +63,20 @@ ${jsDocImports(
 import { i18n as initI18n, i18nObject as initI18nObject, i18nString as initI18nString } from 'typesafe-i18n'
 ${importTypes('typesafe-i18n/detectors', 'LocaleDetector')}
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
-${importTypes(relativeFileImportPath(typesFileName), 'Formatters', 'Locales', 'Translations', 'TranslationFunctions')}
+${importTypes(
+	relativeFileImportPath(typesFileName),
+	'Formatters',
+	'Locales',
+	usesNamespaces && 'Namespaces',
+	'Translations',
+	'TranslationFunctions',
+)}
 
 ${jsDocType('Locales')}
 export const baseLocale${type('Locales')} = '${baseLocale}'
 
 ${localesEnum}
-
+${namespacesEnum}
 export const loadedLocales = ${
 		shouldGenerateJsDoc
 			? `${jsDocType('Record<Locales, Translations>')} ({})`
@@ -99,9 +121,13 @@ export const detectLocale = (...detectors${type('LocaleDetector[]')}) => detectL
 `
 }
 
-export const generateUtil = async (config: GeneratorConfigWithDefaultValues, locales: Locale[]): Promise<void> => {
+export const generateUtil = async (
+	config: GeneratorConfigWithDefaultValues,
+	locales: Locale[],
+	namespaces: string[],
+): Promise<void> => {
 	const { outputPath, utilFileName: utilFile } = config
 
-	const util = getUtil(config, locales)
+	const util = getUtil(config, locales, namespaces)
 	await writeFileIfContainsChanges(outputPath, utilFile, prettify(util))
 }

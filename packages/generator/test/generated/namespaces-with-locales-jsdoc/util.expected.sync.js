@@ -14,6 +14,7 @@ import { loadedFormatters, loadedLocales, locales } from './util.actual'
 import en_us from './en-us'
 import de_at from './de_at'
 import it from './it'
+import de from './de'
 
 import en_us_test from './en-us/test'
 import en_us_some_other_namespace from './en-us/some-other_namespace'
@@ -21,6 +22,8 @@ import de_at_test from './de_at/test'
 import de_at_some_other_namespace from './de_at/some-other_namespace'
 import it_test from './it/test'
 import it_some_other_namespace from './it/some-other_namespace'
+import de_test from './de/test'
+import de_some_other_namespace from './de/some-other_namespace'
 
 const localeTranslations = {
 	'en-us': {
@@ -37,6 +40,11 @@ const localeTranslations = {
 		...it,
 		test: it_test,
 		'some-other_namespace': it_some_other_namespace
+	},
+	de: {
+		...de,
+		test: de_test,
+		'some-other_namespace': de_some_other_namespace
 	},
 }
 
