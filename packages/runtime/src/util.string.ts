@@ -1,11 +1,9 @@
 import { parseRawText } from '../../parser/src/index'
 import type { Part } from '../../parser/src/types'
-import type { Arguments, BaseFormatters, Cache, FormatterFunction, Locale, LocalizedString } from './core'
+import type { Arguments, BaseFormatters, Cache, Locale, LocalizedString } from './core'
 import { translate } from './core'
 
-export type TranslateByString =
-	| ((text: string) => LocalizedString)
-	| ((text: string, ...args: Arguments) => LocalizedString)
+export type TranslateByString = (text: string, ...args: Arguments) => LocalizedString
 
 export const getPartsFromString = (cache: Cache, text: string): Part[] =>
 	(cache as Record<string, Part[]>)[text] || ((cache as Record<string, Part[]>)[text] = parseRawText(text))
@@ -21,14 +19,58 @@ const translateString = <F extends BaseFormatters>(
 export const i18nString = <L extends Locale, F extends BaseFormatters>(
 	locale: L,
 	formatters: F = {} as F,
+): (<Translation extends string>(text: Translation, ...args: Args<Translation, keyof F>) => LocalizedString) =>
+	translateString.bind(null, {}, new Intl.PluralRules(locale), formatters)
+
+export const i18nStringUntyped = <L extends Locale, F extends BaseFormatters>(
+	locale: L,
+	formatters: F = {} as F,
 ): TranslateByString => translateString.bind(null, {}, new Intl.PluralRules(locale), formatters)
 
 // --------------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-type PipeArgument<Formatters extends PropertyKey, Piped extends string, Type> = Piped extends Formatters
+type GetArg<Arg extends string, Type> = Arg extends `${infer OptionalArg}?`
+	? Partial<Record<OptionalArg, Type>>
+	: Record<Arg, Type>
+
+type GetCaseType<Case extends string> = Case extends '*' ? string : Case
+
+type ExtractCase<CaseDefinition extends string> = CaseDefinition extends `${infer Case}:${string}`
+	? GetCaseType<Trim<Case>>
+	: string
+
+type ExtractCases<SwitchCaseDefinition extends string> = SwitchCaseDefinition extends `${infer Case},${infer Rest}`
+	? [ExtractCase<Case>, ...ExtractCases<Rest>]
+	: [ExtractCase<SwitchCaseDefinition>]
+
+type SwitchCase<Arg extends string, SwitchCaseDefinition extends string> = GetArg<
+	Arg,
+	ExtractCases<SwitchCaseDefinition>[number]
+>
+
+type MergePipes<A, B> = A extends string ? A : B extends string ? B : A | B
+
+type PipeArgumentHelper<Piped extends string, Formatters extends PropertyKey, Type> = Piped extends Formatters
+	? Type
+	: Piped extends ''
 	? Type
 	: `unknown Formatter '${Piped}'`
+
+type PipeArgument<
+	Arg extends string,
+	Formatters extends PropertyKey,
+	Piped extends string,
+	Type,
+> = Piped extends `${infer Pipe1}|${infer Rest}`
+	? MergePipes<PipeArgument<Arg, Formatters, Trim<Pipe1>, Type>, PipeArgument<Arg, Formatters, Trim<Rest>, Type>>
+	: Piped extends `{${string}`
+	? Piped extends `${string}}`
+		? Piped extends `{${infer SwitchCaseDefinition}}`
+			? SwitchCase<Arg, Trim<SwitchCaseDefinition>>
+			: PipeArgumentHelper<Piped, Formatters, Type>
+		: PipeArgument<Arg, Formatters, `${Piped}}`, Type>
+	: PipeArgumentHelper<Piped, Formatters, Type>
 
 type DetectType<Type extends string> = Type extends 'string'
 	? string
@@ -91,12 +133,12 @@ type DefineArg<
 	Arg extends string,
 	Formatters extends PropertyKey,
 > = Arg extends `${infer Arg}:${infer Type}|${infer Piped}`
-	? PipeArgument<Formatters, Trim<Piped>, Record<Trim<Arg>, DetectType<Trim<Type>>>>
-	: Arg extends `${infer Arg}:${infer Type}`
-	? Record<Trim<Arg>, DetectType<Trim<Type>>>
+	? PipeArgument<Arg, Formatters, Trim<Piped>, GetArg<Trim<Arg>, DetectType<Trim<Type>>>>
 	: Arg extends `${infer Arg}|${infer Piped}`
-	? PipeArgument<Formatters, Trim<Piped>, Record<Trim<Arg>, unknown>>
-	: Record<Trim<Arg>, unknown>
+	? PipeArgument<Arg, Formatters, Trim<Piped>, GetArg<Trim<Arg>, unknown>>
+	: Arg extends `${infer Arg}:${infer Type}`
+	? GetArg<Trim<Arg>, DetectType<Trim<Type>>>
+	: GetArg<Trim<Arg>, unknown>
 
 type DetectArg<Part extends string, Formatters extends PropertyKey> = Part extends `{${string}}`
 	? []
@@ -107,8 +149,10 @@ type Merge<A extends Array<unknown>, B extends Array<unknown>> = A[number] & B[n
 type DetectArgs<
 	Translation extends string,
 	Formatters extends PropertyKey,
-> = Translation extends `${string}{{${string}}}${infer Rest}`
-	? DetectArgs<Rest, Formatters>
+> = Translation extends `${infer Before}{{${string}}}${infer Rest}`
+	? [Merge<DetectArgs<Before, Formatters>, DetectArgs<Rest, Formatters>>]
+	: Translation extends `${string}{${infer Arg}}}${infer Rest}`
+	? [Merge<DetectArg<`${Arg}}`, Formatters>, DetectArgs<Rest, Formatters>>]
 	: Translation extends `${string}{${infer Arg}}${infer Rest}`
 	? [Merge<DetectArg<Arg, Formatters>, DetectArgs<Rest, Formatters>>]
 	: unknown[]
@@ -117,83 +161,3 @@ type Args<
 	Translation extends string,
 	Formatters extends PropertyKey,
 > = Translation extends `${string}{${string}}${string}` ? DetectArgs<Translation, Formatters> : never
-
-type A<Formatters extends Record<string, FormatterFunction>, Translation extends string> = (
-	text: Translation,
-	...args: Args<Translation, keyof Formatters>
-) => string
-
-const i18n = <Formatters extends Record<string, FormatterFunction>, Translation extends string>(
-	text: Translation,
-	...args: Args<Translation, keyof Formatters>
-) => {
-	return ''
-}
-
-const createI18n =
-	<Formatters extends Record<string, FormatterFunction> = Record<string, FormatterFunction>>() =>
-	<Translation extends string>(text: Translation, ...args: Args<Translation, keyof Formatters>) => {
-		return ''
-	}
-
-// --------------------------------------------------------------------------------------------------------------------
-
-// - text-only
-i18n('test')
-// @ts-expect-error
-i18n('', '')
-
-// - plural rules
-i18n('{a} apple{{s}}', { a: 'test' })
-
-// - index based arguments
-// TODO
-i18n('{0}', { 0: 123 })
-i18n('{0:number} {1}', { 0: 123, 1: 'asd' })
-
-// - single argument
-i18n('{a}', { a: 123 })
-i18n('{a}', { a: '' })
-// @ts-expect-error
-i18n('{a}')
-// @ts-expect-error
-i18n('{ a }', { ' a ': '' })
-// @ts-expect-error
-i18n('{a}', { a: '', b: '' })
-i18n('{b}', { b: 123 })
-
-// - multiple arguments
-i18n('{a}{b}', { a: '', b: 123 })
-// @ts-expect-error
-i18n('{a} {b}', { a: '' })
-// @ts-expect-error
-i18n(' {a} {b}', { a: '', c: 123 })
-i18n('{a}{b}{c}{d}{e}{f}{g}{h}', { a: '', b: '', c: '', d: '', e: '', f: '', g: '', h: '' })
-
-// - typed arguments
-i18n('{a:string}', { a: '123' })
-// @ts-expect-error
-i18n('{a:string}', { a: 123 })
-i18n('{a:number}', { a: 123 })
-// @ts-expect-error
-i18n('{a:number}', { a: '123' })
-// @ts-expect-error
-i18n('{a:number[]}', { a: [123, ''] })
-i18n('{a:number[]}', { a: [123, 0] })
-i18n('{a:Array<number>}', { a: [123, 0] })
-// @ts-expect-error
-i18n('{a:Array<number>}', { a: [''] })
-i18n('{a:LocalizedString}', { a: '' as LocalizedString })
-
-// - trimming
-i18n('{a:string }', { a: '' })
-i18n('{a: string}', { a: '' })
-i18n('{a: string }', { a: '' })
-
-// - formatters
-const ii18n = createI18n<{ uppercase: (test: number) => string; 'some-fn': () => unknown }>()
-ii18n('{a|uppercase}', { a: '' })
-// @ts-expect-error
-ii18n('{a|test}', { a: '' })
-ii18n('{a| uppercase }', { a: '' })
-ii18n('{a| some-fn }', { a: '' })
