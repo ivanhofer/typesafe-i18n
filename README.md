@@ -779,7 +779,6 @@ LLL(BANANAS, { nrOfBananas: 3 }) // => 'bananas'
 
 <!-- ------------------------------------------------------------------------------------------ -->
 
-
 ### format passed in arguments:
 
 Read the [formatters](#formatters) section to learn how you can configure formatters.
@@ -791,6 +790,8 @@ LLL('Today is {date|weekday}', { date: now }) // => 'Today is Friday'
 LLL('Heute ist {date|weekday}', { date: now }) // => 'Heute ist Freitag'
 ```
 
+#### formatter chaining:
+
 Allows also to format values by multiple formatters in row. The formatters will be called from left to right.
 
 ```typescript
@@ -801,21 +802,29 @@ LLL('Today is {date|weekday|uppercase}', { date: now }) // => 'Today is FRIDAY'
 LLL('Today is {date|weekday|uppercase|shorten}', { date: now }) // => 'Today is FRI'
 ```
 
-
 <!-- ------------------------------------------------------------------------------------------ -->
 
-### typesafe nr of arguments:
+### switch-case
 
-For information about the `LL` object, read the [usage](#Usage) section.
+Read the [switch-case](#switch-case) section to learn more about this feature.
 
 ```typescript
-const translation = {
-   HI: 'Hello {0}'
+const translations: Translation {
+   photoAdded:
 }
 
-LL.HI() // => ERROR: Expected 1 arguments, but got 0.
-LL.HI('John', 'Jane') // => ERROR: Expected 1 arguments, but got 2.
-LL.HI('John') // => 'Hi John'
+LLL(
+   'Added a new photo to {gender|{male: his, female: her, *: their}} stream.',
+   { gender: 'male' }
+) // => 'Added a new photo to his stream.'
+LLL(
+   'Added a new photo to {gender|{male: his, female: her, *: their}} stream.',
+   { gender: 'female' }
+) // => 'Added a new photo to her stream.'
+LLL(
+   'Added a new photo to {gender|{male: his, female: her, *: their}} stream.',
+   { gender: 'other' }
+) // => 'Added a new photo to their stream.'
 ```
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -831,17 +840,6 @@ const translation = {
 
 LL.HI('John') // => ERROR: Argument of type 'string' is not assignable to parameter of type '{ name: string; }'.
 LL.HI({ name: 'John' }) // => 'Hi John'
-```
-
-<!-- ------------------------------------------------------------------------------------------ -->
-
-#### everything together:
-
-```typescript
-const MESSAGE = 'Hi {name:string|uppercase}, I want to buy {nrOfApples:number} apple{{s}}'
-
-LLL(MESSAGE, { name: 'John', nrOfApples: 42 }) // => 'Hi JOHN, I would like to buy 42 apples'
-
 ```
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -866,46 +864,6 @@ Or if you are using the [i18nObject (LL)](#i18nObject):
 <div>
    {LL.LOGIN()} <!-- => 'login' -->
 </div>
-```
-
-### arrays:
-
-`typesafe-i18n` also supports [`Arrays` as a dictionary](#dictionary).\
-Here are some example how you can iterate over them:
-
-```html
-<script>
-   const translation = [
-      'first item',
-      'second item'
-   ]
-
-   // calling translation
-   console.log(LL[0]()) // => 'first item'
-
-   // get length of array
-   const length = Array.from(LL).length
-
-   // for loop
-   for (let i = 0; i < Array.from(LL).length; i++) {
-      console.log(LL[i]())
-   }
-
-   // forEach loop
-   Array.from(LL).forEach((entry) => {
-      console.log(entry())
-   })
-
-   // for of loop
-   for (const entry of LL) {
-      console.log(entry())
-   }
-
-   // for in loop
-   for (const entry in LL7) {
-      console.log(LL[entry]())
-   }
-<script>
 ```
 
 
@@ -986,6 +944,47 @@ You are really flexible how you want to define your translations. You could defi
 
 You are really flexible how you define your translations. You can define the translations how it fits best to your application and i18n workflow.
 It is recommended to use `nested key-value pairs` since it offers flexibility and is easy to read, but if your translations come from an external service like a CMS, it is possible that you also have to use the array syntax to define your translations.
+
+
+
+### arrays:
+
+Here are some examples how you can iterate over arrays coming from a `typesafe-i18n` dictionary:
+
+```html
+<script>
+   const translation = [
+      'first item',
+      'second item'
+   ]
+
+   // calling translation
+   console.log(LL[0]()) // => 'first item'
+
+   // get length of array
+   const length = Array.from(LL).length
+
+   // for loop
+   for (let i = 0; i < Array.from(LL).length; i++) {
+      console.log(LL[i]())
+   }
+
+   // forEach loop
+   Array.from(LL).forEach((entry) => {
+      console.log(entry())
+   })
+
+   // for of loop
+   for (const entry of LL) {
+      console.log(entry())
+   }
+
+   // for in loop
+   for (const entry in LL7) {
+      console.log(LL[entry]())
+   }
+<script>
+```
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
