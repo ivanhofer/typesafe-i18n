@@ -102,11 +102,9 @@
 		"lint:ci": "eslint --cache --fix",
 		"lint:fix": "pnpm lint:ci -- packages",
 		"-- TEST ------------------------------------------------": "",
-		"test": "pnpm -r generate:json-schema && pnpm --filter \"@typesafe-i18n/*\" test && pnpm test:rest",
-		"test:rest": "uvu -r tsm -i generated -i importer/test -i example packages test",
-		"test:rest:watch": "watchlist packages -- pnpm test",
-		"test:update-generated-files": "tsm packages/generator/test/generated/update.ts",
+		"test": "pnpm -r generate:json-schema && pnpm --filter \"@typesafe-i18n/*\" test",
 		"test:size": "size-limit",
+		"test:update-generated-files": "pnpm --filter \"@typesafe-i18n/*\" test:update-generated-files",
 		"-- BUILD -----------------------------------------------": "",
 		"build": "pnpm clear && pnpm update:version && pnpm -r generate:json-schema && pnpm build:packages && pnpm link-typedefinitions && pnpm fix-imports",
 		"build:packages": "pnpm recursive run build --filter @typesafe-i18n/*",
@@ -131,10 +129,7 @@
 		"prettier": "^2.5.1",
 		"size-limit": "^7.0.8",
 		"tsm": "^2.2.1",
-		"typescript": "^4.5.5",
-		"typescript-json-schema": "^0.53.0",
-		"uvu": "^0.5.3",
-		"watchlist": "^0.3.1"
+		"typescript": "^4.5.5"
 	},
 	"peerDependencies": {
 		"typescript": ">=3.5.1"

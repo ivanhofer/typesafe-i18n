@@ -1,6 +1,6 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { i18nObject, i18nString } from '../../runtime/src/index'
+import { i18nObject, i18nStringUntyped } from '../../runtime/src/index'
 import { date, identity, ignore, lowercase, number, replace, uppercase } from '../src'
 
 const test = suite('formatters')
@@ -34,7 +34,7 @@ const formatters = {
 	currency: number('en', { style: 'currency', currency: 'USD' }),
 }
 
-const LLL = i18nString('en', formatters)
+const LLL = i18nStringUntyped('en', formatters)
 
 test('LLL uppercase', () => assert.is(LLL('This is a {0|uppercase}', 'test'), 'This is a TEST'))
 

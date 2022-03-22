@@ -1,0 +1,6 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+	},
+	"include": ["./test/**/*.test-types.ts"]
+}

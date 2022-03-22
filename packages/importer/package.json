@@ -10,6 +10,9 @@
   "devDependencies": {
     "esbuild": "^0.14.23",
     "tiny-glob": "^0.2.9",
-    "typescript": "^4.5.5"
+    "tsm": "^2.2.1",
+    "typescript": "^4.5.5",
+    "uvu": "^0.5.3",
+    "watchlist": "^0.3.1"
   }
 }

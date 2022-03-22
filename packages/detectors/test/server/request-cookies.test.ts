@@ -1,12 +1,15 @@
-import type { Request } from 'express'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import type { Locale } from '../../runtime/src/core'
+import type { Locale } from '../../../runtime/src/core'
 import { initRequestCookiesDetector } from '../../src/detectors/server/request-cookies'
 
 const test = suite('detector:request-cookies')
 
 // --------------------------------------------------------------------------------------------------------------------
+
+type Request = {
+	cookies: string
+}
 
 const testDetector = (
 	name: string,

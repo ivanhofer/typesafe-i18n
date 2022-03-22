@@ -1,5 +1,10 @@
 {
   "name": "@typesafe-i18n/generator",
+  "scripts": {
+    "test": "uvu -r tsm -i generated -i example test",
+    "test:watch": "watchlist src test -- pnpm test",
+    "test:update-generated-files": "tsm test/generated/update.ts"
+  },
   "devDependencies": {
     "@types/esutils": "^2.0.0",
     "chokidar": "^3.5.3",
@@ -7,8 +12,11 @@
     "kleur": "^4.1.4",
     "require-self": "^0.2.3",
     "tiny-glob": "^0.2.9",
+    "tsm": "^2.2.1",
     "type-fest": "^2.12.0",
     "typesafe-utils": "^1.16.2",
-    "typescript": "^4.5.5"
+    "typescript": "^4.5.5",
+    "uvu": "^0.5.3",
+    "watchlist": "^0.3.1"
   }
 }
