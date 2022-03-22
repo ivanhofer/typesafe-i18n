@@ -31,7 +31,7 @@ export const i18nStringUntyped = <L extends Locale, F extends BaseFormatters>(
 // --------------------------------------------------------------------------------------------------------------------
 
 type GetArg<Arg extends string, Type> = Arg extends `${infer OptionalArg}?`
-	? Partial<Record<OptionalArg, Type>>
+	? Partial<Record<OptionalArg, Type | undefined>>
 	: Record<Arg, Type>
 
 type GetCaseType<Case extends string> = Case extends '*' ? string : Case
@@ -160,4 +160,67 @@ type DetectArgs<
 type Args<
 	Translation extends string,
 	Formatters extends PropertyKey,
-> = Translation extends `${string}{${string}}${string}` ? DetectArgs<Translation, Formatters> : never
+> = Translation extends `${string}{${string}}${string}`
+	? // ! currently to resource intensive
+	  // ? TransformArgsArray<DetectArgs<Translation, Formatters>> //
+	  DetectArgs<Translation, Formatters>
+	: never
+
+// type TransformArgsArray<A extends Array<Record<string, unknown>>> = keyof A[0] extends `${number}`
+// 	? ToIndexBasedArgs<A>
+// 	: A
+
+// type ToIndexBasedArgs<A extends Array<Record<string, unknown>>, B extends keyof A[0] = keyof A[0]> = GetTypesFromRecord<
+// 	A[0],
+// 	Sort<ToNumberArray<ToTuple<B>>>
+// >
+
+// type GetTypesFromRecordAsArray<A extends Record<string, unknown>, B extends unknown[]> = B extends [infer Item, ...infer Rest]
+// 	? [A[Item], ...XX<A, Rest>]
+// 	: []
+
+// type UnionToParm<U> = U extends any ? (k: U) => void : never
+// type UnionToSect<U> = UnionToParm<U> extends (k: infer I) => void ? I : never
+// type ExtractParm<F> = F extends { (a: infer A): void } ? A : never
+
+// type SpliceOne<Union> = Exclude<Union, ExtractOne<Union>>
+// type ExtractOne<Union> = ExtractParm<UnionToSect<UnionToParm<Union>>>
+
+// type ToTuple<Union> = ToTupleRec<Union, []>
+// type ToTupleRec<Union, Rslt extends any[]> = SpliceOne<Union> extends never
+// 	? [ExtractOne<Union>, ...Rslt]
+// 	: ToTupleRec<SpliceOne<Union>, [ExtractOne<Union>, ...Rslt]>
+
+// type GenList<N, A extends any[] = []> = N extends A['length'] ? A : GenList<N, [0, ...A]>
+
+// // Add lists of size: [1, 2] -> [[1, [_]], [2, [_, _]]]
+// type Expand<T extends any[]> = T extends [infer Head, ...infer Rest] ? [[Head, GenList<Head>], ...Expand<Rest>] : []
+
+// // Drop one from each list, remove whole pair for empty: [[1, [_]], [0, []], [2, [_, _]]] -> [[1, []], [2, [_]]]
+// type DropAndFilter<T> = T extends [infer First, ...infer Rest]
+// 	? First extends [any, []]
+// 		? DropAndFilter<Rest>
+// 		: First extends [infer N, [any, ...infer NREST]]
+// 		? [[N, NREST], ...DropAndFilter<Rest>]
+// 		: []
+// 	: []
+// // [[1, []], [2, [_]]] -> [1]
+// type FindEmpty<T> = T extends [infer First, ...infer Rest]
+// 	? First extends [infer N, []]
+// 		? [N, ...FindEmpty<Rest>]
+// 		: FindEmpty<Rest>
+// 	: []
+
+// // Sort expanded
+// type Condense<T extends [number, any[]][], Result extends number[] = []> = T extends []
+// 	? Result
+// 	: Condense<DropAndFilter<T>, [...Result, ...FindEmpty<T>]>
+
+// type Reverse<A extends any[]> = A extends [infer H, ...infer T] ? [...Reverse<T>, H] : []
+// type Sort<T extends any[], R = false> = R extends true ? Reverse<Condense<Expand<T>>> : Condense<Expand<T>>
+
+// type ToNumberArray<T extends unknown[]> = T extends [infer Item, ...infer Rest]
+// 	? [ToNumber<Item>, ...ToNumberArray<Rest>]
+// 	: []
+
+// type ToNumber<S, L extends number[] = []> = `${L['length']}` extends S ? L['length'] : ToNumber<S, [...L, 0]>
