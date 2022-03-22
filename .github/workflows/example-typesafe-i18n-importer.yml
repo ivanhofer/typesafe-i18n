@@ -26,19 +26,20 @@ jobs:
          - name: update `typesafe-i18n` dependency
            run: npm i typesafe-i18n@latest
 
+         - name: update all dependencies
+           run: npm up
+
          - name: run import
            run: npm run i18n:import
 
          - name: run TypeScript compiler
            run: tsc --noEmit
 
-        #  - name: run tests
-        #    run: npm test
-
          - name: Create Pull Request
            uses: peter-evans/create-pull-request@v3
            with:
               token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+              branch: update/importer
               commit-message: 'chore: update `@typesafe-i18n/importer` example'
               title: 'chore: update `@typesafe-i18n/importer` example'
               body: >
