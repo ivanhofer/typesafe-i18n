@@ -45,19 +45,19 @@ export function i18nObject(locale: any, translations: any, formatters: any = {})
 	return createProxy(translations, getTranslateInstance(locale, formatters))
 }
 
-export function i18nObjectTyped<
+export function typesafeI18nObject<
 	L extends Locale,
 	T extends BaseTranslation | BaseTranslation[],
 	F extends BaseFormatters = BaseFormatters,
 >(locale: L, translations: T, formatters: F): TypedTranslationFunctions<T, F>
 
-export function i18nObjectTyped<L extends Locale, T extends BaseTranslation | BaseTranslation[]>(
+export function typesafeI18nObject<L extends Locale, T extends BaseTranslation | BaseTranslation[]>(
 	locale: L,
 	translations: T,
 ): TypedTranslationFunctions<T>
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-export function i18nObjectTyped(locale: any, translations: any, formatters: any = {}): any {
+export function typesafeI18nObject(locale: any, translations: any, formatters: any = {}): any {
 	return createProxy(translations, getTranslateInstance(locale, formatters))
 }
 

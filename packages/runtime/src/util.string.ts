@@ -19,13 +19,13 @@ const translateString = <F extends BaseFormatters>(
 export const i18nString = <L extends Locale, F extends BaseFormatters>(
 	locale: L,
 	formatters: F = {} as F,
-): (<Translation extends string>(text: Translation, ...args: Args<Translation, keyof F>) => LocalizedString) =>
-	translateString.bind(null, {}, new Intl.PluralRules(locale), formatters)
+): TranslateByString => translateString.bind(null, {}, new Intl.PluralRules(locale), formatters)
 
-export const i18nStringUntyped = <L extends Locale, F extends BaseFormatters>(
+export const typesafeI18nString = <L extends Locale, F extends BaseFormatters>(
 	locale: L,
 	formatters: F = {} as F,
-): TranslateByString => translateString.bind(null, {}, new Intl.PluralRules(locale), formatters)
+): (<Translation extends string>(text: Translation, ...args: Args<Translation, keyof F>) => LocalizedString) =>
+	translateString.bind(null, {}, new Intl.PluralRules(locale), formatters)
 
 // --------------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------

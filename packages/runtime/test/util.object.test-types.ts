@@ -1,4 +1,4 @@
-import { i18nObjectTyped } from '../src/util.object'
+import { typesafeI18nObject } from '../src/util.object'
 
 {
 	const translations = {
@@ -9,7 +9,7 @@ import { i18nObjectTyped } from '../src/util.object'
 		switch: 'Added a new photo to {gender|{male: his, female: her}} stream.',
 	} as const
 
-	const LL = i18nObjectTyped('en', translations)
+	const LL = typesafeI18nObject('en', translations)
 
 	// @ts-expect-error no argument allowed
 	LL.test('')
@@ -49,7 +49,7 @@ import { i18nObjectTyped } from '../src/util.object'
 		chained: 'Added a new photo to {gender|uppercase|{male: his, female: her, *: their}} stream',
 	} as const
 
-	const LL = i18nObjectTyped('en', translations, {
+	const LL = typesafeI18nObject('en', translations, {
 		uppercase: (value: string) => value?.toUpperCase?.(),
 		'some-fn': () => '',
 	})

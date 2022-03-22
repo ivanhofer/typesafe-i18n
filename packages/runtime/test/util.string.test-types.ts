@@ -1,8 +1,8 @@
 import type { LocalizedString } from '../src/core'
-import { i18nString } from '../src/util.string'
+import { typesafeI18nString } from '../src/util.string'
 
 {
-	const LLL = i18nString('de')
+	const LLL = typesafeI18nString('de')
 
 	// - text-only -----------------------------------------------------------------------------------------------------
 	LLL('test')
@@ -72,7 +72,7 @@ import { i18nString } from '../src/util.string'
 
 {
 	// - formatters ----------------------------------------------------------------------------------------------------
-	const LLL = i18nString('en', { uppercase: (value: string) => value?.toUpperCase?.(), 'some-fn': () => '' })
+	const LLL = typesafeI18nString('en', { uppercase: (value: string) => value?.toUpperCase?.(), 'some-fn': () => '' })
 
 	LLL('{a|uppercase}', { a: '' })
 	// @ts-expect-error

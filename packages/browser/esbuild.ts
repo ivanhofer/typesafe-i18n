@@ -2,7 +2,7 @@ import { build } from 'esbuild'
 
 const watch = process.argv.includes('--watch')
 
-const files = ['instance', 'string', 'object', 'all']
+const files = ['string', 'typed.string', 'object', 'typed.object', 'instance', 'all']
 
 files.forEach((file) =>
 	[false, true].forEach((minify) =>

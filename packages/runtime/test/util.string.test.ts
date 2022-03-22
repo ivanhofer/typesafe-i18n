@@ -1,10 +1,10 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { i18nStringUntyped } from '../src/util.string'
+import { i18nString } from '../src/util.string'
 
 const test = suite('util.string')
 
-const LLL = i18nStringUntyped('en')
+const LLL = i18nString('en')
 
 test('basic', () => assert.is(LLL('Welcome'), 'Welcome'))
 
