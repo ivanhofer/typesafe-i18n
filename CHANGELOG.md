@@ -1,6 +1,20 @@
 # CHANGELOG.md
 
 
+# Version 5
+
+## 5.0.0 (unreleased)
+
+Please visit the [release post](https://github.com/ivanhofer/typesafe-i18n/discussions) for more information.
+
+Feature:
+ - add 'typedI18nString' functionality [#88](https://github.com/ivanhofer/typesafe-i18n/discussions/88)
+
+BREAKING:
+ - remove functionality to run the generator via a `rollup` plugin
+ - remove functionality to run the generator via a `webpack` plugin
+
+
 # Version 4
 
 ## 4.5.0 (2022-03-21)

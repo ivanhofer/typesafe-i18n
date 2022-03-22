@@ -290,13 +290,6 @@ Make sure you have installed `node` version `> 12.x` and are using a `typescript
 
  > The generator will create a different output depending on your TypeScript version. Older versions don't support all the features `typesafe-i18n` need to provide you with the best types. Make sure to use a TypeScript version `> 4.1.x` to benefit from all the typechecking features.
 
-You can choose between three variants to run the generator:
-
-- as a [node-process](#node-process) *(recommended)*
-- as a [rollup-plugin](#rollup-plugin)
-- as a [webpack-plugin](#webpack-plugin)
-
-
 ### node-process
 
 Start the generator node process in your terminal:
@@ -333,70 +326,6 @@ When running tests or scripts you can disable the watcher by passing the argumen
 ```
 
 This will only generate types once and **not** listen to changes in your locale files. The process will throw an `TypesafeI18nParseError` if a wrong syntax is detected in your [base locale file](#dictionary).
-
-#### rollup-plugin
-
-If you are using `rollup` as your bundler, you can add the `typesafeI18nPlugin` to your `rollup.config.js`.
-
-```typescript
-import { typesafeI18nPlugin } from 'typesafe-i18n/rollup/rollup-plugin-typesafe-i18n'
-
-export default {
-   input: ...,
-   output: ...,
-   plugins: {
-		...
-      typescript(),
-
-      // looks for changes in your base locale file in development mode
-      // optimizes code in production mode
-      typesafeI18nPlugin({ /* optimization-options go here */ })
-   }
-}
-```
-
-You can pass [options](#options) to the generator by creating a `.typesafe-i18n.json` file in the root of your workspace.
-
-The rollup plugin can be used to optimize the translations for your production bundle.
-
-Currently implemented optimizations:
-
- - get rid of the arguments type information inside your base-translation:\
-   These types inside your base translations e.g. `Hello {name:string}!` are only used from the generator to create types for your translations. The rollup plugin removes these types from the translations in order to reduce bundle size by a few bytes. The example above will be optimized to `Hello {name}!` inside your production bundle.
- - include only certain locales:\
-	If you want to create an own bundle per locale. When running rollup to create your production-bundle, you can specify the `'locales'` optimization-config to include only certain locales. The rollup plugin will remove all other locales from the production bundle.
-   ```typescript
-   export default {
-      plugins: {
-         typesafeI18nPlugin({ locales: ['de'] })
-      }
-   }
-   ```
-
-More [optimizations](#performance) will follow.
-
-
-#### webpack-plugin
-
-If you are already using `webpack` as your bundler, you can add the `TypesafeI18nPlugin` to your `webpack.config.js`.
-
-```typescript
-const TypesafeI18nPlugin = require('typesafe-i18n/webpack/webpack-plugin-typesafe-i18n').default
-
-module.exports = {
-   entry: ...,
-   module: ...,
-   output: ...,
-   plugins: [
-      ...
-      // looks for changes in your base locale file in development mode
-      new TypesafeI18nPlugin({ /* options go here */ })
-   ],
-}
-```
-
-You can pass [options](#options) to the generator by creating a `.typesafe-i18n.json` file in the root of your workspace.
-
 
 ### folder structure
 
@@ -1384,16 +1313,16 @@ The footprint of the `typesafe-i18n` package is smaller compared to other existi
 
 These parts are bundled into the [core functions](#custom-usage). The sizes of the core functionalities are:
 
-- [i18nString](#i18nString): 949 bytes gzipped
-- [i18nObject](#i18nObject): 1093 bytes gzipped
-- [i18n](#i18n): 1121 bytes gzipped
+- [i18nString](#i18nString): 948 bytes gzipped
+- [i18nObject](#i18nObject): 1090 bytes gzipped
+- [i18n](#i18n): 1122 bytes gzipped
 
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
 There also exists a useful wrapper for some frameworks:
-- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 1396 bytes gzipped
-- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react): 1597 bytes gzipped
-- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte): 1347 bytes gzipped
+- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 1398 bytes gzipped
+- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react): 1600 bytes gzipped
+- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte): 1345 bytes gzipped
 - [typesafe-i18n vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue): 1257 bytes gzipped
 
 
@@ -1412,12 +1341,7 @@ The package was optimized for performance:
  - **fast translations**\
 	Passing variables to the [translation function](#usage) will be fast, because its treated like a simple string concatenation. For formatting values, a single function is called per [formatter](#formatters).
 
-If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n solutions. But that doesn't mean, we should stop there. There are planned some possible optimizations, to improve the bundle size even further:
-
- - [x] get rid of the arguments type information inside your base-translation [#13](https://github.com/ivanhofer/typesafe-i18n/issues/13)
- - [x] inline translations for single-locale bundles [#14](https://github.com/ivanhofer/typesafe-i18n/issues/14)
- - [ ] transform bundle so no runtime parsing is needed [#68](https://github.com/ivanhofer/typesafe-i18n/issues/68)
- - [ ] rewrite keyed to index-based arguments [#15](https://github.com/ivanhofer/typesafe-i18n/issues/15)
+If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n solutions. But that doesn't mean, we should stop there. There are some possible optimizations planned to [decrease the bundle size even further](https://github.com/ivanhofer/typesafe-i18n/discussions/89).
 
 
 

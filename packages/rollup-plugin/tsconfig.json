@@ -1,8 +1,0 @@
-{
-	"extends": "../../tsconfig.json",
-	"compilerOptions": {
-		"target": "ESNext",
-		"outDir": "../../rollup"
-	},
-	"include": ["./src/**/*.ts"]
-}
