@@ -157,7 +157,7 @@ type DetectArgs<
 	? [Merge<DetectArg<Arg, Formatters>, DetectArgs<Rest, Formatters>>]
 	: unknown[]
 
-type Args<
+export type Args<
 	Translation extends string,
 	Formatters extends PropertyKey,
 > = Translation extends `${string}{${string}}${string}`

@@ -1,6 +1,7 @@
 import type { TypeGuard } from 'typesafe-utils'
 import { removeOuterBrackets } from '../../parser/src/index'
 import type { ArgumentPart, Part, PluralPart } from '../../parser/src/types'
+import type { Args } from './util.string'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -28,6 +29,26 @@ export type TranslationFunctions<
 > = {
 	[key in keyof T]: T[key] extends string
 		? BaseTranslationFunction
+		: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+		T[key] extends Record<any, any>
+		? TranslationFunctions<T[key]>
+		: never
+}
+
+type TypedTranslationFunction<Translation extends string, Formatters extends BaseFormatters> = (
+	...args: Args<Translation, keyof Formatters>
+) => LocalizedString
+
+export type TypedTranslationFunctions<
+	T extends
+		| BaseTranslation
+		| BaseTranslation[]
+		| Readonly<BaseTranslation>
+		| Readonly<BaseTranslation[]> = BaseTranslation,
+	Formatters extends BaseFormatters = BaseFormatters,
+> = {
+	[key in keyof T]: T[key] extends string
+		? TypedTranslationFunction<T[key], Formatters>
 		: // eslint-disable-next-line @typescript-eslint/no-explicit-any
 		T[key] extends Record<any, any>
 		? TranslationFunctions<T[key]>
