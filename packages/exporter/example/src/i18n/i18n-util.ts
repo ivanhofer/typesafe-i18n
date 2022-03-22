@@ -4,13 +4,17 @@
 import { i18n as initI18n, i18nObject as initI18nObject, i18nString as initI18nString } from 'typesafe-i18n'
 import type { LocaleDetector } from 'typesafe-i18n/detectors'
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
-import type { Formatters, Locales, Translations, TranslationFunctions } from './i18n-types'
+import type { Formatters, Locales, Namespaces, Translations, TranslationFunctions } from './i18n-types'
 
 export const baseLocale: Locales = 'en'
 
 export const locales: Locales[] = [
 	'de',
 	'en'
+]
+
+export const namespaces: Namespaces[] = [
+	'my-namespace'
 ]
 
 export const loadedLocales = {} as Record<Locales, Translations>
