@@ -2,7 +2,7 @@
 
 **An opinionated, fully type-safe, lightweight localization library for TypeScript and JavaScript projects with no external dependencies.**
 
-<img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/typesafe-i18n-demo.gif" width="100%">
+<img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/typesafe-i18n-demo.gif" width="100%">
 
 [![npm version](https://badgen.net/npm/v/typesafe-i18n)](https://badgen.net/npm/v/typesafe-i18n)
 [![types included](https://badgen.net/npm/types/typesafe-i18n)](https://badgen.net/npm/types/typesafe-i18n)
@@ -70,7 +70,7 @@
 
 2. :eyes: Take a look at the generated files and it's [folder-structure](#folder-structure)
 
-3. :open_book: Explore the docs
+3. :open_book: Explore the assets
    > `typesafe-i18n` offers a lot. Just press `cmd + F` to search on this page.
 
 4. :star: Star this project on [GitHub](https://github.com/ivanhofer/typesafe-i18n)
@@ -116,7 +116,7 @@ You can use `typesafe-i18n` in a variety of project-setups:
 
 ### Browser Support
 
-The library should work in all **modern browsers**. It uses some functionality from the [`Intl` namespace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl). You can see the list of supported browsers [here](https://caniuse.com/intl-pluralrules). If you want to support older browsers that don't include these functions, you would need to include a polyfill like [intl-pluralrules](https://formatjs.io/docs/polyfills/intl-pluralrules/).
+The library should work in all **modern browsers**. It uses some functionality from the [`Intl` namespace](https://developer.mozilla.org/de/assets/Web/JavaScript/Reference/Global_Objects/Intl). You can see the list of supported browsers [here](https://caniuse.com/intl-pluralrules). If you want to support older browsers that don't include these functions, you would need to include a polyfill like [intl-pluralrules](https://formatjs.io/assets/polyfills/intl-pluralrules/).
 
 
 ### Other frameworks
@@ -140,23 +140,23 @@ This part of the documentation [was moved to a new location](https://github.com/
 The `typesafe-i18n` package allows us to be 100% typesafe for our translation functions and even the translations for other locales itself. The generator outputs TypeScript definitions based on your base locale. Here you can see some examples where the generated types can help you:
 
 #### typesafe auto-completion for all your defined locales
-![typesafe locales completion](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/01_typesafe-locales-completion.png)
+![typesafe locales completion](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/01_typesafe-locales-completion.png)
 
 #### typesafe auto-completion for all available translations
-![typesafe translation key completion](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/02_typesafe-key-completion.png)
+![typesafe translation key completion](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/02_typesafe-key-completion.png)
 
 #### you will get an error if you forget to pass arguments
-![typesafe number of arguments](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/03_typesafe-nr-of-arguments.png)
+![typesafe number of arguments](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/03_typesafe-nr-of-arguments.png)
 
 #### you will get an error if you pass the wrong type arguments
-![typesafe arguments 1](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/04_typesafe-arguments.png)
-![typesafe arguments 2](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/04_typesafe-arguments-2.png)
+![typesafe arguments 1](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/04_typesafe-arguments.png)
+![typesafe arguments 2](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/04_typesafe-arguments-2.png)
 
 #### you will get an error if you forgot to add a translation in a locale
-![typesafe keys in translations](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/05_typesafe-keys-in-translations.png)
+![typesafe keys in translations](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/05_typesafe-keys-in-translations.png)
 
 #### you will get an error when a translation is missing an argument
-![typesafe arguments in translation](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/docs/06_typesafe-arguments-in-translation.png)
+![typesafe arguments in translation](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/06_typesafe-arguments-in-translation.png)
 
 
 In order to get get full typesafety for your locales, you can start the generator during development. The generator listens for changes you make to your [base locale file](#dictionary) and creates the corresponding TypeScript types.
@@ -184,7 +184,7 @@ or define a script in your `package.json` file:
    }
 }
 ```
-> You could use a npm-package like [`npm-run-all`](https://github.com/mysticatea/npm-run-all/blob/master/docs/npm-run-all.md#run-scripts-in-parallel) in order to start the generator and you development-server in parallel.
+> You could use a npm-package like [`npm-run-all`](https://github.com/mysticatea/npm-run-all/blob/master/assets/npm-run-all.md#run-scripts-in-parallel) in order to start the generator and you development-server in parallel.
 
 To start the generator and watch for changes in your translation you can run:
 
@@ -423,7 +423,7 @@ Folder where the generator can store temporary files. These files are generated 
 
 ## JSDoc
 
-If you want to use `typesafe-i18n` inside your JavaScript code, you can get also full typesafety by running the [`generator`](#generator) with the `outputFormat` [option](#outputformat) set to `'JavaScript'`. The generator then provides wrappers for the [core functions](#usage) together with [JSDoc](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html)  annotations.
+If you want to use `typesafe-i18n` inside your JavaScript code, you can get also full typesafety by running the [`generator`](#generator) with the `outputFormat` [option](#outputformat) set to `'JavaScript'`. The generator then provides wrappers for the [core functions](#usage) together with [JSDoc](https://www.typescriptlang.org/assets/handbook/jsdoc-supported-types.html)  annotations.
 
 > An IDE like [VS Code](https://code.visualstudio.com/) will show you code-completions and errors when you have opened a file in the editor.
 
@@ -967,7 +967,7 @@ With the type `LocalizedString` you can restrict your functions to only translat
 
 Unfortunately there are some open issues in the [`Jest`](https://jestjs.io/) repository regarding modern package export formats so `jest` doesn't know where to load files from.
 
-You need to manually tell `jest` where these files should be loaded from, by defining [`moduleNameMapper`](https://jestjs.io/docs/configuration#modulenamemapper-objectstring-string--arraystring) inside your `jest.config.js`:
+You need to manually tell `jest` where these files should be loaded from, by defining [`moduleNameMapper`](https://jestjs.io/assets/configuration#modulenamemapper-objectstring-string--arraystring) inside your `jest.config.js`:
 
 ```js
 // jest.config.js
