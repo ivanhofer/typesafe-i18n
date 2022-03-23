@@ -34,7 +34,7 @@ const detectLocationOfCompiledBaseTranslation = async (
 	if (!Object.keys(directory).length) {
 		logger.error(`in '${locale}'
 Make sure to import the type 'BaseTranslation' from the generated '${typesFileName}${fileEnding}' file.
-See the example in the official docs: https://github.com/ivanhofer/typesafe-i18n#namespaces
+See the example in the official docs: https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#namespaces
 `)
 	}
 

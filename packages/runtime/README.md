@@ -433,7 +433,7 @@ The `typesafeI18nString` and `typesafeI18nObject` functions offer full typesafet
 
 ### more typesafety features
 
-In order to get full typechecking support, you should use the exported functions in `i18n-utils.ts` created by the [generator](#typesafety). It contains fully typed wrappers for the following core functionalities.
+In order to get full typechecking support, you should use the exported functions in `i18n-utils.ts` created by the [generator](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator). It contains fully typed wrappers for the following core functionalities.
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -441,17 +441,6 @@ In order to get full typechecking support, you should use the exported functions
 <!-- ------------------------------------------------------------------------------------------ -->
 
 ## Dictionary
-
-To define your base translation you need to create a `index.ts` file inside `src/i18n/{baseLocale}`, where `baseLocale` can be defined inside the [`options`](#baselocale).
-This file must have an `default export` that should have the type of `BaseTranslation | BaseTranslation[]`. Something like this:
-
-```typescript
-import type { BaseTranslation } from '../i18n-types'
-
-const en: BaseTranslation = { }
-
-export default en
-```
 
 You are really flexible how you want to define your translations. You could define them:
 

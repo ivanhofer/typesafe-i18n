@@ -16,13 +16,13 @@
 :baby_chick: [lightweight](#sizes) (~1kb)\
 :ok_hand: [easy to use syntax](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#syntax)\
 :running: [fast and efficient](#performance)\
-:safety_vest: [prevents you from making mistakes](#typesafety) (also in [plain JavaScript projects](#jsdoc))\
-:construction_worker: [creates boilerplate code](#folder-structure) for you\
-:speech_balloon: [supports plural rules](#plural)\
+:safety_vest: [prevents you from making mistakes](#typesafety) (also in [plain JavaScript projects](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#jsdoc))\
+:construction_worker: [creates boilerplate code](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#folder-structure) for you\
+:speech_balloon: [supports plural rules](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#plural)\
 :date: allows [formatting of values](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/formatters) e.g. locale-dependent date or number formats\
 :left_right_arrow: supports [switch-case statements](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#switch-case) e.g. for gender-specific output\
-:arrow_down: option for [asynchronous loading of locales](#asynchronous-loading-of-locales)\
-:books: supports multiple [namespaces](#namespaces)\
+:arrow_down: option for [asynchronous loading of locales](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#asynchronous-loading-of-locales)\
+:books: supports multiple [namespaces](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#namespaces)\
 :stopwatch: supports SSR (Server-Side Rendering)\
 :handshake: can be used for [frontend, backend and API](#usage) projects\
 :mag: [locale-detection](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/detectors) for browser and server environments\
@@ -42,7 +42,7 @@
 - [**Typesafety**](#typesafety) - how to get the best typesafety features
 - [**Syntax**](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#syntax) - how to use the translation functions
 - [**Dictionary**](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#dictionary) - how to structure your translations
-- [**Namespaces**](#namespaces) - how to optimize loading of your translations
+- [**Namespaces**](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#namespaces) - how to optimize loading of your translations
 - [**Formatters**](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/formatters) - how to format dates and numbers
 - [**Switch-Case**](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#switch-case) - how to output different words depending on an argument
 - [**Locale-detection**](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/detectors) - how to detect an user's locale
@@ -68,7 +68,7 @@
    ```
    > It didn't work? See [here](#installing-typesafe-i18n-fails) for possible troubleshooting.
 
-2. :eyes: Take a look at the generated files and it's [folder-structure](#folder-structure)
+2. :eyes: Take a look at the generated files and it's [folder-structure](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#folder-structure)
 
 3. :open_book: Explore the assets
    > `typesafe-i18n` offers a lot. Just press `cmd + F` to search on this page.
@@ -102,7 +102,7 @@ The changelog of this project can be found [here](https://github.com/ivanhofer/t
 
 ## Usage
 
-> The package can be used inside JavaScript and TypeScript applications. You will get a lot of benefits by running the [generator](#typesafety) since it will create a few wrappers to provide you with full typesafety.
+> The package can be used inside JavaScript and TypeScript applications. You will get a lot of benefits by running the [generator](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator) since it will create a few wrappers to provide you with full typesafety.
 
 You can use `typesafe-i18n` in a variety of project-setups:
 
@@ -114,15 +114,11 @@ You can use `typesafe-i18n` in a variety of project-setups:
  - [Vue.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue) applications
  - [other frameworks](#other-frameworks)
 
-
-### Browser Support
-
-The library should work in all **modern browsers**. It uses some functionality from the [`Intl` namespace](https://developer.mozilla.org/de/assets/Web/JavaScript/Reference/Global_Objects/Intl). You can see the list of supported browsers [here](https://caniuse.com/intl-pluralrules). If you want to support older browsers that don't include these functions, you would need to include a polyfill like [intl-pluralrules](https://formatjs.io/assets/polyfills/intl-pluralrules/).
-
+<!-- TODO: move documentation into adapter package -->
 
 ### Other frameworks
 
-All you need is inside the [generated](#typesafety) file `i18n-utils.ts`. You can use the functions in there to create a small wrapper for your application.
+All you need is inside the [generated](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#folder-structure) file `i18n-utils.ts`. You can use the functions in there to create a small wrapper for your application.
 
 > Feel free to open a new [discussion](https://github.com/ivanhofer/typesafe-i18n/discussions) if you need a guide for a specific framework.
 
@@ -130,6 +126,12 @@ All you need is inside the [generated](#typesafety) file `i18n-utils.ts`. You ca
 ### Custom usage
 
 See [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#usage) if you want to learn how you can use `typesafe-i18n` to implement your own specific use-case.
+
+
+### Browser Support
+
+The library should work in all **modern browsers**. It uses some functionality from the [`Intl` namespace](https://developer.mozilla.org/de/assets/Web/JavaScript/Reference/Global_Objects/Intl). You can see the list of supported browsers [here](https://caniuse.com/intl-pluralrules). If you want to support older browsers that don't include these functions, you would need to include a polyfill like [intl-pluralrules](https://formatjs.io/assets/polyfills/intl-pluralrules/).
+
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -160,9 +162,9 @@ Here you can see some examples where `typesafe-i18n` can help you:
 ![typesafe arguments in translation](https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/06_typesafe-arguments-in-translation.png)
 
 
-The `typesafe-i18n` package allows us to be 100% typesafe for our translation functions and even the translations for other locales itself. The [`generator`](#generator) outputs TypeScript definitions based on your base locale.
+The `typesafe-i18n` package allows us to be 100% typesafe for our translation functions and even the translations for other locales itself. The [`generator`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator) outputs TypeScript definitions based on your base locale.
 
-> You will also benefit from full typesafe JavaScript code via [JSDoc-annotations](#jsdoc).
+> You will also benefit from full typesafe JavaScript code via [JSDoc-annotations](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#jsdoc).
 
 
 
@@ -195,9 +197,9 @@ The footprint of the `typesafe-i18n` package is smaller compared to other existi
 
 These parts are bundled into the [core functions](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#usage). The sizes of the core functionalities are:
 
-- [i18nString](#i18nString): 948 bytes gzipped
-- [i18nObject](#i18nObject): 1090 bytes gzipped
-- [i18n](#i18n): 1122 bytes gzipped
+- [i18nString](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#i18nString): 948 bytes gzipped
+- [i18nObject](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#i18nObject): 1090 bytes gzipped
+- [i18n](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#i18n): 1122 bytes gzipped
 
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
@@ -207,6 +209,7 @@ There also exists a useful wrapper for some frameworks:
 - [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte): 1345 bytes gzipped
 - [typesafe-i18n vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue): 1257 bytes gzipped
 
+<!-- TODO: link new examples -->
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -217,7 +220,7 @@ There also exists a useful wrapper for some frameworks:
 
 The package was optimized for performance:
  - **the amount of network traffic is kept small**\
-   The translation functions are [small](#sizes). Only the locales that are used are [loaded](#asynchronous-loading-of-locales)
+   The translation functions are [small](#sizes). Only the locales that are used are [loaded](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#asynchronous-loading-of-locales)
  - **no unnecessary workload**\
    Parsing your translation file for variables and formatters will only be performed when you access a translation for the first time. The result of that parsing process will be stored in an optimized object and kept in memory.
  - **fast translations**\
@@ -287,17 +290,17 @@ and then run  the setup-command from within the `node_modules` folder via:
 ---
 ### I added a new translation to my locale file, but TypeScript gives me the Error `Property 'XYZ' does not exist on type 'TranslationFunctions'`
 
-Make sure to run the [generator](#typesafety) after you make changes to your base translation file. The generator will [generate and update the types](#folder-structure) for you.
+Make sure to run the [generator](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator) after you make changes to your base translation file. The generator will [generate and update the types](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#folder-structure) for you.
 
 ---
 ### I don't use TypeScript, can I also use `typesafe-i18n` inside JavaScript applications?
 
-Yes, you can. See the [usage](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#usage) section for instructions. Even if you don't use TypeScript you can still improve from some typesafety features via [JSDoc-annotations](#jsdoc).
+Yes, you can. See the [usage](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#usage) section for instructions. Even if you don't use TypeScript you can still improve from some typesafety features via [JSDoc-annotations](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#jsdoc).
 
 ---
 ### I added a new translation to my locale file, but the generator will not create new types
 
-The [generator](#typesafety) will only look for changes in your base locale file. Make sure to always update your base locale file first, in order to get the correct auto-generated types. If you want to [change your base locale file](#baselocale), make sure to give it the type of `BaseTranslation`. All other locales should have the type of `Translation`. E.g. if you set your base locale to italian, you would need to do it like this:
+The [generator](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator) will only look for changes in your base locale file. Make sure to always update your base locale file first, in order to get the correct auto-generated types. If you want to [change your base locale file](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#baselocale), make sure to give it the type of `BaseTranslation`. All other locales should have the type of `Translation`. E.g. if you set your base locale to italian, you would need to do it like this:
 
  - set your base locale to italian (`it`) in ´.typesafe-i18n.json`:
    ```json
@@ -333,7 +336,7 @@ The [generator](#typesafety) will only look for changes in your base locale file
 ---
 ### The generator keeps overriding my changes I make to the i18n-files
 
-The [generator](#typesafety) creates some helpful wrappers for you. If you want to write your own wrappers, you can disable the generation of these files by setting the [`generateOnlyTypes`](#generateonlytypes) option to `true`.
+The [generator](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator) creates some helpful wrappers for you. If you want to write your own wrappers, you can disable the generation of these files by setting the [`generateOnlyTypes`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generateonlytypes) option to `true`.
 
 ---
 ### Is `typesafe-i18n` supported by `i18n-ally`?
@@ -661,3 +664,5 @@ globalThis.Intl.DateTimeFormat = intl.DateTimeFormat
 ```
 
 Then you should be able to use formatters from the `Intl` namespace with all locales.
+
+<!-- TODO: check if this is now fixed in node version 16 -->

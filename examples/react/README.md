@@ -47,7 +47,7 @@ You could configure your development script to run the generator in parallel to 
 }
 ```
 
-The generator will create a custom React component and context inside `i18n-react.ts` that you can use inside your application.
+The generator will create a custom React component and context inside `i18n-react.tsx` that you can use inside your application.
 
 Wrap your application root with the `TypesafeI18n` component:
 
@@ -95,7 +95,7 @@ export default Greeting
 
 ### TypesafeI18n
 
-When running the [generator](https://github.com/ivanhofer/typesafe-i18n#typesafety), the file `i18n-react.tsx` will export a React component you can wrap around your application. It accepts the (optional) prop `locale` where you can pass a locale to initialize the context.
+When running the [generator](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator), the file `i18n-react.tsx` will export a React component you can wrap around your application. It accepts the (optional) prop `locale` where you can pass a locale to initialize the context.
 
 ```jsx
 import React from 'react'

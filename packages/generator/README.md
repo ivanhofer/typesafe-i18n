@@ -55,6 +55,19 @@ When running tests or scripts you can disable the watcher by passing the argumen
 
 This will only generate types once and **not** listen to changes in your locale files. The process will throw an `TypesafeI18nParseError` if a wrong syntax is detected in your [base locale file](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#dictionary).
 
+### base locale
+
+To define your base translation you need to create a `index.ts` file inside `src/i18n/{baseLocale}`, where `baseLocale` can be defined inside the [`options`](#baselocale).
+This file must have an `default export` that should have the type of `BaseTranslation | BaseTranslation[]`. Something like this:
+
+```typescript
+import type { BaseTranslation } from '../i18n-types'
+
+const en: BaseTranslation = { }
+
+export default en
+```
+
 ### folder structure
 
 This project requires you to use an opinionated folder structure for your locales. All your localization files are located inside the `src/i18n` folder.
@@ -177,7 +190,7 @@ export type Sum = {
 
 ### Options
 
-You can set options for the [generator](#typesafety) inside a `.typesafe-i18n.json`-file in your project's root folder e.g.
+You can set options for the generator inside a `.typesafe-i18n.json`-file in your project's root folder e.g.
 
 ```json
 {
@@ -323,7 +336,7 @@ const en_settings: BaseTranslation = { }
 export default en_settings
 ```
 
-Once you have created that file, the [`generator`](#typesafety) will automatically create boilerplate namespace files for all your other locales and assign the correct type to them.
+Once you have created that file, the generator will automatically create boilerplate namespace files for all your other locales and assign the correct type to them.
 
 By default translations inside namespaces are not loaded. You have to manually load them via `loadNamespaceAsync`.
 
