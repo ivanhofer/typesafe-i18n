@@ -14,19 +14,19 @@
 ## Advantages
 
 :baby_chick: [lightweight](#sizes) (~1kb)\
-:ok_hand: [easy to use syntax](#syntax)\
+:ok_hand: [easy to use syntax](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#syntax)\
 :running: [fast and efficient](#performance)\
 :safety_vest: [prevents you from making mistakes](#typesafety) (also in [plain JavaScript projects](#jsdoc))\
 :construction_worker: [creates boilerplate code](#folder-structure) for you\
 :speech_balloon: [supports plural rules](#plural)\
-:date: allows [formatting of values](#formatters) e.g. locale-dependent date or number formats\
-:left_right_arrow: supports [switch-case statements](#switch-case) e.g. for gender-specific output\
+:date: allows [formatting of values](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/formatters) e.g. locale-dependent date or number formats\
+:left_right_arrow: supports [switch-case statements](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#switch-case) e.g. for gender-specific output\
 :arrow_down: option for [asynchronous loading of locales](#asynchronous-loading-of-locales)\
 :books: supports multiple [namespaces](#namespaces)\
 :stopwatch: supports SSR (Server-Side Rendering)\
 :handshake: can be used for [frontend, backend and API](#usage) projects\
-:mag: [locale-detection](#locale-detection) for browser and server environments\
-:arrows_counterclockwise: [import](#importer) and [export](#exporter) translations from/to files or services\
+:mag: [locale-detection](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/detectors) for browser and server environments\
+:arrows_counterclockwise: [import](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/importer) and [export](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/exporter) translations from/to files or services\
 :no_entry: no external dependencies
 
 <!-- list of supported emojis on GitHub: https://github.com/ikatyang/emoji-cheat-sheet -->
@@ -40,12 +40,12 @@
 - [**Get started**](#get-started) - how to add `typesafe-i18n` to your project
 - [**Usage**](#usage) - how to implement different use-cases
 - [**Typesafety**](#typesafety) - how to get the best typesafety features
-- [**Syntax**](#syntax) - how to use the translation functions
-- [**Dictionary**](#dictionary) - how to structure your translations
+- [**Syntax**](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#syntax) - how to use the translation functions
+- [**Dictionary**](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#dictionary) - how to structure your translations
 - [**Namespaces**](#namespaces) - how to optimize loading of your translations
-- [**Formatters**](#formatters) - how to format dates and numbers
-- [**Switch-Case**](#switch-case) - how to output different words depending on an argument
-- [**Locale-detection**](#locale-detection) - how to detect an user's locale
+- [**Formatters**](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/formatters) - how to format dates and numbers
+- [**Switch-Case**](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#switch-case) - how to output different words depending on an argument
+- [**Locale-detection**](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/detectors) - how to detect an user's locale
 - [**Integrations**](#integration-with-other-services) - how to integrate other i18n services
 - [**Sizes**](#sizes) - how much does `typesafe-i18n` add to your bundle size
 - [**Performance**](#performance) - how efficient is `typesafe-i18n` implemented
@@ -129,7 +129,7 @@ All you need is inside the [generated](#typesafety) file `i18n-utils.ts`. You ca
 
 ### Custom usage
 
-This part of the documentation [was moved to a new location](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime)
+See [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#usage) if you want to learn how you can use `typesafe-i18n` to implement your own specific use-case.
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -165,45 +165,6 @@ The `typesafe-i18n` package allows us to be 100% typesafe for our translation fu
 > You will also benefit from full typesafe JavaScript code via [JSDoc-annotations](#jsdoc).
 
 
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-
-## Dictionary
-
-This part of the documentation [was moved to a new location](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime)
-
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-
-## Syntax
-
-This part of the documentation [was moved to a new location](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime)
-
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-
-## Formatters
-
-This part of the documentation [was moved to a new location](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/formatters)
-
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-
-## Switch-Case
-
-This part of the documentation [was moved to a new location](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#switch-case)
-
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-
-## Locale-detection
-
-This part of the documentation [was moved to a new location](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/detectors)
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -216,16 +177,10 @@ This part of the documentation [was moved to a new location](https://github.com/
 Services that work with `typesafe-i18n`:
 - [inlang](https://github.com/inlang/inlang): An open source translation management dashboard with machine translations and automatic sync. Inlang allows non-technical team members, or external translators to adjust translations without touching the source code.
 
-But you can also connect other services by using the `importer` and `exporter` functionality:
+But you can also connect other services by using the [`importer`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/importer) and [`exporter`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/exporter) functionality:
 
 
-### Importer
 
-This part of the documentation [was moved to a new location](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/importer)
-
-### Exporter
-
-This part of the documentation [was moved to a new location](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/exporter)
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -238,7 +193,7 @@ The footprint of the `typesafe-i18n` package is smaller compared to other existi
 - string-parser: detects variables, formatters and plural-rules in your localized strings
 - translation function: injects arguments, formats them and finds the correct plural form for the given arguments
 
-These parts are bundled into the [core functions](#custom-usage). The sizes of the core functionalities are:
+These parts are bundled into the [core functions](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#usage). The sizes of the core functionalities are:
 
 - [i18nString](#i18nString): 948 bytes gzipped
 - [i18nObject](#i18nObject): 1090 bytes gzipped
@@ -266,7 +221,7 @@ The package was optimized for performance:
  - **no unnecessary workload**\
    Parsing your translation file for variables and formatters will only be performed when you access a translation for the first time. The result of that parsing process will be stored in an optimized object and kept in memory.
  - **fast translations**\
-	Passing variables to the [translation function](#usage) will be fast, because its treated like a simple string concatenation. For formatting values, a single function is called per [formatter](#formatters).
+	Passing variables to the [translation function](#usage) will be fast, because its treated like a simple string concatenation. For formatting values, a single function is called per [formatter](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/formatters).
 
 If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n solutions. But that doesn't mean, we should stop there. There are some possible optimizations planned to [decrease the bundle size even further](https://github.com/ivanhofer/typesafe-i18n/discussions/89).
 
@@ -337,7 +292,7 @@ Make sure to run the [generator](#typesafety) after you make changes to your bas
 ---
 ### I don't use TypeScript, can I also use `typesafe-i18n` inside JavaScript applications?
 
-Yes, you can. See the [usage](#custom-usage) section for instructions. Even if you don't use TypeScript you can still improve from some typesafety features via [JSDoc-annotations](#jsdoc).
+Yes, you can. See the [usage](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#usage) section for instructions. Even if you don't use TypeScript you can still improve from some typesafety features via [JSDoc-annotations](#jsdoc).
 
 ---
 ### I added a new translation to my locale file, but the generator will not create new types

@@ -14,7 +14,7 @@ npm install typesafe-i18n
 
 ## Generator
 
-In order to get get full typesafety for your locales, you can start the generator during development. The generator listens for changes you make to your [base locale file](#dictionary) and creates the corresponding TypeScript types.
+In order to get get full typesafety for your locales, you can start the generator during development. The generator listens for changes you make to your [base locale file](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#dictionary) and creates the corresponding TypeScript types.
 
 Make sure you have installed `node` version `> 12.x` and are using a `typescript` version `>= 3.5.1`.
 
@@ -53,7 +53,7 @@ When running tests or scripts you can disable the watcher by passing the argumen
 > npx typesafe-i18n --no-watch
 ```
 
-This will only generate types once and **not** listen to changes in your locale files. The process will throw an `TypesafeI18nParseError` if a wrong syntax is detected in your [base locale file](#dictionary).
+This will only generate types once and **not** listen to changes in your locale files. The process will throw an `TypesafeI18nParseError` if a wrong syntax is detected in your [base locale file](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#dictionary).
 
 ### folder structure
 
@@ -74,7 +74,7 @@ src/
       i18n-util.ts
 ```
 
- > Some files are auto-generated on every change of your [base locale file](#dictionary); please don't make manual changes to them, since they will be overwritten.
+ > Some files are auto-generated on every change of your [base locale file](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#dictionary); please don't make manual changes to them, since they will be overwritten.
 
  - `en/index.ts`\
   	If 'en' is your [base locale](#baselocale), the file `src/i18n/en/index.ts` will contain your translations. Whenever you make changes to this file, the generator will create updated type definitions.
@@ -83,7 +83,7 @@ src/
 	To [defining types](#custom-types) that are unknown to `typesafe-i18n`.
 
  - `formatters.ts`\
-	In this file, you can configure the [formatters](#formatters) to use inside your translations.
+	In this file, you can configure the [formatters](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/formatters) to use inside your translations.
 
  - `i18n-types.ts`\
 	Type definitions are generated in this file. You don't have to understand them. They are just here to help TypeScript understand, how you need to call the translation functions.
@@ -95,7 +95,7 @@ src/
    This file contains the logic to load your locales in a synchronous way.
 
  - `i18n-util.ts`\
-   This file contains wrappers with type-information around the [base i18n functions](#custom-usage).
+   This file contains wrappers with type-information around the [base i18n functions](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#usage).
 
 
 ### loading locales
@@ -106,7 +106,7 @@ You can choose how you want to load locales depending on your application use-ca
 
 #### asynchronous loading of locales
 
-If your app gets loaded via a network request (probably most websites and -applications) you should use the `loadLocaleAsync` function provided by `src/i18n/i18n-util.async.ts`. It only loads the locale that is currently needed to render the page. No unnecessary data from other locales is transferred to your users. The function returns a `Promise` that loads the dictionary and initializes your [`formatters`](#formatters).
+If your app gets loaded via a network request (probably most websites and -applications) you should use the `loadLocaleAsync` function provided by `src/i18n/i18n-util.async.ts`. It only loads the locale that is currently needed to render the page. No unnecessary data from other locales is transferred to your users. The function returns a `Promise` that loads the dictionary and initializes your [`formatters`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/formatters).
 
 ```ts
 import { loadLocaleAsync } from './i18n/i18n-util.async'
@@ -122,7 +122,7 @@ const switchLocale = async (locale) => {
 
 #### synchronous loading of locales
 
-If you are using `typesafe-i18n` in a server or API context, you can load all locales when the app starts by using the `loadAllLocales` function provided by `src/i18n/i18n-util.sync.ts`. The function loads all dictionaries and initializes the [`formatters`](#formatters) for each locale.
+If you are using `typesafe-i18n` in a server or API context, you can load all locales when the app starts by using the `loadAllLocales` function provided by `src/i18n/i18n-util.sync.ts`. The function loads all dictionaries and initializes the [`formatters`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/formatters) for each locale.
 
 ```ts
 import { loadAllLocales } from './i18n/i18n-util.sync'
@@ -313,7 +313,7 @@ src/
          settings/index.ts
          index.ts
 ```
-In this example the base locale is `en` and we want to have a namespace called `settings`. The `index.ts` file has to export a [`Dictionary`](#dictionary).
+In this example the base locale is `en` and we want to have a namespace called `settings`. The `index.ts` file has to export a [`Dictionary`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#dictionary).
 e.g.
 ```typescript
 import type { BaseTranslation } from '../../i18n-types'

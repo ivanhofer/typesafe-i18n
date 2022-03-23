@@ -161,7 +161,7 @@ LLL(BANANAS, { nrOfBananas: 3 }) // => 'bananas'
 
 ### format passed in arguments:
 
-Read the [formatters](#formatters) section to learn how you can configure formatters.
+Read the [formatters](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/formatters) section to learn how you can configure formatters.
 
 ```typescript
 const now = Date.now()
@@ -326,7 +326,7 @@ LL.HI({ name: 'world' }) // => 'Hello world!'
 LL.RESET_PASSWORD() // => 'reset password'
 ```
 
-> See [here](https://github.com/ivanhofer/typesafe-i18n#dictionary) how you can structure your dictionary object.
+> See [here](#dictionary) how you can structure your dictionary object.
 
 
 ### `i18n`
