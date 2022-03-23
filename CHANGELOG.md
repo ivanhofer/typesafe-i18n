@@ -3,6 +3,11 @@
 
 # Version 5
 
+## 5.0.1 (2022-03-23)
+
+Fix:
+ - hint in setup prompts should mention `.mjs` instead of `.js`
+
 ## 5.0.0 (2022-03-23)
 
 Please visit the [release post](https://github.com/ivanhofer/typesafe-i18n/discussions/227) for more information.

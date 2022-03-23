@@ -49,7 +49,7 @@ export const askConfigQuestions = ({ baseLocale, adapter, esmImports, outputForm
 					value: false,
 					description: 'resolves module paths via Node.js module resolution',
 				},
-				{ title: 'Yes', value: true, description: `requires modules to be imported via '.js' extension` },
+				{ title: 'Yes', value: true, description: `requires modules to be imported via '.mjs' extension` },
 			],
 			initial: esmImports === false ? 0 : 1,
 		},
