@@ -88,10 +88,11 @@ npm install typesafe-i18n
 
 ### changelog
 
-The changelog can be found [here](https://github.com/ivanhofer/typesafe-i18n/blob/main/CHANGELOG.md)
+The changelog of this project can be found [here](https://github.com/ivanhofer/typesafe-i18n/blob/main/CHANGELOG.md)
 
 #### migrations
 
+ - to version `5.x.x`: see the [`release post`](https://github.com/ivanhofer/typesafe-i18n/discussions)
  - to version `4.x.x`: see the [`release post`](https://github.com/ivanhofer/typesafe-i18n/discussions/169)
  - to version `3.x.x`: see the [`release post`](https://github.com/ivanhofer/typesafe-i18n/discussions/163)
 
@@ -268,6 +269,35 @@ The package was optimized for performance:
 	Passing variables to the [translation function](#usage) will be fast, because its treated like a simple string concatenation. For formatting values, a single function is called per [formatter](#formatters).
 
 If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n solutions. But that doesn't mean, we should stop there. There are some possible optimizations planned to [decrease the bundle size even further](https://github.com/ivanhofer/typesafe-i18n/discussions/89).
+
+
+
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+## Sponsors
+
+[Become a sponsor :heart:](https://github.com/sponsors/ivanhofer) if you want to support my open source contributions.
+
+<h3 align="center">
+   Backers
+</h3>
+
+<p align="center">
+   <a href="https://github.com/Kraftwurm">
+      <img src="https://github.com/Kraftwurm.png" width="50px" alt="Kraftwurm" style="border-radius: 50%"/>
+   </a>
+   <a href="https://github.com/Badlapje">
+      <img src="https://github.com/Badlapje.png" width="50px" alt="Badlapje" style="border-radius: 50%"/>
+   </a>
+</p>
+
+<p align="center">
+   Thanks for sponsoring my open source work!
+</p>
+
 
 
 
@@ -676,28 +706,3 @@ globalThis.Intl.DateTimeFormat = intl.DateTimeFormat
 ```
 
 Then you should be able to use formatters from the `Intl` namespace with all locales.
-
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-<!-- ------------------------------------------------------------------------------------------ -->
-
-## Sponsors
-
-[Become a sponsor :heart:](https://github.com/sponsors/ivanhofer) if you want to support my open source contributions.
-
-<h3 align="center">
-   Backers
-</h3>
-
-<p align="center">
-   <a href="https://github.com/Kraftwurm">
-      <img src="https://github.com/Kraftwurm.png" width="50px" alt="Kraftwurm" style="border-radius: 50%"/>
-   </a>
-   <a href="https://github.com/Badlapje">
-      <img src="https://github.com/Badlapje.png" width="50px" alt="Badlapje" style="border-radius: 50%"/>
-   </a>
-</p>
-
-<p align="center">
-   Thanks for sponsoring my open source work!
-</p>
