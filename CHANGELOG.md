@@ -8,7 +8,7 @@
 Please visit the [release post](https://github.com/ivanhofer/typesafe-i18n/discussions) for more information.
 
 Feature:
- - add `typedI18nString` and `typedI18nObject` functionality [#88](https://github.com/ivanhofer/typesafe-i18n/discussions/88)
+ - add `typesafeI18nString` and `typesafeI18nObject` functionality [#88](https://github.com/ivanhofer/typesafe-i18n/discussions/88)
 
 BREAKING:
  - remove functionality to run the generator via a `rollup` plugin

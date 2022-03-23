@@ -278,17 +278,17 @@ The `typesafe-i18n` package exports a few different objects you can use to local
  - [i18nObject (LL)](#i18nObject): for frontend-applications or projects that only load a single locale per user
  - [i18n (L)](#i18n): for APIs or backend-applications that need to handle multiple locales
 
-### `i18nString` and `typedI18nString`
+### `i18nString` and `typesafeI18nString`
 
 The `i18nString` contains the core of the localization engine. To initialize it, you need to pass your desired `locale` and the `formatters` (optional) you want to use.\
 You will get an object back that can be used to transform your translation strings.
 
-> It is recommended to use the `typedI18nString` since it can analyze your translations and show error messages if you call them in a wrong way. Learn more in the [typesafety](#typesafety) section.
+> It is recommended to use the `typesafeI18nString` since it can analyze your translations and show error messages if you call them in a wrong way. Learn more in the [typesafety](#typesafety) section.
 
 ```typescript
 import { i18nString } from 'typesafe-i18n'
 // or
-// import { typedI18nString } from 'typesafe-i18n'
+// import { typesafeI18nString } from 'typesafe-i18n'
 
 const locale = 'en'
 const formatters = {
@@ -300,17 +300,17 @@ const LLL = i18nString(locale, formatters)
 LLL('Hello {name|uppercase}!', { name: 'world' }) // => 'Hello WORLD!'
 ```
 
-### `i18nObject` and `typedI18nObject`
+### `i18nObject` and `typesafeI18nObject`
 
 The `i18nObject` wraps your translations for a certain locale. To initialize it, you need to pass your desired `locale`, your `translations`-object and the `formatters` (optional) you want to use.\
 You will get an object back that can be used to access and apply your translations.
 
-> It is recommended to use the `typedI18nObject` since it can analyze your translations and show error messages if you call them in a wrong way. Learn more in the [typesafety](#typesafety) section.
+> It is recommended to use the `typesafeI18nObject` since it can analyze your translations and show error messages if you call them in a wrong way. Learn more in the [typesafety](#typesafety) section.
 >
 ```typescript
 import { i18nObject } from 'typesafe-i18n'
 // or
-// import { typedI18nObject } from 'typesafe-i18n'
+// import { typesafeI18nObject } from 'typesafe-i18n'
 
 const locale = 'en'
 const translations = {
@@ -379,9 +379,9 @@ function doSomething(session) {
 
 ## Typesafety
 
-Like the name `typesafe-i18n` already suggests, this i18n library can provide you a lot of typesafety features. So whenever you can, you should use the `typedI18nString` and `typedI18nObject` to translate your application. Just by passing the message with the [`typesafe-i18n` syntax](#syntax) to the translation function, `TypeScript` is able to parse it and provide you with typesafety.
+Like the name `typesafe-i18n` already suggests, this i18n library can provide you a lot of typesafety features. So whenever you can, you should use the `typesafeI18nString` and `typesafeI18nObject` to translate your application. Just by passing the message with the [`typesafe-i18n` syntax](#syntax) to the translation function, `TypeScript` is able to parse it and provide you with typesafety.
 
-### `typedI18nString`
+### `typesafeI18nString`
 ```ts
 const formatters = {
    uppercase: (value: string) => value.toUpperCase()
@@ -399,7 +399,7 @@ LLL('I said: {value:string|uppercase}', { value 123 }) // => ERROR: Type 'number
 LLL('I said: {value:string|lowercase}', { value: 'HELLO' }) // => ERROR: unknown Formatter 'lowercase'
 ```
 
-### `typedI18nObject`
+### `typesafeI18nObject`
 ```ts
 const formatters = {
    uppercase: (value: string) => value.toUpperCase()
