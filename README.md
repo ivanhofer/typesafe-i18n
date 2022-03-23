@@ -49,6 +49,7 @@
 - [**Integrations**](#integration-with-other-services) - how to integrate other i18n services
 - [**Sizes**](#sizes) - how much does `typesafe-i18n` add to your bundle size
 - [**Performance**](#performance) - how efficient is `typesafe-i18n` implemented
+- [**Sponsors**](#sponsors) - how to help this project grow
 - [**FAQs**](#faqs) - how to get your questions answered
 
 
@@ -132,8 +133,6 @@ See [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime
 
 The library should work in all **modern browsers**. It uses some functionality from the [`Intl` namespace](https://developer.mozilla.org/de/assets/Web/JavaScript/Reference/Global_Objects/Intl). You can see the list of supported browsers [here](https://caniuse.com/intl-pluralrules). If you want to support older browsers that don't include these functions, you would need to include a polyfill like [intl-pluralrules](https://formatjs.io/assets/polyfills/intl-pluralrules/).
 
-
-
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -166,8 +165,6 @@ The `typesafe-i18n` package allows us to be 100% typesafe for our translation fu
 
 > You will also benefit from full typesafe JavaScript code via [JSDoc-annotations](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#jsdoc).
 
-
-
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -180,9 +177,6 @@ Services that work with `typesafe-i18n`:
 - [inlang](https://github.com/inlang/inlang): An open source translation management dashboard with machine translations and automatic sync. Inlang allows non-technical team members, or external translators to adjust translations without touching the source code.
 
 But you can also connect other services by using the [`importer`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/importer) and [`exporter`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/exporter) functionality:
-
-
-
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -211,7 +205,6 @@ There also exists a useful wrapper for some frameworks:
 
 <!-- TODO: link new examples -->
 
-
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -227,9 +220,6 @@ The package was optimized for performance:
 	Passing variables to the [translation function](#usage) will be fast, because its treated like a simple string concatenation. For formatting values, a single function is called per [formatter](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/formatters).
 
 If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n solutions. But that doesn't mean, we should stop there. There are some possible optimizations planned to [decrease the bundle size even further](https://github.com/ivanhofer/typesafe-i18n/discussions/89).
-
-
-
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -255,9 +245,6 @@ If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n 
 <p align="center">
    Thanks for sponsoring my open source work!
 </p>
-
-
-
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->

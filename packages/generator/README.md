@@ -287,7 +287,7 @@ Folder where the generator can store temporary files. These files are generated 
 
 ## JSDoc
 
-If you want to use `typesafe-i18n` inside your JavaScript code, you can get also full typesafety by running the [`generator`](#generator) with the `outputFormat` [option](#outputformat) set to `'JavaScript'`. The generator then provides wrappers for the [core functions](#usage) together with [JSDoc](https://www.typescriptlang.org/assets/handbook/jsdoc-supported-types.html)  annotations.
+If you want to use `typesafe-i18n` inside your JavaScript code, you can get also full typesafety by running the generator with the `outputFormat` [option](#outputformat) set to `'JavaScript'`. The generator then provides wrappers for the [core functions](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#usage) together with [JSDoc](https://www.typescriptlang.org/assets/handbook/jsdoc-supported-types.html)  annotations.
 
 > An IDE like [VS Code](https://code.visualstudio.com/) will show you code-completions and errors when you have opened a file in the editor.
 

@@ -35,7 +35,7 @@ The function expects following parameters:
 
 ### Detectors
 
-Detectors can be used either on the browser or the server side. You can use the [built-in detectors](#server) or write your own `detector` functions:
+Detectors can be used either on the [browser](#browser) or the [server](#server) side. You can use the [built-in detectors](#server) or write your own `detector` functions:
 
 ```typescript
 import { detectLocale } from 'typesafe-i18n/detectors'

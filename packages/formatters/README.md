@@ -71,7 +71,7 @@ LLL('Today is {0|weekday}', new Date())
 // => 'Today is friday'
 ```
 
-> See [here](#with-nodejs-the-intl-package-does-not-work-with-locales-other-than-en) if you want to use this formatter in a Node.JS environment.
+> See [here](https://github.com/ivanhofer/typesafe-i18n#with-nodejs-the-intl-package-does-not-work-with-locales-other-than-en) if you want to use this formatter in a Node.JS environment.
 
 ### time
 
@@ -102,7 +102,7 @@ LLL('Your balance is {0|currency}', 12345)
 // => 'your balance is €12,345.00'
 ```
 
-> See [here](#with-nodejs-the-intl-package-does-not-work-with-locales-other-than-en) if you want to use this formatter in a Node.JS environment.
+> See [here](https://github.com/ivanhofer/typesafe-i18n#with-nodejs-the-intl-package-does-not-work-with-locales-other-than-en) if you want to use this formatter in a Node.JS environment.
 
 ### replace
 A wrapper for [String.prototype.replace](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
