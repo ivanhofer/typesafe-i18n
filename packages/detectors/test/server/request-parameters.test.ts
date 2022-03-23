@@ -1,12 +1,15 @@
-import type { Request } from 'express'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import type { Locale } from '../../runtime/src/core'
+import type { Locale } from '../../../runtime/src/core'
 import { initRequestParametersDetector } from '../../src/detectors/server/request-parameters'
 
 const test = suite('detector:request-parameters')
 
 // --------------------------------------------------------------------------------------------------------------------
+
+type Request = {
+	params: Record<string, string>
+}
 
 const testDetector = (
 	name: string,

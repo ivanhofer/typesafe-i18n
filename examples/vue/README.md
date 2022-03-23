@@ -89,7 +89,7 @@ const { LL } = typesafeI18n()
 
 ## provided functions & variables
 
-When running the [generator](https://github.com/ivanhofer/typesafe-i18n#typesafety), the file `i18n-vue.ts` will export following functions:
+When running the [generator](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator), the file `i18n-vue.ts` will export following functions:
 
 ### i18nPlugin
 

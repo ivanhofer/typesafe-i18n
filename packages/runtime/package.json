@@ -3,9 +3,16 @@
   "scripts": {
     "build": "pnpm build:cjs && pnpm build:esm",
     "build:cjs": "tsc -p tsconfig-cjs.json && tsm ./rename-cjs.ts",
-    "build:esm": "tsc -p tsconfig-esm.json && tsm ./rename-esm.ts"
+    "build:esm": "tsc -p tsconfig-esm.json && tsm ./rename-esm.ts",
+    "test": "pnpm test:unit && pnpm test:types",
+    "test:unit": "uvu -r tsm test",
+    "test:unit:watch": "watchlist src test -- pnpm test:unit",
+    "test:types": "tsc --noEmit -P tsconfig-tests.json"
   },
   "devDependencies": {
-    "typesafe-utils": "^1.16.2"
+    "tsm": "^2.2.1",
+    "typesafe-utils": "^1.16.2",
+    "uvu": "^0.5.3",
+    "watchlist": "^0.3.1"
   }
 }
