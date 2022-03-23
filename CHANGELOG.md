@@ -3,12 +3,12 @@
 
 # Version 5
 
-## 5.0.0 (unreleased)
+## 5.0.0 (2022-03-23)
 
-Please visit the [release post](https://github.com/ivanhofer/typesafe-i18n/discussions) for more information.
+Please visit the [release post](https://github.com/ivanhofer/typesafe-i18n/discussions/227) for more information.
 
 Feature:
- - add `typesafeI18nString` and `typesafeI18nObject` functionality [#88](https://github.com/ivanhofer/typesafe-i18n/discussions/88)
+ - add [`typesafeI18nString`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#typesafeI18nString) and [`typesafeI18nObject`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#typesafeI18nObject) functionality [#88](https://github.com/ivanhofer/typesafe-i18n/discussions/88)
 
 BREAKING:
  - remove functionality to run the generator via a `rollup` plugin

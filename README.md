@@ -93,7 +93,7 @@ The changelog of this project can be found [here](https://github.com/ivanhofer/t
 
 #### migrations
 
- - to version `5.x.x`: see the [`release post`](https://github.com/ivanhofer/typesafe-i18n/discussions)
+ - to version `5.x.x`: see the [`release post`](https://github.com/ivanhofer/typesafe-i18n/discussions/227)
  - to version `4.x.x`: see the [`release post`](https://github.com/ivanhofer/typesafe-i18n/discussions/169)
  - to version `3.x.x`: see the [`release post`](https://github.com/ivanhofer/typesafe-i18n/discussions/163)
 
