@@ -15,6 +15,7 @@ npm install typesafe-i18n
 
 - [**Syntax**](#syntax) - how to write your translations
 - [**Usage**](#usage) - how to use the translation functions
+- [**Typesafety**](#typesafety) - how to get the best typesafety features
 - [**Dictionary**](#dictionary) - how to structure your translations
 
 
@@ -277,12 +278,12 @@ The `typesafe-i18n` package exports a few different objects you can use to local
  - [i18nObject (LL)](#i18nObject): for frontend-applications or projects that only load a single locale per user
  - [i18n (L)](#i18n): for APIs or backend-applications that need to handle multiple locales
 
-In order to get full typechecking support, you should use the exported functions in `i18n-utils.ts` created by the [generator](#typesafety). It contains fully typed wrappers for the following core functionalities.
-
-### i18nString
+### `i18nString` and `typedI18nString`
 
 The `i18nString` contains the core of the localization engine. To initialize it, you need to pass your desired `locale` and the `formatters` (optional) you want to use.\
 You will get an object back that can be used to transform your translation strings.
+
+> It is recommended to use the `typedI18nString` since it can analyze your translations and show error messages if you call them in a wrong way. Learn more in the [typesafety](#typesafety) section.
 
 ```typescript
 import { i18nString } from 'typesafe-i18n'
@@ -299,11 +300,13 @@ const LLL = i18nString(locale, formatters)
 LLL('Hello {name|uppercase}!', { name: 'world' }) // => 'Hello WORLD!'
 ```
 
-### i18nObject
+### `i18nObject` and `typedI18nObject`
 
 The `i18nObject` wraps your translations for a certain locale. To initialize it, you need to pass your desired `locale`, your `translations`-object and the `formatters` (optional) you want to use.\
 You will get an object back that can be used to access and apply your translations.
 
+> It is recommended to use the `typedI18nObject` since it can analyze your translations and show error messages if you call them in a wrong way. Learn more in the [typesafety](#typesafety) section.
+>
 ```typescript
 import { i18nObject } from 'typesafe-i18n'
 // or
@@ -326,7 +329,7 @@ LL.RESET_PASSWORD() // => 'reset password'
 > See [here](https://github.com/ivanhofer/typesafe-i18n#dictionary) how you can structure your dictionary object.
 
 
-### i18n
+### `i18n`
 
 Wrap all your locales with `i18n`. To initialize it, you need to pass a callback to get the `translations`-object for a given locale and a callback to initialize the `formatters` you want to use (optional).\
 You will get an object back that can be used to access all your locales and apply your translations.
@@ -373,6 +376,65 @@ function doSomething(session) {
 }
 
 ```
+
+## Typesafety
+
+Like the name `typesafe-i18n` already suggests, this i18n library can provide you a lot of typesafety features. So whenever you can, you should use the `typedI18nString` and `typedI18nObject` to translate your application. Just by passing the message with the [`typesafe-i18n` syntax](#syntax) to the translation function, `TypeScript` is able to parse it and provide you with typesafety.
+
+### `typedI18nString`
+```ts
+const formatters = {
+   uppercase: (value: string) => value.toUpperCase()
+}
+
+const LLL = typesafeI18nString('en', formatters)
+
+LLL('I said: {value:string|uppercase}', { value: 'Hello' }) // => 'I said: HELLO'
+
+LLL('I said: {value:string|uppercase}') // => ERROR: Expected 2 arguments, but got 1
+LLL('I said: {value:string|uppercase}', 'Hello') // => ERROR: Argument of type 'string' is not assignable ...
+LLL('I said: {value:string|uppercase}', { }) // => ERROR: Argument ... is not assignable ...
+LLL('I said: {value:string|uppercase}', { someValue: 'Hello' }) // => ERROR: Argument ... is not assignable ...
+LLL('I said: {value:string|uppercase}', { value 123 }) // => ERROR: Type 'number is not assignable to type 'string'
+LLL('I said: {value:string|lowercase}', { value: 'HELLO' }) // => ERROR: unknown Formatter 'lowercase'
+```
+
+### `typedI18nObject`
+```ts
+const formatters = {
+   uppercase: (value: string) => value.toUpperCase()
+}
+
+const translations = {
+   photoAdded: 'Added a new photo to {gender|{male: his, female: her}} stream.',
+} as const // ! important that you mark this 'as const', or else you won't get typesafety hints
+
+const LL = typesafeI18nObject('en', translations)
+```
+
+### limitations
+
+The `typesafeI18nString` and `typesafeI18nObject` functions offer full typesafety support, but these re things you need to know:
+
+ - index based arguments need to be passed as an object:
+   ```ts
+   LLL('{0:number} {1}', { 0: 123, 1: 'test' })
+   ```
+ - optional arguments have to be passed as an empty object or as `undefined` if you don't want to render them
+   ```ts
+   LLL('I am {value?:string}', { })
+   LLL('I am {value?:string}', { value: undefined})
+   ```
+ - you can only use a set of predefined `TypeScript` types. Other types will be marked as `unknown` so any value is allowed to be passed as an argument:
+    ```ts
+   LLL('{value:Project}', { value: 123 })
+   LLL('{value:Project}', { value: 'MyProject' })
+   ```
+
+### more typesafety features
+
+In order to get full typechecking support, you should use the exported functions in `i18n-utils.ts` created by the [generator](#typesafety). It contains fully typed wrappers for the following core functionalities.
+
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
