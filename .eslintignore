@@ -11,6 +11,5 @@ node_modules
 /svelte
 /types
 /vue
-rollup.config.js
 /packages/generator/test/generated
 /packages/**/example
