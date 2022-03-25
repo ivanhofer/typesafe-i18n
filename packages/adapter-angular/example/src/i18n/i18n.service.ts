@@ -2,14 +2,14 @@
 /* eslint-disable */
 
 import { Injectable } from '@angular/core'
-import { I18nServiceRoot } from 'typesafe-i18n/angular/angular-service'
-import type { Locales, Translation, TranslationFunctions, Formatters } from './i18n-types'
+import { I18nServiceRoot } from 'typesafe-i18n/angular'
+import type { Locales, Translations, TranslationFunctions, Formatters } from './i18n-types'
 import { loadedLocales, loadedFormatters } from './i18n-util'
 
 @Injectable({
 	providedIn: 'root',
 })
-export class I18nService extends I18nServiceRoot<Locales, Translation, TranslationFunctions, Formatters> {
+export class I18nService extends I18nServiceRoot<Locales, Translations, TranslationFunctions, Formatters> {
 	constructor() {
 		super(loadedLocales, loadedFormatters)
 	}
