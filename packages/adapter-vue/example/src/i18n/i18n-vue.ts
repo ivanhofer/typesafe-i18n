@@ -2,10 +2,10 @@
 /* eslint-disable */
 
 import { inject, ref } from 'vue'
-import { initI18nVuePlugin } from 'typesafe-i18n/adapters/adapter-vue';
-import type { Locales, Translation, TranslationFunctions, Formatters } from './i18n-types'
+import { initI18nVuePlugin } from 'typesafe-i18n/vue';
+import type { Locales, Translations, TranslationFunctions, Formatters } from './i18n-types'
 import { loadedLocales, loadedFormatters } from './i18n-util'
 
-const { typesafeI18n, i18nPlugin } = initI18nVuePlugin<Locales, Translation, TranslationFunctions, Formatters>(inject, ref, loadedLocales, loadedFormatters)
+const { typesafeI18n, i18nPlugin } = initI18nVuePlugin<Locales, Translations, TranslationFunctions, Formatters>(inject, ref, loadedLocales, loadedFormatters)
 
 export { typesafeI18n, i18nPlugin }
