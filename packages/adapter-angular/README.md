@@ -1,25 +1,20 @@
-# typesafe-i18n Angular
+# `typesafe-i18n` Angular
 
-This is a small project demonstrating a `typesafe-i18n` integration with Angular.
+**You can demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular/example)**
 
-> This repository was set up using the [Angular CLI](https://angular.io/cli).
+## Setup
 
+See [here](https://github.com/ivanhofer/typesafe-i18n#get-started) on more information how to set up `typesafe-i18n`.
 
-## Get started
-
-Start the project in development mode:
+### manual installation
 
 ```bash
-npm run dev
+npm install typesafe-i18n
 ```
 
-Navigate to [http://localhost:4200](http://localhost:4200). You should see the example app running.
-
----
-
-## Overview
- - [add `typesafe-i18n` to existing projects](#configure-typesafe-i18n-for-an-existing-react-project)
- - [generated component & context](#generated-component--context)
+## Table of Contents
+ - [add `typesafe-i18n` to an existing Angular project](#configure-typesafe-i18n-for-an-existing-angular-project)
+ - [generated service](#generated-service)
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -51,6 +46,8 @@ The generator will create a custom Angular Service inside `i18n.service.ts` that
 
 That's it. You can then start using `typesafe-i18n` inside your Angular components.
 
+
+_greeting.component.ts_
 ```typescript
 import { Component } from '@angular/core'
 import { TranslationFunctions } from '../i18n/i18n-types'
@@ -69,10 +66,12 @@ export class GreetingComponent {
 }
 ```
 
+_greeting.component.html_
 ```html
 <p>{{ LL.HI({ name: 'John' }) }}</p>
 ```
 
+## generated service
 
 The service gives you access to following variables:
 
@@ -83,10 +82,6 @@ An initialized [`i18nObject`](https://github.com/ivanhofer/typesafe-i18n#i18nobj
 #### locale
 
 A `string` containing the current selected locale.
-
-#### isLoadingLocale
-
-A `boolean` that indicates if the locale is currently loading. Can be useful if you have set `loadLocalesAsync` and a network request is beeing performed when switching locales.
 
 #### setLocale
 

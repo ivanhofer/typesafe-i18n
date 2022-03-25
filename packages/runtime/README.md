@@ -423,7 +423,7 @@ The `typesafeI18nString` and `typesafeI18nObject` functions offer full typesafet
  - optional arguments have to be passed as an empty object or as `undefined` if you don't want to render them
    ```ts
    LLL('I am {value?:string}', { })
-   LLL('I am {value?:string}', { value: undefined})
+   LLL('I am {value?:string}', { value: undefined })
    ```
  - you can only use a set of predefined `TypeScript` types. Other types will be marked as `unknown` so any value is allowed to be passed as an argument:
     ```ts

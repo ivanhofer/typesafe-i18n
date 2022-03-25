@@ -107,7 +107,7 @@ The changelog of this project can be found [here](https://github.com/ivanhofer/t
 
 You can use `typesafe-i18n` in a variety of project-setups:
 
- - [Angular](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular) applications
+ - [Angular](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular) applications
  - [Browser (Vanilla JS)](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/browser) projects
  - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/node) apis, backends, scripts, ...
  - [React / Next.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react) applications
@@ -198,7 +198,7 @@ These parts are bundled into the [core functions](https://github.com/ivanhofer/t
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
 There also exists a useful wrapper for some frameworks:
-- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 1398 bytes gzipped
+- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular): 1398 bytes gzipped
 - [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react): 1600 bytes gzipped
 - [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte): 1345 bytes gzipped
 - [typesafe-i18n vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue): 1257 bytes gzipped
