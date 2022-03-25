@@ -12,6 +12,8 @@ See [here](https://github.com/ivanhofer/typesafe-i18n#get-started) on more infor
 npm install typesafe-i18n
 ```
 
+---
+
 ## Table of Contents
  - [add `typesafe-i18n` to an existing Angular project](#configure-typesafe-i18n-for-an-existing-angular-project)
  - [generated service](#generated-service)

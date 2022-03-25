@@ -1,4 +1,4 @@
-# typesafe-i18n Browser
+# `typesafe-i18n` Browser
 
 This is a small project demonstrating a `typesafe-i18n` integration with JavaScript in Browsers.
 

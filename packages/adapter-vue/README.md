@@ -1,30 +1,20 @@
-# typesafe-i18n Vue.js
+# `typesafe-i18n` Vue.js
 
-This is a small project demonstrating a `typesafe-i18n` integration with Vue.js version 3.
+**You can find a demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/vue/example)**
 
->This repository was set up using [`vite`](https://vitejs.dev) with the `vue-ts` template.
->```bash
-> npm init vite@latest my-vue-app -- --template vue-ts
->```
+## Setup
 
-#### Recommended IDE Setup
+See [here](https://github.com/ivanhofer/typesafe-i18n#get-started) on more information how to set up `typesafe-i18n`.
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
-
-
-## Get started
-
-Start the project in development mode:
+### manual installation
 
 ```bash
-npm run dev
+npm install typesafe-i18n
 ```
-
-Navigate to [http://localhost:3000](http://localhost:3000). You should see the example app running.
 
 ---
 
-## Overview
+## Table of Contents
  - [add `typesafe-i18n` to existing projects](#configure-typesafe-i18n-for-an-existing-vuejs-project)
  - [provided functions & variables](#provided-functions--variables)
 
@@ -111,7 +101,7 @@ This function can be called in any component to inject i18n functionality:
 <script setup lang="ts">
 import { typesafeI18n } from './i18n/i18n-vue'
 
-const { LL, locale, setLocale, isLoadingLocale } = typesafeI18n()
+const { LL, locale, setLocale } = typesafeI18n()
 </script>
 ```
 
@@ -137,10 +127,6 @@ const { LL } = typesafeI18n()
 #### locale
 
 A `string` containing the current selected locale.
-
-#### isLoadingLocale
-
-A `boolean` that indicates if the locale is currently loading. Can be useful if you have set `loadLocalesAsync` and a network request is beeing performed when switching locales.
 
 #### setLocale
 

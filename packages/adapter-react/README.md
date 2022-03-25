@@ -12,6 +12,7 @@ See [here](https://github.com/ivanhofer/typesafe-i18n#get-started) on more infor
 npm install typesafe-i18n
 ```
 
+---
 
 ## Table of Contents
  - [add `typesafe-i18n` to existing projects](#configure-typesafe-i18n-for-an-existing-react-project)
@@ -123,7 +124,7 @@ import React from 'react'
 import { I18nContext } from './i18n/i18n-react'
 
 function MyComponent(props) {
-   const { LL, isLoadingLocale, locale, setLocale } = useContext(I18nContext)
+   const { LL, locale, setLocale } = useContext(I18nContext)
 
    return // ...
 }
@@ -164,11 +165,7 @@ import React from 'react'
 import { I18nContext } from './i18n/i18n-react'
 
 function LanguageSelection(props) {
-   const { locale, isLoadingLocale, setLocale } = useContext(I18nContext)
-
-   if (isLoadingLocale) {
-      return <div>loading...</div>
-   }
+   const { locale, setLocale } = useContext(I18nContext)
 
    return (
       <ul className="language-selection">

@@ -1,4 +1,4 @@
-# typesafe-i18n Node.js
+# `typesafe-i18n` Node.js
 
 This is a small project demonstrating a `typesafe-i18n` integration with Node.js.
 
