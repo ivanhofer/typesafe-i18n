@@ -8,6 +8,9 @@ const getNodeUtils = ({ utilFileName, banner }: GeneratorConfigWithDefaultValues
 ${banner}
 
 import { i18n } from '${relativeFileImportPath(utilFileName)}'
+import { loadAllLocales } from '${relativeFileImportPath(`${utilFileName}.sync`)}'
+
+loadAllLocales()
 
 export const L = i18n()
 

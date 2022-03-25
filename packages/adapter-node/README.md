@@ -1,23 +1,20 @@
 # `typesafe-i18n` Node.js
 
-This is a small project demonstrating a `typesafe-i18n` integration with Node.js.
+**You can find a demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/node/example)**
 
-> This is a small example express server.
+## Setup
 
+See [here](https://github.com/ivanhofer/typesafe-i18n#get-started) on more information how to set up `typesafe-i18n`.
 
-## Get started
-
-Start the server in development mode:
+### manual installation
 
 ```bash
-npm run dev
+npm install typesafe-i18n
 ```
-
-Navigate to [http://localhost:3001](http://localhost:3001). You should see the example app running.
 
 ---
 
-## Overview
+## Table of Contents
  - [add `typesafe-i18n` to existing projects](#configure-typesafe-i18n-for-an-existing-nodejs-project)
  - [available exports](#exports)
 
@@ -70,7 +67,7 @@ The file `i18n-node.ts` exports following function:
 ### L
 
 An object of type [i18n](https://github.com/ivanhofer/typesafe-i18n#i18n) you can use inside your code.\
-This is also the default object of that file.
+This is also the default export of that file.
 
 
 ---
