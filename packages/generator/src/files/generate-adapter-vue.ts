@@ -17,7 +17,7 @@ ${banner}
 
 ${jsDocImports(
 	{
-		from: 'typesafe-i18n/adapters/adapter-vue',
+		from: 'typesafe-i18n/vue',
 		type: 'VuePluginInit<Locales, Translations, TranslationFunctions>',
 		alias: 'VuePluginInit',
 	},
@@ -28,7 +28,7 @@ ${jsDocImports(
 )}
 
 import { inject, ref } from 'vue'
-import { initI18nVuePlugin } from 'typesafe-i18n/adapters/adapter-vue';
+import { initI18nVuePlugin } from 'typesafe-i18n/vue';
 ${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translations', 'TranslationFunctions', 'Formatters')}
 import { loadedLocales, loadedFormatters } from '${relativeFileImportPath(utilFileName)}'
 

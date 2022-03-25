@@ -15,9 +15,9 @@ const formats = ['esm', 'cjs'] as const
 formats.forEach((format) =>
 	[false, true].forEach((minify) =>
 		build({
-			entryPoints: [`./src/react-context.ts`],
+			entryPoints: ['./src/index.tsx'],
 			bundle: true,
-			outfile: getPath(`../../react/react-context${minify ? '.min' : ''}.${format === 'esm' ? 'm' : 'c'}js`),
+			outfile: getPath(`../../react/index${minify ? '.min' : ''}.${format === 'esm' ? 'm' : 'c'}js`),
 			external: ['react'],
 			platform: 'browser',
 			format,

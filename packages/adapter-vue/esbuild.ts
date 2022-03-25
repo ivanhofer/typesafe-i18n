@@ -15,9 +15,9 @@ const formats = ['esm', 'cjs'] as const
 formats.forEach((format) =>
 	[false, true].forEach((minify) =>
 		build({
-			entryPoints: [`./src/vue-plugin.ts`],
+			entryPoints: [`./src/index.ts`],
 			bundle: true,
-			outfile: getPath(`../../vue/vue-plugin${minify ? '.min' : ''}.${format === 'esm' ? 'm' : 'c'}js`),
+			outfile: getPath(`../../vue/index${minify ? '.min' : ''}.${format === 'esm' ? 'm' : 'c'}js`),
 			external: ['vue'],
 			platform: 'browser',
 			format,

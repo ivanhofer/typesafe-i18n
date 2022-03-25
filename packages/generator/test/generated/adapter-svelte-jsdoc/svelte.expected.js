@@ -3,14 +3,14 @@
 /* eslint-disable */
 
 /**
- * @typedef { import('typesafe-i18n/adapters/adapter-svelte').SvelteStoreInit<Locales, Translations, TranslationFunctions> } SvelteStoreInit,
+ * @typedef { import('typesafe-i18n/svelte').SvelteStoreInit<Locales, Translations, TranslationFunctions> } SvelteStoreInit,
  * @typedef { import('./types.actual').Locales } Locales,
  * @typedef { import('./types.actual').Translations } Translations,
  * @typedef { import('./types.actual').TranslationFunctions } TranslationFunctions,
  * @typedef { import('./types.actual').Formatters } Formatters
  */
 
-import { initI18nSvelte } from 'typesafe-i18n/adapters/adapter-svelte'
+import { initI18nSvelte } from 'typesafe-i18n/svelte'
 
 import { loadedLocales, loadedFormatters } from './util.actual'
 

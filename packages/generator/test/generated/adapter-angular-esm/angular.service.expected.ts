@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 import { Injectable } from '@angular/core'
-import { I18nServiceRoot } from 'typesafe-i18n/angular/angular-service'
+import { I18nServiceRoot } from 'typesafe-i18n/angular'
 import type { Locales, Translations, TranslationFunctions, Formatters } from './types.actual.js'
 import { loadedLocales, loadedFormatters } from './util.actual.js'
 

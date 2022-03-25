@@ -3,14 +3,14 @@
 /* eslint-disable */
 
 /**
- * @typedef { import('typesafe-i18n/adapters/adapter-react').ReactInit<Locales, Translations, TranslationFunctions> } ReactInit,
+ * @typedef { import('typesafe-i18n/react').ReactInit<Locales, Translations, TranslationFunctions> } ReactInit,
  * @typedef { import('./types.actual').Locales } Locales,
  * @typedef { import('./types.actual').Translations } Translations,
  * @typedef { import('./types.actual').TranslationFunctions } TranslationFunctions,
  * @typedef { import('./types.actual').Formatters } Formatters
  */
 
-import { initI18nReact } from 'typesafe-i18n/adapters/adapter-react'
+import { initI18nReact } from 'typesafe-i18n/react'
 
 import { loadedLocales, loadedFormatters } from './util.actual'
 

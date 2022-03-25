@@ -1,5 +1,4 @@
 node_modules
-/adapters
 /angular
 /cli
 /detectors
@@ -9,7 +8,6 @@ node_modules
 /importer
 /parser
 /react
-/rollup
 /runtime
 /schema
 /svelte
@@ -18,6 +16,5 @@ packages/generator/test/generated/**/*.actual.*
 packages/generator/test/generated/console*
 /typesafe-i18n-*.tgz
 /types
-/webpack
 /.eslintcache
 .pnpm-debug.log

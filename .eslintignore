@@ -1,5 +1,4 @@
 node_modules
-/adapters
 /angular
 /cli
 /dist
@@ -8,12 +7,10 @@ node_modules
 /importer
 /parser
 /react
-/rollup
 /runtime
 /svelte
 /types
 /vue
-/webpack
 rollup.config.js
 /packages/generator/test/generated
 /packages/**/example

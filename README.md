@@ -619,7 +619,10 @@ You need to manually tell `jest` where these files should be loaded from, by def
 // jest.config.js
 module.exports = {
    moduleNameMapper: {
-      "typesafe-i18n/adapters/(.*)": "typesafe-i18n/adapters/$1.cjs",
+      "typesafe-i18n/angular": "typesafe-i18n/angular/index.cjs",
+      "typesafe-i18n/react": "typesafe-i18n/react/index.cjs",
+      "typesafe-i18n/svelte": "typesafe-i18n/svelte/index.cjs",
+      "typesafe-i18n/vue": "typesafe-i18n/vue/index.cjs",
       "typesafe-i18n/detectors": "typesafe-i18n/detectors/index.cjs",
    }
 };
