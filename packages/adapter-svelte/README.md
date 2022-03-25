@@ -1,6 +1,8 @@
 # `typesafe-i18n` Svelte
 
-**You can find a demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular/example)**
+**You can find a demo Svelte implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte/examples/svelte)**
+
+**You can find a demo SvelteKit implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte/examples/svelte-kit)**
 
 ## Setup
 

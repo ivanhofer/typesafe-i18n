@@ -108,11 +108,11 @@ The changelog of this project can be found [here](https://github.com/ivanhofer/t
 You can use `typesafe-i18n` in a variety of project-setups:
 
  - [Angular](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular) applications
- - [Browser (Vanilla JS)](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/browser) projects
- - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/node) apis, backends, scripts, ...
+ - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-node) apis, backends, scripts, ...
  - [React / Next.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react) applications
- - [Svelte](https://github.com/ivanhofer/typesafe-i18n-demo-svelte) / [SvelteKit](https://github.com/ivanhofer/typesafe-i18n-demo-sveltekit) / [Sapper](https://github.com/ivanhofer/typesafe-i18n-demo-svelte) applications
- - [Vue.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue) applications
+ - [Svelte / SvelteKit / Sapper](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte) applications
+ - [Vue.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/vue) applications
+ - [Browser (via CDN)](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/browser/example) projects
  - [other frameworks](#other-frameworks)
 
 <!-- TODO: move documentation into adapter package -->
