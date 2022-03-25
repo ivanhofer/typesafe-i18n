@@ -2,6 +2,9 @@
 /* eslint-disable */
 
 import { i18n } from './i18n-util'
+import { loadAllLocales } from './i18n-util.sync'
+
+loadAllLocales()
 
 export const L = i18n()
 
