@@ -1,23 +1,19 @@
-# typesafe-i18n React
+# `typesafe-i18n` React
 
-This is a small project demonstrating a `typesafe-i18n` integration with React.
+**You can find a demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/react/example).**
 
-> This repository was set up using [Create React App](https://github.com/facebook/create-react-app) with the typescript option.
+## Setup
 
+See [here](https://github.com/ivanhofer/typesafe-i18n#get-started) on more information how to set up `typesafe-i18n`.
 
-## Get started
-
-Start the project in development mode:
+### manual installation
 
 ```bash
-npm run dev
+npm install typesafe-i18n
 ```
 
-Navigate to [http://localhost:3000](http://localhost:3000). You should see the example app running.
 
----
-
-## Overview
+## Table of Contents
  - [add `typesafe-i18n` to existing projects](#configure-typesafe-i18n-for-an-existing-react-project)
  - [generated component & context](#generated-component--context)
 
@@ -57,7 +53,7 @@ import TypesafeI18n from './i18n/i18n-react'
 
 function App() {
 
-   // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n#loading-locales)
+   // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#loading-locales)
 
    return (
       <TypesafeI18n locale="en">
@@ -103,7 +99,7 @@ import TypesafeI18n from './i18n/i18n-react'
 
 function App() {
 
-   // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n#loading-locales)
+   // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#loading-locales)
 
    return (
       <TypesafeI18n locale="en">
@@ -139,7 +135,7 @@ The context gives you access to following variables:
 
 #### LL
 
-An initialized [`i18nObject`](https://github.com/ivanhofer/typesafe-i18n#i18nobject) you can use to translate your app.
+An initialized [`i18nObject`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#i18nObject) you can use to translate your app.
 
 ```jsx
 import React from 'react'
@@ -157,10 +153,6 @@ export default ProjectOverview
 #### locale
 
 A `string` containing the current selected locale.
-
-#### isLoadingLocale
-
-A `boolean` that indicates if the locale is currently loading. Can be useful if you have set `loadLocalesAsync` and a network request is beeing performed when switching locales.
 
 #### setLocale
 

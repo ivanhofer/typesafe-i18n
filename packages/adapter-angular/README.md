@@ -1,6 +1,6 @@
 # `typesafe-i18n` Angular
 
-**You can demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular/example)**
+**You can find a demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular/example)**
 
 ## Setup
 
@@ -77,7 +77,7 @@ The service gives you access to following variables:
 
 #### LL
 
-An initialized [`i18nObject`](https://github.com/ivanhofer/typesafe-i18n#i18nobject) you can use to translate your app.
+An initialized [`i18nObject`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#i18nObject) you can use to translate your app.
 
 #### locale
 
@@ -101,7 +101,7 @@ export class LanguageSwitcherComponent {
    constructor(private i18nService: I18nService) {	}
 
    setLocale(locale: Locales): void {
-      // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n#loading-locales)
+      // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#loading-locales)
 
       this.i18nService.setLocale(locale)
    }

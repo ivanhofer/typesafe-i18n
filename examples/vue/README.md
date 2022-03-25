@@ -63,7 +63,7 @@ import { i18nPlugin } from './i18n/i18n-vue'
 const app = createApp(App)
 app.use(i18nPlugin, 'en') // activate plugin
 
-// TODO: load locales (https://github.com/ivanhofer/typesafe-i18n#loading-locales)
+// TODO: load locales (https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#loading-locales)
 
 app.mount('#app')
 ```
@@ -120,7 +120,7 @@ It injects following functions and variables:
 
 #### LL
 
-An initialized [`i18nObject`](https://github.com/ivanhofer/typesafe-i18n#i18nobject) you can use to translate your app.
+An initialized [`i18nObject`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#i18nObject) you can use to translate your app.
 
 ```vue
 <script setup lang="ts">

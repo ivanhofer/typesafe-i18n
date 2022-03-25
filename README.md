@@ -110,7 +110,7 @@ You can use `typesafe-i18n` in a variety of project-setups:
  - [Angular](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular) applications
  - [Browser (Vanilla JS)](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/browser) projects
  - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/node) apis, backends, scripts, ...
- - [React / Next.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react) applications
+ - [React / Next.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react) applications
  - [Svelte](https://github.com/ivanhofer/typesafe-i18n-demo-svelte) / [SvelteKit](https://github.com/ivanhofer/typesafe-i18n-demo-sveltekit) / [Sapper](https://github.com/ivanhofer/typesafe-i18n-demo-svelte) applications
  - [Vue.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue) applications
  - [other frameworks](#other-frameworks)
@@ -171,12 +171,7 @@ The `typesafe-i18n` package allows us to be 100% typesafe for our translation fu
 
 ## Integration with other services
 
-`typesafe-i18n` comes with an API that allows other services to read and update translations.
-
-Services that work with `typesafe-i18n`:
-- [inlang](https://github.com/inlang/inlang): An open source translation management dashboard with machine translations and automatic sync. Inlang allows non-technical team members, or external translators to adjust translations without touching the source code.
-
-But you can also connect other services by using the [`importer`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/importer) and [`exporter`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/exporter) functionality:
+`typesafe-i18n` comes with an API that allows other services to read and update translations. You can connect ot other services by using the [`importer`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/importer) and [`exporter`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/exporter) functionality:
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -199,11 +194,10 @@ Apart from that there can be a small overhead depending on which utilities and w
 
 There also exists a useful wrapper for some frameworks:
 - [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular): 1398 bytes gzipped
-- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react): 1600 bytes gzipped
-- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte): 1345 bytes gzipped
-- [typesafe-i18n vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue): 1257 bytes gzipped
+- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/react): 1600 bytes gzipped
+- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/svelte): 1345 bytes gzipped
+- [typesafe-i18n vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/vue): 1257 bytes gzipped
 
-<!-- TODO: link new examples -->
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
