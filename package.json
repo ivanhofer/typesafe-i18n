@@ -25,13 +25,9 @@
 	"main": "runtime/cjs/runtime/src/index.cjs",
 	"types": "types/index.d.ts",
 	"exports": {
-		"./adapters/*": {
-			"import": "./adapters/*.mjs",
-			"require": "./adapters/*.cjs"
-		},
-		"./angular/angular-service": {
-			"import": "./angular/angular-service.mjs",
-			"require": "./angular/angular-service.cjs"
+		"./angular": {
+			"import": "./angular/index.mjs",
+			"require": "./angular/index.cjs"
 		},
 		"./detectors": {
 			"import": "./detectors/index.mjs",
@@ -53,20 +49,18 @@
 			"import": "./parser/index.mjs",
 			"require": "./parser/index.cjs"
 		},
-		"./react/react-context": {
-			"import": "./react/react-context.mjs",
-			"require": "./react/react-context.cjs"
+		"./react": {
+			"import": "./react/index.mjs",
+			"require": "./react/index.cjs"
 		},
-		"./svelte/svelte-store": {
-			"import": "./svelte/svelte-store.mjs",
-			"require": "./svelte/svelte-store.cjs"
+		"./svelte": {
+			"import": "./svelte/index.mjs",
+			"require": "./svelte/index.cjs"
 		},
-		"./vue/vue-adapter": {
-			"import": "./svelte/svelte-store.mjs",
-			"require": "./svelte/svelte-store.cjs"
+		"./vue": {
+			"import": "./vue/index.mjs",
+			"require": "./vue/index.cjs"
 		},
-		"./rollup/*": "./rollup/*.js",
-		"./webpack/*": "./webpack/*.js",
 		".": {
 			"import": "./runtime/esm/runtime/src/index.mjs",
 			"require": "./runtime/cjs/runtime/src/index.cjs"
@@ -74,7 +68,6 @@
 		"./package.json": "./package.json"
 	},
 	"files": [
-		"/adapters",
 		"/angular",
 		"/detectors",
 		"/cli",
@@ -84,19 +77,17 @@
 		"/importer",
 		"/parser",
 		"/react",
-		"/rollup",
 		"/runtime",
 		"/schema",
 		"/svelte",
 		"/types",
-		"/vue",
-		"/webpack"
+		"/vue"
 	],
 	"scripts": {
 		"-- DEV -------------------------------------------------": "",
 		"update:dependencies": "pnpm up -r",
 		"update:version": "tsm ./update-version.ts",
-		"clear": "rm -rf ./angular ./adapters ./cli ./detectors ./dist ./exporter ./formatters ./importer ./parser ./react ./rollup ./runtime ./schema ./svelte ./types ./vue ./webpack ./temp-output",
+		"clear": "rm -rf ./angular ./adapters ./cli ./detectors ./dist ./exporter ./formatters ./importer ./parser ./react ./runtime ./schema ./svelte ./types ./vue ./temp-output",
 		"-- LINT ------------------------------------------------": "",
 		"lint": "eslint --cache packages",
 		"lint:ci": "eslint --cache --fix",

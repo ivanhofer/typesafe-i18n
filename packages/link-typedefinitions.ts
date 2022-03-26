@@ -12,11 +12,10 @@ type OutputPath = string
 type FilterFunction = (file: string) => boolean
 
 const mappings: [FromWheretoImport, OutputPath?, FilterFunction?][] = [
-	['adapters'],
-	['adapter-angular', 'angular', (file) => file === 'angular-service.d.ts'],
-	['adapter-react', 'react', (file) => file === 'react-context.d.ts'],
-	['adapter-svelte', 'svelte', (file) => file === 'svelte-store.d.ts'],
-	['adapter-vue', 'vue', (file) => file === 'vue-plugin.d.ts'],
+	['adapter-angular', 'angular'],
+	['adapter-react', 'react'],
+	['adapter-svelte', 'svelte'],
+	['adapter-vue', 'vue'],
 	['core', 'cjs'],
 	['core', 'esm'],
 	['exporter', 'exporter', (file) => file === 'index.d.ts'],
@@ -26,11 +25,9 @@ const mappings: [FromWheretoImport, OutputPath?, FilterFunction?][] = [
 	['parser'],
 	['parser', 'runtime/cjs/parser/src'],
 	['parser', 'runtime/esm/parser/src'],
-	['rollup-plugin', 'rollup'],
 	['runtime', 'types'],
 	['runtime', 'runtime/cjs/runtime/src'],
 	['runtime', 'runtime/esm/runtime/src'],
-	['webpack-plugin', 'webpack'],
 ]
 
 const goToRoot = (outputPath: string, file: string) => {

@@ -8,7 +8,7 @@ const getAngularUtils = ({ utilFileName, banner, typesFileName }: GeneratorConfi
 ${banner}
 
 import { Injectable } from '@angular/core'
-import { I18nServiceRoot } from 'typesafe-i18n/angular/angular-service'
+import { I18nServiceRoot } from 'typesafe-i18n/angular'
 ${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translations', 'TranslationFunctions', 'Formatters')}
 import { loadedLocales, loadedFormatters } from '${relativeFileImportPath(utilFileName)}'
 

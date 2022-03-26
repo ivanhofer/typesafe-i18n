@@ -31,6 +31,10 @@
 
 <!-- list of supported emojis on GitHub: https://github.com/ikatyang/emoji-cheat-sheet -->
 
+### Interactive Live Demo
+
+Click [here](https://codesandbox.io/s/typesafe-i18n-demo-qntgqy?file=/index.ts) to see an interactive demo of `typesafe-i18n` showing some key aspects of the type-checking capabilities of this internationalization library.
+
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -107,12 +111,12 @@ The changelog of this project can be found [here](https://github.com/ivanhofer/t
 
 You can use `typesafe-i18n` in a variety of project-setups:
 
- - [Angular](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular) applications
- - [Browser (Vanilla JS)](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/browser) projects
- - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/node) apis, backends, scripts, ...
- - [React / Next.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react) applications
- - [Svelte](https://github.com/ivanhofer/typesafe-i18n-demo-svelte) / [SvelteKit](https://github.com/ivanhofer/typesafe-i18n-demo-sveltekit) / [Sapper](https://github.com/ivanhofer/typesafe-i18n-demo-svelte) applications
- - [Vue.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue) applications
+ - [Angular](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular) applications
+ - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-node) apis, backends, scripts, ...
+ - [React / Next.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react) applications
+ - [Svelte / SvelteKit / Sapper](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte) applications
+ - [Vue.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/vue) applications
+ - [Browser (via CDN)](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/browser/example) projects
  - [other frameworks](#other-frameworks)
 
 <!-- TODO: move documentation into adapter package -->
@@ -171,12 +175,7 @@ The `typesafe-i18n` package allows us to be 100% typesafe for our translation fu
 
 ## Integration with other services
 
-`typesafe-i18n` comes with an API that allows other services to read and update translations.
-
-Services that work with `typesafe-i18n`:
-- [inlang](https://github.com/inlang/inlang): An open source translation management dashboard with machine translations and automatic sync. Inlang allows non-technical team members, or external translators to adjust translations without touching the source code.
-
-But you can also connect other services by using the [`importer`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/importer) and [`exporter`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/exporter) functionality:
+`typesafe-i18n` comes with an API that allows other services to read and update translations. You can connect ot other services by using the [`importer`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/importer) and [`exporter`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/exporter) functionality:
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -198,12 +197,11 @@ These parts are bundled into the [core functions](https://github.com/ivanhofer/t
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
 There also exists a useful wrapper for some frameworks:
-- [typesafe-i18n angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/angular): 1398 bytes gzipped
-- [typesafe-i18n react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/react): 1600 bytes gzipped
-- [typesafe-i18n svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/svelte): 1345 bytes gzipped
-- [typesafe-i18n vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/examples/vue): 1257 bytes gzipped
+- [`typesafe-i18n` angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular): 1398 bytes gzipped
+- [`typesafe-i18n` react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/react): 1576 bytes gzipped
+- [`typesafe-i18n` svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/svelte): 1345 bytes gzipped
+- [`typesafe-i18n` vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/vue): 1257 bytes gzipped
 
-<!-- TODO: link new examples -->
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -625,7 +623,10 @@ You need to manually tell `jest` where these files should be loaded from, by def
 // jest.config.js
 module.exports = {
    moduleNameMapper: {
-      "typesafe-i18n/adapters/(.*)": "typesafe-i18n/adapters/$1.cjs",
+      "typesafe-i18n/angular": "typesafe-i18n/angular/index.cjs",
+      "typesafe-i18n/react": "typesafe-i18n/react/index.cjs",
+      "typesafe-i18n/svelte": "typesafe-i18n/svelte/index.cjs",
+      "typesafe-i18n/vue": "typesafe-i18n/vue/index.cjs",
       "typesafe-i18n/detectors": "typesafe-i18n/detectors/index.cjs",
    }
 };

@@ -3,6 +3,14 @@
 
 # Version 5
 
+## 5.1.0 (2022-03-26)
+
+Fix:
+ - load all locales before initialization of node adapter
+
+Breaking: (will be auto-fixed by running the generator again)
+ - rename the adapter exports
+
 ## 5.0.1 (2022-03-23)
 
 Fix:

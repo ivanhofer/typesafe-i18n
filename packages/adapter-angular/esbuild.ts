@@ -15,9 +15,9 @@ const formats = ['esm', 'cjs'] as const
 formats.forEach((format) =>
 	[false, true].forEach((minify) =>
 		build({
-			entryPoints: [`./src/angular-service.ts`],
+			entryPoints: [`./src/index.ts`],
 			bundle: true,
-			outfile: getPath(`../../angular/angular-service${minify ? '.min' : ''}.${format === 'esm' ? 'm' : 'c'}js`),
+			outfile: getPath(`../../angular/index${minify ? '.min' : ''}.${format === 'esm' ? 'm' : 'c'}js`),
 			platform: 'browser',
 			format,
 			sourcemap: watch,

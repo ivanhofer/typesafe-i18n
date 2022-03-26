@@ -18,7 +18,7 @@ ${banner}
 
 ${jsDocImports(
 	{
-		from: 'typesafe-i18n/adapters/adapter-react',
+		from: 'typesafe-i18n/react',
 		type: 'ReactInit<Locales, Translations, TranslationFunctions>',
 		alias: 'ReactInit',
 	},
@@ -28,7 +28,7 @@ ${jsDocImports(
 	{ from: relativeFileImportPath(typesFileName), type: 'Formatters' },
 )}
 
-import { initI18nReact } from 'typesafe-i18n/adapters/adapter-react'
+import { initI18nReact } from 'typesafe-i18n/react'
 ${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translations', 'TranslationFunctions', 'Formatters')}
 import { loadedLocales, loadedFormatters } from '${relativeFileImportPath(utilFileName)}'
 

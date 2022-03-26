@@ -1,0 +1,22 @@
+{
+  "name": "typesafe-i18n_vue-demo",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npm-run-all --parallel vite typesafe-i18n",
+    "vite": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typesafe-i18n": "typesafe-i18n"
+  },
+  "dependencies": {
+    "typesafe-i18n": "^5.1.0",
+    "vue": "^3.2.29"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.0.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^4.4.4",
+    "vite": "^2.7.2",
+    "vue-tsc": "^0.29.8"
+  }
+}

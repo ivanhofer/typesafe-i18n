@@ -141,10 +141,10 @@ If you are using `typesafe-i18n` in a server or API context, you can load all lo
 import { loadAllLocales } from './i18n/i18n-util.sync'
 import { i18n } from './i18n/i18n-util'
 
+
+loadAllLocales()
+
 const locale = 'en'
-
-loadAllLocales(locale)
-
 const L = i18n(locale)
 ```
 

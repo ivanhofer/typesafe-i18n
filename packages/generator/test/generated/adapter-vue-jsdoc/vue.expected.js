@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 /**
- * @typedef { import('typesafe-i18n/adapters/adapter-vue').VuePluginInit<Locales, Translations, TranslationFunctions> } VuePluginInit,
+ * @typedef { import('typesafe-i18n/vue').VuePluginInit<Locales, Translations, TranslationFunctions> } VuePluginInit,
  * @typedef { import('./types.actual').Locales } Locales,
  * @typedef { import('./types.actual').Translations } Translations,
  * @typedef { import('./types.actual').TranslationFunctions } TranslationFunctions,
@@ -11,7 +11,7 @@
  */
 
 import { inject, ref } from 'vue'
-import { initI18nVuePlugin } from 'typesafe-i18n/adapters/adapter-vue';
+import { initI18nVuePlugin } from 'typesafe-i18n/vue';
 
 import { loadedLocales, loadedFormatters } from './util.actual'
 

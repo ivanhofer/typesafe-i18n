@@ -278,7 +278,7 @@ The `typesafe-i18n` package exports a few different objects you can use to local
  - [i18nObject (LL)](#i18nObject): for frontend-applications or projects that only load a single locale per user
  - [i18n (L)](#i18n): for APIs or backend-applications that need to handle multiple locales
 
-### `i18nString` and `typesafeI18nString`
+### `i18nString`
 
 The `i18nString` contains the core of the localization engine. To initialize it, you need to pass your desired `locale` and the `formatters` (optional) you want to use.\
 You will get an object back that can be used to transform your translation strings.
@@ -300,7 +300,7 @@ const LLL = i18nString(locale, formatters)
 LLL('Hello {name|uppercase}!', { name: 'world' }) // => 'Hello WORLD!'
 ```
 
-### `i18nObject` and `typesafeI18nObject`
+### `i18nObject`
 
 The `i18nObject` wraps your translations for a certain locale. To initialize it, you need to pass your desired `locale`, your `translations`-object and the `formatters` (optional) you want to use.\
 You will get an object back that can be used to access and apply your translations.
@@ -423,7 +423,7 @@ The `typesafeI18nString` and `typesafeI18nObject` functions offer full typesafet
  - optional arguments have to be passed as an empty object or as `undefined` if you don't want to render them
    ```ts
    LLL('I am {value?:string}', { })
-   LLL('I am {value?:string}', { value: undefined})
+   LLL('I am {value?:string}', { value: undefined })
    ```
  - you can only use a set of predefined `TypeScript` types. Other types will be marked as `unknown` so any value is allowed to be passed as an argument:
     ```ts
