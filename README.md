@@ -198,9 +198,9 @@ Apart from that there can be a small overhead depending on which utilities and w
 
 There also exists a useful wrapper for some frameworks:
 - [`typesafe-i18n` angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular): 1398 bytes gzipped
-- [`typesafe-i18n` react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/react): 1576 bytes gzipped
-- [`typesafe-i18n` svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/svelte): 1345 bytes gzipped
-- [`typesafe-i18n` vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/vue): 1257 bytes gzipped
+- [`typesafe-i18n` react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react): 1576 bytes gzipped
+- [`typesafe-i18n` svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte): 1345 bytes gzipped
+- [`typesafe-i18n` vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue): 1257 bytes gzipped
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -627,6 +627,7 @@ module.exports = {
       "typesafe-i18n/react": "typesafe-i18n/react/index.cjs",
       "typesafe-i18n/svelte": "typesafe-i18n/svelte/index.cjs",
       "typesafe-i18n/vue": "typesafe-i18n/vue/index.cjs",
+      "typesafe-i18n/formatters": "typesafe-i18n/formatters/index.cjs",
       "typesafe-i18n/detectors": "typesafe-i18n/detectors/index.cjs",
    }
 };

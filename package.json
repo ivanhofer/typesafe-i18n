@@ -87,7 +87,7 @@
 		"-- DEV -------------------------------------------------": "",
 		"update:dependencies": "pnpm up -r",
 		"update:version": "tsm ./update-version.ts",
-		"clear": "rm -rf ./angular ./adapters ./cli ./detectors ./dist ./exporter ./formatters ./importer ./parser ./react ./runtime ./schema ./svelte ./types ./vue ./temp-output",
+		"clear": "rm -rf ./angular ./cli ./detectors ./dist ./exporter ./formatters ./importer ./parser ./react ./runtime ./schema ./svelte ./types ./vue ./temp-output",
 		"-- LINT ------------------------------------------------": "",
 		"lint": "eslint --cache packages",
 		"lint:ci": "eslint --cache --fix",

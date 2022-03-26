@@ -15,7 +15,7 @@ const formats = ['esm', 'cjs'] as const
 formats.forEach((format) =>
 	[false, true].forEach((minify) =>
 		build({
-			entryPoints: [`./src/index.ts`],
+			entryPoints: ['./src/index.ts'],
 			bundle: true,
 			outfile: getPath(`../../svelte/index${minify ? '.min' : ''}.${format === 'esm' ? 'm' : 'c'}js`),
 			external: ['svelte/store'],
