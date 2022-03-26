@@ -1,6 +1,7 @@
 import { resolve, sep } from 'path'
 import { isTruthy } from 'typesafe-utils'
 import ts from 'typescript'
+import type { OutputFormats } from '../../config/src/types'
 import type { BaseTranslation } from '../../runtime/src'
 import type { Locale } from '../../runtime/src/core'
 import { fileEnding } from './output-handler'
@@ -23,6 +24,7 @@ import { logger } from './utils/logger'
  */
 const detectLocationOfCompiledBaseTranslation = async (
 	outputPath: string,
+	outputFormat: OutputFormats,
 	locale: string,
 	tempPath: string,
 	typesFileName: string,
@@ -31,7 +33,7 @@ const detectLocationOfCompiledBaseTranslation = async (
 
 	const directory = await getDirectoryStructure(tempPath)
 
-	if (!Object.keys(directory).length) {
+	if (outputFormat === 'TypeScript' && !Object.keys(directory).length) {
 		logger.error(`in '${locale}'
 Make sure to import the type 'BaseTranslation' from the generated '${typesFileName}${fileEnding}' file.
 See the example in the official docs: https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#namespaces
@@ -77,6 +79,7 @@ See the example in the official docs: https://github.com/ivanhofer/typesafe-i18n
 
 const transpileTypescriptFiles = async (
 	outputPath: string,
+	outputFormat: OutputFormats,
 	languageFilePath: string,
 	locale: string,
 	tempPath: string,
@@ -87,6 +90,7 @@ const transpileTypescriptFiles = async (
 
 	const baseTranslationPath = await detectLocationOfCompiledBaseTranslation(
 		outputPath,
+		outputFormat,
 		locale,
 		tempPath,
 		typesFileName,
@@ -97,6 +101,7 @@ const transpileTypescriptFiles = async (
 
 export const parseLanguageFile = async (
 	outputPath: string,
+	outputFormat: OutputFormats,
 	typesFileName: string,
 	tempPath: string,
 	locale: Locale,
@@ -114,7 +119,14 @@ export const parseLanguageFile = async (
 
 	await createPathIfNotExits(tempPath)
 
-	const importPath = await transpileTypescriptFiles(outputPath, originalPath, fileName, tempPath, typesFileName)
+	const importPath = await transpileTypescriptFiles(
+		outputPath,
+		outputFormat,
+		originalPath,
+		fileName,
+		tempPath,
+		typesFileName,
+	)
 
 	if (!importPath) {
 		return null

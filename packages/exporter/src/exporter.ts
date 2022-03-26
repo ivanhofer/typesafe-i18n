@@ -1,7 +1,7 @@
 import { resolve } from 'path'
 import ts from 'typescript'
 import { getConfigWithDefaultValues } from '../../config/src/config'
-import type { GeneratorConfigWithDefaultValues } from '../../config/src/types'
+import type { GeneratorConfigWithDefaultValues, OutputFormats } from '../../config/src/types'
 import { configureOutputHandler } from '../../generator/src/output-handler'
 import { getAllLocales, parseLanguageFile } from '../../generator/src/parse-language-file'
 import { parseTypescriptVersion } from '../../generator/src/utils/generator.utils'
@@ -25,12 +25,19 @@ const setup = async (): Promise<GeneratorConfigWithDefaultValues> => {
 const readTranslation = async (
 	locale: Locale,
 	outputPath: string,
+	outputFormat: OutputFormats,
 	tempPath: string,
 	typesFileName: string,
 ): Promise<ExportLocaleMapping> => {
 	logger.info(`exporting translations for locale '${locale}' ...`)
 
-	const translations = await parseLanguageFile(outputPath, typesFileName, resolve(tempPath, locale), locale)
+	const translations = await parseLanguageFile(
+		outputPath,
+		outputFormat,
+		typesFileName,
+		resolve(tempPath, locale),
+		locale,
+	)
 	if (!translations) {
 		logger.error(`could not find locale file '${locale}'`)
 		return { locale, translations: {}, namespaces: [] }
@@ -42,6 +49,7 @@ const readTranslation = async (
 		;(translations as Record<string, BaseTranslation>)[namespace] =
 			(await parseLanguageFile(
 				outputPath,
+				outputFormat,
 				typesFileName,
 				resolve(tempPath, locale, namespace),
 				locale,
@@ -58,21 +66,21 @@ const readTranslation = async (
 
 export const readTranslationFromDisk = async (locale: Locale): Promise<ExportLocaleMapping> => {
 	const config = await setup()
-	const { outputPath, tempPath, typesFileName } = config
+	const { outputPath, outputFormat, tempPath, typesFileName } = config
 
-	return await readTranslation(locale, outputPath, tempPath, typesFileName)
+	return await readTranslation(locale, outputPath, outputFormat, tempPath, typesFileName)
 }
 
 // --------------------------------------------------------------------------------------------------------------------
 
 export const readTranslationsFromDisk = async (): Promise<ExportLocaleMapping[]> => {
 	const config = await setup()
-	const { outputPath, tempPath, typesFileName } = config
+	const { outputPath, outputFormat, tempPath, typesFileName } = config
 
 	const locales = await getAllLocales(outputPath)
 
 	const promises: Promise<ExportLocaleMapping>[] = locales.map((locale) =>
-		readTranslation(locale, outputPath, tempPath, typesFileName),
+		readTranslation(locale, outputPath, outputFormat, tempPath, typesFileName),
 	)
 
 	return Promise.all(promises)

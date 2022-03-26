@@ -17,16 +17,23 @@ let logger: Logger
 let firstRunOfGenerator = true
 
 const getBaseTranslations = async (
-	{ baseLocale, tempPath, outputPath, typesFileName }: GeneratorConfigWithDefaultValues,
+	{ baseLocale, tempPath, outputPath, outputFormat, typesFileName }: GeneratorConfigWithDefaultValues,
 	namespaces: string[],
 ): Promise<BaseTranslation> => {
 	const translations =
-		(await parseLanguageFile(outputPath, typesFileName, resolve(tempPath, `${debounceCounter}`), baseLocale)) || {}
+		(await parseLanguageFile(
+			outputPath,
+			outputFormat,
+			typesFileName,
+			resolve(tempPath, `${debounceCounter}`),
+			baseLocale,
+		)) || {}
 
 	for await (const namespace of namespaces) {
 		const namespaceTranslations =
 			(await parseLanguageFile(
 				outputPath,
+				outputFormat,
 				typesFileName,
 				resolve(tempPath, `${debounceCounter}`),
 				baseLocale,

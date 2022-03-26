@@ -3,6 +3,11 @@
 
 # Version 5
 
+## 5.1.1 (2022-03-26)
+
+Bugfix:
+ - don't show TypeScript related Error message when using `JSDoc` syntax
+
 ## 5.1.0 (2022-03-26)
 
 Fix:

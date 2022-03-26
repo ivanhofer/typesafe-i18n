@@ -87,8 +87,13 @@ export const storeTranslationsToDisk = async (
 
 	if (!baseTranslation) {
 		baseTranslation =
-			(await parseLanguageFile(config.outputPath, config.typesFileName, config.tempPath, config.baseLocale)) ||
-			undefined
+			(await parseLanguageFile(
+				config.outputPath,
+				config.outputFormat,
+				config.typesFileName,
+				config.tempPath,
+				config.baseLocale,
+			)) || undefined
 		if (!baseTranslation) {
 			logger.error(`could not read base locale file '${config.baseLocale}'`)
 			return []
