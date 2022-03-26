@@ -218,7 +218,9 @@ export const translate = (
 // --------------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-type GetArg<Arg extends string, Type> = Arg extends `${infer OptionalArg}?`
+type GetArg<Arg extends string, Type> = Arg extends ''
+	? void
+	: Arg extends `${infer OptionalArg}?`
 	? Partial<Record<OptionalArg, Type | undefined>>
 	: Record<Arg, Type>
 
@@ -317,10 +319,9 @@ type TrimL<S extends string> = S extends `${Empty}${infer L}` ? TrimL<L> : S
 type TrimR<S extends string> = S extends `${infer L}${Empty}` ? TrimR<L> : S
 type Trim<S extends string> = TrimR<TrimL<S>>
 
-type DefineArg<
-	Arg extends string,
-	Formatters extends PropertyKey,
-> = Arg extends `${infer Arg}:${infer Type}|${infer Piped}`
+type DefineArg<Arg extends string, Formatters extends PropertyKey> = Arg extends `${infer Arg1}}${infer Arg2}`
+	? Merge<[DefineArg<Arg1, Formatters>], DetectArgs<Arg2, Formatters>>
+	: Arg extends `${infer Arg}:${infer Type}|${infer Piped}`
 	? PipeArgument<Arg, Formatters, Trim<Piped>, GetArg<Trim<Arg>, DetectType<Trim<Type>>>>
 	: Arg extends `${infer Arg}|${infer Piped}`
 	? PipeArgument<Arg, Formatters, Trim<Piped>, GetArg<Trim<Arg>, unknown>>
@@ -332,7 +333,13 @@ type DetectArg<Part extends string, Formatters extends PropertyKey> = Part exten
 	? []
 	: [DefineArg<Part, Formatters>]
 
-type Merge<A extends Array<unknown>, B extends Array<unknown>> = A[number] & B[number]
+type Merge<A extends Array<unknown>, B extends Array<unknown>> = void extends A[number]
+	? void extends B[number]
+		? unknown
+		: B[number]
+	: void extends B[number]
+	? A[number]
+	: A[number] & B[number]
 
 type DetectArgs<
 	Translation extends string,

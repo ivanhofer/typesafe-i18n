@@ -7,6 +7,8 @@ import { typesafeI18nObject } from '../src/util.object'
 		something: 'test {abc} {cde}',
 		optional: '{a?:number}',
 		switch: 'Added a new photo to {gender|{male: his, female: her}} stream.',
+		switchWithOtherArguments:
+			'{name:string} added a new photo to {gender|{male: his, female: her, other: their}} stream.',
 	} as const
 
 	const LL = typesafeI18nObject('en', translations)
@@ -40,6 +42,7 @@ import { typesafeI18nObject } from '../src/util.object'
 	// @ts-expect-error expects an argument of 'male' | 'female'
 	LL.switch({ gender: 'some string' })
 	LL.switch({ gender: 'male' })
+	LL.switchWithOtherArguments({ name: 'Alex', gender: 'other' })
 }
 
 {

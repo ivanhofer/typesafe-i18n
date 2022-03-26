@@ -3,6 +3,11 @@
 
 # Version 5
 
+## 5.1.2 (2022-03-26)
+
+Fix:
+ - merge definitions correctly if argument and switch-case get used in the same sentence
+
 ## 5.1.1 (2022-03-26)
 
 Bugfix:
