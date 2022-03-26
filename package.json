@@ -1,6 +1,6 @@
 {
 	"name": "typesafe-i18n",
-	"version": "5.1.0",
+	"version": "5.1.1",
 	"description": "An opinionated, fully type-safe, lightweight localization library for TypeScript and JavaScript projects with no external dependencies.",
 	"author": "ivanhofer",
 	"homepage": "https://github.com/ivanhofer/typesafe-i18n",
