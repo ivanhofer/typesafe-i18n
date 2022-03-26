@@ -31,6 +31,10 @@
 
 <!-- list of supported emojis on GitHub: https://github.com/ikatyang/emoji-cheat-sheet -->
 
+### Interactive Live Demo
+
+Click [here](https://codesandbox.io/s/typesafe-i18n-demo-qntgqy?file=/index.ts) to see an interactive demo of `typesafe-i18n` showing some key aspects of the type-checking capabilities of this internationalization library.
+
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
