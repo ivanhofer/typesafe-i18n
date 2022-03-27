@@ -39,28 +39,28 @@ Click [here](https://codesandbox.io/s/typesafe-i18n-demo-qntgqy?file=/index.ts) 
 
 <div align="center">
    <a title="TypeScript" href="#usage">
-      <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/typescript.svg" height="80" hspace="10">
+      <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/typescript.svg" height="70" hspace="10">
    </a>
    <a title="Svelte" href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte">
-      <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/svelte.svg" height="80" hspace="10">
+      <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/svelte.svg" height="70" hspace="10">
    </a>
    <a title="React" href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react">
-      <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/react.svg" height="80" hspace="10">
+      <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/react.svg" height="70" hspace="10">
    </a>
    <a title="Vue.js" href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue">
-      <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/vuejs.svg" height="80" hspace="10">
+      <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/vuejs.svg" height="70" hspace="10">
    </a>
    <a title="Angular" href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular">
-      <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/angular.svg" height="80" hspace="10">
+      <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/angular.svg" height="70" hspace="10">
    </a>
    <a title="SolidJS" href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-solid">
-      <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/solidjs.svg" height="80" hspace="10">
+      <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/solidjs.svg" height="70" hspace="10">
    </a>
    <a title="Node.js" href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-node">
-      <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/nodejs.svg" height="80" hspace="10">
+      <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/nodejs.svg" height="70" hspace="10">
    </a>
    <a title="JavaScript" href="#usage">
-      <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/javascript.svg" height="80" hspace="10">
+      <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/javascript.svg" height="70" hspace="10">
    </a>
 </div>
 
