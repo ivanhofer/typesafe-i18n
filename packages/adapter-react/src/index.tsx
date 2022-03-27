@@ -1,5 +1,5 @@
 import React from 'react'
-import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../runtime/src/core'
+import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from '../../runtime/src/core'
 import { getFallbackProxy } from '../../runtime/src/core-utils'
 import { i18nObject } from '../../runtime/src/util.object'
 
@@ -8,7 +8,7 @@ import { i18nObject } from '../../runtime/src/util.object'
 // --------------------------------------------------------------------------------------------------------------------
 
 export type I18nContextType<
-	L extends string = string,
+	L extends Locale = Locale,
 	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 > = {
@@ -22,7 +22,7 @@ export type TypesafeI18nProps<L extends string> = {
 }
 
 export type ReactInit<
-	L extends string = string,
+	L extends Locale = Locale,
 	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 > = {
@@ -35,7 +35,7 @@ export type ReactInit<
 // --------------------------------------------------------------------------------------------------------------------
 
 export const initI18nReact = <
-	L extends string = string,
+	L extends Locale = Locale,
 	T extends BaseTranslation = BaseTranslation,
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 	F extends BaseFormatters = BaseFormatters,
@@ -58,9 +58,10 @@ export const initI18nReact = <
 
 		const ctx = { setLocale, locale, LL } as I18nContextType<L, T, TF>
 
-		// @ts-ignore
 		return <context.Provider value={ctx}>{props.children}</context.Provider>
 	}
 
 	return { component, context }
 }
+
+// TODO: use non-JSX approach like with the solid-adapter

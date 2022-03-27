@@ -3,8 +3,8 @@
 
 import { Injectable } from '@angular/core'
 import { I18nServiceRoot } from 'typesafe-i18n/angular'
-import type { Locales, Translations, TranslationFunctions, Formatters } from './types.actual.js'
-import { loadedLocales, loadedFormatters } from './util.actual.js'
+import type { Formatters, Locales, TranslationFunctions, Translations } from './types.actual.js'
+import { loadedFormatters, loadedLocales } from './util.actual.js'
 
 @Injectable({
 	providedIn: 'root',

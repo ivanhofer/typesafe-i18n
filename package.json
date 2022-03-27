@@ -53,6 +53,10 @@
 			"import": "./react/index.mjs",
 			"require": "./react/index.cjs"
 		},
+		"./solid": {
+			"import": "./solid/index.mjs",
+			"require": "./solid/index.cjs"
+		},
 		"./svelte": {
 			"import": "./svelte/index.mjs",
 			"require": "./svelte/index.cjs"
@@ -79,6 +83,7 @@
 		"/react",
 		"/runtime",
 		"/schema",
+		"/solid",
 		"/svelte",
 		"/types",
 		"/vue"
@@ -87,7 +92,7 @@
 		"-- DEV -------------------------------------------------": "",
 		"update:dependencies": "pnpm up -r",
 		"update:version": "tsm ./update-version.ts",
-		"clear": "rm -rf ./angular ./cli ./detectors ./dist ./exporter ./formatters ./importer ./parser ./react ./runtime ./schema ./svelte ./types ./vue ./temp-output",
+		"clear": "rm -rf ./angular ./cli ./detectors ./dist ./exporter ./formatters ./importer ./parser ./react ./runtime ./schema ./solid ./svelte ./types ./vue ./temp-output",
 		"-- LINT ------------------------------------------------": "",
 		"lint": "eslint --cache packages",
 		"lint:ci": "eslint --cache --fix",

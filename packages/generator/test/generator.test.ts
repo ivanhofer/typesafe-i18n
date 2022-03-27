@@ -40,6 +40,7 @@ type FileToCheck =
 	| 'angular.service'
 	| 'node'
 	| 'react'
+	| 'solid'
 	| 'svelte'
 	| 'vue'
 
@@ -120,6 +121,7 @@ const testGeneratedOutput = async (
 		await check(prefix, 'formatters-template', outputFormat)
 		await check(prefix, 'types-template', outputFormat)
 		await check(prefix, 'react', outputFormat)
+		await check(prefix, 'solid', outputFormat)
 		await check(prefix, 'angular.service', outputFormat)
 		await check(prefix, 'node', outputFormat)
 		await check(prefix, 'svelte', outputFormat)
@@ -365,6 +367,12 @@ testAdapterMatrix(
 	'adapter-react',
 	{ HELLO_REACT: 'Hi {0:string}' },
 	{ adapter: 'react', adapterFileName: getFileName('react') },
+)
+
+testAdapterMatrix(
+	'adapter-solid',
+	{ HELLO_SOLID: 'Hi {0:string}' },
+	{ adapter: 'solid', adapterFileName: getFileName('solid') },
 )
 
 testAdapterMatrix(

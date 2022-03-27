@@ -9,8 +9,8 @@ ${banner}
 
 import { Injectable } from '@angular/core'
 import { I18nServiceRoot } from 'typesafe-i18n/angular'
-${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translations', 'TranslationFunctions', 'Formatters')}
-import { loadedLocales, loadedFormatters } from '${relativeFileImportPath(utilFileName)}'
+${importTypes(relativeFileImportPath(typesFileName), 'Formatters', 'Locales', 'TranslationFunctions', 'Translations')}
+import { loadedFormatters, loadedLocales } from '${relativeFileImportPath(utilFileName)}'
 
 @Injectable({
 	providedIn: 'root',

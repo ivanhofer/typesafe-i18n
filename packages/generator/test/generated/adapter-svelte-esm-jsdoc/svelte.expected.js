@@ -4,15 +4,15 @@
 
 /**
  * @typedef { import('typesafe-i18n/svelte').SvelteStoreInit<Locales, Translations, TranslationFunctions> } SvelteStoreInit,
+ * @typedef { import('./types.actual.js').Formatters } Formatters,
  * @typedef { import('./types.actual.js').Locales } Locales,
- * @typedef { import('./types.actual.js').Translations } Translations,
  * @typedef { import('./types.actual.js').TranslationFunctions } TranslationFunctions,
- * @typedef { import('./types.actual.js').Formatters } Formatters
+ * @typedef { import('./types.actual.js').Translations } Translations
  */
 
 import { initI18nSvelte } from 'typesafe-i18n/svelte'
 
-import { loadedLocales, loadedFormatters } from './util.actual.js'
+import { loadedFormatters, loadedLocales } from './util.actual.js'
 
 /** @type { SvelteStoreInit } */
 const { locale, LL, setLocale } = initI18nSvelte(loadedLocales, loadedFormatters)

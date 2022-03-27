@@ -3,6 +3,7 @@ import type { BaseTranslation, Locale } from '../../runtime/src/core'
 import { generateAngularAdapter } from './files/generate-adapter-angular'
 import { generateNodeAdapter } from './files/generate-adapter-node'
 import { generateReactAdapter } from './files/generate-adapter-react'
+import { generateSolidAdapter } from './files/generate-adapter-solid'
 import { generateSvelteAdapter } from './files/generate-adapter-svelte'
 import { generateVueAdapter } from './files/generate-adapter-vue'
 import { generateFormattersTemplate } from './files/generate-template-formatters'
@@ -121,6 +122,9 @@ export const generate = async (
 			break
 		case 'react':
 			promises.push(generateReactAdapter(config))
+			break
+		case 'solid':
+			promises.push(generateSolidAdapter(config))
 			break
 		case 'svelte':
 			promises.push(generateSvelteAdapter(config))

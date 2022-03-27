@@ -3,8 +3,8 @@
 
 import { inject, ref } from 'vue'
 import { initI18nVuePlugin } from 'typesafe-i18n/vue';
-import type { Locales, Translations, TranslationFunctions, Formatters } from './types.actual'
-import { loadedLocales, loadedFormatters } from './util.actual'
+import type { Formatters, Locales, TranslationFunctions, Translations } from './types.actual'
+import { loadedFormatters, loadedLocales } from './util.actual'
 
 const { typesafeI18n, i18nPlugin } = initI18nVuePlugin<Locales, Translations, TranslationFunctions, Formatters>(inject, ref, loadedLocales, loadedFormatters)
 

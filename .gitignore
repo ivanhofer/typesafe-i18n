@@ -10,6 +10,7 @@ node_modules
 /react
 /runtime
 /schema
+/solid
 /svelte
 /vue
 packages/generator/test/generated/**/*.actual.*

@@ -1,6 +1,6 @@
 import type { Locale } from '../../runtime/src/core'
 
-export type Adapters = 'angular' | 'node' | 'react' | 'svelte' | 'vue'
+export type Adapters = 'angular' | 'node' | 'react' | 'solid' | 'svelte' | 'vue'
 
 export type OutputFormats = 'TypeScript' | 'JavaScript'
 

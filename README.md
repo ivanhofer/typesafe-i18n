@@ -114,8 +114,9 @@ You can use `typesafe-i18n` in a variety of project-setups:
  - [Angular](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular) applications
  - [Node.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-node) apis, backends, scripts, ...
  - [React / Next.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react) applications
+ - [Solid.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-solid) applications
  - [Svelte / SvelteKit / Sapper](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte) applications
- - [Vue.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/vue) applications
+ - [Vue.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue) applications
  - [Browser (via CDN)](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/browser/example) projects
  - [other frameworks](#other-frameworks)
 
@@ -199,6 +200,7 @@ Apart from that there can be a small overhead depending on which utilities and w
 There also exists a useful wrapper for some frameworks:
 - [`typesafe-i18n` angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular): 1398 bytes gzipped
 - [`typesafe-i18n` react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react): 1576 bytes gzipped
+- [`typesafe-i18n` solid-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-solid): 1421 bytes gzipped
 - [`typesafe-i18n` svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte): 1345 bytes gzipped
 - [`typesafe-i18n` vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue): 1257 bytes gzipped
 
@@ -625,6 +627,7 @@ module.exports = {
    moduleNameMapper: {
       "typesafe-i18n/angular": "typesafe-i18n/angular/index.cjs",
       "typesafe-i18n/react": "typesafe-i18n/react/index.cjs",
+      "typesafe-i18n/solid": "typesafe-i18n/solid/index.cjs",
       "typesafe-i18n/svelte": "typesafe-i18n/svelte/index.cjs",
       "typesafe-i18n/vue": "typesafe-i18n/vue/index.cjs",
       "typesafe-i18n/formatters": "typesafe-i18n/formatters/index.cjs",

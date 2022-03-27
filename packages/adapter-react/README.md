@@ -72,10 +72,10 @@ That's it. You can then start using `typesafe-i18n` inside your React components
 
 ```jsx
 import React from 'react'
-import { I18nContext } from './i18n/i18n-react'
+import { useI18nContext } from './i18n/i18n-react'
 
 function Greeting(props) {
-   const { LL } = useContext(I18nContext)
+   const { LL } = useI18nContext()
 
    return <h1>{LL.HI({ name: props.name })}</h1>
 }
@@ -92,7 +92,7 @@ export default Greeting
 
 ### TypesafeI18n
 
-When running the [generator](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator), the file `i18n-react.tsx` will export a React component you can wrap around your application. It accepts the (optional) prop `locale` where you can pass a locale to initialize the context.
+When running the [generator](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator), the file `i18n-react.tsx` will export a React component you can wrap around your application. It requires the prop `locale` where you need to pass a locale to initialize the context.
 
 ```jsx
 import React from 'react'
@@ -115,16 +115,16 @@ export default App
 ```
 
 
-### I18nContext
+### useI18nContext
 
-Also a React context is exported by the generated file `i18n-react.tsx`. You can use it with the `useContext` hook.
+Also a React context is exported by the generated file `i18n-react.tsx`. You can use it with the `useI18nContext` function.
 
 ```jsx
 import React from 'react'
-import { I18nContext } from './i18n/i18n-react'
+import { useI18nContext } from './i18n/i18n-react'
 
 function MyComponent(props) {
-   const { LL, locale, setLocale } = useContext(I18nContext)
+   const { LL, locale, setLocale } = useI18nContext()
 
    return // ...
 }
@@ -140,10 +140,10 @@ An initialized [`i18nObject`](https://github.com/ivanhofer/typesafe-i18n/tree/ma
 
 ```jsx
 import React from 'react'
-import { I18nContext } from './i18n/i18n-react'
+import { useI18nContext } from './i18n/i18n-react'
 
-function ProjectOverview(props) {
-   const { LL } = useContext(I18nContext)
+function ProjectOverview() {
+   const { LL } = useI18nContext()
 
    return LL.NR_OF_PROJECTS(5) // will output e.g => '5 Projects'
 }
@@ -162,10 +162,10 @@ A function to set another locale for the context.
 
 ```jsx
 import React from 'react'
-import { I18nContext } from './i18n/i18n-react'
+import { useI18nContext } from './i18n/i18n-react'
 
-function LanguageSelection(props) {
-   const { locale, setLocale } = useContext(I18nContext)
+function LanguageSelection() {
+   const { locale, setLocale } = useI18nContext()
 
    return (
       <ul className="language-selection">

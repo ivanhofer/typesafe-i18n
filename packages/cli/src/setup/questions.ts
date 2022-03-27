@@ -18,7 +18,8 @@ export const askConfigQuestions = ({ baseLocale, adapter, esmImports, outputForm
 				{ title: 'Angular', value: 'angular', description: 'this is an Angular application' },
 				{ title: 'Node.js', value: 'node', description: 'for Backends, APIs' },
 				{ title: 'React', value: 'react', description: 'this is a React/Next.js application' },
-				{ title: 'Svelte', value: 'svelte', description: 'this is a Svelte/SvelteKit application' },
+				{ title: 'Solid', value: 'solid', description: 'this is a SolidJS application' },
+				{ title: 'Svelte', value: 'svelte', description: 'this is a Svelte/SvelteKit/Sapper application' },
 				{ title: 'Vue.js', value: 'vue', description: 'this is a Vue.js application' },
 			],
 			initial: () => {
