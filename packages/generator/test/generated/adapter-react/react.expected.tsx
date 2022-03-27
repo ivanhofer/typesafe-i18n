@@ -7,7 +7,7 @@ import type { I18nContextType } from 'typesafe-i18n/react'
 import type { Formatters, Locales, TranslationFunctions, Translations } from './types.actual'
 import { loadedFormatters, loadedLocales } from './util.actual'
 
-const { component: TypesafeI18n, context: I18nContext, useContext: useI18nContext } = initI18nReact<Locales, Translations, TranslationFunctions, Formatters>(loadedLocales, loadedFormatters)
+const { component: TypesafeI18n, context: I18nContext } = initI18nReact<Locales, Translations, TranslationFunctions, Formatters>(loadedLocales, loadedFormatters)
 
 const useI18nContext = (): I18nContextType<Locales, Translations, TranslationFunctions> => useContext(I18nContext)
 

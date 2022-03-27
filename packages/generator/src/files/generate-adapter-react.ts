@@ -35,7 +35,7 @@ ${importTypes(relativeFileImportPath(typesFileName), 'Formatters', 'Locales', 'T
 import { loadedFormatters, loadedLocales } from '${relativeFileImportPath(utilFileName)}'
 
 ${jsDocType('ReactInit')}
-const { component: TypesafeI18n, context: I18nContext, useContext: useI18nContext } = initI18nReact${generics(
+const { component: TypesafeI18n, context: I18nContext } = initI18nReact${generics(
 		'Locales',
 		'Translations',
 		'TranslationFunctions',
