@@ -114,7 +114,7 @@ export default App
 ```
 
 
-### I18nContext
+### useI18nContext
 
 Also a SolidJs context is exported by the generated file `i18n-solid.tsx`. You can use it with the `useI18nContext` function.
 
