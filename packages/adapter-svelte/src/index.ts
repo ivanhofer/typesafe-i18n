@@ -1,6 +1,6 @@
 import type { Readable, Writable } from 'svelte/store'
 import { derived, writable } from 'svelte/store'
-import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../runtime/src/core'
+import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from '../../runtime/src/core'
 import { getFallbackProxy } from '../../runtime/src/core-utils'
 import { i18nObject } from '../../runtime/src/util.object'
 
@@ -9,7 +9,7 @@ import { i18nObject } from '../../runtime/src/util.object'
 // --------------------------------------------------------------------------------------------------------------------
 
 export type SvelteStoreInit<
-	L extends string = string,
+	L extends Locale = Locale,
 	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 > = {
@@ -23,7 +23,7 @@ export type SvelteStoreInit<
 // --------------------------------------------------------------------------------------------------------------------
 
 export const initI18nSvelte = <
-	L extends string = string,
+	L extends Locale = Locale,
 	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 	F extends BaseFormatters = BaseFormatters,

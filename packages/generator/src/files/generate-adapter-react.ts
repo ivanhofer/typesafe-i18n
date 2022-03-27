@@ -22,25 +22,29 @@ ${jsDocImports(
 		type: 'ReactInit<Locales, Translations, TranslationFunctions>',
 		alias: 'ReactInit',
 	},
-	{ from: relativeFileImportPath(typesFileName), type: 'Locales' },
-	{ from: relativeFileImportPath(typesFileName), type: 'Translations' },
-	{ from: relativeFileImportPath(typesFileName), type: 'TranslationFunctions' },
 	{ from: relativeFileImportPath(typesFileName), type: 'Formatters' },
+	{ from: relativeFileImportPath(typesFileName), type: 'Locales' },
+	{ from: relativeFileImportPath(typesFileName), type: 'TranslationFunctions' },
+	{ from: relativeFileImportPath(typesFileName), type: 'Translations' },
 )}
 
+import { useContext } from 'react'
 import { initI18nReact } from 'typesafe-i18n/react'
-${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translations', 'TranslationFunctions', 'Formatters')}
-import { loadedLocales, loadedFormatters } from '${relativeFileImportPath(utilFileName)}'
+${importTypes('typesafe-i18n/react', 'I18nContextType')}
+${importTypes(relativeFileImportPath(typesFileName), 'Formatters', 'Locales', 'TranslationFunctions', 'Translations')}
+import { loadedFormatters, loadedLocales } from '${relativeFileImportPath(utilFileName)}'
 
 ${jsDocType('ReactInit')}
-const { component: TypesafeI18n, context: I18nContext } = initI18nReact${generics(
+const { component: TypesafeI18n, context: I18nContext, useContext: useI18nContext } = initI18nReact${generics(
 		'Locales',
 		'Translations',
 		'TranslationFunctions',
 		'Formatters',
 	)}(loadedLocales, loadedFormatters)
 
-export { I18nContext }
+const useI18nContext = (): I18nContextType<Locales, Translations, TranslationFunctions> => useContext(I18nContext)
+
+export { I18nContext, useI18nContext }
 
 export default TypesafeI18n
 `

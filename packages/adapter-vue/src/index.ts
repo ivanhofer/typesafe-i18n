@@ -1,5 +1,5 @@
 import type { App, inject, InjectionKey, Ref, ref } from 'vue'
-import type { BaseFormatters, BaseTranslation, TranslationFunctions } from '../../runtime/src/core'
+import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from '../../runtime/src/core'
 import { getFallbackProxy } from '../../runtime/src/core-utils'
 import { i18nObject } from '../../runtime/src/util.object'
 
@@ -20,7 +20,7 @@ type I18nPlugin<L extends string> = {
 }
 
 export type VuePluginInit<
-	L extends string = string,
+	L extends Locale = Locale,
 	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 > = {
@@ -29,7 +29,7 @@ export type VuePluginInit<
 }
 
 export const initI18nVuePlugin = <
-	L extends string = string,
+	L extends Locale = Locale,
 	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 	F extends BaseFormatters = BaseFormatters,

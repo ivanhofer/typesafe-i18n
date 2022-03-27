@@ -9,7 +9,7 @@ import { i18nObject } from '../../runtime/src/util.object'
 // --------------------------------------------------------------------------------------------------------------------
 
 export type I18nContextType<
-	L extends string = string,
+	L extends Locale = Locale,
 	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 > = {
@@ -23,7 +23,7 @@ export type TypesafeI18nProps<L extends string> = {
 }
 
 export type SolidInit<
-	L extends string = string,
+	L extends Locale = Locale,
 	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 > = {

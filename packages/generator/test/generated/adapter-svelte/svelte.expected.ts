@@ -2,8 +2,8 @@
 /* eslint-disable */
 
 import { initI18nSvelte } from 'typesafe-i18n/svelte'
-import type { Locales, Translations, TranslationFunctions, Formatters } from './types.actual'
-import { loadedLocales, loadedFormatters } from './util.actual'
+import type { Formatters, Locales, TranslationFunctions, Translations } from './types.actual'
+import { loadedFormatters, loadedLocales } from './util.actual'
 
 const { locale, LL, setLocale } = initI18nSvelte<Locales, Translations, TranslationFunctions, Formatters>(loadedLocales, loadedFormatters)
 

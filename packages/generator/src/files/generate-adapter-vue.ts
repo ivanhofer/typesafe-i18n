@@ -21,16 +21,16 @@ ${jsDocImports(
 		type: 'VuePluginInit<Locales, Translations, TranslationFunctions>',
 		alias: 'VuePluginInit',
 	},
-	{ from: relativeFileImportPath(typesFileName), type: 'Locales' },
-	{ from: relativeFileImportPath(typesFileName), type: 'Translations' },
-	{ from: relativeFileImportPath(typesFileName), type: 'TranslationFunctions' },
 	{ from: relativeFileImportPath(typesFileName), type: 'Formatters' },
+	{ from: relativeFileImportPath(typesFileName), type: 'Locales' },
+	{ from: relativeFileImportPath(typesFileName), type: 'TranslationFunctions' },
+	{ from: relativeFileImportPath(typesFileName), type: 'Translations' },
 )}
 
 import { inject, ref } from 'vue'
 import { initI18nVuePlugin } from 'typesafe-i18n/vue';
-${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translations', 'TranslationFunctions', 'Formatters')}
-import { loadedLocales, loadedFormatters } from '${relativeFileImportPath(utilFileName)}'
+${importTypes(relativeFileImportPath(typesFileName), 'Formatters', 'Locales', 'TranslationFunctions', 'Translations')}
+import { loadedFormatters, loadedLocales } from '${relativeFileImportPath(utilFileName)}'
 
 ${jsDocType('VuePluginInit')}
 const { typesafeI18n, i18nPlugin } = initI18nVuePlugin${generics(
