@@ -1,10 +1,6 @@
 # `typesafe-i18n` Solid
-
-
-TODO
-
-
-**You can find a demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/react/example).**
+<!--
+**You can find a demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/solid/example).** -->
 
 ## Setup
 
@@ -19,7 +15,7 @@ npm install typesafe-i18n
 ---
 
 ## Table of Contents
- - [add `typesafe-i18n` to existing projects](#configure-typesafe-i18n-for-an-existing-react-project)
+ - [add `typesafe-i18n` to existing projects](#configure-typesafe-i18n-for-an-existing-solidjs-project)
  - [generated component & context](#generated-component--context)
 
 
@@ -27,7 +23,7 @@ npm install typesafe-i18n
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
-## Configure `typesafe-i18n` for an existing React project
+## Configure `typesafe-i18n` for an existing SolidJS project
 
 
 Initialize `typesafe-i18n` by running
@@ -36,27 +32,27 @@ Initialize `typesafe-i18n` by running
 npx typesafe-i18n --setup-auto
 ```
 
-You could configure your development script to run the generator in parallel to `react-scripts start` by using [`npm-run-all`](https://github.com/mysticatea/npm-run-all).
+You could configure your development script to run the generator in parallel to `vite` by using [`npm-run-all`](https://github.com/mysticatea/npm-run-all).
 
 ```json
 {
    "scripts": {
-      "dev": "npm-run-all --parallel start typesafe-i18n",
+      "dev": "npm-run-all --parallel vite typesafe-i18n",
       "typesafe-i18n": "typesafe-i18n",
-      "start": "react-scripts start"
+      "vite": "vite"
    }
 }
 ```
 
-The generator will create a custom React component and context inside `i18n-react.tsx` that you can use inside your application.
+The generator will create a custom SolidJS component and context inside `i18n-solid.tsx` that you can use inside your application.
 
 Wrap your application root with the `TypesafeI18n` component:
 
 ```jsx
-import React from 'react'
-import TypesafeI18n from './i18n/i18n-react'
+import { Component } from 'solid-js'
+import TypesafeI18n from './i18n/i18n-solid'
 
-function App() {
+const App: Component = () => {
 
    // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#loading-locales)
 
@@ -72,14 +68,13 @@ function App() {
 export default App
 ```
 
-That's it. You can then start using `typesafe-i18n` inside your React components.
+That's it. You can then start using `typesafe-i18n` inside your SolidJS components.
 
 ```jsx
-import React from 'react'
-import { I18nContext } from './i18n/i18n-react'
+import { useI18nContext } from './i18n/i18n-solid'
 
-function Greeting(props) {
-   const { LL } = useContext(I18nContext)
+function Greeting(props: { name: string }) {
+   const { LL } = useI18nContext()
 
    return <h1>{LL.HI({ name: props.name })}</h1>
 }
@@ -96,13 +91,13 @@ export default Greeting
 
 ### TypesafeI18n
 
-When running the [generator](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator), the file `i18n-react.tsx` will export a React component you can wrap around your application. It accepts the (optional) prop `locale` where you can pass a locale to initialize the context.
+When running the [generator](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator), the file `i18n-solid.tsx` will export a Solid component you can wrap around your application. It accepts the (optional) prop `locale` where you can pass a locale to initialize the context.
 
 ```jsx
-import React from 'react'
-import TypesafeI18n from './i18n/i18n-react'
+import { Component } from 'solid-js'
+import TypesafeI18n from './i18n/i18n-solid'
 
-function App() {
+const App: Component = () => {
 
    // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#loading-locales)
 
@@ -121,14 +116,13 @@ export default App
 
 ### I18nContext
 
-Also a React context is exported by the generated file `i18n-react.tsx`. You can use it with the `useContext` hook.
+Also a SolidJs context is exported by the generated file `i18n-solid.tsx`. You can use it with the `useI18nContext` function.
 
 ```jsx
-import React from 'react'
-import { I18nContext } from './i18n/i18n-react'
+import { useI18nContext } from './i18n/i18n-solid'
 
 function MyComponent(props) {
-   const { LL, locale, setLocale } = useContext(I18nContext)
+   const { LL, locale, setLocale } = useI18nContext()
 
    return // ...
 }
@@ -143,11 +137,10 @@ The context gives you access to following variables:
 An initialized [`i18nObject`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#i18nObject) you can use to translate your app.
 
 ```jsx
-import React from 'react'
-import { I18nContext } from './i18n/i18n-react'
+import { useI18nContext } from './i18n/i18n-solid'
 
-function ProjectOverview(props) {
-   const { LL } = useContext(I18nContext)
+function ProjectOverview() {
+   const { LL } = useI18nContext()
 
    return LL.NR_OF_PROJECTS(5) // will output e.g => '5 Projects'
 }
@@ -165,11 +158,10 @@ A function to set another locale for the context.
 
 
 ```jsx
-import React from 'react'
-import { I18nContext } from './i18n/i18n-react'
+import { useI18nContext } from './i18n/i18n-solid'
 
-function LanguageSelection(props) {
-   const { locale, setLocale } = useContext(I18nContext)
+function LanguageSelection() {
+   const { locale, setLocale } = useI18nContext()
 
    return (
       <ul className="language-selection">
