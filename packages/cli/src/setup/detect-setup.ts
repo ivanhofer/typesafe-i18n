@@ -12,6 +12,7 @@ const useAdapterWhenDependenciesContain =
 
 const shouldUseAngularAdapter = useAdapterWhenDependenciesContain(['@angular/core'])
 const shouldUseReactAdapter = useAdapterWhenDependenciesContain(['react', 'next'])
+const shouldUseSolidAdapter = useAdapterWhenDependenciesContain(['solid-js'])
 const shouldUseSvelteAdapter = useAdapterWhenDependenciesContain(['svelte', '@sveltejs/kit', 'sapper'])
 const shouldUseVueAdapter = useAdapterWhenDependenciesContain(['vue'])
 const shouldUseNodeAdapter = useAdapterWhenDependenciesContain(['express', 'fastify'])
@@ -19,6 +20,7 @@ const shouldUseNodeAdapter = useAdapterWhenDependenciesContain(['express', 'fast
 const getAdapterInfo = (deps: string[]): Adapters | undefined => {
 	if (shouldUseAngularAdapter(deps)) return 'angular'
 	if (shouldUseReactAdapter(deps)) return 'react'
+	if (shouldUseSolidAdapter(deps)) return 'solid'
 	if (shouldUseSvelteAdapter(deps)) return 'svelte'
 	if (shouldUseVueAdapter(deps)) return 'vue'
 	if (shouldUseNodeAdapter(deps)) return 'node'
@@ -31,7 +33,7 @@ const getAdapterInfo = (deps: string[]): Adapters | undefined => {
 export const getDefaultConfig = async () => {
 	const dependencies = await getDependencyList()
 
-	const adapter = getAdapterInfo(dependencies)
+	const adapter = getAdapterInfo(dependencies) as Adapters
 	const isTypeScriptProject =
 		dependencies.includes('typescript') || (await doesPathExist(path.resolve('tsconfig.json')))
 

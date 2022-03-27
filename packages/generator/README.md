@@ -207,7 +207,7 @@ The available options are:
 
 | key                                                       | type                                                                                             | default value                                 |
 | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------- |
-| [adapter](#adapter)                                       | `'angular'` &#124; `'node'` &#124; `'react'` &#124; `'svelte'` &#124; `'vue'` &#124; `undefined` | `undefined`                                   |
+| [adapter](#adapter)                                       | `'angular'` &#124; `'node'` &#124; `'react'` &#124; `'solid'` &#124; `'svelte'` &#124; `'vue'` &#124; `undefined` | `undefined`                                   |
 | [baseLocale](#baseLocale)                                 | `string`                                                                                         | `'en'`                                        |
 | [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                                                             | `'TypeScript'`                                |
 | [esmImports](#esmImports)                                 | `boolean`                                                                                        | `false`                                       |

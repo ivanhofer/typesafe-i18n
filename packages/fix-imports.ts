@@ -22,6 +22,7 @@ const folders = [
 	'formatters',
 	'parser',
 	'react',
+	'solid',
 	'svelte',
 	'vue',
 ]

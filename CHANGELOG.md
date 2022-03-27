@@ -3,6 +3,11 @@
 
 # Version 5
 
+## 5.2.0 (2022-03-27)
+
+Feature:
+ - add `solid` adapter [#193](https://github.com/ivanhofer/typesafe-i18n/discussions/193)
+
 ## 5.1.2 (2022-03-26)
 
 Fix:
