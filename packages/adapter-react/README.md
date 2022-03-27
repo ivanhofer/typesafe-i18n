@@ -92,7 +92,7 @@ export default Greeting
 
 ### TypesafeI18n
 
-When running the [generator](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator), the file `i18n-react.tsx` will export a React component you can wrap around your application. It accepts the (optional) prop `locale` where you can pass a locale to initialize the context.
+When running the [generator](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator), the file `i18n-react.tsx` will export a React component you can wrap around your application. It requires the prop `locale` where you need to pass a locale to initialize the context.
 
 ```jsx
 import React from 'react'
