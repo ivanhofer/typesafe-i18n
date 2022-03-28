@@ -3,6 +3,11 @@
 
 # Version 5
 
+## 5.2.2 (2022-03-28)
+
+Fix:
+ - add reactivity to solid adapter
+
 ## 5.2.1 (2022-03-27)
 
 Fix:

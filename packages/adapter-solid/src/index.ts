@@ -1,5 +1,4 @@
-import { Component, createComponent, createContext, useContext } from 'solid-js'
-import { $RAW, createStore } from 'solid-js/store'
+import { Accessor, Component, createComponent, createContext, createSignal, useContext } from 'solid-js'
 import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from '../../runtime/src/core'
 import { getFallbackProxy } from '../../runtime/src/core-utils'
 import { i18nObject } from '../../runtime/src/util.object'
@@ -13,8 +12,8 @@ export type I18nContextType<
 	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,
 	TF extends TranslationFunctions<T> = TranslationFunctions<T>,
 > = {
-	locale: L
-	LL: TF
+	locale: Accessor<L>
+	LL: Accessor<TF>
 	setLocale: (locale: L) => void
 }
 
@@ -35,11 +34,6 @@ export type SolidInit<
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-const wrapProxy = <T>(proxy: T): T =>
-	({
-		[$RAW]: proxy,
-	} as unknown as T)
-
 export const initI18nSolid = <
 	L extends Locale = Locale,
 	T extends BaseTranslation = BaseTranslation,
@@ -52,22 +46,19 @@ export const initI18nSolid = <
 	const I18nContext = createContext({} as I18nContextType<L, T, TF>)
 
 	const TypesafeI18n: Component<TypesafeI18nProps<L>> = (props) => {
-		const setLocale = (newLocale: L): void =>
-			setState((v) => ({
-				...v,
-				locale: newLocale,
-				LL: wrapProxy(i18nObject<L, T, TF, F>(newLocale, translations[newLocale], formatters[newLocale])),
-			}))
+		const [locale, _setLocale] = createSignal<L>(null as unknown as L)
+		const [LL, setLL] = createSignal<TF>(getFallbackProxy<TF>())
 
-		const [state, setState] = createStore<I18nContextType<L, T, TF>>({
-			locale: null as unknown as L,
-			LL: wrapProxy(getFallbackProxy<TF>()),
-			setLocale,
-		})
+		const setLocale = (newLocale: L): void => {
+			_setLocale(() => newLocale)
+			setLL(() => i18nObject<L, T, TF, F>(newLocale, translations[newLocale], formatters[newLocale]))
+		}
 
-		!state.locale && setLocale(props.locale)
+		!locale() && setLocale(props.locale)
 
-		return createComponent(I18nContext.Provider, { value: state, children: () => props.children })
+		const ctx: I18nContextType<L, T, TF> = { locale, LL, setLocale }
+
+		return createComponent(I18nContext.Provider, { value: ctx, children: () => props.children })
 	}
 
 	const useI18nContext = (): I18nContextType<L, T, TF> => useContext(I18nContext)

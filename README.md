@@ -229,8 +229,8 @@ Apart from that there can be a small overhead depending on which utilities and w
 There also exists a useful wrapper for some frameworks:
 - [`typesafe-i18n` angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular): 1398 bytes gzipped
 - [`typesafe-i18n` react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react): 1576 bytes gzipped
-- [`typesafe-i18n` solid-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-solid): 1421 bytes gzipped
-- [`typesafe-i18n` svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte): 1345 bytes gzipped
+- [`typesafe-i18n` solid-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-solid): 1404 bytes gzipped
+- [`typesafe-i18n` svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte): 1346 bytes gzipped
 - [`typesafe-i18n` vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue): 1257 bytes gzipped
 
 

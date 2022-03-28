@@ -44,13 +44,13 @@ module.exports = [
 	{
 		name: 'adapter-solid',
 		path: 'solid/index.min.mjs',
-		limit: '1421 b',
+		limit: '1404 b',
 		ignore: ['solid-js'],
 	},
 	{
 		name: 'adapter-svelte',
 		path: 'svelte/index.min.mjs',
-		limit: '1345 b',
+		limit: '1346 b',
 		ignore: ['svelte'],
 	},
 	{

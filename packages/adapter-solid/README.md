@@ -76,7 +76,7 @@ import { useI18nContext } from './i18n/i18n-solid'
 function Greeting(props: { name: string }) {
    const { LL } = useI18nContext()
 
-   return <h1>{LL.HI({ name: props.name })}</h1>
+   return <h1>{LL().HI({ name: props.name })}</h1>
 }
 
 export default Greeting
@@ -142,7 +142,7 @@ import { useI18nContext } from './i18n/i18n-solid'
 function ProjectOverview() {
    const { LL } = useI18nContext()
 
-   return LL.NR_OF_PROJECTS(5) // will output e.g => '5 Projects'
+   return LL().NR_OF_PROJECTS(5) // will output e.g => '5 Projects'
 }
 
 export default ProjectOverview
@@ -165,13 +165,13 @@ function LanguageSelection() {
 
    return (
       <ul className="language-selection">
-         <li className={'en' === locale ? 'selected' : ''} onClick={() => setLocale('en')}>
+         <li className={'en' === locale() ? 'selected' : ''} onClick={() => setLocale('en')}>
             english
          </li>
-         <li className={'de' === locale ? 'selected' : ''} onClick={() => setLocale('de')}>
+         <li className={'de' === locale() ? 'selected' : ''} onClick={() => setLocale('de')}>
             deutsch
          </li>
-         <li className={'it' === locale ? 'selected' : ''} onClick={() => setLocale('it')}>
+         <li className={'it' === locale() ? 'selected' : ''} onClick={() => setLocale('it')}>
             italiano
          </li>
       </ul>
