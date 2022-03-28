@@ -1,6 +1,6 @@
 # `typesafe-i18n` Solid
-<!--
-**You can find a demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/solid/example).** -->
+
+**You can find a demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/solid/example).**
 
 ## Setup
 
