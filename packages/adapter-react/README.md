@@ -1,6 +1,6 @@
 # `typesafe-i18n` React
 
-**You can find a demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/react/example).**
+**You can find a demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react/example).**
 
 ## Setup
 

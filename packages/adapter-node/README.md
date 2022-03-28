@@ -1,6 +1,6 @@
 # `typesafe-i18n` Node.js
 
-**You can find a demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/node/example)**
+**You can find a demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-node/example).**
 
 ## Setup
 

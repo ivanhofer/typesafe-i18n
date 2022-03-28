@@ -1,6 +1,6 @@
 # `typesafe-i18n` Vue.js
 
-**You can find a demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/vue/example)**
+**You can find a demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue/example).**
 
 ## Setup
 
