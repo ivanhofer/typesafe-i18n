@@ -1,4 +1,4 @@
-name: '@typesafe-i18n/importer example'
+name: '@typesafe-i18n/importer example - update to latest version'
 
 on:
    schedule:
