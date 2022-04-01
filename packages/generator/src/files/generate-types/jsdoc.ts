@@ -1,6 +1,8 @@
 import { sortStringPropertyASC } from 'typesafe-utils'
 import type { JsDocInfo, TypeInformation } from '../../types'
 
+const sanitizeText = (text: string) => text.replace(/\*\//g, '*\\/')
+
 export const createJsDocsString = (
 	{ text, types, pluralOnlyArgs }: JsDocInfo = {} as JsDocInfo,
 	renderTypes = false,
@@ -16,7 +18,7 @@ export const createJsDocsString = (
 
 	return text?.length + renderedTypes.length
 		? `/**
-	 * ${text}${renderedTypes}
+	 * ${sanitizeText(text)}${renderedTypes}
 	 */
 	`
 		: ''

@@ -3,6 +3,11 @@
 
 # Version 5
 
+## 5.2.3 (2022-04-01)
+
+Bugfix:
+ - generation of hints when text contains comment-end-marker
+
 ## 5.2.2 (2022-03-28)
 
 Fix:
