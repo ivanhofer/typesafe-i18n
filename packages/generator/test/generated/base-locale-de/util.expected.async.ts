@@ -9,10 +9,15 @@ const localeTranslationLoaders = {
 	de: () => import('./de'),
 }
 
-export const loadLocaleAsync = async (locale: Locales) => {
-	if (loadedLocales[locale]) return
+const getDictionary = (locale: Locales) =>
+	loadedLocales[locale] || (loadedLocales[locale] = {} as Translations)
 
-	loadedLocales[locale] = (await localeTranslationLoaders[locale]()).default as unknown as Translations
+export const loadLocaleAsync = async (locale: Locales) => {
+	loadedLocales[locale] = {
+		...getDictionary(locale),
+		...(await localeTranslationLoaders[locale]()).default as Translations
+	}
+
 	loadFormatters(locale)
 }
 

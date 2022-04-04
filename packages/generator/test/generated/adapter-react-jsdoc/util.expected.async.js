@@ -17,12 +17,21 @@ const localeTranslationLoaders = {
 
 /**
  * @param { Locales } locale
+ * @return { Translations }
+ */
+const getDictionary = (locale) =>
+	loadedLocales[locale] || (loadedLocales[locale] = /** @type { Translations } */ ({}))
+
+/**
+ * @param { Locales } locale
  * @return { Promise<void> }
  */
 export const loadLocaleAsync = async (locale) => {
-	if (loadedLocales[locale]) return
+	loadedLocales[locale] = {
+		...getDictionary(locale),
+		.../** @type { Translations } */ ((await localeTranslationLoaders[locale]()).default)
+	}
 
-	loadedLocales[locale] = /** @type { Translations } */ (/** @type { unknown } */ ((await localeTranslationLoaders[locale]()).default))
 	loadFormatters(locale)
 }
 

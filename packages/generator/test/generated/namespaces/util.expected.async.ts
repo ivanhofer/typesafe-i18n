@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 import { initFormatters } from './formatters-template.actual'
-import type { Locales, Translations, Namespaces } from './types.actual'
+import type { Locales, Namespaces, Translations } from './types.actual'
 import { loadedFormatters, loadedLocales, locales } from './util.actual'
 
 const localeTranslationLoaders = {
@@ -15,10 +15,15 @@ const localeNamespaceLoaders = {
 	}
 }
 
-export const loadLocaleAsync = async (locale: Locales) => {
-	if (loadedLocales[locale]) return
+const getDictionary = (locale: Locales) =>
+	loadedLocales[locale] || (loadedLocales[locale] = {} as Translations)
 
-	loadedLocales[locale] = (await localeTranslationLoaders[locale]()).default as unknown as Translations
+export const loadLocaleAsync = async (locale: Locales) => {
+	loadedLocales[locale] = {
+		...getDictionary(locale),
+		...(await localeTranslationLoaders[locale]()).default as Translations
+	}
+
 	loadFormatters(locale)
 }
 
@@ -29,6 +34,6 @@ export const loadFormatters = (locale: Locales) => {
 }
 
 export const loadNamespaceAsync = async <Namespace extends Namespaces>(locale: Locales, namespace: Namespace) => {
-	if (!loadedLocales[locale]) loadedLocales[locale] = {} as Translations
-	loadedLocales[locale][namespace] = (await (localeNamespaceLoaders[locale][namespace])()).default as Translations[Namespace]
+	const dictionary = getDictionary(locale)
+	dictionary[namespace] = (await (localeNamespaceLoaders[locale][namespace])()).default as Translations[Namespace]
 }

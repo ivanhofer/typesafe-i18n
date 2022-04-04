@@ -41,10 +41,9 @@ ${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' }, { type: 'N
 export const loadNamespaceAsync = async ${generics('Namespace extends Namespaces')}(locale${type(
 		'Locales',
 	)}, namespace${type('Namespace')}) => {
-	if (!loadedLocales[locale]) loadedLocales[locale] = ${jsDocType('Translations', '{}')}${typeCast('Translations')}
-	loadedLocales[locale][namespace] = ${jsDocType(
-		'any',
-		`(await (localeNamespaceLoaders[locale][namespace])()).default${typeCast('Translations[Namespace]')}`,
+	const dictionary = getDictionary(locale)
+	dictionary[namespace] = (await (localeNamespaceLoaders[locale][namespace])()).default${typeCast(
+		'Translations[Namespace]',
 	)}
 }
 `
@@ -64,28 +63,29 @@ ${banner}
 
 ${jsDocImports(
 	{ from: relativeFileImportPath(typesFileName), type: 'Locales' },
-	{ from: relativeFileImportPath(typesFileName), type: 'Translations' },
 	usesNamespaces && { from: relativeFileImportPath(typesFileName), type: 'Namespaces' },
+	{ from: relativeFileImportPath(typesFileName), type: 'Translations' },
 )}
 
 import { initFormatters } from './${formattersTemplateFileName}'
-${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translations', usesNamespaces && 'Namespaces')}
+${importTypes(relativeFileImportPath(typesFileName), 'Locales', usesNamespaces && 'Namespaces', 'Translations')}
 import { loadedFormatters, loadedLocales, locales } from './${utilFileName}'
 
 const localeTranslationLoaders = {${localesTranslationLoaders}
 }
 ${namespaceImports}
+
+${jsDocFunction('Translations', { type: 'Locales', name: 'locale' })}
+const getDictionary = (locale${type('Locales')}) =>
+	loadedLocales[locale] || (loadedLocales[locale] = ${jsDocType('Translations', '{}')}${typeCast('Translations')})
+
 ${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' })}
 export const loadLocaleAsync = async (locale${type('Locales')}) => {
-	if (loadedLocales[locale]) return
+	loadedLocales[locale] = {
+		...getDictionary(locale),
+		...${jsDocType('Translations', `(await localeTranslationLoaders[locale]()).default${typeCast('Translations')}`)}
+	}
 
-	loadedLocales[locale] = ${jsDocType(
-		'Translations',
-		jsDocType(
-			'unknown',
-			`(await localeTranslationLoaders[locale]()).default${typeCast('unknown')}${typeCast('Translations')}`,
-		),
-	)}
 	loadFormatters(locale)
 }
 

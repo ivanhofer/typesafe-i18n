@@ -3,7 +3,10 @@
 
 # Version 5
 
-## 5.2.4 (2022-04-04)
+## 5.3.0 (2022-04-04)
+
+Feature:
+ - allow loading locale and namespace in parallel
 
 Fix:
  - remove unnecessary comma on JSDoc type definitions
