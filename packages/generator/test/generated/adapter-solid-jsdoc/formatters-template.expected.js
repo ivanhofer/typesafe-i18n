@@ -1,8 +1,8 @@
 // @ts-check
 
 /**
- * @typedef { import('typesafe-i18n').FormattersInitializer<Locales, Formatters> } FormattersInitializer,
- * @typedef { import('./types.actual').Locales } Locales,
+ * @typedef { import('typesafe-i18n').FormattersInitializer<Locales, Formatters> } FormattersInitializer
+ * @typedef { import('./types.actual').Locales } Locales
  * @typedef { import('./types.actual').Formatters } Formatters
  */
 

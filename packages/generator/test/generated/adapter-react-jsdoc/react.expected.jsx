@@ -3,10 +3,10 @@
 /* eslint-disable */
 
 /**
- * @typedef { import('typesafe-i18n/react').ReactInit<Locales, Translations, TranslationFunctions> } ReactInit,
- * @typedef { import('./types.actual').Formatters } Formatters,
- * @typedef { import('./types.actual').Locales } Locales,
- * @typedef { import('./types.actual').TranslationFunctions } TranslationFunctions,
+ * @typedef { import('typesafe-i18n/react').ReactInit<Locales, Translations, TranslationFunctions> } ReactInit
+ * @typedef { import('./types.actual').Formatters } Formatters
+ * @typedef { import('./types.actual').Locales } Locales
+ * @typedef { import('./types.actual').TranslationFunctions } TranslationFunctions
  * @typedef { import('./types.actual').Translations } Translations
  */
 

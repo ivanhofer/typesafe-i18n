@@ -3,8 +3,8 @@
 /* eslint-disable */
 
 /**
- * @typedef { import('./types.actual').Locales } Locales,
- * @typedef { import('./types.actual').Translations } Translations,
+ * @typedef { import('./types.actual').Locales } Locales
+ * @typedef { import('./types.actual').Translations } Translations
  * @typedef { import('./types.actual').Namespaces } Namespaces
  */
 

@@ -3,10 +3,10 @@
 /* eslint-disable */
 
 /**
- * @typedef { import('typesafe-i18n/vue').VuePluginInit<Locales, Translations, TranslationFunctions> } VuePluginInit,
- * @typedef { import('./types.actual.js').Formatters } Formatters,
- * @typedef { import('./types.actual.js').Locales } Locales,
- * @typedef { import('./types.actual.js').TranslationFunctions } TranslationFunctions,
+ * @typedef { import('typesafe-i18n/vue').VuePluginInit<Locales, Translations, TranslationFunctions> } VuePluginInit
+ * @typedef { import('./types.actual.js').Formatters } Formatters
+ * @typedef { import('./types.actual.js').Locales } Locales
+ * @typedef { import('./types.actual.js').TranslationFunctions } TranslationFunctions
  * @typedef { import('./types.actual.js').Translations } Translations
  */
 

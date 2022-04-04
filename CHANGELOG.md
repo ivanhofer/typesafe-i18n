@@ -3,6 +3,11 @@
 
 # Version 5
 
+## 5.2.4 (2022-04-04)
+
+Fix:
+ - remove unnecessary comma on JSDoc type definitions
+
 ## 5.2.3 (2022-04-01)
 
 Bugfix:

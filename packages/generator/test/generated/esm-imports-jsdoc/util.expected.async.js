@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 /**
- * @typedef { import('./types.actual.js').Locales } Locales,
+ * @typedef { import('./types.actual.js').Locales } Locales
  * @typedef { import('./types.actual.js').Translations } Translations
  */
 

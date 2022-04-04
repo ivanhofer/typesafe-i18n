@@ -40,10 +40,13 @@ export const configureOutputHandler = (config: GeneratorConfigWithDefaultValues,
 	jsDocImports = (...imports) =>
 		shouldGenerateJsDoc
 			? `
-/**${imports.filter(isTruthy).map(
-					({ from, type, alias }) => `
+/**${imports
+					.filter(isTruthy)
+					.map(
+						({ from, type, alias }) => `
  * @typedef { import('${from}').${type} } ${alias || type}`,
-			  )}
+					)
+					.join('')}
  */
 `
 			: ''
