@@ -13,7 +13,7 @@
     "require-self": "^0.2.3",
     "tiny-glob": "^0.2.9",
     "tsm": "^2.2.1",
-    "type-fest": "^2.12.1",
+    "type-fest": "^2.12.2",
     "typesafe-utils": "^1.16.2",
     "typescript": "^4.6.3",
     "uvu": "^0.5.3",
