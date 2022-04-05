@@ -5,11 +5,13 @@ import {
 	importTypes,
 	jsDocFunction,
 	jsDocImports,
+	jsDocType,
 	OVERRIDE_WARNING,
 	relativeFileImportPath,
 	relativeFolderImportPath,
 	tsCheck,
 	type,
+	typeCast,
 } from '../output-handler'
 import { writeFileIfContainsChanges } from '../utils/file.utils'
 import { prettify, wrapObjectKeyIfNeeded } from '../utils/generator.utils'
@@ -39,7 +41,18 @@ ${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' }, { type: 'N
 export const loadNamespaceAsync = async ${generics('Namespace extends Namespaces')}(locale${type(
 		'Locales',
 	)}, namespace${type('Namespace')}) =>
-	void updateDictionary(locale, { [namespace]: (await (localeNamespaceLoaders[locale][namespace])()).default })
+	void updateDictionary(
+		locale,
+		${jsDocType(
+			'Partial<Translations>',
+			jsDocType(
+				'unknown',
+				`{ [namespace]: (await (localeNamespaceLoaders[locale][namespace])()).default }${typeCast(
+					'unknown',
+				)}${typeCast('Partial<Translations>')}`,
+			),
+		)}
+	)
 `
 	return [namespaceImports, namespaceLoader]
 }
@@ -79,7 +92,16 @@ const updateDictionary = (locale${type('Locales')}, dictionary${type('Partial<Tr
 
 ${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' })}
 export const loadLocaleAsync = async (locale${type('Locales')}) => {
-	updateDictionary(locale, (await localeTranslationLoaders[locale]()).default)
+	updateDictionary(
+		locale,
+		${jsDocType(
+			'Translations',
+			jsDocType(
+				'unknown',
+				`(await localeTranslationLoaders[locale]()).default${typeCast('unknown')}${typeCast('Translations')}`,
+			),
+		)}
+	)
 	loadFormatters(locale)
 }
 

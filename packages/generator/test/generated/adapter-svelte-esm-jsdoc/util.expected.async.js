@@ -28,7 +28,10 @@ const updateDictionary = (locale, dictionary) =>
  * @return { Promise<void> }
  */
 export const loadLocaleAsync = async (locale) => {
-	updateDictionary(locale, (await localeTranslationLoaders[locale]()).default)
+	updateDictionary(
+		locale,
+		/** @type { Translations } */ (/** @type { unknown } */ ((await localeTranslationLoaders[locale]()).default))
+	)
 	loadFormatters(locale)
 }
 

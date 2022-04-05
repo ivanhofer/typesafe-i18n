@@ -22,7 +22,10 @@ const updateDictionary = (locale: Locales, dictionary: Partial<Translations>) =>
 	loadedLocales[locale] = { ...loadedLocales[locale], ...dictionary }
 
 export const loadLocaleAsync = async (locale: Locales) => {
-	updateDictionary(locale, (await localeTranslationLoaders[locale]()).default)
+	updateDictionary(
+		locale,
+		(await localeTranslationLoaders[locale]()).default as unknown as Translations
+	)
 	loadFormatters(locale)
 }
 
@@ -32,4 +35,7 @@ export const loadFormatters = (locale: Locales) =>
 	void (loadedFormatters[locale] = initFormatters(locale))
 
 export const loadNamespaceAsync = async <Namespace extends Namespaces>(locale: Locales, namespace: Namespace) =>
-	void updateDictionary(locale, { [namespace]: (await (localeNamespaceLoaders[locale][namespace])()).default })
+	void updateDictionary(
+		locale,
+		{ [namespace]: (await (localeNamespaceLoaders[locale][namespace])()).default } as unknown as Partial<Translations>
+	)

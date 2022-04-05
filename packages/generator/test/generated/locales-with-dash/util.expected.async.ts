@@ -15,7 +15,10 @@ const updateDictionary = (locale: Locales, dictionary: Partial<Translations>) =>
 	loadedLocales[locale] = { ...loadedLocales[locale], ...dictionary }
 
 export const loadLocaleAsync = async (locale: Locales) => {
-	updateDictionary(locale, (await localeTranslationLoaders[locale]()).default)
+	updateDictionary(
+		locale,
+		(await localeTranslationLoaders[locale]()).default as unknown as Translations
+	)
 	loadFormatters(locale)
 }
 

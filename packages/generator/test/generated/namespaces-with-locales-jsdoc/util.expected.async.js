@@ -51,7 +51,10 @@ const updateDictionary = (locale, dictionary) =>
  * @return { Promise<void> }
  */
 export const loadLocaleAsync = async (locale) => {
-	updateDictionary(locale, (await localeTranslationLoaders[locale]()).default)
+	updateDictionary(
+		locale,
+		/** @type { Translations } */ (/** @type { unknown } */ ((await localeTranslationLoaders[locale]()).default))
+	)
 	loadFormatters(locale)
 }
 
@@ -70,4 +73,7 @@ export const loadFormatters = (locale) =>
  * @return { Promise<void> }
  */
 export const loadNamespaceAsync = async (locale, namespace) =>
-	void updateDictionary(locale, { [namespace]: (await (localeNamespaceLoaders[locale][namespace])()).default })
+	void updateDictionary(
+		locale,
+		/** @type { Partial<Translations> } */ (/** @type { unknown } */ ({ [namespace]: (await (localeNamespaceLoaders[locale][namespace])()).default }))
+	)
