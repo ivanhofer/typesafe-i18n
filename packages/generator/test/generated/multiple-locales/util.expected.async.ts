@@ -11,20 +11,15 @@ const localeTranslationLoaders = {
 	it: () => import('./it'),
 }
 
-const getDictionary = (locale: Locales) =>
-	loadedLocales[locale] || (loadedLocales[locale] = {} as Translations)
+const updateDictionary = (locale: Locales, dictionary: Partial<Translations>) =>
+	loadedLocales[locale] = { ...loadedLocales[locale], ...dictionary }
 
 export const loadLocaleAsync = async (locale: Locales) => {
-	loadedLocales[locale] = {
-		...getDictionary(locale),
-		...(await localeTranslationLoaders[locale]()).default as Translations
-	}
-
+	updateDictionary(locale, (await localeTranslationLoaders[locale]()).default)
 	loadFormatters(locale)
 }
 
 export const loadAllLocalesAsync = () => Promise.all(locales.map(loadLocaleAsync))
 
-export const loadFormatters = (locale: Locales) => {
-	loadedFormatters[locale] = initFormatters(locale)
-}
+export const loadFormatters = (locale: Locales) =>
+	void (loadedFormatters[locale] = initFormatters(locale))

@@ -54,10 +54,12 @@ export const configureOutputHandler = (config: GeneratorConfigWithDefaultValues,
 	jsDocFunction = (returnType, ...params) =>
 		shouldGenerateJsDoc
 			? `
-/**${params.map(
-					({ type, name }) => `
+/**${params
+					.map(
+						({ type, name }) => `
  * @param { ${type} } ${name}`,
-			  )}
+					)
+					.join('')}
  * @return { ${returnType} }
  */`
 			: ''

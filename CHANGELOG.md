@@ -3,6 +3,11 @@
 
 # Version 5
 
+## 5.3.1 (2022-04-05)
+
+Fix:
+ - improve loading locale and namespace in parallel
+
 ## 5.3.0 (2022-04-04)
 
 Feature:

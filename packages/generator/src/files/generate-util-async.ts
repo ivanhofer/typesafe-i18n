@@ -5,13 +5,11 @@ import {
 	importTypes,
 	jsDocFunction,
 	jsDocImports,
-	jsDocType,
 	OVERRIDE_WARNING,
 	relativeFileImportPath,
 	relativeFolderImportPath,
 	tsCheck,
 	type,
-	typeCast,
 } from '../output-handler'
 import { writeFileIfContainsChanges } from '../utils/file.utils'
 import { prettify, wrapObjectKeyIfNeeded } from '../utils/generator.utils'
@@ -40,12 +38,8 @@ const localeNamespaceLoaders = {
 ${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' }, { type: 'Namespaces', name: 'namespace' })}
 export const loadNamespaceAsync = async ${generics('Namespace extends Namespaces')}(locale${type(
 		'Locales',
-	)}, namespace${type('Namespace')}) => {
-	const dictionary = getDictionary(locale)
-	dictionary[namespace] = (await (localeNamespaceLoaders[locale][namespace])()).default${typeCast(
-		'Translations[Namespace]',
-	)}
-}
+	)}, namespace${type('Namespace')}) =>
+	void updateDictionary(locale, { [namespace]: (await (localeNamespaceLoaders[locale][namespace])()).default })
 `
 	return [namespaceImports, namespaceLoader]
 }
@@ -75,26 +69,25 @@ const localeTranslationLoaders = {${localesTranslationLoaders}
 }
 ${namespaceImports}
 
-${jsDocFunction('Translations', { type: 'Locales', name: 'locale' })}
-const getDictionary = (locale${type('Locales')}) =>
-	loadedLocales[locale] || (loadedLocales[locale] = ${jsDocType('Translations', '{}')}${typeCast('Translations')})
+${jsDocFunction(
+	'Translations',
+	{ type: 'Locales', name: 'locale' },
+	{ type: 'Partial<Translations>', name: 'dictionary' },
+)}
+const updateDictionary = (locale${type('Locales')}, dictionary${type('Partial<Translations>')}) =>
+	loadedLocales[locale] = { ...loadedLocales[locale], ...dictionary }
 
 ${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' })}
 export const loadLocaleAsync = async (locale${type('Locales')}) => {
-	loadedLocales[locale] = {
-		...getDictionary(locale),
-		...${jsDocType('Translations', `(await localeTranslationLoaders[locale]()).default${typeCast('Translations')}`)}
-	}
-
+	updateDictionary(locale, (await localeTranslationLoaders[locale]()).default)
 	loadFormatters(locale)
 }
 
 export const loadAllLocalesAsync = () => Promise.all(locales.map(loadLocaleAsync))
 
 ${jsDocFunction('void', { type: 'Locales', name: 'locale' })}
-export const loadFormatters = (locale${type('Locales')}) => {
-	loadedFormatters[locale] = initFormatters(locale)
-}
+export const loadFormatters = (locale${type('Locales')}) =>
+	void (loadedFormatters[locale] = initFormatters(locale))
 ${namespaceLoader}`
 }
 
