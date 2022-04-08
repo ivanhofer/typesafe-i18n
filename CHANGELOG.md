@@ -3,6 +3,11 @@
 
 # Version 5
 
+## 5.3.3 (2022-04-08)
+
+Bugfix:
+ - add `children` to the type definitions of the react component [#263](https://github.com/ivanhofer/typesafe-i18n/issues/263)
+
 ## 5.3.2 (2022-04-05)
 ## 5.3.1 (2022-04-05)
 

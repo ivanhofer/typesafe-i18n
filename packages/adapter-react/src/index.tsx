@@ -19,6 +19,8 @@ export type I18nContextType<
 
 export type TypesafeI18nProps<L extends string> = {
 	locale: L
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	children: React.ReactElement<any, any> | null
 }
 
 export type ReactInit<
