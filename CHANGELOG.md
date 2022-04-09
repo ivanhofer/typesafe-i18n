@@ -3,9 +3,14 @@
 
 # Version 5
 
+## 5.3.4 (2022-04-09)
+
+Fix:
+ - make generated types compatible with 'strictNullChecks: false'
+
 ## 5.3.3 (2022-04-08)
 
-Bugfix:
+Fix:
  - add `children` to the type definitions of the react component [#263](https://github.com/ivanhofer/typesafe-i18n/issues/263)
 
 ## 5.3.2 (2022-04-05)

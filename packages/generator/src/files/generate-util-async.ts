@@ -40,7 +40,7 @@ const localeNamespaceLoaders = {
 ${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' }, { type: 'Namespaces', name: 'namespace' })}
 export const loadNamespaceAsync = async ${generics('Namespace extends Namespaces')}(locale${type(
 		'Locales',
-	)}, namespace${type('Namespace')}) =>
+	)}, namespace${type('Namespace')})${type('Promise<void>')} =>
 	void updateDictionary(
 		locale,
 		${jsDocType(
@@ -91,7 +91,7 @@ const updateDictionary = (locale${type('Locales')}, dictionary${type('Partial<Tr
 	loadedLocales[locale] = { ...loadedLocales[locale], ...dictionary }
 
 ${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' })}
-export const loadLocaleAsync = async (locale${type('Locales')}) => {
+export const loadLocaleAsync = async (locale${type('Locales')})${type('Promise<void>')} => {
 	updateDictionary(
 		locale,
 		${jsDocType(
@@ -105,10 +105,10 @@ export const loadLocaleAsync = async (locale${type('Locales')}) => {
 	loadFormatters(locale)
 }
 
-export const loadAllLocalesAsync = () => Promise.all(locales.map(loadLocaleAsync))
+export const loadAllLocalesAsync = ()${type('Promise<void[]>')} => Promise.all(locales.map(loadLocaleAsync))
 
 ${jsDocFunction('void', { type: 'Locales', name: 'locale' })}
-export const loadFormatters = (locale${type('Locales')}) =>
+export const loadFormatters = (locale${type('Locales')})${type('void')} =>
 	void (loadedFormatters[locale] = initFormatters(locale))
 ${namespaceLoader}`
 }

@@ -82,7 +82,7 @@ const localeTranslations = {${localesTranslations}
 }
 
 ${jsDocFunction('void', { type: 'Locales', name: 'locale' })}
-export const loadLocale = (locale${type('Locales')}) => {
+export const loadLocale = (locale${type('Locales')})${type('void')} => {
 	if (loadedLocales[locale]) return
 
 	loadedLocales[locale] = ${jsDocType(
@@ -92,10 +92,10 @@ export const loadLocale = (locale${type('Locales')}) => {
 	loadFormatters(locale)
 }
 
-export const loadAllLocales = () => locales.forEach(loadLocale)
+export const loadAllLocales = ()${type('void')} => locales.forEach(loadLocale)
 
 ${jsDocFunction('void', { type: 'Locales', name: 'locale' })}
-export const loadFormatters = (locale${type('Locales')}) => {
+export const loadFormatters = (locale${type('Locales')})${type('void')} => {
 	loadedFormatters[locale] = initFormatters(locale)
 }
 `
