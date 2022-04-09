@@ -7,6 +7,7 @@
 
 Fix:
  - make generated types compatible with 'strictNullChecks: false'
+ - use `React.ReactNode` instead of `React.ReactElement`
 
 ## 5.3.3 (2022-04-08)
 
