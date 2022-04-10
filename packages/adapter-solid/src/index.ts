@@ -58,7 +58,7 @@ export const initI18nSolid = <
 
 		const ctx: I18nContextType<L, T, TF> = { locale, LL, setLocale }
 
-		return createComponent(I18nContext.Provider, { value: ctx, children: () => props.children })
+		return createComponent(I18nContext.Provider, { value: ctx, get children() { return props.children } })
 	}
 
 	const useI18nContext = (): I18nContextType<L, T, TF> => useContext(I18nContext)

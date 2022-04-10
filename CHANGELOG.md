@@ -3,6 +3,11 @@
 
 # Version 5
 
+## 5.3.5 (2022-04-10)
+
+Fix:
+ - avoid recomputing SolidJS children [#267](https://github.com/ivanhofer/typesafe-i18n/issues/267)
+
 ## 5.3.4 (2022-04-09)
 
 Fix:
