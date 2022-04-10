@@ -18,7 +18,13 @@
 		"internationalization library",
 		"localization library",
 		"localization engine",
-		"lightweight"
+		"lightweight",
+		"svelte",
+		"react",
+		"angular",
+		"vue",
+		"solid",
+		"nodejs"
 	],
 	"license": "MIT",
 	"module": "runtime/esm/runtime/src/index.mjs",
