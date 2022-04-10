@@ -44,7 +44,7 @@ module.exports = [
 	{
 		name: 'adapter-solid',
 		path: 'solid/index.min.mjs',
-		limit: '1404 b',
+		limit: '1409 b',
 		ignore: ['solid-js'],
 	},
 	{
