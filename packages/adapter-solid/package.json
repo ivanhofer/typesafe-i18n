@@ -5,8 +5,8 @@
     "build": "tsm esbuild.ts && tsc -p tsconfig.json --emitDeclarationOnly"
   },
   "devDependencies": {
-    "esbuild": "^0.14.30",
-    "solid-js": "^1.3.13",
+    "esbuild": "^0.14.34",
+    "solid-js": "^1.3.14",
     "tsm": "^2.2.1",
     "typescript": "^4.6.3"
   }
