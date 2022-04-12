@@ -3,6 +3,11 @@
 
 # Version 5
 
+## 5.3.6 (2022-04-12)
+
+Fix:
+ - update state with `batch` inside solid adapter
+
 ## 5.3.5 (2022-04-10)
 
 Fix:
