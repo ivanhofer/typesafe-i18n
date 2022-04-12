@@ -5,8 +5,8 @@
     "build": "tsm esbuild.ts && tsc -p tsconfig.json --emitDeclarationOnly"
   },
   "devDependencies": {
-    "@types/react": "^17.0.43",
-    "esbuild": "^0.14.30",
+    "@types/react": "^17.0.44",
+    "esbuild": "^0.14.34",
     "tsm": "^2.2.1",
     "typescript": "^4.6.3"
   }
