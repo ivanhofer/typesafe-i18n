@@ -1,4 +1,4 @@
-import { Accessor, Component, createComponent, createContext, createSignal, useContext } from 'solid-js'
+import { Accessor, batch, Component, createComponent, createContext, createSignal, useContext } from 'solid-js'
 import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from '../../runtime/src/core'
 import { getFallbackProxy } from '../../runtime/src/core-utils'
 import { i18nObject } from '../../runtime/src/util.object'
@@ -49,16 +49,17 @@ export const initI18nSolid = <
 		const [locale, _setLocale] = createSignal<L>(null as unknown as L)
 		const [LL, setLL] = createSignal<TF>(getFallbackProxy<TF>())
 
-		const setLocale = (newLocale: L): void => {
+		const setLocale = (newLocale: L): void => batch(() => {
 			_setLocale(() => newLocale)
 			setLL(() => i18nObject<L, T, TF, F>(newLocale, translations[newLocale], formatters[newLocale]))
-		}
+		})
 
-		!locale() && setLocale(props.locale)
+		setLocale(props.locale)
 
-		const ctx: I18nContextType<L, T, TF> = { locale, LL, setLocale }
-
-		return createComponent(I18nContext.Provider, { value: ctx, get children() { return props.children } })
+		return createComponent(I18nContext.Provider, {
+			value: { locale, LL, setLocale },
+			get children() { return props.children }
+		})
 	}
 
 	const useI18nContext = (): I18nContextType<L, T, TF> => useContext(I18nContext)
