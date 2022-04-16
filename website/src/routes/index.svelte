@@ -7,11 +7,7 @@
 </div>
 
 <div class="image">
-	<!-- TODO: use video instead of gif -->
-	<img
-		src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/typesafe-i18n-demo.gif"
-		alt="typesafe-i18n in action"
-	/>
+	<video autoplay muted src="/showcase.mp4" alt="typesafe-i18n in action" />
 </div>
 
 <div class="works-with narrow">
@@ -21,7 +17,7 @@
 	<div class="logos">
 		<a title="TypeScript" target="_blank" href="https://github.com/ivanhofer/typesafe-i18n#usage">
 			<img
-				src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/typescript.svg"
+				src="/icons/typescript.svg"
 				alt="TypeScript logo"
 				height="70"
 			/>
@@ -32,7 +28,7 @@
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte"
 		>
 			<img
-				src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/svelte.svg"
+				src="/icons/svelte.svg"
 				alt="Svelte logo"
 				height="70"
 			/>
@@ -43,7 +39,7 @@
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react"
 		>
 			<img
-				src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/react.svg"
+				src="/icons/react.svg"
 				alt="React logo"
 				height="70"
 			/>
@@ -54,7 +50,7 @@
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue"
 		>
 			<img
-				src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/vuejs.svg"
+				src="/icons/vuejs.svg"
 				alt="Vue.js logo"
 				height="70"
 			/>
@@ -65,7 +61,7 @@
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular"
 		>
 			<img
-				src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/angular.svg"
+				src="/icons/angular.svg"
 				alt="Angular logo"
 				height="70"
 			/>
@@ -76,7 +72,7 @@
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-solid"
 		>
 			<img
-				src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/solidjs.svg"
+				src="/icons/solidjs.svg"
 				alt="SolidJS logo"
 				height="70"
 			/>
@@ -87,14 +83,14 @@
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-node"
 		>
 			<img
-				src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/nodejs.svg"
+				src="/icons/nodejs.svg"
 				alt="Node.js logo"
 				height="70"
 			/>
 		</a>
 		<a title="JavaScript" target="_blank" href="https://github.com/ivanhofer/typesafe-i18n#usage">
 			<img
-				src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/icons/javascript.svg"
+				src="/icons/javascript.svg"
 				alt="JavaScript logo"
 				height="70"
 			/>
@@ -105,21 +101,66 @@
 <div class="advantages narrow">
 	<h3>Advantages</h3>
 	<ul>
-		<li>🐤 lightweight (~1kb)</li>
-		<li>👌 easy to use syntax</li>
-		<li>🏃 fast and efficient</li>
-		<li>🦺 prevents you from making mistakes (also in plain JavaScript projects)</li>
-		<li>👷 creates boilerplate code for you</li>
-		<li>💬 supports plural rules</li>
-		<li>📅 allows formatting of values e.g. locale-dependent date or number formats</li>
-		<li>↔️ supports switch-case statements e.g. for gender-specific output</li>
-		<li>⬇️ option for asynchronous loading of locales</li>
-		<li>📚 supports multiple namespaces</li>
-		<li>⏱️ supports SSR (Server-Side Rendering)</li>
-		<li>🤝 can be used for frontend, backend and API projects</li>
-		<li>🔍 locale-detection for browser and server environments</li>
-		<li>🔄 import and export translations from/to files or services</li>
-		<li>⛔ no external dependencies</li>
+		<li>
+			<span>🐤</span>
+			lightweight (~1kb)
+		</li>
+		<li>
+			<span>👌</span>
+			easy to use syntax
+		</li>
+		<li>
+			<span>🏃</span>
+			fast and efficient
+		</li>
+		<li>
+			<span>🦺</span>
+			prevents you from making mistakes (also in plain JavaScript projects)
+		</li>
+		<li>
+			<span>👷</span>
+			creates boilerplate code for you
+		</li>
+		<li>
+			<span>💬</span>
+			supports plural rules
+		</li>
+		<li>
+			<span>📅</span>
+			allows formatting of values e.g. locale-dependent date or number formats
+		</li>
+		<li>
+			<span>↔️</span>
+			supports switch-case statements e.g. for gender-specific output
+		</li>
+		<li>
+			<span>⬇️</span>
+			option for asynchronous loading of locales
+		</li>
+		<li>
+			<span>📚</span>
+			supports multiple namespaces
+		</li>
+		<li>
+			<span>⏱️</span>
+			supports SSR (Server-Side Rendering)
+		</li>
+		<li>
+			<span>🤝</span>
+			can be used for frontend, backend and API projects
+		</li>
+		<li>
+			<span>🔍</span>
+			locale-detection for browser and server environments
+		</li>
+		<li>
+			<span>🔄</span>
+			import and export translations from/to files or services
+		</li>
+		<li>
+			<span>⛔</span>
+			no external dependencies
+		</li>
 	</ul>
 </div>
 
@@ -176,6 +217,13 @@
 		list-style-type: none;
 		padding-inline-start: 0;
 		font-size: 1.1rem;
+		line-height: 1.75;
+	}
+
+	li span {
+		display: inline-block;
+		width: 30px;
+		transform: scale(1.2);
 	}
 
 	.links {
