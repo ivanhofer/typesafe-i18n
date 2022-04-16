@@ -32,52 +32,52 @@
 	<!-- TODO: better responsive grid -->
 	<div class="logos">
 		<a title="TypeScript" target="_blank" href="https://github.com/ivanhofer/typesafe-i18n#usage">
-			<img src={iconTypeScript} alt="TypeScript logo" height="70" />
+			<img src={iconTypeScript} alt="TypeScript logo" height="70" width="70" />
 		</a>
 		<a
 			title="Svelte"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte"
 		>
-			<img src={iconSvelte} alt="Svelte logo" height="70" />
+			<img src={iconSvelte} alt="Svelte logo" height="70" width="58.2" />
 		</a>
 		<a
 			title="React"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react"
 		>
-			<img src={iconReact} alt="React logo" height="70" />
+			<img src={iconReact} alt="React logo" height="70" width="78.7" />
 		</a>
 		<a
 			title="Vue.js"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue"
 		>
-			<img src={iconVuejs} alt="Vue.js logo" height="70" />
+			<img src={iconVuejs} alt="Vue.js logo" height="70" width="80.85" />
 		</a>
 		<a
 			title="Angular"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular"
 		>
-			<img src={iconAngular} alt="Angular logo" height="70" />
+			<img src={iconAngular} alt="Angular logo" height="70" width="70" />
 		</a>
 		<a
 			title="SolidJS"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-solid"
 		>
-			<img src={iconSolidjs} alt="SolidJS logo" height="70" />
+			<img src={iconSolidjs} alt="SolidJS logo" height="70" width="74.85" />
 		</a>
 		<a
 			title="Node.js"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-node"
 		>
-			<img src={iconNodejs} alt="Node.js logo" height="70" />
+			<img src={iconNodejs} alt="Node.js logo" height="70" width="114.3" />
 		</a>
 		<a title="JavaScript" target="_blank" href="https://github.com/ivanhofer/typesafe-i18n#usage">
-			<img src={iconJavaScript} alt="JavaScript logo" height="70" />
+			<img src={iconJavaScript} alt="JavaScript logo" height="70" width="70" />
 		</a>
 	</div>
 </div>
@@ -196,7 +196,7 @@
 		justify-content: space-between;
 		gap: 20px;
 
-		@media (max-width: 810px) {
+		@media (max-width: 820px) {
 			gap: 10px;
 
 			img {
@@ -204,7 +204,7 @@
 			}
 		}
 
-		@media (max-width: 660px) {
+		@media (max-width: 665px) {
 			img {
 				height: 50px;
 			}
