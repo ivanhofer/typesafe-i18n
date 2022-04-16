@@ -16,84 +16,52 @@
 	<!-- TODO: better responsive grid -->
 	<div class="logos">
 		<a title="TypeScript" target="_blank" href="https://github.com/ivanhofer/typesafe-i18n#usage">
-			<img
-				src="/icons/typescript.svg"
-				alt="TypeScript logo"
-				height="70"
-			/>
+			<img src="/icons/typescript.svg" alt="TypeScript logo" height="70" />
 		</a>
 		<a
 			title="Svelte"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte"
 		>
-			<img
-				src="/icons/svelte.svg"
-				alt="Svelte logo"
-				height="70"
-			/>
+			<img src="/icons/svelte.svg" alt="Svelte logo" height="70" />
 		</a>
 		<a
 			title="React"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react"
 		>
-			<img
-				src="/icons/react.svg"
-				alt="React logo"
-				height="70"
-			/>
+			<img src="/icons/react.svg" alt="React logo" height="70" />
 		</a>
 		<a
 			title="Vue.js"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue"
 		>
-			<img
-				src="/icons/vuejs.svg"
-				alt="Vue.js logo"
-				height="70"
-			/>
+			<img src="/icons/vuejs.svg" alt="Vue.js logo" height="70" />
 		</a>
 		<a
 			title="Angular"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular"
 		>
-			<img
-				src="/icons/angular.svg"
-				alt="Angular logo"
-				height="70"
-			/>
+			<img src="/icons/angular.svg" alt="Angular logo" height="70" />
 		</a>
 		<a
 			title="SolidJS"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-solid"
 		>
-			<img
-				src="/icons/solidjs.svg"
-				alt="SolidJS logo"
-				height="70"
-			/>
+			<img src="/icons/solidjs.svg" alt="SolidJS logo" height="70" />
 		</a>
 		<a
 			title="Node.js"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-node"
 		>
-			<img
-				src="/icons/nodejs.svg"
-				alt="Node.js logo"
-				height="70"
-			/>
+			<img src="/icons/nodejs.svg" alt="Node.js logo" height="70" />
 		</a>
 		<a title="JavaScript" target="_blank" href="https://github.com/ivanhofer/typesafe-i18n#usage">
-			<img
-				src="/icons/javascript.svg"
-				alt="JavaScript logo"
-				height="70"
-			/>
+			<img src="/icons/javascript.svg" alt="JavaScript logo" height="70" />
 		</a>
 	</div>
 </div>
@@ -211,6 +179,32 @@
 		align-items: center;
 		justify-content: space-between;
 		gap: 20px;
+
+		@media (max-width: 810px) {
+			gap: 10px;
+
+			img {
+				height: 60px;
+			}
+		}
+
+		@media (max-width: 660px) {
+			img {
+				height: 50px;
+			}
+		}
+
+		@media (max-width: 570px) {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			grid-template-rows: repeat(2, 1fr);
+			gap: 30px;
+			justify-content: center;
+
+			img {
+				height: 50px;
+			}
+		}
 	}
 
 	ul {
@@ -220,10 +214,16 @@
 		line-height: 1.75;
 	}
 
-	li span {
-		display: inline-block;
-		width: 30px;
-		transform: scale(1.2);
+	li {
+		display: flex;
+		align-items: baseline;
+
+		span {
+			display: inline-block;
+			width: 30px;
+			flex-shrink: 0;
+			transform: scale(1.2);
+		}
 	}
 
 	.links {
