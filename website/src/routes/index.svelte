@@ -1,3 +1,19 @@
+<script lang="ts">
+	import videoShowcase from '../assets/showcase.mp4'
+
+	import iconTypeScript from '../assets/icons/typescript.svg'
+	import iconSvelte from '../assets/icons/svelte.svg'
+	import iconReact from '../assets/icons/react.svg'
+	import iconVuejs from '../assets/icons/vuejs.svg'
+	import iconAngular from '../assets/icons/angular.svg'
+	import iconSolidjs from '../assets/icons/solidjs.svg'
+	import iconNodejs from '../assets/icons/nodejs.svg'
+	import iconJavaScript from '../assets/icons/javascript.svg'
+
+	import logoGitHub from '../assets/github-logo.svg'
+	import logoNpm from '../assets/npm-logo.svg'
+</script>
+
 <!-- TODO: create in multiple languages -->
 <!-- TODO: ligt/dark mode -->
 
@@ -7,7 +23,7 @@
 </div>
 
 <div class="image">
-	<video autoplay muted src="/showcase.mp4" alt="typesafe-i18n in action" />
+	<video autoplay muted src={videoShowcase} alt="typesafe-i18n in action" />
 </div>
 
 <div class="works-with narrow">
@@ -16,52 +32,52 @@
 	<!-- TODO: better responsive grid -->
 	<div class="logos">
 		<a title="TypeScript" target="_blank" href="https://github.com/ivanhofer/typesafe-i18n#usage">
-			<img src="/icons/typescript.svg" alt="TypeScript logo" height="70" />
+			<img src={iconTypeScript} alt="TypeScript logo" height="70" />
 		</a>
 		<a
 			title="Svelte"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte"
 		>
-			<img src="/icons/svelte.svg" alt="Svelte logo" height="70" />
+			<img src={iconSvelte} alt="Svelte logo" height="70" />
 		</a>
 		<a
 			title="React"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react"
 		>
-			<img src="/icons/react.svg" alt="React logo" height="70" />
+			<img src={iconReact} alt="React logo" height="70" />
 		</a>
 		<a
 			title="Vue.js"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue"
 		>
-			<img src="/icons/vuejs.svg" alt="Vue.js logo" height="70" />
+			<img src={iconVuejs} alt="Vue.js logo" height="70" />
 		</a>
 		<a
 			title="Angular"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular"
 		>
-			<img src="/icons/angular.svg" alt="Angular logo" height="70" />
+			<img src={iconAngular} alt="Angular logo" height="70" />
 		</a>
 		<a
 			title="SolidJS"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-solid"
 		>
-			<img src="/icons/solidjs.svg" alt="SolidJS logo" height="70" />
+			<img src={iconSolidjs} alt="SolidJS logo" height="70" />
 		</a>
 		<a
 			title="Node.js"
 			target="_blank"
 			href="https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-node"
 		>
-			<img src="/icons/nodejs.svg" alt="Node.js logo" height="70" />
+			<img src={iconNodejs} alt="Node.js logo" height="70" />
 		</a>
 		<a title="JavaScript" target="_blank" href="https://github.com/ivanhofer/typesafe-i18n#usage">
-			<img src="/icons/javascript.svg" alt="JavaScript logo" height="70" />
+			<img src={iconJavaScript} alt="JavaScript logo" height="70" />
 		</a>
 	</div>
 </div>
@@ -134,10 +150,10 @@
 
 <nav class="links narrow">
 	<a title="GitHub Repository" target="_blank" href="https://github.com/ivanhofer/typesafe-i18n">
-		<img src="/github-logo.svg" alt="GitHub logo" height="30" />
+		<img src={logoGitHub} alt="GitHub logo" height="30" />
 	</a>
 	<a title="npm registry" target="_blank" href="https://www.npmjs.com/package/typesafe-i18n">
-		<img src="/npm-logo.svg" alt="npm logo" height="30" />
+		<img src={logoNpm} alt="npm logo" height="30" />
 	</a>
 </nav>
 
