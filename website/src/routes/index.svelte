@@ -1,17 +1,15 @@
 <script lang="ts">
-	import videoShowcase from '../assets/showcase.mp4'
-
-	import iconTypeScript from '../assets/icons/typescript.svg'
-	import iconSvelte from '../assets/icons/svelte.svg'
-	import iconReact from '../assets/icons/react.svg'
-	import iconVuejs from '../assets/icons/vuejs.svg'
-	import iconAngular from '../assets/icons/angular.svg'
-	import iconSolidjs from '../assets/icons/solidjs.svg'
-	import iconNodejs from '../assets/icons/nodejs.svg'
-	import iconJavaScript from '../assets/icons/javascript.svg'
-
 	import logoGitHub from '../assets/github-logo.svg'
+	import iconAngular from '../assets/icons/angular.svg'
+	import iconJavaScript from '../assets/icons/javascript.svg'
+	import iconNodejs from '../assets/icons/nodejs.svg'
+	import iconReact from '../assets/icons/react.svg'
+	import iconSolidjs from '../assets/icons/solidjs.svg'
+	import iconSvelte from '../assets/icons/svelte.svg'
+	import iconTypeScript from '../assets/icons/typescript.svg'
+	import iconVuejs from '../assets/icons/vuejs.svg'
 	import logoNpm from '../assets/npm-logo.svg'
+	import videoShowcase from '../assets/showcase.mp4'
 </script>
 
 <!-- TODO: create in multiple languages -->
@@ -19,7 +17,7 @@
 
 <div class="heading narrow">
 	<h1>🌍typesafe-i18n</h1>
-	<h2>A fully type-safe and lightweight localization library for all your TypeScript and JavaScript projects.</h2>
+	<h2>A fully type-safe and lightweight internationalization library for all your TypeScript and JavaScript projects.</h2>
 </div>
 
 <div class="image">
