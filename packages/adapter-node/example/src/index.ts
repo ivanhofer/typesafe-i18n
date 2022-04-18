@@ -1,7 +1,8 @@
-import express, { Application, Request, Response } from 'express'
+import type { Application, Request, Response } from 'express'
+import express from 'express'
 import { initAcceptLanguageHeaderDetector, initRequestParametersDetector } from 'typesafe-i18n/detectors'
 import L from './i18n/i18n-node'
-import { Locales } from './i18n/i18n-types'
+import type { Locales } from './i18n/i18n-types'
 import { detectLocale } from './i18n/i18n-util'
 import { loadAllLocales } from './i18n/i18n-util.sync'
 

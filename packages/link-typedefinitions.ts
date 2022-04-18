@@ -1,8 +1,7 @@
 import { readFileSync, writeFileSync } from 'fs'
-import globPkg from 'glob'
 import { dirname, resolve } from 'path'
+import glob from 'tiny-glob/sync.js'
 import { fileURLToPath } from 'url'
-const { sync: glob } = globPkg
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -17,8 +16,6 @@ const mappings: [FromWheretoImport, OutputPath?, FilterFunction?][] = [
 	['adapter-solid', 'solid'],
 	['adapter-svelte', 'svelte'],
 	['adapter-vue', 'vue'],
-	['core', 'cjs'],
-	['core', 'esm'],
 	['exporter', 'exporter', (file) => file === 'index.d.ts'],
 	['formatters'],
 	['importer', 'importer', (file) => file === 'index.d.ts'],
@@ -43,12 +40,12 @@ mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, mapperFunc
 			.replace(/\\/g, '/'),
 	)
 
-	// rewrite all files to link always to the same core types
+	// rewrite all files to link always to the same runtime types
 	files.forEach((file) => {
 		const fullFilePath = resolve(__dirname, `../types/${fromWheretoImport}/src/${file}`)
 		const content = readFileSync(fullFilePath).toString()
-		if (content.includes('runtime/src/core')) {
-			writeFileSync(fullFilePath, content.replace('runtime/src/core', 'core'), { encoding: 'utf8' })
+		if (content.includes('runtime/src/runtime')) {
+			writeFileSync(fullFilePath, content.replace('runtime/src/runtime', 'runtime'), { encoding: 'utf8' })
 		}
 	})
 

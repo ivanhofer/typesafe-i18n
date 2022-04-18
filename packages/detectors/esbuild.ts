@@ -1,9 +1,7 @@
 import { build } from 'esbuild'
-import globPkg from 'glob'
 import { dirname, resolve } from 'path'
+import glob from 'tiny-glob/sync.js'
 import { fileURLToPath } from 'url'
-
-const { sync: glob } = globPkg
 
 //@ts-ignore
 const __filename = fileURLToPath(import.meta.url)

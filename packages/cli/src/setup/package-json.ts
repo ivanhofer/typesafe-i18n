@@ -1,12 +1,12 @@
 import { execSync } from 'child_process'
-import path from 'path'
+import { resolve } from 'path'
 import type { PackageJson } from 'type-fest'
 import { doesPathExist, importFile, readFile, writeFile } from '../../../generator/src/utils/file.utils'
 import { logger } from '../../../generator/src/utils/logger'
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const packageJsonPath = path.resolve('package.json')
+const packageJsonPath = resolve('package.json')
 
 let pck: PackageJson | undefined = undefined
 
@@ -33,9 +33,9 @@ export const getDependencyList = async () => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const npmLockPath = path.resolve('package-lock.json')
-const yarnLockPath = path.resolve('yarn.lock')
-const pnpmLockPath = path.resolve('pnpm-lock.yaml')
+const npmLockPath = resolve('package-lock.json')
+const yarnLockPath = resolve('yarn.lock')
+const pnpmLockPath = resolve('pnpm-lock.yaml')
 
 const getInstallCommand = async (): Promise<string | undefined> => {
 	if (await doesPathExist(npmLockPath)) {

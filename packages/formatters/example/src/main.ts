@@ -1,5 +1,5 @@
 import { queryStringDetector } from 'typesafe-i18n/detectors'
-import { Locales, TranslationFunctions } from './i18n/i18n-types'
+import type { Locales, TranslationFunctions } from './i18n/i18n-types'
 import { detectLocale, i18nObject, locales } from './i18n/i18n-util'
 import { loadAllLocales } from './i18n/i18n-util.sync'
 

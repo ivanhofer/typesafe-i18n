@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler, useContext, useState } from 'react'
 import './App.css'
 import { I18nContext } from './i18n/i18n-react'
-import { Locales } from './i18n/i18n-types'
+import type { Locales } from './i18n/i18n-types'
 import { locales } from './i18n/i18n-util'
 import { loadLocaleAsync } from './i18n/i18n-util.async'
 import logo from './logo.svg'

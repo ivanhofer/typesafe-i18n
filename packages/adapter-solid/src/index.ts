@@ -49,16 +49,19 @@ export const initI18nSolid = <
 		const [locale, _setLocale] = createSignal<L>(null as unknown as L)
 		const [LL, setLL] = createSignal<TF>(getFallbackProxy<TF>())
 
-		const setLocale = (newLocale: L): void => batch(() => {
-			_setLocale(() => newLocale)
-			setLL(() => i18nObject<L, T, TF, F>(newLocale, translations[newLocale], formatters[newLocale]))
-		})
+		const setLocale = (newLocale: L): void =>
+			batch(() => {
+				_setLocale(() => newLocale)
+				setLL(() => i18nObject<L, T, TF, F>(newLocale, translations[newLocale], formatters[newLocale]))
+			})
 
 		setLocale(props.locale)
 
 		return createComponent(I18nContext.Provider, {
 			value: { locale, LL, setLocale },
-			get children() { return props.children }
+			get children() {
+				return props.children
+			},
 		})
 	}
 

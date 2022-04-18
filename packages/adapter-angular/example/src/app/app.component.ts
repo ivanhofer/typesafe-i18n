@@ -1,8 +1,8 @@
 import { Component } from '@angular/core'
-import { loadLocaleAsync } from 'src/i18n/i18n-util.async'
 import { localStorageDetector } from 'typesafe-i18n/detectors'
-import { Locales, TranslationFunctions } from '../i18n/i18n-types'
+import type { Locales, TranslationFunctions } from '../i18n/i18n-types'
 import { detectLocale, locales } from '../i18n/i18n-util'
+import { loadLocaleAsync } from '../i18n/i18n-util.async'
 import { I18nService } from '../i18n/i18n.service'
 
 @Component({

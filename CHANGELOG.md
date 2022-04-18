@@ -3,6 +3,10 @@
 
 # Version 5
 
+## 5.4.0 (2022-04-18)
+
+ - replace `chokidar` with `watchlist`
+
 ## 5.3.6 (2022-04-12)
 
 Fix:
