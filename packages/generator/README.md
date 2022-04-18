@@ -96,7 +96,7 @@ src/
 	To [defining types](#custom-types) that are unknown to `typesafe-i18n`.
 
  - `formatters.ts`\
-	In this file, you can configure the [formatters](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/formatters) to use inside your translations.
+	In this file, you can configure the [formatters](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/formatters) to use inside your translations. The `Formatters` type gets generated automatically by reading all your translations from the base locale file.
 
  - `i18n-types.ts`\
 	Type definitions are generated in this file. You don't have to understand them. They are just here to help TypeScript understand, how you need to call the translation functions.

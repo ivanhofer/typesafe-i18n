@@ -40,6 +40,8 @@ const APPLES = '{0} apples'
 LLL(APPLES, 12) // => '12 apples'
 ```
 
+> Arguments don't get transformed. If you want to output locale-specific arguments, take a look at the [`formatter`](#format-passed-in-arguments) syntax.
+
 <!-- ------------------------------------------------------------------------------------------ -->
 
 ### passing multiple arguments:
