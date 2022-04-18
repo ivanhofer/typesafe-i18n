@@ -16,8 +16,13 @@
 <!-- TODO: ligt/dark mode -->
 
 <div class="heading narrow">
-	<h1>🌍typesafe-i18n</h1>
-	<h2>A fully type-safe and lightweight internationalization library for all your TypeScript and JavaScript projects.</h2>
+	<h1>
+		<span>🌍</span>
+		<span>typesafe-i18n</span>
+	</h1>
+	<h2>
+		A fully type-safe and lightweight internationalization library for all your TypeScript and JavaScript projects.
+	</h2>
 </div>
 
 <div class="image">
@@ -156,6 +161,15 @@
 </nav>
 
 <style lang="scss">
+	:global {
+		@media (prefers-color-scheme: dark) {
+			html {
+				background-color: #353535;
+				color: #ededed;
+			}
+		}
+	}
+
 	.narrow {
 		max-width: 810px;
 		width: 100%;
@@ -174,6 +188,8 @@
 	h1 {
 		font-family: monospace;
 		font-size: 3rem;
+		display: flex;
+		gap: 10px;
 	}
 
 	h2 {
@@ -234,7 +250,7 @@
 
 		span {
 			display: inline-block;
-			width: 30px;
+			width: 35px;
 			flex-shrink: 0;
 			transform: scale(1.2);
 		}
