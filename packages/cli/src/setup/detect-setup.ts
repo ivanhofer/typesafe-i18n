@@ -1,4 +1,4 @@
-import path from 'path'
+import { resolve } from 'path'
 import { getConfigWithDefaultValues } from '../../../config/src/config'
 import type { Adapters, GeneratorConfig } from '../../../config/src/types'
 import { doesPathExist } from '../../../generator/src/utils/file.utils'
@@ -34,8 +34,7 @@ export const getDefaultConfig = async () => {
 	const dependencies = await getDependencyList()
 
 	const adapter = getAdapterInfo(dependencies) as Adapters
-	const isTypeScriptProject =
-		dependencies.includes('typescript') || (await doesPathExist(path.resolve('tsconfig.json')))
+	const isTypeScriptProject = dependencies.includes('typescript') || (await doesPathExist(resolve('tsconfig.json')))
 
 	// TODO: check if this is still valid
 	// vite currently has some SSR issues (https://github.com/vitejs/vite/discussions/4230) so we have to disable esmImports

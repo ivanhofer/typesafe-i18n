@@ -1,4 +1,4 @@
-import path from 'path'
+import { resolve } from 'path'
 import { doesPathExist, importFile, writeConfigFile } from '../../generator/src/utils/file.utils'
 import { version } from '../../version'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './types'
@@ -7,10 +7,10 @@ import { validateConfig } from './validation'
 export const writeConfigToFile = async (config: GeneratorConfig) =>
 	writeConfigFile({ ...config, $schema: `https://unpkg.com/typesafe-i18n@${version}/schema/typesafe-i18n.json` })
 
-export const doesConfigFileExist = async () => doesPathExist(path.resolve('.typesafe-i18n.json'))
+export const doesConfigFileExist = async () => doesPathExist(resolve('.typesafe-i18n.json'))
 
 export const readRawConfig = async () =>
-	(await importFile<GeneratorConfig & { $schema?: string }>(path.resolve('.typesafe-i18n.json'), false)) || {}
+	(await importFile<GeneratorConfig & { $schema?: string }>(resolve('.typesafe-i18n.json'), false)) || {}
 
 export const readConfig = async (): Promise<GeneratorConfig> => {
 	const generatorConfig = await readRawConfig()

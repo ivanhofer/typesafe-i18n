@@ -1,12 +1,16 @@
-import { sync as glob } from 'glob'
+import glob from 'tiny-glob/sync.js'
 import type { Locale } from '../../../runtime/src/core'
 
-export const findAllNamespacesForLocale = (locale: Locale, outputPath: string): string[] =>
-	glob(`${outputPath}/${locale}/*/index.*s`).map((file) => {
-		// TODO: check if this split also works for windows-paths
-		const parts = file.split('/')
-		return parts[parts.length - 2] as string
-	})
+export const findAllNamespacesForLocale = (locale: Locale, outputPath: string): string[] => {
+	try {
+		return glob(`${outputPath}/${locale}/*/index.*s`).map((file) => {
+			const parts = file.split('/')
+			return parts[parts.length - 2] as string
+		})
+	} catch (ignore) {
+		return []
+	}
+}
 
 // --------------------------------------------------------------------------------------------------------------------
 

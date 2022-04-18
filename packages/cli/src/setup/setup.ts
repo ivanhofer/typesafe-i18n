@@ -23,7 +23,7 @@ const getConfigDiff = async (options: GeneratorConfig) => {
 				esmImports: undefined,
 				outputFormat: undefined,
 				outputPath: undefined,
-			} as GeneratorConfig,
+			} as unknown as GeneratorConfig,
 			diff,
 		) || {}
 

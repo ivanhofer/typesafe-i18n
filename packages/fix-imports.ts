@@ -1,8 +1,7 @@
 import { readFileSync, writeFileSync } from 'fs'
-import globPkg from 'glob'
 import { dirname, resolve } from 'path'
+import glob from 'tiny-glob/sync.js'
 import { fileURLToPath } from 'url'
-const { sync: glob } = globPkg
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -15,7 +14,6 @@ const formats = [
 ]
 
 const folders = [
-	'adapters',
 	'detectors',
 	'runtime/cjs/runtime/src',
 	'runtime/esm/runtime/src',
@@ -31,7 +29,7 @@ formats.forEach(({ regex, fileEnding }) => {
 	const files = folders.flatMap((folder) => glob(resolve(__dirname, `../${folder}/**/*.${fileEnding}`)))
 
 	files.forEach((file) => {
-		const fullFilePath = resolve(__dirname, file)
+		const fullFilePath = resolve(__dirname, '..', file)
 
 		const content = readFileSync(fullFilePath).toString()
 

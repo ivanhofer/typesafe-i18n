@@ -10,6 +10,7 @@
     "test:types": "tsc --noEmit -P tsconfig-tests.json"
   },
   "devDependencies": {
+    "tiny-glob": "^0.2.9",
     "tsm": "^2.2.1",
     "typesafe-utils": "^1.16.2",
     "uvu": "^0.5.3",
