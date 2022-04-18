@@ -1,3 +1,5 @@
-**/example/* linguist-detectable=false
-packages/generator/test/generated/* linguist-detectable=false
-.size-limit.js linguist-detectable=false
+.husky/** -linguist-detectable
+**/example/** -linguist-detectable
+packages/generator/test/generated/** linguist-generated
+website/** -linguist-detectable
+.size-limit.js linguist-vendored
