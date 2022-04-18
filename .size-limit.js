@@ -38,7 +38,7 @@ module.exports = [
 	{
 		name: 'adapter-react',
 		path: 'react/index.min.mjs',
-		limit: '1576 b',
+		limit: '1570 b',
 		ignore: ['react'],
 	},
 	{

@@ -1,6 +1,6 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { Locale } from '../../../runtime/src/core'
+import type { Locale } from '../../../runtime/src/core'
 import { initLocalStorageDetector } from '../../src/detectors/browser/localstorage-detector'
 
 const test = suite('detector:localStorage')

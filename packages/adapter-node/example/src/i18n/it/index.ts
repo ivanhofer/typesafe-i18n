@@ -1,4 +1,4 @@
-import { Translation } from '../i18n-types'
+import type { Translation } from '../i18n-types'
 
 const it: Translation = {
 	HI: 'Ciao {name}!',
