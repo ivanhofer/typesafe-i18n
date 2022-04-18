@@ -280,7 +280,7 @@ The `typesafe-i18n` package exports a few different objects you can use to local
 
 ### `i18nString`
 
-The `i18nString` contains the core of the localization engine. To initialize it, you need to pass your desired `locale` and the `formatters` (optional) you want to use.\
+The `i18nString` contains the core of the internationalization engine. To initialize it, you need to pass your desired `locale` and the `formatters` (optional) you want to use.\
 You will get an object back that can be used to transform your translation strings.
 
 > It is recommended to use the `typesafeI18nString` since it can analyze your translations and show error messages if you call them in a wrong way. Learn more in the [typesafety](#typesafety) section.
