@@ -153,10 +153,10 @@
 
 <nav class="links narrow">
 	<a title="GitHub Repository" target="_blank" href="https://github.com/ivanhofer/typesafe-i18n">
-		<img src={logoGitHub} alt="GitHub logo" height="30" />
+		<img src={logoGitHub} alt="GitHub logo" height="30" width="30" />
 	</a>
 	<a title="npm registry" target="_blank" href="https://www.npmjs.com/package/typesafe-i18n">
-		<img src={logoNpm} alt="npm logo" height="30" />
+		<img src={logoNpm} alt="npm logo" height="30" width="33.8" />
 	</a>
 </nav>
 
