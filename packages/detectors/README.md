@@ -131,7 +131,7 @@ e.g. `/:lang/products`\
 The function needs to be initialized first and expects you to pass the `Request` object.
 
 ```typescript
-import { detectLocale, initRequestCookiesDetector } from 'typesafe-i18n/detectors'
+import { detectLocale, initRequestParametersDetector } from 'typesafe-i18n/detectors'
 
 app.get('/:lang/products', (req: Request, res: Response) => {
    const requestParametersDetector = initRequestParametersDetector(req)
