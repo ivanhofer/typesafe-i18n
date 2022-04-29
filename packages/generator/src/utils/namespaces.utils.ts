@@ -1,12 +1,17 @@
 import glob from 'tiny-glob/sync.js'
+import { isTruthy } from 'typesafe-utils'
 import type { Locale } from '../../../runtime/src/core'
+
+const REGEX_BACKSLASHES = /\\/g
 
 export const findAllNamespacesForLocale = (locale: Locale, outputPath: string): string[] => {
 	try {
-		return glob(`${outputPath}/${locale}/*/index.*s`).map((file) => {
-			const parts = file.split('/')
-			return parts[parts.length - 2] as string
-		})
+		return glob(`${outputPath}/${locale}/*/index.*s`)
+			.map((file) => {
+				const parts = file.replace(REGEX_BACKSLASHES, '/').split('/')
+				return parts[parts.length - 2] as string
+			})
+			.filter(isTruthy)
 	} catch (ignore) {
 		return []
 	}

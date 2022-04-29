@@ -3,6 +3,17 @@
 
 # Version 5
 
+## 5.4.2 (2022-04-29)
+
+Bugfix:
+ - buffer overflow on windows when using namespaces
+ - also trigger generator initially when starting watcher
+
+## 5.4.1 (2022-04-28)
+
+Fix:
+ - documentation
+
 ## 5.4.0 (2022-04-18)
 
  - replace `chokidar` with `watchlist`
