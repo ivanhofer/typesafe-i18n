@@ -5,7 +5,6 @@ import * as assert from 'uvu/assert'
 import { getConfigWithDefaultValues } from '../../config/src/config'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues, OutputFormats } from '../../config/src/types'
 import type { BaseTranslation, Locale } from '../../runtime/src/core'
-import { REGEX_BRACKETS } from '../src/constants'
 import { generate } from '../src/generate-files'
 import { parseTypescriptVersion, TypescriptVersion } from '../src/utils/generator.utils'
 
