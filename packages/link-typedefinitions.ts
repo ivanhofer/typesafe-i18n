@@ -34,7 +34,7 @@ const goToRoot = (outputPath: string, file: string) => {
 }
 
 mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, mapperFunction]) => {
-	const files = glob(resolve(__dirname, `../types/${fromWheretoImport}/src/**/*.d.ts`)).map((file) =>
+	const files = glob(`types/${fromWheretoImport}/src/**/*.d.ts`).map((file) =>
 		resolve(file)
 			.substring(resolve(__dirname, `../types/${fromWheretoImport}/src/`).length + 1)
 			.replace(/\\/g, '/'),

@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-const files = glob(resolve(__dirname, `../../runtime/esm/**/*.js`))
+const files = glob('../../runtime/esm/**/*.js')
 
 files.forEach((file) => renameSync(file, file.replace('.js', '.mjs')))
 

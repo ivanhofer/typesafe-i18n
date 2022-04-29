@@ -11,7 +11,7 @@ const watch = process.argv.includes('--watch')
 
 const getPath = (file: string) => resolve(__dirname, file)
 
-const files = glob(resolve(__dirname, `./src/**/*.*ts`))
+const files = glob('./src/**/*.*ts')
 	.map((file) =>
 		resolve(file)
 			.substring(resolve(__dirname, `./src/`).length + 1)
