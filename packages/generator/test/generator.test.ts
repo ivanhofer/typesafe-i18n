@@ -65,6 +65,9 @@ const getPathOfOutputFile = (
 	return `${outputPath}/${prefix}/${fileName}${fileEnding}`
 }
 
+const REGEX_INDENT = /(\t|\s+)/g
+const unifyIndent = (text: string) => text.replace(REGEX_INDENT, ' ')
+
 const REGEX_NEW_LINE = /\n/g
 const check = async (prefix: string, file: FileToCheck, outputFormat: OutputFormats) => {
 	let pathOfFailingFile = ''
@@ -73,12 +76,12 @@ const check = async (prefix: string, file: FileToCheck, outputFormat: OutputForm
 		return ''
 	}
 
-	const actual: string = (
-		await readFile(getPathOfOutputFile(prefix, file, 'actual', outputFormat)).catch(onError)
-	).toString()
-	const expected: string = (
-		await readFile(getPathOfOutputFile(prefix, file, 'expected', outputFormat)).catch(onError)
-	).toString()
+	const actual: string = unifyIndent(
+		(await readFile(getPathOfOutputFile(prefix, file, 'actual', outputFormat)).catch(onError)).toString(),
+	)
+	const expected: string = unifyIndent(
+		(await readFile(getPathOfOutputFile(prefix, file, 'expected', outputFormat)).catch(onError)).toString(),
+	)
 
 	if ((expected && !actual) || (!expected && actual)) throw Error(`Could not find file '${pathOfFailingFile}'`)
 

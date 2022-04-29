@@ -1,7 +1,7 @@
 {
   "name": "@typesafe-i18n/config",
   "scripts": {
-    "generate:json-schema": "rm -rf ../../schema && mkdir ../../schema && typescript-json-schema --noExtraProps ./tsconfig.json GeneratorConfig > ../../schema/typesafe-i18n.json"
+    "generate:json-schema": "rimraf \"../../schema\" && mkdir \"../../schema\" && typescript-json-schema --noExtraProps ./tsconfig.json GeneratorConfig > \"../../schema/typesafe-i18n.json\""
   },
   "devDependencies": {
     "ajv": "^6.12.6",

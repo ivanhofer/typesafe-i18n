@@ -15,6 +15,7 @@ importers:
       husky: ^7.0.4
       lint-staged: ^12.4.0
       prettier: ^2.6.2
+      rimraf: ^3.0.2
       size-limit: ^7.0.8
       tiny-glob: ^0.2.9
       tsm: ^2.2.1
@@ -31,6 +32,7 @@ importers:
       husky: 7.0.4
       lint-staged: 12.4.0
       prettier: 2.6.2
+      rimraf: 3.0.2
       size-limit: 7.0.8
       tiny-glob: 0.2.9
       tsm: 2.2.1

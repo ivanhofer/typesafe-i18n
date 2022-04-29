@@ -7,14 +7,20 @@ import { storeTranslationToDisk } from '../src/importer'
 
 const test = suite('importer')
 
+const REGEX_INDENT = /(\t|\s+)/g
+const unifyIndent = (text: string) => text.replace(REGEX_INDENT, ' ')
+
 const testImporter = (name: string, translations: BaseTranslation | BaseTranslation[]) =>
 	test(`importer ${name}`, async () => {
 		const result = await storeTranslationToDisk({ locale: name, translations }, false)
 
 		assert.is(result, name)
 
-		const actual: string = (await readFile(resolve(`snapshots/${name}/index.ts`)).catch(() => '')).toString()
-		const expected: string = (await readFile(resolve(`generated/${name}/index.ts`))).toString()
+		const actual: string = unifyIndent(
+			(await readFile(resolve(`snapshots/${name}/index.ts`)).catch(() => '')).toString(),
+		)
+
+		const expected: string = unifyIndent((await readFile(resolve(`generated/${name}/index.ts`))).toString())
 
 		assert.is(actual, expected)
 	})

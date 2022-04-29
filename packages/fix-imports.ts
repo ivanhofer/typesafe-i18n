@@ -26,7 +26,7 @@ const folders = [
 ]
 
 formats.forEach(({ regex, fileEnding }) => {
-	const files = folders.flatMap((folder) => glob(resolve(__dirname, `../${folder}/**/*.${fileEnding}`)))
+	const files = folders.flatMap((folder) => glob(`${folder}/**/*.${fileEnding}`))
 
 	files.forEach((file) => {
 		const fullFilePath = resolve(__dirname, '..', file)

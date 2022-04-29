@@ -139,8 +139,9 @@ export const startGenerator = async (config?: GeneratorConfig, watchFiles = true
 	logger.info(`options:`, parsedConfig)
 	watchFiles && logger.info(`watcher started in: '${outputPath}'`)
 
+	await onChange()
+
 	if (!watchFiles) {
-		await onChange()
 		logger.info(`generating files completed`)
 	}
 }

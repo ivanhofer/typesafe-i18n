@@ -13,11 +13,11 @@ const __dirname = dirname(__filename)
 console.log(`
 updating generated files ...`)
 
-const files = glob('../generated/**/*.*', { cwd: __dirname })
+const files = glob('test/generated/**/*.*')
 for (const file of files) {
-	const actual = readFileSync(resolve(`${__dirname}/${file}`), 'utf-8')
-	const newFileName = resolve(`${__dirname}/${file.replace('generated', 'snapshots')}`)
-	await createPathIfNotExits(newFileName.substring(0, newFileName.lastIndexOf('/')))
+	const actual = readFileSync(resolve(`${__dirname}/../../${file}`), 'utf-8')
+	const newFileName = resolve(`${__dirname}/../../${file.replace('generated', 'snapshots')}`)
+	await createPathIfNotExits(newFileName.substring(0, newFileName.replace(/\\/g, '/').lastIndexOf('/')))
 	writeFileSync(newFileName, actual)
 }
 
