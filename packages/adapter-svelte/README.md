@@ -55,7 +55,7 @@ Then inside your root-component, you need to load your locales and call `setLoca
 <script lang="ts">
    import { setLocale } from './i18n/i18n-svelte'
 
-   // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n#loading-locales)
+   // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#loading-locales)
 
    setLocale()
 </script>
@@ -194,19 +194,43 @@ See [here](https://github.com/ivanhofer/typesafe-i18n-demo-sveltekit)
 
 # Sapper
 
-For your Sapper projects, you should call the `initI18n` function inside `preload` in your root `routes/_layout.svelte` file:
+For your Sapper projects, you should call the `loadLocaleAsync` function inside `preload` in your root `routes/_layout.svelte` file:
 
 ```html
-<script context="module">
-   import { initI18n } from '../i18n/i18n-svelte'
+<script lang="ts" context="module">
+   import { loadFormatters, loadLocaleAsync } from '../i18n/i18n-util.async'
+   import { loadedLocales } from '../i18n/i18n-util'
 
    export async function preload(page, session) {
-      // detect locale of user (see https://github.com/ivanhofer/typesafe-i18n#locale-detection)
+      // detect locale of user (see https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/detectors)
       const locale = 'en'
-      await initI18n(locale)
+      await loadLocaleAsync(locale)
+
+      // access the loaded translations and send it as a prop to the layout
+      const translations = loadedLocales[locale]
+
+      return { locale, translations }
    }
 </script>
+
+<script lang="ts">
+   import LL, { setLocale } from '../i18n/i18n-svelte'
+   import type { Locales, Translation } from '../i18n/i18n-types'
+
+   export let locale: Locales
+   export let translations: Translation
+
+   // restore the translations from the received props
+   loadedLocales[locale] = translations
+   loadFormatters(locale)
+
+   setLocale(locale)
+</script>
+
+<h1>{$LL.HI({ name: 'Sapper' })}</h1>
 ```
+
+> Due to how sapper works, the `preload` function on the first request only get's called on the server. To be able to access the translations also in the client, you need to send the loaded translations via a prop to the client and restore the state there.
 
 For more information about the stores you can use, see the [Svelte](#svelte) section.
 
