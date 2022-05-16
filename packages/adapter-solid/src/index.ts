@@ -1,4 +1,4 @@
-import { Accessor, batch, Component, createComponent, createContext, createSignal, useContext } from 'solid-js'
+import { Accessor, batch, Component, createComponent, createContext, createSignal, JSX, useContext } from 'solid-js'
 import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from '../../runtime/src/core'
 import { getFallbackProxy } from '../../runtime/src/core-utils'
 import { i18nObject } from '../../runtime/src/util.object'
@@ -19,6 +19,7 @@ export type I18nContextType<
 
 export type TypesafeI18nProps<L extends string> = {
 	locale: L
+	children: JSX.Element
 }
 
 export type SolidInit<

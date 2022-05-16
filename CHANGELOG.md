@@ -3,6 +3,11 @@
 
 # Version 5
 
+## 5.4.3 (2022-05-15)
+
+Fix:
+ - update `children` types for Solid adapter
+
 ## 5.4.2 (2022-04-29)
 
 Bugfix:
