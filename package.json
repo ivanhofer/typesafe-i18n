@@ -109,7 +109,7 @@
 		"test:update-generated-files": "pnpm --filter \"@typesafe-i18n/*\" test:update-generated-files",
 		"-- BUILD -----------------------------------------------": "",
 		"build": "pnpm clear && pnpm update:version && pnpm -r generate:json-schema && pnpm build:packages && pnpm link-typedefinitions && pnpm fix-imports",
-		"build:packages": "pnpm recursive run build --filter @typesafe-i18n/*",
+		"build:packages": "pnpm -r --filter=@typesafe-i18n/** run build",
 		"fix-imports": "tsm ./packages/fix-imports.ts",
 		"link-typedefinitions": "tsm ./packages/link-typedefinitions.ts",
 		"-- OTHER -----------------------------------------------": "",
