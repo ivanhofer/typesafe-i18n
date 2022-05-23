@@ -10,7 +10,7 @@
     "esbuild": "^0.14.39",
     "glob": "^7.2.3",
     "just-diff": "^5.0.2",
-    "just-diff-apply": "^5.2.0",
+    "just-diff-apply": "^5.3.1",
     "kleur": "^4.1.4",
     "prompts": "^2.4.2",
     "tiny-glob": "^0.2.9",
