@@ -316,8 +316,8 @@ import { i18nObject } from 'typesafe-i18n'
 
 const locale = 'en'
 const translations = {
-   HI: "Hello {name}!",
-   RESET_PASSWORD: "reset password"
+   HI: 'Hello {name}!',
+   RESET_PASSWORD: 'reset password'
    /* ... */
 }
 const formatters = { /* ... */ }
@@ -340,30 +340,35 @@ You will get an object back that can be used to access all your locales and appl
 ```typescript
 import { i18n } from 'typesafe-i18n'
 
+type Locales = 'en' | 'de' | 'it'
+
 const localeTranslations = {
-   en: { TODAY: "Today is {date|weekday}" },
-   de: { TODAY: "Heute ist {date|weekday}" },
-   it: { TODAY: "Oggi è {date|weekday}" },
+   en: { TODAY: 'Today is {date|weekday}' },
+   de: { TODAY: 'Heute ist {date|weekday}' },
+   it: { TODAY: 'Oggi è {date|weekday}' },
 }
 
-const loadLocale = (locale) => localeTranslations[locale]
-
-const initFormatters = (locale) => {
+const initFormatters = (locale: Locales) => {
    const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
 
    return {
-      weekday: (value) => dateFormatter.format(value)
+      weekday: (value: Date | number) => dateFormatter.format(value),
    }
 }
 
-const L = i18n(loadLocale, initFormatters)
+const formatters = {
+   en: initFormatters('en'),
+   de: initFormatters('de'),
+   it: initFormatters('it'),
+}
+
+const L = i18n(localeTranslations, formatters)
 
 const now = new Date()
 
 L.en.TODAY({ date: now }) // => 'Today is friday'
 L.de.TODAY({ date: now }) // => 'Heute ist Freitag'
 L.it.TODAY({ date: now }) // => 'Oggi è venerdì'
-
 ```
 
 A good usecase for this object could be inside your API, when your locale is dynamic e.g. derived from a users session:
