@@ -130,6 +130,14 @@ The changelog of this project can be found [here](https://github.com/ivanhofer/t
  - to version `4.x.x`: see the [`release post`](https://github.com/ivanhofer/typesafe-i18n/discussions/169)
  - to version `3.x.x`: see the [`release post`](https://github.com/ivanhofer/typesafe-i18n/discussions/163)
 
+### Long-term goals
+
+Curious about what comes next? See [this discussion](https://github.com/ivanhofer/typesafe-i18n/discussions/324) to learn more about the plans for the future of this project.
+
+#### Contributions
+
+If you would like to get involved within this project, take a look at this [discussion](https://github.com/ivanhofer/typesafe-i18n/discussions/323).
+
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -148,8 +156,6 @@ You can use `typesafe-i18n` in a variety of project-setups:
  - [Vue.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue) applications
  - [Browser (via CDN)](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/browser/example) projects
  - [other frameworks](#other-frameworks)
-
-<!-- TODO: move documentation into adapter package -->
 
 ### Other frameworks
 
