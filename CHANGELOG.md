@@ -2,6 +2,10 @@
 
 # Version 5
 
+## 5.5.0 (2022-05-29)
+
+ - replace `watchlist` with `chokidar` [#314](https://github.com/ivanhofer/typesafe-i18n/issues/314)
+
 ## 5.4.3 (2022-05-15)
 
 Fix:

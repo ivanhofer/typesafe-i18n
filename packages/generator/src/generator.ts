@@ -1,7 +1,7 @@
 import { execSync } from 'child_process'
+import { watch } from 'chokidar'
 import { resolve } from 'path'
 import ts from 'typescript'
-import { watch } from 'watchlist'
 import { getConfigWithDefaultValues, readConfig } from '../../config/src/config'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../../config/src/types'
 import type { BaseTranslation } from '../../runtime/src'
@@ -129,7 +129,7 @@ export const startGenerator = async (config?: GeneratorConfig, watchFiles = true
 
 	await createPathIfNotExits(outputPath)
 
-	watchFiles && watch([outputPath], () => !disableChangeDetection && debounce(onChange))
+	watchFiles && watch(outputPath).on('all', () => !disableChangeDetection && debounce(onChange))
 
 	logger.info(
 		`generating files for ${
