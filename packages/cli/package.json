@@ -6,16 +6,16 @@
   },
   "devDependencies": {
     "@types/prompts": "^2.0.14",
-    "commander": "^9.2.0",
-    "esbuild": "^0.14.39",
+    "commander": "^9.3.0",
+    "esbuild": "^0.14.42",
     "glob": "^7.2.3",
     "just-diff": "^5.0.2",
     "just-diff-apply": "^5.3.1",
     "kleur": "^4.1.4",
     "prompts": "^2.4.2",
     "tiny-glob": "^0.2.9",
-    "type-fest": "^2.12.2",
+    "type-fest": "^2.13.0",
     "typesafe-utils": "^1.16.2",
-    "typescript": "^4.6.4"
+    "typescript": "^4.7.2"
   }
 }
