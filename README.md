@@ -4,11 +4,13 @@
 
 <img src="https://raw.githubusercontent.com/ivanhofer/typesafe-i18n/main/assets/typesafe-i18n-demo.gif" width="100%">
 
-[![npm version](https://badgen.net/npm/v/typesafe-i18n)](https://badgen.net/npm/v/typesafe-i18n)
-[![types included](https://badgen.net/npm/types/typesafe-i18n)](https://badgen.net/npm/types/typesafe-i18n)
-[![bundle size](https://badgen.net/bundlephobia/minzip/typesafe-i18n)](https://badgen.net/bundlephobia/minzip/typesafe-i18n)
+[![npm version](https://badgen.net/npm/v/typesafe-i18n)](https://www.npmjs.com/package/typesafe-i18n)
+![GitHub Top Language](https://img.shields.io/github/languages/top/ivanhofer/typesafe-i18n)
+[![bundle size](https://badgen.net/bundlephobia/minzip/typesafe-i18n)](https://github.com/ivanhofer/typesafe-i18n#sizes)
+![types included](https://badgen.net/npm/types/typesafe-i18n)
 [![bump version & publish to npm](https://github.com/ivanhofer/typesafe-i18n/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/ivanhofer/typesafe-i18n/actions/workflows/release.yml)
 [![Generic badge](https://img.shields.io/badge/discord-support-slateblue.svg)](https://discord.gg/T27AHfaADK)
+[![Sponsor this project](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&link=https://github.com/sponsors/ivanhofer)](https://github.com/sponsors/ivanhofer)
 
 
 ## Advantages
