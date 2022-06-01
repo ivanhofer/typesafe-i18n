@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.5.1 (2022-06-01)
+
+New Backer:
+ - [Swepool](https://github.com/Swepool)
+
 ## 5.5.0 (2022-05-29)
 
  - replace `watchlist` with `chokidar` [#314](https://github.com/ivanhofer/typesafe-i18n/issues/314)

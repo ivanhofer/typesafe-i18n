@@ -277,6 +277,9 @@ If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n 
    <a href="https://github.com/Badlapje">
       <img src="https://github.com/Badlapje.png" width="50px" alt="Badlapje" style="border-radius: 50%"/>
    </a>
+   <a href="https://github.com/Swepool">
+      <img src="https://github.com/Swepool.png" width="50px" alt="Swepool" style="border-radius: 50%"/>
+   </a>
 </p>
 
 <p align="center">
