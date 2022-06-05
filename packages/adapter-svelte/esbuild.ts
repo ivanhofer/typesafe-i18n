@@ -18,7 +18,7 @@ formats.forEach((format) =>
 			entryPoints: ['./src/index.ts'],
 			bundle: true,
 			outfile: getPath(`../../svelte/index${minify ? '.min' : ''}.${format === 'esm' ? 'm' : 'c'}js`),
-			external: ['svelte/store'],
+			external: format === 'esm' ? ['svelte/store'] : [],
 			platform: 'browser',
 			format,
 			sourcemap: watch,

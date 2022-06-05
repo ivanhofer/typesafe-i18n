@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.5.2 (2022-06-05)
+
+Fix:
+ - bundle 'svelte/store' together with cjs output
+
 ## 5.5.1 (2022-06-01)
 
 New Backer:
