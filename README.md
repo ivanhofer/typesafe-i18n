@@ -526,6 +526,19 @@ Your locale translation files can be any kind of JavaScript object. So you can m
    export default en_US
    ```
 
+   > If you are using nested translations, you probably need a function like [`lodash/merge`](https://lodash.com/docs/4.17.15#merge) to make a deep merge of your translations.
+   > ```ts
+   > import { merge } from 'lodash'
+   >
+   > const en_US: Translation = deepMerge(en, {
+   >    labels: {
+   >       color: "color" // override specific translations
+   >    }
+   > })
+   >
+   > export default en_US
+   > ```
+
 ---
 ### For certain locales I don't want to output a variable, but due to the strict typing I have to specify it in my translation
 
