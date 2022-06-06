@@ -11,7 +11,7 @@
     "tiny-glob": "^0.2.9",
     "tsm": "^2.2.1",
     "typesafe-utils": "^1.16.2",
-    "typescript": "^4.7.2",
+    "typescript": "^4.7.3",
     "uvu": "^0.5.3",
     "watchlist": "^0.3.1"
   }
