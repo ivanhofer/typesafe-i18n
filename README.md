@@ -266,19 +266,9 @@ If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n 
 
 [Become a sponsor :heart:](https://github.com/sponsors/ivanhofer) if you want to support my open source contributions.
 
-<h3 align="center">
-   Backers
-</h3>
-
 <p align="center">
-   <a href="https://github.com/Kraftwurm">
-      <img src="https://github.com/Kraftwurm.png" width="50px" alt="Kraftwurm" style="border-radius: 50%"/>
-   </a>
-   <a href="https://github.com/Badlapje">
-      <img src="https://github.com/Badlapje.png" width="50px" alt="Badlapje" style="border-radius: 50%"/>
-   </a>
-   <a href="https://github.com/Swepool">
-      <img src="https://github.com/Swepool.png" width="50px" alt="Swepool" style="border-radius: 50%"/>
+   <a href="https://cdn.jsdelivr.net/gh/ivanhofer/sponsors/sponsorkit/sponsors.svg" title="ivanhofer's sponsors">
+      <img src="https://cdn.jsdelivr.net/gh/ivanhofer/sponsors/sponsorkit/sponsors.svg" alt="ivanhofer's sponsors" />
    </a>
 </p>
 
