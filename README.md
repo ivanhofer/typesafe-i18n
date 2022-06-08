@@ -94,7 +94,7 @@ Click [here](https://codesandbox.io/s/typesafe-i18n-demo-qntgqy?file=/index.ts) 
 
 ## Get started
 
-1. Run the setup process and **automatically detect** the config needed
+1. :keyboard: Run the setup process and **automatically detect** the config needed
    ```bash
    npx typesafe-i18n --setup-auto
    ```
@@ -107,7 +107,7 @@ Click [here](https://codesandbox.io/s/typesafe-i18n-demo-qntgqy?file=/index.ts) 
 2. :eyes: Take a look at the generated files and it's [folder-structure](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#folder-structure)
 
 3. :open_book: Explore the assets
-   > `typesafe-i18n` offers a lot. Just press `cmd + F` to search on this page.
+   > `typesafe-i18n` offers a lot. Just press `cmd + F` to search on this page or see the [table of contents](#table-of-contents) that will link you to more specific subpages with more details.
 
 4. :star: Star this project on [GitHub](https://github.com/ivanhofer/typesafe-i18n)
    > Thanks! This helps the project to grow.
