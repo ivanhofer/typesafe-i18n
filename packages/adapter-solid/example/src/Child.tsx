@@ -22,7 +22,7 @@ function Child() {
 		setName((target as HTMLInputElement).value)
 
 	return (
-		<header className="header">
+		<header class="header">
 			{locale}
 			<label>
 				{LL().SELECTED_LOCALE()}
@@ -52,10 +52,10 @@ function Child() {
 
 			<hr />
 
-			<img src={logo} className="logo" alt="logo" />
+			<img src={logo} class="logo" alt="logo" />
 
 			<p innerHTML={LL().EDIT_AND_SAVE()} />
-			<a className="link" href="https://github.com/solidjs/solid" target="_blank" rel="noopener noreferrer">
+			<a class="link" href="https://github.com/solidjs/solid" target="_blank" rel="noopener noreferrer">
 				{LL().LEARN_SOLID()}
 			</a>
 		</header>

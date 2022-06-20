@@ -15,15 +15,15 @@ const localeTranslations = {
 	it,
 }
 
-export const loadLocale = (locale: Locales) => {
+export const loadLocale = (locale: Locales): void => {
 	if (loadedLocales[locale]) return
 
 	loadedLocales[locale] = localeTranslations[locale] as unknown as Translations
 	loadFormatters(locale)
 }
 
-export const loadAllLocales = () => locales.forEach(loadLocale)
+export const loadAllLocales = (): void => locales.forEach(loadLocale)
 
-export const loadFormatters = (locale: Locales) => {
+export const loadFormatters = (locale: Locales): void => {
 	loadedFormatters[locale] = initFormatters(locale)
 }

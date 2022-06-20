@@ -17,7 +17,7 @@ function App() {
 	return (
 		<Show when={wasLoaded()}>
 			<TypesafeI18n locale={detectedLocale}>
-				<div className="App">
+				<div class="App">
 					<Child />
 				</div>
 			</TypesafeI18n>
