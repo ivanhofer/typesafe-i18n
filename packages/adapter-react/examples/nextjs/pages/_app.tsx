@@ -8,23 +8,23 @@ import '../src/styles/App.css'
 import '../src/styles/index.css'
 
 function MyApp({ Component, pageProps, router }: AppProps) {
-  const [locale, setLocale] = useState<Locales | undefined>(undefined)
+	const [locale, setLocale] = useState<Locales | undefined>(undefined)
 
 	useEffect(() => {
-    const l = detectLocale(() => [router.locale || baseLocale])
+		const l = detectLocale(() => [router.locale || baseLocale])
 
 		loadLocaleAsync(l).then(() => setLocale(l))
-	}, [])
+	}, [router.locale])
 
 	if (!locale) return null
-  
-  return (
-  <TypesafeI18n locale={locale}>
-    <div className="App">
-    < Component {...pageProps} />
-    </div>
-  </TypesafeI18n>
-  )
+
+	return (
+		<TypesafeI18n locale={locale}>
+			<div className="App">
+				<Component {...pageProps} />
+			</div>
+		</TypesafeI18n>
+	)
 }
 
 export default MyApp
