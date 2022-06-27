@@ -9,14 +9,14 @@
     "@types/esutils": "^2.0.0",
     "chokidar": "^3.5.3",
     "esutils": "^2.0.3",
-    "kleur": "^4.1.4",
+    "kleur": "^4.1.5",
     "require-self": "^0.2.3",
     "tiny-glob": "^0.2.9",
     "tsm": "^2.2.1",
-    "type-fest": "^2.13.1",
+    "type-fest": "^2.14.0",
     "typesafe-utils": "^1.16.2",
     "typescript": "^4.7.4",
-    "uvu": "^0.5.3",
+    "uvu": "^0.5.4",
     "watchlist": "^0.3.1"
   }
 }
