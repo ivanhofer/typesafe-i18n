@@ -124,6 +124,26 @@ app.use((req: Request, res: Response) => {
 
 The default cookie name is `'lang'`, but you can change it by passing a `string` as a second argument to the `initRequestCookiesDetector` function.
 
+#### hostname
+
+Detects the locale from the request's hostname.\
+e.g. fr.example.com or fr-CA.example.com\
+The function needs to be initialized first and expects you to pass the `Request` object.
+
+```typescript
+import { detectLocale, initRequestHostnameDetector } from 'typesafe-i18n/detectors'
+
+app.use((req: Request, res: Response) => {
+   const requestHostnameDetector = initRequestHostnameDetector(req)
+   // or: const requestHostnameDetector = requestHostnameDetector(req, 'user-lang')
+   const detectedLocale = detectLocale(fallbackLocale, availableLocales, requestHostnameDetector)
+
+   res.json({
+      locale: detectedLocale,
+   })
+})
+```
+
 #### parameters
 
 Extracts the locale from the request's path.\
