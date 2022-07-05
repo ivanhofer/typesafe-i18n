@@ -135,7 +135,7 @@ import { detectLocale, initRequestHostnameDetector } from 'typesafe-i18n/detecto
 
 app.use((req: Request, res: Response) => {
    const requestHostnameDetector = initRequestHostnameDetector(req)
-   // or: const requestHostnameDetector = requestHostnameDetector(req, 'user-lang')
+   // or: const requestHostnameDetector = requestHostnameDetector(req, 'host-lang')
    const detectedLocale = detectLocale(fallbackLocale, availableLocales, requestHostnameDetector)
 
    res.json({
