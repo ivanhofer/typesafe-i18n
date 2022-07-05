@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.6.0 (2022-07-05)
+
+Feature:
+ - detect locale from request's `hostname`
+
 ## 5.5.2 (2022-06-05)
 
 Fix:
