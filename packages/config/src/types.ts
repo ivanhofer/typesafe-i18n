@@ -4,6 +4,22 @@ export type Adapters = 'angular' | 'node' | 'react' | 'solid' | 'svelte' | 'vue'
 
 export type OutputFormats = 'TypeScript' | 'JavaScript'
 
+type NoAdaptersConfig = {
+	adapter?: never
+	adapters?: never
+}
+type SingleAdapterConfig = {
+	adapter: Adapters
+	adapters?: never
+}
+
+type MultipleAdaptersConfig = {
+	adapter?: never
+	adapters: Adapters[]
+}
+
+type AdapterConfig = NoAdaptersConfig | SingleAdapterConfig | MultipleAdaptersConfig
+
 export type GeneratorConfig = {
 	$schema?: string
 
@@ -18,13 +34,12 @@ export type GeneratorConfig = {
 	typesTemplateFileName?: string
 	esmImports?: boolean
 
-	adapter?: Adapters
 	adapterFileName?: string
 	generateOnlyTypes?: boolean
 
 	banner?: string
 	runAfterGenerator?: string | undefined
-}
+} & AdapterConfig
 
 export type RollupConfig = {
 	locales?: Locale[]

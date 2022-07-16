@@ -207,7 +207,8 @@ The available options are:
 
 | key                                                       | type                                                                                             | default value                                 |
 | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------- |
-| [adapter](#adapter)                                       | `'angular'` &#124; `'node'` &#124; `'react'` &#124; `'solid'` &#124; `'svelte'` &#124; `'vue'` &#124; `undefined` | `undefined`                                   |
+| [adapter](#adapter)                                       | `'angular'  \| 'node'  \| 'react'  \| 'solid'  \| 'svelte'  \| 'vue'  \| undefined` | `undefined`                                   |
+| [adapters](#adapters)                                       | `Array<'angular' \| 'node' \| 'react' \| 'solid' \| 'svelte' \| 'vue'> \| undefined`                           | `undefined`
 | [baseLocale](#baseLocale)                                 | `string`                                                                                         | `'en'`                                        |
 | [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                                                             | `'TypeScript'`                                |
 | [esmImports](#esmImports)                                 | `boolean`                                                                                        | `false`                                       |
@@ -226,6 +227,12 @@ The available options are:
 #### `adapter`
 
 If this config is set, code will be generated that wraps i18n functions into useful helpers for that environment e.g. a `svelte`-store.
+
+#### `adapters`
+
+> This will override the [`adapter`](#adapter) option
+
+If you need multiple adapters in a single project, you can pass them as an array.
 
 #### `baseLocale`
 
