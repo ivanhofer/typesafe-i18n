@@ -1,4 +1,6 @@
-import type { GeneratorConfigWithDefaultValues } from '../../config/src/types'
+import type { config } from 'process'
+import { isArray } from 'typesafe-utils'
+import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../../config/src/types'
 import type { BaseTranslation, Locale } from '../../runtime/src/core'
 import { generateAngularAdapter } from './files/generate-adapter-angular'
 import { generateNodeAdapter } from './files/generate-adapter-node'
@@ -113,6 +115,19 @@ export const generate = async (
 	promises.push(generateSyncUtil(config, locales, namespaces))
 	promises.push(generateAsyncUtil(config, locales, namespaces))
 
+	addAdapters(config, promises)
+
+	await Promise.all(promises)
+}
+
+const addAdapters = (config: GeneratorConfigWithDefaultValues, promises: Promise<unknown>[]) => {
+	const { adapters, ...configWithoutAdapters } = config
+
+	if (adapters) {
+		adapters.forEach((adapter) => addAdapters({ ...configWithoutAdapters, adapter }, promises))
+		return
+	}
+
 	switch (config.adapter) {
 		case 'angular':
 			promises.push(generateAngularAdapter(config))
@@ -133,6 +148,4 @@ export const generate = async (
 			promises.push(generateVueAdapter(config))
 			break
 	}
-
-	await Promise.all(promises)
 }

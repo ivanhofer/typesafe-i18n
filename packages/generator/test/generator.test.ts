@@ -396,6 +396,16 @@ testAdapterMatrix(
 
 // --------------------------------------------------------------------------------------------------------------------
 
+testGeneratedOutput('adapters-empty', { HELLO: 'Hi {0:string}' }, { adapters: [] })
+
+testGeneratedOutput('adapters-angular', { HELLO: 'Hi {0:string}' }, { adapters: ['angular'] })
+
+testGeneratedOutput('adapters-node-react', { HELLO_NODE_REACT: 'Hi {0:string}' }, { adapters: ['node', 'react'] })
+
+testGeneratedOutput('adapters-react-svelte-vue', { HELLO: 'Hi {0:string}' }, { adapters: ['react', 'svelte', 'vue'] })
+
+// --------------------------------------------------------------------------------------------------------------------
+
 testGeneratedOutput('esm-imports', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true })
 
 testGeneratedOutput('esm-imports-jsdoc', { HELLO_ESM: 'Hi {0:name}' }, { esmImports: true, outputFormat: 'JavaScript' })

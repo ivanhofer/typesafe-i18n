@@ -39,10 +39,12 @@ export const getConfigWithDefaultValues = async (
 	formattersTemplateFileName: 'formatters',
 	typesTemplateFileName: 'custom-types',
 	esmImports: false,
+	adapter: undefined,
 
 	generateOnlyTypes: false,
 	banner: '/* eslint-disable */',
 	runAfterGenerator: undefined,
-	...config,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	...(config as unknown as any),
 	...(shouldReadConfig ? await readConfig() : {}),
 })

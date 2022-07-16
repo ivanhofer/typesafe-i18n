@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.7.0 (2022-07-16)
+
+Feature:
+ - allow to set multiple `adapters` [#375](https://github.com/ivanhofer/typesafe-i18n/discussions/375)
+
 ## 5.6.0 (2022-07-05)
 
 Feature:
