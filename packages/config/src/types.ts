@@ -8,6 +8,7 @@ type NoAdaptersConfig = {
 	adapter?: never
 	adapters?: never
 }
+
 type SingleAdapterConfig = {
 	adapter: Adapters
 	adapters?: never
@@ -40,10 +41,6 @@ export type GeneratorConfig = {
 	banner?: string
 	runAfterGenerator?: string | undefined
 } & AdapterConfig
-
-export type RollupConfig = {
-	locales?: Locale[]
-}
 
 export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 	baseLocale: Locale
