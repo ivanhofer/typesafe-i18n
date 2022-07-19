@@ -1,6 +1,4 @@
-import type { config } from 'process'
-import { isArray } from 'typesafe-utils'
-import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../../config/src/types'
+import type { GeneratorConfigWithDefaultValues } from '../../config/src/types'
 import type { BaseTranslation, Locale } from '../../runtime/src/core'
 import { generateAngularAdapter } from './files/generate-adapter-angular'
 import { generateNodeAdapter } from './files/generate-adapter-node'
