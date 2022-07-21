@@ -1,7 +1,8 @@
 # `typesafe-i18n` React
 
 **You can find a demo react implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react/examples/react).**
-**You can find a demo nextjs implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react/examples/nextjs).**
+
+**You can find a demo Next.js implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react/examples/nextjs).**
 
 ## Setup
 
