@@ -155,7 +155,7 @@ You can use `typesafe-i18n` in a variety of project-setups:
  - [React / Next.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react) applications
  - [Solid.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-solid) applications
  - [Svelte / SvelteKit / Sapper](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte) applications
- - [Vue.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue) applications
+ - [Vue.js / Nuxt.js](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue) applications
  - [Browser (via CDN)](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/browser/example) projects
  - [other frameworks](#other-frameworks)
 
