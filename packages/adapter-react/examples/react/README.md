@@ -2,7 +2,7 @@
 
 This is a small project demonstrating a `typesafe-i18n` integration with React.
 
-> This repository was set up using [Create React App](https://github.com/facebook/create-react-app) with the typescript option.
+> This repository was set up using [Create React App](https://github.com/facebook/create-react-app) with the `typescript` option.
 
 
 ## Get started
