@@ -25,11 +25,11 @@ type RootTranslation = {
 	 */
 	HI: RequiredParams<'name'>
 	/**
-	 * Edit <code>src/App.tsx</code> and save to reload.
+	 * Edit <code>pages/index.tsx</code> and save to reload.
 	 */
 	EDIT_AND_SAVE: string
 	/**
-	 * Learn React
+	 * Learn Next.js
 	 */
 	LEARN_REACT: string
 	/**
@@ -57,11 +57,11 @@ export type TranslationFunctions = {
 	 */
 	HI: (arg: { name: string }) => LocalizedString
 	/**
-	 * Edit <code>src/App.tsx</code> and save to reload.
+	 * Edit <code>pages/index.tsx</code> and save to reload.
 	 */
 	EDIT_AND_SAVE: () => LocalizedString
 	/**
-	 * Learn React
+	 * Learn Next.js
 	 */
 	LEARN_REACT: () => LocalizedString
 	/**
