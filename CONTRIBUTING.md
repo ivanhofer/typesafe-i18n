@@ -19,6 +19,17 @@ Tests are written using the [`uvu`](https://github.com/lukeed/uvu) test runner. 
 
 To ensure the output-size of the core-library stays small, [`size-limit`](https://github.com/ai/size-limit) is used. By running `pnpm build` and then `pnpm test:size` a report gets generated to see if changes had negative impact to the bundle size of the translation runtime.
 
+### generator
+
+If you change something in the `generator`, please also:
+ - add some snapshot tests to the `packages/generator/test/generator.test.ts`-file
+ - then run `pnpm test` => you should see your tests failing
+ - run `pnpm test:update-generated-files`
+ - again run `pnpm test` => your tests should pass
+ - then add all the created `*.expected.*`-files to the git-index and
+ - make sure these files look like you would expect them
+ - finally commit these files to the repository
+
 ## submitting changes
 
 If you make changes, please open a new [`PR`](https://github.com/ivanhofer/typesafe-i18n/pulls) and fill out the template. Pull requests are run trough a GitHub Action that makes sure the source code is formatted and that all tests are passing.
