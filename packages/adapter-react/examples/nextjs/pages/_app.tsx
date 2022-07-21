@@ -1,22 +1,23 @@
 import type { AppProps } from 'next/app'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import TypesafeI18n from '../src/i18n/i18n-react'
-import { Locales } from '../src/i18n/i18n-types'
-import { baseLocale, detectLocale } from '../src/i18n/i18n-util'
-import { loadLocaleAsync } from '../src/i18n/i18n-util.async'
+import { Locales, Translation } from '../src/i18n/i18n-types'
+import { loadedLocales } from '../src/i18n/i18n-util'
+import { loadFormatters } from '../src/i18n/i18n-util.sync'
 import '../src/styles/App.css'
 import '../src/styles/index.css'
 
-function MyApp({ Component, pageProps, router }: AppProps) {
-	const [locale, setLocale] = useState<Locales | undefined>(undefined)
+function MyApp({ Component, pageProps }: AppProps) {
+	if (!pageProps.i18n) {
+		// probably an Error page
+		return <Component {...pageProps} />
+	}
 
-	useEffect(() => {
-		const l = detectLocale(() => [router.locale || baseLocale])
+	const locale: Locales = pageProps.i18n.locale
+	const dictionary: Translation = pageProps.i18n.dictionary
 
-		loadLocaleAsync(l).then(() => setLocale(l))
-	}, [router.locale])
-
-	if (!locale) return null
+	loadedLocales[locale] = dictionary as Translation
+	loadFormatters(locale)
 
 	return (
 		<TypesafeI18n locale={locale}>
