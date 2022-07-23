@@ -1,42 +1,25 @@
-# Nuxt 3 Minimal Starter
+# `typesafe-i18n` Vue.js Example
 
-Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
+This is a small project demonstrating a `typesafe-i18n` integration with Nuxt.js version 3.
 
-## Setup
+>This repository was set up using the  [`Nuxt3 Quick Start guide`](https://v3.nuxtjs.org/getting-started/quick-start).
+>```bash
+> npx nuxi init nuxt-app
+>```
 
-Make sure to install the dependencies:
+#### Recommended IDE Setup
 
-```bash
-# yarn
-yarn install
+- [VSCode](https://code.visualstudio.com/)
+- [Vue Language Features (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+- [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
 
-# npm
-npm install
 
-# pnpm
-pnpm install --shamefully-hoist
-```
+## Get started
 
-## Development Server
-
-Start the development server on http://localhost:3000
+Start the project in development mode:
 
 ```bash
 npm run dev
 ```
 
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.
+Navigate to [http://localhost:3000](http://localhost:3000). You should see the example app running.
