@@ -1,8 +1,12 @@
 import type { Translation } from '../i18n-types'
 
 const de: Translation = {
-	// this is an example Translation, just rename or delete this folder if you want
-	HI: 'Hallo {name}! Bitte hinterlasse einen Stern, wenn dir das Projekt gefällt: https://github.com/ivanhofer/typesafe-i18n',
+	STARTUP: 'Anwendung gestartet',
+	CHOOSE_LOCALE: 'Sprache auswählen...',
+	RECOMMENDED_SETUP: 'Empfohlene IDE-Konfiguration:',
+	COUNT: 'Anzahl: {count}',
+	EDIT: 'Bearbeite <code>{component}</code> zum Testen von "hot module replacement".',
+	TODAY: 'Heute ist {date|weekday}',
 }
 
 export default de

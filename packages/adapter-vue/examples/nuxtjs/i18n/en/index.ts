@@ -1,8 +1,12 @@
 import type { BaseTranslation } from '../i18n-types'
 
 const en: BaseTranslation = {
-	// TODO: your translations go here
-	HI: 'Hi {name:string}! Please leave a star if you like this project: https://github.com/ivanhofer/typesafe-i18n',
+	STARTUP: 'application started',
+	CHOOSE_LOCALE: 'choose locale...',
+	RECOMMENDED_SETUP: 'Recommended IDE setup:',
+	COUNT: 'count is: {count:number}',
+	EDIT: 'Edit <code>{component:string}</code> to test hot module replacement.',
+	TODAY: 'Today is {date:Date|weekday}',
 }
 
 export default en
