@@ -14,7 +14,7 @@ const shouldUseAngularAdapter = useAdapterWhenDependenciesContain(['@angular/cor
 const shouldUseReactAdapter = useAdapterWhenDependenciesContain(['react', 'next'])
 const shouldUseSolidAdapter = useAdapterWhenDependenciesContain(['solid-js'])
 const shouldUseSvelteAdapter = useAdapterWhenDependenciesContain(['svelte', '@sveltejs/kit', 'sapper'])
-const shouldUseVueAdapter = useAdapterWhenDependenciesContain(['vue'])
+const shouldUseVueAdapter = useAdapterWhenDependenciesContain(['vue', 'nuxt'])
 const shouldUseNodeAdapter = useAdapterWhenDependenciesContain(['express', 'fastify'])
 
 const getAdapterInfo = (deps: string[]): Adapters | undefined => {

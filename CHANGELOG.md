@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.8.0 (2022-07-23)
+
+Feature:
+ - auto-setup `vue` adapter for `Nuxt.js` applications
+
 ## 5.7.0 (2022-07-16)
 
 Feature:
