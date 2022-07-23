@@ -1,4 +1,4 @@
-# `typesafe-i18n` Vue.js Example
+# `typesafe-i18n` Nuxt.js Example
 
 This is a small project demonstrating a `typesafe-i18n` integration with Nuxt.js version 3.
 

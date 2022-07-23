@@ -1,5 +1,6 @@
 {
-  "private": true,
+  "name": "typesafe-i18n_nuxtjs-demo",
+  "version": "1.0.0",
   "scripts": {
     "build": "nuxt build",
     "dev": "npm-run-all --parallel nuxt typesafe-i18n",
