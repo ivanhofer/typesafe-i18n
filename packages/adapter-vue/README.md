@@ -1,6 +1,8 @@
 # `typesafe-i18n` Vue.js
 
-**You can find a demo implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue/example).**
+**You can find a demo vue implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue/examples/vue).**
+
+**You can find a demo Nuxt.js implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue/examples/nuxtjs).**
 
 ## Setup
 
