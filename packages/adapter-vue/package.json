@@ -9,7 +9,7 @@
     "esbuild": "^0.14.49",
     "tsx": "^3.8.0",
     "typescript": "^4.7.4",
-    "vue": "3.2.29"
+    "vue": "3.2.37"
   },
   "type": "module"
 }

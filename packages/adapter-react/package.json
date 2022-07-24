@@ -5,7 +5,7 @@
     "build": "tsx esbuild.ts && tsc -p tsconfig.json --emitDeclarationOnly"
   },
   "devDependencies": {
-    "@types/react": "^17.0.47",
+    "@types/react": "^18.0.15",
     "@typesafe-i18n/runtime": "workspace:../runtime/src",
     "esbuild": "^0.14.49",
     "tsx": "^3.8.0",
