@@ -3,6 +3,7 @@
 # Version 5
 
 ## 5.9.0 (2022-07-24)
+## 5.8.1 (2022-07-24)
 
  - internal package modifications
 
