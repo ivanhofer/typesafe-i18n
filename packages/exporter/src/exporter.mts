@@ -1,7 +1,7 @@
 import type { BaseTranslation, ExportLocaleMapping, Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { resolve } from 'path'
 import ts from 'typescript'
-import { getConfigWithDefaultValues } from '../../config/src/config'
+import { getConfigWithDefaultValues } from '../../config/src/config.mjs'
 import type { GeneratorConfigWithDefaultValues, OutputFormats } from '../../config/src/types.mjs'
 import { configureOutputHandler } from '../../generator/src/output-handler.mjs'
 import { getAllLocales, parseLanguageFile } from '../../generator/src/parse-language-file'

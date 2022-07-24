@@ -1,5 +1,10 @@
 import { build } from 'esbuild'
-import { resolve } from 'path'
+import { dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
+
+//@ts-ignore
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const watch = process.argv.includes('--watch')
 
@@ -9,7 +14,7 @@ const formats = ['esm', 'cjs'] as const
 
 formats.forEach((format) => {
 	build({
-		entryPoints: [getPath('src/index.ts')],
+		entryPoints: [getPath('src/index.mts')],
 		bundle: true,
 		outfile: getPath(`../../exporter/index.${format === 'esm' ? 'm' : 'c'}js`),
 		platform: 'node',
