@@ -3,5 +3,5 @@
 	"compilerOptions": {
 		"outDir": "../../detectors"
 	},
-	"include": ["./src/**/*.ts", "src/detectors/browser/sessionstorage-detector.mts", "src/detectors/browser/query-string.mts", "src/detectors/browser/navigator.mts", "src/detectors/browser/localstorage-detector.mts", "src/detectors/browser/html-lang-attribute.mts", "src/detectors/browser/document-cookie.mts", "src/detectors/server/request-parameters.mts", "src/detectors/server/request-hostname.mts", "src/detectors/server/request-cookies.tms", "src/detectors/server/accept-language-header.mts", "src/detectors/_cookie.util.mts", "src/index.mts", "src/detect.mts"]
+	"include": ["src/**/*.mts"]
 }

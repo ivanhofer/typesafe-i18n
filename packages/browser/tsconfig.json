@@ -1,4 +1,4 @@
 {
 	"extends": "../../tsconfig.json",
-	"include": ["./src/**/*.ts", "src/browser.typed.string.mts", "src/browser.typed.object.mts", "src/browser.string.mts", "src/browser.object.mts", "src/browser.instance.mts", "src/browser.all.mts"]
+	"include": ["src/**/*.mts"]
 }

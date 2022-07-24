@@ -6,5 +6,5 @@
 		"outDir": "../../runtime/cjs",
 		"sourceMap": false
 	},
-	"include": ["./src/**/*.mts"]
+	"include": ["src/**/*.mts"]
 }

@@ -4,5 +4,5 @@
 		"target": "ESNext",
 		"outDir": "../../exporter",
 	},
-	"include": ["./src/**/*.ts", "src/exporter.mts", "src/index.mts"]
+	"include": ["src/**/*.mts"]
 }
