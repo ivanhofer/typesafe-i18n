@@ -1,4 +1,4 @@
-import type { Locale } from '../../../../runtime/src/core'
+import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
 import type { LocaleDetector } from '../../detect'
 
 type Request = {

@@ -15,7 +15,7 @@ const formats = ['esm', 'cjs'] as const
 formats.forEach((format) =>
 	[false, true].forEach((minify) =>
 		build({
-			entryPoints: [getPath('src/index.ts')],
+			entryPoints: [getPath('src/index.mts')],
 			bundle: true,
 			outfile: getPath(`../../parser/index${minify ? '.min' : ''}.${format === 'esm' ? 'm' : 'c'}js`),
 			platform: 'browser',

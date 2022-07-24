@@ -6,9 +6,9 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-const files = glob('../../runtime/cjs/**/*.js')
+const files = glob('../../runtime/cjs/**/*.mjs')
 
-files.forEach((file) => renameSync(file, file.replace('.js', '.cjs')))
+files.forEach((file) => renameSync(file, file.replace('.mjs', '.cjs')))
 
 // eslint-disable-next-line no-console, no-undef
 console.log(`renamed all '.js' file to '.cjs'`)

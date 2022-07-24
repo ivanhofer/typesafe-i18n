@@ -4,6 +4,7 @@
     "generate:json-schema": "rimraf \"../../schema\" && mkdir \"../../schema\" && typescript-json-schema --noExtraProps ./tsconfig.json GeneratorConfig > \"../../schema/typesafe-i18n.json\""
   },
   "devDependencies": {
+    "@typesafe-i18n/runtime": "workspace:../runtime/src",
     "ajv": "^6.12.6",
     "kleur": "^4.1.5",
     "typescript-json-schema": "^0.53.1"

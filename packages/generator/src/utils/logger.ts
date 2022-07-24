@@ -1,5 +1,5 @@
+import type { Arguments } from '@typesafe-i18n/runtime/core.mjs'
 import kleur from 'kleur'
-import type { Arguments } from '../../../runtime/src/core'
 
 type LogLevel = 'info' | 'warn' | 'error'
 

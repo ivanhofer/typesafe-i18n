@@ -1,6 +1,6 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { i18nObject } from '../src/util.object'
+import { i18nObject } from '../src/util.object.mjs'
 
 const test = suite('util.object')
 

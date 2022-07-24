@@ -1,4 +1,4 @@
-import type { Locale } from '../../../runtime/src/core'
+import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
 
 export const parseValueFromCookie = (cookieValue: string, key: string): Locale[] => {
 	const value = cookieValue

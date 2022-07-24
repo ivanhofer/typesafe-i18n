@@ -1,6 +1,6 @@
+import type { BaseTranslation, Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { isString } from 'typesafe-utils'
 import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
-import type { BaseTranslation, Locale } from '../../../runtime/src/core'
 import {
 	defaultExportStatement,
 	importTypes,

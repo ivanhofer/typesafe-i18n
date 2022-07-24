@@ -5,6 +5,7 @@
     "build": "tsm esbuild.ts && tsc -p tsconfig.json --emitDeclarationOnly"
   },
   "devDependencies": {
+    "@typesafe-i18n/runtime": "workspace:../runtime/src",
     "esbuild": "^0.14.49",
     "svelte": "^3.49.0",
     "tsm": "^2.2.1",

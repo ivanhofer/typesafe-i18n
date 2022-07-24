@@ -1,19 +1,9 @@
-import { readFileSync, renameSync, writeFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { dirname, resolve } from 'path'
-import glob from 'tiny-glob/sync.js'
 import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-
-const files = glob('../../runtime/esm/**/*.js')
-
-files.forEach((file) => renameSync(file, file.replace('.js', '.mjs')))
-
-// eslint-disable-next-line no-console, no-undef
-console.log(`renamed all '.js' file to '.mjs'`)
-
-// --------------------------------------------------------------------------------------------------------------------
 
 const throwError = () => {
 	throw Error('failed to remove CJS Proxy')

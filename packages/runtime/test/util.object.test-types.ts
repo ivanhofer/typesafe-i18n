@@ -1,4 +1,4 @@
-import { typesafeI18nObject } from '../src/util.object'
+import { typesafeI18nObject } from '../src/util.object.mjs'
 
 {
 	const translations = {

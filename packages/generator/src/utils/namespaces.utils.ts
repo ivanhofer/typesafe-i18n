@@ -1,6 +1,6 @@
+import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
 import glob from 'tiny-glob/sync.js'
 import { isTruthy } from 'typesafe-utils'
-import type { Locale } from '../../../runtime/src/core'
 
 const REGEX_BACKSLASHES = /\\/g
 

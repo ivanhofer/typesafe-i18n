@@ -1,3 +1,4 @@
+import type { BaseTranslation, ExportLocaleMapping, Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { resolve } from 'path'
 import ts from 'typescript'
 import { getConfigWithDefaultValues } from '../../config/src/config'
@@ -7,7 +8,6 @@ import { getAllLocales, parseLanguageFile } from '../../generator/src/parse-lang
 import { parseTypescriptVersion } from '../../generator/src/utils/generator.utils'
 import { createLogger } from '../../generator/src/utils/logger'
 import { findAllNamespacesForLocale } from '../../generator/src/utils/namespaces.utils'
-import type { BaseTranslation, ExportLocaleMapping, Locale } from '../../runtime/src/core'
 
 const logger = createLogger(console, true)
 

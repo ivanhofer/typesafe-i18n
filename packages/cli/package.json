@@ -5,6 +5,7 @@
     "build": "tsm esbuild.ts"
   },
   "devDependencies": {
+    "@typesafe-i18n/runtime": "workspace:../runtime/src",
     "@types/prompts": "^2.0.14",
     "commander": "^9.4.0",
     "esbuild": "^0.14.49",

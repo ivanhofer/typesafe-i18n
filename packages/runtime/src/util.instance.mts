@@ -1,5 +1,5 @@
-import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from './core'
-import { i18nObject } from './util.object'
+import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from './core.mjs'
+import { i18nObject } from './util.object.mjs'
 
 export type LocaleTranslationFunctions<
 	L extends Locale = Locale,

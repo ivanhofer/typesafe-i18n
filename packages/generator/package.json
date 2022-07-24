@@ -6,6 +6,8 @@
     "test:update-generated-files": "tsm test/generated/update.ts"
   },
   "devDependencies": {
+    "@typesafe-i18n/parser": "workspace:../parser/src",
+    "@typesafe-i18n/runtime": "workspace:../runtime/src",
     "@types/esutils": "^2.0.0",
     "chokidar": "^3.5.3",
     "esutils": "^2.0.3",

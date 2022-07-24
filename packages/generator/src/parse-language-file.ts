@@ -1,9 +1,9 @@
+import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
+import type { BaseTranslation } from '@typesafe-i18n/runtime/index.mjs'
 import { resolve, sep } from 'path'
 import { isTruthy } from 'typesafe-utils'
 import ts from 'typescript'
 import type { OutputFormats } from '../../config/src/types'
-import type { BaseTranslation } from '../../runtime/src'
-import type { Locale } from '../../runtime/src/core'
 import { fileEnding } from './output-handler'
 import {
 	containsFolders,

@@ -1,6 +1,6 @@
-import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from '../../runtime/src/core'
-import { getFallbackProxy } from '../../runtime/src/core-utils'
-import { i18nObject } from '../../runtime/src/util.object'
+import { getFallbackProxy } from '@typesafe-i18n/runtime/core-utils.mjs'
+import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from '@typesafe-i18n/runtime/core.mjs'
+import { i18nObject } from '@typesafe-i18n/runtime/util.object.mjs'
 
 const wrapProxy = <
 	T extends BaseTranslation | BaseTranslation[] = BaseTranslation,

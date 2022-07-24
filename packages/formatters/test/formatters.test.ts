@@ -1,6 +1,6 @@
+import { i18nObject, i18nString } from '@typesafe-i18n/runtime/index.mjs'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { i18nObject, i18nString } from '../../runtime/src/index'
 import { date, identity, ignore, lowercase, number, replace, uppercase } from '../src'
 
 const test = suite('formatters')

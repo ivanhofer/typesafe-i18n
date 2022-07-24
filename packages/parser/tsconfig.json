@@ -4,5 +4,5 @@
 		"rootDir": "./src",
 		"outDir": "../../parser"
 	},
-	"include": ["./src/**/*.ts"]
+	"include": ["./src/**/*.mts"]
 }

@@ -5,6 +5,7 @@
     "build": "tsm esbuild.ts && tsc -p tsconfig.json --emitDeclarationOnly"
   },
   "devDependencies": {
+    "@typesafe-i18n/runtime": "workspace:../runtime/src",
     "@types/react": "^17.0.47",
     "esbuild": "^0.14.49",
     "tsm": "^2.2.1",

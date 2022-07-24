@@ -1,8 +1,8 @@
+import type { BaseTranslation } from '@typesafe-i18n/runtime/index.mjs'
 import { readFile } from 'fs/promises'
 import { resolve } from 'path'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import type { BaseTranslation } from '../../runtime/src'
 import { storeTranslationToDisk } from '../src/importer'
 
 const test = suite('importer')

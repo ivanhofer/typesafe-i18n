@@ -1,5 +1,5 @@
+import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { isTruthy, uniqueArray } from 'typesafe-utils'
-import type { Locale } from '../../runtime/src/core'
 
 export type LocaleDetector = () => string[]
 

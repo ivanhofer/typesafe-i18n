@@ -1,8 +1,9 @@
-import type { ArgumentPart, Part, PluralPart } from './types'
+import type { ArgumentPart, Part, PluralPart } from './types.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const removeEmptyValues = <T>(object: T): T =>
+// eslint-disable-next-line prettier/prettier
+export const removeEmptyValues = <T,>(object: T): T =>
 	Object.fromEntries(
 		Object.entries(object)
 			.map(([key, value]) => key !== 'i' && value && value != '0' && [key, value])

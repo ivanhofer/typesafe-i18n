@@ -6,10 +6,10 @@ import type {
 	Locale,
 	LocalizedString,
 	TranslationFunctions,
-	TypedTranslationFunctions,
-} from './core'
-import { translate } from './core'
-import { getPartsFromString } from './util.string'
+	TypedTranslationFunctions
+} from './core.mjs'
+import { translate } from './core.mjs'
+import { getPartsFromString } from './util.string.mjs'
 
 type TranslateFn = (text: string, ...args: Arguments) => LocalizedString
 

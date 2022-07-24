@@ -1,6 +1,6 @@
-import { i18n } from '../../runtime/src/util.instance'
-import { i18nObject, typesafeI18nObject } from '../../runtime/src/util.object'
-import { i18nString, typesafeI18nString } from '../../runtime/src/util.string'
+import { i18n } from '@typesafe-i18n/runtime/util.instance.mjs'
+import { i18nObject, typesafeI18nObject } from '@typesafe-i18n/runtime/util.object.mjs'
+import { i18nString, typesafeI18nString } from '@typesafe-i18n/runtime/util.string.mjs'
 
 //@ts-ignore
 window.typesafeI18n = {

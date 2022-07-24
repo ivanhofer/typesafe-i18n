@@ -1,6 +1,6 @@
+import { removeOuterBrackets } from '@typesafe-i18n/parser/index.mjs'
+import type { ArgumentPart, Part, PluralPart } from '@typesafe-i18n/parser/types.mjs'
 import type { TypeGuard } from 'typesafe-utils'
-import { removeOuterBrackets } from '../../parser/src/index'
-import type { ArgumentPart, Part, PluralPart } from '../../parser/src/types'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -135,7 +135,7 @@ export type RequiredParams<Params extends string> = ConstructString<Permutation<
 // --------------------------------------------------------------------------------------------------------------------
 
 export const isPluralPart = (part: Part): part is TypeGuard<PluralPart, Part> =>
-	!!((<PluralPart>part).o || (<PluralPart>part).r)
+	!!((part as PluralPart).o || (part as PluralPart).r)
 
 const REGEX_SWITCH_CASE = /^\{.*\}$/
 
