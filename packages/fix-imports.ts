@@ -5,8 +5,8 @@ import glob from 'tiny-glob/sync.js'
 const rootPath = resolve(__dirname, '..')
 
 const formats = [
-	{ regex: /require\("\.(.*)"\)/g, fileEnding: 'cjs' },
-	{ regex: /port .* from '\.(.*)'/g, fileEnding: 'mjs' },
+	{ regex: /require\("\.([^(cjs)]*)"\)/g, fileEnding: 'cjs' },
+	{ regex: /port .* from '\.([^(mjs)]*)'/g, fileEnding: 'mjs' },
 ]
 
 const folders = [
