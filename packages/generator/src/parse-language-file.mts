@@ -1,9 +1,9 @@
+import type { OutputFormats } from '@typesafe-i18n/config/types.mjs'
 import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
 import type { BaseTranslation } from '@typesafe-i18n/runtime/index.mjs'
 import { resolve, sep } from 'path'
 import { isTruthy } from 'typesafe-utils'
 import ts from 'typescript'
-import type { OutputFormats } from '../../config/src/types.mjs'
 import { fileEnding } from './output-handler.mjs'
 import {
 	containsFolders,
@@ -12,7 +12,7 @@ import {
 	doesPathExist,
 	getDirectoryStructure,
 	getFiles,
-	importFile,
+	importFile
 } from './utils/file.utils.mjs'
 import { logger } from './utils/logger.mjs'
 

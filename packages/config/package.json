@@ -5,6 +5,8 @@
   },
   "devDependencies": {
     "@typesafe-i18n/runtime": "workspace:../runtime/src",
+    "@typesafe-i18n/generator": "workspace:../generator/src",
+    "@typesafe-i18n/config": "workspace:../config/src",
     "ajv": "^6.12.6",
     "kleur": "^4.1.5",
     "typescript-json-schema": "^0.53.1"

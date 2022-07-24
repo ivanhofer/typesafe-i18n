@@ -1,5 +1,5 @@
-import { parseRawText } from '../../parser/src/index.mjs'
-import type { Part } from '../../parser/src/types.mjs'
+import { parseRawText } from '@typesafe-i18n/parser/index.mjs'
+import type { Part } from '@typesafe-i18n/parser/types.mjs'
 import type { Args, Arguments, BaseFormatters, Cache, Locale, LocalizedString } from './core.mjs'
 import { translate } from './core.mjs'
 

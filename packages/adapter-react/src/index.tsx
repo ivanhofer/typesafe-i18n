@@ -1,7 +1,7 @@
+import { getFallbackProxy } from '@typesafe-i18n/runtime/core-utils.mjs'
+import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from '@typesafe-i18n/runtime/core.mjs'
+import { i18nObject } from '@typesafe-i18n/runtime/util.object.mjs'
 import React from 'react'
-import { getFallbackProxy } from '../../runtime/src/core-utils.mjs'
-import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from '../../runtime/src/core.mjs'
-import { i18nObject } from '../../runtime/src/util.object.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------

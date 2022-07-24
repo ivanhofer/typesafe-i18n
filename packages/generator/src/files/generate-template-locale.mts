@@ -1,6 +1,6 @@
+import type { GeneratorConfigWithDefaultValues } from '@typesafe-i18n/config/types.mjs'
 import type { BaseTranslation, Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { join } from 'path'
-import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types.mjs'
 import { fileEnding } from '../output-handler.mjs'
 import { getDictionaryTemplate } from '../utils/dictionary.utils.mjs'
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'

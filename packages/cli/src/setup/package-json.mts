@@ -1,8 +1,8 @@
+import { doesPathExist, importFile, readFile, writeFile } from '@typesafe-i18n/generator/utils/file.utils.mjs'
+import { logger } from '@typesafe-i18n/generator/utils/logger.mjs'
 import { execSync } from 'child_process'
 import { resolve } from 'path'
 import type { PackageJson } from 'type-fest'
-import { doesPathExist, importFile, readFile, writeFile } from '../../../generator/src/utils/file.utils.mjs'
-import { logger } from '../../../generator/src/utils/logger.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 

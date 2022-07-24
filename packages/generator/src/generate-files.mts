@@ -1,5 +1,5 @@
+import type { GeneratorConfigWithDefaultValues } from '@typesafe-i18n/config/types.mjs'
 import type { BaseTranslation, Locale } from '@typesafe-i18n/runtime/core.mjs'
-import type { GeneratorConfigWithDefaultValues } from '../../config/src/types.mjs'
 import { generateAngularAdapter } from './files/generate-adapter-angular.mjs'
 import { generateNodeAdapter } from './files/generate-adapter-node.mjs'
 import { generateReactAdapter } from './files/generate-adapter-react.mjs'

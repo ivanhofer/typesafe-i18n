@@ -121,6 +121,8 @@ importers:
   packages/cli:
     specifiers:
       '@types/prompts': ^2.0.14
+      '@typesafe-i18n/config': workspace:../config/src
+      '@typesafe-i18n/generator': workspace:../generator/src
       '@typesafe-i18n/runtime': workspace:../runtime/src
       commander: ^9.4.0
       esbuild: ^0.14.49
@@ -136,6 +138,8 @@ importers:
       typescript: ^4.7.4
     devDependencies:
       '@types/prompts': 2.0.14
+      '@typesafe-i18n/config': link:../config/src
+      '@typesafe-i18n/generator': link:../generator/src
       '@typesafe-i18n/runtime': link:../runtime/src
       commander: 9.4.0
       esbuild: 0.14.49
@@ -152,11 +156,15 @@ importers:
 
   packages/config:
     specifiers:
+      '@typesafe-i18n/config': workspace:../config/src
+      '@typesafe-i18n/generator': workspace:../generator/src
       '@typesafe-i18n/runtime': workspace:../runtime/src
       ajv: ^6.12.6
       kleur: ^4.1.5
       typescript-json-schema: ^0.53.1
     devDependencies:
+      '@typesafe-i18n/config': link:src
+      '@typesafe-i18n/generator': link:../generator/src
       '@typesafe-i18n/runtime': link:../runtime/src
       ajv: 6.12.6
       kleur: 4.1.5
@@ -184,11 +192,15 @@ importers:
 
   packages/exporter:
     specifiers:
+      '@typesafe-i18n/config': workspace:../config/src
+      '@typesafe-i18n/generator': workspace:../generator/src
       '@typesafe-i18n/runtime': workspace:../runtime/src
       esbuild: ^0.14.49
       tsx: ^3.8.0
       typescript: ^4.7.4
     devDependencies:
+      '@typesafe-i18n/config': link:../config/src
+      '@typesafe-i18n/generator': link:../generator/src
       '@typesafe-i18n/runtime': link:../runtime/src
       esbuild: 0.14.49
       tsx: 3.8.0
@@ -213,6 +225,7 @@ importers:
   packages/generator:
     specifiers:
       '@types/esutils': ^2.0.0
+      '@typesafe-i18n/config': workspace:../config/src
       '@typesafe-i18n/parser': workspace:../parser/src
       '@typesafe-i18n/runtime': workspace:../runtime/src
       chokidar: ^3.5.3
@@ -228,6 +241,7 @@ importers:
       watchlist: ^0.3.1
     devDependencies:
       '@types/esutils': 2.0.0
+      '@typesafe-i18n/config': link:../config/src
       '@typesafe-i18n/parser': link:../parser/src
       '@typesafe-i18n/runtime': link:../runtime/src
       chokidar: 3.5.3
@@ -244,6 +258,8 @@ importers:
 
   packages/importer:
     specifiers:
+      '@typesafe-i18n/config': workspace:../config/src
+      '@typesafe-i18n/generator': workspace:../generator/src
       '@typesafe-i18n/runtime': workspace:../runtime/src
       esbuild: ^0.14.49
       tiny-glob: ^0.2.9
@@ -252,6 +268,8 @@ importers:
       uvu: ^0.5.6
       watchlist: ^0.3.1
     devDependencies:
+      '@typesafe-i18n/config': link:../config/src
+      '@typesafe-i18n/generator': link:../generator/src
       '@typesafe-i18n/runtime': link:../runtime/src
       esbuild: 0.14.49
       tiny-glob: 0.2.9

@@ -1,5 +1,5 @@
+import type { GeneratorConfigWithDefaultValues, OutputFormats } from '@typesafe-i18n/config/types.mjs'
 import { isTruthy } from 'typesafe-utils'
-import type { GeneratorConfigWithDefaultValues, OutputFormats } from '../../config/src/types.mjs'
 import { parseTypescriptVersion, TypescriptVersion } from './utils/generator.utils.mjs'
 
 export const OVERRIDE_WARNING =

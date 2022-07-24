@@ -1,6 +1,6 @@
+import type { GeneratorConfigWithDefaultValues } from '@typesafe-i18n/config/types.mjs'
 import type { BaseTranslation, Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { isPropertyTrue, isTruthy } from 'typesafe-utils'
-import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types.mjs'
 import {
 	fileEndingForTypesFile,
 	importTypeStatement,

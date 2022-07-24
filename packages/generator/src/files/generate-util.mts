@@ -1,5 +1,5 @@
+import type { GeneratorConfigWithDefaultValues } from '@typesafe-i18n/config/types.mjs'
 import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
-import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types.mjs'
 import {
 	generics,
 	importTypes,
@@ -11,7 +11,7 @@ import {
 	shouldGenerateJsDoc,
 	tsCheck,
 	type,
-	typeCast,
+	typeCast
 } from '../output-handler.mjs'
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
 import { prettify } from '../utils/generator.utils.mjs'
