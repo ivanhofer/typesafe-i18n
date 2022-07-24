@@ -14,7 +14,7 @@ const formats = ['esm', 'cjs'] as const
 
 formats.forEach((format) => {
 	build({
-		entryPoints: [getPath('src/index.ts')],
+		entryPoints: [getPath('src/index.mts')],
 		bundle: true,
 		outfile: getPath(`../../importer/index.${format === 'esm' ? 'm' : 'c'}js`),
 		platform: 'node',

@@ -3,7 +3,7 @@ import { readFile } from 'fs/promises'
 import { resolve } from 'path'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { storeTranslationToDisk } from '../src/importer'
+import { storeTranslationToDisk } from '../src/importer.mjs'
 
 const test = suite('importer')
 
