@@ -1,7 +1,7 @@
-import { checkAndUpdateSchemaVersion } from '@typesafe-i18n/config/update-schema-version.mjs'
-import { startGenerator } from '@typesafe-i18n/generator/generator.mjs'
-import { logger } from '@typesafe-i18n/generator/utils/logger.mjs'
 import { Command } from 'commander'
+import { checkAndUpdateSchemaVersion } from '../../config/src/update-schema-version.mjs'
+import { startGenerator } from '../../generator/src/generator.mjs'
+import { logger } from '../../generator/src/utils/logger.mjs'
 import { version } from '../../version'
 import { setup } from './setup/setup.mjs'
 

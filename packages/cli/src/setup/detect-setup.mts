@@ -1,7 +1,7 @@
-import { getConfigWithDefaultValues } from '@typesafe-i18n/config/config.mjs'
-import type { Adapters, GeneratorConfig } from '@typesafe-i18n/config/types.mjs'
-import { doesPathExist } from '@typesafe-i18n/generator/utils/file.utils.mjs'
 import { resolve } from 'path'
+import { getConfigWithDefaultValues } from '../../../config/src/config.mjs'
+import type { Adapters, GeneratorConfig } from '../../../config/src/types.mjs'
+import { doesPathExist } from '../../../generator/src/utils/file.utils.mjs'
 import { getDependencyList, isEsmProject } from './package-json.mjs'
 
 const useAdapterWhenDependenciesContain =

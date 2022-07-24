@@ -1,5 +1,5 @@
-import { partAsStringWithoutTypes } from '@typesafe-i18n/runtime/core-utils.mjs'
 import { isArray, isPropertyFalsy } from 'typesafe-utils'
+import { partAsStringWithoutTypes } from '../../../../runtime/src/core-utils.mjs'
 import { NEW_LINE, PIPE_SEPARATION, REGEX_BRACKETS } from '../../constants.mjs'
 import { supportsTemplateLiteralTypes } from '../../output-handler.mjs'
 import { isParsedResultEntry, type Arg, type JsDocInfo, type JsDocInfos, type ParsedResult } from '../../types.mjs'

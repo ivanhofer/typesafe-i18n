@@ -10,7 +10,6 @@
     "test:types": "tsc --noEmit -P tsconfig-tests.json"
   },
   "devDependencies": {
-    "@typesafe-i18n/parser": "workspace:../parser/src",
     "tiny-glob": "^0.2.9",
     "tsx": "^3.8.0",
     "typesafe-utils": "^1.16.2",

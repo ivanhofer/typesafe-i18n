@@ -1,4 +1,4 @@
-import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
+import type { Locale } from '../../runtime/src/core.mjs'
 
 export type Adapters = 'angular' | 'node' | 'react' | 'solid' | 'svelte' | 'vue'
 

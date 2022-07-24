@@ -1,5 +1,5 @@
-import type { BaseTranslation } from '@typesafe-i18n/runtime/index.mjs'
 import { isString } from 'typesafe-utils'
+import type { BaseTranslation } from '../../../../runtime/src/index.mjs'
 import { NEW_LINE } from '../../constants.mjs'
 import { wrapObjectKeyIfNeeded } from '../../utils/generator.utils.mjs'
 import { logger } from '../../utils/logger.mjs'

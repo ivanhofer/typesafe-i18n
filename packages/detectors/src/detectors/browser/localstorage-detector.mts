@@ -1,5 +1,5 @@
-import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { isTruthy } from 'typesafe-utils'
+import type { Locale } from '../../../../runtime/src/core.mjs'
 import type { LocaleDetector } from '../../detect.mjs'
 
 export const initLocalStorageDetector =

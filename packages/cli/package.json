@@ -6,9 +6,6 @@
   },
   "devDependencies": {
     "@types/prompts": "^2.0.14",
-    "@typesafe-i18n/runtime": "workspace:../runtime/src",
-    "@typesafe-i18n/generator": "workspace:../generator/src",
-    "@typesafe-i18n/config": "workspace:../config/src",
     "commander": "^9.4.0",
     "esbuild": "^0.14.49",
     "just-diff": "^5.0.3",

@@ -7,7 +7,6 @@
     "test:watch": "watchlist src test -- pnpm test"
   },
   "devDependencies": {
-    "@typesafe-i18n/runtime": "workspace:../runtime/src",
     "esbuild": "^0.14.49",
     "tiny-glob": "^0.2.9",
     "tsx": "^3.8.0",

@@ -1,4 +1,4 @@
-import type { FormatterFunction } from '@typesafe-i18n/runtime/core.mjs'
+import type { FormatterFunction } from '../../runtime/src/core.mjs'
 
 export default (
 	locale: string,

@@ -1,6 +1,6 @@
-import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
+import type { Locale } from '../../runtime/src/core.mjs'
 import { detectLocale, LocaleDetector } from '../src/detect.mjs'
 
 const test = suite('detector')

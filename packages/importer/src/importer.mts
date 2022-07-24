@@ -1,13 +1,13 @@
-import { getConfigWithDefaultValues } from '@typesafe-i18n/config/config.mjs'
-import { generateLocaleTemplate } from '@typesafe-i18n/generator/files/generate-template-locale.mjs'
-import { generateNamespaceTemplate } from '@typesafe-i18n/generator/files/generate-template-namespace.mjs'
-import { generate } from '@typesafe-i18n/generator/generate-files.mjs'
-import { configureOutputHandler } from '@typesafe-i18n/generator/output-handler.mjs'
-import { getAllLocales, parseLanguageFile } from '@typesafe-i18n/generator/parse-language-file.mjs'
-import { parseTypescriptVersion } from '@typesafe-i18n/generator/utils/generator.utils.mjs'
-import { createLogger } from '@typesafe-i18n/generator/utils/logger.mjs'
-import type { BaseTranslation, ImportLocaleMapping, Locale } from '@typesafe-i18n/runtime/core.mjs'
 import ts from 'typescript'
+import { getConfigWithDefaultValues } from '../../config/src/config.mjs'
+import { generateLocaleTemplate } from '../../generator/src/files/generate-template-locale.mjs'
+import { generateNamespaceTemplate } from '../../generator/src/files/generate-template-namespace.mjs'
+import { generate } from '../../generator/src/generate-files.mjs'
+import { configureOutputHandler } from '../../generator/src/output-handler.mjs'
+import { getAllLocales, parseLanguageFile } from '../../generator/src/parse-language-file.mjs'
+import { parseTypescriptVersion } from '../../generator/src/utils/generator.utils.mjs'
+import { createLogger } from '../../generator/src/utils/logger.mjs'
+import type { BaseTranslation, ImportLocaleMapping, Locale } from '../../runtime/src/core.mjs'
 
 const logger = createLogger(console, true)
 

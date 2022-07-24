@@ -1,7 +1,7 @@
-import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { isNotUndefined } from 'typesafe-utils'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
+import type { Locale } from '../../runtime/src/core.mjs'
 import { initAcceptLanguageHeaderDetector } from '../../src/detectors/server/accept-language-header.mjs'
 
 const test = suite('detector:accept-language-header')

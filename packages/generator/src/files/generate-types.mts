@@ -1,11 +1,11 @@
-import type { GeneratorConfigWithDefaultValues } from '@typesafe-i18n/config/types.mjs'
-import type { BaseTranslation, Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { isPropertyTrue, isTruthy } from 'typesafe-utils'
+import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types.mjs'
+import type { BaseTranslation, Locale } from '../../../runtime/src/core.mjs'
 import {
 	fileEndingForTypesFile,
 	importTypeStatement,
 	OVERRIDE_WARNING,
-	supportsTemplateLiteralTypes,
+	supportsTemplateLiteralTypes
 } from '../output-handler.mjs'
 import { isParsedResultEntry, JsDocInfos, ParsedResult } from '../types.mjs'
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'

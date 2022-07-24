@@ -1,6 +1,6 @@
-import type { GeneratorConfigWithDefaultValues } from '@typesafe-i18n/config/types.mjs'
-import type { BaseTranslation, Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { isString } from 'typesafe-utils'
+import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types.mjs'
+import type { BaseTranslation, Locale } from '../../../runtime/src/core.mjs'
 import {
 	defaultExportStatement,
 	importTypes,
@@ -8,7 +8,7 @@ import {
 	jsDocType,
 	relativeFileImportPath,
 	tsCheck,
-	type,
+	type
 } from '../output-handler.mjs'
 import { sanitizePath, wrapObjectKeyIfNeeded } from './generator.utils.mjs'
 import { getTypeNameForNamespace } from './namespaces.utils.mjs'

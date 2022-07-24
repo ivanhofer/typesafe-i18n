@@ -1,4 +1,4 @@
-import type { Part } from '@typesafe-i18n/parser/types.mjs'
+import type { Part } from '../../parser/src/types.mjs'
 import { isPluralPart, TranslationFunctions } from './core.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------

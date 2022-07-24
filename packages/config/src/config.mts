@@ -1,5 +1,5 @@
-import { doesPathExist, importFile, writeConfigFile } from '@typesafe-i18n/generator/utils/file.utils.mjs'
 import { resolve } from 'path'
+import { doesPathExist, importFile, writeConfigFile } from '../../generator/src/utils/file.utils.mjs'
 import { version } from '../../version'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './types.mjs'
 import { validateConfig } from './validation.mjs'

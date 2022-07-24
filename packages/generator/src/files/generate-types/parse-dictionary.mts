@@ -1,8 +1,3 @@
-import { parseRawText } from '@typesafe-i18n/parser/index.mjs'
-import type { ArgumentPart } from '@typesafe-i18n/parser/types.mjs'
-import { partsAsStringWithoutTypes } from '@typesafe-i18n/runtime/core-utils.mjs'
-import { isPluralPart } from '@typesafe-i18n/runtime/core.mjs'
-import type { BaseTranslation } from '@typesafe-i18n/runtime/index.mjs'
 import {
 	isArrayNotEmpty,
 	isNotUndefined,
@@ -11,8 +6,13 @@ import {
 	not,
 	sortStringASC,
 	sortStringPropertyASC,
-	uniqueArray,
+	uniqueArray
 } from 'typesafe-utils'
+import { parseRawText } from '../../../../parser/src/index.mjs'
+import type { ArgumentPart } from '../../../../parser/src/types.mjs'
+import { partsAsStringWithoutTypes } from '../../../../runtime/src/core-utils.mjs'
+import { isPluralPart } from '../../../../runtime/src/core.mjs'
+import type { BaseTranslation } from '../../../../runtime/src/index.mjs'
 import { REGEX_BRACKETS } from '../../constants.mjs'
 import type { Arg, ParsedResult, ParsedResultEntry, Types } from '../../types.mjs'
 import type { Logger } from '../../utils/logger.mjs'

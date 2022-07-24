@@ -29,8 +29,8 @@ const goToRoot = (outputPath: string, file: string) => {
 	return new Array(file.split('/').length + goUpXTimes).fill('../').join('')
 }
 
-mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, mapperFunction]) => {
-	const files = glob(`types/${fromWheretoImport}/src/**/*.d.ts`).map((file) =>
+mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, filterFunction]) => {
+	const files = glob(`types/${fromWheretoImport}/src/**/*.d.mts`).map((file) =>
 		resolve(file)
 			.substring(resolve(__dirname, `../types/${fromWheretoImport}/src/`).length + 1)
 			.replace(/\\/g, '/'),
@@ -46,14 +46,14 @@ mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, mapperFunc
 	})
 
 	// link generated files to types
-	const filteredFiles = (mapperFunction && files.filter(mapperFunction)) || files
+	const filteredFiles = (filterFunction && files.filter(filterFunction)) || files
 
 	filteredFiles.forEach((file) => {
-		const fileName = file.substring(0, file.length - 5)
+		const fileName = file.substring(0, file.length - 6)
 
 		writeFileSync(
-			resolve(__dirname, `../${outputPath}/${file}`),
-			`export * from '${goToRoot(outputPath, file)}types/${fromWheretoImport}/src/${fileName}'`,
+			resolve(__dirname, `../${outputPath}/${file.replace('.d.mts', '.d.ts')}`),
+			`export * from '${goToRoot(outputPath, file)}types/${fromWheretoImport}/src/${fileName}.d.mjs'`,
 			{ encoding: 'utf8' },
 		)
 	})

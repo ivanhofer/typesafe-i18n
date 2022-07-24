@@ -8,9 +8,6 @@
     "test:update-generated-files": "tsx test/snapshots/update.ts"
   },
   "devDependencies": {
-    "@typesafe-i18n/runtime": "workspace:../runtime/src",
-    "@typesafe-i18n/generator": "workspace:../generator/src",
-    "@typesafe-i18n/config": "workspace:../config/src",
     "esbuild": "^0.14.49",
     "tiny-glob": "^0.2.9",
     "tsx": "^3.8.0",
