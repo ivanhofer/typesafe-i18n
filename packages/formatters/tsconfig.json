@@ -3,5 +3,5 @@
 	"compilerOptions": {
 		"outDir": "../../formatters"
 	},
-	"include": ["./src/**/*.ts"]
+	"include": ["./src/**/*.ts", "src/uppercase.mts", "src/time.mts", "src/replace.mts", "src/number.mts", "src/lowercase.mts", "src/index.mts", "src/ignore.mts", "src/identity.mts", "src/date.mts"]
 }
