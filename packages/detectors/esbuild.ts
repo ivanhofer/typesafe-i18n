@@ -11,7 +11,7 @@ const watch = process.argv.includes('--watch')
 
 const getPath = (file: string) => resolve(__dirname, file)
 
-const files = glob('./src/**/*.*ts')
+const files = glob('./src/**/*.*mts')
 	.map((file) =>
 		resolve(file)
 			.substring(resolve(__dirname, `./src/`).length + 1)
@@ -26,7 +26,7 @@ files.forEach((file) =>
 		build({
 			entryPoints: [getPath(`./src/${file}`)],
 			bundle: true,
-			outfile: getPath(`../../detectors/${file.replace('.ts', `.${format === 'esm' ? 'm' : 'c'}js`)}`),
+			outfile: getPath(`../../detectors/${file.replace('.mts', `.${format === 'esm' ? 'm' : 'c'}js`)}`),
 			platform: 'browser',
 			format,
 			minify: true,

@@ -7,7 +7,7 @@ const files = ['string', 'typed.string', 'object', 'typed.object', 'instance', '
 files.forEach((file) =>
 	[false, true].forEach((minify) =>
 		build({
-			entryPoints: [`./src/browser.${file}.ts`],
+			entryPoints: [`./src/browser.${file}.mts`],
 			bundle: true,
 			outfile: `../../dist/i18n.${file}${minify ? '.min' : ''}.js`,
 			platform: 'browser',

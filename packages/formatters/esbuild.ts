@@ -20,7 +20,7 @@ files.forEach((file) =>
 		build({
 			entryPoints: [`./src/${file}`],
 			bundle: true,
-			outfile: getPath(`../../formatters/${file.replace('.ts', `.${format === 'esm' ? 'm' : 'c'}js`)}`),
+			outfile: getPath(`../../formatters/${file.replace('.mts', `.${format === 'esm' ? 'm' : 'c'}js`)}`),
 			platform: 'neutral',
 			format,
 			minify: true,

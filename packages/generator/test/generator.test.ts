@@ -2,11 +2,11 @@ import { readFile } from 'fs/promises'
 import { resolve } from 'path'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { getConfigWithDefaultValues } from '../../config/src/config'
-import type { GeneratorConfig, GeneratorConfigWithDefaultValues, OutputFormats } from '../../config/src/types'
-import type { BaseTranslation, Locale } from '../../runtime/src/core'
-import { generate } from '../src/generate-files'
-import { parseTypescriptVersion, TypescriptVersion } from '../src/utils/generator.utils'
+import { getConfigWithDefaultValues } from '../../config/src/config.mjs'
+import type { GeneratorConfig, GeneratorConfigWithDefaultValues, OutputFormats } from '../../config/src/types.mjs'
+import type { BaseTranslation, Locale } from '../../runtime/src/core.mjs'
+import { generate } from '../src/generate-files.mjs'
+import { parseTypescriptVersion, TypescriptVersion } from '../src/utils/generator.utils.mjs'
 
 const test = suite('types')
 

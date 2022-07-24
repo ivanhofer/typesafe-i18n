@@ -1,10 +1,6 @@
 import { readFileSync, writeFileSync } from 'fs'
-import { dirname, resolve } from 'path'
+import { resolve } from 'path'
 import glob from 'tiny-glob/sync.js'
-import { fileURLToPath } from 'url'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
 
 const rootPath = resolve(__dirname, '..')
 
@@ -34,7 +30,7 @@ formats.forEach(({ regex, fileEnding }) => {
 		const content = readFileSync(fullFilePath).toString()
 
 		const newContent = content.replace(regex, (requireStatement, path) =>
-			requireStatement.replace(path, path + `.${fileEnding}`),
+			requireStatement.replace(path, path + `.${fileEnding}`).replace(`.mjs.${fileEnding}`, `.${fileEnding}`),
 		)
 
 		writeFileSync(fullFilePath, newContent, { encoding: 'utf8' })

@@ -1,6 +1,6 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { i18nString } from '../src/util.string'
+import { i18nString } from '../src/util.string.mjs'
 
 const test = suite('util.string')
 

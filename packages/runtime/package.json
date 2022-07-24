@@ -2,18 +2,19 @@
   "name": "@typesafe-i18n/runtime",
   "scripts": {
     "build": "pnpm build:cjs && pnpm build:esm",
-    "build:cjs": "tsc -p tsconfig-cjs.json && tsm ./rename-cjs.ts",
-    "build:esm": "tsc -p tsconfig-esm.json && tsm ./rename-esm.ts",
+    "build:cjs": "tsc -p tsconfig-cjs.json && tsx ./rename-cjs.ts",
+    "build:esm": "tsc -p tsconfig-esm.json && tsx ./rename-esm.ts",
     "test": "pnpm test:unit && pnpm test:types",
-    "test:unit": "uvu -r tsm test",
+    "test:unit": "uvu -r @esbuild-kit/cjs-loader test",
     "test:unit:watch": "watchlist src test -- pnpm test:unit",
     "test:types": "tsc --noEmit -P tsconfig-tests.json"
   },
   "devDependencies": {
     "tiny-glob": "^0.2.9",
-    "tsm": "^2.2.1",
+    "tsx": "^3.8.0",
     "typesafe-utils": "^1.16.2",
     "uvu": "^0.5.6",
     "watchlist": "^0.3.1"
-  }
+  },
+  "type": "module"
 }

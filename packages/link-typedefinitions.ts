@@ -1,10 +1,6 @@
 import { readFileSync, writeFileSync } from 'fs'
-import { dirname, resolve } from 'path'
+import { resolve } from 'path'
 import glob from 'tiny-glob/sync.js'
-import { fileURLToPath } from 'url'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
 
 type FromWheretoImport = string
 type OutputPath = string
@@ -33,31 +29,22 @@ const goToRoot = (outputPath: string, file: string) => {
 	return new Array(file.split('/').length + goUpXTimes).fill('../').join('')
 }
 
-mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, mapperFunction]) => {
-	const files = glob(`types/${fromWheretoImport}/src/**/*.d.ts`).map((file) =>
+mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, filterFunction]) => {
+	const files = glob(`types/${fromWheretoImport}/src/**/*.d.mts`).map((file) =>
 		resolve(file)
 			.substring(resolve(__dirname, `../types/${fromWheretoImport}/src/`).length + 1)
 			.replace(/\\/g, '/'),
 	)
 
-	// rewrite all files to link always to the same runtime types
-	files.forEach((file) => {
-		const fullFilePath = resolve(__dirname, `../types/${fromWheretoImport}/src/${file}`)
-		const content = readFileSync(fullFilePath).toString()
-		if (content.includes('runtime/src/runtime')) {
-			writeFileSync(fullFilePath, content.replace('runtime/src/runtime', 'runtime'), { encoding: 'utf8' })
-		}
-	})
-
 	// link generated files to types
-	const filteredFiles = (mapperFunction && files.filter(mapperFunction)) || files
+	const filteredFiles = (filterFunction && files.filter(filterFunction)) || files
 
 	filteredFiles.forEach((file) => {
-		const fileName = file.substring(0, file.length - 5)
+		const fileName = file.substring(0, file.length - 6)
 
 		writeFileSync(
-			resolve(__dirname, `../${outputPath}/${file}`),
-			`export * from '${goToRoot(outputPath, file)}types/${fromWheretoImport}/src/${fileName}'`,
+			resolve(__dirname, `../${outputPath}/${file.replace('.d.mts', '.d.ts')}`),
+			`export * from '${goToRoot(outputPath, file)}types/${fromWheretoImport}/src/${fileName}.mjs'`,
 			{ encoding: 'utf8' },
 		)
 	})

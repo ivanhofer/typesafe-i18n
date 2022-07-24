@@ -1,5 +1,5 @@
-import type { LocalizedString } from '../src/core'
-import { typesafeI18nString } from '../src/util.string'
+import type { LocalizedString } from '../src/core.mjs'
+import { typesafeI18nString } from '../src/util.string.mjs'
 
 {
 	const LLL = typesafeI18nString('de')

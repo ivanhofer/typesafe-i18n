@@ -11,7 +11,7 @@ const __dirname = dirname(__filename)
 console.log(`
 creating tree-shakable index files ...`)
 
-const content = readFileSync(resolve(__dirname, './src/index.ts'))
+const content = readFileSync(resolve(__dirname, './src/index.mts'))
 	.toString()
 	.split(/\r?\n/)
 	.filter((line) => !line.startsWith('export type'))

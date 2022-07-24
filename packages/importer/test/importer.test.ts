@@ -2,8 +2,8 @@ import { readFile } from 'fs/promises'
 import { resolve } from 'path'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import type { BaseTranslation } from '../../runtime/src'
-import { storeTranslationToDisk } from '../src/importer'
+import type { BaseTranslation } from '../../runtime/src/index.mjs'
+import { storeTranslationToDisk } from '../src/importer.mjs'
 
 const test = suite('importer')
 

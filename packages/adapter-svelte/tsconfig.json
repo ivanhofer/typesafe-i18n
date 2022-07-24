@@ -3,5 +3,5 @@
 	"compilerOptions": {
 		"outDir": "../../svelte"
 	},
-	"include": ["./src/**/*"]
+	"include": ["src/**/*.mts"]
 }

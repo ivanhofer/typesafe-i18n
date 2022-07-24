@@ -1,13 +1,13 @@
 {
   "name": "typesafe-i18n_example_exporter",
   "scripts": {
-    "i18n:export": "tsm export.ts",
+    "i18n:export": "tsx export.ts",
     "typesafe-i18n": "typesafe-i18n",
-    "test": "uvu -r tsm tests"
+    "test": "uvu -r @esbuild-kit/cjs-loader tests"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
-    "tsm": "^2.2.1",
+    "tsx": "^3.8.0",
     "typescript": "^4.6.2",
     "uvu": "^0.5.3"
   },

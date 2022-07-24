@@ -3,5 +3,5 @@
 	"compilerOptions": {
 		"outDir": "../../react"
 	},
-	"include": ["./src/**/*"]
+	"include": ["src/**/*.tsx"]
 }

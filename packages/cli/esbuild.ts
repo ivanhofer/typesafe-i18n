@@ -13,7 +13,7 @@ const getPath = (file: string) => resolve(__dirname, file)
 
 build({
 	plugins: [nativeNodeModulesPlugin],
-	entryPoints: [getPath('src/cli.ts')],
+	entryPoints: [getPath('src/cli.mts')],
 	bundle: true,
 	outfile: getPath('../../cli/typesafe-i18n.mjs'),
 	platform: 'node',

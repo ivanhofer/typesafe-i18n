@@ -3,5 +3,5 @@
 	"compilerOptions": {
 		"outDir": "../../angular"
 	},
-	"include": ["./src/**/*"]
+	"include": ["src/**/*.mts"]
 }

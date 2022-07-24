@@ -3,5 +3,5 @@
 	"compilerOptions": {
 		"outDir": "../../formatters"
 	},
-	"include": ["./src/**/*.ts"]
+	"include": ["src/**/*.mts"]
 }

@@ -1,12 +1,12 @@
 {
   "name": "typesafe-i18n_example_importer",
   "scripts": {
-    "i18n:import": "tsm import.ts",
+    "i18n:import": "tsx import.ts",
     "typesafe-i18n": "typesafe-i18n"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
-    "tsm": "^2.2.1",
+    "tsx": "^3.8.0",
     "typescript": "^4.6.2"
   },
   "dependencies": {

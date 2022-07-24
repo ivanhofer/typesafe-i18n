@@ -5,5 +5,5 @@
 		"outDir": "../../runtime/esm",
 		"sourceMap": false
 	},
-	"include": ["./src/**/*.ts"]
+	"include": ["src/**/*.mts"]
 }

@@ -1,6 +1,6 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { getFallbackProxy } from '../src/core-utils'
+import { getFallbackProxy } from '../src/core-utils.mjs'
 
 const test = suite('fallback')
 

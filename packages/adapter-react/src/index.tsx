@@ -1,7 +1,7 @@
 import React from 'react'
-import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from '../../runtime/src/core'
-import { getFallbackProxy } from '../../runtime/src/core-utils'
-import { i18nObject } from '../../runtime/src/util.object'
+import { getFallbackProxy } from '../../runtime/src/core-utils.mjs'
+import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from '../../runtime/src/core.mjs'
+import { i18nObject } from '../../runtime/src/util.object.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
