@@ -1,5 +1,5 @@
 import { Command } from 'commander'
-import { checkAndUpdateSchemaVersion } from '../../config/src/update-schema-version'
+import { checkAndUpdateSchemaVersion } from '../../config/src/update-schema-version.mjs'
 import { startGenerator } from '../../generator/src/generator'
 import { logger } from '../../generator/src/utils/logger.mjs'
 import { version } from '../../version'

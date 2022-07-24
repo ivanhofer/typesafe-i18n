@@ -1,6 +1,6 @@
 import { logger } from '../../generator/src/utils/logger.mjs'
 import { version } from '../../version'
-import { readRawConfig, writeConfigToFile } from './config'
+import { readRawConfig, writeConfigToFile } from './config.mjs'
 
 export const checkAndUpdateSchemaVersion = async () => {
 	const config = await readRawConfig()

@@ -2,7 +2,7 @@ import { resolve } from 'path'
 import { doesPathExist, importFile, writeConfigFile } from '../../generator/src/utils/file.utils.mjs'
 import { version } from '../../version'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './types.mjs'
-import { validateConfig } from './validation'
+import { validateConfig } from './validation.mjs'
 
 export const writeConfigToFile = async (config: GeneratorConfig) =>
 	writeConfigFile({ ...config, $schema: `https://unpkg.com/typesafe-i18n@${version}/schema/typesafe-i18n.json` })
