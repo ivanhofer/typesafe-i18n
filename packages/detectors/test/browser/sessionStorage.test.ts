@@ -1,7 +1,7 @@
 import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { initSessionStorageDetector } from '../../src/detectors/browser/sessionstorage-detector'
+import { initSessionStorageDetector } from '../../src/detectors/browser/sessionstorage-detector.mjs'
 
 const test = suite('detector:sessionStorage')
 

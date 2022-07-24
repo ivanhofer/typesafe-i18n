@@ -1,7 +1,7 @@
 import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { initRequestCookiesDetector } from '../../src/detectors/server/request-cookies'
+import { initRequestCookiesDetector } from '../../src/detectors/server/request-cookies.mts'
 
 const test = suite('detector:request-cookies')
 

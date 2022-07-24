@@ -2,7 +2,7 @@ import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { isNotUndefined } from 'typesafe-utils'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { htmlLangAttributeDetector } from '../../src/detectors/browser/html-lang-attribute'
+import { htmlLangAttributeDetector } from '../../src/detectors/browser/html-lang-attribute.mjs'
 
 const test = suite('detector:html-lang')
 

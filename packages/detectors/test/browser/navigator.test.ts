@@ -1,7 +1,7 @@
 import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { navigatorDetector } from '../../src/detectors/browser/navigator'
+import { navigatorDetector } from '../../src/detectors/browser/navigator.mjs'
 
 const test = suite('detector:navigator')
 

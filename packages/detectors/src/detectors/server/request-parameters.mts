@@ -1,6 +1,6 @@
 import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { isTruthy } from 'typesafe-utils'
-import type { LocaleDetector } from '../../detect'
+import type { LocaleDetector } from '../../detect.mjs'
 
 type Request = {
 	params: Record<string, string>

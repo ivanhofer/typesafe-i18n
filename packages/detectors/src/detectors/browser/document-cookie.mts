@@ -1,6 +1,6 @@
 import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
-import type { LocaleDetector } from '../../detect'
-import { parseValueFromCookie } from '../_cookie.util'
+import type { LocaleDetector } from '../../detect.mjs'
+import { parseValueFromCookie } from '../_cookie.util.mjs'
 
 export const initDocumentCookieDetector =
 	(key = 'lang'): LocaleDetector =>
