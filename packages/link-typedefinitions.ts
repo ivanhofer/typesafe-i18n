@@ -36,15 +36,6 @@ mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, filterFunc
 			.replace(/\\/g, '/'),
 	)
 
-	// rewrite all files to link always to the same runtime types
-	files.forEach((file) => {
-		const fullFilePath = resolve(__dirname, `../types/${fromWheretoImport}/src/${file}`)
-		const content = readFileSync(fullFilePath).toString()
-		if (content.includes('runtime/src/runtime')) {
-			writeFileSync(fullFilePath, content.replace('runtime/src/runtime', 'runtime'), { encoding: 'utf8' })
-		}
-	})
-
 	// link generated files to types
 	const filteredFiles = (filterFunction && files.filter(filterFunction)) || files
 
@@ -53,7 +44,7 @@ mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, filterFunc
 
 		writeFileSync(
 			resolve(__dirname, `../${outputPath}/${file.replace('.d.mts', '.d.ts')}`),
-			`export * from '${goToRoot(outputPath, file)}types/${fromWheretoImport}/src/${fileName}.d.mjs'`,
+			`export * from '${goToRoot(outputPath, file)}types/${fromWheretoImport}/src/${fileName}.mjs'`,
 			{ encoding: 'utf8' },
 		)
 	})
