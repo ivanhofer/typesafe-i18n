@@ -1,12 +1,12 @@
 {
   "name": "@typesafe-i18n/cli",
   "scripts": {
-    "dev": "tsm esbuild.ts --watch",
-    "build": "tsm esbuild.ts"
+    "dev": "tsx esbuild.ts --watch",
+    "build": "tsx esbuild.ts"
   },
   "devDependencies": {
-    "@typesafe-i18n/runtime": "workspace:../runtime/src",
     "@types/prompts": "^2.0.14",
+    "@typesafe-i18n/runtime": "workspace:../runtime/src",
     "commander": "^9.4.0",
     "esbuild": "^0.14.49",
     "glob": "^7.2.3",
@@ -15,6 +15,7 @@
     "kleur": "^4.1.5",
     "prompts": "^2.4.2",
     "tiny-glob": "^0.2.9",
+    "tsx": "^3.8.0",
     "type-fest": "^2.16.0",
     "typesafe-utils": "^1.16.2",
     "typescript": "^4.7.4"

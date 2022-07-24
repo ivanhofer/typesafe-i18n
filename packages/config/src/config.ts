@@ -1,7 +1,7 @@
 import { resolve } from 'path'
-import { doesPathExist, importFile, writeConfigFile } from '../../generator/src/utils/file.utils'
+import { doesPathExist, importFile, writeConfigFile } from '../../generator/src/utils/file.utils.mjs'
 import { version } from '../../version'
-import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './types'
+import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './types.mjs'
 import { validateConfig } from './validation'
 
 export const writeConfigToFile = async (config: GeneratorConfig) =>

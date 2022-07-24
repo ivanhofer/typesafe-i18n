@@ -3,8 +3,8 @@ import type { BaseTranslation } from '@typesafe-i18n/runtime/index.mjs'
 import { resolve, sep } from 'path'
 import { isTruthy } from 'typesafe-utils'
 import ts from 'typescript'
-import type { OutputFormats } from '../../config/src/types'
-import { fileEnding } from './output-handler'
+import type { OutputFormats } from '../../config/src/types.mjs'
+import { fileEnding } from './output-handler.mjs'
 import {
 	containsFolders,
 	createPathIfNotExits,
@@ -13,8 +13,8 @@ import {
 	getDirectoryStructure,
 	getFiles,
 	importFile,
-} from './utils/file.utils'
-import { logger } from './utils/logger'
+} from './utils/file.utils.mjs'
+import { logger } from './utils/logger.mjs'
 
 // TODO: use esbuild instead of tsc
 

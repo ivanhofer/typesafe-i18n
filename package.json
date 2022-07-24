@@ -97,7 +97,7 @@
 	"scripts": {
 		"-- DEV -------------------------------------------------": "",
 		"update:dependencies": "pnpm up -r",
-		"update:version": "tsm ./update-version.ts",
+		"update:version": "tsx ./update-version.ts",
 		"clear": "rimraf ./angular ./cli ./detectors ./dist ./exporter ./formatters ./importer ./parser ./react ./runtime ./schema ./solid ./svelte ./types ./vue ./temp-output",
 		"-- LINT ------------------------------------------------": "",
 		"lint": "eslint --cache packages",
@@ -110,8 +110,8 @@
 		"-- BUILD -----------------------------------------------": "",
 		"build": "pnpm clear && pnpm update:version && pnpm -r generate:json-schema && pnpm build:packages && pnpm link-typedefinitions && pnpm fix-imports",
 		"build:packages": "pnpm -r --filter=@typesafe-i18n/** run build",
-		"fix-imports": "tsm ./packages/fix-imports.ts",
-		"link-typedefinitions": "tsm ./packages/link-typedefinitions.ts",
+		"fix-imports": "tsx ./packages/fix-imports.ts",
+		"link-typedefinitions": "tsx ./packages/link-typedefinitions.ts",
 		"-- OTHER -----------------------------------------------": "",
 		"lint-staged": "lint-staged",
 		"prepare": "husky install"
@@ -131,7 +131,7 @@
 		"rimraf": "^3.0.2",
 		"size-limit": "^7.0.8",
 		"tiny-glob": "^0.2.9",
-		"tsm": "^2.2.1",
+		"tsx": "^3.8.0",
 		"typescript": "^4.7.4"
 	},
 	"peerDependencies": {

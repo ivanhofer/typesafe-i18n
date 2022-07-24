@@ -1,13 +1,13 @@
 {
   "name": "@typesafe-i18n/adapter-angular",
   "scripts": {
-    "dev": "tsm esbuild.ts --watch",
-    "build": "tsm esbuild.ts && tsc -p tsconfig.json --emitDeclarationOnly"
+    "dev": "tsx esbuild.ts --watch",
+    "build": "tsx esbuild.ts && tsc -p tsconfig.json --emitDeclarationOnly"
   },
   "devDependencies": {
     "@typesafe-i18n/runtime": "workspace:../runtime/src",
     "esbuild": "^0.14.49",
-    "tsm": "^2.2.1",
+    "tsx": "^3.8.0",
     "typescript": "^4.7.4"
   }
 }

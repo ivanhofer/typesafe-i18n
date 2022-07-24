@@ -1,13 +1,13 @@
 {
   "name": "@typesafe-i18n/browser",
   "scripts": {
-    "dev": "tsm esbuild.ts --watch",
-    "build": "tsm esbuild.ts"
+    "dev": "tsx esbuild.ts --watch",
+    "build": "tsx esbuild.ts"
   },
   "devDependencies": {
     "@typesafe-i18n/runtime": "workspace:../runtime/src",
     "esbuild": "^0.14.49",
-    "tsm": "^2.2.1",
+    "tsx": "^3.8.0",
     "typescript": "^4.7.4"
   }
 }

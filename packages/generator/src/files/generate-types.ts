@@ -1,16 +1,16 @@
 import type { BaseTranslation, Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { isPropertyTrue, isTruthy } from 'typesafe-utils'
-import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
+import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types.mjs'
 import {
 	fileEndingForTypesFile,
 	importTypeStatement,
 	OVERRIDE_WARNING,
 	supportsTemplateLiteralTypes,
-} from '../output-handler'
+} from '../output-handler.mjs'
 import { isParsedResultEntry, JsDocInfos, ParsedResult } from '../types'
-import { writeFileIfContainsChanges } from '../utils/file.utils'
-import { prettify, wrapObjectKeyIfNeeded } from '../utils/generator.utils'
-import type { Logger } from '../utils/logger'
+import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
+import { prettify, wrapObjectKeyIfNeeded } from '../utils/generator.utils.mjs'
+import type { Logger } from '../utils/logger.mjs'
 import { getTypeNameForNamespace } from '../utils/namespaces.utils'
 import { createTypeImports } from './generate-types/external-type-imports'
 import { createFormattersType } from './generate-types/formatters-type'

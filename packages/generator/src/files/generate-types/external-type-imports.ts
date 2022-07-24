@@ -1,6 +1,6 @@
 import { filterDuplicates, sortStringASC } from 'typesafe-utils'
 import { COMMA_SEPARATION } from '../../constants'
-import { importTypeStatement } from '../../output-handler'
+import { importTypeStatement } from '../../output-handler.mjs'
 import { isParsedResultEntry, ParsedResult } from '../../types'
 
 const BASE_TYPES = [

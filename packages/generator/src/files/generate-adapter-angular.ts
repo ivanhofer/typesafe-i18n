@@ -1,7 +1,7 @@
-import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
-import { importTypes, OVERRIDE_WARNING, relativeFileImportPath, tsCheck } from '../output-handler'
-import { writeFileIfContainsChanges } from '../utils/file.utils'
-import { prettify } from '../utils/generator.utils'
+import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types.mjs'
+import { importTypes, OVERRIDE_WARNING, relativeFileImportPath, tsCheck } from '../output-handler.mjs'
+import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
+import { prettify } from '../utils/generator.utils.mjs'
 
 const getAngularUtils = ({ utilFileName, banner, typesFileName }: GeneratorConfigWithDefaultValues) => {
 	return `${OVERRIDE_WARNING}${tsCheck}

@@ -1,5 +1,5 @@
 import prompts from 'prompts'
-import type { GeneratorConfig } from '../../../config/src/types'
+import type { GeneratorConfig } from '../../../config/src/types.mjs'
 
 export const askConfigQuestions = ({ baseLocale, adapter, esmImports, outputFormat, outputPath }: GeneratorConfig) =>
 	prompts([

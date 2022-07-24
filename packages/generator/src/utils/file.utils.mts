@@ -2,8 +2,8 @@ import { promises as fsPromises } from 'fs'
 import { dirname, join, resolve } from 'path'
 import type { JsonObject } from 'type-fest'
 import { pathToFileURL } from 'url'
-import { fileEnding } from '../output-handler'
-import { logger } from './logger'
+import { fileEnding } from '../output-handler.mjs'
+import { logger } from './logger.mjs'
 
 const { readFile: read, readdir, writeFile: write, mkdir, stat, rm } = fsPromises
 
@@ -139,7 +139,8 @@ export const getDirectoryStructure = async (path: string): Promise<Record<string
 const isWindows = process.platform === 'win32'
 const isEsm = (import.meta.url || '').endsWith('.mjs')
 
-export const importFile = async <T = unknown>(file: string, outputError = true): Promise<T> => {
+// eslint-disable-next-line prettier/prettier
+export const importFile = async <T = unknown,>(file: string, outputError = true): Promise<T> => {
 	if (file.endsWith('.json')) {
 		const jsonFile = await readFile(file)
 		return jsonFile ? JSON.parse(jsonFile) : undefined

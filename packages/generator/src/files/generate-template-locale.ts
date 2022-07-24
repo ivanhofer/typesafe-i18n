@@ -1,10 +1,10 @@
 import type { BaseTranslation, Locale } from '@typesafe-i18n/runtime/core.mjs'
 import { join } from 'path'
-import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
-import { fileEnding } from '../output-handler'
+import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types.mjs'
+import { fileEnding } from '../output-handler.mjs'
 import { getDictionaryTemplate } from '../utils/dictionary.utils'
-import { writeFileIfContainsChanges } from '../utils/file.utils'
-import { prettify } from '../utils/generator.utils'
+import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
+import { prettify } from '../utils/generator.utils.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 

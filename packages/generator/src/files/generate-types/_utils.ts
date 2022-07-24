@@ -1,6 +1,6 @@
 import { NEW_LINE, NEW_LINE_INDENTED } from '../../constants'
 import { isParsedResultEntry, type ParsedResult, type ParsedResultEntry } from '../../types'
-import { wrapObjectKeyIfNeeded } from '../../utils/generator.utils'
+import { wrapObjectKeyIfNeeded } from '../../utils/generator.utils.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 

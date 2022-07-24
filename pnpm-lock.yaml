@@ -18,7 +18,7 @@ importers:
       rimraf: ^3.0.2
       size-limit: ^7.0.8
       tiny-glob: ^0.2.9
-      tsm: ^2.2.1
+      tsx: ^3.8.0
       typescript: ^4.7.4
     devDependencies:
       '@size-limit/preset-small-lib': 7.0.8_size-limit@7.0.8
@@ -35,19 +35,19 @@ importers:
       rimraf: 3.0.2
       size-limit: 7.0.8
       tiny-glob: 0.2.9
-      tsm: 2.2.1
+      tsx: 3.8.0
       typescript: 4.7.4
 
   packages/adapter-angular:
     specifiers:
       '@typesafe-i18n/runtime': workspace:../runtime/src
       esbuild: ^0.14.49
-      tsm: ^2.2.1
+      tsx: ^3.8.0
       typescript: ^4.7.4
     devDependencies:
       '@typesafe-i18n/runtime': link:../runtime/src
       esbuild: 0.14.49
-      tsm: 2.2.1
+      tsx: 3.8.0
       typescript: 4.7.4
 
   packages/adapter-react:
@@ -55,13 +55,13 @@ importers:
       '@types/react': ^17.0.47
       '@typesafe-i18n/runtime': workspace:../runtime/src
       esbuild: ^0.14.49
-      tsm: ^2.2.1
+      tsx: ^3.8.0
       typescript: ^4.7.4
     devDependencies:
       '@types/react': 17.0.47
       '@typesafe-i18n/runtime': link:../runtime/src
       esbuild: 0.14.49
-      tsm: 2.2.1
+      tsx: 3.8.0
       typescript: 4.7.4
 
   packages/adapter-solid:
@@ -69,13 +69,13 @@ importers:
       '@typesafe-i18n/runtime': workspace:../runtime/src
       esbuild: ^0.14.49
       solid-js: ^1.4.7
-      tsm: ^2.2.1
+      tsx: ^3.8.0
       typescript: ^4.7.4
     devDependencies:
       '@typesafe-i18n/runtime': link:../runtime/src
       esbuild: 0.14.49
       solid-js: 1.4.7
-      tsm: 2.2.1
+      tsx: 3.8.0
       typescript: 4.7.4
 
   packages/adapter-svelte:
@@ -83,26 +83,26 @@ importers:
       '@typesafe-i18n/runtime': workspace:../runtime/src
       esbuild: ^0.14.49
       svelte: ^3.49.0
-      tsm: ^2.2.1
+      tsx: ^3.8.0
       typescript: ^4.7.4
     devDependencies:
       '@typesafe-i18n/runtime': link:../runtime/src
       esbuild: 0.14.49
       svelte: 3.49.0
-      tsm: 2.2.1
+      tsx: 3.8.0
       typescript: 4.7.4
 
   packages/adapter-vue:
     specifiers:
       '@typesafe-i18n/runtime': workspace:../runtime/src
       esbuild: ^0.14.49
-      tsm: ^2.2.1
+      tsx: ^3.8.0
       typescript: ^4.7.4
       vue: 3.2.29
     devDependencies:
       '@typesafe-i18n/runtime': link:../runtime/src
       esbuild: 0.14.49
-      tsm: 2.2.1
+      tsx: 3.8.0
       typescript: 4.7.4
       vue: 3.2.29
 
@@ -110,12 +110,12 @@ importers:
     specifiers:
       '@typesafe-i18n/runtime': workspace:../runtime/src
       esbuild: ^0.14.49
-      tsm: ^2.2.1
+      tsx: ^3.8.0
       typescript: ^4.7.4
     devDependencies:
       '@typesafe-i18n/runtime': link:../runtime/src
       esbuild: 0.14.49
-      tsm: 2.2.1
+      tsx: 3.8.0
       typescript: 4.7.4
 
   packages/cli:
@@ -130,6 +130,7 @@ importers:
       kleur: ^4.1.5
       prompts: ^2.4.2
       tiny-glob: ^0.2.9
+      tsx: ^3.8.0
       type-fest: ^2.16.0
       typesafe-utils: ^1.16.2
       typescript: ^4.7.4
@@ -144,6 +145,7 @@ importers:
       kleur: 4.1.5
       prompts: 2.4.2
       tiny-glob: 0.2.9
+      tsx: 3.8.0
       type-fest: 2.16.0
       typesafe-utils: 1.16.2
       typescript: 4.7.4
@@ -165,7 +167,7 @@ importers:
       '@typesafe-i18n/runtime': workspace:../runtime/src
       esbuild: ^0.14.49
       tiny-glob: ^0.2.9
-      tsm: ^2.2.1
+      tsx: ^3.8.0
       typesafe-utils: ^1.16.2
       typescript: ^4.7.4
       uvu: ^0.5.6
@@ -174,7 +176,7 @@ importers:
       '@typesafe-i18n/runtime': link:../runtime/src
       esbuild: 0.14.49
       tiny-glob: 0.2.9
-      tsm: 2.2.1
+      tsx: 3.8.0
       typesafe-utils: 1.16.2
       typescript: 4.7.4
       uvu: 0.5.6
@@ -184,24 +186,26 @@ importers:
     specifiers:
       '@typesafe-i18n/runtime': workspace:../runtime/src
       esbuild: ^0.14.49
+      tsx: ^3.8.0
       typescript: ^4.7.4
     devDependencies:
       '@typesafe-i18n/runtime': link:../runtime/src
       esbuild: 0.14.49
+      tsx: 3.8.0
       typescript: 4.7.4
 
   packages/formatters:
     specifiers:
       '@typesafe-i18n/runtime': workspace:../runtime/src
       esbuild: ^0.14.49
-      tsm: ^2.2.1
+      tsx: ^3.8.0
       typescript: ^4.7.4
       uvu: ^0.5.6
       watchlist: ^0.3.1
     devDependencies:
       '@typesafe-i18n/runtime': link:../runtime/src
       esbuild: 0.14.49
-      tsm: 2.2.1
+      tsx: 3.8.0
       typescript: 4.7.4
       uvu: 0.5.6
       watchlist: 0.3.1
@@ -216,7 +220,7 @@ importers:
       kleur: ^4.1.5
       require-self: ^0.2.3
       tiny-glob: ^0.2.9
-      tsm: ^2.2.1
+      tsx: ^3.8.0
       type-fest: ^2.16.0
       typesafe-utils: ^1.16.2
       typescript: ^4.7.4
@@ -231,7 +235,7 @@ importers:
       kleur: 4.1.5
       require-self: 0.2.3
       tiny-glob: 0.2.9
-      tsm: 2.2.1
+      tsx: 3.8.0
       type-fest: 2.16.0
       typesafe-utils: 1.16.2
       typescript: 4.7.4
@@ -243,7 +247,7 @@ importers:
       '@typesafe-i18n/runtime': workspace:../runtime/src
       esbuild: ^0.14.49
       tiny-glob: ^0.2.9
-      tsm: ^2.2.1
+      tsx: ^3.8.0
       typescript: ^4.7.4
       uvu: ^0.5.6
       watchlist: ^0.3.1
@@ -251,7 +255,7 @@ importers:
       '@typesafe-i18n/runtime': link:../runtime/src
       esbuild: 0.14.49
       tiny-glob: 0.2.9
-      tsm: 2.2.1
+      tsx: 3.8.0
       typescript: 4.7.4
       uvu: 0.5.6
       watchlist: 0.3.1
@@ -270,7 +274,6 @@ importers:
     specifiers:
       '@typesafe-i18n/parser': workspace:../parser/src
       tiny-glob: ^0.2.9
-      tsm: ^2.2.1
       tsx: ^3.8.0
       typesafe-utils: ^1.16.2
       uvu: ^0.5.6
@@ -278,7 +281,6 @@ importers:
     devDependencies:
       '@typesafe-i18n/parser': link:../parser/src
       tiny-glob: 0.2.9
-      tsm: 2.2.1
       tsx: 3.8.0
       typesafe-utils: 1.16.2
       uvu: 0.5.6
@@ -2260,14 +2262,6 @@ packages:
 
   /tslib/2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
-    dev: true
-
-  /tsm/2.2.1:
-    resolution: {integrity: sha512-qvJB0baPnxQJolZru11mRgGTdNlx17WqgJnle7eht3Vhb+VUR4/zFA5hFl6NqRe7m8BD9w/6yu0B2XciRrdoJA==}
-    engines: {node: '>=12'}
-    hasBin: true
-    dependencies:
-      esbuild: 0.14.49
     dev: true
 
   /tsutils/3.21.0_typescript@4.7.4:

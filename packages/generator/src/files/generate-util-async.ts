@@ -1,5 +1,5 @@
 import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
-import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
+import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types.mjs'
 import {
 	generics,
 	importTypes,
@@ -12,9 +12,9 @@ import {
 	tsCheck,
 	type,
 	typeCast,
-} from '../output-handler'
-import { writeFileIfContainsChanges } from '../utils/file.utils'
-import { prettify, wrapObjectKeyIfNeeded } from '../utils/generator.utils'
+} from '../output-handler.mjs'
+import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
+import { prettify, wrapObjectKeyIfNeeded } from '../utils/generator.utils.mjs'
 
 const NEW_LINE_INDENTED_WITH_COMMA = `,
 	`

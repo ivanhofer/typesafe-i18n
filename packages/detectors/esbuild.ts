@@ -1,11 +1,6 @@
 import { build } from 'esbuild'
-import { dirname, resolve } from 'path'
+import { resolve } from 'path'
 import glob from 'tiny-glob/sync.js'
-import { fileURLToPath } from 'url'
-
-//@ts-ignore
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
 
 const watch = process.argv.includes('--watch')
 

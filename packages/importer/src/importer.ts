@@ -4,10 +4,10 @@ import { getConfigWithDefaultValues } from '../../config/src/config'
 import { generateLocaleTemplate } from '../../generator/src/files/generate-template-locale'
 import { generateNamespaceTemplate } from '../../generator/src/files/generate-template-namespace'
 import { generate } from '../../generator/src/generate-files'
-import { configureOutputHandler } from '../../generator/src/output-handler'
+import { configureOutputHandler } from '../../generator/src/output-handler.mjs'
 import { getAllLocales, parseLanguageFile } from '../../generator/src/parse-language-file'
-import { parseTypescriptVersion } from '../../generator/src/utils/generator.utils'
-import { createLogger } from '../../generator/src/utils/logger'
+import { parseTypescriptVersion } from '../../generator/src/utils/generator.utils.mjs'
+import { createLogger } from '../../generator/src/utils/logger.mjs'
 
 const logger = createLogger(console, true)
 

@@ -17,7 +17,7 @@ npm install typesafe-i18n
 
 An example implementation can be seen in the [`importer.ts`-file](https://github.com/ivanhofer/typesafe-i18n/blob/main/packages/importer/example/import.ts).
 
-> you need to run this script during development or as a CI-process and **not** at runtime. Create an own file with the implementation and run it with [`tsm`](https://github.com/lukeed/tsm) or something similar.
+> you need to run this script during development or as a CI-process and **not** at runtime. Create an own file with the implementation and run it with [`tsx`](https://github.com/esbuild-kit/tsx) or something similar.
 
 To run this example execute following command in your terminal:
 

@@ -8,7 +8,7 @@ import {
 	type ParsedResult,
 	type Types,
 } from '../../types'
-import { wrapObjectKeyIfNeeded } from '../../utils/generator.utils'
+import { wrapObjectKeyIfNeeded } from '../../utils/generator.utils.mjs'
 import { createJsDocsString } from './jsdoc'
 import { getNestedKey, mapToString, processNestedParsedResult, wrapObjectType } from './_utils'
 

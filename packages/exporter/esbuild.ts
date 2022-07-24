@@ -1,10 +1,5 @@
 import { build } from 'esbuild'
-import { dirname, resolve } from 'path'
-import { fileURLToPath } from 'url'
-
-//@ts-ignore
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+import { resolve } from 'path'
 
 const watch = process.argv.includes('--watch')
 

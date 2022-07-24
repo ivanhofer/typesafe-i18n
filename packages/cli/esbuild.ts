@@ -1,11 +1,6 @@
 import { build } from 'esbuild'
-import { dirname, resolve } from 'path'
-import { fileURLToPath } from 'url'
+import { resolve } from 'path'
 import { nativeNodeModulesPlugin } from './native-node-modules-plugin'
-
-//@ts-ignore
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
 
 const watch = process.argv.includes('--watch')
 

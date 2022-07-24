@@ -1,5 +1,5 @@
 import type { Locale } from '@typesafe-i18n/runtime/core.mjs'
-import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types'
+import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types.mjs'
 import {
 	importTypes,
 	jsDocFunction,
@@ -11,9 +11,9 @@ import {
 	tsCheck,
 	type,
 	typeCast,
-} from '../output-handler'
-import { writeFileIfContainsChanges } from '../utils/file.utils'
-import { prettify, sanitizePath, wrapObjectKeyIfNeeded } from '../utils/generator.utils'
+} from '../output-handler.mjs'
+import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
+import { prettify, sanitizePath, wrapObjectKeyIfNeeded } from '../utils/generator.utils.mjs'
 
 const aa = (sanitizedLocale: string, namespaces: string[]) => `{
 		...${sanitizedLocale}${namespaces

@@ -4,7 +4,7 @@ import kleur from 'kleur'
 import { inspect } from 'util'
 //@ts-ignore
 import schema from '../../../schema/typesafe-i18n.json'
-import type { GeneratorConfig } from './types'
+import type { GeneratorConfig } from './types.mjs'
 
 const validate = new Ajv({ allErrors: true }).compile(schema as object)
 

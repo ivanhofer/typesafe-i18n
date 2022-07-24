@@ -1,10 +1,6 @@
 import { readFileSync, writeFileSync } from 'fs'
-import { dirname, resolve } from 'path'
+import { resolve } from 'path'
 import glob from 'tiny-glob/sync.js'
-import { fileURLToPath } from 'url'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
 
 type FromWheretoImport = string
 type OutputPath = string

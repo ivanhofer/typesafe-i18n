@@ -15,7 +15,7 @@ import {
 } from 'typesafe-utils'
 import { REGEX_BRACKETS } from '../../constants'
 import type { Arg, ParsedResult, ParsedResultEntry, Types } from '../../types'
-import type { Logger } from '../../utils/logger'
+import type { Logger } from '../../utils/logger.mjs'
 
 export const parseDictionary = (
 	translations: BaseTranslation | BaseTranslation[] | Readonly<BaseTranslation> | Readonly<BaseTranslation[]>,
