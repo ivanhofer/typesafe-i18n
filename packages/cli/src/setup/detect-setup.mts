@@ -2,7 +2,7 @@ import { resolve } from 'path'
 import { getConfigWithDefaultValues } from '../../../config/src/config'
 import type { Adapters, GeneratorConfig } from '../../../config/src/types.mjs'
 import { doesPathExist } from '../../../generator/src/utils/file.utils.mjs'
-import { getDependencyList, isEsmProject } from './package-json'
+import { getDependencyList, isEsmProject } from './package-json.mjs'
 
 const useAdapterWhenDependenciesContain =
 	(shouldContain: string[]) =>

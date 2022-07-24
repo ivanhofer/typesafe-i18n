@@ -3,5 +3,5 @@
 	"compilerOptions": {
 		"target": "ESNext",
 	},
-	"include": ["./src/**/*.ts"]
+	"include": ["./src/**/*.ts", "src/setup/questions.mts", "src/setup/detect-setup.mts", "src/setup/package-json.mts", "src/setup/setup.mts", "src/cli.mts"]
 }

@@ -1,6 +1,11 @@
 import { build } from 'esbuild'
-import { resolve } from 'path'
+import { dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
 import { nativeNodeModulesPlugin } from './native-node-modules-plugin'
+
+//@ts-ignore
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const watch = process.argv.includes('--watch')
 
@@ -8,7 +13,7 @@ const getPath = (file: string) => resolve(__dirname, file)
 
 build({
 	plugins: [nativeNodeModulesPlugin],
-	entryPoints: [getPath('src/cli.ts')],
+	entryPoints: [getPath('src/cli.mts')],
 	bundle: true,
 	outfile: getPath('../../cli/typesafe-i18n.mjs'),
 	platform: 'node',

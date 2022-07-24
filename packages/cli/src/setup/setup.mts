@@ -5,9 +5,9 @@ import { isPropertyNotUndefined } from 'typesafe-utils'
 import { doesConfigFileExist, getConfigWithDefaultValues, writeConfigToFile } from '../../../config/src/config'
 import type { GeneratorConfig } from '../../../config/src/types.mjs'
 import { logger } from '../../../generator/src/utils/logger.mjs'
-import { getDefaultConfig } from './detect-setup'
-import { updatePackageJson } from './package-json'
-import { askConfigQuestions, askOverrideQuestion } from './questions'
+import { getDefaultConfig } from './detect-setup.mjs'
+import { updatePackageJson } from './package-json.mjs'
+import { askConfigQuestions, askOverrideQuestion } from './questions.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -16,7 +16,8 @@ const getConfigDiff = async (options: GeneratorConfig) => {
 
 	const diff = justDiff({ baseLocale, adapter, esmImports, outputFormat, outputPath }, options)
 
-	const changedValues = <GeneratorConfig>justDiffApply(
+	const changedValues =
+		justDiffApply(
 			{
 				baseLocale: undefined,
 				adapter: undefined,

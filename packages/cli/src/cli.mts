@@ -3,7 +3,7 @@ import { checkAndUpdateSchemaVersion } from '../../config/src/update-schema-vers
 import { startGenerator } from '../../generator/src/generator'
 import { logger } from '../../generator/src/utils/logger.mjs'
 import { version } from '../../version'
-import { setup } from './setup/setup'
+import { setup } from './setup/setup.mjs'
 
 const program = new Command()
 
