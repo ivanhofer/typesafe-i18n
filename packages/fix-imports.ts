@@ -5,8 +5,8 @@ import glob from 'tiny-glob/sync.js'
 const rootPath = resolve(__dirname, '..')
 
 const formats = [
-	{ regex: /require\("\.([^(cjs)]*)"\)/g, fileEnding: 'cjs' },
-	{ regex: /port .* from '\.([^(mjs)]*)'/g, fileEnding: 'mjs' },
+	{ regex: /require\("\.(.*)"\)/g, fileEnding: 'cjs' },
+	{ regex: /port .* from '\.(.*)'/g, fileEnding: 'mjs' },
 ]
 
 const folders = [
@@ -30,7 +30,7 @@ formats.forEach(({ regex, fileEnding }) => {
 		const content = readFileSync(fullFilePath).toString()
 
 		const newContent = content.replace(regex, (requireStatement, path) =>
-			requireStatement.replace(path, path + `.${fileEnding}`),
+			requireStatement.replace(path, path + `.${fileEnding}`).replace(`.mjs.${fileEnding}`, `.${fileEnding}`),
 		)
 
 		writeFileSync(fullFilePath, newContent, { encoding: 'utf8' })
