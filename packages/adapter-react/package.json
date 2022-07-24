@@ -10,5 +10,6 @@
     "esbuild": "^0.14.49",
     "tsx": "^3.8.0",
     "typescript": "^4.7.4"
-  }
+  },
+  "type": "module"
 }
