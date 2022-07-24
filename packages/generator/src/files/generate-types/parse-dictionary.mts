@@ -11,7 +11,7 @@ import {
 	not,
 	sortStringASC,
 	sortStringPropertyASC,
-	uniqueArray
+	uniqueArray,
 } from 'typesafe-utils'
 import { REGEX_BRACKETS } from '../../constants.mjs'
 import type { Arg, ParsedResult, ParsedResultEntry, Types } from '../../types.mjs'

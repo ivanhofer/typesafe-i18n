@@ -6,7 +6,7 @@ import type {
 	Locale,
 	LocalizedString,
 	TranslationFunctions,
-	TypedTranslationFunctions
+	TypedTranslationFunctions,
 } from './core.mjs'
 import { translate } from './core.mjs'
 import { getPartsFromString } from './util.string.mjs'
@@ -86,6 +86,7 @@ const createProxy = <T extends BaseTranslation | BaseTranslation[]>(
 /* PROXY-END */
 
 /* PROXY-CJS-START */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const createCjsProxy = <T extends BaseTranslation | BaseTranslation[]>(
 	proxyObject: T = {} as T,
 	translateFn: TranslateFn,

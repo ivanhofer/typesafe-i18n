@@ -10,4 +10,3 @@ export { initAcceptLanguageHeaderDetector } from './detectors/server/accept-lang
 export { initRequestCookiesDetector } from './detectors/server/request-cookies.mjs'
 export { initRequestHostnameDetector } from './detectors/server/request-hostname.mjs'
 export { initRequestParametersDetector } from './detectors/server/request-parameters.mjs'
-

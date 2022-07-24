@@ -6,7 +6,7 @@ import {
 	type JsDocInfo,
 	type JsDocInfos,
 	type ParsedResult,
-	type Types
+	type Types,
 } from '../../types.mjs'
 import { wrapObjectKeyIfNeeded } from '../../utils/generator.utils.mjs'
 import { createJsDocsString } from './jsdoc.mjs'
