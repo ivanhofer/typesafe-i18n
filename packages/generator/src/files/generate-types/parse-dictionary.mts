@@ -6,7 +6,7 @@ import {
 	not,
 	sortStringASC,
 	sortStringPropertyASC,
-	uniqueArray
+	uniqueArray,
 } from 'typesafe-utils'
 import { parseRawText } from '../../../../parser/src/index.mjs'
 import type { ArgumentPart } from '../../../../parser/src/types.mjs'

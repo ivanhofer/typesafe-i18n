@@ -7,7 +7,7 @@ import {
 	jsDocType,
 	OVERRIDE_WARNING,
 	relativeFileImportPath,
-	tsCheck
+	tsCheck,
 } from '../output-handler.mjs'
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
 import { prettify } from '../utils/generator.utils.mjs'

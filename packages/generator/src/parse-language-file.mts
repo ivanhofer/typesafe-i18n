@@ -6,13 +6,13 @@ import type { Locale } from '../../runtime/src/core.mjs'
 import type { BaseTranslation } from '../../runtime/src/index.mjs'
 import { fileEnding } from './output-handler.mjs'
 import {
-    containsFolders,
-    createPathIfNotExits,
-    deleteFolderRecursive,
-    doesPathExist,
-    getDirectoryStructure,
-    getFiles,
-    importFile
+	containsFolders,
+	createPathIfNotExits,
+	deleteFolderRecursive,
+	doesPathExist,
+	getDirectoryStructure,
+	getFiles,
+	importFile,
 } from './utils/file.utils.mjs'
 import { logger } from './utils/logger.mjs'
 
