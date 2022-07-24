@@ -11,10 +11,10 @@ import {
 	not,
 	sortStringASC,
 	sortStringPropertyASC,
-	uniqueArray,
+	uniqueArray
 } from 'typesafe-utils'
-import { REGEX_BRACKETS } from '../../constants'
-import type { Arg, ParsedResult, ParsedResultEntry, Types } from '../../types'
+import { REGEX_BRACKETS } from '../../constants.mjs'
+import type { Arg, ParsedResult, ParsedResultEntry, Types } from '../../types.mjs'
 import type { Logger } from '../../utils/logger.mjs'
 
 export const parseDictionary = (

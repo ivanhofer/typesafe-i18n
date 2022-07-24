@@ -1,9 +1,9 @@
 import type { BaseTranslation } from '@typesafe-i18n/runtime/index.mjs'
 import { isString } from 'typesafe-utils'
-import { NEW_LINE } from '../../constants'
+import { NEW_LINE } from '../../constants.mjs'
 import { wrapObjectKeyIfNeeded } from '../../utils/generator.utils.mjs'
 import { logger } from '../../utils/logger.mjs'
-import { wrapUnionType } from './_utils'
+import { wrapUnionType } from './_utils.mjs'
 
 export const validateNamespaces = (translations: BaseTranslation | BaseTranslation[], namespaces: string[]) => {
 	if (!namespaces.length) return

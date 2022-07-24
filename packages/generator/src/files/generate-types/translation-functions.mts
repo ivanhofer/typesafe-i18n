@@ -1,16 +1,16 @@
 import { filterDuplicatesByKey } from 'typesafe-utils'
-import { COMMA_SEPARATION } from '../../constants'
+import { COMMA_SEPARATION } from '../../constants.mjs'
 import {
 	isParsedResultEntry,
 	type Arg,
 	type JsDocInfo,
 	type JsDocInfos,
 	type ParsedResult,
-	type Types,
-} from '../../types'
+	type Types
+} from '../../types.mjs'
 import { wrapObjectKeyIfNeeded } from '../../utils/generator.utils.mjs'
-import { createJsDocsString } from './jsdoc'
-import { getNestedKey, mapToString, processNestedParsedResult, wrapObjectType } from './_utils'
+import { createJsDocsString } from './jsdoc.mjs'
+import { getNestedKey, mapToString, processNestedParsedResult, wrapObjectType } from './_utils.mjs'
 
 export const createTranslationFunctionsType = (parsedTranslations: ParsedResult[], jsDocInfo: JsDocInfos) =>
 	`export type TranslationFunctions = ${wrapObjectType(parsedTranslations, () =>

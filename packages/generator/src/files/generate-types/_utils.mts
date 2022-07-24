@@ -1,5 +1,5 @@
-import { NEW_LINE, NEW_LINE_INDENTED } from '../../constants'
-import { isParsedResultEntry, type ParsedResult, type ParsedResultEntry } from '../../types'
+import { NEW_LINE, NEW_LINE_INDENTED } from '../../constants.mjs'
+import { isParsedResultEntry, type ParsedResult, type ParsedResultEntry } from '../../types.mjs'
 import { wrapObjectKeyIfNeeded } from '../../utils/generator.utils.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -8,12 +8,14 @@ export const getNestedKey = (key: string, parentKeys: string[]) => [...parentKey
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const mapToString = <T>(items: T[], mappingFunction: (item: T) => string): string =>
+// eslint-disable-next-line prettier/prettier
+export const mapToString = <T,>(items: T[], mappingFunction: (item: T) => string): string =>
 	items.map(mappingFunction).join('')
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const wrapObjectType = <T>(array: T[], callback: () => string) =>
+// eslint-disable-next-line prettier/prettier
+export const wrapObjectType = <T,>(array: T[], callback: () => string) =>
 	!array.length
 		? '{}'
 		: `{${callback()}

@@ -1,5 +1,5 @@
 import { sortStringPropertyASC } from 'typesafe-utils'
-import type { JsDocInfo, TypeInformation } from '../../types'
+import type { JsDocInfo, TypeInformation } from '../../types.mjs'
 
 const sanitizeText = (text: string) => text.replace(/\*\//g, '*\\/')
 

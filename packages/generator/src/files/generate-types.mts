@@ -5,20 +5,20 @@ import {
 	fileEndingForTypesFile,
 	importTypeStatement,
 	OVERRIDE_WARNING,
-	supportsTemplateLiteralTypes,
+	supportsTemplateLiteralTypes
 } from '../output-handler.mjs'
-import { isParsedResultEntry, JsDocInfos, ParsedResult } from '../types'
+import { isParsedResultEntry, JsDocInfos, ParsedResult } from '../types.mjs'
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
 import { prettify, wrapObjectKeyIfNeeded } from '../utils/generator.utils.mjs'
 import type { Logger } from '../utils/logger.mjs'
-import { getTypeNameForNamespace } from '../utils/namespaces.utils'
-import { createTypeImports } from './generate-types/external-type-imports'
-import { createFormattersType } from './generate-types/formatters-type'
-import { createNamespacesTypes, validateNamespaces } from './generate-types/namespaces'
-import { parseDictionary } from './generate-types/parse-dictionary'
-import { createTranslationFunctionsType } from './generate-types/translation-functions'
-import { createTranslationType } from './generate-types/translations'
-import { flattenToParsedResultEntry, getNestedKey, wrapUnionType } from './generate-types/_utils'
+import { getTypeNameForNamespace } from '../utils/namespaces.utils.mjs'
+import { createTypeImports } from './generate-types/external-type-imports.mjs'
+import { createFormattersType } from './generate-types/formatters-type.mjs'
+import { createNamespacesTypes, validateNamespaces } from './generate-types/namespaces.mjs'
+import { parseDictionary } from './generate-types/parse-dictionary.mjs'
+import { createTranslationFunctionsType } from './generate-types/translation-functions.mjs'
+import { createTranslationType } from './generate-types/translations.mjs'
+import { flattenToParsedResultEntry, getNestedKey, wrapUnionType } from './generate-types/_utils.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 

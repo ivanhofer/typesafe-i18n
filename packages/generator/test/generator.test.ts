@@ -3,9 +3,9 @@ import { readFile } from 'fs/promises'
 import { resolve } from 'path'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { getConfigWithDefaultValues } from '../../config/src/config'
+import { getConfigWithDefaultValues } from '../../config/src/config.mjs'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues, OutputFormats } from '../../config/src/types.mjs'
-import { generate } from '../src/generate-files'
+import { generate } from '../src/generate-files.mjs'
 import { parseTypescriptVersion, TypescriptVersion } from '../src/utils/generator.utils.mjs'
 
 const test = suite('types')

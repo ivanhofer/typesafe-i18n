@@ -5,13 +5,13 @@ import { resolve } from 'path'
 import ts from 'typescript'
 import { getConfigWithDefaultValues, readConfig } from '../../config/src/config.mjs'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../../config/src/types.mjs'
-import { generate } from './generate-files'
+import { generate } from './generate-files.mjs'
 import { configureOutputHandler, shouldGenerateJsDoc } from './output-handler.mjs'
-import { getAllLocales, parseLanguageFile } from './parse-language-file'
+import { getAllLocales, parseLanguageFile } from './parse-language-file.mjs'
 import { createPathIfNotExits } from './utils/file.utils.mjs'
 import { parseTypescriptVersion, TypescriptVersion } from './utils/generator.utils.mjs'
 import { createLogger, Logger } from './utils/logger.mjs'
-import { findAllNamespacesForLocale } from './utils/namespaces.utils'
+import { findAllNamespacesForLocale } from './utils/namespaces.utils.mjs'
 
 let logger: Logger
 let firstRunOfGenerator = true

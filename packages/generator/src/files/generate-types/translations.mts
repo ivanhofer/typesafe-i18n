@@ -1,13 +1,13 @@
 import { partAsStringWithoutTypes } from '@typesafe-i18n/runtime/core-utils.mjs'
 import { isArray, isPropertyFalsy } from 'typesafe-utils'
-import { NEW_LINE, PIPE_SEPARATION, REGEX_BRACKETS } from '../../constants'
+import { NEW_LINE, PIPE_SEPARATION, REGEX_BRACKETS } from '../../constants.mjs'
 import { supportsTemplateLiteralTypes } from '../../output-handler.mjs'
-import { isParsedResultEntry, type Arg, type JsDocInfo, type JsDocInfos, type ParsedResult } from '../../types'
-import { getWrappedString } from '../../utils/dictionary.utils'
+import { isParsedResultEntry, type Arg, type JsDocInfo, type JsDocInfos, type ParsedResult } from '../../types.mjs'
+import { getWrappedString } from '../../utils/dictionary.utils.mjs'
 import { wrapObjectKeyIfNeeded } from '../../utils/generator.utils.mjs'
-import { getTypeNameForNamespace } from '../../utils/namespaces.utils'
-import { createJsDocsString } from './jsdoc'
-import { getNestedKey, mapToString, processNestedParsedResult, wrapObjectType } from './_utils'
+import { getTypeNameForNamespace } from '../../utils/namespaces.utils.mjs'
+import { createJsDocsString } from './jsdoc.mjs'
+import { getNestedKey, mapToString, processNestedParsedResult, wrapObjectType } from './_utils.mjs'
 
 export const createTranslationType = (
 	parsedTranslations: ParsedResult[],

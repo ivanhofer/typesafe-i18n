@@ -1,7 +1,7 @@
 import { sortStringPropertyASC, uniqueArray } from 'typesafe-utils'
-import type { ParsedResult } from '../../types'
+import type { ParsedResult } from '../../types.mjs'
 import { wrapObjectKeyIfNeeded } from '../../utils/generator.utils.mjs'
-import { flattenToParsedResultEntry, mapToString, wrapObjectType } from './_utils'
+import { flattenToParsedResultEntry, mapToString, wrapObjectType } from './_utils.mjs'
 
 const getUniqueFormatters = (parsedTranslations: ParsedResult[]): [string, string[]][] => {
 	const map = {} as { [key: string]: string[] }

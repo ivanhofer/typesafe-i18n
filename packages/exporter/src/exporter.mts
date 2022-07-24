@@ -4,10 +4,10 @@ import ts from 'typescript'
 import { getConfigWithDefaultValues } from '../../config/src/config.mjs'
 import type { GeneratorConfigWithDefaultValues, OutputFormats } from '../../config/src/types.mjs'
 import { configureOutputHandler } from '../../generator/src/output-handler.mjs'
-import { getAllLocales, parseLanguageFile } from '../../generator/src/parse-language-file'
+import { getAllLocales, parseLanguageFile } from '../../generator/src/parse-language-file.mjs'
 import { parseTypescriptVersion } from '../../generator/src/utils/generator.utils.mjs'
 import { createLogger } from '../../generator/src/utils/logger.mjs'
-import { findAllNamespacesForLocale } from '../../generator/src/utils/namespaces.utils'
+import { findAllNamespacesForLocale } from '../../generator/src/utils/namespaces.utils.mjs'
 
 const logger = createLogger(console, true)
 
