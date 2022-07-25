@@ -58,6 +58,14 @@ export const loadFormatters = (locale) =>
 /**
  * @param { Locales } locale
  * @param { Namespaces } namespace
+ * @return { Promise<Translations[namespace]> }
+ */
+export const importNamespaceAsync = async(locale, namespace) =>
+	(await localeNamespaceLoaders[locale][namespace]()).default
+
+/**
+ * @param { Locales } locale
+ * @param { Namespaces } namespace
  * @return { Promise<void> }
  */
 export const loadNamespaceAsync = async (locale, namespace) =>
@@ -65,11 +73,3 @@ export const loadNamespaceAsync = async (locale, namespace) =>
 		locale,
 		/** @type { Partial<Translations> } */ ({ [namespace]: await importNamespaceAsync(locale, namespace)})
 	)
-
-/**
- * @param { Locales } locale
- * @param { Namespaces } namespace
- * @return { Promise<Partial<Translations>> }
- */
-export const importNamespaceAsync = async(locale, namespace) =>
-	(await localeNamespaceLoaders[locale][namespace]()).default;

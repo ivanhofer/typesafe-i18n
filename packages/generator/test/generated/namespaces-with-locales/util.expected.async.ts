@@ -47,11 +47,11 @@ export const loadAllLocalesAsync = (): Promise<void[]> => Promise.all(locales.ma
 export const loadFormatters = (locale: Locales): void =>
 	void (loadedFormatters[locale] = initFormatters(locale))
 
+export const importNamespaceAsync = async<Namespace extends Namespaces>(locale: Locales, namespace: Namespace) =>
+	(await localeNamespaceLoaders[locale][namespace]()).default as unknown as Translations[Namespace]
+
 export const loadNamespaceAsync = async <Namespace extends Namespaces>(locale: Locales, namespace: Namespace): Promise<void> =>
 	void updateDictionary(
 		locale,
 		{ [namespace]: await importNamespaceAsync(locale, namespace)}
 	)
-
-export const importNamespaceAsync = async<Namespace extends Namespaces>(locale: Locales, namespace: Namespace) =>
-	(await localeNamespaceLoaders[locale][namespace]()).default as unknown as Partial<Translations>;

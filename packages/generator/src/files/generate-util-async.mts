@@ -37,6 +37,15 @@ const localeNamespaceLoaders = {
 }`
 
 	const namespaceLoader = `
+${jsDocFunction(
+	'Promise<Translations[namespace]>',
+	{ type: 'Locales', name: 'locale' },
+	{ type: 'Namespaces', name: 'namespace' },
+)}
+export const importNamespaceAsync = async${generics('Namespace extends Namespaces')}(locale${type(
+		'Locales',
+	)}, namespace${type('Namespace')}) =>
+	(await localeNamespaceLoaders[locale][namespace]()).default${typeCast('unknown')}${typeCast('Translations[Namespace]')}
 ${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' }, { type: 'Namespaces', name: 'namespace' })}
 export const loadNamespaceAsync = async ${generics('Namespace extends Namespaces')}(locale${type(
 		'Locales',
@@ -45,16 +54,7 @@ export const loadNamespaceAsync = async ${generics('Namespace extends Namespaces
 		locale,
 		${jsDocType('Partial<Translations>', `{ [namespace]: await importNamespaceAsync(locale, namespace)}`)}
 	)
-
-${jsDocFunction(
-	'Promise<Partial<Translations>>',
-	{ type: 'Locales', name: 'locale' },
-	{ type: 'Namespaces', name: 'namespace' },
-)}
-export const importNamespaceAsync = async${generics('Namespace extends Namespaces')}(locale${type(
-		'Locales',
-	)}, namespace${type('Namespace')}) =>
-	(await localeNamespaceLoaders[locale][namespace]()).default${typeCast('unknown')}${typeCast('Partial<Translations>')};`
+`
 	return [namespaceImports, namespaceLoader]
 }
 
