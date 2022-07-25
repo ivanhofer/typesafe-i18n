@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs'
+import { writeFileSync } from 'fs'
 import { resolve } from 'path'
 import glob from 'tiny-glob/sync.js'
 
@@ -12,9 +12,9 @@ const mappings: [FromWheretoImport, OutputPath?, FilterFunction?][] = [
 	['adapter-solid', 'solid'],
 	['adapter-svelte', 'svelte'],
 	['adapter-vue', 'vue'],
-	['exporter', 'exporter', (file) => file === 'index.d.ts'],
+	['exporter', 'exporter', (file) => file === 'index.d.mts'],
 	['formatters'],
-	['importer', 'importer', (file) => file === 'index.d.ts'],
+	['importer', 'importer', (file) => file === 'index.d.mts'],
 	['detectors'],
 	['parser'],
 	['parser', 'runtime/cjs/parser/src'],
@@ -30,7 +30,7 @@ const goToRoot = (outputPath: string, file: string) => {
 }
 
 mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, filterFunction]) => {
-	const files = glob(`types/${fromWheretoImport}/src/**/*.d.mts`).map((file) =>
+	const files = glob(`types/${fromWheretoImport}/src/**/*.d.{ts,mts}`).map((file) =>
 		resolve(file)
 			.substring(resolve(__dirname, `../types/${fromWheretoImport}/src/`).length + 1)
 			.replace(/\\/g, '/'),
