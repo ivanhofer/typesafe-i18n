@@ -11,7 +11,7 @@ import {
 	relativeFolderImportPath,
 	tsCheck,
 	type,
-	typeCast,
+	typeCast
 } from '../output-handler.mjs'
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
 import { prettify, wrapObjectKeyIfNeeded } from '../utils/generator.utils.mjs'
@@ -43,13 +43,14 @@ export const loadNamespaceAsync = async ${generics('Namespace extends Namespaces
 	)}, namespace${type('Namespace')})${type('Promise<void>')} =>
 	void updateDictionary(
 		locale,
-		${jsDocType(
-			'Partial<Translations>',
-			`{ [namespace]: await importNamespaceAsync(locale, namespace)}`,
-		)}
+		${jsDocType('Partial<Translations>', `{ [namespace]: await importNamespaceAsync(locale, namespace)}`)}
 	)
 
-${jsDocFunction('Promise<Partial<Translations>>', { type: 'Locales', name: 'locale' }, { type: 'Namespaces', name: 'namespace' })}
+${jsDocFunction(
+	'Promise<Partial<Translations>>',
+	{ type: 'Locales', name: 'locale' },
+	{ type: 'Namespaces', name: 'namespace' },
+)}
 export const importNamespaceAsync = async${generics('Namespace extends Namespaces')}(locale${type(
 		'Locales',
 	)}, namespace${type('Namespace')}) =>
@@ -68,7 +69,13 @@ const getAsyncCode = (
 	const translationImporter = `
 ${jsDocFunction('Promise<Translations>', { type: 'Locales', name: 'locale' })}
 export const importLocaleAsync = async (locale${type('Locales')}) =>
-	(await localeTranslationLoaders[locale]()).default${typeCast('unknown')}${typeCast('Translations')};
+	${jsDocType(
+		'Translations',
+		jsDocType(
+			'unknown',
+			`(await localeTranslationLoaders[locale]()).default${typeCast('unknown')}${typeCast('Translations')}`,
+		),
+	)}
 `
 
 	return `${OVERRIDE_WARNING}${tsCheck}
@@ -100,10 +107,7 @@ ${translationImporter}
 
 ${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' })}
 export const loadLocaleAsync = async (locale${type('Locales')})${type('Promise<void>')} => {
-	updateDictionary(
-		locale,
-		${jsDocType('Translations', `await importLocaleAsync(locale)`)}
-	)
+	updateDictionary(locale, await importLocaleAsync(locale))
 	loadFormatters(locale)
 }
 
