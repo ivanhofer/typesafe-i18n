@@ -95,9 +95,8 @@ export const loadLocale = (locale${type('Locales')})${type('void')} => {
 export const loadAllLocales = ()${type('void')} => locales.forEach(loadLocale)
 
 ${jsDocFunction('void', { type: 'Locales', name: 'locale' })}
-export const loadFormatters = (locale${type('Locales')})${type('void')} => {
-	loadedFormatters[locale] = initFormatters(locale)
-}
+export const loadFormatters = (locale${type('Locales')})${type('void')} =>
+	void (loadedFormatters[locale] = initFormatters(locale))
 `
 }
 

@@ -37,22 +37,20 @@ const localeNamespaceLoaders = {
 }`
 
 	const namespaceLoader = `
+${jsDocFunction(
+	'Promise<Translations[namespace]>',
+	{ type: 'Locales', name: 'locale' },
+	{ type: 'Namespaces', name: 'namespace' },
+)}
+export const importNamespaceAsync = async${generics('Namespace extends Namespaces')}(locale${type(
+		'Locales',
+	)}, namespace${type('Namespace')}) =>
+	(await localeNamespaceLoaders[locale][namespace]()).default${typeCast('unknown')}${typeCast('Translations[Namespace]')}
 ${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' }, { type: 'Namespaces', name: 'namespace' })}
 export const loadNamespaceAsync = async ${generics('Namespace extends Namespaces')}(locale${type(
 		'Locales',
 	)}, namespace${type('Namespace')})${type('Promise<void>')} =>
-	void updateDictionary(
-		locale,
-		${jsDocType(
-			'Partial<Translations>',
-			jsDocType(
-				'unknown',
-				`{ [namespace]: (await (localeNamespaceLoaders[locale][namespace])()).default }${typeCast(
-					'unknown',
-				)}${typeCast('Partial<Translations>')}`,
-			),
-		)}
-	)
+	void updateDictionary(locale, { [namespace]: await importNamespaceAsync(locale, namespace )})
 `
 	return [namespaceImports, namespaceLoader]
 }
@@ -65,6 +63,18 @@ const getAsyncCode = (
 	const usesNamespaces = !!namespaces.length
 	const localesTranslationLoaders = locales.map(getLocalesTranslationRowAsync).join('')
 	const [namespaceImports, namespaceLoader] = usesNamespaces ? generateNamespacesCode(locales, namespaces) : ['', '']
+	const translationImporter = `
+${jsDocFunction('Promise<Translations>', { type: 'Locales', name: 'locale' })}
+export const importLocaleAsync = async (locale${type('Locales')}) =>
+	${jsDocType(
+		'Translations',
+		jsDocType(
+			'unknown',
+			`(await localeTranslationLoaders[locale]()).default${typeCast('unknown')}${typeCast('Translations')}`,
+		),
+	)}
+`
+
 	return `${OVERRIDE_WARNING}${tsCheck}
 ${banner}
 
@@ -90,18 +100,11 @@ ${jsDocFunction(
 const updateDictionary = (locale${type('Locales')}, dictionary${type('Partial<Translations>')}) =>
 	loadedLocales[locale] = { ...loadedLocales[locale], ...dictionary }
 
+${translationImporter}
+
 ${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' })}
 export const loadLocaleAsync = async (locale${type('Locales')})${type('Promise<void>')} => {
-	updateDictionary(
-		locale,
-		${jsDocType(
-			'Translations',
-			jsDocType(
-				'unknown',
-				`(await localeTranslationLoaders[locale]()).default${typeCast('unknown')}${typeCast('Translations')}`,
-			),
-		)}
-	)
+	updateDictionary(locale, await importLocaleAsync(locale))
 	loadFormatters(locale)
 }
 

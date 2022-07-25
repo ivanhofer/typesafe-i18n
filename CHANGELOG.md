@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.10.0 (2022-07-25)
+
+Feature:
+ - break out translation imports into it's own functions [#384](https://github.com/ivanhofer/typesafe-i18n/discussions/384)
+
 ## 5.9.1 (2022-07-25)
 
 Fix:

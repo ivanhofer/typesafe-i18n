@@ -39,6 +39,5 @@ export const loadAllLocales = () => locales.forEach(loadLocale)
  * @param { Locales } locale
  * @return { void }
  */
-export const loadFormatters = (locale) => {
-	loadedFormatters[locale] = initFormatters(locale)
-}
+export const loadFormatters = (locale) =>
+	void (loadedFormatters[locale] = initFormatters(locale))
