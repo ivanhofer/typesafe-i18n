@@ -35,7 +35,4 @@ export const importNamespaceAsync = async<Namespace extends Namespaces>(locale: 
 	(await localeNamespaceLoaders[locale][namespace]()).default as unknown as Translations[Namespace]
 
 export const loadNamespaceAsync = async <Namespace extends Namespaces>(locale: Locales, namespace: Namespace): Promise<void> =>
-	void updateDictionary(
-		locale,
-		{ [namespace]: await importNamespaceAsync(locale, namespace)}
-	)
+	void updateDictionary(locale, { [namespace]: await importNamespaceAsync(locale, namespace )})

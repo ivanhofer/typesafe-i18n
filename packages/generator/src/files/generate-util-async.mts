@@ -50,10 +50,7 @@ ${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' }, { type: 'N
 export const loadNamespaceAsync = async ${generics('Namespace extends Namespaces')}(locale${type(
 		'Locales',
 	)}, namespace${type('Namespace')})${type('Promise<void>')} =>
-	void updateDictionary(
-		locale,
-		${jsDocType('Partial<Translations>', `{ [namespace]: await importNamespaceAsync(locale, namespace)}`)}
-	)
+	void updateDictionary(locale, { [namespace]: await importNamespaceAsync(locale, namespace )})
 `
 	return [namespaceImports, namespaceLoader]
 }

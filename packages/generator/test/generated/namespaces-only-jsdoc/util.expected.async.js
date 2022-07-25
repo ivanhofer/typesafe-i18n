@@ -69,7 +69,4 @@ export const importNamespaceAsync = async(locale, namespace) =>
  * @return { Promise<void> }
  */
 export const loadNamespaceAsync = async (locale, namespace) =>
-	void updateDictionary(
-		locale,
-		/** @type { Partial<Translations> } */ ({ [namespace]: await importNamespaceAsync(locale, namespace)})
-	)
+	void updateDictionary(locale, { [namespace]: await importNamespaceAsync(locale, namespace )})
