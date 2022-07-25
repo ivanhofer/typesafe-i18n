@@ -47,9 +47,7 @@ export const loadNamespaceAsync = async ${generics('Namespace extends Namespaces
 			'Partial<Translations>',
 			jsDocType(
 				'unknown',
-				`{ [namespace]: (await (localeNamespaceLoaders[locale][namespace])()).default }${typeCast(
-					'unknown',
-				)}${typeCast('Partial<Translations>')}`,
+				`{ [namespace]: (await importTranslations(locale, namespace))}${typeCast('Partial<Translations>')}`,
 			),
 		)}
 	)
@@ -65,6 +63,29 @@ const getAsyncCode = (
 	const usesNamespaces = !!namespaces.length
 	const localesTranslationLoaders = locales.map(getLocalesTranslationRowAsync).join('')
 	const [namespaceImports, namespaceLoader] = usesNamespaces ? generateNamespacesCode(locales, namespaces) : ['', '']
+	const translationImporter = `
+export const importTranslations = async ${usesNamespaces ? generics('Namespace extends Namespaces') : ''}(${
+		usesNamespaces
+			? `
+`
+			: ''
+	}locale${type('Locales')}${
+		usesNamespaces
+			? `,
+	namespace?${type('Namespace')}`
+			: ''
+	}) => {
+	const loader = ${
+		usesNamespaces
+			? `namespace
+		? localeNamespaceLoaders[locale][namespace]
+		: `
+			: ''
+	}localeTranslationLoaders[locale];
+	return (await loader()).default${typeCast('unknown')};
+};
+`
+
 	return `${OVERRIDE_WARNING}${tsCheck}
 ${banner}
 
@@ -90,17 +111,13 @@ ${jsDocFunction(
 const updateDictionary = (locale${type('Locales')}, dictionary${type('Partial<Translations>')}) =>
 	loadedLocales[locale] = { ...loadedLocales[locale], ...dictionary }
 
+${translationImporter}
+
 ${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' })}
 export const loadLocaleAsync = async (locale${type('Locales')})${type('Promise<void>')} => {
 	updateDictionary(
 		locale,
-		${jsDocType(
-			'Translations',
-			jsDocType(
-				'unknown',
-				`(await localeTranslationLoaders[locale]()).default${typeCast('unknown')}${typeCast('Translations')}`,
-			),
-		)}
+		${jsDocType('Translations', jsDocType('unknown', `(await importTranslations(locale))${typeCast('Translations')}`))}
 	)
 	loadFormatters(locale)
 }

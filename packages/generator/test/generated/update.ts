@@ -7,6 +7,8 @@ console.log(`
 updating generated files ...`
 )
 
+const __dirname = new URL('.', import.meta.url).pathname;
+
 glob('**/*.actual.*', { cwd: __dirname }).forEach((file) => {
 	const actual = readFileSync(`${__dirname}/${file}`, 'utf-8')
 	writeFileSync(`${__dirname}/${file.replace('.actual.', '.expected.')}`, actual)
