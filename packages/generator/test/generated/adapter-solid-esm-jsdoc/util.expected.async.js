@@ -23,10 +23,12 @@ const localeTranslationLoaders = {
 const updateDictionary = (locale, dictionary) =>
 	loadedLocales[locale] = { ...loadedLocales[locale], ...dictionary }
 
-export const importTranslations = async (locale) => {
-	const loader = localeTranslationLoaders[locale];
-	return (await loader()).default;
-};
+/**
+ * @param { Locales } locale
+ * @return { Promise<Translations> }
+ */
+export const importLocaleAsync = async (locale) =>
+	(await localeTranslationLoaders[locale]()).default;
 
 /**
  * @param { Locales } locale
@@ -35,7 +37,7 @@ export const importTranslations = async (locale) => {
 export const loadLocaleAsync = async (locale) => {
 	updateDictionary(
 		locale,
-		/** @type { Translations } */ (/** @type { unknown } */ ((await importTranslations(locale))))
+		/** @type { Translations } */ (await importLocaleAsync(locale))
 	)
 	loadFormatters(locale)
 }

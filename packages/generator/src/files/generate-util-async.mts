@@ -45,13 +45,15 @@ export const loadNamespaceAsync = async ${generics('Namespace extends Namespaces
 		locale,
 		${jsDocType(
 			'Partial<Translations>',
-			jsDocType(
-				'unknown',
-				`{ [namespace]: (await importTranslations(locale, namespace))}${typeCast('Partial<Translations>')}`,
-			),
+			`{ [namespace]: await importNamespaceAsync(locale, namespace)}`,
 		)}
 	)
-`
+
+${jsDocFunction('Promise<Partial<Translations>>', { type: 'Locales', name: 'locale' }, { type: 'Namespaces', name: 'namespace' })}
+export const importNamespaceAsync = async${generics('Namespace extends Namespaces')}(locale${type(
+		'Locales',
+	)}, namespace${type('Namespace')}) =>
+	(await localeNamespaceLoaders[locale][namespace]()).default${typeCast('unknown')}${typeCast('Partial<Translations>')};`
 	return [namespaceImports, namespaceLoader]
 }
 
@@ -64,26 +66,9 @@ const getAsyncCode = (
 	const localesTranslationLoaders = locales.map(getLocalesTranslationRowAsync).join('')
 	const [namespaceImports, namespaceLoader] = usesNamespaces ? generateNamespacesCode(locales, namespaces) : ['', '']
 	const translationImporter = `
-export const importTranslations = async ${usesNamespaces ? generics('Namespace extends Namespaces') : ''}(${
-		usesNamespaces
-			? `
-`
-			: ''
-	}locale${type('Locales')}${
-		usesNamespaces
-			? `,
-	namespace?${type('Namespace')}`
-			: ''
-	}) => {
-	const loader = ${
-		usesNamespaces
-			? `namespace
-		? localeNamespaceLoaders[locale][namespace]
-		: `
-			: ''
-	}localeTranslationLoaders[locale];
-	return (await loader()).default${typeCast('unknown')};
-};
+${jsDocFunction('Promise<Translations>', { type: 'Locales', name: 'locale' })}
+export const importLocaleAsync = async (locale${type('Locales')}) =>
+	(await localeTranslationLoaders[locale]()).default${typeCast('unknown')}${typeCast('Translations')};
 `
 
 	return `${OVERRIDE_WARNING}${tsCheck}
@@ -117,7 +102,7 @@ ${jsDocFunction('Promise<void>', { type: 'Locales', name: 'locale' })}
 export const loadLocaleAsync = async (locale${type('Locales')})${type('Promise<void>')} => {
 	updateDictionary(
 		locale,
-		${jsDocType('Translations', jsDocType('unknown', `(await importTranslations(locale))${typeCast('Translations')}`))}
+		${jsDocType('Translations', `await importLocaleAsync(locale)`)}
 	)
 	loadFormatters(locale)
 }
