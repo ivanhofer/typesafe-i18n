@@ -12,6 +12,6 @@
     "uvu": "^0.5.3"
   },
   "dependencies": {
-    "typesafe-i18n": "^5.9.1"
+    "typesafe-i18n": "^5.10.0"
   }
 }
