@@ -40,11 +40,14 @@ mappings.forEach(([fromWheretoImport, outputPath = fromWheretoImport, filterFunc
 	const filteredFiles = (filterFunction && files.filter(filterFunction)) || files
 
 	filteredFiles.forEach((file) => {
-		const fileName = file.substring(0, file.length - 6)
+		const esm = file.endsWith('.d.mts')
+		const fileName = file.replace(esm ? '.d.mts' : '.d.ts', '')
 
 		writeFileSync(
 			resolve(__dirname, `../${outputPath}/${file.replace('.d.mts', '.d.ts')}`),
-			`export * from '${goToRoot(outputPath, file)}types/${fromWheretoImport}/src/${fileName}.mjs'`,
+			`export * from '${goToRoot(outputPath, file)}types/${fromWheretoImport}/src/${fileName}.${
+				esm ? 'mjs' : 'js'
+			}'`,
 			{ encoding: 'utf8' },
 		)
 	})
