@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.10.1 (2022-07-25)
+
+Fix:
+ - link correct types for React adapter
+
 ## 5.10.0 (2022-07-25)
 
 Feature:
