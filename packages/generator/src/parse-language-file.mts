@@ -12,11 +12,9 @@ import {
 	doesPathExist,
 	getDirectoryStructure,
 	getFiles,
-	importFile,
+	importFile
 } from './utils/file.utils.mjs'
 import { logger } from './utils/logger.mjs'
-
-// TODO: use esbuild instead of tsc
 
 /**
  * looks for the location of the compiled 'index.js' file
@@ -85,7 +83,14 @@ const transpileTypescriptFiles = async (
 	tempPath: string,
 	typesFileName: string,
 ): Promise<string> => {
-	const program = ts.createProgram([languageFilePath], { outDir: tempPath, allowJs: true, resolveJsonModule: true })
+	const program = ts.createProgram([languageFilePath], {
+		outDir: tempPath,
+		allowJs: true,
+		resolveJsonModule: true,
+		skipLibCheck: true,
+		sourceMap: false,
+	})
+
 	program.emit()
 
 	const baseTranslationPath = await detectLocationOfCompiledBaseTranslation(

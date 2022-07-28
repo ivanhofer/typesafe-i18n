@@ -117,7 +117,7 @@ export const startGenerator = async (config?: GeneratorConfig, watchFiles = true
 	const parsedConfig = {
 		...(await readConfig()),
 		...config,
-	}
+	} as GeneratorConfig
 
 	const configWithDefaultValues = await getConfigWithDefaultValues(parsedConfig)
 	const { outputPath } = configWithDefaultValues

@@ -2,7 +2,12 @@
 
 # Version 5
 
-## 5.10.1 (2022-07-25)
+## 5.11.0 (2022-07-28)
+
+Feature:
+ - make generator faster by improving the speed of the TypeScript compilation process
+
+## 5.10.1 (2022-07-28)
 
 Fix:
  - link correct types for React adapter
