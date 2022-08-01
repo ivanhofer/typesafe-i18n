@@ -1,13 +1,13 @@
-import React, { ChangeEventHandler, useContext, useState } from 'react'
+import React, { ChangeEventHandler, useState } from 'react'
 import './App.css'
-import { I18nContext } from './i18n/i18n-react'
+import { useI18nContext } from './i18n/i18n-react'
 import type { Locales } from './i18n/i18n-types'
 import { locales } from './i18n/i18n-util'
 import { loadLocaleAsync } from './i18n/i18n-util.async'
 import logo from './logo.svg'
 
 function Child() {
-	const { locale, LL, setLocale } = useContext(I18nContext)
+	const { locale, LL, setLocale } = useI18nContext()
 
 	const [name, setName] = useState('John')
 
