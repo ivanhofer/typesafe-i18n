@@ -118,7 +118,14 @@ type Permutation<T extends string, U extends string = T> = [T] extends [never]
 	? [T, ...Permutation<Exclude<U, T>>]
 	: [T]
 
-type WrapParam<P> = P extends string ? `{${P}}` : never
+type Split<S extends string, D extends string> =
+    string extends S ? string[] :
+    S extends '' ? [] :
+    S extends `${infer T}${D}${infer U}` ? [T, ...Split<U, D>] : [S]
+
+type Ignored<P extends string> = `${Split<P, '|'>[0]}|ignore`
+
+type WrapParam<P> = P extends string ? `{${P | Ignored<P>}}` : never
 
 type ConstructString<Params extends unknown[]> = Params extends []
 	? `${string}`
