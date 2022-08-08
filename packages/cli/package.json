@@ -7,9 +7,9 @@
   "devDependencies": {
     "@types/prompts": "^2.0.14",
     "commander": "^9.4.0",
-    "esbuild": "^0.14.51",
-    "just-diff": "^5.0.3",
-    "just-diff-apply": "^5.3.1",
+    "esbuild": "^0.14.53",
+    "just-diff": "^5.1.0",
+    "just-diff-apply": "^5.4.0",
     "kleur": "^4.1.5",
     "prompts": "^2.4.2",
     "tiny-glob": "^0.2.9",
