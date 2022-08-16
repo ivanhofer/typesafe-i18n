@@ -482,6 +482,15 @@ export function App() {
 Basically you will need to write a function that splits the translated message and renders a component between the parts. You can define your split characters yourself but you would always need to make sure you add them in any translation since `typesafe-i18n` doesn't provide any typesafety for these characters (yet).
 
 ---
+
+### How can I use my base translation as a fallback for other locales?
+
+With the strong typesafety features, you'll know if a locale is missing a translation. But in rare cases you might want to use your base translation as a fallback for other locales.
+
+See the [next FAQ entry](#i-have-two-similar-locales-only-a-few-translations-are-different-but-i-dont-want-to-duplicate-my-translations). The same concept can be applied to prefill your translations with the base translation and then just override the parts that are translated.
+
+> You'll loose the some sort of typesafety with that approach since you can't know which parts are translated and which are not. Using the base translation as a fallback is not recommended because your UI will contain two different locales which might confuse your users.
+
 ### I have two similar locales (only a few translations are different) but I don't want to duplicate my translations
 
 Your locale translation files can be any kind of JavaScript object. So you can make object-transformations inside your translation file. The only restriction is: in the end it has to contain a default export with type `Translation`. You could do something like this:
@@ -508,7 +517,7 @@ Your locale translation files can be any kind of JavaScript object. So you can m
    import en from '../en' // import translations from 'en' locale
 
    const en_US: Translation = {
-      ...en, // use destructuring to copy all translations from your 'en' locale
+      ...en as Translation, // use destructuring to copy all translations from your 'en' locale
 
       COLOR: "color" // override specific translations
    }
