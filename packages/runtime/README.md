@@ -421,7 +421,7 @@ const LL = typesafeI18nObject('en', translations)
 
 ### limitations
 
-The `typesafeI18nString` and `typesafeI18nObject` functions offer full typesafety support, but these re things you need to know:
+The `typesafeI18nString` and `typesafeI18nObject` functions offer full typesafety support, but these are things you need to know:
 
  - index based arguments need to be passed as an object:
    ```ts
