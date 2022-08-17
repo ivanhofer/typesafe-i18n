@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.12.0 (2022-08-17)
+
+Feature:
+ - don't require optional params in translations
+
 ## 5.11.0 (2022-07-28)
 
 Feature:

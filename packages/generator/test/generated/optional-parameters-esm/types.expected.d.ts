@@ -17,40 +17,51 @@ type RootTranslation = {
 	 * Hi {0?}
 	 * @param {unknown} [0]
 	 */
-	index: RequiredParams<'0?'>
+	index: RequiredParams<'0?'> | string
 	/**
 	 * Hi {name?}
 	 * @param {unknown} [name]
 	 */
-	keyed: RequiredParams<'name?'>
+	keyed: RequiredParams<'name?'> | string
 	/**
 	 * Hi {name?}
 	 * @param {string} [name]
 	 */
-	typed: RequiredParams<'name?'>
+	typed: RequiredParams<'name?'> | string
 	/**
 	 * Hi {name1?} and {name2?}
 	 * @param {unknown} [name1]
 	 * @param {unknown} [name2]
 	 */
-	multiple: RequiredParams<'name1?' | 'name2?'>
+	multiple: RequiredParams<'name1?' | 'name2?'> | RequiredParams<'name2?'> | RequiredParams<'name1?'> | string
 	/**
 	 * Hi {name1} and {name2?}
 	 * @param {unknown} name1
 	 * @param {unknown} [name2]
 	 */
-	multiple1: RequiredParams<'name1' | 'name2?'>
+	multiple1: RequiredParams<'name1' | 'name2?'> | RequiredParams<'name1'>
 	/**
 	 * Hi {name1?} and {name2}
 	 * @param {unknown} [name1]
 	 * @param {unknown} name2
 	 */
-	multiple2: RequiredParams<'name1?' | 'name2'>
+	multiple2: RequiredParams<'name1?' | 'name2'> | RequiredParams<'name2'>
 	/**
 	 * Hi {name1?|uppercase}
 	 * @param {unknown} [name1]
 	 */
-	formatter: RequiredParams<'name1?|uppercase'>
+	formatter: RequiredParams<'name1?|uppercase'> | string
+	/**
+	 * Test {name?}, test {name?}, another test {name?}
+	 * @param {unknown} [name]
+	 */
+	sameArg: RequiredParams<'name?' | 'name?' | 'name?'> | RequiredParams<'name?' | 'name?'> | RequiredParams<'name?'> | string
+	/**
+	 * {arg} Test {name?}, test {name?}, another test {name?}
+	 * @param {string} arg
+	 * @param {unknown} [name]
+	 */
+	sameArgWithRequiredParam: RequiredParams<'arg' | 'name?' | 'name?' | 'name?'> | RequiredParams<'arg' | 'name?' | 'name?'> | RequiredParams<'arg' | 'name?'> | RequiredParams<'arg'>
 }
 
 export type TranslationFunctions = {
@@ -82,6 +93,14 @@ export type TranslationFunctions = {
 	 * Hi {name1?|uppercase}
 	 */
 	formatter: (arg: { name1?: unknown }) => LocalizedString
+	/**
+	 * Test {name?}, test {name?}, another test {name?}
+	 */
+	sameArg: (arg: { name?: unknown }) => LocalizedString
+	/**
+	 * {arg} Test {name?}, test {name?}, another test {name?}
+	 */
+	sameArgWithRequiredParam: (arg: { arg: string, name?: unknown }) => LocalizedString
 }
 
 export type Formatters = {
