@@ -1,4 +1,4 @@
-import { isArray, isPropertyFalsy } from 'typesafe-utils'
+import { filterDuplicates, isArray, isPropertyFalsy } from 'typesafe-utils'
 import { partAsStringWithoutTypes } from '../../../../runtime/src/core-utils.mjs'
 import { NEW_LINE, PIPE_SEPARATION, REGEX_BRACKETS } from '../../constants.mjs'
 import { supportsTemplateLiteralTypes } from '../../output-handler.mjs'
@@ -85,6 +85,8 @@ const getFormatterType = (formatter: string) => {
 }
 
 const generateTranslationType = (args: Arg[] = []) => {
+	if (!supportsTemplateLiteralTypes) return 'string'
+
 	const argStrings = args
 		.filter(isPropertyFalsy('pluralOnly'))
 		.map(({ key, optional, formatters }) =>
@@ -94,7 +96,34 @@ const generateTranslationType = (args: Arg[] = []) => {
 			),
 		)
 
-	return supportsTemplateLiteralTypes && argStrings.length
+	const containsOptionalParams = args.some(({ optional }) => optional)
+	if (!containsOptionalParams) return getParamsType(argStrings)
+
+	const permutations = getArgumentVariations(argStrings)
+
+	const containsRequiredParams = args.some(({ optional }) => !optional)
+	if (!containsRequiredParams) permutations.push([])
+
+	return permutations.map(getParamsType).filter(filterDuplicates).join(PIPE_SEPARATION)
+}
+
+const getParamsType = (argStrings: string[]) =>
+	argStrings.length
 		? `RequiredParams<${argStrings.map((arg) => getWrappedString(arg, true)).join(PIPE_SEPARATION)}>`
 		: 'string'
+
+const REGEX_IS_OPTIONAL_PARAM = /((\?\s?$)|(\?\s?\|))/
+
+const getArgumentVariations = (argStrings: string[]): string[][] => {
+	if (!argStrings.length) return []
+
+	const optionals = argStrings.filter((arg) => REGEX_IS_OPTIONAL_PARAM.test(arg))
+
+	const mappings = optionals.map((optional) => {
+		const index = argStrings.findIndex((arg) => arg === optional)
+		if (index === -1) return []
+		return getArgumentVariations([...argStrings.slice(0, index), ...argStrings.slice(index + 1)])
+	})
+
+	return [argStrings, ...mappings.flat()]
 }

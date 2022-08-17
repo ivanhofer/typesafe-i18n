@@ -266,6 +266,8 @@ const dictionary_optionals = {
 	multiple1: 'Hi {name1} and {name2?}',
 	multiple2: 'Hi {name1?} and {name2}',
 	formatter: 'Hi {name1?|uppercase}',
+	sameArg: 'Test {name?}, test {name?}, another test {name?}',
+	sameArgWithRequiredParam: '{arg:string} Test {name?}, test {name?}, another test {name?}',
 }
 
 testGeneratedOutput('optional-parameters', dictionary_optionals)
