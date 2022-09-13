@@ -388,7 +388,7 @@ export default en
 
 2. use it in your components
 
-```svelte
+```html
 <script lang="ts">
    // Component.svelte
 

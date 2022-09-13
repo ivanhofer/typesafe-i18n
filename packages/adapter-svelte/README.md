@@ -51,7 +51,7 @@ The generator will create some custom Svelte stores inside `i18n-svelte.ts` that
 
 Then inside your root-component, you need to load your locales and call `setLocale` in order to setup all stores.
 
-```svelte
+```html
 <script lang="ts">
    import { setLocale } from './i18n/i18n-svelte'
 
@@ -65,7 +65,7 @@ Then inside your root-component, you need to load your locales and call `setLoca
 
 That's it. You can then start using `typesafe-i18n` inside your Svelte application.
 
-```svelte
+```html
 <script lang="ts">
    import LL from './i18n/i18n-svelte'
 </script>
@@ -87,7 +87,7 @@ When running the [generator](https://github.com/ivanhofer/typesafe-i18n#typesafe
 
 Call it inside your root Svelte component in order to setup the stores:
 
-```svelte
+```html
 <script>
    import { initI18n } from './i18n/i18n-svelte'
 
@@ -100,7 +100,7 @@ Call it inside your root Svelte component in order to setup the stores:
 
 The default export of the generated file will be the store you can use to translate your app. You can use it with subscriptions (`$LL`) or as a regular JavaScript object (`LL`).
 
-```svelte
+```html
 <script>
    import LL from './i18n/i18n-svelte'
 
@@ -127,7 +127,7 @@ console.log(get(LL).SOME_MESSAGE())
 
 This Svelte store will contain the current selected locale.
 
-```svelte
+```html
 <script>
    import { locale } from './i18n/i18n-svelte'
 </script>
@@ -142,7 +142,7 @@ This Svelte store will contain the current selected locale.
 
 If you want to change the locale, you need to call `setLocale` with the locale as an argument.
 
-```svelte
+```html
 <script>
    import { setLocale } from './i18n/i18n-svelte'
 </script>
@@ -170,7 +170,7 @@ If you want to change the locale, you need to call `setLocale` with the locale a
 
 Svelte store that returns a `boolean`. It can be used to wait for the locale to be loaded.
 
-```svelte
+```html
 <script>
    import { isLocaleLoading } from './i18n/i18n-svelte'
 </script>
@@ -204,7 +204,7 @@ See [here](https://github.com/ivanhofer/typesafe-i18n-demo-sveltekit)
 
 For your Sapper projects, you should call the `loadLocaleAsync` function inside `preload` in your root `routes/_layout.svelte` file:
 
-```svelte
+```html
 <script lang="ts" context="module">
    import { loadFormatters, loadLocaleAsync } from '../i18n/i18n-util.async'
    import { loadedLocales } from '../i18n/i18n-util'
