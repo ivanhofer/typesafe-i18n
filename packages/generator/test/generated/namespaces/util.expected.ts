@@ -16,6 +16,10 @@ export const namespaces: Namespaces[] = [
 	'test'
 ]
 
+export const isLocale = (locale: string) => locales.includes(locale as Locales)
+
+export const isNamespace = (namespace: string) => namespaces.includes(namespace as Namespaces)
+
 export const loadedLocales = {} as Record<Locales, Translations>
 
 export const loadedFormatters = {} as Record<Locales, Formatters>

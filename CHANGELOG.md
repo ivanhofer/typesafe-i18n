@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.13.0 (2022-09-14)
+
+Feature:
+ - add `isLocale` and `isNamespace` utility functions
+
 ## 5.12.0 (2022-08-17)
 
 Feature:

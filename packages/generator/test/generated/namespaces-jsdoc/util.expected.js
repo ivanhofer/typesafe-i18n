@@ -31,6 +31,18 @@ export const namespaces = [
 	'test'
 ]
 
+/**
+ * @param { string } locale
+ * @return { boolean }
+ */
+export const isLocale = (locale) => locales.includes(/** @type { Locales } */ (locale))
+
+/**
+ * @param { string } namespace
+ * @return { boolean }
+ */
+export const isNamespace = (namespace) => namespaces.includes(/** @type { Namespaces } */ (namespace))
+
 export const loadedLocales = /** @type { Record<Locales, Translations> } */ ({})
 
 export const loadedFormatters = /** @type { Record<Locales, Formatters> } */ ({})

@@ -8,7 +8,6 @@ import {
 	jsDocType,
 	OVERRIDE_WARNING,
 	relativeFileImportPath,
-	shouldGenerateJsDoc,
 	tsCheck,
 	type,
 	typeCast,
@@ -77,17 +76,37 @@ export const baseLocale${type('Locales')} = '${baseLocale}'
 
 ${localesEnum}
 ${namespacesEnum}
-export const loadedLocales = ${
-		shouldGenerateJsDoc
-			? `${jsDocType('Record<Locales, Translations>')} ({})`
-			: `{}${typeCast('Record<Locales, Translations>')}`
-	}
+${jsDocFunction('boolean', {
+	type: 'string',
+	name: 'locale',
+})}
+export const isLocale = (locale${type('string')}) => locales.includes(${jsDocType(
+		'Locales',
+		`locale${typeCast('Locales')}`,
+	)})
+${
+	usesNamespaces
+		? `
+${jsDocFunction('boolean', {
+	type: 'string',
+	name: 'namespace',
+})}
+export const isNamespace = (namespace${type('string')}) => namespaces.includes(${jsDocType(
+				'Namespaces',
+				`namespace${typeCast('Namespaces')}`,
+		  )})`
+		: ''
+}
 
-export const loadedFormatters = ${
-		shouldGenerateJsDoc
-			? `${jsDocType('Record<Locales, Formatters>')} ({})`
-			: `{}${typeCast('Record<Locales, Formatters>')}`
-	}
+export const loadedLocales = ${jsDocType(
+		'Record<Locales, Translations>',
+		`{}${typeCast('Record<Locales, Translations>')}`,
+	)}
+
+export const loadedFormatters = ${jsDocType(
+		'Record<Locales, Formatters>',
+		`{}${typeCast('Record<Locales, Formatters>')}`,
+	)}
 
 ${jsDocFunction('TranslateByString', {
 	type: 'Locales',
