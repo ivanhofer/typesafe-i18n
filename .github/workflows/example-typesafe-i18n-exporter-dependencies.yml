@@ -2,7 +2,7 @@ name: '@typesafe-i18n/exporter example - update dependencies'
 
 on:
    schedule:
-      - cron: '0 0 * * 1' # Runs at 00:00 on Monday
+      - cron: '0 20 * * 7' # Runs at 20:00 on Sunday
    workflow_dispatch:
 
 defaults:

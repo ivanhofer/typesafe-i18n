@@ -7,9 +7,6 @@ const config = {
 
 	kit: {
 		adapter: adapter(),
-		prerender: {
-			default: true
-		},
 		serviceWorker: {
 			register: true
 		}

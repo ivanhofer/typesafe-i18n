@@ -5,10 +5,10 @@
     "build": "tsx esbuild.ts && tsc -p tsconfig.json --emitDeclarationOnly"
   },
   "devDependencies": {
-    "@types/react": "^18.0.17",
-    "esbuild": "^0.14.54",
-    "tsx": "^3.8.2",
-    "typescript": "^4.7.4"
+    "@types/react": "^18.0.20",
+    "esbuild": "^0.15.7",
+    "tsx": "^3.9.0",
+    "typescript": "^4.8.3"
   },
   "type": "module"
 }
