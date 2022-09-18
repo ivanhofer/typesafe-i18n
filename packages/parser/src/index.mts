@@ -3,16 +3,17 @@ import type { ArgumentPart, Part, PluralPart } from './types.mjs'
 // --------------------------------------------------------------------------------------------------------------------
 
 // eslint-disable-next-line prettier/prettier
-export const removeEmptyValues = <T,>(object: T): T =>
+const removeEmptyValues = <T extends ArgumentPart | PluralPart>(object: T): T =>
 	Object.fromEntries(
-		Object.entries(object)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		(Object.entries(object) as [string, any][])
 			.map(([key, value]) => key !== 'i' && value && value != '0' && [key, value])
 			.filter(Boolean),
 	) as T
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const trimAllValues = <T extends ArgumentPart | PluralPart>(part: T): T =>
+const trimAllValues = <T extends ArgumentPart | PluralPart>(part: T): T =>
 	Object.fromEntries(
 		Object.keys(part).map((key) => {
 			const val = part[key as keyof T] as unknown as boolean | string | string[]
