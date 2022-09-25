@@ -1,6 +1,8 @@
 # `typesafe-i18n` Vue.js Example
 
-This is a small project demonstrating a `typesafe-i18n` integration with Vue.js version 3.
+**This example shows how you could use `typesafe-i18n` in a Vue.js 3 application.**
+
+_There are many ways you could integrate the library and its i18n process into your applications. As  probably all applications and workflows are different, the solution shown here might not fit your needs. Luckily `typesafe-i18n` is really flexible and you can tweak it accordingly. You can ask specific questions by joining the [`Discord` server](https://discord.gg/T27AHfaADK)_
 
 >This repository was set up using [`vite`](https://vitejs.dev) with the `vue-ts` template.
 >```bash
