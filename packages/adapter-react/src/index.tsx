@@ -1,7 +1,10 @@
-import React from 'react'
+import ReactImport from 'react'
 import { getFallbackProxy } from '../../runtime/src/core-utils.mjs'
 import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from '../../runtime/src/core.mjs'
 import { i18nObject } from '../../runtime/src/util.object.mjs'
+import type ReactImportType from '../node_modules/@types/react'
+
+const React = ReactImport as unknown as typeof ReactImportType
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
