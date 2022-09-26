@@ -3,7 +3,7 @@
   "scripts": {
     "i18n:export": "tsx export.ts",
     "typesafe-i18n": "typesafe-i18n",
-    "test": "uvu -r @esbuild-kit/cjs-loader tests"
+    "test": "uvu -r @esbuild-kit/cjs-loader tests && tsc --noEmit"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",

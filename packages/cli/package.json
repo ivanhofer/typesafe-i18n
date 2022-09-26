@@ -2,7 +2,8 @@
   "name": "@typesafe-i18n/cli",
   "scripts": {
     "dev": "tsx esbuild.ts --watch",
-    "build": "tsx esbuild.ts"
+    "build": "tsx esbuild.ts",
+    "test": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/prompts": "^2.0.14",

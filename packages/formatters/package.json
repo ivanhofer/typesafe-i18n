@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "tsx esbuild.ts --watch",
     "build": "tsx esbuild.ts && tsc -p tsconfig.json --emitDeclarationOnly && tsx ./generateTreeShakableIndexFile.ts",
-    "test": "uvu -r @esbuild-kit/cjs-loader test",
+    "test": "uvu -r @esbuild-kit/cjs-loader test && tsc --noEmit",
     "test:watch": "watchlist src test -- pnpm test"
   },
   "devDependencies": {
