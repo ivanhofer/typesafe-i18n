@@ -5,8 +5,8 @@
     "build:cjs": "tsc -p tsconfig-cjs.json && tsx ./rename-cjs.ts",
     "build:esm": "tsc -p tsconfig-esm.json && tsx ./rename-esm.ts",
     "test": "pnpm test:unit && pnpm test:tsc",
-    "test:unit": "uvu -r @esbuild-kit/cjs-loader test",
-    "test:unit:watch": "watchlist src test -- pnpm test:unit",
+    "test:unit": "uvu -r @esbuild-kit/cjs-loader src",
+    "test:unit:watch": "watchlist src -- pnpm test:unit",
     "test:tsc": "tsc --noEmit -P tsconfig-tests.json"
   },
   "devDependencies": {
