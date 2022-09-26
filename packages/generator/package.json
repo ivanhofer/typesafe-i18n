@@ -1,7 +1,7 @@
 {
   "name": "@typesafe-i18n/generator",
   "scripts": {
-    "test": "uvu -r @esbuild-kit/cjs-loader -i generated -i example test && pnpm test:tsc",
+    "test": "uvu -r @esbuild-kit/cjs-loader -i generated -i example test src && pnpm test:tsc",
     "test:watch": "watchlist src test -- pnpm test",
     "test:update-generated-files": "tsx test/generated/update.ts",
     "test:tsc": "tsc --noEmit -P tsconfig-tests.json"
