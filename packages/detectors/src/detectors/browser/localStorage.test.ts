@@ -1,7 +1,7 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import type { Locale } from '../../runtime/src/core.mjs'
-import { initLocalStorageDetector } from '../../src/detectors/browser/localstorage-detector.mjs'
+import type { Locale } from '../../../../runtime/src/core.mjs'
+import { initLocalStorageDetector } from './localstorage-detector.mjs'
 
 const test = suite('detector:localStorage')
 

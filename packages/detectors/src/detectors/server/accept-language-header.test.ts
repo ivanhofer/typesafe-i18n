@@ -2,8 +2,8 @@ import { Headers } from 'node-fetch'
 import { isNotUndefined } from 'typesafe-utils'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { Locale } from '../../../runtime/src/core.mjs'
-import { initAcceptLanguageHeaderDetector } from '../../src/detectors/server/accept-language-header.mjs'
+import type { Locale } from '../../../../runtime/src/core.mjs'
+import { initAcceptLanguageHeaderDetector } from './accept-language-header.mjs'
 
 const test = suite('detector:accept-language-header')
 
