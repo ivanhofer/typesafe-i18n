@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.13.1 (2022-09-26)
+
+Fix:
+ - make accept-language-header detector case insensitive [#451](https://github.com/ivanhofer/typesafe-i18n/issues/451)
+
 ## 5.13.0 (2022-09-14)
 
 Feature:
