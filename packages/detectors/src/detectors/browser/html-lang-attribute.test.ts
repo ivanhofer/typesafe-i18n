@@ -1,8 +1,8 @@
 import { isNotUndefined } from 'typesafe-utils'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import type { Locale } from '../../runtime/src/core.mjs'
-import { htmlLangAttributeDetector } from '../../src/detectors/browser/html-lang-attribute.mjs'
+import type { Locale } from '../../../../runtime/src/core.mjs'
+import { htmlLangAttributeDetector } from './html-lang-attribute.mjs'
 
 const test = suite('detector:html-lang')
 

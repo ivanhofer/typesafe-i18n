@@ -1,7 +1,7 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import type { Locale } from '../../runtime/src/core.mjs'
-import { initDocumentCookieDetector } from '../../src/detectors/browser/document-cookie.mjs'
+import type { Locale } from '../../../../runtime/src/core.mjs'
+import { initDocumentCookieDetector } from './document-cookie.mjs'
 
 const test = suite('detector:document-cookie')
 

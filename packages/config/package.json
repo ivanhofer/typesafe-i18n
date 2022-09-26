@@ -1,6 +1,7 @@
 {
   "name": "@typesafe-i18n/config",
   "scripts": {
+    "test": "tsc --noEmit",
     "generate:json-schema": "rimraf \"../../schema\" && mkdir \"../../schema\" && typescript-json-schema --noExtraProps ./tsconfig.json GeneratorConfig > \"../../schema/typesafe-i18n.json\""
   },
   "devDependencies": {

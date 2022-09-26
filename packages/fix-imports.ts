@@ -36,6 +36,6 @@ formats.forEach(({ regex, fileEnding }) => {
 		writeFileSync(fullFilePath, newContent, { encoding: 'utf8' })
 
 		// eslint-disable-next-line no-console
-		console.info(`fixed '${fileEnding}' imports for '.${file.replace(rootPath, '')}'`)
+		console.info(`fixed '${fileEnding}' imports for '${file.replace(rootPath, '')}'`)
 	})
 })

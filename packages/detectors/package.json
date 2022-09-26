@@ -3,11 +3,12 @@
   "scripts": {
     "dev": "tsx esbuild.ts --watch",
     "build": "tsx esbuild.ts && tsc -p tsconfig.json --emitDeclarationOnly && tsx ./generateTreeShakableIndexFile.ts",
-    "test": "uvu -r @esbuild-kit/cjs-loader test",
-    "test:watch": "watchlist src test -- pnpm test"
+    "test": "uvu -r @esbuild-kit/cjs-loader src && tsc --noEmit",
+    "test:watch": "watchlist src -- pnpm test"
   },
   "devDependencies": {
     "esbuild": "^0.15.9",
+    "node-fetch": "^3.2.10",
     "tiny-glob": "^0.2.9",
     "tsx": "^3.9.0",
     "typesafe-utils": "^1.16.2",

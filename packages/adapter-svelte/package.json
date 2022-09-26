@@ -2,7 +2,8 @@
   "name": "@typesafe-i18n/adapter-svelte",
   "scripts": {
     "dev": "tsx esbuild.ts --watch",
-    "build": "tsx esbuild.ts && tsc -p tsconfig.json --emitDeclarationOnly"
+    "build": "tsx esbuild.ts && tsc -p tsconfig.json --emitDeclarationOnly",
+    "test": "tsc --noEmit"
   },
   "devDependencies": {
     "esbuild": "^0.15.9",

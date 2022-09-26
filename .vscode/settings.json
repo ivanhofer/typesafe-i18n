@@ -5,4 +5,8 @@
 	},
 	"editor.formatOnSave": false,
 	"files.eol": "auto",
+	"explorer.fileNesting.patterns": {
+		"*.mts": "${capture}.test.ts, ${capture}.test.types.ts"
+	},
+	"explorer.fileNesting.enabled": true,
 }

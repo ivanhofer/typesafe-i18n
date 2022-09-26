@@ -1,27 +1,25 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import type { Locale } from '../../runtime/src/core.mjs'
-import { initSessionStorageDetector } from '../../src/detectors/browser/sessionstorage-detector.mjs'
+import type { Locale } from '../../../../runtime/src/core.mjs'
+import { initRequestParametersDetector } from './request-parameters.mjs'
 
-const test = suite('detector:sessionStorage')
+const test = suite('detector:request-parameters')
 
 // --------------------------------------------------------------------------------------------------------------------
 
+type Request = {
+	params: Record<string, string>
+}
+
 const testDetector = (
 	name: string,
-	items: Record<string, string> | undefined,
+	params: Record<string, string> | undefined,
 	expected: Locale[],
-	itemKey: string | undefined = undefined,
+	parameterName: string | undefined = undefined,
 ) =>
-	test(`sessionStorage ${name}`, () => {
-		//@ts-ignore
-		globalThis.window = {
-			sessionStorage: {
-				getItem: (key: string) => items?.[key],
-			} as Storage,
-		}
-
-		const detector = initSessionStorageDetector(itemKey)
+	test(`request-parameters ${name}`, () => {
+		const req = { params } as Request
+		const detector = initRequestParametersDetector(req, parameterName)
 		assert.equal(detector(), expected)
 	})
 

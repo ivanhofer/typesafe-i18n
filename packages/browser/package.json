@@ -2,7 +2,8 @@
   "name": "@typesafe-i18n/browser",
   "scripts": {
     "dev": "tsx esbuild.ts --watch",
-    "build": "tsx esbuild.ts"
+    "build": "tsx esbuild.ts",
+    "test": "tsc --noEmit"
   },
   "devDependencies": {
     "esbuild": "^0.15.9",
