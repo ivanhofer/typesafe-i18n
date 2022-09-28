@@ -104,7 +104,7 @@ Click [here](https://codesandbox.io/s/typesafe-i18n-demo-qntgqy?file=/index.ts) 
    ```
    > It didn't work? See [here](#installing-typesafe-i18n-fails) for possible troubleshooting.
 
-2. :eyes: Take a look at the generated files and it's [folder-structure](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#folder-structure)
+2. :eyes: Take a look at the generated files and it's [folder-structure](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#folder-structure) after running `npm run typesafe-i18n` (or `npx typesafe-i18n`)
 
 3. :open_book: Explore the assets
    > `typesafe-i18n` offers a lot. Just press `cmd + F` to search on this page or see the [table of contents](#table-of-contents) that will link you to more specific subpages with more details.
