@@ -14,18 +14,18 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * {0|calculate}!
+	 * {​0​|​c​a​l​c​u​l​a​t​e​}​!
 	 * @param {number} 0
 	 */
 	A: RequiredParams<'0|calculate'>
 	/**
-	 * {0} {1|calculate}
+	 * {​0​}​ ​{​1​|​c​a​l​c​u​l​a​t​e​}
 	 * @param {unknown} 0
 	 * @param {number} 1
 	 */
 	B: RequiredParams<'0' | '1|calculate'>
 	/**
-	 * {0} {2|calculate} {1}
+	 * {​0​}​ ​{​2​|​c​a​l​c​u​l​a​t​e​}​ ​{​1​}
 	 * @param {unknown} 0
 	 * @param {unknown} 1
 	 * @param {number} 2

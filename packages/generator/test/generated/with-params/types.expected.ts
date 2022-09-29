@@ -14,12 +14,12 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * {0} apple{{s}}
+	 * {​0​}​ ​a​p​p​l​e​{​{​s​}​}
 	 * @param {string | number | boolean} 0
 	 */
 	PARAM: RequiredParams<'0'>
 	/**
-	 * {0} apple{{s}} and {1} banana{{s}}
+	 * {​0​}​ ​a​p​p​l​e​{​{​s​}​}​ ​a​n​d​ ​{​1​}​ ​b​a​n​a​n​a​{​{​s​}​}
 	 * @param {string | number | boolean} 0
 	 * @param {string | number | boolean} 1
 	 */

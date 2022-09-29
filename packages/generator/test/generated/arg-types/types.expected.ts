@@ -14,12 +14,12 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * Hi {name}!
+	 * H​i​ ​{​n​a​m​e​}​!
 	 * @param {string} name
 	 */
 	STRING_TYPE: RequiredParams<'name'>
 	/**
-	 * {0} apple{{s}}
+	 * {​0​}​ ​a​p​p​l​e​{​{​s​}​}
 	 * @param {number} 0
 	 */
 	NUMBER_TYPE: RequiredParams<'0'>

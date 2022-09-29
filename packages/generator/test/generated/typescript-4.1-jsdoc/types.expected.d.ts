@@ -14,7 +14,7 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}
+	 * H​i​ ​{​n​a​m​e​}​,​ ​I​ ​h​a​v​e​ ​{​n​r​O​f​A​p​p​l​e​s​}​ ​{​{​A​f​p​e​l​|​Ä​p​f​e​l​}​}
 	 * @param {unknown} name
 	 * @param {string | number | boolean} nrOfApples
 	 */

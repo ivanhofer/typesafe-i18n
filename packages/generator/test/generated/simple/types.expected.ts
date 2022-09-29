@@ -14,7 +14,7 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * This is a test
+	 * T​h​i​s​ ​i​s​ ​a​ ​t​e​s​t
 	 */
 	TEST: string
 }

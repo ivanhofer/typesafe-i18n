@@ -14,11 +14,11 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * apple{{s}}
+	 * a​p​p​l​e​{​{​s​}​}
 	 */
 	ONLY_PLURAL: string
 	/**
-	 * {{Afpel|Äpfel}}
+	 * {​{​A​f​p​e​l​|​Ä​p​f​e​l​}​}
 	 */
 	ONLY_SINGULAR_PLURAL: string
 }

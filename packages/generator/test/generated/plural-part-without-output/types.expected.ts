@@ -16,7 +16,7 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * New message{{s}} in {inbox}
+	 * N​e​w​ ​m​e​s​s​a​g​e​{​{​s​}​}​ ​i​n​ ​{​i​n​b​o​x​}
 	 * @param {InboxType} inbox
 	 */
 	PLURAL_WITHOUT_OUTPUT: RequiredParams<'inbox'>

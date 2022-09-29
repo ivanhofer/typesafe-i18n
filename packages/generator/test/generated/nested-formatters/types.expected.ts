@@ -15,13 +15,13 @@ export type Translations = RootTranslation
 type RootTranslation = {
 	'some-key': {
 		/**
-		 * format {me|custom-formatter}
+		 * f​o​r​m​a​t​ ​{​m​e​|​c​u​s​t​o​m​-​f​o​r​m​a​t​t​e​r​}
 		 * @param {string} me
 		 */
 		'other-key': RequiredParams<'me|custom-formatter'>
 	}
 	/**
-	 * {0|format}
+	 * {​0​|​f​o​r​m​a​t​}
 	 * @param {unknown} 0
 	 */
 	'another-key': RequiredParams<'0|format'>

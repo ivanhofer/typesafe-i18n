@@ -16,7 +16,7 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * This is a test {0|someFormatter}
+	 * T​h​i​s​ ​i​s​ ​a​ ​t​e​s​t​ ​{​0​|​s​o​m​e​F​o​r​m​a​t​t​e​r​}
 	 * @param {CustomType} 0
 	 */
 	TEST: RequiredParams<'0|someFormatter'>

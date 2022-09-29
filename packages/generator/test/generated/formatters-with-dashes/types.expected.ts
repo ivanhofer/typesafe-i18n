@@ -14,7 +14,7 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * {0|custom-formatter|and-another}
+	 * {​0​|​c​u​s​t​o​m​-​f​o​r​m​a​t​t​e​r​|​a​n​d​-​a​n​o​t​h​e​r​}
 	 * @param {unknown} 0
 	 */
 	FORMATTER: RequiredParams<'0|custom-formatter|and-another'>

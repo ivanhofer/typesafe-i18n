@@ -14,7 +14,7 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * Hi {0}
+	 * H​i​ ​{​0​}
 	 * @param {string} 0
 	 */
 	HELLO_REACT: RequiredParams<'0'>

@@ -14,7 +14,7 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * {0} {0} {0}
+	 * {​0​}​ ​{​0​}​ ​{​0​}
 	 * @param {unknown} 0
 	 */
 	SAME_PARAM: RequiredParams<'0' | '0' | '0'>

@@ -17,14 +17,14 @@ export type Translations = RootTranslation &
 
 type RootTranslation = {
 	/**
-	 * some text
+	 * s​o​m​e​ ​t​e​x​t
 	 */
 	wow: string
 }
 
 export type NamespaceTestTranslation = {
 	/**
-	 * hello
+	 * h​e​l​l​o
 	 */
 	hi: string
 }

@@ -16,7 +16,7 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * The result is {0|calculate}!
+	 * T​h​e​ ​r​e​s​u​l​t​ ​i​s​ ​{​0​|​c​a​l​c​u​l​a​t​e​}​!
 	 * @param {Result} 0
 	 */
 	EXTERNAL_TYPE: RequiredParams<'0|calculate'>

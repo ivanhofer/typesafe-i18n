@@ -14,7 +14,7 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * {count|sqrt|round}
+	 * {​c​o​u​n​t​|​s​q​r​t​|​r​o​u​n​d​}
 	 * @param {number} count
 	 */
 	CHAINING: RequiredParams<'count|sqrt|round'>

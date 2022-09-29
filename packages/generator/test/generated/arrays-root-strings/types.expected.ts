@@ -14,11 +14,11 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * hello
+	 * h​e​l​l​o
 	 */
 	'0': string
 	/**
-	 * this is a test, {name}
+	 * t​h​i​s​ ​i​s​ ​a​ ​t​e​s​t​,​ ​{​n​a​m​e​}
 	 * @param {string} name
 	 */
 	'1': RequiredParams<'name'>

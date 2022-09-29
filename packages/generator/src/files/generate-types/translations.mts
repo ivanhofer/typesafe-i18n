@@ -58,7 +58,7 @@ const createTranslationTypeEntry = (resultEntry: ParsedResult, jsDocInfo: JsDocI
 		const { key, args, parentKeys } = resultEntry
 
 		const nestedKey = getNestedKey(key, parentKeys)
-		const jsDocString = createJsDocsString(jsDocInfo[nestedKey] as JsDocInfo, true, false)
+		const jsDocString = createJsDocsString(jsDocInfo[nestedKey] as JsDocInfo, true, false, true)
 		const translationType = generateTranslationType(args)
 
 		return `

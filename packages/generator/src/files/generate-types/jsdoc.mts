@@ -1,12 +1,15 @@
 import { sortStringPropertyASC } from 'typesafe-utils'
 import type { JsDocInfo, TypeInformation } from '../../types.mjs'
 
+const addNonBreakingSpaceBetweenCharacters = (value: string) => value.split('').join('​')
+
 const sanitizeText = (text: string) => text.replace(/\*\//g, '*\\/')
 
 export const createJsDocsString = (
 	{ text, types, pluralOnlyArgs }: JsDocInfo = {} as JsDocInfo,
 	renderTypes = false,
 	renderPluralOnlyArgs = true,
+	renderNonBreakingSpaceBetweenCharacters = false,
 ) => {
 	const renderedTypes = renderTypes
 		? `${Object.entries(types || {})
@@ -16,9 +19,14 @@ export const createJsDocsString = (
 				.join('')}`
 		: ''
 
-	return text?.length + renderedTypes.length
+	const sanitizedText = sanitizeText(text)
+	const textToDisplay = renderNonBreakingSpaceBetweenCharacters
+		? addNonBreakingSpaceBetweenCharacters(sanitizedText)
+		: sanitizedText
+
+	return textToDisplay.length + renderedTypes.length
 		? `/**
-	 * ${sanitizeText(text)}${renderedTypes}
+	 * ${textToDisplay}${renderedTypes}
 	 */
 	`
 		: ''
