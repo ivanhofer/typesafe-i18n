@@ -14,50 +14,50 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * Hi {0?}
+	 * H​i​ ​{​0​?​}
 	 * @param {unknown} [0]
 	 */
 	index: RequiredParams<'0?'> | string
 	/**
-	 * Hi {name?}
+	 * H​i​ ​{​n​a​m​e​?​}
 	 * @param {unknown} [name]
 	 */
 	keyed: RequiredParams<'name?'> | string
 	/**
-	 * Hi {name?}
+	 * H​i​ ​{​n​a​m​e​?​}
 	 * @param {string} [name]
 	 */
 	typed: RequiredParams<'name?'> | string
 	/**
-	 * Hi {name1?} and {name2?}
+	 * H​i​ ​{​n​a​m​e​1​?​}​ ​a​n​d​ ​{​n​a​m​e​2​?​}
 	 * @param {unknown} [name1]
 	 * @param {unknown} [name2]
 	 */
 	multiple: RequiredParams<'name1?' | 'name2?'> | RequiredParams<'name2?'> | RequiredParams<'name1?'> | string
 	/**
-	 * Hi {name1} and {name2?}
+	 * H​i​ ​{​n​a​m​e​1​}​ ​a​n​d​ ​{​n​a​m​e​2​?​}
 	 * @param {unknown} name1
 	 * @param {unknown} [name2]
 	 */
 	multiple1: RequiredParams<'name1' | 'name2?'> | RequiredParams<'name1'>
 	/**
-	 * Hi {name1?} and {name2}
+	 * H​i​ ​{​n​a​m​e​1​?​}​ ​a​n​d​ ​{​n​a​m​e​2​}
 	 * @param {unknown} [name1]
 	 * @param {unknown} name2
 	 */
 	multiple2: RequiredParams<'name1?' | 'name2'> | RequiredParams<'name2'>
 	/**
-	 * Hi {name1?|uppercase}
+	 * H​i​ ​{​n​a​m​e​1​?​|​u​p​p​e​r​c​a​s​e​}
 	 * @param {unknown} [name1]
 	 */
 	formatter: RequiredParams<'name1?|uppercase'> | string
 	/**
-	 * Test {name?}, test {name?}, another test {name?}
+	 * T​e​s​t​ ​{​n​a​m​e​?​}​,​ ​t​e​s​t​ ​{​n​a​m​e​?​}​,​ ​a​n​o​t​h​e​r​ ​t​e​s​t​ ​{​n​a​m​e​?​}
 	 * @param {unknown} [name]
 	 */
 	sameArg: RequiredParams<'name?' | 'name?' | 'name?'> | RequiredParams<'name?' | 'name?'> | RequiredParams<'name?'> | string
 	/**
-	 * {arg} Test {name?}, test {name?}, another test {name?}
+	 * {​a​r​g​}​ ​T​e​s​t​ ​{​n​a​m​e​?​}​,​ ​t​e​s​t​ ​{​n​a​m​e​?​}​,​ ​a​n​o​t​h​e​r​ ​t​e​s​t​ ​{​n​a​m​e​?​}
 	 * @param {string} arg
 	 * @param {unknown} [name]
 	 */

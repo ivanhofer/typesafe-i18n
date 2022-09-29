@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.14.0 (2022-09-29)
+
+Feature:
+ - mask original text in `Translations` entries to not show up in search result while keeping the same hover behavior [#453](https://github.com/ivanhofer/typesafe-i18n/discussions/453)
+
 ## 5.13.1 (2022-09-26)
 
 Fix:

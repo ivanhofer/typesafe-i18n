@@ -14,47 +14,47 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * text
+	 * t​e​x​t
 	 */
 	'0': string
 	/**
-	 * text
+	 * t​e​x​t
 	 */
 	'1234': string
 	/**
-	 * text
+	 * t​e​x​t
 	 */
 	'*': string
 	/**
-	 * text
+	 * t​e​x​t
 	 */
 	'': string
 	/**
-	 * text
+	 * t​e​x​t
 	 */
 	'a key': string
 	/**
-	 * text
+	 * t​e​x​t
 	 */
 	'a/key': string
 	/**
-	 * text
+	 * t​e​x​t
 	 */
 	'a\key': string
 	/**
-	 * text
+	 * t​e​x​t
 	 */
 	a_key: string
 	/**
-	 * text
+	 * t​e​x​t
 	 */
 	'a-key': string
 	/**
-	 * text
+	 * t​e​x​t
 	 */
 	'k"e"y': string
 	/**
-	 * text
+	 * t​e​x​t
 	 */
 	'k\'e\'y': string
 }

@@ -16,27 +16,27 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * {1} {0} {2} {0}
+	 * {​1​}​ ​{​0​}​ ​{​2​}​ ​{​0​}
 	 * @param {unknown} 0
 	 * @param {unknown} 1
 	 * @param {unknown} 2
 	 */
 	ORDER_INDEX: RequiredParams<'0' | '0' | '1' | '2'>
 	/**
-	 * {b} {z} {a}
+	 * {​b​}​ ​{​z​}​ ​{​a​}
 	 * @param {unknown} a
 	 * @param {unknown} b
 	 * @param {unknown} z
 	 */
 	ORDER_KEYED: RequiredParams<'a' | 'b' | 'z'>
 	/**
-	 * {0|z} {1|a}
+	 * {​0​|​z​}​ ​{​1​|​a​}
 	 * @param {unknown} 0
 	 * @param {unknown} 1
 	 */
 	ORDER_FORMATTER: RequiredParams<'0|z' | '1|a'>
 	/**
-	 * {0} {1}
+	 * {​0​}​ ​{​1​}
 	 * @param {B} 0
 	 * @param {A} 1
 	 */

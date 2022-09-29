@@ -23,14 +23,14 @@ type RootTranslation = {}
 
 export type NamespaceTestTranslation = {
 	/**
-	 * hello
+	 * h​e​l​l​o
 	 */
 	hi: string
 }
 
 export type NamespaceSomeOtherNamespaceTranslation = {
 	/**
-	 * abc
+	 * a​b​c
 	 */
 	a: string
 }

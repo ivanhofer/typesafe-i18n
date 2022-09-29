@@ -14,7 +14,7 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * apple{{s}}: {nrOfApples}
+	 * a​p​p​l​e​{​{​s​}​}​:​ ​{​n​r​O​f​A​p​p​l​e​s​}
 	 * @param {number} nrOfApples
 	 */
 	PLURAL_BEFORE_KEY: RequiredParams<'nrOfApples'>

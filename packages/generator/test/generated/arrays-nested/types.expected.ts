@@ -15,7 +15,7 @@ export type Translations = RootTranslation
 type RootTranslation = {
 	'0': {
 		/**
-		 * test 123
+		 * t​e​s​t​ ​1​2​3
 		 */
 		'0': string
 	}
@@ -24,13 +24,13 @@ type RootTranslation = {
 			nested: {
 				test: {
 					/**
-					 * {name}
+					 * {​n​a​m​e​}
 					 * @param {string} name
 					 */
 					'0': RequiredParams<'name'>
 					'1': {
 						/**
-						 * test
+						 * t​e​s​t
 						 */
 						a: string
 					}

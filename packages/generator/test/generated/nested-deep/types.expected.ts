@@ -26,7 +26,7 @@ type RootTranslation = {
 											k: {
 												l: {
 													/**
-													 * I am deeply nested
+													 * I​ ​a​m​ ​d​e​e​p​l​y​ ​n​e​s​t​e​d
 													 */
 													m: string
 												}

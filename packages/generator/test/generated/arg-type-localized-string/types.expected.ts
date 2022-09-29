@@ -14,7 +14,7 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * Click on the button: <button>{buttonText}</button>
+	 * C​l​i​c​k​ ​o​n​ ​t​h​e​ ​b​u​t​t​o​n​:​ ​<​b​u​t​t​o​n​>​{​b​u​t​t​o​n​T​e​x​t​}​<​/​b​u​t​t​o​n​>
 	 * @param {LocalizedString} buttonText
 	 */
 	localized: RequiredParams<'buttonText'>

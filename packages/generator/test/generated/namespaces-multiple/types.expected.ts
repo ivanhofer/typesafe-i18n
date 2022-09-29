@@ -20,25 +20,25 @@ export type Translations = RootTranslation &
 
 type RootTranslation = {
 	/**
-	 * some text
+	 * s​o​m​e​ ​t​e​x​t
 	 */
 	wow: string
 }
 
 export type NamespaceTestTranslation = {
 	/**
-	 * hello
+	 * h​e​l​l​o
 	 */
 	hi: string
 }
 
 export type NamespaceATranslation = {
 	/**
-	 * some
+	 * s​o​m​e
 	 */
 	'0': string
 	/**
-	 * value
+	 * v​a​l​u​e
 	 */
 	'1': string
 }
@@ -48,7 +48,7 @@ export type NamespaceAndAnotherTranslation = {
 		c: {
 			d: {
 				/**
-				 * heyyy
+				 * h​e​y​y​y
 				 */
 				e: string
 			}
@@ -58,7 +58,7 @@ export type NamespaceAndAnotherTranslation = {
 
 export type NamespaceXYTranslation = {
 	/**
-	 * some long text
+	 * s​o​m​e​ ​l​o​n​g​ ​t​e​x​t
 	 */
 	b: string
 }
