@@ -13,6 +13,17 @@
 [![Sponsor this project](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&link=https://github.com/sponsors/ivanhofer)](https://github.com/sponsors/ivanhofer)
 
 
+---
+---
+
+### Survey about i18n
+
+How does your i18n workflow currently look like? Are you happy with it? What is missing?\
+Please fill out [**this survey**](https://forms.office.com/r/PV7V23nfW5) and help this project gain focus for the upcoming releases.
+
+---
+---
+
 ## Advantages
 
 :baby_chick: [lightweight](#sizes) (~1kb)\
