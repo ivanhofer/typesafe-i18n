@@ -16,57 +16,57 @@ export type Translations = RootTranslation
 type RootTranslation = {
 	locale: {
 		/**
-		 * Choose locale:
+		 * C​h​o​o​s​e​ ​l​o​c​a​l​e​:
 		 */
 		choose: string
 		/**
-		 * Selected locale:
+		 * S​e​l​e​c​t​e​d​ ​l​o​c​a​l​e​:
 		 */
 		selected: string
 	}
 	/**
-	 * For input '{0}' I get '{0|custom}' as a result
+	 * F​o​r​ ​i​n​p​u​t​ ​'​{​0​}​'​ ​I​ ​g​e​t​ ​'​{​0​|​c​u​s​t​o​m​}​'​ ​a​s​ ​a​ ​r​e​s​u​l​t
 	 * @param {number} 0
 	 */
 	custom: RequiredParams<'0' | '0|custom'>
 	/**
-	 * Result: {0|sqrt|round}
+	 * R​e​s​u​l​t​:​ ​{​0​|​s​q​r​t​|​r​o​u​n​d​}
 	 * @param {number} 0
 	 */
 	chaining: RequiredParams<'0|sqrt|round'>
 	builtin: {
 		/**
-		 * Today is {0|weekday}
+		 * T​o​d​a​y​ ​i​s​ ​{​0​|​w​e​e​k​d​a​y​}
 		 * @param {Date} 0
 		 */
 		date: RequiredParams<'0|weekday'>
 		/**
-		 * Next meeting: {0|timeShort}
+		 * N​e​x​t​ ​m​e​e​t​i​n​g​:​ ​{​0​|​t​i​m​e​S​h​o​r​t​}
 		 * @param {Date} 0
 		 */
 		time: RequiredParams<'0|timeShort'>
 		/**
-		 * Your balance is {0|currency}
+		 * Y​o​u​r​ ​b​a​l​a​n​c​e​ ​i​s​ ​{​0​|​c​u​r​r​e​n​c​y​}
 		 * @param {number} 0
 		 */
 		number: RequiredParams<'0|currency'>
 		/**
-		 * The link is: https://www.xyz.com/{0|noSpaces}
+		 * T​h​e​ ​l​i​n​k​ ​i​s​:​ ​h​t​t​p​s​:​/​/​w​w​w​.​x​y​z​.​c​o​m​/​{​0​|​n​o​S​p​a​c​e​s​}
 		 * @param {string} 0
 		 */
 		replace: RequiredParams<'0|noSpaces'>
 		/**
-		 * Hello {name|myFormatter}
+		 * H​e​l​l​o​ ​{​n​a​m​e​|​m​y​F​o​r​m​a​t​t​e​r​}
 		 * @param {unknown} name
 		 */
 		'identity-and-ignore': RequiredParams<'name|myFormatter'>
 		/**
-		 * I said: {0|upper}
+		 * I​ ​s​a​i​d​:​ ​{​0​|​u​p​p​e​r​}
 		 * @param {string} 0
 		 */
 		uppercase: RequiredParams<'0|upper'>
 		/**
-		 * He said: {0|lower}
+		 * H​e​ ​s​a​i​d​:​ ​{​0​|​l​o​w​e​r​}
 		 * @param {string} 0
 		 */
 		lowercase: RequiredParams<'0|lower'>
