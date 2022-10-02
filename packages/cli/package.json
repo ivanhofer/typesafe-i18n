@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "@types/prompts": "^2.0.14",
-    "commander": "^9.4.0",
+    "commander": "^9.4.1",
     "esbuild": "^0.14.54",
     "just-diff": "^5.1.1",
     "just-diff-apply": "^5.4.1",
@@ -17,7 +17,7 @@
     "tsx": "^3.9.0",
     "type-fest": "^2.19.0",
     "typesafe-utils": "^1.16.2",
-    "typescript": "^4.8.3"
+    "typescript": "^4.8.4"
   },
   "type": "module"
 }
