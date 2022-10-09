@@ -8,7 +8,7 @@
   "devDependencies": {
     "@vue/runtime-dom": "^3.2.40",
     "esbuild": "^0.15.10",
-    "tsx": "^3.9.0",
+    "tsx": "^3.10.1",
     "typescript": "^4.8.4",
     "vue": "3.2.39"
   },
