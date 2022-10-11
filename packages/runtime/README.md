@@ -440,7 +440,7 @@ The `typesafeI18nString` and `typesafeI18nObject` functions offer full typesafet
 
 ### more typesafety features
 
-In order to get full typechecking support, you should use the exported functions in `i18n-utils.ts` created by the [generator](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator). It contains fully typed wrappers for the following core functionalities.
+In order to get full typechecking support, you should use the exported functions in `i18n-util.ts` created by the [generator](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator). It contains fully typed wrappers for the following core functionalities.
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
