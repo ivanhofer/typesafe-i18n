@@ -172,7 +172,7 @@ You can use `typesafe-i18n` in a variety of project-setups:
 
 ### Other frameworks
 
-All you need is inside the [generated](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#folder-structure) file `i18n-utils.ts`. You can use the functions in there to create a small wrapper for your application.
+All you need is inside the [generated](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#folder-structure) file `i18n-util.ts`. You can use the functions in there to create a small wrapper for your application.
 
 > Feel free to open a new [discussion](https://github.com/ivanhofer/typesafe-i18n/discussions) if you need a guide for a specific framework.
 
