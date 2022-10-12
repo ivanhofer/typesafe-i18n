@@ -192,6 +192,8 @@ The library should work in all **modern browsers**. It uses some functionality f
 
 ## Typesafety
 
+If you want to get the best typesafety features, you will need to use the [`generator`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator) in order to create types and boilerplate code for you
+
 Here you can see some examples where `typesafe-i18n` can help you:
 
 #### typesafe auto-completion for all your defined locales
