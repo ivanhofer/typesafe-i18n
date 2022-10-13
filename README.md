@@ -646,7 +646,7 @@ const createUser = (name: string, password: string) => {
    }
 
    if (isStrongPassword(password)) {
-      showErrorMessage('Password is to weak')
+      showErrorMessage('Password is too weak')
       return
    }
 
@@ -668,7 +668,7 @@ const createUser = (name: string, password: string) => {
    }
 
    if (isStrongPassword(password)) {
-      showErrorMessage('Password is to weak') // => ERROR: Argument of type 'string' is not assignable to parameter of type 'LocalizedString'.
+      showErrorMessage('Password is too weak') // => ERROR: Argument of type 'string' is not assignable to parameter of type 'LocalizedString'.
       return
    }
 
