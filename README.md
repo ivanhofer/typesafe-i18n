@@ -704,6 +704,7 @@ module.exports = {
 > here is the original issue with some additional information: [#140](https://github.com/ivanhofer/typesafe-i18n/issues/140)
 
 ---
+
 ### With Node.JS the `Intl` package does not work with locales other than 'en'
 
 Node.JS, by default, does not come with the full [`intl`](https://nodejs.org/api/intl.html) support. To reduce the size of the node installment it will only include 'en' as locale. You would need to add it yourself. The easiest way is to install the `intl` package
@@ -722,4 +723,31 @@ globalThis.Intl.DateTimeFormat = intl.DateTimeFormat
 
 Then you should be able to use formatters from the `Intl` namespace with all locales.
 
+> Note: this is an older approach to the problem. You should not need this when using Node.js version > 16.
+
 <!-- TODO: check if this is now fixed in node version 16 -->
+
+---
+
+### "Cannot find module" in yarn monorepo setup
+
+Yarn uses a strange way to install dependencies in a monorepo setup. The issue lays in the "hoisting" of packages (see [this issue](https://github.com/yarnpkg/yarn/issues/7572)). Therefore it might be that the `typesafe-i18n` dependencies cannot be found.
+
+Changing the workspace config in package.json will fix the issue:
+
+```diff
+-  "workspaces": [
+-    "apps/*",
+-    "packages/*"
+-  ],
++  "workspaces": {
++    "packages": [
++      "apps/*",
++      "packages/*"
++    ],
++    "nohoist": [
++      "**/typesafe-i18n",
++      "**/typesafe-i18n/**"
++    ]
++  },
+```
