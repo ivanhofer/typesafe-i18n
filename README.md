@@ -226,7 +226,7 @@ The `typesafe-i18n` package allows us to be 100% typesafe for our translation fu
 
 ## Integration with other services
 
-`typesafe-i18n` comes with an API that allows other services to read and update translations. You can connect ot other services by using the [`importer`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/importer) and [`exporter`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/exporter) functionality:
+`typesafe-i18n` comes with an API that allows other services to read and update translations. You can connect other services by using the [`importer`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/importer) and [`exporter`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/exporter) functionality.
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
