@@ -119,9 +119,9 @@
 	"devDependencies": {
 		"@size-limit/preset-small-lib": "^8.1.0",
 		"@types/glob": "^7.2.0",
-		"@types/node": "^16.11.64",
-		"@typescript-eslint/eslint-plugin": "^5.39.0",
-		"@typescript-eslint/parser": "^5.39.0",
+		"@types/node": "^16.11.66",
+		"@typescript-eslint/eslint-plugin": "^5.40.0",
+		"@typescript-eslint/parser": "^5.40.0",
 		"eslint": "^8.25.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-prettier": "^4.2.1",
