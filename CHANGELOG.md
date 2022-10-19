@@ -6,6 +6,8 @@
 
 Feature:
  - use type predicates for `isLocale` and `isNamespace` utility functions [#475](https://github.com/ivanhofer/typesafe-i18n/discussions/475)
+Fix:
+ - add ReturnTypes to generated functions to prevent TypeScript performance issues
 
 ## 5.14.0 (2022-09-29)
 

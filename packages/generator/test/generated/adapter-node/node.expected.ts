@@ -3,9 +3,11 @@
 
 import { i18n } from './util.actual'
 import { loadAllLocales } from './util.actual.sync'
+import type { LocaleTranslationFunctions } from 'typesafe-i18n'
+import type { Locales, Translations, TranslationFunctions } from './types.actual'
 
 loadAllLocales()
 
-export const L = i18n()
+export const L: LocaleTranslationFunctions<Locales, Translations, TranslationFunctions> = i18n()
 
 export default L

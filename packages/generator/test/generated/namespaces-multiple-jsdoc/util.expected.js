@@ -70,7 +70,8 @@ export const i18nObject = (locale) =>
 /**
  * @return { LocaleTranslationFunctions }
  */
-export const i18n = () => initI18n(loadedLocales, loadedFormatters)
+export const i18n = () =>
+	initI18n(loadedLocales, loadedFormatters)
 
 /**
  * @param { LocaleDetector[] } detectors
