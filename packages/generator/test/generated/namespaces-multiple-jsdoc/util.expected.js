@@ -36,13 +36,13 @@ export const namespaces = [
 
 /**
  * @param { string } locale
- * @return { boolean }
+ * @return { locale is Locales }
  */
 export const isLocale = (locale) => locales.includes(/** @type { Locales } */ (locale))
 
 /**
  * @param { string } namespace
- * @return { boolean }
+ * @return { namespace is Namespaces }
  */
 export const isNamespace = (namespace) => namespaces.includes(/** @type { Namespaces } */ (namespace))
 
@@ -70,7 +70,8 @@ export const i18nObject = (locale) =>
 /**
  * @return { LocaleTranslationFunctions }
  */
-export const i18n = () => initI18n(loadedLocales, loadedFormatters)
+export const i18n = () =>
+	initI18n(loadedLocales, loadedFormatters)
 
 /**
  * @param { LocaleDetector[] } detectors

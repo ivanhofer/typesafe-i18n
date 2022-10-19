@@ -33,6 +33,9 @@ export const loadLocale = (locale) => {
 	loadFormatters(locale)
 }
 
+/**
+ * @return { void }
+ */
 export const loadAllLocales = () => locales.forEach(loadLocale)
 
 /**

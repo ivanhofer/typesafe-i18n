@@ -9,10 +9,10 @@ const localeTranslationLoaders = {
 	en: () => import('./en/index.js'),
 }
 
-const updateDictionary = (locale: Locales, dictionary: Partial<Translations>) =>
+const updateDictionary = (locale: Locales, dictionary: Partial<Translations>): Translations =>
 	loadedLocales[locale] = { ...loadedLocales[locale], ...dictionary }
 
-export const importLocaleAsync = async (locale: Locales) =>
+export const importLocaleAsync = async (locale: Locales): Promise<Translations> =>
 	(await localeTranslationLoaders[locale]()).default as unknown as Translations
 
 export const loadLocaleAsync = async (locale: Locales): Promise<void> => {

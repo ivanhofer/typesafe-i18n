@@ -27,7 +27,7 @@ export const locales = [
 
 /**
  * @param { string } locale
- * @return { boolean }
+ * @return { locale is Locales }
  */
 export const isLocale = (locale) => locales.includes(/** @type { Locales } */ (locale))
 
@@ -55,7 +55,8 @@ export const i18nObject = (locale) =>
 /**
  * @return { LocaleTranslationFunctions }
  */
-export const i18n = () => initI18n(loadedLocales, loadedFormatters)
+export const i18n = () =>
+	initI18n(loadedLocales, loadedFormatters)
 
 /**
  * @param { LocaleDetector[] } detectors

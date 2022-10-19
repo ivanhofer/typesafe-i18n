@@ -10,7 +10,7 @@ import {
 	relativeFolderImportPath,
 	tsCheck,
 	type,
-	typeCast,
+	typeCast
 } from '../output-handler.mjs'
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
 import { prettify, sanitizePath, wrapObjectKeyIfNeeded } from '../utils/generator.utils.mjs'
@@ -92,6 +92,7 @@ export const loadLocale = (locale${type('Locales')})${type('void')} => {
 	loadFormatters(locale)
 }
 
+${jsDocFunction('void')}
 export const loadAllLocales = ()${type('void')} => locales.forEach(loadLocale)
 
 ${jsDocFunction('void', { type: 'Locales', name: 'locale' })}

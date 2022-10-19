@@ -11,7 +11,7 @@ import {
 	relativeFolderImportPath,
 	tsCheck,
 	type,
-	typeCast,
+	typeCast
 } from '../output-handler.mjs'
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
 import { prettify, wrapObjectKeyIfNeeded } from '../utils/generator.utils.mjs'
@@ -65,7 +65,7 @@ const getAsyncCode = (
 	const [namespaceImports, namespaceLoader] = usesNamespaces ? generateNamespacesCode(locales, namespaces) : ['', '']
 	const translationImporter = `
 ${jsDocFunction('Promise<Translations>', { type: 'Locales', name: 'locale' })}
-export const importLocaleAsync = async (locale${type('Locales')}) =>
+export const importLocaleAsync = async (locale${type('Locales')})${type('Promise<Translations>')} =>
 	${jsDocType(
 		'Translations',
 		jsDocType(
@@ -97,7 +97,9 @@ ${jsDocFunction(
 	{ type: 'Locales', name: 'locale' },
 	{ type: 'Partial<Translations>', name: 'dictionary' },
 )}
-const updateDictionary = (locale${type('Locales')}, dictionary${type('Partial<Translations>')}) =>
+const updateDictionary = (locale${type('Locales')}, dictionary${type('Partial<Translations>')})${type(
+		'Translations',
+	)} =>
 	loadedLocales[locale] = { ...loadedLocales[locale], ...dictionary }
 
 ${translationImporter}
