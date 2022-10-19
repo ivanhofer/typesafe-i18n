@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.15.0 (2022-10-19)
+
+Feature:
+ - use type predicates for `isLocale` and `isNamespace` utility functions [#475](https://github.com/ivanhofer/typesafe-i18n/discussions/475)
+
 ## 5.14.0 (2022-09-29)
 
 Feature:

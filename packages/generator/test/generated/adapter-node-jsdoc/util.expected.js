@@ -27,7 +27,7 @@ export const locales = [
 
 /**
  * @param { string } locale
- * @return { boolean }
+ * @return { locale is Locales }
  */
 export const isLocale = (locale) => locales.includes(/** @type { Locales } */ (locale))
 
