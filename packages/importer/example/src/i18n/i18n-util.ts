@@ -3,6 +3,7 @@
 
 import { i18n as initI18n, i18nObject as initI18nObject, i18nString as initI18nString } from 'typesafe-i18n'
 import type { LocaleDetector } from 'typesafe-i18n/detectors'
+import type { LocaleTranslationFunctions, TranslateByString } from 'typesafe-i18n'
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
 import type { Formatters, Locales, Namespaces, Translations, TranslationFunctions } from './i18n-types'
 
@@ -17,23 +18,24 @@ export const namespaces: Namespaces[] = [
 	'my-namespace'
 ]
 
-export const isLocale = (locale: string) => locales.includes(locale as Locales)
+export const isLocale = (locale: string): locale is Locales => locales.includes(locale as Locales)
 
-export const isNamespace = (namespace: string) => namespaces.includes(namespace as Namespaces)
+export const isNamespace = (namespace: string): namespace is Namespaces => namespaces.includes(namespace as Namespaces)
 
-export const loadedLocales = {} as Record<Locales, Translations>
+export const loadedLocales: Record<Locales, Translations> = {} as Record<Locales, Translations>
 
-export const loadedFormatters = {} as Record<Locales, Formatters>
+export const loadedFormatters: Record<Locales, Formatters> = {} as Record<Locales, Formatters>
 
-export const i18nString = (locale: Locales) => initI18nString<Locales, Formatters>(locale, loadedFormatters[locale])
+export const i18nString = (locale: Locales): TranslateByString => initI18nString<Locales, Formatters>(locale, loadedFormatters[locale])
 
-export const i18nObject = (locale: Locales) =>
+export const i18nObject = (locale: Locales): TranslationFunctions =>
 	initI18nObject<Locales, Translations, TranslationFunctions, Formatters>(
 		locale,
 		loadedLocales[locale],
 		loadedFormatters[locale]
 	)
 
-export const i18n = () => initI18n<Locales, Translations, TranslationFunctions, Formatters>(loadedLocales, loadedFormatters)
+export const i18n = (): LocaleTranslationFunctions<Locales, Translations, TranslationFunctions> =>
+	initI18n<Locales, Translations, TranslationFunctions, Formatters>(loadedLocales, loadedFormatters)
 
-export const detectLocale = (...detectors: LocaleDetector[]) => detectLocaleFn<Locales>(baseLocale, locales, ...detectors)
+export const detectLocale = (...detectors: LocaleDetector[]): Locales => detectLocaleFn<Locales>(baseLocale, locales, ...detectors)
