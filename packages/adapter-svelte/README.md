@@ -240,7 +240,7 @@ For your Sapper projects, you should call the `loadLocaleAsync` function inside 
 
 > Due to how sapper works, the `preload` function on the first request only get's called on the server. To be able to access the translations also in the client, you need to send the loaded translations via a prop to the client and restore the state there.
 
-For more information about the stores you can use, see the [Svelte](#svelte) section.
+For more information about the stores you can use, see the [Stores](#stores) section.
 
  <!-- TODO: create example repository -->
 
@@ -248,6 +248,23 @@ For more information about the stores you can use, see the [Svelte](#svelte) sec
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
+
+### Notes
+
+You may run into the error **`Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'svelte' imported from ...`**, when using the `node` adapter from `SvelteKit`. The reason behind this is that `typesafe-i18n` uses the stores that Svelte includes. There is currently an unresolved question how dependencies, that itself depend on `Svelte` can and should be bundled. Until that question is resolved you can do two things:
+
+1. move `Svelte` to your production `dependencies` inside `package.json`
+2. _(recommended)_ move `typesafe-i18n` to your `devDependencies` inside `package.json` and tell `vite` to bundle it by adding a few lines to your config:
+
+   _vite.config.js_
+   ```diff
+   export default defineConfig({
+	   plugins: [sveltekit()],
+   +	ssr: {
+   +		noExternal: ['typesafe-i18n'],
+   +	},
+   })
+   ```
 
 ---
 ---
