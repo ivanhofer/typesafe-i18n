@@ -249,7 +249,7 @@ For more information about the stores you can use, see the [Stores](#stores) sec
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
-### Notes
+# Notes
 
 You may run into the error **`Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'svelte' imported from ...`**, when using the `node` adapter from `SvelteKit`. The reason behind this is that `typesafe-i18n` uses the stores that Svelte includes. There is currently an unresolved question how dependencies, that itself depend on `Svelte` can and should be bundled. Until that question is resolved you can do two things:
 
