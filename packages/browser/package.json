@@ -6,8 +6,8 @@
     "test": "tsc --noEmit"
   },
   "devDependencies": {
-    "esbuild": "^0.15.11",
-    "tsx": "^3.10.1",
+    "esbuild": "^0.15.12",
+    "tsx": "^3.11.0",
     "typescript": "^4.8.4"
   },
   "type": "module"
