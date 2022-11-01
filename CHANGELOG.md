@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.16.0 (2022-11-01)
+
+Feature:
+ - make generator faster by improving the speed of the TypeScript compilation process
+
 ## 5.15.0 (2022-10-19)
 
 Feature:

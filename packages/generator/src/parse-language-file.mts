@@ -12,7 +12,7 @@ import {
 	doesPathExist,
 	getDirectoryStructure,
 	getFiles,
-	importFile,
+	importFile
 } from './utils/file.utils.mjs'
 import { logger } from './utils/logger.mjs'
 
@@ -89,6 +89,7 @@ const transpileTypescriptFiles = async (
 		resolveJsonModule: true,
 		skipLibCheck: true,
 		sourceMap: false,
+		noLib: true,
 	})
 
 	program.emit()
