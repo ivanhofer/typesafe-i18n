@@ -123,6 +123,10 @@ export const parseLanguageFile = async (
 		return null
 	}
 
+	if (outputFormat === 'JavaScript' && namespace) {
+		tempPath = `${tempPath}-${namespace}`
+	}
+
 	await createPathIfNotExits(tempPath)
 
 	const importPath = await transpileTypescriptFiles(
