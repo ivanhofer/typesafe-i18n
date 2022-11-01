@@ -10,7 +10,7 @@ import {
 	relativeFolderImportPath,
 	tsCheck,
 	type,
-	typeCast
+	typeCast,
 } from '../output-handler.mjs'
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
 import { prettify, sanitizePath, wrapObjectKeyIfNeeded } from '../utils/generator.utils.mjs'
@@ -70,9 +70,9 @@ ${jsDocImports(
 	{ from: relativeFileImportPath(typesFileName), type: 'Translations' },
 )}
 
-import { initFormatters } from './${formattersTemplateFileName}'
+import { initFormatters } from './${relativeFileImportPath(formattersTemplateFileName)}'
 ${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translations')}
-import { loadedFormatters, loadedLocales, locales } from './${utilFileName}'
+import { loadedFormatters, loadedLocales, locales } from './${relativeFileImportPath(utilFileName)}'
 
 ${localesImports}
 
