@@ -7,9 +7,9 @@
  * @typedef { import('./types.actual').Translations } Translations
  */
 
-import { initFormatters } from './formatters-template.actual'
+import { initFormatters } from '././formatters-template.actual'
 
-import { loadedFormatters, loadedLocales, locales } from './util.actual'
+import { loadedFormatters, loadedLocales, locales } from '././util.actual'
 
 import en from './en'
 
