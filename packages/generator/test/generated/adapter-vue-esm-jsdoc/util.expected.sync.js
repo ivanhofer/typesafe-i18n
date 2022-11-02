@@ -7,9 +7,9 @@
  * @typedef { import('./types.actual.js').Translations } Translations
  */
 
-import { initFormatters } from '././formatters-template.actual.js'
+import { initFormatters } from './formatters-template.actual.js'
 
-import { loadedFormatters, loadedLocales, locales } from '././util.actual.js'
+import { loadedFormatters, loadedLocales, locales } from './util.actual.js'
 
 import en from './en/index.js'
 
