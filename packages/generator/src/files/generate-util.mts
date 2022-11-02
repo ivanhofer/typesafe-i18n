@@ -10,7 +10,7 @@ import {
 	relativeFileImportPath,
 	tsCheck,
 	type,
-	typeCast
+	typeCast,
 } from '../output-handler.mjs'
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
 import { prettify } from '../utils/generator.utils.mjs'

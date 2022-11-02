@@ -1,7 +1,11 @@
 # CHANGELOG.md
 
 # Version 5
+## 5.16.2 (2022-11-02)
 
+Fix:
+ - generator esm imports
+ 
 ## 5.16.1 (2022-11-01)
 
 Fix:
