@@ -2,6 +2,16 @@
 
 # Version 5
 
+## 5.16.1 (2022-11-01)
+
+Fix:
+ - generating types for namespaces when `outputFormat` is set to `JavaScript` [#491](https://github.com/ivanhofer/typesafe-i18n/discussions/491)
+
+## 5.16.0 (2022-11-01)
+
+Feature:
+ - make generator faster by improving the speed of the TypeScript compilation process
+
 ## 5.15.0 (2022-10-19)
 
 Feature:

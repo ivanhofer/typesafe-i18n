@@ -15,7 +15,7 @@ import {
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
 import { prettify, sanitizePath, wrapObjectKeyIfNeeded } from '../utils/generator.utils.mjs'
 
-const aa = (sanitizedLocale: string, namespaces: string[]) => `{
+const combineNamespacesSingleToObject = (sanitizedLocale: string, namespaces: string[]) => `{
 		...${sanitizedLocale}${namespaces
 	.map(
 		(namespace) => `,
@@ -28,7 +28,7 @@ const getLocalesTranslationRowSync = (locale: Locale, namespaces: string[]): str
 	const sanitizedLocale = sanitizePath(locale)
 	const needsEscaping = locale !== sanitizedLocale
 	const postfix = namespaces.length
-		? `: ${aa(sanitizedLocale, namespaces)}`
+		? `: ${combineNamespacesSingleToObject(sanitizedLocale, namespaces)}`
 		: needsEscaping
 		? `: ${sanitizedLocale}`
 		: ''

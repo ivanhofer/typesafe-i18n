@@ -12,7 +12,7 @@ import {
 	doesPathExist,
 	getDirectoryStructure,
 	getFiles,
-	importFile,
+	importFile
 } from './utils/file.utils.mjs'
 import { logger } from './utils/logger.mjs'
 
@@ -89,6 +89,7 @@ const transpileTypescriptFiles = async (
 		resolveJsonModule: true,
 		skipLibCheck: true,
 		sourceMap: false,
+		noLib: true,
 	})
 
 	program.emit()
@@ -120,6 +121,10 @@ export const parseLanguageFile = async (
 	if (!(await doesPathExist(originalPath))) {
 		logger.info(`could not load ${type} file '${fileName}'`)
 		return null
+	}
+
+	if (outputFormat === 'JavaScript' && namespace) {
+		tempPath = `${tempPath}-${namespace}`
 	}
 
 	await createPathIfNotExits(tempPath)
