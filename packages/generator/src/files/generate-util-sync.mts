@@ -70,9 +70,9 @@ ${jsDocImports(
 	{ from: relativeFileImportPath(typesFileName), type: 'Translations' },
 )}
 
-import { initFormatters } from './${relativeFileImportPath(formattersTemplateFileName)}'
+import { initFormatters } from '${relativeFileImportPath(formattersTemplateFileName)}'
 ${importTypes(relativeFileImportPath(typesFileName), 'Locales', 'Translations')}
-import { loadedFormatters, loadedLocales, locales } from './${relativeFileImportPath(utilFileName)}'
+import { loadedFormatters, loadedLocales, locales } from '${relativeFileImportPath(utilFileName)}'
 
 ${localesImports}
 
