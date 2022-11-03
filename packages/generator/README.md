@@ -35,7 +35,7 @@ or define a script in your `package.json` file:
    }
 }
 ```
-> You could use a npm-package like [`npm-run-all`](https://github.com/mysticatea/npm-run-all/blob/master/assets/npm-run-all.md#run-scripts-in-parallel) in order to start the generator and you development-server in parallel.
+> You could use a npm-package like [`npm-run-all`](https://github.com/mysticatea/npm-run-all/blob/master/docs/npm-run-all.md#run-scripts-in-parallel) in order to start the generator and you development-server in parallel.
 
 To start the generator and watch for changes in your translation you can run:
 
@@ -209,19 +209,19 @@ The available options are:
 | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------- |
 | [adapter](#adapter)                                       | `'angular'  \| 'node'  \| 'react'  \| 'solid'  \| 'svelte'  \| 'vue'  \| undefined` | `undefined`                                   |
 | [adapters](#adapters)                                       | `Array<'angular' \| 'node' \| 'react' \| 'solid' \| 'svelte' \| 'vue'> \| undefined`                           | `undefined`
-| [baseLocale](#baseLocale)                                 | `string`                                                                                         | `'en'`                                        |
-| [outputFormat](#outputFormat)                             | `'TypeScript'` &#124; `'JavaScript'`                                                             | `'TypeScript'`                                |
-| [esmImports](#esmImports)                                 | `boolean`                                                                                        | `false`                                       |
-| [generateOnlyTypes](#generateOnlyTypes)                   | `boolean`                                                                                        | `false`                                       |
-| [runAfterGenerator](#runAfterGenerator)                   | `string` &#124; `undefined`                                                                      | `undefined`                                   |
+| [baseLocale](#baselocale)                                 | `string`                                                                                         | `'en'`                                        |
+| [outputFormat](#outputformat)                             | `'TypeScript'` &#124; `'JavaScript'`                                                             | `'TypeScript'`                                |
+| [esmImports](#esmimports)                                 | `boolean`                                                                                        | `false`                                       |
+| [generateOnlyTypes](#generateonlytypes)                   | `boolean`                                                                                        | `false`                                       |
+| [runAfterGenerator](#runaftergenerator)                   | `string` &#124; `undefined`                                                                      | `undefined`                                   |
 | [banner](#banner)                                         | `string`                                                                                         | `'/* eslint-disable */'`                      |
-| [outputPath](#outputPath)                                 | `string`                                                                                         | `'./src/i18n/'`                               |
-| [typesFileName](#typesFileName)                           | `string`                                                                                         | `'i18n-types'`                                |
-| [utilFileName](#utilFileName)                             | `string`                                                                                         | `'i18n-util'`                                 |
-| [formattersTemplateFileName](#formattersTemplateFileName) | `string`                                                                                         | `'formatters'`                                |
-| [typesTemplateFileName](#typesTemplateFileName)           | `string`                                                                                         | `'custom-types'`                              |
-| [adapterFileName](#adapterFileName)                       | `string` &#124; `undefined`                                                                      | `undefined`                                   |
-| [tempPath](#tempPath)                                     | `string`                                                                                         | `'./node_modules/typesafe-i18n/temp-output/'` |
+| [outputPath](#outputpath)                                 | `string`                                                                                         | `'./src/i18n/'`                               |
+| [typesFileName](#typesfilename)                           | `string`                                                                                         | `'i18n-types'`                                |
+| [utilFileName](#utilfilename)                             | `string`                                                                                         | `'i18n-util'`                                 |
+| [formattersTemplateFileName](#formatterstemplatefilename) | `string`                                                                                         | `'formatters'`                                |
+| [typesTemplateFileName](#typestemplatefilename)           | `string`                                                                                         | `'custom-types'`                              |
+| [adapterFileName](#adapterfilename)                       | `string` &#124; `undefined`                                                                      | `undefined`                                   |
+| [tempPath](#temppath)                                     | `string`                                                                                         | `'./node_modules/typesafe-i18n/temp-output/'` |
 
 
 #### `adapter`
@@ -294,7 +294,7 @@ Folder where the generator can store temporary files. These files are generated 
 
 ## JSDoc
 
-If you want to use `typesafe-i18n` inside your JavaScript code, you can get also full typesafety by running the generator with the `outputFormat` [option](#outputformat) set to `'JavaScript'`. The generator then provides wrappers for the [core functions](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#usage) together with [JSDoc](https://www.typescriptlang.org/assets/handbook/jsdoc-supported-types.html)  annotations.
+If you want to use `typesafe-i18n` inside your JavaScript code, you can get also full typesafety by running the generator with the `outputFormat` [option](#outputformat) set to `'JavaScript'`. The generator then provides wrappers for the [core functions](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#usage) together with [JSDoc](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html) annotations.
 
 > An IDE like [VS Code](https://code.visualstudio.com/) will show you code-completions and errors when you have opened a file in the editor.
 

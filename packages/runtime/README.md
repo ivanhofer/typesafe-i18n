@@ -276,8 +276,8 @@ Or if you are using the [i18nObject (LL)](#i18nObject):
 If the provided wrappers don't fit your needs, you can use these raw functions to implement a custom i18n integration.
 The `typesafe-i18n` package exports a few different objects you can use to localize your applications:
 
- - [i18nString (LLL)](#i18nString): string interpolation for selected parts of an application
- - [i18nObject (LL)](#i18nObject): for frontend-applications or projects that only load a single locale per user
+ - [i18nString (LLL)](#i18nstring): string interpolation for selected parts of an application
+ - [i18nObject (LL)](#i18nobject): for frontend-applications or projects that only load a single locale per user
  - [i18n (L)](#i18n): for APIs or backend-applications that need to handle multiple locales
 
 ### `i18nString`
