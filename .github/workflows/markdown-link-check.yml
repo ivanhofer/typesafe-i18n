@@ -1,20 +1,20 @@
 name: Check Markdown links
 
 on:
-  push:
-    branches:
-      - main
-  schedule:
-    - cron: '0 20 * * 0' # Runs at 20:00 on Sunday
+   pull_request:
+      branches:
+         - main
+   schedule:
+      - cron: '0 20 * * 0' # Runs at 20:00 on Sunday
 
 jobs:
-  markdown-link-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - uses: gaurav-nelson/github-action-markdown-link-check@v1
-        with:
-          use-quiet-mode: 'yes'
-          use-verbose-mode: 'yes'
-          config-file: '.markdown-link-check.json'
-          folder-path: '.'
+   markdown-link-check:
+      runs-on: ubuntu-latest
+      steps:
+         - uses: actions/checkout@master
+         - uses: gaurav-nelson/github-action-markdown-link-check@v1
+           with:
+              use-quiet-mode: 'yes'
+              use-verbose-mode: 'yes'
+              config-file: '.markdown-link-check.json'
+              folder-path: '.'
