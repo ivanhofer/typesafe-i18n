@@ -11,7 +11,7 @@ This project should keep following values:
 
 ## package manager
 
-This project uses [`pnpm`](https://pnpm.io/de/) as a package manager. You can install it by running `npm install -g pnpm`. It uses the same syntax like `npm` for most commands, you only have to write `pnpm` instead of `npm`. e.g. `pnpm install` or `pnpm test`
+This project uses [`pnpm`](https://pnpm.io/) as a package manager. You can install it by running `npm install -g pnpm`. It uses the same syntax like `npm` for most commands, you only have to write `pnpm` instead of `npm`. e.g. `pnpm install` or `pnpm test`
 
 ## testing
 

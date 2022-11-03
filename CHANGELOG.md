@@ -5,7 +5,7 @@
 
 Fix:
  - generator esm imports
- 
+
 ## 5.16.1 (2022-11-01)
 
 Fix:
@@ -358,7 +358,7 @@ Fix:
 ## 2.60.1 (2022-01-22)
 
 Feature:
- - add functionality to loop over arrays [#152](https://github.com/ivanhofer/typesafe-i18n/discussions/152)
+ - add functionality to loop over arrays [#152](https://github.com/ivanhofer/typesafe-i18n/issues/152)
 
 ## 2.59.0 (2022-01-18)
 
@@ -589,7 +589,7 @@ Feature:
 ## 2.42.0 (2021-10-02)
 
 Breaking:
- - get rid of `locales` as generator-config [#95](https://github.com/ivanhofer/typesafe-i18n/discussions/95)
+ - get rid of `locales` as generator-config
 
 ## 2.41.0 (2021-10-02)
 
