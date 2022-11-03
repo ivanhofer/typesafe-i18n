@@ -107,7 +107,7 @@
 		"test": "pnpm -r generate:json-schema && pnpm --filter \"@typesafe-i18n/*\" test",
 		"test:size": "size-limit",
 		"test:update-generated-files": "pnpm --filter \"@typesafe-i18n/*\" test:update-generated-files",
-		"markdown-link-check": "find ./packages -type f -name \"*.md\" -not -path \"*/node_modules/*\" -print0 | xargs -0 -n1 markdown-link-check -c .markdown-link-check.json",
+		"markdown-link-check": "find . -type f -name \"*.md\" -not -path \"*/node_modules/*\" -print0 | xargs -0 -n1 markdown-link-check -c .markdown-link-check.json",
 		"-- BUILD -----------------------------------------------": "",
 		"build": "pnpm clear && pnpm update:version && pnpm -r generate:json-schema && pnpm build:packages && pnpm link-typedefinitions && pnpm fix-imports",
 		"build:packages": "pnpm -r --filter=@typesafe-i18n/** run build",
