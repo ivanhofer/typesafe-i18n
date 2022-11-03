@@ -24,4 +24,4 @@ jobs:
          - run: pnpm install --no-save
 
          - name: run link checks
-           run: pnpm markdown-lint-check
+           run: pnpm markdown-link-check
