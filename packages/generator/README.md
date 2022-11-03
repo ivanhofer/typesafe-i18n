@@ -104,7 +104,7 @@ src/
  - `i18n-util.async.ts`\
    This file contains the logic to load individual locales asynchronously.
 
- - `i18n-util.ts`\
+ - `i18n-util.sync.ts`\
    This file contains the logic to load your locales in a synchronous way.
 
  - `i18n-util.ts`\
