@@ -26,7 +26,7 @@ npm install typesafe-i18n
 
 ## Syntax
 
-For more information about the `LLL` object, read the [usage](#i18nString) section.
+For more information about the `LLL` object, read the [usage](#i18nstring) section.
 
 <!-- ------------------------------------------------------------------------------------------ -->
 
@@ -251,7 +251,7 @@ Of course `typesafe-i18n` can handle that as well.
 LLL('Welcome to my site') // => 'Welcome to my site'
 ```
 
-Or if you are using the [i18nObject (LL)](#i18nObject):
+Or if you are using the [i18nObject (LL)](#i18nobject):
 
 ```html
 <script>
