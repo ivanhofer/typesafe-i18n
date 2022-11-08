@@ -72,6 +72,7 @@
 			"require": "./vue/index.cjs"
 		},
 		".": {
+			"types": "./runtime/esm/runtime/src/index.d.ts",
 			"import": "./runtime/esm/runtime/src/index.mjs",
 			"require": "./runtime/cjs/runtime/src/index.cjs"
 		},

@@ -1,6 +1,12 @@
 # CHANGELOG.md
 
 # Version 5
+
+## 5.16.3 (2022-11-08)
+
+Fix:
+ - types for TypeScript moduleResolution 'Node16'
+
 ## 5.16.2 (2022-11-02)
 
 Fix:
