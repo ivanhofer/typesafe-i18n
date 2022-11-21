@@ -6,10 +6,10 @@
     "test": "tsc --noEmit"
   },
   "devDependencies": {
-    "@vue/runtime-dom": "^3.2.41",
-    "esbuild": "^0.15.13",
-    "tsx": "^3.11.0",
-    "typescript": "^4.8.4",
+    "@vue/runtime-dom": "^3.2.45",
+    "esbuild": "^0.15.14",
+    "tsx": "^3.12.1",
+    "typescript": "^4.9.3",
     "vue": "3.2.39"
   },
   "type": "module"
