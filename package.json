@@ -32,42 +32,52 @@
 	"types": "types/index.d.ts",
 	"exports": {
 		"./angular": {
+			"types": "./angular/index.d.ts",
 			"import": "./angular/index.mjs",
 			"require": "./angular/index.cjs"
 		},
 		"./detectors": {
+			"types": "./detectors/index.d.ts",
 			"import": "./detectors/index.mjs",
 			"require": "./detectors/index.cjs"
 		},
-		"./formatters": {
-			"import": "./formatters/index.mjs",
-			"require": "./formatters/index.cjs"
-		},
 		"./exporter": {
+			"types": "./exporter/index.d.ts",
 			"import": "./exporter/index.mjs",
 			"require": "./exporter/index.cjs"
 		},
+		"./formatters": {
+			"types": "./formatters/index.d.ts",
+			"import": "./formatters/index.mjs",
+			"require": "./formatters/index.cjs"
+		},
 		"./importer": {
+			"types": "./importer/index.d.ts",
 			"import": "./importer/index.mjs",
 			"require": "./importer/index.cjs"
 		},
 		"./parser": {
+			"types": "./parser/index.d.ts",
 			"import": "./parser/index.mjs",
 			"require": "./parser/index.cjs"
 		},
 		"./react": {
+			"types": "./react/index.d.ts",
 			"import": "./react/index.mjs",
 			"require": "./react/index.cjs"
 		},
 		"./solid": {
+			"types": "./solid/index.d.ts",
 			"import": "./solid/index.mjs",
 			"require": "./solid/index.cjs"
 		},
 		"./svelte": {
+			"types": "./svelte/index.d.ts",
 			"import": "./svelte/index.mjs",
 			"require": "./svelte/index.cjs"
 		},
 		"./vue": {
+			"types": "./vue/index.d.ts",
 			"import": "./vue/index.mjs",
 			"require": "./vue/index.cjs"
 		},
