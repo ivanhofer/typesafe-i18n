@@ -158,7 +158,7 @@
 		"url": "https://github.com/sponsors/ivanhofer"
 	},
 	"volta": {
-		"node": "16.14.0",
+		"node": "16.18.1",
 		"npm": "8.5.1"
 	}
 }

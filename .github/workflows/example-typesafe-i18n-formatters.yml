@@ -13,12 +13,12 @@ jobs:
    check-formatters:
       runs-on: ubuntu-latest
       steps:
-         - uses: actions/checkout@v2
+         - uses: actions/checkout@v3
 
          - name: install node
            uses: actions/setup-node@v2
            with:
-              node-version: 16.14.0
+              node-version: 16.18.1
 
          - name: install dependencies
            run: npm install --no-save
