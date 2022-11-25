@@ -11,7 +11,7 @@ import {
 	relativeFolderImportPath,
 	tsCheck,
 	type,
-	typeCast,
+	typeCast
 } from '../output-handler.mjs'
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
 import { prettify, wrapObjectKeyIfNeeded } from '../utils/generator.utils.mjs'
@@ -25,7 +25,12 @@ const getLocalesTranslationRowAsync = (locale: Locale): string => `
 const getNamespaceLoaderForLocale = (locale: Locale, namespaces: string[]) => {
 	return `${wrapObjectKeyIfNeeded(locale)}: {
 	${namespaces
-		.map((namespace) => `	${wrapObjectKeyIfNeeded(namespace)}: () => import('./${locale}/${namespace}')`)
+		.map(
+			(namespace) =>
+				`	${wrapObjectKeyIfNeeded(namespace)}: () => import('${relativeFolderImportPath(
+					`${locale}/${namespace}`,
+				)}')`,
+		)
 		.join(NEW_LINE_INDENTED_WITH_COMMA)}
 	}`
 }

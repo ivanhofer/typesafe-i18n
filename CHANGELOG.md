@@ -2,6 +2,15 @@
 
 # Version 5
 
+## 5.17.0 (2022-11-25)
+
+Feat:
+ - better esm support
+
+Fix:
+ - fix async namespace imports for esm output [#514](https://github.com/ivanhofer/typesafe-i18n/issues/514)
+ - add types to package.json exports [#514](https://github.com/ivanhofer/typesafe-i18n/issues/514)
+
 ## 5.16.3 (2022-11-08)
 
 Fix:

@@ -457,6 +457,14 @@ testNamespacesMatrix(
 	['en-us', 'de_at', 'it', 'de'],
 )
 
+testNamespacesMatrix(
+	'namespaces-with-locales-esm',
+	{ test: { hi: 'hello' }, 'some-other_namespace': { a: 'abc' } },
+	{ baseLocale: 'it', esmImports: true },
+	['test', 'some-other_namespace'],
+	['en-us', 'it'],
+)
+
 // --------------------------------------------------------------------------------------------------------------------
 
 const tsTestTranslation = { TEST: 'Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}' }
