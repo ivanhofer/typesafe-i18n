@@ -1,13 +1,13 @@
 // @ts-check
 
 /**
- * @typedef { import('../types.actual.js').BaseTranslation } BaseTranslation
+ * @typedef { import('../types.actual.js').Translation } Translation
  */
 
-/** @type { BaseTranslation } */
+/** @type { Translation } */
 const de = {
-	// TODO: your translations go here
-	HI: 'Hallo {name:string}! Bitte hinterlasse einen Stern, wenn dir das Projekt gefällt: https://github.com/ivanhofer/typesafe-i18n',
+	// this is an example Translation, just rename or delete this folder if you want
+	HI: 'Hallo {name}! Bitte hinterlasse einen Stern, wenn dir das Projekt gefällt: https://github.com/ivanhofer/typesafe-i18n',
 }
 
 export default de

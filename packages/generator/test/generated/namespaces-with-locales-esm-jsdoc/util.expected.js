@@ -19,7 +19,7 @@ import { i18n as initI18n, i18nObject as initI18nObject, i18nString as initI18nS
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
 
 /** @type { Locales } */
-export const baseLocale = 'de'
+export const baseLocale = 'it'
 
 /** @type { Locales[] } */
 export const locales = [

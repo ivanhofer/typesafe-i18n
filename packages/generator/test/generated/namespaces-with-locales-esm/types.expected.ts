@@ -3,7 +3,7 @@
 import type { BaseTranslation as BaseTranslationType, LocalizedString } from 'typesafe-i18n'
 
 export type BaseTranslation = BaseTranslationType & DisallowNamespaces
-export type BaseLocale = 'de'
+export type BaseLocale = 'it'
 
 export type Locales =
 	| 'en-us'

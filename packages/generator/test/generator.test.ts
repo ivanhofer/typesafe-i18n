@@ -460,7 +460,7 @@ testNamespacesMatrix(
 testNamespacesMatrix(
 	'namespaces-with-locales-esm',
 	{ test: { hi: 'hello' }, 'some-other_namespace': { a: 'abc' } },
-	{ baseLocale: 'de', esmImports: true },
+	{ baseLocale: 'it', esmImports: true },
 	['test', 'some-other_namespace'],
 	['en-us', 'it'],
 )

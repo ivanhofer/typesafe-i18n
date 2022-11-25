@@ -7,7 +7,7 @@ import type { LocaleTranslationFunctions, TranslateByString } from 'typesafe-i18
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
 import type { Formatters, Locales, Namespaces, Translations, TranslationFunctions } from './types.actual.js'
 
-export const baseLocale: Locales = 'de'
+export const baseLocale: Locales = 'it'
 
 export const locales: Locales[] = [
 	'en-us',
