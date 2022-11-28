@@ -5,9 +5,9 @@
 		"dev": "serve ./src"
 	},
 	"devDependencies": {
-		"serve": "^13.0.2"
+		"serve": "^14.1.2"
 	},
 	"dependencies": {
-		"typesafe-i18n": "^2.58.0"
+		"typesafe-i18n": "^5.17.0"
 	}
 }

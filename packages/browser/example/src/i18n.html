@@ -7,9 +7,9 @@
 		<link rel="stylesheet" href="styles.css" />
 		<title>typesafe-i18n: i18n</title>
 
-		<script src="https://unpkg.com/typesafe-i18n@5.7.0/dist/i18n.min.js"></script>
+		<script src="https://unpkg.com/typesafe-i18n@5.17.0/dist/i18n.instance.min.js"></script>
 		<script type="module">
-			import date from 'https://unpkg.com/typesafe-i18n@5.7.0/formatters/date.mjs'
+			import date from 'https://unpkg.com/typesafe-i18n@5.17.0/formatters/date.mjs'
 
 			// helper function to render translation in HTML
 			const addTexts = (locale, ...texts) => {
@@ -33,14 +33,18 @@
 				it: { HI: 'Ciao {name|uppercase}!', TODAY: 'Oggi è {0|weekday}', NO_ARGS: 'Testo senza parametri' },
 			}
 
-			const loadLocale = (locale) => localeTranslations[locale]
-
 			const initFormatters = (locale) => ({
 				uppercase: (value) => value.toUpperCase(),
 				weekday: date(locale, { weekday: 'long' }),
 			})
 
-			const L = i18n(loadLocale, initFormatters)
+			const formatters= {
+				en: initFormatters('en'),
+				de: initFormatters('de'),
+				it: initFormatters('it'),
+			}
+
+			const L = i18n(localeTranslations, formatters)
 
 			addTexts('en', L.en.HI({ name: 'world' }), L.en.TODAY(new Date()), L.en.NO_ARGS())
 
