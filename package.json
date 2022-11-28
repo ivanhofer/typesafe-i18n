@@ -115,7 +115,7 @@
 		"lint:ci": "eslint --cache --fix",
 		"lint:fix": "pnpm lint:ci -- packages",
 		"-- TEST ------------------------------------------------": "",
-		"test": "pnpm -r generate:json-schema && pnpm --filter \"@typesafe-i18n/*\" test",
+		"test": "pnpm clear && pnpm -r generate:json-schema && pnpm --filter \"@typesafe-i18n/*\" test",
 		"test:size": "size-limit",
 		"test:update-generated-files": "pnpm --filter \"@typesafe-i18n/*\" test:update-generated-files",
 		"markdown-link-check": "find . -type f -name \"*.md\" -not -path \"*/node_modules/*\" -print0 | xargs -0 -n1 markdown-link-check -c .markdown-link-check.json",
@@ -158,7 +158,7 @@
 		"url": "https://github.com/sponsors/ivanhofer"
 	},
 	"volta": {
-		"node": "16.14.0",
+		"node": "16.18.1",
 		"npm": "8.5.1"
 	}
 }

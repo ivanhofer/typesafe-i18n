@@ -1,4 +1,4 @@
 {
-   "$schema": "https://unpkg.com/typesafe-i18n@5.7.0/schema/typesafe-i18n.json",
+   "$schema": "https://unpkg.com/typesafe-i18n@5.17.0/schema/typesafe-i18n.json",
    "adapter": "angular"
 }

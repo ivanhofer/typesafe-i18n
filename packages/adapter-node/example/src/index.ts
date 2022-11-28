@@ -43,7 +43,8 @@ app.get('*', (req: Request, res: Response) => {
 
 const getPreferredLocale = (req: Request): Locales => {
 	const requestParametersDetector = initRequestParametersDetector(req, 'locale')
-	const acceptLanguageDetector = initAcceptLanguageHeaderDetector(req)
+	const headers = { get: (key: string) => req.headers[key] as string || null }
+	const acceptLanguageDetector = initAcceptLanguageHeaderDetector({ headers })
 
 	return detectLocale(requestParametersDetector, acceptLanguageDetector)
 }

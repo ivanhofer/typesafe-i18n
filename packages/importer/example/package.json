@@ -5,11 +5,11 @@
     "typesafe-i18n": "typesafe-i18n"
   },
   "devDependencies": {
-    "@types/node": "^17.0.21",
-    "tsx": "^3.8.0",
-    "typescript": "^4.6.2"
+    "@types/node": "^16.11.7",
+    "tsx": "^3.12.1",
+    "typescript": "^4.9.3"
   },
   "dependencies": {
-    "typesafe-i18n": "^5.16.3"
+    "typesafe-i18n": "^5.17.0"
   }
 }

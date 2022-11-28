@@ -16,16 +16,16 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * Hello {name}!
+	 * H​e​l​l​o​ ​{​n​a​m​e​}​!
 	 * @param {string} name
 	 */
 	HI: RequiredParams<'name'>
 	/**
-	 * Please navigate to "http://localhost:3001/:locale", where ":locale" is one of following: "en", "de" or "it" e.g. <a href="http://localhost:3001/en">http://localhost:3001/en</a>
+	 * P​l​e​a​s​e​ ​n​a​v​i​g​a​t​e​ ​t​o​ ​"​h​t​t​p​:​/​/​l​o​c​a​l​h​o​s​t​:​3​0​0​1​/​:​l​o​c​a​l​e​"​,​ ​w​h​e​r​e​ ​"​:​l​o​c​a​l​e​"​ ​i​s​ ​o​n​e​ ​o​f​ ​f​o​l​l​o​w​i​n​g​:​ ​"​e​n​"​,​ ​"​d​e​"​ ​o​r​ ​"​i​t​"​ ​e​.​g​.​ ​<​a​ ​h​r​e​f​=​"​h​t​t​p​:​/​/​l​o​c​a​l​h​o​s​t​:​3​0​0​1​/​e​n​"​>​h​t​t​p​:​/​/​l​o​c​a​l​h​o​s​t​:​3​0​0​1​/​e​n​<​/​a​>
 	 */
 	INSTRUCTIONS_LOCALE: string
 	/**
-	 * Please navigate to "http://localhost:3001/en/:name", where ":name" is your name e.g. <a href="http://localhost:3001/en/John">http://localhost:3001/en/John</a>
+	 * P​l​e​a​s​e​ ​n​a​v​i​g​a​t​e​ ​t​o​ ​"​h​t​t​p​:​/​/​l​o​c​a​l​h​o​s​t​:​3​0​0​1​/​e​n​/​:​n​a​m​e​"​,​ ​w​h​e​r​e​ ​"​:​n​a​m​e​"​ ​i​s​ ​y​o​u​r​ ​n​a​m​e​ ​e​.​g​.​ ​<​a​ ​h​r​e​f​=​"​h​t​t​p​:​/​/​l​o​c​a​l​h​o​s​t​:​3​0​0​1​/​e​n​/​J​o​h​n​"​>​h​t​t​p​:​/​/​l​o​c​a​l​h​o​s​t​:​3​0​0​1​/​e​n​/​J​o​h​n​<​/​a​>
 	 */
 	INSTRUCTIONS_NAME: string
 }
