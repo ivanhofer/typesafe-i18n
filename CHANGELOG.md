@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.17.1 (2022-11-28)
+
+Fix:
+ - type-import for vue adapter
+
 ## 5.17.0 (2022-11-25)
 
 Feat:
