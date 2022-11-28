@@ -16,41 +16,41 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * app started
+	 * a​p​p​ ​s​t​a​r​t​e​d
 	 */
 	STARTUP: string
 	/**
-	 * choose locale...
+	 * c​h​o​o​s​e​ ​l​o​c​a​l​e​.​.​.
 	 */
 	CHOOSE_LOCALE: string
 	/**
-	 * Hello {name}!
+	 * H​e​l​l​o​ ​{​n​a​m​e​}​!
 	 * @param {string} name
 	 */
 	HI: RequiredParams<'name'>
 	/**
-	 * Your name:
+	 * Y​o​u​r​ ​n​a​m​e​:
 	 */
 	YOUR_NAME: string
 	/**
-	 * Selected locale:
+	 * S​e​l​e​c​t​e​d​ ​l​o​c​a​l​e​:
 	 */
 	SELECTED_LOCALE: string
 	/**
-	 * Today is {date|weekday}
+	 * T​o​d​a​y​ ​i​s​ ​{​d​a​t​e​|​w​e​e​k​d​a​y​}
 	 * @param {Date} date
 	 */
 	TODAY: RequiredParams<'date|weekday'>
 	/**
-	 * Apples
+	 * A​p​p​l​e​s
 	 */
 	APPLES_LABEL: string
 	/**
-	 * Bananas
+	 * B​a​n​a​n​a​s
 	 */
 	BANANAS_LABEL: string
 	/**
-	 * I want to buy {nrOfApples|fallback0} apple{{s}} and {nrOfBananas|fallback0} banana{{s}}.
+	 * I​ ​w​a​n​t​ ​t​o​ ​b​u​y​ ​{​n​r​O​f​A​p​p​l​e​s​|​f​a​l​l​b​a​c​k​0​}​ ​a​p​p​l​e​{​{​s​}​}​ ​a​n​d​ ​{​n​r​O​f​B​a​n​a​n​a​s​|​f​a​l​l​b​a​c​k​0​}​ ​b​a​n​a​n​a​{​{​s​}​}​.
 	 * @param {number} nrOfApples
 	 * @param {number} nrOfBananas
 	 */
