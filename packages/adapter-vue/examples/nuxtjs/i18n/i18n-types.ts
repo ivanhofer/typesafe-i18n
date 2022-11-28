@@ -16,29 +16,29 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * application started
+	 * a​p​p​l​i​c​a​t​i​o​n​ ​s​t​a​r​t​e​d
 	 */
 	STARTUP: string
 	/**
-	 * choose locale...
+	 * c​h​o​o​s​e​ ​l​o​c​a​l​e​.​.​.
 	 */
 	CHOOSE_LOCALE: string
 	/**
-	 * Recommended IDE setup:
+	 * R​e​c​o​m​m​e​n​d​e​d​ ​I​D​E​ ​s​e​t​u​p​:
 	 */
 	RECOMMENDED_SETUP: string
 	/**
-	 * count is: {count}
+	 * c​o​u​n​t​ ​i​s​:​ ​{​c​o​u​n​t​}
 	 * @param {number} count
 	 */
 	COUNT: RequiredParams<'count'>
 	/**
-	 * Edit <code>{component}</code> to test hot module replacement.
+	 * E​d​i​t​ ​<​c​o​d​e​>​{​c​o​m​p​o​n​e​n​t​}​<​/​c​o​d​e​>​ ​t​o​ ​t​e​s​t​ ​h​o​t​ ​m​o​d​u​l​e​ ​r​e​p​l​a​c​e​m​e​n​t​.
 	 * @param {string} component
 	 */
 	EDIT: RequiredParams<'component'>
 	/**
-	 * Today is {date|weekday}
+	 * T​o​d​a​y​ ​i​s​ ​{​d​a​t​e​|​w​e​e​k​d​a​y​}
 	 * @param {Date} date
 	 */
 	TODAY: RequiredParams<'date|weekday'>
