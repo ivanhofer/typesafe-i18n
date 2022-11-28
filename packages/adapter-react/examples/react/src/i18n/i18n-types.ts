@@ -16,32 +16,32 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * choose locale...
+	 * c​h​o​o​s​e​ ​l​o​c​a​l​e​.​.​.
 	 */
 	CHOOSE_LOCALE: string
 	/**
-	 * Hello {name}!
+	 * H​e​l​l​o​ ​{​n​a​m​e​}​!
 	 * @param {string} name
 	 */
 	HI: RequiredParams<'name'>
 	/**
-	 * Edit <code>src/App.tsx</code> and save to reload.
+	 * E​d​i​t​ ​<​c​o​d​e​>​s​r​c​/​A​p​p​.​t​s​x​<​/​c​o​d​e​>​ ​a​n​d​ ​s​a​v​e​ ​t​o​ ​r​e​l​o​a​d​.
 	 */
 	EDIT_AND_SAVE: string
 	/**
-	 * Learn React
+	 * L​e​a​r​n​ ​R​e​a​c​t
 	 */
 	LEARN_REACT: string
 	/**
-	 * Your name:
+	 * Y​o​u​r​ ​n​a​m​e​:
 	 */
 	YOUR_NAME: string
 	/**
-	 * Selected locale:
+	 * S​e​l​e​c​t​e​d​ ​l​o​c​a​l​e​:
 	 */
 	SELECTED_LOCALE: string
 	/**
-	 * Today is {date|weekday}
+	 * T​o​d​a​y​ ​i​s​ ​{​d​a​t​e​|​w​e​e​k​d​a​y​}
 	 * @param {Date} date
 	 */
 	TODAY: RequiredParams<'date|weekday'>
