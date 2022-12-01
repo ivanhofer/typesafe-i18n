@@ -4,6 +4,8 @@
 
 **You can find a demo Next.js implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react/examples/nextjs).**
 
+**You can find a demo Expo react-native implementation [here](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react/examples/expo).**
+
 ## Setup
 
 See [here](https://github.com/ivanhofer/typesafe-i18n#get-started) on more information how to set up `typesafe-i18n`.

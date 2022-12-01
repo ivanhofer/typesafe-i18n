@@ -1,0 +1,36 @@
+{
+	"name": "typesafe-i18n_expo-demo",
+	"version": "1.0.0",
+	"main": "node_modules/expo/AppEntry.js",
+	"scripts": {
+		"start": "expo start",
+		"android": "expo start --android",
+		"ios": "expo start --ios",
+		"web": "expo start --web",
+		"typesafe-i18n": "typesafe-i18n"
+	},
+	"dependencies": {
+		"@expo/webpack-config": "^0.17.3",
+		"@formatjs/intl-getcanonicallocales": "^2.0.4",
+		"@formatjs/intl-locale": "^3.0.7",
+		"@formatjs/intl-pluralrules": "^5.1.4",
+		"@react-native-async-storage/async-storage": "^1.17.11",
+		"@react-native-picker/picker": "^2.4.8",
+		"expo": "~47.0.8",
+		"expo-localization": "^14.0.0",
+		"expo-status-bar": "~1.4.2",
+		"react": "18.1.0",
+		"react-dom": "18.1.0",
+		"react-native": "0.70.5",
+		"react-native-svg": "^13.4.0",
+		"react-native-web": "~0.18.9",
+		"typesafe-i18n": "^5.17.0"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.12.9",
+		"@types/react": "~18.0.14",
+		"@types/react-native": "~0.70.6",
+		"typescript": "^4.6.3"
+	},
+	"private": true
+}
