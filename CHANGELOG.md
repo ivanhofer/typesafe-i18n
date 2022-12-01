@@ -104,14 +104,10 @@ Feature:
  - detect locale from request's `hostname`
 
 ## 5.5.2 (2022-06-05)
+## 5.5.1 (2022-06-01)
 
 Fix:
  - bundle 'svelte/store' together with cjs output
-
-## 5.5.1 (2022-06-01)
-
-New Backer:
- - [Swepool](https://github.com/Swepool)
 
 ## 5.5.0 (2022-05-29)
 
@@ -339,15 +335,10 @@ Bugfix:
  - fix react adapter
 
 ## 3.1.2 (2022-02-04)
+## 3.1.1 (2022-02-01)
 
 Fix:
  - missing index.d.ts in importer [#167](https://github.com/ivanhofer/typesafe-i18n/issues/167)
-
-## 3.1.1 (2022-02-01)
-
-New Backers:
- - [Kraftwurm](https://github.com/Kraftwurm)
- - [Badlapje](https://github.com/Badlapje)
 
 ## 3.1.0 (2022-02-01)
 

@@ -2,6 +2,9 @@
 	"ignorePatterns": [
 		{
 			"pattern": "^http://localhost.*"
+		},
+		{
+			"pattern": "^https://badgen.net/*"
 		}
 	],
 	"retryOn429": true,
