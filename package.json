@@ -131,21 +131,21 @@
 	"devDependencies": {
 		"@size-limit/preset-small-lib": "^8.1.0",
 		"@types/glob": "^7.2.0",
-		"@types/node": "^16.18.3",
-		"@typescript-eslint/eslint-plugin": "^5.44.0",
-		"@typescript-eslint/parser": "^5.44.0",
-		"eslint": "^8.28.0",
+		"@types/node": "^16.18.8",
+		"@typescript-eslint/eslint-plugin": "^5.46.0",
+		"@typescript-eslint/parser": "^5.46.0",
+		"eslint": "^8.29.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-prettier": "^4.2.1",
 		"husky": "^8.0.2",
-		"lint-staged": "^13.0.4",
+		"lint-staged": "^13.1.0",
 		"markdown-link-check": "^3.10.3",
-		"prettier": "^2.8.0",
+		"prettier": "^2.8.1",
 		"rimraf": "^3.0.2",
 		"size-limit": "^8.1.0",
 		"tiny-glob": "^0.2.9",
 		"tsx": "^3.12.1",
-		"typescript": "^4.9.3"
+		"typescript": "^4.9.4"
 	},
 	"peerDependencies": {
 		"typescript": ">=3.5.1"

@@ -6,11 +6,11 @@
     "test": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/react": "^18.0.25",
-    "esbuild": "^0.15.16",
+    "@types/react": "^18.0.26",
+    "esbuild": "^0.15.18",
     "react": "^18.2.0",
     "tsx": "^3.12.1",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.4"
   },
   "type": "module"
 }
