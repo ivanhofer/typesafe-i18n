@@ -1,0 +1,9 @@
+{
+	"name": "snapshot-tests",
+	"devDependencies": {
+		"typesafe-i18n": "workspace:*",
+		"@types/react": "^18.0.26",
+		"@angular/core": "~15.0.1",
+		"vue": "3.2.39"
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"experimentalDecorators": true,
+		"rootDir": "../",
+		"outDir": "../../generator",
+		"paths": {
+			"typesafe-i18n": ["./"],
+			"typesafe-i18n/*": ["./*"],
+			"react": ["./node_modules/@types/react"],
+			"vue": ["./node_modules/vue"],
+		}
+	},
+	"include": ["src/**/*.mts"],
+	"exclude": ["test/generated/*/*/index.*"]
+}

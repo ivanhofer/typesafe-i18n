@@ -222,6 +222,18 @@ importers:
       uvu: 0.5.6
       watchlist: 0.3.1
 
+  packages/generator/test/generated:
+    specifiers:
+      '@angular/core': ~15.0.1
+      '@types/react': ^18.0.26
+      typesafe-i18n: workspace:*
+      vue: 3.2.39
+    devDependencies:
+      '@angular/core': 15.0.4
+      '@types/react': 18.0.26
+      typesafe-i18n: link:../../../..
+      vue: 3.2.39
+
   packages/importer:
     specifiers:
       esbuild: ^0.15.18
@@ -263,6 +275,16 @@ importers:
       watchlist: 0.3.1
 
 packages:
+
+  /@angular/core/15.0.4:
+    resolution: {integrity: sha512-Xf8Nuu0iM/VjQHPS4A0jufqTYZCfiGqc0iAD7j9zM3TD6caQ3OP4mxXVYYTpIG+APKel38+Gol8cpQB/8PVbqQ==}
+    engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0}
+    peerDependencies:
+      rxjs: ^6.5.3 || ^7.4.0
+      zone.js: ~0.11.4 || ~0.12.0
+    dependencies:
+      tslib: 2.4.1
+    dev: true
 
   /@babel/helper-string-parser/7.19.4:
     resolution: {integrity: sha512-nHtDoQcuqFmwYNYPz3Rah5ph2p8PFeFCsZk9A/48dPc/rGocJ5J3hAAZ7pb76VWX3fZKu+uEr/FhH5jLx7umrw==}

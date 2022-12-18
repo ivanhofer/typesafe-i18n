@@ -53,15 +53,23 @@ const getPathOfOutputFile = (
 	let fileName
 
 	if (file.endsWith('sync')) {
-		const x = file.split('.')
-		const a = x.pop()
-		fileName = `${x.join('.')}.${type}.${a}`
+		const parts = file.split('.')
+		const part = parts.pop()
+		fileName = `${parts.join('.')}.${type}.${part}`
 	} else {
 		fileName = `${file}.${type}`
 	}
 
 	const fileEnding =
-		outputFormat === 'TypeScript' ? '.ts' : file === 'types' || file === 'types-template' ? '.d.ts' : '.js'
+		outputFormat === 'TypeScript'
+			? file === 'react'
+				? '.tsx'
+				: '.ts'
+			: file === 'types' || file === 'types-template'
+			? '.d.ts'
+			: file === 'react'
+			? '.jsx'
+			: '.js'
 	return `${outputPath}/${prefix}/${fileName}${fileEnding}`
 }
 
@@ -175,6 +183,7 @@ const testGeneratedConsoleOutput = async (
 		await callback(loggerWrapper.outputs)
 	})
 
+// --------------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
 testGeneratedOutput('empty', {})
