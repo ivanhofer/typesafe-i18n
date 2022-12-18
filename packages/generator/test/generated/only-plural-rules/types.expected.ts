@@ -18,7 +18,7 @@ type RootTranslation = {
 	 */
 	ONLY_PLURAL: string
 	/**
-	 * {​{​A​f​p​e​l​|​Ä​p​f​e​l​}​}
+	 * {​{​A​p​f​e​l​|​Ä​p​f​e​l​}​}
 	 */
 	ONLY_SINGULAR_PLURAL: string
 }
@@ -29,7 +29,7 @@ export type TranslationFunctions = {
 	 */
 	ONLY_PLURAL: (arg0: string | number | boolean) => LocalizedString
 	/**
-	 * {{Afpel|Äpfel}}
+	 * {{Apfel|Äpfel}}
 	 */
 	ONLY_SINGULAR_PLURAL: (arg0: string | number | boolean) => LocalizedString
 }
