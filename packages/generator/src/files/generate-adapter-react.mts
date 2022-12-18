@@ -8,6 +8,7 @@ import {
 	OVERRIDE_WARNING,
 	relativeFileImportPath,
 	tsCheck,
+	type
 } from '../output-handler.mjs'
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
 import { prettify } from '../utils/generator.utils.mjs'
@@ -21,6 +22,11 @@ ${jsDocImports(
 		from: 'typesafe-i18n/react',
 		type: 'ReactInit<Locales, Translations, TranslationFunctions>',
 		alias: 'ReactInit',
+	},
+	{
+		from: 'typesafe-i18n/react',
+		type: 'I18nContextType<Locales, Translations, TranslationFunctions>',
+		alias: 'I18nContextType',
 	},
 	{ from: relativeFileImportPath(typesFileName), type: 'Formatters' },
 	{ from: relativeFileImportPath(typesFileName), type: 'Locales' },
@@ -42,7 +48,10 @@ const { component: TypesafeI18n, context: I18nContext } = initI18nReact${generic
 		'Formatters',
 	)}(loadedLocales, loadedFormatters)
 
-const useI18nContext = (): I18nContextType<Locales, Translations, TranslationFunctions> => useContext(I18nContext)
+${jsDocType('() => I18nContextType')}
+const useI18nContext = ()${type(
+		'I18nContextType<Locales, Translations, TranslationFunctions>',
+	)} => useContext(I18nContext)
 
 export { I18nContext, useI18nContext }
 

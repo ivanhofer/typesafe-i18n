@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.17.2 (2022-12-18)
+
+Bugfix:
+ - react `JSDoc` output
+
 ## 5.17.1 (2022-11-28)
 
 Fix:

@@ -4,6 +4,7 @@
 
 /**
  * @typedef { import('typesafe-i18n/react').ReactInit<Locales, Translations, TranslationFunctions> } ReactInit
+ * @typedef { import('typesafe-i18n/react').I18nContextType<Locales, Translations, TranslationFunctions> } I18nContextType
  * @typedef { import('./types.actual.js').Formatters } Formatters
  * @typedef { import('./types.actual.js').Locales } Locales
  * @typedef { import('./types.actual.js').TranslationFunctions } TranslationFunctions
@@ -18,7 +19,8 @@ import { loadedFormatters, loadedLocales } from './util.actual.js'
 /** @type { ReactInit } */
 const { component: TypesafeI18n, context: I18nContext } = initI18nReact(loadedLocales, loadedFormatters)
 
-const useI18nContext = (): I18nContextType<Locales, Translations, TranslationFunctions> => useContext(I18nContext)
+/** @type { () => I18nContextType } */
+const useI18nContext = () => useContext(I18nContext)
 
 export { I18nContext, useI18nContext }
 
