@@ -510,6 +510,8 @@ You are really flexible how you want to define your translations. You could defi
 You are really flexible how you define your translations. You can define the translations how it fits best to your application and i18n workflow.
 It is recommended to use `nested key-value pairs` since it offers flexibility and is easy to read, but if your translations come from an external service like a CMS, it is possible that you also have to use the array syntax to define your translations.
 
+> There is a small limitation when it comes to naming your keys. Due to `JavaScript` and some reserved keywords, you can't use `'length'`, `'caller'`, `'callee'` and `'arguments'` as keys inside your dictionary.
+
 ### arrays:
 
 Here are some examples how you can iterate over arrays coming from a `typesafe-i18n` dictionary:
