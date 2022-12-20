@@ -270,3 +270,61 @@ You may run into the error **`Error [ERR_MODULE_NOT_FOUND]: Cannot find package 
 ---
 
 **For more information about `typesafe-i18n`, take a look at the [main repository](https://github.com/ivanhofer/typesafe-i18n).**
+
+---
+---
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+## recipes
+
+### How do I render a component inside a Translation?
+
+By default `typesafe-i18n` at this time does not provide such a functionality. But you could easily write a function like this:
+
+```svelte
+<script lang="ts">
+	import type { LocalizedString } from 'typesafe-i18n'
+
+	export let message: LocalizedString
+
+	$: [prefix, infix, postfix] = message.split('<>') as LocalizedString[]
+	// render infix only if the message doesn't have any split characters
+	$: if (!infix && !postfix) {
+		infix = prefix
+		prefix = '' as LocalizedString
+	}
+</script>
+
+{prefix}<slot {infix} />{postfix}
+```
+
+Your translations would look something like this
+
+```ts
+const en = {
+   'WELCOME': 'Hi {name:string}, click <>here<> to create your first project'
+   'LOGOUT': 'Logout'
+}
+```
+
+Use it inside your application
+
+```svelte
+<header>
+   <!-- normal usage -->
+   <button on:click={() => alert('do logout')}>
+      {LL.logout()}
+   </button>
+</header>
+<main>
+   <!-- usage with a component inside a translation -->
+   <WrapTranslation message={LL.WELCOME({ name: 'John' })} let:infix>
+      <button on:click={() => alert('clicked')}>
+         {infix}
+      </button>
+   </WrapTranslation>
+</main>
+```

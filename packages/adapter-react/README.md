@@ -194,3 +194,72 @@ export default LanguageSelection
 ---
 
 **For more information about `typesafe-i18n`, take a look at the [main repository](https://github.com/ivanhofer/typesafe-i18n).**
+
+---
+---
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+## recipes
+
+### How do I render a component inside a Translation?
+
+By default `typesafe-i18n` at this time does not provide such a functionality. But you could easily write a function like this:
+
+```jsx
+import { LocalizedString } from 'typesafe-i18n'
+
+// create a component that handles the translated message
+
+interface WrapTranslationPropsType {
+   message: LocalizedString,
+   renderComponent: (messagePart: LocalizedString) => JSX.Element
+}
+
+export function WrapTranslation({ message, renderComponent }: WrapTranslationPropsType) {
+   // define a split character, in this case '<>'
+   let [prefix, infix, postfix] = message.split('<>') as LocalizedString[]
+
+   // render infix only if the message doesn't have any split characters
+   if (!infix && !postfix) {
+      infix = prefix
+      prefix = '' as LocalizedString
+   }
+
+   return <>
+      {prefix}
+      {renderComponent(infix)}
+      {prefix}
+   </>
+}
+```
+
+Your translations would look something like this
+
+```ts
+const en = {
+   'WELCOME': 'Hi {name:string}, click <>here<> to create your first project'
+   'LOGOUT': 'Logout'
+}
+```
+
+Use it inside your application
+
+```tsx
+export function App() {
+   return <>
+      <header>
+         <!-- normal usage -->
+         <button onClick={() => alert('do logout')}>{LL.logout()}</button>} />
+      </header>
+      <main>
+         <!-- usage with a component inside a translation -->
+         <WrapTranslation
+            message={LL.WELCOME({ name: 'John' })}
+            renderComponent={(infix) => <button onClick={() => alert('clicked')}>{infix}</button>} />
+      </main>
+   <>
+}
+```
