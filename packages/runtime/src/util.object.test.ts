@@ -236,6 +236,8 @@ const LL9 = i18nObject(
 		spacesInKey: '{0|{a b c: begin, *:rest}}',
 		dashesInKey: '{0|{a-b-c: begin, *:rest}}',
 		withType: '{0:string|{y:yes,n:no}}',
+		withComma:
+			'Price: ${price:number}. {taxes|{yes: An additional tax, a few bucks for Uncle Sam, will be collected. , no: No taxes apply.}}',
 	},
 	{
 		uppercase: (v: string) => v.toUpperCase(),
@@ -255,6 +257,13 @@ test('switch-case fallback empty', () => assert.is(LL9.emptyNoFallback('test'), 
 test('switch-case spaces in key', () => assert.is(LL9.spacesInKey('a b c'), 'begin'))
 test('switch-case dashes in key', () => assert.is(LL9.dashesInKey('a-b-c'), 'begin'))
 test('switch-case with type', () => assert.is(LL9.withType('y'), 'yes'))
+test('switch-case with comma 1', () =>
+	assert.is(
+		LL9.withComma({ price: '100', taxes: 'yes' }),
+		'Price: $100. An additional tax, a few bucks for Uncle Sam, will be collected.',
+	))
+test('switch-case with comma 2', () =>
+	assert.is(LL9.withComma({ price: '100', taxes: 'no' }), 'Price: $100. No taxes apply.'))
 
 // --------------------------------------------------------------------------------------------------------------------
 

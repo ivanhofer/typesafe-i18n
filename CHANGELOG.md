@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.18.0 (2022-12-22)
+
+Feature:
+ - allow to have strings with a comma inside switch-case statements [#548](https://github.com/ivanhofer/typesafe-i18n/discussions/548)
+
 ## 5.17.2 (2022-12-18)
 
 Bugfix:
@@ -14,7 +19,7 @@ Fix:
 
 ## 5.17.0 (2022-11-25)
 
-Feat:
+Feature:
  - better esm support
 
 Fix:
@@ -570,7 +575,7 @@ Feature:
 ## 2.45.0 (2021-10-16)
 
 Feature:
- - feat: reduce size of `i18n` (L) by removing unnecessary Error message
+ - reduce size of `i18n` (L) by removing unnecessary Error message
 
 ## 2.44.3 (2021-10-15)
 

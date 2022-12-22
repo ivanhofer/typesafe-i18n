@@ -147,7 +147,16 @@ const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], in
 						const cases = Object.fromEntries(
 							removeOuterBrackets(formatterKey)
 								.split(',')
-								.map((part) => part.split(':').map((value) => value.trim())),
+								.map((part) => part.split(':'))
+								.reduce((accumulator, entry) => {
+									if (entry.length === 2) {
+										return [...accumulator, entry.map((entry) => entry.trim()) as [string, string]]
+									}
+
+									// if we have a single part, this means that a comma `,` was present in the string and we need to combine the strings again
+									;(accumulator[accumulator.length - 1] as [string, string])[1] += ',' + entry[0]
+									return accumulator
+								}, [] as ([string, string] | [string])[]),
 						)
 
 						return cases[value as string] ?? cases['*']
