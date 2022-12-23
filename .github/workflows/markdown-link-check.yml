@@ -1,9 +1,6 @@
 name: Check Markdown links
 
 on:
-   pull_request:
-      branches:
-         - main
    schedule:
       - cron: '0 20 * * 0' # Runs at 20:00 on Sunday
 
