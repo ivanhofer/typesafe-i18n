@@ -219,7 +219,7 @@ export default function useLocales() {
   const setLocale: (locale: Locales) => {
     ready.value = false
     return loadEverything(newLocale, _setLocale).then(() => {
-      ready.value = false
+      ready.value = true
     })
   }
 
