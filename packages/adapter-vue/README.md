@@ -19,6 +19,7 @@ npm install typesafe-i18n
 ## Table of Contents
  - [add `typesafe-i18n` to existing projects](#configure-typesafe-i18n-for-an-existing-vuejs-project)
  - [provided functions & variables](#provided-functions--variables)
+ - [recipes](#recipes)
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -154,4 +155,180 @@ const { locale, setLocale } = typesafeI18n()
       </li>
    </ul>
 </template>
+```
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------------------------------------ -->
+
+## recipes
+
+### How to update all namespaces on locale change
+
+When loading namespaces asynchronously, they are not automatically updated on locale change. To do this, you could wrap the typesafe-i18n utils in a composable, like this:
+
+```ts
+// src/composables/useLocales.ts
+import { ref, watch } from 'vue'
+import { loadLocaleAsync, loadNamespaceAsync } from '../i18n/i18n-util.async'
+import { typesafeI18n } from '../i18n/i18n-vue'
+
+// keep track of loaded namespaces
+const loadedNamespaces: Namespaces[] = []
+
+// a way to track namespaces, without storing them, would be to check the list
+// of namespaces (export namespaces in i18n-util) against the loaded locales
+// (export loadedLocales in i18n-util), like:
+//
+// import { namespaces, loadedLocales } from '@/i18n/i18n-util'
+// const loadedNamespaces = namespaces.map(ns => ns in loadedLocales[locale])
+
+/**
+ * Load a new locale and all currently loaded namespaces
+ *
+ * @param locale - the new locale
+ * @setLocale - the actual setLocale function, coming from typesafe-i18n
+ *
+ * @returns a promise that resolves after loading the new locale and all namespaces
+ */
+function loadEverything(
+  locale: Locales,
+  setLocale: (l: Locales) => void,
+) {
+  const loaders = [
+    loadLocaleAsync(locale),
+    ...loadedNamespaces.map(ns => loadNamespaceAsync(ns))
+  ]
+  return Promise.all(loaders).then(() => setLocale(locale))
+}
+
+/**
+ * Provides i18n utils with automatic namespace tracking
+ * @returns an object containing i18n utils
+ *   ready: Ref<boolean> - tracks if locales are currently loading
+ *   locale: Ref<Locales> - always contains the currently set locale
+ *   setLocale: (locale: Locales) => Promise<void> - set a locale
+ *   addNamespace: (ns: Namespaces) => Promise<void> - load and add a namespace
+ */
+export default function useLocales() {
+  const ready = ref(false)
+  const { locale, setLocale: _setLocale, LL } = typesafeI18n()
+
+  // sets a new locale and uses ready to indicate the loading state, but also
+  // returns the Promise coming from `loadEverything`
+  const setLocale: (locale: Locales) => {
+    ready.value = false
+    return loadEverything(newLocale, _setLocale).then(() => {
+      ready.value = true
+    })
+  }
+
+  // adds and loads a namespace if it is not yet added, and uses ready to
+  // indicate the loading state, but also
+  // returns the Promise coming from `loadNamespaceAsync`
+  const addNamespace(ns: Namespaces) {
+    if (loadedNamespaces.includes(ns)) return
+    ready.value = false
+    return loadNamespaceAsync(ns).then(() => {
+      loadedNamespaces.push(ns)
+      ready.value = true
+    })
+  }
+
+  return { ready, locale, setLocale, addNamespace, LL }
+}
+```
+
+### Pre-/Post setLocale/addNamespace hooks
+
+The above code can be extended to call functions before or after a locale is set. For this, add a mean to give those callbacks as params to `useLocales` and call them in their respective places:
+
+```ts
+// src/composables/useLocales.ts
+import { ref, watch } from 'vue'
+import { loadLocaleAsync, loadNamespaceAsync } from '../i18n/i18n-util.async'
+import { typesafeI18n } from '../i18n/i18n-vue'
+
+// keep track of loaded namespaces
+const loadedNamespaces: Namespaces[] = []
+
+/**
+ * Load a new locale and all currently loaded namespaces
+ *
+ * @param locale - the new locale
+ * @setLocale - the actual setLocale function, coming from typesafe-i18n
+ *
+ * @returns a promise that resolves after loading the new locale and all namespaces
+ */
+function loadEverything(
+  locale: Locales,
+  setLocale: (l: Locales) => void,
+) {
+  const loaders = [
+    loadLocaleAsync(locale),
+    ...loadedNamespaces.map(ns => loadNamespaceAsync(ns))
+  ]
+  return Promise.all(loaders).then(() => setLocale(locale))
+}
+
+/**
+ * Provides i18n utils with automatic namespace tracking
+ *
+ * @param options - object, optionally containing hooks to be called before/after setting a locale/namespace
+ *
+ * @returns an object containing i18n utils
+ *   ready: Ref<boolean> - tracks if locales are currently loading
+ *   locale: Ref<Locales> - always contains the currently set locale
+ *   setLocale: (locale: Locales) => Promise<void> - set new locale
+ *   addNamespace: (ns: Namespaces) => Promise<void> - load a new namespace
+ */
+export default function useLocales({
+  beforeSetLocale,
+  afterSetLocale,
+  beforeAddNamespace,
+  afterAddNamespace,
+}: {
+  beforeSetLocale?: (newLocale: Locales, oldLocale: Locales) => void
+  afterSetLocale?: (newLocale: Locales, oldLocale: Locales) => void
+  beforeAddNamespace?: (newNS: Namespaces, loadedNS: Namespaces[]) => void
+  afterAddNamespace?: (newNS: Namespaces, loadedNS: Namespaces[]) => void
+} = {}) {
+  const ready = ref(false)
+  const { locale, setLocale: _setLocale, LL } = typesafeI18n()
+
+  // Sets a new locale and uses ready to indicate the loading state,
+  // calls beforeSetLocale after setting ready to false, right before `loadEverything` is called.
+  // calls afterSetLocale after `loadEverything` and setting ready to true.
+  // returns the Promise coming from `loadEverything`
+  const setLocale: (newLocale: Locales) => {
+    ready.value = false
+    const oldLocale = locale.value
+    if (beforeSetLocale) beforeSetLocale(newLocale, oldLocale)
+    return loadEverything(newLocale, _setLocale).then(() => {
+      ready.value = true
+      if (afterSetLocale) afterSetLocale(newLocale, oldLocale)
+    })
+  }
+
+  // Adds and loads a namespace if it is not yet added, and uses ready to
+  // indicate the loading state.
+  // Calls beforeAddNamespace after setting ready to false, right before `loadNamespaceAsync` is called.
+  // Calls afterAddNamespace after loadNamespaceAsync and setting ready to true.
+  // returns the Promise coming from `loadNamespaceAsync`
+  const addNamespace(ns: Namespaces) {
+    ready.value = false
+    if (beforeAddNamespace) beforeAddNamespace(ns, loadedNamespaces)
+    if (loadedNamespaces.includes(ns)) {
+      ready.value = true
+      return
+    }
+    return loadNamespaceAsync(ns).then(() => {
+      loadedNamespaces.push(ns)
+      ready.value = true
+      if (afterAddNamespace) afterAddNamespace(ns, loadedNamespaces)
+    })
+  }
+
+  return { ready, locale, setLocale, addNamespace, LL }
+}
 ```
