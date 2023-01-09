@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "@types/prompts": "^2.4.2",
-    "commander": "^9.4.1",
+    "commander": "^9.5.0",
     "esbuild": "^0.14.54",
     "just-diff": "^5.2.0",
     "just-diff-apply": "^5.5.0",
