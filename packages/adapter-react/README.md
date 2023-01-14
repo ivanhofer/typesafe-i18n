@@ -54,9 +54,9 @@ Wrap your application root with the `TypesafeI18n` component:
 
 ```jsx
 import React, { useState, useEffect } from 'react'
-import { detectLocale, navigatorDetector } from 'typesafe-i18n/detectors'
+import { navigatorDetector } from 'typesafe-i18n/detectors'
 import TypesafeI18n from './i18n/i18n-react'
-import { baseLocale, locales } from 'i18n/i18n-util'
+import { detectLocale } from './i18n/i18n-util'
 import { loadLocale } from './i18n/i18n-util.sync'
 
 
@@ -64,11 +64,7 @@ function App() {
    // Detect locale
    // (Use as advanaced locale detection strategy as you like. 
    // More info: https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/detectors)
-   const locale = detectLocale(
-    baseLocale,
-    locales,
-    navigatorDetector
-  )
+   const locale = detectLocale(navigatorDetector)
 
    // Load locales
    // (Use a data fetching solution that you prefer)
