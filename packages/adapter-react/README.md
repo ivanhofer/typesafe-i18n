@@ -53,7 +53,7 @@ The generator will create a custom React component and context inside `i18n-reac
 Wrap your application root with the `TypesafeI18n` component:
 
 ```jsx
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { navigatorDetector } from 'typesafe-i18n/detectors'
 import TypesafeI18n from './i18n/i18n-react'
 import { detectLocale } from './i18n/i18n-util'
@@ -92,7 +92,6 @@ export default App
 That's it. You can then start using `typesafe-i18n` inside your React components.
 
 ```jsx
-import React from 'react'
 import { useI18nContext } from './i18n/i18n-react'
 
 function Greeting(props) {
@@ -116,7 +115,6 @@ export default Greeting
 When running the [generator](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#generator), the file `i18n-react.tsx` will export a React component you can wrap around your application. It requires the prop `locale` where you need to pass a locale to initialize the context.
 
 ```jsx
-import React from 'react'
 import TypesafeI18n from './i18n/i18n-react'
 
 function App() {
@@ -141,7 +139,6 @@ export default App
 Also a React context is exported by the generated file `i18n-react.tsx`. You can use it with the `useI18nContext` function.
 
 ```jsx
-import React from 'react'
 import { useI18nContext } from './i18n/i18n-react'
 
 function MyComponent(props) {
@@ -160,7 +157,6 @@ The context gives you access to following variables:
 An initialized [`i18nObject`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#i18nObject) you can use to translate your app.
 
 ```jsx
-import React from 'react'
 import { useI18nContext } from './i18n/i18n-react'
 
 function ProjectOverview() {
@@ -182,7 +178,6 @@ A function to set another locale for the context.
 
 
 ```jsx
-import React from 'react'
 import { useI18nContext } from './i18n/i18n-react'
 
 function LanguageSelection() {
