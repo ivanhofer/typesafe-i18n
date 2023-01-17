@@ -1,6 +1,7 @@
 import { resolve } from 'path'
 import { doesPathExist, importFile, writeConfigFile } from '../../generator/src/utils/file.utils.mjs'
 import { version } from '../../version'
+import { applyDefaultValues } from './core.mjs'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './types.mjs'
 import { validateConfig } from './validation.mjs'
 
@@ -27,24 +28,10 @@ export const readConfig = async (): Promise<GeneratorConfig> => {
 
 export const getConfigWithDefaultValues = async (
 	config?: GeneratorConfig | undefined,
-	shouldReadConfig = true,
-): Promise<GeneratorConfigWithDefaultValues> => ({
-	baseLocale: 'en',
-
-	tempPath: './node_modules/typesafe-i18n/temp-output/',
-	outputPath: './src/i18n/',
-	outputFormat: 'TypeScript',
-	typesFileName: 'i18n-types',
-	utilFileName: 'i18n-util',
-	formattersTemplateFileName: 'formatters',
-	typesTemplateFileName: 'custom-types',
-	esmImports: false,
-	adapter: undefined,
-
-	generateOnlyTypes: false,
-	banner: '/* eslint-disable */',
-	runAfterGenerator: undefined,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	...(config as unknown as any),
-	...(shouldReadConfig ? await readConfig() : {}),
-})
+	shouldReadConfigFromDisk = true,
+): Promise<GeneratorConfigWithDefaultValues> =>
+	applyDefaultValues({
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		...(config as unknown as any),
+		...(shouldReadConfigFromDisk ? await readConfig() : {}),
+	})

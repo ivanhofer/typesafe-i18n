@@ -7,16 +7,6 @@ import { logger } from './logger.mjs'
 
 const { readFile: read, readdir, writeFile: write, mkdir, stat, rm } = fsPromises
 
-// --------------------------------------------------------------------------------------------------------------------
-// types --------------------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------------------------------------
-
-type GetFilesType = { name: string; folder: string }
-
-// --------------------------------------------------------------------------------------------------------------------
-// implementation -----------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------------------------------------
-
 export const readFile = async (file: string, createPath = false): Promise<string> => {
 	try {
 		if (createPath) {
@@ -94,26 +84,6 @@ export const writeFileIfNotExists = async (path: string, file: string, content: 
 	if (await doesPathExist(getFileName(path, file))) return
 
 	await writeNewFile(path, file, content)
-}
-
-export const getFiles = async (path: string, depth = 0): Promise<GetFilesType[]> => {
-	const entries = await readdir(path, { withFileTypes: true })
-
-	const files = entries.filter((file) => !file.isDirectory()).map(({ name }) => ({ name, folder: '' }))
-
-	const folders = entries.filter((folder) => folder.isDirectory())
-
-	if (depth) {
-		for (const folder of folders)
-			files.push(
-				...(await getFiles(`${resolve(path, folder.name)}/`, depth - 1)).map((a) => ({
-					...a,
-					folder: folder.name,
-				})),
-			)
-	}
-
-	return files
 }
 
 export const containsFolders = async (path: string): Promise<boolean> => {

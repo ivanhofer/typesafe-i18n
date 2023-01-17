@@ -1,13 +1,15 @@
+import fs from 'fs/promises'
 import { resolve } from 'path'
 import ts from 'typescript'
 import { getConfigWithDefaultValues } from '../../config/src/config.mjs'
 import type { GeneratorConfigWithDefaultValues, OutputFormats } from '../../config/src/types.mjs'
 import { configureOutputHandler } from '../../generator/src/output-handler.mjs'
-import { getAllLocales, parseLanguageFile } from '../../generator/src/parse-language-file.mjs'
+import { parseLanguageFile } from '../../generator/src/parse-language-file.mjs'
 import { parseTypescriptVersion } from '../../generator/src/utils/generator.utils.mjs'
 import { createLogger } from '../../generator/src/utils/logger.mjs'
 import { findAllNamespacesForLocale } from '../../generator/src/utils/namespaces.utils.mjs'
 import type { BaseTranslation, ExportLocaleMapping, Locale } from '../../runtime/src/core.mjs'
+import { getAllLocales } from '../../shared/src/file.utils.mjs'
 
 const logger = createLogger(console, true)
 
@@ -77,7 +79,7 @@ export const readTranslationsFromDisk = async (): Promise<ExportLocaleMapping[]>
 	const config = await setup()
 	const { outputPath, outputFormat, tempPath, typesFileName } = config
 
-	const locales = await getAllLocales(outputPath)
+	const locales = await getAllLocales(fs, outputPath, outputFormat)
 
 	const promises: Promise<ExportLocaleMapping>[] = locales.map((locale) =>
 		readTranslation(locale, outputPath, outputFormat, tempPath, typesFileName),

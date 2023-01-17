@@ -36,6 +36,11 @@
 			"import": "./angular/index.mjs",
 			"require": "./angular/index.cjs"
 		},
+		"./config": {
+			"types": "./config/index.d.ts",
+			"import": "./config/index.mjs",
+			"require": "./config/index.cjs"
+		},
 		"./detectors": {
 			"types": "./detectors/index.d.ts",
 			"import": "./detectors/index.mjs",
@@ -109,7 +114,7 @@
 		"-- DEV -------------------------------------------------": "",
 		"update:dependencies": "pnpm up -r",
 		"update:version": "tsx ./update-version.ts",
-		"clear": "rimraf ./angular ./cli ./detectors ./dist ./exporter ./formatters ./importer ./parser ./react ./runtime ./schema ./solid ./svelte ./types ./vue ./temp-output",
+		"clear": "rimraf ./angular ./cli ./config ./detectors ./dist ./exporter ./formatters ./importer ./parser ./react ./runtime ./schema ./solid ./svelte ./types ./vue ./temp-output",
 		"-- LINT ------------------------------------------------": "",
 		"lint": "eslint --cache packages",
 		"lint:ci": "eslint --cache --fix",

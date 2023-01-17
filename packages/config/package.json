@@ -1,11 +1,14 @@
 {
   "name": "@typesafe-i18n/config",
   "scripts": {
+    "dev": "tsx esbuild.ts --watch",
+    "build": "tsx esbuild.ts && tsc -p tsconfig.json --emitDeclarationOnly",
     "test": "tsc --noEmit",
-    "generate:json-schema": "rimraf \"../../schema\" && mkdir \"../../schema\" && typescript-json-schema --noExtraProps ./tsconfig.json GeneratorConfig > \"../../schema/typesafe-i18n.json\""
+    "generate:json-schema": "rimraf \"../../schema\" && mkdir \"../../schema\" && typescript-json-schema --noExtraProps ./tsconfig.json-schema.json GeneratorConfig > \"../../schema/typesafe-i18n.json\""
   },
   "devDependencies": {
     "ajv": "^6.12.6",
+    "esbuild": "^0.15.18",
     "kleur": "^4.1.5",
     "typescript-json-schema": "^0.54.0"
   },

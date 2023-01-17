@@ -4,5 +4,7 @@
 		"target": "ESNext",
 		"outDir": "../../importer",
 	},
-	"include": ["src/**/*.mts"]
+	"include": [
+		"src/**/*.mts"
+	]
 }
