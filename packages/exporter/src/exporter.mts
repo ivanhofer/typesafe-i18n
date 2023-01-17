@@ -79,7 +79,7 @@ export const readTranslationsFromDisk = async (): Promise<ExportLocaleMapping[]>
 	const config = await setup()
 	const { outputPath, outputFormat, tempPath, typesFileName } = config
 
-	const locales = await getAllLocales(fs, outputPath)
+	const locales = await getAllLocales(fs, outputPath, outputFormat)
 
 	const promises: Promise<ExportLocaleMapping>[] = locales.map((locale) =>
 		readTranslation(locale, outputPath, outputFormat, tempPath, typesFileName),

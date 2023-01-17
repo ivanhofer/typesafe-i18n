@@ -73,9 +73,9 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 		logger.info('files were modified => looking for changes ...')
 	}
 
-	const { baseLocale, outputPath, runAfterGenerator } = config
+	const { baseLocale, outputPath, runAfterGenerator,outputFormat } = config
 
-	const locales = await getAllLocales(fs, outputPath)
+	const locales = await getAllLocales(fs, outputPath, outputFormat)
 	const namespaces = findAllNamespacesForLocale(baseLocale, outputPath)
 
 	const firstLaunchOfGenerator = !locales.length

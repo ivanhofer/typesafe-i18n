@@ -27,9 +27,8 @@ export const getFiles = async (fs: FileSystemUtil, path: string, depth = 0): Pro
 	return files
 }
 
-let fileEnding = '.ts' // TODO
-
-export const getAllLocales = async (fs: FileSystemUtil, path: string): Promise<string[]> => {
+export const getAllLocales = async (fs: FileSystemUtil, path: string, outputFormat: 'TypeScript' | 'JavaScript'): Promise<string[]> => {
+	const fileEnding = outputFormat === 'JavaScript' ? '.js' : '.ts'
 	const files = await getFiles(fs, path, 1)
 
 	return files.filter(({ folder, name }) => folder && name === `index${fileEnding}`).map(({ folder }) => folder)

@@ -1,3 +1,4 @@
+import { fileEnding } from 'packages/generator/src/output-handler.mjs';
 import { getAllLocales, type FileSystemUtil } from '../../shared/src/file.utils.mjs';
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './types.mjs';
 
@@ -42,6 +43,6 @@ export const getLocaleInformation = async (fs: FileSystemUtil) => {
 
 	return {
 		base: config.baseLocale,
-		locales: await getAllLocales(fs, config.outputPath)
+		locales: await getAllLocales(fs, config.outputPath, config.outputFormat)
 	}
 }

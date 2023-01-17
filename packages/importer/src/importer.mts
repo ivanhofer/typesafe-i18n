@@ -102,7 +102,7 @@ export const storeTranslationsToDisk = async (
 		}
 	}
 
-	const locales = await getAllLocales(fs, config.outputPath)
+	const locales = await getAllLocales(fs, config.outputPath, config.outputFormat)
 
 	logger.info(`updating types ...`)
 	await generate(baseTranslation, config, version, undefined, undefined, locales, baseNamespaces)
