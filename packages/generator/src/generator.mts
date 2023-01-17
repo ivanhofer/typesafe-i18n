@@ -1,13 +1,15 @@
 import { execSync } from 'child_process'
 import { watch } from 'chokidar'
+import fs from 'fs/promises'
 import { resolve } from 'path'
 import ts from 'typescript'
 import { getConfigWithDefaultValues, readConfig } from '../../config/src/config.mjs'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from '../../config/src/types.mjs'
 import type { BaseTranslation } from '../../runtime/src/index.mjs'
+import { getAllLocales } from '../../shared/src/file.utils.mjs'
 import { generate } from './generate-files.mjs'
 import { configureOutputHandler, shouldGenerateJsDoc } from './output-handler.mjs'
-import { getAllLocales, parseLanguageFile } from './parse-language-file.mjs'
+import { parseLanguageFile } from './parse-language-file.mjs'
 import { createPathIfNotExits } from './utils/file.utils.mjs'
 import { parseTypescriptVersion, TypescriptVersion } from './utils/generator.utils.mjs'
 import { createLogger, Logger } from './utils/logger.mjs'
@@ -73,7 +75,7 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 
 	const { baseLocale, outputPath, runAfterGenerator } = config
 
-	const locales = await getAllLocales(outputPath)
+	const locales = await getAllLocales(fs, outputPath)
 	const namespaces = findAllNamespacesForLocale(baseLocale, outputPath)
 
 	const firstLaunchOfGenerator = !locales.length

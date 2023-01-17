@@ -1,1 +1,1 @@
-export { getConfig } from './core.mjs';
+export { getConfig, getLocaleInformation } from './core.mjs';

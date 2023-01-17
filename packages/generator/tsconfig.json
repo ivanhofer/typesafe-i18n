@@ -11,6 +11,6 @@
 			"vue": ["./node_modules/vue"],
 		}
 	},
-	"include": ["src/**/*.mts"],
+	"include": ["src/**/*.mts", "../shared/src/file.utils.mts"],
 	"exclude": ["test/generated/*/*/index.*"]
 }
