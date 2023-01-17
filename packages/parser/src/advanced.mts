@@ -1,5 +1,5 @@
 import { isNotUndefined, isString } from 'typesafe-utils'
-import { parseRawText } from './basic.mjs'
+import { parseCases, parseRawText, REGEX_SWITCH_CASE } from './basic.mjs'
 import type { ArgumentPart, Part, PluralPart as BasePluralPart } from './types.mjs'
 
 export type ParsedMessage = ParsedMessagePart[]
@@ -35,10 +35,21 @@ type ParameterPart = {
 
 type TransformParameterPart =
 	| TransformParameterFormatterPart
+	| TransformParameterSwitchCasePart
 
 type TransformParameterFormatterPart = {
 	kind: 'formatter'
 	name: string
+}
+
+type TransformParameterSwitchCasePart = {
+	kind: 'switch-case'
+	cases: TransformParameterSwitchCaseCasePart[]
+}
+
+type TransformParameterSwitchCaseCasePart = {
+	key: string
+	value: string
 }
 
 // TODO: use `parseTranslationEntry` to improve types
@@ -73,7 +84,6 @@ const createPluralPart = ({ k, z, o, t, f, m, r }: BasePluralPart): PluralPart =
 	other: r,
 })
 
-// TODO: add switch-case support
 const createParameterPart = ({ k, i, n, f }: ArgumentPart): ParameterPart => ({
 	kind: 'parameter',
 	key: k,
@@ -83,8 +93,15 @@ const createParameterPart = ({ k, i, n, f }: ArgumentPart): ParameterPart => ({
 })
 
 const createTransformParameterPart = (transform: string): TransformParameterPart => {
-	return {
-		kind: 'formatter',
-		name: transform
-	} satisfies TransformParameterFormatterPart
+	const isSwitchCase = transform.match(REGEX_SWITCH_CASE)
+
+	return isSwitchCase
+		? {
+			kind: 'switch-case',
+			cases: Object.entries(parseCases(transform)).map(([key, value]) => ({ key, value })),
+		}satisfies TransformParameterSwitchCasePart
+		: {
+			kind: 'formatter',
+			name: transform
+		} satisfies TransformParameterFormatterPart
 }

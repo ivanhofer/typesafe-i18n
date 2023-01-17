@@ -418,4 +418,98 @@ test('multiple parameters with multiple formatters', () => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
+test('switch-case', () => {
+	assert.equal(
+		parseMessage('{username:string} added a new photo to {gender|{ male: his, female: her, *: their }} stream.'),
+		[
+			{
+				kind: 'parameter',
+				key: 'username',
+				type: 'string',
+				optional: false,
+				transforms: [],
+			},
+			{
+				kind: 'text',
+				content: ' added a new photo to ',
+			},
+			{
+				kind: 'parameter',
+				key: 'gender',
+				type: 'unknown',
+				optional: false,
+				transforms: [
+					{
+						kind: 'switch-case',
+						cases: [
+							{
+								key: 'male',
+								value: 'his',
+							},
+							{
+								key: 'female',
+								value: 'her',
+							},
+							{
+								key: '*',
+								value: 'their',
+							},
+						],
+					},
+				],
+			},
+			{
+				kind: 'text',
+				content: ' stream.',
+			},
+		] satisfies ParsedMessage,
+	)
+})
+
+test('switch-case yes-no', () => {
+	assert.equal(
+		parseMessage('Price: ${price:number}. {taxes|{yes: An additional tax will be collected. , no: No taxes apply.}}'),
+		[
+			{
+				kind: 'text',
+				content: 'Price: $',
+			},
+			{
+				kind: 'parameter',
+				key: 'price',
+				type: 'number',
+				optional: false,
+				transforms: [],
+			},
+			{
+				kind: 'text',
+				content: '. ',
+			},
+			{
+				kind: 'parameter',
+				key: 'taxes',
+				type: 'unknown',
+				optional: false,
+				transforms: [
+					{
+						kind: 'switch-case',
+						cases: [
+							{
+								key: 'yes',
+								value: 'An additional tax will be collected.',
+							},
+							{
+								key: 'no',
+								value: 'No taxes apply.',
+							},
+						],
+					},
+				],
+			},
+		] satisfies ParsedMessage,
+	)
+})
+
+// --------------------------------------------------------------------------------------------------------------------
+
 test.run()
