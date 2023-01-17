@@ -97,6 +97,7 @@
 		"/angular",
 		"/detectors",
 		"/cli",
+		"/config",
 		"/dist",
 		"/exporter",
 		"/formatters",
