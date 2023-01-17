@@ -29,7 +29,9 @@ export const readConfig = async (): Promise<GeneratorConfig> => {
 export const getConfigWithDefaultValues = async (
 	config?: GeneratorConfig | undefined,
 	shouldReadConfigFromDisk = true,
-): Promise<GeneratorConfigWithDefaultValues> => applyDefaultValues({
-	...(config as unknown as any),
-	...(shouldReadConfigFromDisk ? await readConfig() : {}),
-})
+): Promise<GeneratorConfigWithDefaultValues> =>
+	applyDefaultValues({
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		...(config as unknown as any),
+		...(shouldReadConfigFromDisk ? await readConfig() : {}),
+	})

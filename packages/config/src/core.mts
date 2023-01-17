@@ -1,5 +1,5 @@
-import { getAllLocales, type FileSystemUtil } from '../../shared/src/file.utils.mjs';
-import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './types.mjs';
+import { getAllLocales, type FileSystemUtil } from '../../shared/src/file.utils.mjs'
+import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './types.mjs'
 
 export const applyDefaultValues = async (
 	config?: GeneratorConfig | undefined,
@@ -26,7 +26,7 @@ export const applyDefaultValues = async (
 const readConfigFromDisk = async (fs: FileSystemUtil) => {
 	const content = await fs.readFile('.typesafe-i18n.json').catch(() => '{}')
 
-	return JSON.parse((content.toString())) as GeneratorConfig & { $schema?: string }
+	return JSON.parse(content.toString()) as GeneratorConfig & { $schema?: string }
 }
 
 export const getConfig = async (fs: FileSystemUtil) => {
@@ -42,6 +42,6 @@ export const getLocaleInformation = async (fs: FileSystemUtil) => {
 
 	return {
 		base: config.baseLocale,
-		locales: await getAllLocales(fs, config.outputPath, config.outputFormat)
+		locales: await getAllLocales(fs, config.outputPath, config.outputFormat),
 	}
 }
