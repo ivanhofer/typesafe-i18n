@@ -256,12 +256,14 @@ importers:
     specifiers:
       esbuild: ^0.15.18
       tsx: ^3.12.2
+      typesafe-utils: ^1.16.2
       typescript: ^4.9.4
       uvu: ^0.5.6
       watchlist: ^0.3.1
     devDependencies:
       esbuild: 0.15.18
       tsx: 3.12.2
+      typesafe-utils: 1.16.2
       typescript: 4.9.4
       uvu: 0.5.6
       watchlist: 0.3.1
