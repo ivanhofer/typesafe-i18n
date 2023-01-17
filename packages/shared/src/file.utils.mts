@@ -7,7 +7,7 @@ type Dirent = { name: string | Buffer, isDirectory: () => boolean }
 
 type GetFilesType = { name: string; folder: string }
 
-export const getFiles = async (fs: FileSystemUtil, path: string, depth = 0): Promise<GetFilesType[]> => {
+const getFiles = async (fs: FileSystemUtil, path: string, depth = 0): Promise<GetFilesType[]> => {
 	const entries = await fs.readdir(path, { withFileTypes: true }) as Dirent[]
 
 	const files = entries.filter((file) => !file.isDirectory()).map(({ name }) => ({ name: name.toString(), folder: '' }))

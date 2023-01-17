@@ -42,7 +42,7 @@ const getBaseTranslations = async (
 				namespace,
 			)) || {}
 
-		;(translations as Record<string, BaseTranslation>)[namespace] = namespaceTranslations
+			; (translations as Record<string, BaseTranslation>)[namespace] = namespaceTranslations
 	}
 
 	return translations
@@ -54,10 +54,10 @@ const runCommandAfterGenerator = (runAfterGenerator: string) => {
 	const output = execSync(runAfterGenerator).toString()
 	logger.info(
 		'output: \n>\n' +
-			output
-				.split('\n')
-				.map((line) => `> ${line}`)
-				.join('\n'),
+		output
+			.split('\n')
+			.map((line) => `> ${line}`)
+			.join('\n'),
 	)
 }
 
@@ -73,7 +73,7 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 		logger.info('files were modified => looking for changes ...')
 	}
 
-	const { baseLocale, outputPath, runAfterGenerator,outputFormat } = config
+	const { baseLocale, outputPath, runAfterGenerator, outputFormat } = config
 
 	const locales = await getAllLocales(fs, outputPath, outputFormat)
 	const namespaces = findAllNamespacesForLocale(baseLocale, outputPath)
@@ -134,8 +134,7 @@ export const startGenerator = async (config?: GeneratorConfig, watchFiles = true
 	watchFiles && watch(outputPath).on('all', () => !disableChangeDetection && debounce(onChange))
 
 	logger.info(
-		`generating files for ${
-			shouldGenerateJsDoc ? 'JavaScript with JSDoc notation' : `TypeScript version: '${ts.versionMajorMinor}.x'`
+		`generating files for ${shouldGenerateJsDoc ? 'JavaScript with JSDoc notation' : `TypeScript version: '${ts.versionMajorMinor}.x'`
 		}`,
 	)
 	logger.info(`options:`, parsedConfig)
