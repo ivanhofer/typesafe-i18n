@@ -28,6 +28,7 @@ test('index-based parameter', () => {
 			key: '0',
 			type: 'unknown',
 			optional: false,
+			transforms: [],
 		},
 		{
 			kind: 'text',
@@ -47,6 +48,7 @@ test('index-based parameters', () => {
 			key: '1',
 			type: 'unknown',
 			optional: false,
+			transforms: [],
 		},
 		{
 			kind: 'text',
@@ -57,6 +59,7 @@ test('index-based parameters', () => {
 			key: '0',
 			type: 'unknown',
 			optional: false,
+			transforms: [],
 		},
 	] satisfies ParsedMessage)
 })
@@ -72,6 +75,7 @@ test('key-based parameter', () => {
 			key: 'name',
 			type: 'unknown',
 			optional: false,
+			transforms: [],
 		},
 	] satisfies ParsedMessage)
 })
@@ -83,6 +87,7 @@ test('mixed parameters', () => {
 			key: 'name1',
 			type: 'unknown',
 			optional: false,
+			transforms: [],
 		},
 		{
 			kind: 'text',
@@ -93,6 +98,7 @@ test('mixed parameters', () => {
 			key: '0',
 			type: 'unknown',
 			optional: false,
+			transforms: [],
 		},
 		{
 			kind: 'text',
@@ -114,6 +120,7 @@ test('index-based parameter wit type', () => {
 			key: '0',
 			type: 'number',
 			optional: false,
+			transforms: [],
 		},
 	] satisfies ParsedMessage)
 })
@@ -129,6 +136,7 @@ test('key-based parameter with type', () => {
 			key: 'date',
 			type: 'Date',
 			optional: false,
+			transforms: [],
 		},
 	] satisfies ParsedMessage)
 })
@@ -144,6 +152,7 @@ test('mixed parameters with types', () => {
 			key: 'name',
 			type: 'string',
 			optional: false,
+			transforms: [],
 		},
 		{
 			kind: 'text',
@@ -154,6 +163,7 @@ test('mixed parameters with types', () => {
 			key: '0',
 			type: 'EmailString',
 			optional: false,
+			transforms: [],
 		},
 		{
 			kind: 'text',
@@ -186,6 +196,7 @@ test('plural rules with index-based parameter', () => {
 			key: '0',
 			type: 'unknown',
 			optional: false,
+			transforms: [],
 		},
 		{
 			kind: 'text',
@@ -207,6 +218,7 @@ test('plural rules with key-based parameter', () => {
 			key: 'nr',
 			type: 'number',
 			optional: false,
+			transforms: [],
 		},
 		{
 			kind: 'text',
@@ -228,6 +240,7 @@ test('plural rules singular-only', () => {
 			key: '0',
 			type: 'unknown',
 			optional: false,
+			transforms: [],
 		},
 		{
 			kind: 'text',
@@ -293,6 +306,112 @@ test('plural full syntax', () => {
 			key: '0',
 			one: '',
 			other: 's',
+		},
+	] satisfies ParsedMessage)
+})
+
+// --------------------------------------------------------------------------------------------------------------------
+
+test('index-based parameter with formatter', () => {
+	assert.equal(parseMessage('Hello {0|uppercase}!'), [
+		{
+			kind: 'text',
+			content: 'Hello ',
+		},
+		{
+			kind: 'parameter',
+			key: '0',
+			type: 'unknown',
+			optional: false,
+			transforms: [
+				{
+					kind: 'formatter',
+					name: 'uppercase',
+				},
+			],
+		},
+		{
+			kind: 'text',
+			content: '!',
+		},
+	] satisfies ParsedMessage)
+})
+
+test('key-based parameter with formatter', () => {
+	assert.equal(parseMessage('{date:Date|dateTime}'), [
+		{
+			kind: 'parameter',
+			key: 'date',
+			type: 'Date',
+			optional: false,
+			transforms: [
+				{
+					kind: 'formatter',
+					name: 'dateTime',
+				},
+			],
+		},
+	] satisfies ParsedMessage)
+})
+
+test('parameter with multiple formatters', () => {
+	assert.equal(parseMessage('{date:Date|dateTime|upperCase|trim}'), [
+		{
+			kind: 'parameter',
+			key: 'date',
+			type: 'Date',
+			optional: false,
+			transforms: [
+				{
+					kind: 'formatter',
+					name: 'dateTime',
+				},
+				{
+					kind: 'formatter',
+					name: 'upperCase',
+				},
+				{
+					kind: 'formatter',
+					name: 'trim',
+				},
+			],
+		},
+	] satisfies ParsedMessage)
+})
+
+test('multiple parameters with multiple formatters', () => {
+	assert.equal(parseMessage('Hi {name: string | upper}, today is: {date: Date | dateTime}'), [
+		{
+			kind: 'text',
+			content: 'Hi ',
+		},
+		{
+			kind: 'parameter',
+			key: 'name',
+			type: 'string',
+			optional: false,
+			transforms: [
+				{
+					kind: 'formatter',
+					name: 'upper',
+				},
+			],
+		},
+		{
+			kind: 'text',
+			content: ', today is: ',
+		},
+		{
+			kind: 'parameter',
+			key: 'date',
+			type: 'Date',
+			optional: false,
+			transforms: [
+				{
+					kind: 'formatter',
+					name: 'dateTime',
+				},
+			],
 		},
 	] satisfies ParsedMessage)
 })

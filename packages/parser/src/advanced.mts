@@ -29,7 +29,16 @@ type ParameterPart = {
 	kind: 'parameter'
 	key: string
 	type: string
-	optional: boolean
+	optional: boolean,
+	transforms: TransformParameterPart[]
+}
+
+type TransformParameterPart =
+	| TransformParameterFormatterPart
+
+type TransformParameterFormatterPart = {
+	kind: 'formatter'
+	name: string
 }
 
 // TODO: use `parseTranslationEntry` to improve types
@@ -64,10 +73,18 @@ const createPluralPart = ({ k, z, o, t, f, m, r }: BasePluralPart): PluralPart =
 	other: r,
 })
 
-// TODO: add formatter and switch-case support
-const createParameterPart = ({ k, i, n }: ArgumentPart): ParameterPart => ({
+// TODO: add switch-case support
+const createParameterPart = ({ k, i, n, f }: ArgumentPart): ParameterPart => ({
 	kind: 'parameter',
 	key: k,
 	type: i || 'unknown',
-	optional: n || false
+	optional: n || false,
+	transforms: (f || []).map(createTransformParameterPart)
 })
+
+const createTransformParameterPart = (transform: string): TransformParameterPart => {
+	return {
+		kind: 'formatter',
+		name: transform
+	} satisfies TransformParameterFormatterPart
+}
