@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.19.0 (2023-01-17)
+
+Feature:
+  - expose `getConfig` and `getLocaleInformation` functionality from `'typesafe-i18n/config'`
+
 ## 5.18.0 (2022-12-22)
 
 Feature:
