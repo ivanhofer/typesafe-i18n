@@ -164,4 +164,139 @@ test('mixed parameters with types', () => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
+test('plural rules only', () => {
+	assert.equal(parseMessage('Project{{s}}'), [
+		{
+			kind: 'text',
+			content: 'Project',
+		},
+		{
+			kind: 'plural',
+			key: '0',
+			one: '',
+			other: 's',
+		},
+	] satisfies ParsedMessage)
+})
+
+test('plural rules with index-based parameter', () => {
+	assert.equal(parseMessage('{0} {{Project|Projects}}'), [
+		{
+			kind: 'parameter',
+			key: '0',
+			type: 'unknown',
+			optional: false,
+		},
+		{
+			kind: 'text',
+			content: ' ',
+		},
+		{
+			kind: 'plural',
+			key: '0',
+			one: 'Project',
+			other: 'Projects',
+		},
+	] satisfies ParsedMessage)
+})
+
+test('plural rules with key-based parameter', () => {
+	assert.equal(parseMessage('{ nr: number } {{ Project | Projects }}'), [
+		{
+			kind: 'parameter',
+			key: 'nr',
+			type: 'number',
+			optional: false,
+		},
+		{
+			kind: 'text',
+			content: ' ',
+		},
+		{
+			kind: 'plural',
+			key: 'nr',
+			one: 'Project',
+			other: 'Projects',
+		},
+	] satisfies ParsedMessage)
+})
+
+test('plural rules singular-only', () => {
+	assert.equal(parseMessage('{0} weitere{{s|}} Mitglied{{er}}'), [
+		{
+			kind: 'parameter',
+			key: '0',
+			type: 'unknown',
+			optional: false,
+		},
+		{
+			kind: 'text',
+			content: ' weitere',
+		},
+		{
+			kind: 'plural',
+			key: '0',
+			one: 's',
+			other: '',
+		},
+		{
+			kind: 'text',
+			content: ' Mitglied',
+		},
+		{
+			kind: 'plural',
+			key: '0',
+			one: '',
+			other: 'er',
+		},
+	] satisfies ParsedMessage)
+})
+
+test('plural zero-one-other', () => {
+	assert.equal(parseMessage('The list includes {{ no items | an item | ?? items }}'), [
+		{
+			kind: 'text',
+			content: 'The list includes ',
+		},
+		{
+			kind: 'plural',
+			key: '0',
+			zero: 'no items',
+			one: 'an item',
+			other: '?? items',
+		},
+	] satisfies ParsedMessage)
+})
+
+test('plural full syntax', () => {
+	assert.equal(parseMessage('I have {{zero|one|two|a few|many|a lot}} apple{{s}}'), [
+		{
+			kind: 'text',
+			content: 'I have ',
+		},
+		{
+			kind: 'plural',
+			key: '0',
+			zero: 'zero',
+			one: 'one',
+			two: 'two',
+			few: 'a few',
+			many: 'many',
+			other: 'a lot',
+		},
+		{
+			kind: 'text',
+			content: ' apple',
+		},
+		{
+			kind: 'plural',
+			key: '0',
+			one: '',
+			other: 's',
+		},
+	] satisfies ParsedMessage)
+})
+
+// --------------------------------------------------------------------------------------------------------------------
+
 test.run()

@@ -1,16 +1,28 @@
 import { isNotUndefined, isString } from 'typesafe-utils'
 import { parseRawText } from './basic.mjs'
-import type { Part, PluralPart } from './types.mjs'
+import type { ArgumentPart, Part, PluralPart as BasePluralPart } from './types.mjs'
 
 export type ParsedMessage = ParsedMessagePart[]
 
 type ParsedMessagePart =
 	| TextPart
+	| PluralPart
 	| ParameterPart
 
 type TextPart = {
 	kind: 'text'
 	content: string
+}
+
+type PluralPart = {
+	kind: 'plural'
+	key: string
+	zero?: string
+	one: string
+	two?: string
+	few?: string
+	many?: string
+	other: string
 }
 
 type ParameterPart = {
@@ -27,16 +39,33 @@ const createPart = (part: Part): ParsedMessagePart | undefined => {
 		return part ? createTextPart(part) : undefined
 	}
 
-	if (!isPluralPart(part)) return createParameterPart(part.k, part.i || 'unknown', part.n || false)
+	if (isPluralPart(part))
+		return createPluralPart(part)
 
-	console.info(1, part);
-
-	return undefined
-
+	return createParameterPart(part)
 }
 
-const isPluralPart = (part: Exclude<Part, string>): part is PluralPart => !!((part as PluralPart).r)
+const isPluralPart = (part: Exclude<Part, string>): part is BasePluralPart => !!((part as BasePluralPart).o || (part as BasePluralPart).r)
 
-const createTextPart = (content: string): TextPart => ({ kind: 'text', content })
+const createTextPart = (content: string): TextPart => ({
+	kind: 'text',
+	content
+})
 
-const createParameterPart = (key: string, type: string, optional: boolean): ParameterPart => ({ kind: 'parameter', key, type: type, optional })
+const createPluralPart = ({ k, z, o, t, f, m, r }: BasePluralPart): PluralPart => ({
+	kind: 'plural',
+	key: k,
+	...(z ? { zero: z } : undefined),
+	one: o || '',
+	...(t ? { two: t } : undefined),
+	...(f ? { few: f } : undefined),
+	...(m ? { many: m } : undefined),
+	other: r,
+})
+
+const createParameterPart = ({ k, i, n }: ArgumentPart): ParameterPart => ({
+	kind: 'parameter',
+	key: k,
+	type: i || 'unknown',
+	optional: n || false
+})
