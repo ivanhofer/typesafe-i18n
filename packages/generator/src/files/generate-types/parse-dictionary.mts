@@ -6,9 +6,9 @@ import {
 	not,
 	sortStringASC,
 	sortStringPropertyASC,
-	uniqueArray,
+	uniqueArray
 } from 'typesafe-utils'
-import { parseRawText } from '../../../../parser/src/index.mjs'
+import { parseRawText } from '../../../../parser/src/basic.mjs'
 import type { ArgumentPart } from '../../../../parser/src/types.mjs'
 import { partsAsStringWithoutTypes } from '../../../../runtime/src/core-utils.mjs'
 import { isPluralPart } from '../../../../runtime/src/core.mjs'

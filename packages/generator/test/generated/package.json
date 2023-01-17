@@ -3,7 +3,7 @@
 	"devDependencies": {
 		"@angular/core": "~15.0.4",
 		"@types/react": "^18.0.26",
-		"typesafe-i18n": "workspace:5.18.1",
+		"typesafe-i18n": "workspace:*",
 		"vue": "3.2.39"
 	}
 }

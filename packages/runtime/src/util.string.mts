@@ -1,4 +1,4 @@
-import { parseRawText } from '../../parser/src/index.mjs'
+import { parseRawText } from '../../parser/src/basic.mjs'
 import type { Part } from '../../parser/src/types.mjs'
 import type { Args, Arguments, BaseFormatters, Cache, Locale, LocalizedString } from './core.mjs'
 import { translate } from './core.mjs'

@@ -1,5 +1,5 @@
 import type { TypeGuard } from 'typesafe-utils'
-import { removeOuterBrackets } from '../../parser/src/index.mjs'
+import { removeOuterBrackets } from '../../parser/src/basic.mjs'
 import type { ArgumentPart, Part, PluralPart } from '../../parser/src/types.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
