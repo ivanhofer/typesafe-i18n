@@ -1,4 +1,3 @@
-import { fileEnding } from 'packages/generator/src/output-handler.mjs';
 import { getAllLocales, type FileSystemUtil } from '../../shared/src/file.utils.mjs';
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './types.mjs';
 
