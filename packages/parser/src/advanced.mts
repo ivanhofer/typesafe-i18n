@@ -4,10 +4,7 @@ import type { ArgumentPart, Part, PluralPart as BasePluralPart } from './types.m
 
 export type ParsedMessage = ParsedMessagePart[]
 
-type ParsedMessagePart =
-	| TextPart
-	| PluralPart
-	| ParameterPart
+type ParsedMessagePart = TextPart | PluralPart | ParameterPart
 
 type TextPart = {
 	kind: 'text'
@@ -29,13 +26,11 @@ type ParameterPart = {
 	kind: 'parameter'
 	key: string
 	type: string
-	optional: boolean,
+	optional: boolean
 	transforms: TransformParameterPart[]
 }
 
-type TransformParameterPart =
-	| TransformParameterFormatterPart
-	| TransformParameterSwitchCasePart
+type TransformParameterPart = TransformParameterFormatterPart | TransformParameterSwitchCasePart
 
 type TransformParameterFormatterPart = {
 	kind: 'formatter'
@@ -53,24 +48,25 @@ type TransformParameterSwitchCaseCasePart = {
 }
 
 // TODO: use `parseTranslationEntry` to improve types
-export const parseMessage = (message: string): ParsedMessage => parseRawText(message, false).map(createPart).filter(isNotUndefined)
+export const parseMessage = (message: string): ParsedMessage =>
+	parseRawText(message, false).map(createPart).filter(isNotUndefined)
 
 const createPart = (part: Part): ParsedMessagePart | undefined => {
 	if (isString(part)) {
 		return part ? createTextPart(part) : undefined
 	}
 
-	if (isPluralPart(part))
-		return createPluralPart(part)
+	if (isPluralPart(part)) return createPluralPart(part)
 
 	return createParameterPart(part)
 }
 
-const isPluralPart = (part: Exclude<Part, string>): part is BasePluralPart => !!((part as BasePluralPart).o || (part as BasePluralPart).r)
+const isPluralPart = (part: Exclude<Part, string>): part is BasePluralPart =>
+	!!((part as BasePluralPart).o || (part as BasePluralPart).r)
 
 const createTextPart = (content: string): TextPart => ({
 	kind: 'text',
-	content
+	content,
 })
 
 const createPluralPart = ({ k, z, o, t, f, m, r }: BasePluralPart): PluralPart => ({
@@ -89,19 +85,19 @@ const createParameterPart = ({ k, i, n, f }: ArgumentPart): ParameterPart => ({
 	key: k,
 	type: i || 'unknown',
 	optional: n || false,
-	transforms: (f || []).map(createTransformParameterPart)
+	transforms: (f || []).map(createTransformParameterPart),
 })
 
 const createTransformParameterPart = (transform: string): TransformParameterPart => {
 	const isSwitchCase = transform.match(REGEX_SWITCH_CASE)
 
 	return isSwitchCase
-		? {
-			kind: 'switch-case',
-			cases: Object.entries(parseCases(transform)).map(([key, value]) => ({ key, value })),
-		}satisfies TransformParameterSwitchCasePart
-		: {
-			kind: 'formatter',
-			name: transform
-		} satisfies TransformParameterFormatterPart
+		? ({
+				kind: 'switch-case',
+				cases: Object.entries(parseCases(transform)).map(([key, value]) => ({ key, value })),
+		  } satisfies TransformParameterSwitchCasePart)
+		: ({
+				kind: 'formatter',
+				name: transform,
+		  } satisfies TransformParameterFormatterPart)
 }

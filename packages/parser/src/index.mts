@@ -1,2 +1,1 @@
-export { parseMessage } from './advanced.mjs';
-
+export { parseMessage } from './advanced.mjs'

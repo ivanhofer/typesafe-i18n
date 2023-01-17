@@ -65,20 +65,21 @@ const parsePluralPart = (content: string, lastAccessor: string): PluralPart => {
 
 export const REGEX_SWITCH_CASE = /^\{.*\}$/
 
-export const parseCases = (text: string): Record<string, string> => Object.fromEntries(
-	removeOuterBrackets(text)
-		.split(',')
-		.map((part) => part.split(':'))
-		.reduce((accumulator, entry) => {
-			if (entry.length === 2) {
-				return [...accumulator, entry.map((entry) => entry.trim()) as [string, string]]
-			}
+export const parseCases = (text: string): Record<string, string> =>
+	Object.fromEntries(
+		removeOuterBrackets(text)
+			.split(',')
+			.map((part) => part.split(':'))
+			.reduce((accumulator, entry) => {
+				if (entry.length === 2) {
+					return [...accumulator, entry.map((entry) => entry.trim()) as [string, string]]
+				}
 
-			// if we have a single part, this means that a comma `,` was present in the string and we need to combine the strings again
-			; (accumulator[accumulator.length - 1] as [string, string])[1] += ',' + entry[0]
-			return accumulator
-		}, [] as ([string, string] | [string])[]),
-)
+				// if we have a single part, this means that a comma `,` was present in the string and we need to combine the strings again
+				;(accumulator[accumulator.length - 1] as [string, string])[1] += ',' + entry[0]
+				return accumulator
+			}, [] as ([string, string] | [string])[]),
+	)
 
 // --------------------------------------------------------------------------------------------------------------------
 

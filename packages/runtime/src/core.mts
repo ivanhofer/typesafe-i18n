@@ -21,18 +21,18 @@ type BaseTranslationFunction = (...args: Arguments) => LocalizedString
 
 export type TranslationFunctions<
 	T extends
-	| BaseTranslation
-	| BaseTranslation[]
-	| Readonly<BaseTranslation>
-	| Readonly<BaseTranslation[]> = BaseTranslation,
+		| BaseTranslation
+		| BaseTranslation[]
+		| Readonly<BaseTranslation>
+		| Readonly<BaseTranslation[]> = BaseTranslation,
 > = {
-		[key in keyof T]: T[key] extends string
+	[key in keyof T]: T[key] extends string
 		? BaseTranslationFunction
 		: // eslint-disable-next-line @typescript-eslint/no-explicit-any
 		T[key] extends Record<any, any>
 		? TranslationFunctions<T[key]>
 		: never
-	}
+}
 
 type TypedTranslationFunction<Translation extends string, Formatters extends BaseFormatters> = (
 	...args: Args<Translation, keyof Formatters>
@@ -40,19 +40,19 @@ type TypedTranslationFunction<Translation extends string, Formatters extends Bas
 
 export type TypedTranslationFunctions<
 	T extends
-	| BaseTranslation
-	| BaseTranslation[]
-	| Readonly<BaseTranslation>
-	| Readonly<BaseTranslation[]> = BaseTranslation,
+		| BaseTranslation
+		| BaseTranslation[]
+		| Readonly<BaseTranslation>
+		| Readonly<BaseTranslation[]> = BaseTranslation,
 	Formatters extends BaseFormatters = BaseFormatters,
 > = {
-		[key in keyof T]: T[key] extends string
+	[key in keyof T]: T[key] extends string
 		? TypedTranslationFunction<T[key], Formatters>
 		: // eslint-disable-next-line @typescript-eslint/no-explicit-any
 		T[key] extends Record<any, any>
 		? TranslationFunctions<T[key]>
 		: never
-	}
+}
 
 export type Locale = string
 
@@ -61,23 +61,23 @@ export type Arguments = any[]
 
 export type BaseTranslation =
 	| {
-		[key: number]:
-		| string
-		| BaseTranslation
-		| BaseTranslation[]
-		| Readonly<string>
-		| Readonly<BaseTranslation>
-		| Readonly<BaseTranslation[]>
-	}
+			[key: number]:
+				| string
+				| BaseTranslation
+				| BaseTranslation[]
+				| Readonly<string>
+				| Readonly<BaseTranslation>
+				| Readonly<BaseTranslation[]>
+	  }
 	| {
-		[key: string]:
-		| string
-		| BaseTranslation
-		| BaseTranslation[]
-		| Readonly<string>
-		| Readonly<BaseTranslation>
-		| Readonly<BaseTranslation[]>
-	}
+			[key: string]:
+				| string
+				| BaseTranslation
+				| BaseTranslation[]
+				| Readonly<string>
+				| Readonly<BaseTranslation>
+				| Readonly<BaseTranslation[]>
+	  }
 	| string[]
 	| Readonly<string[]>
 
@@ -246,10 +246,10 @@ type PipeArgument<
 	? MergePipes<PipeArgument<Arg, Formatters, Trim<Pipe1>, Type>, PipeArgument<Arg, Formatters, Trim<Rest>, Type>>
 	: Piped extends `{${string}`
 	? Piped extends `${string}}`
-	? Piped extends `{${infer SwitchCaseDefinition}}`
-	? SwitchCase<Arg, Trim<SwitchCaseDefinition>>
-	: PipeArgumentHelper<Piped, Formatters, Type>
-	: PipeArgument<Arg, Formatters, `${Piped}}`, Type>
+		? Piped extends `{${infer SwitchCaseDefinition}}`
+			? SwitchCase<Arg, Trim<SwitchCaseDefinition>>
+			: PipeArgumentHelper<Piped, Formatters, Type>
+		: PipeArgument<Arg, Formatters, `${Piped}}`, Type>
 	: PipeArgumentHelper<Piped, Formatters, Type>
 
 type DetectType<Type extends string> = Type extends 'string'
@@ -325,8 +325,8 @@ type DetectArg<Part extends string, Formatters extends PropertyKey> = Part exten
 
 type Merge<A extends Array<unknown>, B extends Array<unknown>> = void extends A[number]
 	? void extends B[number]
-	? unknown
-	: B[number]
+		? unknown
+		: B[number]
 	: void extends B[number]
 	? A[number]
 	: A[number] & B[number]
@@ -347,8 +347,8 @@ export type Args<
 	Formatters extends PropertyKey,
 > = Translation extends `${string}{${string}}${string}`
 	? // ! currently to resource intensive
-	// ? TransformArgsArray<DetectArgs<Translation, Formatters>> //
-	DetectArgs<Translation, Formatters>
+	  // ? TransformArgsArray<DetectArgs<Translation, Formatters>> //
+	  DetectArgs<Translation, Formatters>
 	: never
 
 // type TransformArgsArray<A extends Array<Record<string, unknown>>> = keyof A[0] extends `${number}`
