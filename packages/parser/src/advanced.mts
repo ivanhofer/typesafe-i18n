@@ -32,6 +32,7 @@ type ParameterPart = {
 	optional: boolean
 }
 
+// TODO: use `parseTranslationEntry` to improve types
 export const parseMessage = (message: string): ParsedMessage => parseRawText(message, false).map(createPart).filter(isNotUndefined)
 
 const createPart = (part: Part): ParsedMessagePart | undefined => {
@@ -63,6 +64,7 @@ const createPluralPart = ({ k, z, o, t, f, m, r }: BasePluralPart): PluralPart =
 	other: r,
 })
 
+// TODO: add formatter and switch-case support
 const createParameterPart = ({ k, i, n }: ArgumentPart): ParameterPart => ({
 	kind: 'parameter',
 	key: k,
