@@ -7,22 +7,22 @@ module.exports = [
 	{
 		name: 'typed-i18n-string',
 		path: 'dist/i18n.typed.string.min.js',
-		limit: '992 b',
+		limit: '991 b',
 	},
 	{
 		name: 'i18n-object',
 		path: 'dist/i18n.object.min.js',
-		limit: '1129 b',
+		limit: '1128 b',
 	},
 	{
 		name: 'typed-i18n-object',
 		path: 'dist/i18n.typed.object.min.js',
-		limit: '1136 b',
+		limit: '1134 b',
 	},
 	{
 		name: 'i18n-instance',
 		path: 'dist/i18n.instance.min.js',
-		limit: '1161 b',
+		limit: '1159 b',
 	},
 	{
 		name: 'all together',
@@ -38,7 +38,7 @@ module.exports = [
 	{
 		name: 'adapter-react',
 		path: 'react/index.min.mjs',
-		limit: '1617 b',
+		limit: '1618 b',
 		ignore: ['react'],
 	},
 	{
@@ -50,7 +50,7 @@ module.exports = [
 	{
 		name: 'adapter-svelte',
 		path: 'svelte/index.min.mjs',
-		limit: '1382 b',
+		limit: '1381 b',
 		ignore: ['svelte'],
 	},
 	{
