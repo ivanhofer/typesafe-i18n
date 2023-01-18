@@ -1,4 +1,5 @@
 import { filterDuplicates, isArray, isPropertyFalsy } from 'typesafe-utils'
+import { createParameterPart } from '../../../../parser/src/advanced.mjs'
 import { partAsStringWithoutTypes } from '../../../../runtime/src/core-utils.mjs'
 import { NEW_LINE, PIPE_SEPARATION, REGEX_BRACKETS } from '../../constants.mjs'
 import { supportsTemplateLiteralTypes } from '../../output-handler.mjs'
@@ -90,10 +91,9 @@ const generateTranslationType = (args: Arg[] = []) => {
 	const argStrings = args
 		.filter(isPropertyFalsy('pluralOnly'))
 		.map(({ key, optional, formatters }) =>
-			partAsStringWithoutTypes({ k: key, n: optional, f: formatters?.map(getFormatterType) }).replace(
-				REGEX_BRACKETS,
-				'',
-			),
+			partAsStringWithoutTypes(
+				createParameterPart({ k: key, i: '', n: optional, f: formatters?.map(getFormatterType) }),
+			).replace(REGEX_BRACKETS, ''),
 		)
 
 	const containsOptionalParams = args.some(({ optional }) => optional)

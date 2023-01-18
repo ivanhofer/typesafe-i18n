@@ -1,3 +1,4 @@
+import { parseMessage } from 'typesafe-i18n/packages/parser/src/advanced.mjs'
 import {
 	isArrayNotEmpty,
 	isNotUndefined,
@@ -50,9 +51,10 @@ const parseTranslationEntry = (
 	logger: Logger,
 	parentKeys: string[],
 ): ParsedResult | null => {
-	const parsedParts = parseRawText(text, false)
 	// TODO: refactor to use new models
-	const textWithoutTypes = partsAsStringWithoutTypes(parsedParts)
+	const parsedParts = parseRawText(text, false)
+	const parsedMessage = parseMessage(text)
+	const textWithoutTypes = partsAsStringWithoutTypes(parsedMessage)
 
 	const parsedObjects = parsedParts.filter(isObject)
 	const argumentParts = parsedObjects.filter<BasicArgumentPart>(not(isBasicPluralPart))

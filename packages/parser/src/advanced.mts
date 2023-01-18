@@ -26,7 +26,7 @@ export type PluralPart = {
 	kind: 'plural'
 	key: string
 	zero?: string
-	one: string
+	one?: string
 	two?: string
 	few?: string
 	many?: string
@@ -52,6 +52,7 @@ export type TransformParameterFormatterPart = {
 export type TransformParameterSwitchCasePart = {
 	kind: 'switch-case'
 	cases: TransformParameterSwitchCaseCasePart[]
+	raw: string
 }
 
 export type TransformParameterSwitchCaseCasePart = {
@@ -63,7 +64,7 @@ export type TransformParameterSwitchCaseCasePart = {
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-export const isTextPart = (part: ParsedMessagePart): part is TextPart => part.kind === 'plural'
+export const isTextPart = (part: ParsedMessagePart): part is TextPart => part.kind === 'text'
 
 export const isPluralPart = (part: ParsedMessagePart): part is PluralPart => part.kind === 'plural'
 
@@ -98,14 +99,14 @@ const createPluralPart = ({ k, z, o, t, f, m, r }: BasicPluralPart): PluralPart 
 	kind: 'plural',
 	key: k,
 	...(z ? { zero: z } : undefined),
-	one: o || '',
+	...(o ? { one: o } : undefined),
 	...(t ? { two: t } : undefined),
 	...(f ? { few: f } : undefined),
 	...(m ? { many: m } : undefined),
 	other: r,
 })
 
-const createParameterPart = ({ k, i, n, f }: BasicArgumentPart): ParameterPart => ({
+export const createParameterPart = ({ k, i, n, f }: BasicArgumentPart): ParameterPart => ({
 	kind: 'parameter',
 	key: k,
 	types: [i || 'unknown'],
@@ -120,6 +121,7 @@ const createTransformParameterPart = (transform: string): TransformParameterPart
 		? ({
 				kind: 'switch-case',
 				cases: Object.entries(parseCases(transform)).map(([key, value]) => ({ key, value })),
+				raw: transform,
 		  } as TransformParameterSwitchCasePart)
 		: ({
 				kind: 'formatter',
