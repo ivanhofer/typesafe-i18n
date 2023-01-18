@@ -16,5 +16,6 @@ const serializePluralPart = ({ key, zero, one, two, few, many, other }: PluralPa
 }
 
 const serializeParameterPart = ({ key, optional, types, transforms }: ParameterPart) => {
-	return ''
+	const type = types.length === 1 && types[0] === 'unknown' ? undefined : types[0]
+	return `{${key}${type ? `:${type}` : ''}${optional ? '?' : ''}}`
 }
