@@ -8,7 +8,7 @@ import {
 	uniqueArray
 } from 'typesafe-utils'
 import { isParameterPart, isPluralPart, parseMessage } from '../../../../parser/src/advanced/parse.mjs'
-import { partsAsStringWithoutTypes } from '../../../../runtime/src/core-utils.mjs'
+import { serializeMessageWithoutTypes } from '../../../../parser/src/advanced/serialize.mjs'
 import type { BaseTranslation } from '../../../../runtime/src/index.mjs'
 import type { Arg, ParsedResult, ParsedResultEntry, Types } from '../../types.mjs'
 import type { Logger } from '../../utils/logger.mjs'
@@ -33,7 +33,7 @@ const parseTranslationEntry = (
 	parentKeys: string[],
 ): ParsedResult | null => {
 	const parsedMessage = parseMessage(text)
-	const textWithoutTypes = partsAsStringWithoutTypes(parsedMessage)
+	const textWithoutTypes = serializeMessageWithoutTypes(parsedMessage)
 
 	const args: Arg[] = []
 	const typesMap: Types = {}

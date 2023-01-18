@@ -1,7 +1,7 @@
 import { filterDuplicates, isArray, isPropertyFalsy } from 'typesafe-utils'
 import { createParameterPart, REGEX_BRACKETS } from '../../../../parser/src/advanced/parse.mjs'
+import { serializeMessageWithoutTypes } from '../../../../parser/src/advanced/serialize.mjs'
 import type { TransformParameterPart } from '../../../../parser/src/advanced/types.mjs'
-import { partAsStringWithoutTypes } from '../../../../runtime/src/core-utils.mjs'
 import { NEW_LINE, PIPE_SEPARATION } from '../../constants.mjs'
 import { supportsTemplateLiteralTypes } from '../../output-handler.mjs'
 import { isParsedResultEntry, type Arg, type JsDocInfo, type JsDocInfos, type ParsedResult } from '../../types.mjs'
@@ -92,9 +92,9 @@ const generateTranslationType = (args: Arg[] = []) => {
 	const argStrings = args
 		.filter(isPropertyFalsy('pluralOnly'))
 		.map(({ key, optional, transforms }) =>
-			partAsStringWithoutTypes(
+			serializeMessageWithoutTypes([
 				createParameterPart({ k: key, i: '', n: optional, f: transforms.map(getFormatterType) }),
-			).replace(REGEX_BRACKETS, ''),
+			]).replace(REGEX_BRACKETS, ''),
 		)
 
 	const containsOptionalParams = args.some(({ optional }) => optional)

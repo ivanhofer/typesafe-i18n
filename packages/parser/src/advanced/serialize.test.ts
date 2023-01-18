@@ -23,11 +23,11 @@ const strings = [
 	'{0} weitere{{s|}} Mitglied{{er}}',
 	'The list includes {{no items|an item|?? items}}',
 	'I have {{zero|one|two|a few|many|a lot}} apple{{s}}',
-	// // formatters
-	// 'Hello {0|uppercase}!',
-	// '{date:Date|dateTime}',
-	// '{date:Date|dateTime|upperCase|trim}',
-	// 'Hi {name: string | upper}, today is: {date: Date | dateTime}',
+	// formatters
+	'Hello {0|uppercase}!',
+	'{date:Date|dateTime}',
+	'{date:Date|dateTime|upperCase|trim}',
+	'Hi {name:string|upper}, today is: {date:Date|dateTime}',
 	// // switch-case
 	// '{username:string} added a new photo to {gender|{ male: his, female: her, *: their }} stream.',
 	// 'Price: ${price:number}. {taxes|{yes: An additional tax will be collected. , no: No taxes apply.}}',
