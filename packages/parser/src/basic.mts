@@ -61,6 +61,9 @@ const parseArgumentPart = (text: string): BasicArgumentPart => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
+export const isBasicPluralPart = (part: Exclude<BasicPart, string>): part is BasicPluralPart =>
+	!!((part as BasicPluralPart).o || (part as BasicPluralPart).r)
+
 const parsePluralPart = (content: string, lastAccessor: string): BasicPluralPart => {
 	let [key, values] = content.split(':') as [string, string?]
 	if (!values) {

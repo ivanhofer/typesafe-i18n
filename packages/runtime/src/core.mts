@@ -1,6 +1,4 @@
-import type { TypeGuard } from 'typesafe-utils'
-import type { BasicArgumentPart, BasicPart, BasicPluralPart } from '../../parser/src/basic.mjs'
-import { parseCases, REGEX_SWITCH_CASE } from '../../parser/src/basic.mjs'
+import { BasicArgumentPart, BasicPart, BasicPluralPart, isBasicPluralPart, parseCases, REGEX_SWITCH_CASE } from '../../parser/src/basic.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -134,9 +132,6 @@ export type RequiredParams<Params extends string> = ConstructString<Permutation<
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-export const isPluralPart = (part: BasicPart): part is TypeGuard<BasicPluralPart, BasicPart> =>
-	!!((part as BasicPluralPart).o || (part as BasicPluralPart).r)
-
 const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], initialValue: unknown) =>
 	formatterKeys.reduce(
 		(value, formatterKey) =>
@@ -180,7 +175,7 @@ const applyArguments = (
 			const { k: key = '0', f: formatterKeys = [] } = part as BasicArgumentPart
 			const value = args[key as unknown as number] as unknown
 
-			if (isPluralPart(part)) {
+			if (isBasicPluralPart(part)) {
 				return (
 					(typeof value === 'boolean' ? (value ? part.o : part.r) : getPlural(pluralRules, part, value)) || ''
 				).replace(REGEX_PLURAL_VALUE_INJECTION, value as string)

@@ -8,10 +8,8 @@ import {
 	sortStringPropertyASC,
 	uniqueArray
 } from 'typesafe-utils'
-import { parseMessage } from '../../../../parser/src/advanced.mjs'
-import { BasicArgumentPart, parseRawText } from '../../../../parser/src/basic.mjs'
+import { BasicArgumentPart, isBasicPluralPart, parseRawText } from '../../../../parser/src/basic.mjs'
 import { partsAsStringWithoutTypes } from '../../../../runtime/src/core-utils.mjs'
-import { isPluralPart } from '../../../../runtime/src/core.mjs'
 import type { BaseTranslation } from '../../../../runtime/src/index.mjs'
 import { REGEX_BRACKETS } from '../../constants.mjs'
 import type { Arg, ParsedResult, ParsedResultEntry, Types } from '../../types.mjs'
@@ -52,13 +50,13 @@ const parseTranslationEntry = (
 	logger: Logger,
 	parentKeys: string[],
 ): ParsedResult | null => {
-	const parsedParts = parseRawText(text)
+	const parsedParts = parseRawText(text, false)
 	// TODO: refactor to use new models
 	const textWithoutTypes = partsAsStringWithoutTypes(parsedParts)
 
 	const parsedObjects = parsedParts.filter(isObject)
-	const argumentParts = parsedObjects.filter<BasicArgumentPart>(not(isPluralPart))
-	const pluralParts = parsedObjects.filter(isPluralPart)
+	const argumentParts = parsedObjects.filter<BasicArgumentPart>(not(isBasicPluralPart))
+	const pluralParts = parsedObjects.filter(isBasicPluralPart)
 
 	const args: Arg[] = []
 	const types: Types = {}

@@ -26,7 +26,7 @@ test('index-based parameter', () => {
 		{
 			kind: 'parameter',
 			key: '0',
-			type: 'unknown',
+			types: ['unknown'],
 			optional: false,
 			transforms: [],
 		},
@@ -46,7 +46,7 @@ test('index-based parameters', () => {
 		{
 			kind: 'parameter',
 			key: '1',
-			type: 'unknown',
+			types: ['unknown'],
 			optional: false,
 			transforms: [],
 		},
@@ -57,7 +57,7 @@ test('index-based parameters', () => {
 		{
 			kind: 'parameter',
 			key: '0',
-			type: 'unknown',
+			types: ['unknown'],
 			optional: false,
 			transforms: [],
 		},
@@ -73,7 +73,7 @@ test('key-based parameter', () => {
 		{
 			kind: 'parameter',
 			key: 'name',
-			type: 'unknown',
+			types: ['unknown'],
 			optional: false,
 			transforms: [],
 		},
@@ -85,7 +85,7 @@ test('mixed parameters', () => {
 		{
 			kind: 'parameter',
 			key: 'name1',
-			type: 'unknown',
+			types: ['unknown'],
 			optional: false,
 			transforms: [],
 		},
@@ -96,7 +96,7 @@ test('mixed parameters', () => {
 		{
 			kind: 'parameter',
 			key: '0',
-			type: 'unknown',
+			types: ['unknown'],
 			optional: false,
 			transforms: [],
 		},
@@ -118,7 +118,7 @@ test('index-based parameter wit type', () => {
 		{
 			kind: 'parameter',
 			key: '0',
-			type: 'number',
+			types: ['number'],
 			optional: false,
 			transforms: [],
 		},
@@ -134,7 +134,7 @@ test('key-based parameter with type', () => {
 		{
 			kind: 'parameter',
 			key: 'date',
-			type: 'Date',
+			types: ['Date'],
 			optional: false,
 			transforms: [],
 		},
@@ -150,7 +150,7 @@ test('mixed parameters with types', () => {
 		{
 			kind: 'parameter',
 			key: 'name',
-			type: 'string',
+			types: ['string'],
 			optional: false,
 			transforms: [],
 		},
@@ -161,7 +161,7 @@ test('mixed parameters with types', () => {
 		{
 			kind: 'parameter',
 			key: '0',
-			type: 'EmailString',
+			types: ['EmailString'],
 			optional: false,
 			transforms: [],
 		},
@@ -194,7 +194,7 @@ test('plural rules with index-based parameter', () => {
 		{
 			kind: 'parameter',
 			key: '0',
-			type: 'unknown',
+			types: ['unknown'],
 			optional: false,
 			transforms: [],
 		},
@@ -216,7 +216,7 @@ test('plural rules with key-based parameter', () => {
 		{
 			kind: 'parameter',
 			key: 'nr',
-			type: 'number',
+			types: ['number'],
 			optional: false,
 			transforms: [],
 		},
@@ -238,7 +238,7 @@ test('plural rules singular-only', () => {
 		{
 			kind: 'parameter',
 			key: '0',
-			type: 'unknown',
+			types: ['unknown'],
 			optional: false,
 			transforms: [],
 		},
@@ -321,7 +321,7 @@ test('index-based parameter with formatter', () => {
 		{
 			kind: 'parameter',
 			key: '0',
-			type: 'unknown',
+			types: ['unknown'],
 			optional: false,
 			transforms: [
 				{
@@ -342,7 +342,7 @@ test('key-based parameter with formatter', () => {
 		{
 			kind: 'parameter',
 			key: 'date',
-			type: 'Date',
+			types: ['Date'],
 			optional: false,
 			transforms: [
 				{
@@ -359,7 +359,7 @@ test('parameter with multiple formatters', () => {
 		{
 			kind: 'parameter',
 			key: 'date',
-			type: 'Date',
+			types: ['Date'],
 			optional: false,
 			transforms: [
 				{
@@ -388,7 +388,7 @@ test('multiple parameters with multiple formatters', () => {
 		{
 			kind: 'parameter',
 			key: 'name',
-			type: 'string',
+			types: ['string'],
 			optional: false,
 			transforms: [
 				{
@@ -404,7 +404,7 @@ test('multiple parameters with multiple formatters', () => {
 		{
 			kind: 'parameter',
 			key: 'date',
-			type: 'Date',
+			types: ['Date'],
 			optional: false,
 			transforms: [
 				{
@@ -425,7 +425,7 @@ test('switch-case', () => {
 			{
 				kind: 'parameter',
 				key: 'username',
-				type: 'string',
+				types: ['string'],
 				optional: false,
 				transforms: [],
 			},
@@ -436,7 +436,7 @@ test('switch-case', () => {
 			{
 				kind: 'parameter',
 				key: 'gender',
-				type: 'unknown',
+				types: ['unknown'],
 				optional: false,
 				transforms: [
 					{
@@ -477,7 +477,7 @@ test('switch-case yes-no', () => {
 			{
 				kind: 'parameter',
 				key: 'price',
-				type: 'number',
+				types: ['number'],
 				optional: false,
 				transforms: [],
 			},
@@ -488,7 +488,7 @@ test('switch-case yes-no', () => {
 			{
 				kind: 'parameter',
 				key: 'taxes',
-				type: 'unknown',
+				types: ['unknown'],
 				optional: false,
 				transforms: [
 					{

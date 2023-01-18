@@ -1,6 +1,13 @@
 import { isNotUndefined, isString } from 'typesafe-utils'
-import type { BasicArgumentPart, BasicPart, BasicPluralPart } from './basic.mjs'
-import { parseCases, parseRawText, REGEX_SWITCH_CASE } from './basic.mjs'
+import {
+	BasicArgumentPart,
+	BasicPart,
+	BasicPluralPart,
+	isBasicPluralPart,
+	parseCases,
+	parseRawText,
+	REGEX_SWITCH_CASE
+} from './basic.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
@@ -8,14 +15,14 @@ import { parseCases, parseRawText, REGEX_SWITCH_CASE } from './basic.mjs'
 
 export type ParsedMessage = ParsedMessagePart[]
 
-type ParsedMessagePart = TextPart | PluralPart | ParameterPart
+export type ParsedMessagePart = TextPart | PluralPart | ParameterPart
 
-type TextPart = {
+export type TextPart = {
 	kind: 'text'
 	content: string
 }
 
-type PluralPart = {
+export type PluralPart = {
 	kind: 'plural'
 	key: string
 	zero?: string
@@ -26,33 +33,46 @@ type PluralPart = {
 	other: string
 }
 
-type ParameterPart = {
+export type ParameterPart = {
 	kind: 'parameter'
 	key: string
-	type: string
+	types: string[]
 	optional: boolean
 	transforms: TransformParameterPart[]
+	pluralOnly?: boolean
 }
 
-type TransformParameterPart = TransformParameterFormatterPart | TransformParameterSwitchCasePart
+export type TransformParameterPart = TransformParameterFormatterPart | TransformParameterSwitchCasePart
 
-type TransformParameterFormatterPart = {
+export type TransformParameterFormatterPart = {
 	kind: 'formatter'
 	name: string
 }
 
-type TransformParameterSwitchCasePart = {
+export type TransformParameterSwitchCasePart = {
 	kind: 'switch-case'
 	cases: TransformParameterSwitchCaseCasePart[]
 }
 
-type TransformParameterSwitchCaseCasePart = {
+export type TransformParameterSwitchCaseCasePart = {
 	key: string
 	value: string
 }
 
 // --------------------------------------------------------------------------------------------------------------------
 // implementation -----------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+
+export const isTextPart = (part: ParsedMessagePart): part is TextPart => part.kind === 'plural'
+
+export const isPluralPart = (part: ParsedMessagePart): part is PluralPart => part.kind === 'plural'
+
+export const isParameterPart = (part: ParsedMessagePart): part is ParameterPart => part.kind === 'parameter'
+
+export const isTransformParameterFormatterPart = (
+	part: TransformParameterPart,
+): part is TransformParameterFormatterPart => part.kind === 'formatter'
+
 // --------------------------------------------------------------------------------------------------------------------
 
 // TODO: use `parseTranslationEntry` to improve types
@@ -64,13 +84,10 @@ const createPart = (part: BasicPart): ParsedMessagePart | undefined => {
 		return part ? createTextPart(part) : undefined
 	}
 
-	if (isPluralPart(part)) return createPluralPart(part)
+	if (isBasicPluralPart(part)) return createPluralPart(part)
 
 	return createParameterPart(part)
 }
-
-const isPluralPart = (part: Exclude<BasicPart, string>): part is BasicPluralPart =>
-	!!((part as BasicPluralPart).o || (part as BasicPluralPart).r)
 
 const createTextPart = (content: string): TextPart => ({
 	kind: 'text',
@@ -91,7 +108,7 @@ const createPluralPart = ({ k, z, o, t, f, m, r }: BasicPluralPart): PluralPart 
 const createParameterPart = ({ k, i, n, f }: BasicArgumentPart): ParameterPart => ({
 	kind: 'parameter',
 	key: k,
-	type: i || 'unknown',
+	types: [i || 'unknown'],
 	optional: n || false,
 	transforms: (f || []).map(createTransformParameterPart),
 })
@@ -103,9 +120,9 @@ const createTransformParameterPart = (transform: string): TransformParameterPart
 		? ({
 				kind: 'switch-case',
 				cases: Object.entries(parseCases(transform)).map(([key, value]) => ({ key, value })),
-		  } satisfies TransformParameterSwitchCasePart)
+		  } as TransformParameterSwitchCasePart)
 		: ({
 				kind: 'formatter',
 				name: transform,
-		  } satisfies TransformParameterFormatterPart)
+		  } as TransformParameterFormatterPart)
 }
