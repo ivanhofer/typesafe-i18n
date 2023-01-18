@@ -5,7 +5,7 @@ import {
 	isString,
 	sortStringASC,
 	sortStringPropertyASC,
-	uniqueArray
+	uniqueArray,
 } from 'typesafe-utils'
 import { isParameterPart, isPluralPart, parseMessage } from '../../../../parser/src/advanced/parse.mjs'
 import { serializeMessageWithoutTypes } from '../../../../parser/src/advanced/serialize.mjs'

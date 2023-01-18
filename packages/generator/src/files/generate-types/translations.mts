@@ -75,7 +75,7 @@ const createTranslationTypeEntry = (resultEntry: ParsedResult, jsDocInfo: JsDocI
 const getFormatterType = (formatter: TransformParameterPart): string => {
 	if (formatter.kind === 'formatter') return formatter.name
 
-	const cases = formatter.raw
+	const cases = (formatter.raw || '')
 		.replace(REGEX_BRACKETS, '')
 		.split(',')
 		.map((part) => part.split(':'))

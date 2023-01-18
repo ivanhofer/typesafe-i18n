@@ -1,4 +1,11 @@
-import { BasicArgumentPart, BasicPart, BasicPluralPart, isBasicPluralPart, parseCases, REGEX_SWITCH_CASE } from '../../parser/src/basic.mjs'
+import {
+	BasicArgumentPart,
+	BasicPart,
+	BasicPluralPart,
+	isBasicPluralPart,
+	parseCases,
+	REGEX_SWITCH_CASE,
+} from '../../parser/src/basic.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------

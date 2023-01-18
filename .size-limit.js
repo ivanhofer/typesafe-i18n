@@ -32,7 +32,7 @@ module.exports = [
 	{
 		name: 'adapter-angular',
 		path: 'angular/index.min.mjs',
-		limit: '1438 b',
+		limit: '1440 b',
 		ignore: ['angular'],
 	},
 	{
@@ -56,7 +56,7 @@ module.exports = [
 	{
 		name: 'adapter-vue',
 		path: 'vue/index.min.mjs',
-		limit: '1297 b',
+		limit: '1299 b',
 		ignore: ['vue'],
 	},
 ]

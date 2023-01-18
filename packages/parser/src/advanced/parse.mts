@@ -6,7 +6,7 @@ import {
 	isBasicPluralPart,
 	parseCases,
 	parseRawText,
-	REGEX_SWITCH_CASE
+	REGEX_SWITCH_CASE,
 } from '../basic.mjs'
 import type {
 	ParameterPart,
@@ -16,7 +16,7 @@ import type {
 	TextPart,
 	TransformParameterFormatterPart,
 	TransformParameterPart,
-	TransformParameterSwitchCasePart
+	TransformParameterSwitchCasePart,
 } from './types.mjs'
 
 export const isTextPart = (part: ParsedMessagePart): part is TextPart => part.kind === 'text'

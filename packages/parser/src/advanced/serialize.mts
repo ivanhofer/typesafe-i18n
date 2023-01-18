@@ -5,7 +5,7 @@ import type {
 	ParsedMessagePart,
 	PluralPart,
 	TransformParameterPart,
-	TransformParameterSwitchCasePart
+	TransformParameterSwitchCasePart,
 } from './types.mjs'
 
 // TODO: maybe add a spacing:boolean option to control if `{name:string|uppercase}` or ` {name: string | uppercase }` should be emitted
