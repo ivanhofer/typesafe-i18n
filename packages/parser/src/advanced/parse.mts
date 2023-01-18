@@ -7,62 +7,17 @@ import {
 	parseCases,
 	parseRawText,
 	REGEX_SWITCH_CASE
-} from './basic.mjs'
-
-// --------------------------------------------------------------------------------------------------------------------
-// types --------------------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------------------------------------
-
-export type ParsedMessage = ParsedMessagePart[]
-
-export type ParsedMessagePart = TextPart | PluralPart | ParameterPart
-
-export type TextPart = {
-	kind: 'text'
-	content: string
-}
-
-export type PluralPart = {
-	kind: 'plural'
-	key: string
-	zero?: string
-	one?: string
-	two?: string
-	few?: string
-	many?: string
-	other: string
-}
-
-export type ParameterPart = {
-	kind: 'parameter'
-	key: string
-	types: string[]
-	optional: boolean
-	transforms: TransformParameterPart[]
-	pluralOnly?: boolean
-}
-
-export type TransformParameterPart = TransformParameterFormatterPart | TransformParameterSwitchCasePart
-
-export type TransformParameterFormatterPart = {
-	kind: 'formatter'
-	name: string
-}
-
-export type TransformParameterSwitchCasePart = {
-	kind: 'switch-case'
-	cases: TransformParameterSwitchCaseCasePart[]
-	raw: string
-}
-
-export type TransformParameterSwitchCaseCasePart = {
-	key: string
-	value: string
-}
-
-// --------------------------------------------------------------------------------------------------------------------
-// implementation -----------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------------------------------------
+} from '../basic.mjs'
+import type {
+	ParameterPart,
+	ParsedMessage,
+	ParsedMessagePart,
+	PluralPart,
+	TextPart,
+	TransformParameterFormatterPart,
+	TransformParameterPart,
+	TransformParameterSwitchCasePart
+} from './types.mjs'
 
 export const isTextPart = (part: ParsedMessagePart): part is TextPart => part.kind === 'text'
 
@@ -86,6 +41,7 @@ export const parseMessage = (message: string): ParsedMessage =>
 
 const createPart = (part: BasicPart): ParsedMessagePart | undefined => {
 	if (isString(part)) {
+		// don't create part for empty strings
 		return part ? createTextPart(part) : undefined
 	}
 

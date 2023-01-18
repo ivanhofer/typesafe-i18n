@@ -1,5 +1,6 @@
+export { parseMessage } from './advanced/parse.mjs'
+export { serializeMessage } from './advanced/serialize.mjs'
 export {
-	parseMessage,
 	type ParameterPart,
 	type ParsedMessage,
 	type ParsedMessagePart,
@@ -9,5 +10,5 @@ export {
 	type TransformParameterPart,
 	type TransformParameterSwitchCaseCasePart,
 	type TransformParameterSwitchCasePart
-} from './advanced.mjs';
+} from './advanced/types.mjs'
 

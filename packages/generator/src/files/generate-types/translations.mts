@@ -1,5 +1,6 @@
 import { filterDuplicates, isArray, isPropertyFalsy } from 'typesafe-utils'
-import { createParameterPart, REGEX_BRACKETS, TransformParameterPart } from '../../../../parser/src/advanced.mjs'
+import { createParameterPart, REGEX_BRACKETS } from '../../../../parser/src/advanced/parse.mjs'
+import type { TransformParameterPart } from '../../../../parser/src/advanced/types.mjs'
 import { partAsStringWithoutTypes } from '../../../../runtime/src/core-utils.mjs'
 import { NEW_LINE, PIPE_SEPARATION } from '../../constants.mjs'
 import { supportsTemplateLiteralTypes } from '../../output-handler.mjs'

@@ -1,5 +1,5 @@
 import { isArray, isObject, TypeGuard } from 'typesafe-utils'
-import type { TransformParameterPart } from '../../parser/src/advanced.mjs'
+import type { TransformParameterPart } from '../../parser/src/advanced/types.mjs'
 
 export type Arg = {
 	key: string

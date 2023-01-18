@@ -1,10 +1,5 @@
-import {
-	isPluralPart,
-	isTextPart,
-	type ParsedMessage,
-	type ParsedMessagePart,
-	type TransformParameterPart
-} from '../../parser/src/advanced.mjs'
+import { isPluralPart, isTextPart } from '../../parser/src/advanced/parse.mjs'
+import type { ParsedMessage, ParsedMessagePart, TransformParameterPart } from '../../parser/src/advanced/types.mjs'
 import type { TranslationFunctions } from './core.mjs'
 
 export const partsAsStringWithoutTypes = (parts: ParsedMessage): string => parts.map(partAsStringWithoutTypes).join('')

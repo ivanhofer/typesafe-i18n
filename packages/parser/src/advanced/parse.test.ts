@@ -1,6 +1,6 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { ParsedMessage, parseMessage } from './advanced.mjs'
+import { ParsedMessage, parseMessage } from './parse.mjs'
 
 const test = suite('parseMessage')
 

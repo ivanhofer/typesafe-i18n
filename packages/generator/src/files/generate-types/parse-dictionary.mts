@@ -7,7 +7,7 @@ import {
 	sortStringPropertyASC,
 	uniqueArray
 } from 'typesafe-utils'
-import { isParameterPart, isPluralPart, parseMessage } from '../../../../parser/src/advanced.mjs'
+import { isParameterPart, isPluralPart, parseMessage } from '../../../../parser/src/advanced/parse.mjs'
 import { partsAsStringWithoutTypes } from '../../../../runtime/src/core-utils.mjs'
 import type { BaseTranslation } from '../../../../runtime/src/index.mjs'
 import type { Arg, ParsedResult, ParsedResultEntry, Types } from '../../types.mjs'
