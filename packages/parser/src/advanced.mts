@@ -1,4 +1,4 @@
-import { isNotUndefined, isString } from 'typesafe-utils'
+import { isNotUndefined, isString, pick, uniqueArray } from 'typesafe-utils'
 import {
 	BasicArgumentPart,
 	BasicPart,
@@ -74,11 +74,15 @@ export const isTransformParameterFormatterPart = (
 	part: TransformParameterPart,
 ): part is TransformParameterFormatterPart => part.kind === 'formatter'
 
+export const isTransformParameterSwitchCasePart = (
+	part: TransformParameterPart,
+): part is TransformParameterSwitchCasePart => part.kind === 'switch-case'
+
 // --------------------------------------------------------------------------------------------------------------------
 
 // TODO: use `parseTranslationEntry` to improve types
 export const parseMessage = (message: string): ParsedMessage =>
-	parseRawText(message, false).map(createPart).filter(isNotUndefined)
+	enhanceTypeInformation(parseRawText(message, false).map(createPart).filter(isNotUndefined))
 
 const createPart = (part: BasicPart): ParsedMessagePart | undefined => {
 	if (isString(part)) {
@@ -109,7 +113,7 @@ const createPluralPart = ({ k, z, o, t, f, m, r }: BasicPluralPart): PluralPart 
 export const createParameterPart = ({ k, i, n, f }: BasicArgumentPart): ParameterPart => ({
 	kind: 'parameter',
 	key: k,
-	types: [i || 'unknown'],
+	types: i ? [i] : [],
 	optional: n || false,
 	transforms: (f || []).map(createTransformParameterPart),
 })
@@ -127,4 +131,60 @@ const createTransformParameterPart = (transform: string): TransformParameterPart
 				kind: 'formatter',
 				name: transform,
 		  } as TransformParameterFormatterPart)
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+const enhanceTypeInformation = (parts: ParsedMessage): ParsedMessage => {
+	const parameterParts = parts.filter(isParameterPart)
+	const pluralParts = parts.filter(isPluralPart)
+
+	const typeMap: Record<string, { types: string[]; optional: boolean }> = {}
+
+	parameterParts.forEach(({ key, types, transforms, optional }) => {
+		const enhancedTypes = types.length
+			? types
+			: parseTypesFromSwitchCaseStatement(transforms as [TransformParameterPart])
+		typeMap[key] = {
+			types: uniqueArray([...(typeMap[key]?.types || []), ...enhancedTypes]).filter(isNotUndefined),
+			optional: typeMap[key]?.optional || optional,
+		}
+	})
+
+	pluralParts.forEach(({ key }) => {
+		if (!typeMap[key]?.types.length) {
+			// if key has no types => add types that are valid for a PluralPart
+			typeMap[key] = { types: ['string', 'number', 'boolean'], optional: false }
+		}
+	})
+
+	// add 'unknown' if argument has no type
+	Object.keys(typeMap).forEach((key) => {
+		if (!typeMap[key]?.types.length) {
+			typeMap[key] = { types: ['unknown'], optional: typeMap[key]?.optional || false }
+		}
+	})
+
+	Object.entries(typeMap).forEach(([key, value]) => {
+		const part = parameterParts.find((p) => p.key === key)
+		if (!part) return
+
+		part.types = value.types
+		part.optional = part.optional || value.optional
+	})
+
+	return parts
+}
+
+export const REGEX_BRACKETS = /(^{)|(}$)/g
+
+const parseTypesFromSwitchCaseStatement = (formatters: [TransformParameterPart] | [] | undefined) => {
+	if (!formatters?.length) return []
+
+	const formatter = formatters[0]
+	if (!isTransformParameterSwitchCasePart(formatter)) return []
+
+	const keys = formatter.cases.map(pick('key'))
+
+	return keys.map((key) => (key === '*' ? 'string' : `'${key}'`))
 }

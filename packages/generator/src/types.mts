@@ -1,8 +1,9 @@
+import type { TransformParameterPart } from 'typesafe-i18n/packages/parser/src/advanced.mjs'
 import { isArray, isObject, TypeGuard } from 'typesafe-utils'
 
 export type Arg = {
 	key: string
-	formatters?: string[] | undefined
+	transforms: TransformParameterPart[]
 	pluralOnly?: boolean | undefined
 	optional?: boolean | undefined
 }

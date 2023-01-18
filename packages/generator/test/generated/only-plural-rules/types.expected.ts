@@ -27,11 +27,11 @@ export type TranslationFunctions = {
 	/**
 	 * apple{{s}}
 	 */
-	ONLY_PLURAL: (arg0: string | number | boolean) => LocalizedString
+	ONLY_PLURAL: (arg0: number | string | boolean) => LocalizedString
 	/**
 	 * {{Apfel|Äpfel}}
 	 */
-	ONLY_SINGULAR_PLURAL: (arg0: string | number | boolean) => LocalizedString
+	ONLY_SINGULAR_PLURAL: (arg0: number | string | boolean) => LocalizedString
 }
 
 export type Formatters = {}

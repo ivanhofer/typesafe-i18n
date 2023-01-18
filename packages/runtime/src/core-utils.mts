@@ -23,7 +23,7 @@ export const partAsStringWithoutTypes = (part: ParsedMessagePart): string => {
 	}
 
 	return `{${part.key}${part.optional ? '?' : ''}${
-		part.transforms?.length ? `|${part.transforms.map(transformPartAsString).join('|')}` : ''
+		part.transforms.length ? `|${part.transforms.map(transformPartAsString).join('|')}` : ''
 	}}`
 }
 

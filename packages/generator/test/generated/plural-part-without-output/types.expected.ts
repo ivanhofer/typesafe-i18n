@@ -26,7 +26,7 @@ export type TranslationFunctions = {
 	/**
 	 * New message{{s}} in {inbox}
 	 */
-	PLURAL_WITHOUT_OUTPUT: (arg: { inbox: InboxType, nrOfMessages: string | number | boolean }) => LocalizedString
+	PLURAL_WITHOUT_OUTPUT: (arg: { inbox: InboxType, nrOfMessages: number | string | boolean }) => LocalizedString
 }
 
 export type Formatters = {}

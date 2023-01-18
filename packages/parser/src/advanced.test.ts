@@ -183,7 +183,6 @@ test('plural rules only', () => {
 		{
 			kind: 'plural',
 			key: '0',
-			one: '',
 			other: 's',
 		},
 	] satisfies ParsedMessage)
@@ -194,7 +193,7 @@ test('plural rules with index-based parameter', () => {
 		{
 			kind: 'parameter',
 			key: '0',
-			types: ['unknown'],
+			types: ['string', 'number', 'boolean'],
 			optional: false,
 			transforms: [],
 		},
@@ -238,7 +237,7 @@ test('plural rules singular-only', () => {
 		{
 			kind: 'parameter',
 			key: '0',
-			types: ['unknown'],
+			types: ['string', 'number', 'boolean'],
 			optional: false,
 			transforms: [],
 		},
@@ -259,7 +258,6 @@ test('plural rules singular-only', () => {
 		{
 			kind: 'plural',
 			key: '0',
-			one: '',
 			other: 'er',
 		},
 	] satisfies ParsedMessage)
@@ -304,7 +302,6 @@ test('plural full syntax', () => {
 		{
 			kind: 'plural',
 			key: '0',
-			one: '',
 			other: 's',
 		},
 	] satisfies ParsedMessage)
@@ -436,7 +433,7 @@ test('switch-case', () => {
 			{
 				kind: 'parameter',
 				key: 'gender',
-				types: ['unknown'],
+				types: ["'male'", "'female'", 'string'],
 				optional: false,
 				transforms: [
 					{
@@ -455,6 +452,7 @@ test('switch-case', () => {
 								value: 'their',
 							},
 						],
+						raw: '{ male: his, female: her, *: their }',
 					},
 				],
 			},
@@ -488,7 +486,7 @@ test('switch-case yes-no', () => {
 			{
 				kind: 'parameter',
 				key: 'taxes',
-				types: ['unknown'],
+				types: ["'yes'", "'no'"],
 				optional: false,
 				transforms: [
 					{
@@ -503,6 +501,7 @@ test('switch-case yes-no', () => {
 								value: 'No taxes apply.',
 							},
 						],
+						raw: '{yes: An additional tax will be collected. , no: No taxes apply.}',
 					},
 				],
 			},
