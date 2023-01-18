@@ -1,6 +1,6 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { parseMessage } from './parse.mjs'
+import { isParameterPart, isTransformParameterSwitchCasePart, parseMessage } from './parse.mjs'
 import { serializeMessage } from './serialize.mjs'
 
 const test = suite('serializeMessage')
@@ -28,14 +28,28 @@ const strings = [
 	'{date:Date|dateTime}',
 	'{date:Date|dateTime|upperCase|trim}',
 	'Hi {name:string|upper}, today is: {date:Date|dateTime}',
-	// // switch-case
-	// '{username:string} added a new photo to {gender|{ male: his, female: her, *: their }} stream.',
-	// 'Price: ${price:number}. {taxes|{yes: An additional tax will be collected. , no: No taxes apply.}}',
+	// switch-case
+	'{username:string} added a new photo to {gender|{male:his,female:her,*:their}} stream.',
+	'Price: ${price:number}. {taxes|{yes:An additional tax will be collected.,no:No taxes apply.}}',
 ]
 
 strings.forEach((string) => {
 	test(string, () => {
-		assert.equal(serializeMessage(parseMessage(string)), string)
+		assert.equal(
+			serializeMessage(
+				parseMessage(string).map((part) =>
+					isParameterPart(part)
+						? {
+								...part,
+								transforms: part.transforms.map((transform) =>
+									isTransformParameterSwitchCasePart(transform) ? { ...transform, raw: '' } : transform,
+								),
+						  }
+						: part,
+				),
+			),
+			string,
+		)
 	})
 })
 

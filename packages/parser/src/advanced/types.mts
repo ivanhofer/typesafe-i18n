@@ -36,7 +36,7 @@ export type TransformParameterFormatterPart = {
 export type TransformParameterSwitchCasePart = {
 	kind: 'switch-case'
 	cases: TransformParameterSwitchCaseCasePart[]
-	raw: string
+	raw?: string
 }
 
 export type TransformParameterSwitchCaseCasePart = {
