@@ -4,7 +4,7 @@ import {
 	type ParsedMessage,
 	type ParsedMessagePart,
 	type TransformParameterPart
-} from 'packages/parser/src/advanced.mjs'
+} from '../../parser/src/advanced.mjs'
 import type { TranslationFunctions } from './core.mjs'
 
 export const partsAsStringWithoutTypes = (parts: ParsedMessage): string => parts.map(partAsStringWithoutTypes).join('')

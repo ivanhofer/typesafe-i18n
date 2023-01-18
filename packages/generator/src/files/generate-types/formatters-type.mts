@@ -1,5 +1,5 @@
-import { isTransformParameterFormatterPart } from 'typesafe-i18n/packages/parser/src/advanced.mjs'
 import { sortStringPropertyASC, uniqueArray } from 'typesafe-utils'
+import { isTransformParameterFormatterPart } from '../../../../parser/src/advanced.mjs'
 import type { ParsedResult } from '../../types.mjs'
 import { wrapObjectKeyIfNeeded } from '../../utils/generator.utils.mjs'
 import { flattenToParsedResultEntry, mapToString, wrapObjectType } from './_utils.mjs'
