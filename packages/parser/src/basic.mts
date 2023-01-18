@@ -1,9 +1,34 @@
-import type { ArgumentPart, Part, PluralPart } from './types.mjs'
+// --------------------------------------------------------------------------------------------------------------------
+// types --------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
+export type BasicTextPart = string
+
+export type BasicArgumentPart = {
+	k: string // key
+	i?: string | undefined // type
+	n?: boolean | undefined // non-mandatory (optional)
+	f?: string[] | undefined // formatterFunctionKey
+}
+
+export type BasicPluralPart = {
+	k: string // key
+	z?: string // zero
+	o: string // one
+	t?: string // two
+	f?: string // few
+	m?: string // many
+	r: string // other
+}
+
+export type BasicPart = BasicTextPart | BasicArgumentPart | BasicPluralPart
+
+// --------------------------------------------------------------------------------------------------------------------
+// implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
 // eslint-disable-next-line prettier/prettier
-const removeEmptyValues = <T extends ArgumentPart | PluralPart>(object: T): T =>
+const removeEmptyValues = <T extends BasicArgumentPart | BasicPluralPart>(object: T): T =>
 	Object.fromEntries(
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		(Object.entries(object) as [string, any][])
@@ -13,7 +38,7 @@ const removeEmptyValues = <T extends ArgumentPart | PluralPart>(object: T): T =>
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const trimAllValues = <T extends ArgumentPart | PluralPart>(part: T): T =>
+const trimAllValues = <T extends BasicArgumentPart | BasicPluralPart>(part: T): T =>
 	Object.fromEntries(
 		Object.keys(part).map((key) => {
 			const val = part[key as keyof T] as unknown as boolean | string | string[]
@@ -26,7 +51,7 @@ const trimAllValues = <T extends ArgumentPart | PluralPart>(part: T): T =>
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const parseArgumentPart = (text: string): ArgumentPart => {
+const parseArgumentPart = (text: string): BasicArgumentPart => {
 	const [keyPart = '', ...formatterKeys] = text.split('|')
 
 	const [keyWithoutType = '', type] = keyPart.split(':')
@@ -36,7 +61,7 @@ const parseArgumentPart = (text: string): ArgumentPart => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const parsePluralPart = (content: string, lastAccessor: string): PluralPart => {
+const parsePluralPart = (content: string, lastAccessor: string): BasicPluralPart => {
 	let [key, values] = content.split(':') as [string, string?]
 	if (!values) {
 		values = key
@@ -49,16 +74,16 @@ const parsePluralPart = (content: string, lastAccessor: string): PluralPart => {
 	const nrOfEntries = entries.filter((entry) => entry !== undefined).length
 
 	if (nrOfEntries === 1) {
-		return { k: key, r: zero } as PluralPart
+		return { k: key, r: zero } as BasicPluralPart
 	}
 	if (nrOfEntries === 2) {
-		return { k: key, o: zero, r: one } as PluralPart
+		return { k: key, o: zero, r: one } as BasicPluralPart
 	}
 	if (nrOfEntries === 3) {
-		return { k: key, z: zero, o: one, r: two } as PluralPart
+		return { k: key, z: zero, o: one, r: two } as BasicPluralPart
 	}
 
-	return { k: key, z: zero, o: one, t: two, f: few, m: many, r: rest } as PluralPart
+	return { k: key, z: zero, o: one, t: two, f: few, m: many, r: rest } as BasicPluralPart
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -76,7 +101,7 @@ export const parseCases = (text: string): Record<string, string> =>
 				}
 
 				// if we have a single part, this means that a comma `,` was present in the string and we need to combine the strings again
-				;(accumulator[accumulator.length - 1] as [string, string])[1] += ',' + entry[0]
+				; (accumulator[accumulator.length - 1] as [string, string])[1] += ',' + entry[0]
 				return accumulator
 			}, [] as ([string, string] | [string])[]),
 	)
@@ -87,7 +112,7 @@ const REGEX_BRACKETS_SPLIT = /(\{(?:[^{}]+|\{(?:[^{}]+)*\})*\})/g
 
 export const removeOuterBrackets = (text: string) => text.substring(1, text.length - 1)
 
-export const parseRawText = (rawText: string, optimize = true, firstKey = '', lastKey = ''): Part[] =>
+export const parseRawText = (rawText: string, optimize = true, firstKey = '', lastKey = ''): BasicPart[] =>
 	rawText
 		.split(REGEX_BRACKETS_SPLIT)
 		.map((part) => {

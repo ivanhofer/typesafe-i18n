@@ -1,13 +1,13 @@
-import type { Part } from '../../parser/src/types.mjs'
+import type { BasicPart } from '../../parser/src/basic.mjs'
 import { isPluralPart, TranslationFunctions } from './core.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const partsAsStringWithoutTypes = (parts: Part[]): string => parts.map(partAsStringWithoutTypes).join('')
+export const partsAsStringWithoutTypes = (parts: BasicPart[]): string => parts.map(partAsStringWithoutTypes).join('')
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const partAsStringWithoutTypes = (part: Part): string => {
+export const partAsStringWithoutTypes = (part: BasicPart): string => {
 	if (typeof part === 'string') {
 		return part
 	}

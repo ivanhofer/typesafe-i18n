@@ -1,6 +1,10 @@
 import { isNotUndefined, isString } from 'typesafe-utils'
+import type { BasicArgumentPart, BasicPart, BasicPluralPart } from './basic.mjs'
 import { parseCases, parseRawText, REGEX_SWITCH_CASE } from './basic.mjs'
-import type { ArgumentPart, Part, PluralPart as BasePluralPart } from './types.mjs'
+
+// --------------------------------------------------------------------------------------------------------------------
+// types --------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 export type ParsedMessage = ParsedMessagePart[]
 
@@ -47,11 +51,15 @@ type TransformParameterSwitchCaseCasePart = {
 	value: string
 }
 
+// --------------------------------------------------------------------------------------------------------------------
+// implementation -----------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+
 // TODO: use `parseTranslationEntry` to improve types
 export const parseMessage = (message: string): ParsedMessage =>
 	parseRawText(message, false).map(createPart).filter(isNotUndefined)
 
-const createPart = (part: Part): ParsedMessagePart | undefined => {
+const createPart = (part: BasicPart): ParsedMessagePart | undefined => {
 	if (isString(part)) {
 		return part ? createTextPart(part) : undefined
 	}
@@ -61,15 +69,15 @@ const createPart = (part: Part): ParsedMessagePart | undefined => {
 	return createParameterPart(part)
 }
 
-const isPluralPart = (part: Exclude<Part, string>): part is BasePluralPart =>
-	!!((part as BasePluralPart).o || (part as BasePluralPart).r)
+const isPluralPart = (part: Exclude<BasicPart, string>): part is BasicPluralPart =>
+	!!((part as BasicPluralPart).o || (part as BasicPluralPart).r)
 
 const createTextPart = (content: string): TextPart => ({
 	kind: 'text',
 	content,
 })
 
-const createPluralPart = ({ k, z, o, t, f, m, r }: BasePluralPart): PluralPart => ({
+const createPluralPart = ({ k, z, o, t, f, m, r }: BasicPluralPart): PluralPart => ({
 	kind: 'plural',
 	key: k,
 	...(z ? { zero: z } : undefined),
@@ -80,7 +88,7 @@ const createPluralPart = ({ k, z, o, t, f, m, r }: BasePluralPart): PluralPart =
 	other: r,
 })
 
-const createParameterPart = ({ k, i, n, f }: ArgumentPart): ParameterPart => ({
+const createParameterPart = ({ k, i, n, f }: BasicArgumentPart): ParameterPart => ({
 	kind: 'parameter',
 	key: k,
 	type: i || 'unknown',

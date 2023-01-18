@@ -1,13 +1,13 @@
 import type { TypeGuard } from 'typesafe-utils'
+import type { BasicArgumentPart, BasicPart, BasicPluralPart } from '../../parser/src/basic.mjs'
 import { parseCases, REGEX_SWITCH_CASE } from '../../parser/src/basic.mjs'
-import type { ArgumentPart, Part, PluralPart } from '../../parser/src/types.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
 type TranslationParts<T extends BaseTranslation | BaseTranslation[] = BaseTranslation> = {
-	[key in keyof T]: Part[]
+	[key in keyof T]: BasicPart[]
 }
 
 export type Cache<T extends BaseTranslation | BaseTranslation[] = BaseTranslation> = TranslationParts<T>
@@ -134,8 +134,8 @@ export type RequiredParams<Params extends string> = ConstructString<Permutation<
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-export const isPluralPart = (part: Part): part is TypeGuard<PluralPart, Part> =>
-	!!((part as PluralPart).o || (part as PluralPart).r)
+export const isPluralPart = (part: BasicPart): part is TypeGuard<BasicPluralPart, BasicPart> =>
+	!!((part as BasicPluralPart).o || (part as BasicPluralPart).r)
 
 const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], initialValue: unknown) =>
 	formatterKeys.reduce(
@@ -146,7 +146,7 @@ const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], in
 		initialValue,
 	)
 
-const getPlural = (pluralRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPart, value: unknown) => {
+const getPlural = (pluralRules: Intl.PluralRules, { z, o, t, f, m, r }: BasicPluralPart, value: unknown) => {
 	switch (z && value == 0 ? 'zero' : pluralRules.select(value as number)) {
 		case 'zero':
 			return z
@@ -166,7 +166,7 @@ const getPlural = (pluralRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPa
 const REGEX_PLURAL_VALUE_INJECTION = /\?\?/g
 
 const applyArguments = (
-	textParts: Part[],
+	textParts: BasicPart[],
 	pluralRules: Intl.PluralRules,
 	formatters: BaseFormatters,
 	args: Arguments,
@@ -177,7 +177,7 @@ const applyArguments = (
 				return part
 			}
 
-			const { k: key = '0', f: formatterKeys = [] } = part as ArgumentPart
+			const { k: key = '0', f: formatterKeys = [] } = part as BasicArgumentPart
 			const value = args[key as unknown as number] as unknown
 
 			if (isPluralPart(part)) {
@@ -193,7 +193,7 @@ const applyArguments = (
 		.join('') as LocalizedString
 
 export const translate = (
-	textParts: Part[],
+	textParts: BasicPart[],
 	pluralRules: Intl.PluralRules,
 	formatters: BaseFormatters,
 	args: Arguments,
