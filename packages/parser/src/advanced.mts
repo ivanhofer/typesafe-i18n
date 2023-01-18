@@ -80,7 +80,7 @@ export const isTransformParameterSwitchCasePart = (
 
 // --------------------------------------------------------------------------------------------------------------------
 
-// TODO: use `parseTranslationEntry` to improve types
+// TODO: use other parsing strategy instead of re-using `parseRawText` function and make `raw` property available everywhere
 export const parseMessage = (message: string): ParsedMessage =>
 	enhanceTypeInformation(parseRawText(message, false).map(createPart).filter(isNotUndefined))
 
