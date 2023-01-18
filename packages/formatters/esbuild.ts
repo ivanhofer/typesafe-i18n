@@ -11,7 +11,7 @@ const __dirname = dirname(__filename)
 
 const getPath = (file: string) => resolve(__dirname, file)
 
-const files = readdirSync(getPath('./src')).filter((file) => !file.startsWith('_'))
+const files = readdirSync(getPath('./src')).filter((file) => !file.startsWith('_') && !file.includes('.test.'))
 
 const formats = ['esm', 'cjs'] as const
 

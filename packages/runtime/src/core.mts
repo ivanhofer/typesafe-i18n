@@ -1,13 +1,18 @@
-import type { TypeGuard } from 'typesafe-utils'
-import { removeOuterBrackets } from '../../parser/src/index.mjs'
-import type { ArgumentPart, Part, PluralPart } from '../../parser/src/types.mjs'
+import {
+	BasicArgumentPart,
+	BasicPart,
+	BasicPluralPart,
+	isBasicPluralPart,
+	parseCases,
+	REGEX_SWITCH_CASE,
+} from '../../parser/src/basic.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 // types --------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
 type TranslationParts<T extends BaseTranslation | BaseTranslation[] = BaseTranslation> = {
-	[key in keyof T]: Part[]
+	[key in keyof T]: BasicPart[]
 }
 
 export type Cache<T extends BaseTranslation | BaseTranslation[] = BaseTranslation> = TranslationParts<T>
@@ -134,38 +139,16 @@ export type RequiredParams<Params extends string> = ConstructString<Permutation<
 // implementation -----------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------
 
-export const isPluralPart = (part: Part): part is TypeGuard<PluralPart, Part> =>
-	!!((part as PluralPart).o || (part as PluralPart).r)
-
-const REGEX_SWITCH_CASE = /^\{.*\}$/
-
 const applyFormatters = (formatters: BaseFormatters, formatterKeys: string[], initialValue: unknown) =>
 	formatterKeys.reduce(
 		(value, formatterKey) =>
 			(formatterKey.match(REGEX_SWITCH_CASE)
-				? (() => {
-						const cases = Object.fromEntries(
-							removeOuterBrackets(formatterKey)
-								.split(',')
-								.map((part) => part.split(':'))
-								.reduce((accumulator, entry) => {
-									if (entry.length === 2) {
-										return [...accumulator, entry.map((entry) => entry.trim()) as [string, string]]
-									}
-
-									// if we have a single part, this means that a comma `,` was present in the string and we need to combine the strings again
-									;(accumulator[accumulator.length - 1] as [string, string])[1] += ',' + entry[0]
-									return accumulator
-								}, [] as ([string, string] | [string])[]),
-						)
-
-						return cases[value as string] ?? cases['*']
-				  })()
+				? ((cases) => cases[value as string] ?? cases['*'])(parseCases(formatterKey))
 				: formatters[formatterKey]?.(value)) ?? value,
 		initialValue,
 	)
 
-const getPlural = (pluralRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPart, value: unknown) => {
+const getPlural = (pluralRules: Intl.PluralRules, { z, o, t, f, m, r }: BasicPluralPart, value: unknown) => {
 	switch (z && value == 0 ? 'zero' : pluralRules.select(value as number)) {
 		case 'zero':
 			return z
@@ -185,7 +168,7 @@ const getPlural = (pluralRules: Intl.PluralRules, { z, o, t, f, m, r }: PluralPa
 const REGEX_PLURAL_VALUE_INJECTION = /\?\?/g
 
 const applyArguments = (
-	textParts: Part[],
+	textParts: BasicPart[],
 	pluralRules: Intl.PluralRules,
 	formatters: BaseFormatters,
 	args: Arguments,
@@ -196,10 +179,10 @@ const applyArguments = (
 				return part
 			}
 
-			const { k: key = '0', f: formatterKeys = [] } = part as ArgumentPart
+			const { k: key = '0', f: formatterKeys = [] } = part as BasicArgumentPart
 			const value = args[key as unknown as number] as unknown
 
-			if (isPluralPart(part)) {
+			if (isBasicPluralPart(part)) {
 				return (
 					(typeof value === 'boolean' ? (value ? part.o : part.r) : getPlural(pluralRules, part, value)) || ''
 				).replace(REGEX_PLURAL_VALUE_INJECTION, value as string)
@@ -212,7 +195,7 @@ const applyArguments = (
 		.join('') as LocalizedString
 
 export const translate = (
-	textParts: Part[],
+	textParts: BasicPart[],
 	pluralRules: Intl.PluralRules,
 	formatters: BaseFormatters,
 	args: Arguments,

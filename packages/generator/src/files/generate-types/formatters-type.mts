@@ -1,4 +1,5 @@
 import { sortStringPropertyASC, uniqueArray } from 'typesafe-utils'
+import { isTransformParameterFormatterPart } from '../../../../parser/src/advanced/parse.mjs'
 import type { ParsedResult } from '../../types.mjs'
 import { wrapObjectKeyIfNeeded } from '../../utils/generator.utils.mjs'
 import { flattenToParsedResultEntry, mapToString, wrapObjectType } from './_utils.mjs'
@@ -8,10 +9,10 @@ const getUniqueFormatters = (parsedTranslations: ParsedResult[]): [string, strin
 
 	flattenToParsedResultEntry(parsedTranslations).forEach((parsedResult) => {
 		const { types, args = [] } = parsedResult
-		args.forEach(({ key, formatters }) =>
+		args.forEach(({ key, transforms: formatters }) =>
 			(formatters || [])
-				.filter((formatter) => !formatter.startsWith('{'))
-				.forEach((formatter) => (map[formatter] = [...(map[formatter] || []), ...(types[key]?.types || [])])),
+				.filter(isTransformParameterFormatterPart)
+				.forEach(({ name }) => (map[name] = [...(map[name] || []), ...(types[key]?.types || [])])),
 		)
 	})
 

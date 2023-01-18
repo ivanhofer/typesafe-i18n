@@ -15,22 +15,22 @@ export type Translations = RootTranslation
 type RootTranslation = {
 	/**
 	 * {​0​|​{​y​e​s​:​J​A​,​n​o​:​N​E​I​N​}​}
-	 * @param {'no' | 'yes'} 0
+	 * @param {'yes' | 'no'} 0
 	 */
 	switch1: RequiredParams<`0|{yes:${string},no:${string}}`>
 	/**
 	 * {​o​p​t​i​o​n​|​{​y​e​s​:​J​A​,​n​o​:​N​E​I​N​}​}
-	 * @param {'no' | 'yes'} option
+	 * @param {'yes' | 'no'} option
 	 */
 	keyed: RequiredParams<`option|{yes:${string},no:${string}}`>
 	/**
 	 * {​0​|​{​ ​ ​y​e​s​ ​:​ ​J​A​ ​,​ ​n​o​ ​:​ ​N​E​I​N​ ​}​}
-	 * @param {'no' | 'yes'} 0
+	 * @param {'yes' | 'no'} 0
 	 */
 	switch2: RequiredParams<`0|{  yes :${string}, no :${string}}`>
 	/**
 	 * {​0​|​{​y​:​ ​y​e​s​,​ ​n​:​ ​n​o​ ​}​|​u​p​p​e​r​c​a​s​e​}
-	 * @param {'n' | 'y'} 0
+	 * @param {'y' | 'n'} 0
 	 */
 	switchFormatter: RequiredParams<`0|{y:${string}, n:${string}}|uppercase`>
 	/**
@@ -50,22 +50,22 @@ type RootTranslation = {
 	number: RequiredParams<`0|{1:${string}, 2:${string}}`>
 	/**
 	 * {​0​|​{​y​e​s​:​J​A​,​ ​*​ ​:​ ​N​E​I​N​}​}
-	 * @param {string | 'yes'} 0
+	 * @param {'yes' | string} 0
 	 */
 	fallback: RequiredParams<`0|{yes:${string}, * :${string}}`>
 	/**
 	 * {​0​|​{​t​e​s​t​:​,​ ​*​ ​:​ ​n​o​t​h​i​n​g​}​}
-	 * @param {string | 'test'} 0
+	 * @param {'test' | string} 0
 	 */
 	emptyNoFallback: RequiredParams<`0|{test:${string}, * :${string}}`>
 	/**
 	 * {​0​|​{​a​ ​b​ ​c​:​ ​b​e​g​i​n​,​ ​*​:​r​e​s​t​}​}
-	 * @param {string | 'a b c'} 0
+	 * @param {'a b c' | string} 0
 	 */
 	spacesInKey: RequiredParams<`0|{a b c:${string}, *:${string}}`>
 	/**
 	 * {​0​|​{​a​-​b​-​c​:​ ​b​e​g​i​n​,​ ​*​:​r​e​s​t​}​}
-	 * @param {string | 'a-b-c'} 0
+	 * @param {'a-b-c' | string} 0
 	 */
 	dashesInKey: RequiredParams<`0|{a-b-c:${string}, *:${string}}`>
 	/**
@@ -79,19 +79,19 @@ export type TranslationFunctions = {
 	/**
 	 * {0|{yes:JA,no:NEIN}}
 	 */
-	switch1: (arg0: 'no' | 'yes') => LocalizedString
+	switch1: (arg0: 'yes' | 'no') => LocalizedString
 	/**
 	 * {option|{yes:JA,no:NEIN}}
 	 */
-	keyed: (arg: { option: 'no' | 'yes' }) => LocalizedString
+	keyed: (arg: { option: 'yes' | 'no' }) => LocalizedString
 	/**
 	 * {0|{  yes : JA , no : NEIN }}
 	 */
-	switch2: (arg0: 'no' | 'yes') => LocalizedString
+	switch2: (arg0: 'yes' | 'no') => LocalizedString
 	/**
 	 * {0|{y: yes, n: no }|uppercase}
 	 */
-	switchFormatter: (arg0: 'n' | 'y') => LocalizedString
+	switchFormatter: (arg0: 'y' | 'n') => LocalizedString
 	/**
 	 * {0|uppercase|{Y: yes, N: no }}
 	 */
@@ -107,19 +107,19 @@ export type TranslationFunctions = {
 	/**
 	 * {0|{yes:JA, * : NEIN}}
 	 */
-	fallback: (arg0: string | 'yes') => LocalizedString
+	fallback: (arg0: 'yes' | string) => LocalizedString
 	/**
 	 * {0|{test:, * : nothing}}
 	 */
-	emptyNoFallback: (arg0: string | 'test') => LocalizedString
+	emptyNoFallback: (arg0: 'test' | string) => LocalizedString
 	/**
 	 * {0|{a b c: begin, *:rest}}
 	 */
-	spacesInKey: (arg0: string | 'a b c') => LocalizedString
+	spacesInKey: (arg0: 'a b c' | string) => LocalizedString
 	/**
 	 * {0|{a-b-c: begin, *:rest}}
 	 */
-	dashesInKey: (arg0: string | 'a-b-c') => LocalizedString
+	dashesInKey: (arg0: 'a-b-c' | string) => LocalizedString
 	/**
 	 * {0|{y:yes,n:no}}
 	 */
@@ -127,5 +127,5 @@ export type TranslationFunctions = {
 }
 
 export type Formatters = {
-	uppercase: (value: 'n' | 'y' | unknown) => unknown
+	uppercase: (value: 'y' | 'n' | unknown) => unknown
 }

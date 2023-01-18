@@ -3,17 +3,13 @@ import {
 	isNotUndefined,
 	isObject,
 	isString,
-	not,
 	sortStringASC,
 	sortStringPropertyASC,
 	uniqueArray,
 } from 'typesafe-utils'
-import { parseRawText } from '../../../../parser/src/index.mjs'
-import type { ArgumentPart } from '../../../../parser/src/types.mjs'
-import { partsAsStringWithoutTypes } from '../../../../runtime/src/core-utils.mjs'
-import { isPluralPart } from '../../../../runtime/src/core.mjs'
+import { isParameterPart, isPluralPart, parseMessage } from '../../../../parser/src/advanced/parse.mjs'
+import { serializeMessageWithoutTypes } from '../../../../parser/src/advanced/serialize.mjs'
 import type { BaseTranslation } from '../../../../runtime/src/index.mjs'
-import { REGEX_BRACKETS } from '../../constants.mjs'
 import type { Arg, ParsedResult, ParsedResultEntry, Types } from '../../types.mjs'
 import type { Logger } from '../../utils/logger.mjs'
 
@@ -31,71 +27,42 @@ export const parseDictionary = (
 		  })
 		: []
 
-const parseTypesFromSwitchCaseStatement = (formatters: string[] | undefined) => {
-	if (!formatters?.length) return undefined
-
-	const formatter = formatters[0] as string
-	if (!formatter.startsWith('{')) return undefined
-
-	const keys = formatter
-		.replace(REGEX_BRACKETS, '')
-		.split(',')
-		.map((s) => s.split(':'))
-		.map(([key]) => key?.trim())
-		.sort()
-
-	return keys.map((key) => (key === '*' ? 'string' : `'${key}'`)).join(' | ')
-}
-
 const parseTranslationEntry = (
 	[key, text]: [string, string],
 	logger: Logger,
 	parentKeys: string[],
 ): ParsedResult | null => {
-	const parsedParts = parseRawText(text, false)
-	const textWithoutTypes = partsAsStringWithoutTypes(parsedParts)
-
-	const parsedObjects = parsedParts.filter(isObject)
-	const argumentParts = parsedObjects.filter<ArgumentPart>(not(isPluralPart))
-	const pluralParts = parsedObjects.filter(isPluralPart)
+	const parsedMessage = parseMessage(text)
+	const textWithoutTypes = serializeMessageWithoutTypes(parsedMessage)
 
 	const args: Arg[] = []
-	const types: Types = {}
+	const typesMap: Types = {}
 
-	argumentParts.forEach(({ k, n, i, f }) => {
-		args.push({ key: k, formatters: f, optional: n })
-		const type = i ?? parseTypesFromSwitchCaseStatement(f)
-		types[k] = {
-			types: uniqueArray([...(types[k]?.types || []), type]).filter(isNotUndefined),
-			optional: types[k]?.optional || n,
+	parsedMessage.filter(isParameterPart).forEach(({ key, optional, types, transforms }) => {
+		args.push({ key, transforms, optional })
+
+		typesMap[key] = {
+			types: uniqueArray([...(typesMap[key]?.types || []), ...types]).filter(isNotUndefined),
+			optional: typesMap[key]?.optional || optional,
 		}
 	})
 
-	pluralParts.forEach(({ k }) => {
-		if (!types[k]?.types.length) {
-			// if key has no types => add types that are valid for a PluralPart
-			types[k] = { types: ['string', 'number', 'boolean'] }
-			if (!args.find(({ key }) => key === k)) {
-				// if only pluralPart exists => add it as argument
-				args.push({ key: k, formatters: [], pluralOnly: true })
+	parsedMessage.filter(isPluralPart).forEach(({ key }) => {
+		if (!typesMap[key]?.types.length && !args.find((arg) => arg.key === key)) {
+			typesMap[key] = {
+				types: ['number', 'string', 'boolean'],
 			}
-		}
-	})
-
-	// add 'unknown' if argument has no type
-	Object.keys(types).forEach((key) => {
-		if (!types[key]?.types.length) {
-			types[key] = { types: ['unknown'], optional: types[key]?.optional }
+			// if only pluralPart exists => add it as argument
+			args.push({ key, transforms: [], pluralOnly: true })
 		}
 	})
 
 	args.sort(sortStringPropertyASC('key'))
 
-	const isValid = validateTranslation(key, types, logger)
-
+	const isValid = validateTranslation(key, typesMap, logger)
 	if (!isValid) return null
 
-	return { key, text, textWithoutTypes, args, types, parentKeys }
+	return { key, text, textWithoutTypes, args, types: typesMap, parentKeys }
 }
 
 const validateTranslation = (key: string, types: Types, logger: Logger): boolean => {

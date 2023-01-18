@@ -1,12 +1,12 @@
-import { parseRawText } from '../../parser/src/index.mjs'
-import type { Part } from '../../parser/src/types.mjs'
+import type { BasicPart } from '../../parser/src/basic.mjs'
+import { parseRawText } from '../../parser/src/basic.mjs'
 import type { Args, Arguments, BaseFormatters, Cache, Locale, LocalizedString } from './core.mjs'
 import { translate } from './core.mjs'
 
 export type TranslateByString = (text: string, ...args: Arguments) => LocalizedString
 
-export const getPartsFromString = (cache: Cache, text: string): Part[] =>
-	(cache as Record<string, Part[]>)[text] || ((cache as Record<string, Part[]>)[text] = parseRawText(text))
+export const getPartsFromString = (cache: Cache, text: string): BasicPart[] =>
+	(cache as Record<string, BasicPart[]>)[text] || ((cache as Record<string, BasicPart[]>)[text] = parseRawText(text))
 
 const translateString = <F extends BaseFormatters>(
 	cache: Cache,
