@@ -5,7 +5,7 @@
 ## 5.20.0 (2023-01-18)
 
 Feature:
- - expose `parseMessage` and `serializeMessage` functionality from `'typesafe-i18n/parser'`
+ - expose `experimentalParseMessage` and `experimentalSerializeMessage` functionality from `'typesafe-i18n/parser'`
 
 ## 5.19.1 (2023-01-17)
 
