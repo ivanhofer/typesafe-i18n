@@ -516,37 +516,35 @@ It is recommended to use `nested key-value pairs` since it offers flexibility an
 
 Here are some examples how you can iterate over arrays coming from a `typesafe-i18n` dictionary:
 
-```html
-<script>
-   const translation = [
-      'first item',
-      'second item'
-   ]
+```ts
+const translation = [
+   'first item',
+   'second item'
+]
 
-   // calling translation
-   console.log(LL[0]()) // => 'first item'
+// calling translation
+console.log(LL[0]()) // => 'first item'
 
-   // get length of array
-   const length = Array.from(LL).length
+// get length of array
+const length = Array.from(LL).length
 
-   // for loop
-   for (let i = 0; i < Array.from(LL).length; i++) {
-      console.log(LL[i]())
-   }
+// for loop
+for (let i = 0; i < Array.from(LL).length; i++) {
+   console.log(LL[i]())
+}
 
-   // forEach loop
-   Array.from(LL).forEach((entry) => {
-      console.log(entry())
-   })
+// forEach loop
+Array.from(LL).forEach((entry) => {
+   console.log(entry())
+})
 
-   // for of loop
-   for (const entry of LL) {
-      console.log(entry())
-   }
+// for of loop
+for (const entry of LL) {
+   console.log(entry())
+}
 
-   // for in loop
-   for (const entry in LL7) {
-      console.log(LL[entry]())
-   }
-<script>
+// for in loop
+for (const entry in LL7) {
+   console.log(LL[entry]())
+}
 ```
