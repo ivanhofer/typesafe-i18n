@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.21.0 (2023-01-30)
+
+Feature:
+ - run `runAfterGenerator` hook when using the `importer` [#579](https://github.com/ivanhofer/typesafe-i18n/discussions/579)
+
 ## 5.20.0 (2023-01-18)
 
 Feature:
