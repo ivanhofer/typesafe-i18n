@@ -48,7 +48,7 @@ const getBaseTranslations = async (
 	return translations
 }
 
-const runCommandAfterGenerator = (runAfterGenerator: string) => {
+export const runCommandAfterGenerator = (runAfterGenerator: string) => {
 	logger.info(`running command '${runAfterGenerator}'`)
 
 	const output = execSync(runAfterGenerator).toString()
