@@ -4,10 +4,9 @@ import { getConfigWithDefaultValues } from '../../config/src/config.mjs'
 import { generateLocaleTemplate } from '../../generator/src/files/generate-template-locale.mjs'
 import { generateNamespaceTemplate } from '../../generator/src/files/generate-template-namespace.mjs'
 import { generate } from '../../generator/src/generate-files.mjs'
-import { runCommandAfterGenerator } from '../../generator/src/generator.mjs'
 import { configureOutputHandler } from '../../generator/src/output-handler.mjs'
 import { parseLanguageFile } from '../../generator/src/parse-language-file.mjs'
-import { parseTypescriptVersion } from '../../generator/src/utils/generator.utils.mjs'
+import { parseTypescriptVersion, runCommandAfterGenerator } from '../../generator/src/utils/generator.utils.mjs'
 import { createLogger } from '../../generator/src/utils/logger.mjs'
 import type { BaseTranslation, ImportLocaleMapping, Locale } from '../../runtime/src/core.mjs'
 import { getAllLocales } from '../../shared/src/file.utils.mjs'
@@ -109,7 +108,7 @@ export const storeTranslationsToDisk = async (
 	await generate(baseTranslation, config, version, undefined, undefined, locales, baseNamespaces)
 	logger.info(`updating types completed`)
 
-	config.runAfterGenerator && runCommandAfterGenerator(config.runAfterGenerator)
+	config.runAfterGenerator && runCommandAfterGenerator(logger, config.runAfterGenerator)
 
 	return createdLocales
 }

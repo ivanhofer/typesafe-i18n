@@ -1,4 +1,6 @@
+import { execSync } from 'child_process'
 import { keyword } from 'esutils'
+import type { Logger } from './logger.mjs'
 
 export type TypescriptVersion = {
 	major: number
@@ -27,3 +29,18 @@ export const prettify = (content: string): string =>
 		.replace(/\n\n+/g, '\n\n') // remove multiple new-lines
 		.replace(/(\n)+$/, '\n') // remove all multiple trailing new-lines
 		.replace(/\t\n/g, '\n') // remove all tabs at the and of a line
+
+// --------------------------------------------------------------------------------------------------------------------
+
+export const runCommandAfterGenerator = (logger: Logger, runAfterGenerator: string) => {
+	logger.info(`running command '${runAfterGenerator}'`)
+
+	const output = execSync(runAfterGenerator).toString()
+	logger.info(
+		'output: \n>\n' +
+			output
+				.split('\n')
+				.map((line) => `> ${line}`)
+				.join('\n'),
+	)
+}
