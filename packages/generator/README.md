@@ -194,7 +194,7 @@ You can set options for the generator inside a `.typesafe-i18n.json`-file in you
 
 ```json
 {
-   "$schema": "https://unpkg.com/typesafe-i18n@5.17.0/schema/typesafe-i18n.json",
+   "$schema": "https://unpkg.com/typesafe-i18n@5.20.0/schema/typesafe-i18n.json",
 
    "baseLocale": "de",
    "adapter": "svelte"

@@ -1,4 +1,3 @@
-import { execSync } from 'child_process'
 import { watch } from 'chokidar'
 import fs from 'fs/promises'
 import { resolve } from 'path'
@@ -11,7 +10,7 @@ import { generate } from './generate-files.mjs'
 import { configureOutputHandler, shouldGenerateJsDoc } from './output-handler.mjs'
 import { parseLanguageFile } from './parse-language-file.mjs'
 import { createPathIfNotExits } from './utils/file.utils.mjs'
-import { parseTypescriptVersion, TypescriptVersion } from './utils/generator.utils.mjs'
+import { parseTypescriptVersion, runCommandAfterGenerator, TypescriptVersion } from './utils/generator.utils.mjs'
 import { createLogger, Logger } from './utils/logger.mjs'
 import { findAllNamespacesForLocale } from './utils/namespaces.utils.mjs'
 
@@ -48,19 +47,6 @@ const getBaseTranslations = async (
 	return translations
 }
 
-const runCommandAfterGenerator = (runAfterGenerator: string) => {
-	logger.info(`running command '${runAfterGenerator}'`)
-
-	const output = execSync(runAfterGenerator).toString()
-	logger.info(
-		'output: \n>\n' +
-			output
-				.split('\n')
-				.map((line) => `> ${line}`)
-				.join('\n'),
-	)
-}
-
 const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, version: TypescriptVersion) => {
 	if (disableChangeDetection) return
 
@@ -94,7 +80,7 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 		logger.warn(message)
 	}
 
-	runAfterGenerator && runCommandAfterGenerator(runAfterGenerator)
+	runAfterGenerator && runCommandAfterGenerator(logger, runAfterGenerator)
 
 	logger.info('... all files are up to date')
 
