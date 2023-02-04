@@ -10,7 +10,7 @@ import {
 	relativeFileImportPath,
 	tsCheck,
 	type,
-	typeCast,
+	typeCast
 } from '../output-handler.mjs'
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
 import { prettify } from '../utils/generator.utils.mjs'
@@ -63,6 +63,7 @@ import { i18n as initI18n, i18nObject as initI18nObject, i18nString as initI18nS
 ${importTypes('typesafe-i18n/detectors', 'LocaleDetector')}
 ${importTypes('typesafe-i18n', 'LocaleTranslationFunctions', 'TranslateByString')}
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
+import { initExtendDictionary } from 'typesafe-i18n/utils'
 ${importTypes(
 	relativeFileImportPath(typesFileName),
 	'Formatters',
@@ -88,11 +89,11 @@ export const isLocale = (locale${type('string')})${type('locale is Locales')} =>
 ${
 	usesNamespaces
 		? `
-${jsDocFunction('namespace is Namespaces', {
-	type: 'string',
-	name: 'namespace',
-})}
-export const isNamespace = (namespace${type('string')})${type(
+	${jsDocFunction('namespace is Namespaces', {
+		type: 'string',
+		name: 'namespace',
+	})}
+	export const isNamespace = (namespace${type('string')})${type(
 				'namespace is Namespaces',
 		  )} => namespaces.includes(${jsDocType('Namespaces', `namespace${typeCast('Namespaces')}`)})`
 		: ''
@@ -107,6 +108,9 @@ export const loadedFormatters${type('Record<Locales, Formatters>')} = ${jsDocTyp
 		'Record<Locales, Formatters>',
 		`{}${typeCast('Record<Locales, Formatters>')}`,
 	)}
+
+${jsDocType('ReturnType<typeof initExtendDictionary<Translations>>')}
+export const extendDictionary = initExtendDictionary${generics('Translations')}()
 
 ${jsDocFunction('TranslateByString', {
 	type: 'Locales',

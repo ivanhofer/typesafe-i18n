@@ -16,6 +16,7 @@
 import { i18n as initI18n, i18nObject as initI18nObject, i18nString as initI18nString } from 'typesafe-i18n'
 
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
+import { initExtendDictionary } from 'typesafe-i18n/utils'
 
 /** @type { Locales } */
 export const baseLocale = 'en'
@@ -34,6 +35,9 @@ export const isLocale = (locale) => locales.includes(/** @type { Locales } */ (l
 export const loadedLocales = /** @type { Record<Locales, Translations> } */ ({})
 
 export const loadedFormatters = /** @type { Record<Locales, Formatters> } */ ({})
+
+/** @type { ReturnType<typeof initExtendDictionary<Translations>> } */
+export const extendDictionary = initExtendDictionary()
 
 /**
  * @param { Locales } locale

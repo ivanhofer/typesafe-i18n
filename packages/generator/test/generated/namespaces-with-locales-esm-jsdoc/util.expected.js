@@ -17,6 +17,7 @@
 import { i18n as initI18n, i18nObject as initI18nObject, i18nString as initI18nString } from 'typesafe-i18n'
 
 import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors'
+import { initExtendDictionary } from 'typesafe-i18n/utils'
 
 /** @type { Locales } */
 export const baseLocale = 'it'
@@ -39,15 +40,19 @@ export const namespaces = [
  */
 export const isLocale = (locale) => locales.includes(/** @type { Locales } */ (locale))
 
+
 /**
  * @param { string } namespace
  * @return { namespace is Namespaces }
  */
-export const isNamespace = (namespace) => namespaces.includes(/** @type { Namespaces } */ (namespace))
+	export const isNamespace = (namespace) => namespaces.includes(/** @type { Namespaces } */ (namespace))
 
 export const loadedLocales = /** @type { Record<Locales, Translations> } */ ({})
 
 export const loadedFormatters = /** @type { Record<Locales, Formatters> } */ ({})
+
+/** @type { ReturnType<typeof initExtendDictionary<Translations>> } */
+export const extendDictionary = initExtendDictionary()
 
 /**
  * @param { Locales } locale
