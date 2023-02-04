@@ -21,6 +21,7 @@ const mappings: [FromWheretoImport, OutputPath?, FilterFunction?][] = [
 	['runtime', 'types'],
 	['runtime', 'runtime/cjs/runtime/src'],
 	['runtime', 'runtime/esm/runtime/src'],
+	['utils'],
 ]
 
 const goToRoot = (outputPath: string, file: string) => {

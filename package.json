@@ -109,13 +109,14 @@
 		"/solid",
 		"/svelte",
 		"/types",
+		"/utils",
 		"/vue"
 	],
 	"scripts": {
 		"-- DEV -------------------------------------------------": "",
 		"update:dependencies": "pnpm up -r",
 		"update:version": "tsx ./update-version.ts",
-		"clear": "rimraf ./angular ./cli ./config ./detectors ./dist ./exporter ./formatters ./importer ./parser ./react ./runtime ./schema ./solid ./svelte ./types ./vue ./temp-output",
+		"clear": "rimraf ./angular ./cli ./config ./detectors ./dist ./exporter ./formatters ./importer ./parser ./react ./runtime ./schema ./solid ./svelte ./types ./utils ./vue ./temp-output",
 		"-- LINT ------------------------------------------------": "",
 		"lint": "eslint --cache packages",
 		"lint:ci": "eslint --cache --fix",

@@ -12,6 +12,7 @@ node_modules
 /solid
 /svelte
 /types
+/utils
 /vue
 /packages/generator/test/generated
 /packages/**/example
