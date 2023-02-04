@@ -291,22 +291,18 @@ importers:
 
   packages/utils:
     specifiers:
+      '@types/lodash.merge': ^4.6.7
       esbuild: ^0.15.18
-      node-fetch: ^3.3.0
-      tiny-glob: ^0.2.9
+      lodash.merge: ^4.6.2
       tsx: ^3.12.2
-      typesafe-utils: ^1.16.2
       typescript: ^4.9.4
-      uvu: ^0.5.6
       watchlist: ^0.3.1
     devDependencies:
+      '@types/lodash.merge': 4.6.7
       esbuild: 0.15.18
-      node-fetch: 3.3.0
-      tiny-glob: 0.2.9
+      lodash.merge: 4.6.2
       tsx: 3.12.2
-      typesafe-utils: 1.16.2
       typescript: 4.9.4
-      uvu: 0.5.6
       watchlist: 0.3.1
 
 packages:
@@ -737,6 +733,16 @@ packages:
 
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
+    dev: true
+
+  /@types/lodash.merge/4.6.7:
+    resolution: {integrity: sha512-OwxUJ9E50gw3LnAefSHJPHaBLGEKmQBQ7CZe/xflHkyy/wH2zVyEIAKReHvVrrn7zKdF58p16We9kMfh7v0RRQ==}
+    dependencies:
+      '@types/lodash': 4.14.191
+    dev: true
+
+  /@types/lodash/4.14.191:
+    resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
     dev: true
 
   /@types/minimatch/5.1.2:
