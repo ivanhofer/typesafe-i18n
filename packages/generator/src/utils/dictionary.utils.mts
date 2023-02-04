@@ -8,7 +8,7 @@ import {
 	jsDocSatisfies,
 	relativeFileImportPath,
 	satisfies,
-	tsCheck
+	tsCheck,
 } from '../output-handler.mjs'
 import { sanitizePath, wrapObjectKeyIfNeeded } from './generator.utils.mjs'
 import { getTypeNameForNamespace } from './namespaces.utils.mjs'

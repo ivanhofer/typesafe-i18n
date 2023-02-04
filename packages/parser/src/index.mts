@@ -9,6 +9,5 @@ export {
 	type TransformParameterFormatterPart,
 	type TransformParameterPart,
 	type TransformParameterSwitchCaseCasePart,
-	type TransformParameterSwitchCasePart
+	type TransformParameterSwitchCasePart,
 } from './advanced/types.mjs'
-

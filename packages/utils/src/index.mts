@@ -1,2 +1,1 @@
-export * from './extendDictionary.mjs';
-
+export * from './extendDictionary.mjs'

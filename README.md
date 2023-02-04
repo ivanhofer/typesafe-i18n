@@ -452,12 +452,13 @@ Your locale translation files can be any kind of JavaScript object. So you can m
    ```typescript
    // file 'src/i18n/en-US/index.ts'
    import type { Translation } from '../i18n-types'
-   import { extendDictionary } from '../i18n-utils'
    import en from '../en' // import translations from 'en' locale
 
-   const en_US: Translation = extendDictionary(en, {
+   const en_US: Translation = {
+      ...en as Translation, // use destructuring to copy all translations from your 'en' locale
+
       COLOR: "color" // override specific translations
-   })
+   }
 
    export default en_US
    ```
