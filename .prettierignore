@@ -12,4 +12,5 @@ node_modules
 /solid
 /svelte
 /types
+/utils
 /vue

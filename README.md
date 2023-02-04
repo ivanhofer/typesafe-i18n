@@ -81,6 +81,7 @@ Click [here](https://codesandbox.io/s/typesafe-i18n-demo-qntgqy?file=/index.ts) 
 - [**Formatters**](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/formatters) - how to format dates and numbers
 - [**Switch-Case**](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#switch-case) - how to output different words depending on an argument
 - [**Locale-detection**](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/detectors) - how to detect an user's locale
+- [**Utility functions**](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/utils) - useful utility functions
 - [**Integrations**](#integration-with-other-services) - how to integrate other i18n services
 - [**Sizes**](#sizes) - how much does `typesafe-i18n` add to your bundle size
 - [**Performance**](#performance) - how efficient is `typesafe-i18n` implemented
@@ -462,11 +463,12 @@ Your locale translation files can be any kind of JavaScript object. So you can m
    export default en_US
    ```
 
-   > If you are using nested translations, you probably need a function like [`lodash/merge`](https://lodash.com/docs/4.17.15#merge) to make a deep merge of your translations.
+   > If you are using nested translations, you should use the provided `extendDictionary` function that uses [`lodash/merge`](https://lodash.com/docs/4.17.15#merge) under the hood.
    > ```ts
-   > import { merge } from 'lodash'
+   > import { extendDictionary } from '../i18n-utils'
+   > import en from '../en' // import translations from 'en' locale
    >
-   > const en_US: Translation = deepMerge(en, {
+   > const en_US = extendDictionary(en, {
    >    labels: {
    >       color: "color" // override specific translations
    >    }

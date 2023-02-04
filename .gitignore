@@ -13,6 +13,7 @@ node_modules
 /schema
 /solid
 /svelte
+/utils
 /vue
 packages/generator/test/generated/**/*.actual.*
 packages/generator/test/generated/console*
