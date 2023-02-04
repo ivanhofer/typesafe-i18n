@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.22.0 (2023-02-04)
+
+Feature:
+ - use `satisfies` operator where possible
+
 ## 5.21.0 (2023-01-30)
 
 Feature:

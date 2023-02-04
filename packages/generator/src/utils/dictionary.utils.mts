@@ -5,10 +5,10 @@ import {
 	defaultExportStatement,
 	importTypes,
 	jsDocImports,
-	jsDocType,
+	jsDocSatisfies,
 	relativeFileImportPath,
-	tsCheck,
-	type,
+	satisfies,
+	tsCheck
 } from '../output-handler.mjs'
 import { sanitizePath, wrapObjectKeyIfNeeded } from './generator.utils.mjs'
 import { getTypeNameForNamespace } from './namespaces.utils.mjs'
@@ -56,10 +56,13 @@ ${jsDocImports({
 	type: typeOfDictionary,
 })}
 
-${jsDocType(typeOfDictionary)}
-const ${variableName}${type(typeOfDictionary)} = {
+${jsDocSatisfies(typeOfDictionary)}
+const ${variableName}${satisfies(
+		typeOfDictionary,
+		`{
 ${hint}${translationsMap}
-}
+}`,
+	)}
 
 ${defaultExportStatement} ${variableName}
 `

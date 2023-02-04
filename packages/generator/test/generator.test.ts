@@ -14,7 +14,7 @@ const outputPath = resolve(__dirname, 'generated')
 
 const actualPostfix = '.actual'
 
-const defaultVersion = parseTypescriptVersion('4.1')
+const defaultVersion = parseTypescriptVersion('4.9')
 
 const getFileName = (name: string) => name + actualPostfix
 
@@ -478,27 +478,20 @@ testNamespacesMatrix(
 
 const tsTestTranslation = { TEST: 'Hi {name}, I have {nrOfApples} {{Afpel|Äpfel}}' }
 
-testGeneratedOutput('typescript-3.0', tsTestTranslation, {}, parseTypescriptVersion('3.0'))
-testGeneratedOutput(
-	'typescript-3.0-jsdoc',
-	tsTestTranslation,
-	{ outputFormat: 'JavaScript' },
-	parseTypescriptVersion('3.0'),
-)
-testGeneratedOutput('typescript-3.8', tsTestTranslation, {}, parseTypescriptVersion('3.8'))
-testGeneratedOutput(
-	'typescript-3.8-jsdoc',
-	tsTestTranslation,
-	{ outputFormat: 'JavaScript' },
-	parseTypescriptVersion('3.8'),
-)
-testGeneratedOutput('typescript-4.1', tsTestTranslation, {}, parseTypescriptVersion('4.1'))
-testGeneratedOutput(
-	'typescript-4.1-jsdoc',
-	tsTestTranslation,
-	{ outputFormat: 'JavaScript' },
-	parseTypescriptVersion('4.1'),
-)
+const testTypeScriptVersion = (version: `${number}.${number}`) => {
+	testGeneratedOutput(`typescript-${version}`, tsTestTranslation, {}, parseTypescriptVersion(version))
+	testGeneratedOutput(
+		`typescript-${version}-jsdoc`,
+		tsTestTranslation,
+		{ outputFormat: 'JavaScript' },
+		parseTypescriptVersion(version),
+	)
+}
+testTypeScriptVersion('3.0')
+testTypeScriptVersion('3.8')
+testTypeScriptVersion('4.1')
+testTypeScriptVersion('4.9')
+testTypeScriptVersion('5.0')
 
 // --------------------------------------------------------------------------------------------------------------------
 
