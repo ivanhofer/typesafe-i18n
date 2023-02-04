@@ -1,8 +1,8 @@
 import type { NamespaceSomeOtherNamespaceTranslation } from '../../types.actual'
 
-const en_us_some_other_namespace: NamespaceSomeOtherNamespaceTranslation = {
+const en_us_some_other_namespace = {
 	// TODO: insert translations
 
-}
+} satisfies NamespaceSomeOtherNamespaceTranslation
 
 export default en_us_some_other_namespace

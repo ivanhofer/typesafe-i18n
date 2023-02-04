@@ -1,7 +1,7 @@
 /* eslint-disable */
 import type { Translation } from '../i18n-types'
 
-const nested: Translation = {
+const nested = {
 	i: {
 		am: {
 			deeply: {
@@ -10,6 +10,6 @@ const nested: Translation = {
 		},
 		nested: 'i am nested',
 	},
-}
+} satisfies Translation
 
 export default nested

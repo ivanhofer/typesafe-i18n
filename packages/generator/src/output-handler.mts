@@ -25,6 +25,8 @@ export const configureOutputHandler = (config: GeneratorConfigWithDefaultValues,
 	supportsTemplateLiteralTypes =
 		shouldGenerateJsDoc || (tsVersion.major === 4 && tsVersion.minor >= 1) || tsVersion.major >= 5
 	supportsImportType = shouldGenerateJsDoc || (tsVersion.major === 3 && tsVersion.minor >= 8) || tsVersion.major >= 4
+	supportsSatisfiesOperator = (tsVersion.major === 4 && tsVersion.minor >= 9) || tsVersion.major >= 5
+	supportsSatisfiesOperatorForJsDoc = tsVersion.major >= 5
 
 	importTypeStatement = `import${supportsImportType ? ' type' : ''}`
 
@@ -36,6 +38,12 @@ export const configureOutputHandler = (config: GeneratorConfigWithDefaultValues,
 	type = (type) => (shouldGenerateJsDoc ? '' : `: ${type}`)
 	typeCast = (type) => (shouldGenerateJsDoc ? '' : ` as ${type}`)
 	generics = (...generics) => (shouldGenerateJsDoc ? '' : `<${generics.join(', ')}>`)
+	satisfies = (type, codeBlock) =>
+		shouldGenerateJsDoc
+			? ` = ${codeBlock}`
+			: supportsSatisfiesOperator
+			? ` = ${codeBlock} satisfies ${type}`
+			: `: ${type} = ${codeBlock}`
 
 	jsDocImports = (...imports) =>
 		shouldGenerateJsDoc
@@ -68,6 +76,9 @@ export const configureOutputHandler = (config: GeneratorConfigWithDefaultValues,
 		(shouldGenerateJsDoc ? `/** @type { ${type} } */` : '') +
 		(toWrap ? (shouldGenerateJsDoc ? ` (${toWrap})` : toWrap) : '')
 
+	jsDocSatisfies = (type) =>
+		!shouldGenerateJsDoc ? '' : supportsSatisfiesOperatorForJsDoc ? `/** @satisfies { ${type} } */` : jsDocType(type)
+
 	relativeFileImportPath = (fileName: string) =>
 		`${fileName.startsWith('..') ? '' : './'}${fileName}${config.esmImports ? '.js' : ''}`
 
@@ -80,6 +91,8 @@ export const configureOutputHandler = (config: GeneratorConfigWithDefaultValues,
 export let supportsTemplateLiteralTypes: boolean
 export let supportsImportType: boolean
 export let shouldGenerateJsDoc: boolean
+export let supportsSatisfiesOperator: boolean
+export let supportsSatisfiesOperatorForJsDoc: boolean
 export let fileEnding: FileEnding
 export let fileEndingForTypesFile: FileEnding
 export let tsCheck: string
@@ -96,11 +109,15 @@ export let typeCast: (type: string) => string
 
 export let generics: (...generic: string[]) => string
 
+export let satisfies: (type: string, codeBlock: string) => string
+
 export let jsDocImports: (...imports: ({ from: string; type: string; alias?: string } | false)[]) => string
 
 export let jsDocFunction: (returnType: string, ...params: { type: string; name: string }[]) => string
 
 export let jsDocType: (type: string, toWrap?: string) => string
+
+export let jsDocSatisfies: (type: string) => string
 
 export let relativeFileImportPath: (fileName: string) => string
 
