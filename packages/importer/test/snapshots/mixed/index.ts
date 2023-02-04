@@ -1,7 +1,7 @@
 /* eslint-disable */
 import type { Translation } from '../i18n-types'
 
-const mixed: Translation = {
+const mixed = {
 	'0': {
 		a: 'b',
 		c: {
@@ -17,6 +17,6 @@ const mixed: Translation = {
 			'1': 'f',
 		},
 	},
-}
+} satisfies Translation
 
 export default mixed
