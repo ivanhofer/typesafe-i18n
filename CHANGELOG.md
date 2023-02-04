@@ -2,6 +2,12 @@
 
 # Version 5
 
+## 5.23.0 (2023-02-04)
+
+Feature:
+ - add `extendDictionary` functionality
+
+
 ## 5.22.0 (2023-02-04)
 
 Feature:
