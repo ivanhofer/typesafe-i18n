@@ -3,7 +3,7 @@ import { importTypes, OVERRIDE_WARNING, relativeFileImportPath, tsCheck, type } 
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
 import { prettify } from '../utils/generator.utils.mjs'
 
-const getNodeUtils = ({ utilFileName, banner, typesFileName }: GeneratorConfigWithDefaultValues) => {
+export const getNodeUtils = ({ utilFileName, banner, typesFileName }: GeneratorConfigWithDefaultValues) => {
 	return `${OVERRIDE_WARNING}${tsCheck}
 ${banner}
 

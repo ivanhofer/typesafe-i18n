@@ -2,7 +2,7 @@ import { resolve } from 'path'
 import { getConfigWithDefaultValues } from '../../../config/src/config.mjs'
 import type { Adapters, GeneratorConfig } from '../../../config/src/types.mjs'
 import { doesPathExist } from '../../../generator/src/utils/file.utils.mjs'
-import { getRuntimeObject } from './runtimes/index.mjs'
+import { getRuntimeObject, RuntimeObject } from './runtimes/index.mjs'
 
 const useAdapterWhenDependenciesContain =
 	(shouldContain: string[]) =>
@@ -16,9 +16,8 @@ const shouldUseSolidAdapter = useAdapterWhenDependenciesContain(['solid-js'])
 const shouldUseSvelteAdapter = useAdapterWhenDependenciesContain(['svelte', '@sveltejs/kit', 'sapper'])
 const shouldUseVueAdapter = useAdapterWhenDependenciesContain(['vue', 'nuxt'])
 const shouldUseNodeAdapter = useAdapterWhenDependenciesContain(['express', 'fastify'])
-const shouldUseDenoAdapter = async () => (await getRuntimeObject())?.type === 'deno'
 
-const getAdaptersInfo = async (deps: string[]): Promise<Adapters[]> => {
+const getAdaptersInfo = (type: RuntimeObject['type'], deps: string[]): Adapters[] => {
 	const adapters: Adapters[] = []
 
 	if (shouldUseAngularAdapter(deps)) adapters.push('angular')
@@ -27,7 +26,7 @@ const getAdaptersInfo = async (deps: string[]): Promise<Adapters[]> => {
 	if (shouldUseSvelteAdapter(deps)) adapters.push('svelte')
 	if (shouldUseVueAdapter(deps)) adapters.push('vue')
 	if (shouldUseNodeAdapter(deps)) adapters.push('node')
-	if (await shouldUseDenoAdapter()) adapters.push('deno')
+	if (type === 'deno') adapters.push('deno')
 
 	return adapters
 }
@@ -40,7 +39,7 @@ export const getDefaultConfig = async () => {
 
 	const dependencies = await runtime.getDependencyList()
 
-	const adapters = await getAdaptersInfo(dependencies)
+	const adapters = getAdaptersInfo(runtime.type, dependencies)
 	const isTypeScriptProject = dependencies.includes('typescript') || (await doesPathExist(resolve('tsconfig.json')))
 
 	// TODO: check if this is still valid
