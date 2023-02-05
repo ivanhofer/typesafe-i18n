@@ -38,6 +38,7 @@ type FileToCheck =
 	| 'formatters-template'
 	| 'types-template'
 	| 'angular.service'
+	| 'deno'
 	| 'node'
 	| 'react'
 	| 'solid'
@@ -134,6 +135,7 @@ const testGeneratedOutput = async (
 		await check(prefix, 'react', outputFormat)
 		await check(prefix, 'solid', outputFormat)
 		await check(prefix, 'angular.service', outputFormat)
+		await check(prefix, 'deno', outputFormat)
 		await check(prefix, 'node', outputFormat)
 		await check(prefix, 'svelte', outputFormat)
 		await check(prefix, 'vue', outputFormat)
@@ -373,6 +375,12 @@ testAdapterMatrix(
 	'adapter-angular',
 	{ HELLO_ANGULAR: 'Hi {0:string}' },
 	{ adapter: 'angular', adapterFileName: getFileName('angular.service') },
+)
+
+testAdapterMatrix(
+	'adapter-deno',
+	{ HELLO_NODE: 'Hi {0:string}' },
+	{ adapter: 'deno', esmImports: 'fileEnding', adapterFileName: getFileName('deno') },
 )
 
 testAdapterMatrix(

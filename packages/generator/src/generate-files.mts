@@ -1,6 +1,7 @@
 import type { GeneratorConfigWithDefaultValues } from '../../config/src/types.mjs'
 import type { BaseTranslation, Locale } from '../../runtime/src/core.mjs'
 import { generateAngularAdapter } from './files/generate-adapter-angular.mjs'
+import { generateDenoAdapter } from './files/generate-adapter-deno.mjs'
 import { generateNodeAdapter } from './files/generate-adapter-node.mjs'
 import { generateReactAdapter } from './files/generate-adapter-react.mjs'
 import { generateSolidAdapter } from './files/generate-adapter-solid.mjs'
@@ -129,6 +130,9 @@ const addAdapters = (config: GeneratorConfigWithDefaultValues, promises: Promise
 	switch (config.adapter) {
 		case 'angular':
 			promises.push(generateAngularAdapter(config))
+			break
+		case 'deno':
+			promises.push(generateDenoAdapter(config))
 			break
 		case 'node':
 			promises.push(generateNodeAdapter(config))

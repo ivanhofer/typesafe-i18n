@@ -21,7 +21,7 @@ type MultipleAdaptersConfig = {
 
 type AdapterConfig = NoAdaptersConfig | SingleAdapterConfig | MultipleAdaptersConfig
 
-export type EsmImportsOption = boolean | '.js' | '.ts'
+export type EsmImportsOption = boolean | '.js' | 'fileEnding'
 
 export type GeneratorConfig = {
 	$schema?: string
@@ -54,7 +54,7 @@ export type GeneratorConfigWithDefaultValues = GeneratorConfig & {
 	utilFileName: string
 	formattersTemplateFileName: string
 	typesTemplateFileName: string
-	esmImports: boolean
+	esmImports: EsmImportsOption
 
 	generateOnlyTypes: boolean
 	banner: string

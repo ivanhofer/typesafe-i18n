@@ -37,6 +37,6 @@ const install = async (): Promise<boolean> => {
 export const denoRuntime: RuntimeObject = {
 	type: 'deno',
 	install,
-	getEsmImportOption: async () => '.ts',
+	getEsmImportOption: async () => 'fileEnding',
 	getDependencyList,
 }
