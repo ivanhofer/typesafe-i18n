@@ -21,12 +21,7 @@ build({
 	banner: {
 		js: `#!/usr/bin/env node
 import { createRequire } from 'module'
-global.require = createRequire(import.meta.url)
-
-import { fileURLToPath } from 'url'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)`,
+global.require = createRequire(import.meta.url)`,
 	},
 	format: 'esm',
 	sourcemap: watch,

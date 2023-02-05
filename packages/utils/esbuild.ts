@@ -19,19 +19,6 @@ formats.forEach((format) => {
 		outfile: getPath(`../../utils/index.${format === 'esm' ? 'm' : 'c'}js`),
 		platform: 'node',
 		external: ['typescript'],
-		banner:
-			format === 'esm'
-				? {
-						js: `
-import { createRequire } from 'module'
-global.require = createRequire(import.meta.url)
-
-import { fileURLToPath } from 'url'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)`,
-				  }
-				: {},
 		format,
 		sourcemap: watch,
 		watch,
