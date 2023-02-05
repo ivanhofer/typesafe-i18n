@@ -81,6 +81,11 @@
 			"import": "./svelte/index.mjs",
 			"require": "./svelte/index.cjs"
 		},
+		"./utils": {
+			"types": "./utils/index.d.ts",
+			"import": "./utils/index.mjs",
+			"require": "./utils/index.cjs"
+		},
 		"./vue": {
 			"types": "./vue/index.d.ts",
 			"import": "./vue/index.mjs",
