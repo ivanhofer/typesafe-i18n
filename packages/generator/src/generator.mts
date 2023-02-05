@@ -72,7 +72,7 @@ const parseAndGenerate = async (config: GeneratorConfigWithDefaultValues, versio
 
 	if (firstLaunchOfGenerator) {
 		let message =
-			'Visit https://github.com/ivanhofer/typesafe-i18n#options and configure `typesafe-i18n` depending on your project-setup.'
+			'Visit https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#options and configure `typesafe-i18n` depending on your project-setup.'
 		if (!config.adapter) {
 			message += " You probably want to set at least the 'adapter' option."
 		}

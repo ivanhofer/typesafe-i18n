@@ -81,7 +81,7 @@ export const setup = async (autoSetup: boolean) => {
 
 	!autoSetup &&
 		highlightedInfoLog(
-			'See this link for more information on how to setup this project: https://github.com/ivanhofer/typesafe-i18n#options',
+			'See this link for more information on how to setup this project: https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#options',
 		)
 
 	const defaultConfig = await getDefaultConfig()
