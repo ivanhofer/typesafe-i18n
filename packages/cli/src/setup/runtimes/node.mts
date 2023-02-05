@@ -3,7 +3,7 @@ import { resolve } from 'path'
 import type { PackageJson } from 'type-fest'
 import { doesPathExist, importFile, readFile, writeFile } from '../../../../generator/src/utils/file.utils.mjs'
 import { logger } from '../../../../generator/src/utils/logger.mjs'
-import type { RuntimeObject } from './inde.mjs'
+import type { RuntimeObject } from './index.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ export const isNodeProject = async () => !!(await readPackageJson())
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const isEsmProject = async () => {
+const getEsmImportOption = async () => {
 	const pck = await readPackageJson()
 
 	return pck?.type === 'module'
@@ -127,6 +127,6 @@ const install = async (): Promise<boolean> => {
 export const nodeRuntime: RuntimeObject = {
 	type: 'node',
 	install,
-	isEsmProject,
+	getEsmImportOption,
 	getDependencyList,
 }

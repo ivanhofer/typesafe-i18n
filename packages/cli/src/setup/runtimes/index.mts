@@ -1,10 +1,11 @@
+import type { EsmImportsOption } from 'packages/config/src/types.mjs'
 import { denoRuntime, isDenoProject } from './deno.mjs'
 import { isNodeProject, nodeRuntime } from './node.mjs'
 
 export type RuntimeObject = {
 	type: 'deno' | 'node'
 	install: () => Promise<boolean>
-	isEsmProject: () => Promise<boolean>
+	getEsmImportOption: () => Promise<EsmImportsOption>
 	getDependencyList: () => Promise<string[]>
 }
 

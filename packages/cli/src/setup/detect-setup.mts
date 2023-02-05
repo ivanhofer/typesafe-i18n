@@ -2,7 +2,7 @@ import { resolve } from 'path'
 import { getConfigWithDefaultValues } from '../../../config/src/config.mjs'
 import type { Adapters, GeneratorConfig } from '../../../config/src/types.mjs'
 import { doesPathExist } from '../../../generator/src/utils/file.utils.mjs'
-import { getRuntimeObject } from './runtimes/inde.mjs'
+import { getRuntimeObject } from './runtimes/index.mjs'
 
 const useAdapterWhenDependenciesContain =
 	(shouldContain: string[]) =>
@@ -17,15 +17,18 @@ const shouldUseSvelteAdapter = useAdapterWhenDependenciesContain(['svelte', '@sv
 const shouldUseVueAdapter = useAdapterWhenDependenciesContain(['vue', 'nuxt'])
 const shouldUseNodeAdapter = useAdapterWhenDependenciesContain(['express', 'fastify'])
 
-const getAdapterInfo = (deps: string[]): Adapters | undefined => {
-	if (shouldUseAngularAdapter(deps)) return 'angular'
-	if (shouldUseReactAdapter(deps)) return 'react'
-	if (shouldUseSolidAdapter(deps)) return 'solid'
-	if (shouldUseSvelteAdapter(deps)) return 'svelte'
-	if (shouldUseVueAdapter(deps)) return 'vue'
-	if (shouldUseNodeAdapter(deps)) return 'node'
+const getAdaptersInfo = (deps: string[]): Adapters[] => {
+	const adapters: Adapters[] = []
 
-	return undefined
+	if (shouldUseAngularAdapter(deps)) adapters.push('angular')
+	if (shouldUseReactAdapter(deps)) adapters.push('react')
+	if (shouldUseSolidAdapter(deps)) adapters.push('solid')
+	if (shouldUseSvelteAdapter(deps)) adapters.push('svelte')
+	if (shouldUseVueAdapter(deps)) adapters.push('vue')
+	if (shouldUseNodeAdapter(deps)) adapters.push('node')
+	if ('TODO') adapters.push('deno')
+
+	return adapters
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -36,17 +39,17 @@ export const getDefaultConfig = async () => {
 
 	const dependencies = await runtime.getDependencyList()
 
-	const adapter = getAdapterInfo(dependencies) as Adapters
+	const adapters = getAdaptersInfo(dependencies)
 	const isTypeScriptProject = dependencies.includes('typescript') || (await doesPathExist(resolve('tsconfig.json')))
 
 	// TODO: check if this is still valid
 	// vite currently has some SSR issues (https://github.com/vitejs/vite/discussions/4230) so we have to disable esmImports
-	const esmImports = (await runtime.isEsmProject()) && adapter !== 'svelte'
+	const esmImports = (await runtime.getEsmImportOption()) && !adapters.includes('svelte')
 
 	const defaultConfig = await getConfigWithDefaultValues()
 	const config: GeneratorConfig = {
 		baseLocale: defaultConfig.baseLocale,
-		adapter,
+		...(adapters ? (adapters.length === 1 ? { adapter: adapters[0] as Adapters } : { adapters }) : {}),
 		esmImports,
 		outputFormat: isTypeScriptProject ? 'TypeScript' : 'JavaScript',
 		outputPath: defaultConfig.outputPath,

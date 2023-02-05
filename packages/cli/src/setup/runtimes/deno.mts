@@ -2,7 +2,7 @@ import { resolve } from 'path'
 import type { PackageJson } from 'type-fest'
 import { importFile } from '../../../../generator/src/utils/file.utils.mjs'
 import { logger } from '../../../../generator/src/utils/logger.mjs'
-import type { RuntimeObject } from './inde.mjs'
+import type { RuntimeObject } from './index.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -37,6 +37,6 @@ const install = async (): Promise<boolean> => {
 export const denoRuntime: RuntimeObject = {
 	type: 'deno',
 	install,
-	isEsmProject: async () => true,
+	getEsmImportOption: async () => '.ts',
 	getDependencyList,
 }

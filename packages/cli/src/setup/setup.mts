@@ -7,7 +7,7 @@ import type { GeneratorConfig } from '../../../config/src/types.mjs'
 import { logger } from '../../../generator/src/utils/logger.mjs'
 import { getDefaultConfig } from './detect-setup.mjs'
 import { askConfigQuestions, askOverrideQuestion } from './questions.mjs'
-import { getRuntimeObject } from './runtimes/inde.mjs'
+import { getRuntimeObject } from './runtimes/index.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 

@@ -1,6 +1,6 @@
 import type { Locale } from '../../runtime/src/core.mjs'
 
-export type Adapters = 'angular' | 'node' | 'react' | 'solid' | 'svelte' | 'vue'
+export type Adapters = 'angular' | 'deno' | 'node' | 'react' | 'solid' | 'svelte' | 'vue'
 
 export type OutputFormats = 'TypeScript' | 'JavaScript'
 
@@ -21,6 +21,8 @@ type MultipleAdaptersConfig = {
 
 type AdapterConfig = NoAdaptersConfig | SingleAdapterConfig | MultipleAdaptersConfig
 
+export type EsmImportsOption = boolean | '.js' | '.ts'
+
 export type GeneratorConfig = {
 	$schema?: string
 
@@ -33,7 +35,7 @@ export type GeneratorConfig = {
 	utilFileName?: string
 	formattersTemplateFileName?: string
 	typesTemplateFileName?: string
-	esmImports?: boolean
+	esmImports?: EsmImportsOption
 
 	adapterFileName?: string
 	generateOnlyTypes?: boolean
