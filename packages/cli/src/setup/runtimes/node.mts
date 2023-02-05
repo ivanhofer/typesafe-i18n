@@ -1,16 +1,17 @@
 import { execSync } from 'child_process'
 import { resolve } from 'path'
 import type { PackageJson } from 'type-fest'
-import { doesPathExist, importFile, readFile, writeFile } from '../../../generator/src/utils/file.utils.mjs'
-import { logger } from '../../../generator/src/utils/logger.mjs'
+import { doesPathExist, importFile, readFile, writeFile } from '../../../../generator/src/utils/file.utils.mjs'
+import { logger } from '../../../../generator/src/utils/logger.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const packageJsonPath = resolve('package.json')
-
 let pck: PackageJson | undefined = undefined
 
+const packageJsonPath = resolve('package.json')
 const readPackageJson = async () => pck || (pck = await importFile<PackageJson | undefined>(packageJsonPath, false))
+
+export const isNodeProject = async () => !!(await readPackageJson())
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -24,10 +25,12 @@ export const isEsmProject = async () => {
 
 export const getDependencyList = async () => {
 	const pck = await readPackageJson()
+	if (!pck) return []
 
-	const dependencyList = Object.keys(pck?.dependencies || {})
-	const devDependencyList = Object.keys(pck?.devDependencies || {})
-	const peerDependencyList = Object.keys(pck?.peerDependencies || {})
+	const dependencyList = Object.keys(pck.dependencies || {})
+	const devDependencyList = Object.keys(pck.devDependencies || {})
+	const peerDependencyList = Object.keys(pck.peerDependencies || {})
+
 	return [...dependencyList, ...devDependencyList, ...peerDependencyList]
 }
 
@@ -63,10 +66,7 @@ const installDependencies = async () => {
 	const dependencies = await getDependencyList()
 	if (dependencies.includes('typesafe-i18n')) return true
 
-	if (!pck) {
-		logger.error(`no 'package.json' found. You have to install 'typesafe-i18n' by yourself`)
-		return false
-	}
+	if (!pck) return false
 
 	logger.info('installing dependencies ...')
 

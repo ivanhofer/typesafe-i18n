@@ -6,8 +6,9 @@ import { doesConfigFileExist, getConfigWithDefaultValues, writeConfigToFile } fr
 import type { GeneratorConfig } from '../../../config/src/types.mjs'
 import { logger } from '../../../generator/src/utils/logger.mjs'
 import { getDefaultConfig } from './detect-setup.mjs'
-import { updatePackageJson } from './package-json.mjs'
 import { askConfigQuestions, askOverrideQuestion } from './questions.mjs'
+import { isDenoProject } from './runtimes/deno.mjs'
+import { isNodeProject, updatePackageJson } from './runtimes/node.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -29,6 +30,27 @@ const getConfigDiff = async (options: GeneratorConfig) => {
 		) || {}
 
 	return Object.fromEntries(Object.entries(changedValues).filter(isPropertyNotUndefined('1')))
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+const installDependencies = async (): Promise<boolean> => {
+	let installed = false
+	if (await isNodeProject()) {
+		installed = await updatePackageJson()
+	} else if (await isDenoProject()) {
+		// TODO: do the same as above for `deno`
+		installed = true
+		logger.info(
+			`Automatic install of deno dependencies is currently not implemented for 'deno'. See https://github.com/ivanhofer/typesafe-i18n/discussions/87. You have to install 'typesafe-i18n' by yourself.`,
+		)
+	}
+
+	if (!installed) {
+		logger.error(`Could not detect 'Node.js' or 'deno' project root. You have to install 'typesafe-i18n' by yourself`)
+	}
+
+	return installed
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -72,7 +94,7 @@ export const setup = async (autoSetup: boolean) => {
 	await writeConfigToFile(config)
 	logger.info(`generated config file: '.typesafe-i18n.json'`)
 
-	const installed = await updatePackageJson()
+	const installed = await installDependencies()
 	if (!installed) {
 		showSponsoringMessage()
 		return
