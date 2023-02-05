@@ -211,7 +211,7 @@ The available options are:
 | [adapters](#adapters)                                       | `Array<'angular' \| 'node' \| 'react' \| 'solid' \| 'svelte' \| 'vue'> \| undefined`                           | `undefined`
 | [baseLocale](#baselocale)                                 | `string`                                                                                         | `'en'`                                        |
 | [outputFormat](#outputformat)                             | `'TypeScript'` &#124; `'JavaScript'`                                                             | `'TypeScript'`                                |
-| [esmImports](#esmimports)                                 | `boolean`                                                                                        | `false`                                       |
+| [esmImports](#esmimports)                                 | `boolean | '.js' | 'fileEnding'                                                                                        | `false`                                       |
 | [generateOnlyTypes](#generateonlytypes)                   | `boolean`                                                                                        | `false`                                       |
 | [runAfterGenerator](#runaftergenerator)                   | `string` &#124; `undefined`                                                                      | `undefined`                                   |
 | [banner](#banner)                                         | `string`                                                                                         | `'/* eslint-disable */'`                      |
@@ -245,6 +245,8 @@ The programming language you use inside your code. If 'TypeScript' is selected, 
 #### `esmImports`
 
 If `true` generated files will import other files with the `.js` file extension. This makes it compatible with ESM packages that have specified `"type": "module"` in their `package.json` file.
+
+Set this option to `'fileEnding'` if the module import needs to be done with a `.ts` file extension (e.g. for the `deno` runtime).
 
 #### `generateOnlyTypes`
 

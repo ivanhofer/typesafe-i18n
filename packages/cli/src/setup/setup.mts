@@ -6,8 +6,8 @@ import { doesConfigFileExist, getConfigWithDefaultValues, writeConfigToFile } fr
 import type { GeneratorConfig } from '../../../config/src/types.mjs'
 import { logger } from '../../../generator/src/utils/logger.mjs'
 import { getDefaultConfig } from './detect-setup.mjs'
-import { updatePackageJson } from './package-json.mjs'
 import { askConfigQuestions, askOverrideQuestion } from './questions.mjs'
+import { getRuntimeObject } from './runtimes/index.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -29,6 +29,18 @@ const getConfigDiff = async (options: GeneratorConfig) => {
 		) || {}
 
 	return Object.fromEntries(Object.entries(changedValues).filter(isPropertyNotUndefined('1')))
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+const installDependencies = async (): Promise<boolean> => {
+	const runtime = await getRuntimeObject()
+	if (!runtime) {
+		logger.error(`Could not detect 'Node.js' or 'deno' project root. You have to install 'typesafe-i18n' by yourself`)
+		return false
+	}
+
+	return runtime.install()
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -59,20 +71,20 @@ export const setup = async (autoSetup: boolean) => {
 
 	!autoSetup &&
 		highlightedInfoLog(
-			'See this link for more information on how to setup this project: https://github.com/ivanhofer/typesafe-i18n#options',
+			'See this link for more information on how to setup this project: https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#options',
 		)
 
 	const defaultConfig = await getDefaultConfig()
 
 	const answers: GeneratorConfig = autoSetup ? defaultConfig : await askConfigQuestions(defaultConfig)
-	const options = { ...defaultConfig, ...answers }
+	const options = { ...defaultConfig, ...answers } as GeneratorConfig
 
 	const config = await getConfigDiff(options)
 
 	await writeConfigToFile(config)
 	logger.info(`generated config file: '.typesafe-i18n.json'`)
 
-	const installed = await updatePackageJson()
+	const installed = await installDependencies()
 	if (!installed) {
 		showSponsoringMessage()
 		return
@@ -80,7 +92,15 @@ export const setup = async (autoSetup: boolean) => {
 
 	logger.info('setup complete')
 
-	highlightedInfoLog(`You can now run 'npm run typesafe-i18n' to start the generator`)
+	const runtime = await getRuntimeObject()
+	if (!runtime) {
+		return
+	}
+
+	const commandToRun =
+		runtime.type === 'node' ? 'npm run typesafe-i18n' : runtime.type === 'deno' ? 'deno run -A npm:typesafe-i18n' : ''
+
+	commandToRun && highlightedInfoLog(`You can now run '${commandToRun}' to start the generator`)
 
 	showSponsoringMessage()
 }

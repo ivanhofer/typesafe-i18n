@@ -6,6 +6,7 @@ import { inspect } from 'util'
 import schema from '../../../schema/typesafe-i18n.json'
 import type { GeneratorConfig } from './types.mjs'
 
+// TODO: switch to `zod` for validation
 const validate = new Ajv({ allErrors: true }).compile(schema as object)
 
 const formatMessage = ({ keyword, message, params, dataPath }: ErrorObject) => {
@@ -30,7 +31,7 @@ Your 'typesafe-i18n' config contains following errors:${NEW_LINE}${errors.map(fo
 `,
 	) +
 	kleur.yellow(`
-See here for all available options: https://github.com/ivanhofer/typesafe-i18n#options
+See here for all available options: https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#options
 `)
 
 // --------------------------------------------------------------------------------------------------------------------
