@@ -7,8 +7,7 @@ import type { GeneratorConfig } from '../../../config/src/types.mjs'
 import { logger } from '../../../generator/src/utils/logger.mjs'
 import { getDefaultConfig } from './detect-setup.mjs'
 import { askConfigQuestions, askOverrideQuestion } from './questions.mjs'
-import { isDenoProject } from './runtimes/deno.mjs'
-import { isNodeProject, updatePackageJson } from './runtimes/node.mjs'
+import { getRuntimeObject } from './runtimes/inde.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -35,22 +34,13 @@ const getConfigDiff = async (options: GeneratorConfig) => {
 // --------------------------------------------------------------------------------------------------------------------
 
 const installDependencies = async (): Promise<boolean> => {
-	let installed = false
-	if (await isNodeProject()) {
-		installed = await updatePackageJson()
-	} else if (await isDenoProject()) {
-		// TODO: do the same as above for `deno`
-		installed = true
-		logger.info(
-			`Automatic install of deno dependencies is currently not implemented for 'deno'. See https://github.com/ivanhofer/typesafe-i18n/discussions/87. You have to install 'typesafe-i18n' by yourself.`,
-		)
-	}
-
-	if (!installed) {
+	const runtime = await getRuntimeObject()
+	if (!runtime) {
 		logger.error(`Could not detect 'Node.js' or 'deno' project root. You have to install 'typesafe-i18n' by yourself`)
+		return false
 	}
 
-	return installed
+	return runtime.install()
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -87,7 +77,7 @@ export const setup = async (autoSetup: boolean) => {
 	const defaultConfig = await getDefaultConfig()
 
 	const answers: GeneratorConfig = autoSetup ? defaultConfig : await askConfigQuestions(defaultConfig)
-	const options = { ...defaultConfig, ...answers }
+	const options = { ...defaultConfig, ...answers } as GeneratorConfig
 
 	const config = await getConfigDiff(options)
 
@@ -102,7 +92,15 @@ export const setup = async (autoSetup: boolean) => {
 
 	logger.info('setup complete')
 
-	highlightedInfoLog(`You can now run 'npm run typesafe-i18n' to start the generator`)
+	const runtime = await getRuntimeObject()
+	if (!runtime) {
+		return
+	}
+
+	const commandToRun =
+		runtime.type === 'node' ? 'npm run typesafe-i18n' : runtime.type === 'deno' ? 'deno run -A npm:typesafe-i18n' : ''
+
+	commandToRun && highlightedInfoLog(`You can now run '${commandToRun}' to start the generator`)
 
 	showSponsoringMessage()
 }

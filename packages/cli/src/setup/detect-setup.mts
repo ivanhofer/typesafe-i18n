@@ -2,7 +2,7 @@ import { resolve } from 'path'
 import { getConfigWithDefaultValues } from '../../../config/src/config.mjs'
 import type { Adapters, GeneratorConfig } from '../../../config/src/types.mjs'
 import { doesPathExist } from '../../../generator/src/utils/file.utils.mjs'
-import { getDependencyList, isEsmProject } from './runtimes/node.mjs'
+import { getRuntimeObject } from './runtimes/inde.mjs'
 
 const useAdapterWhenDependenciesContain =
 	(shouldContain: string[]) =>
@@ -31,14 +31,17 @@ const getAdapterInfo = (deps: string[]): Adapters | undefined => {
 // --------------------------------------------------------------------------------------------------------------------
 
 export const getDefaultConfig = async () => {
-	const dependencies = await getDependencyList()
+	const runtime = await getRuntimeObject()
+	if (!runtime) return {} as GeneratorConfig
+
+	const dependencies = await runtime.getDependencyList()
 
 	const adapter = getAdapterInfo(dependencies) as Adapters
 	const isTypeScriptProject = dependencies.includes('typescript') || (await doesPathExist(resolve('tsconfig.json')))
 
 	// TODO: check if this is still valid
 	// vite currently has some SSR issues (https://github.com/vitejs/vite/discussions/4230) so we have to disable esmImports
-	const esmImports = (await isEsmProject()) && adapter !== 'svelte'
+	const esmImports = (await runtime.isEsmProject()) && adapter !== 'svelte'
 
 	const defaultConfig = await getConfigWithDefaultValues()
 	const config: GeneratorConfig = {

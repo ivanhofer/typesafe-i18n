@@ -3,6 +3,7 @@ import { resolve } from 'path'
 import type { PackageJson } from 'type-fest'
 import { doesPathExist, importFile, readFile, writeFile } from '../../../../generator/src/utils/file.utils.mjs'
 import { logger } from '../../../../generator/src/utils/logger.mjs'
+import type { RuntimeObject } from './inde.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -15,7 +16,7 @@ export const isNodeProject = async () => !!(await readPackageJson())
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const isEsmProject = async () => {
+const isEsmProject = async () => {
 	const pck = await readPackageJson()
 
 	return pck?.type === 'module'
@@ -23,7 +24,7 @@ export const isEsmProject = async () => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const getDependencyList = async () => {
+const getDependencyList = async () => {
 	const pck = await readPackageJson()
 	if (!pck) return []
 
@@ -114,9 +115,18 @@ const addTypesafeI18nScript = async () => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const updatePackageJson = async (): Promise<boolean> => {
+const install = async (): Promise<boolean> => {
 	let installed = await installDependencies()
 	installed = installed && (await addTypesafeI18nScript())
 
 	return installed
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+export const nodeRuntime: RuntimeObject = {
+	type: 'node',
+	install,
+	isEsmProject,
+	getDependencyList,
 }
