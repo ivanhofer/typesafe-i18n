@@ -74,7 +74,7 @@ const getPathOfOutputFile = (
 	return `${outputPath}/${prefix}/${fileName}${fileEnding}`
 }
 
-const REGEX_INDENT = /(\t|\s+)/g
+const REGEX_INDENT = /(\t|\s)/g
 const unifyIndent = (text: string) => text.replace(REGEX_INDENT, ' ')
 
 const REGEX_NEW_LINE = /\n/g

@@ -42,12 +42,11 @@ export const namespaces = [
  */
 export const isLocale = (locale) => locales.includes(/** @type { Locales } */ (locale))
 
-
 /**
  * @param { string } namespace
  * @return { namespace is Namespaces }
  */
-	export const isNamespace = (namespace) => namespaces.includes(/** @type { Namespaces } */ (namespace))
+export const isNamespace = (namespace) => namespaces.includes(/** @type { Namespaces } */ (namespace))
 
 export const loadedLocales = /** @type { Record<Locales, Translations> } */ ({})
 
