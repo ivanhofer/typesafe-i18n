@@ -10,7 +10,7 @@ import {
 	relativeFileImportPath,
 	tsCheck,
 	type,
-	typeCast,
+	typeCast
 } from '../output-handler.mjs'
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
 import { prettify } from '../utils/generator.utils.mjs'
@@ -89,11 +89,11 @@ export const isLocale = (locale${type('string')})${type('locale is Locales')} =>
 ${
 	usesNamespaces
 		? `
-	${jsDocFunction('namespace is Namespaces', {
-		type: 'string',
-		name: 'namespace',
-	})}
-	export const isNamespace = (namespace${type('string')})${type(
+${jsDocFunction('namespace is Namespaces', {
+	type: 'string',
+	name: 'namespace',
+})}
+export const isNamespace = (namespace${type('string')})${type(
 				'namespace is Namespaces',
 		  )} => namespaces.includes(${jsDocType('Namespaces', `namespace${typeCast('Namespaces')}`)})`
 		: ''

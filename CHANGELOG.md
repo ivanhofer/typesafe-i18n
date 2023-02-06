@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.24.1 (2023-02-06)
+
+Fix:
+ - indentation of generated namespace function
+
 ## 5.24.0 (2023-02-05)
 
 Feature:
