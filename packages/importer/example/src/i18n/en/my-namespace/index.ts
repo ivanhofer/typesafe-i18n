@@ -1,7 +1,7 @@
 /* eslint-disable */
 import type { BaseTranslation } from '../../i18n-types'
 
-const en_my_namespace: BaseTranslation = {
+const en_my_namespace = {
 	i: {
 		am: {
 			inside: {
@@ -11,6 +11,6 @@ const en_my_namespace: BaseTranslation = {
 			},
 		},
 	},
-}
+} satisfies BaseTranslation
 
 export default en_my_namespace
