@@ -51,7 +51,7 @@ const getPathOfOutputFile = (
 	type: 'actual' | 'expected',
 	outputFormat: OutputFormats,
 ) => {
-	let fileName
+	let fileName: string
 
 	if (file.endsWith('sync')) {
 		const parts = file.split('.')
@@ -74,7 +74,11 @@ const getPathOfOutputFile = (
 	return `${outputPath}/${prefix}/${fileName}${fileEnding}`
 }
 
-const REGEX_INDENT = /(\t|\s)/g
+const REGEX_INDENT_UNIX = /(\t|\s)/g
+const REGEX_INDENT_WINDOWS = /(\t|\s+)/g
+const isWindows = process.platform === 'win32'
+const REGEX_INDENT = isWindows ? REGEX_INDENT_WINDOWS : REGEX_INDENT_UNIX
+
 const unifyIndent = (text: string) => text.replace(REGEX_INDENT, ' ')
 
 const REGEX_NEW_LINE = /\n/g

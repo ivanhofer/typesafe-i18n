@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.24.2 (2023-02-13)
+
+Fix:
+ - make exporter work on `windows` again [#600](https://github.com/ivanhofer/typesafe-i18n/discussions/600)
+
 ## 5.24.1 (2023-02-06)
 
 Fix:

@@ -107,7 +107,6 @@ export const getDirectoryStructure = async (path: string): Promise<Record<string
 }
 
 const isWindows = process.platform === 'win32'
-const isEsm = (import.meta.url || '').endsWith('.mjs')
 
 // eslint-disable-next-line prettier/prettier
 export const importFile = async <T = unknown,>(file: string, outputError = true): Promise<T> => {
@@ -116,7 +115,7 @@ export const importFile = async <T = unknown,>(file: string, outputError = true)
 		return jsonFile ? JSON.parse(jsonFile) : undefined
 	}
 
-	const importPath = isWindows && isEsm ? pathToFileURL(file).href : file
+	const importPath = isWindows ? pathToFileURL(file).href : file
 	return (
 		await import(importPath).catch((e) => {
 			outputError && logger.error(`import failed for ${importPath}`, e)
