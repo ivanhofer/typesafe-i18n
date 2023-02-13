@@ -51,7 +51,7 @@ const getPathOfOutputFile = (
 	type: 'actual' | 'expected',
 	outputFormat: OutputFormats,
 ) => {
-	let fileName
+	let fileName: string
 
 	if (file.endsWith('sync')) {
 		const parts = file.split('.')
