@@ -21,8 +21,7 @@ export const namespaces: Namespaces[] = [
 
 export const isLocale = (locale: string): locale is Locales => locales.includes(locale as Locales)
 
-
-	export const isNamespace = (namespace: string): namespace is Namespaces => namespaces.includes(namespace as Namespaces)
+export const isNamespace = (namespace: string): namespace is Namespaces => namespaces.includes(namespace as Namespaces)
 
 export const loadedLocales: Record<Locales, Translations> = {} as Record<Locales, Translations>
 
