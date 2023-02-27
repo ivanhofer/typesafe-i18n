@@ -284,7 +284,7 @@ import { detectLocale, documentCookieDetector } from 'typesafe-i18n/detectors'
 const detectedLocale = detectLocale(fallbackLocale, availableLocales, documentCookieDetector)
 ```
 
-The default cookie name is `'lang'`, but you can change it by using the `initSessionStorageDetector` function:
+The default cookie name is `'lang'`, but you can change it by using the `initDocumentCookieDetector` function:
 
 ```typescript
 import { detectLocale, initDocumentCookieDetector } from 'typesafe-i18n/detectors'
