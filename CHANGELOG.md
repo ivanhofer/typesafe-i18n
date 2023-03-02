@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.24.3 (2023-03-02)
+
+Fix:
+ - `extendDictionary` functionality to not mutate original object [#618](https://github.com/ivanhofer/typesafe-i18n/issues/618)
+
 ## 5.24.2 (2023-02-13)
 
 Fix:

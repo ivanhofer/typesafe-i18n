@@ -21,6 +21,6 @@ export const initExtendDictionary =
 		base: Base,
 		part: DeepPartial<ToGenericString<Translation>>,
 	): Translation =>
-		merge(base, part) as Translation
+		merge({}, base, part) as Translation
 
 export const extendDictionary = initExtendDictionary()
