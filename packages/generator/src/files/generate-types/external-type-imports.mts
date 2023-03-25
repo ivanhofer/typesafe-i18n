@@ -1,7 +1,7 @@
 import { filterDuplicates, sortStringASC } from 'typesafe-utils'
 import { COMMA_SEPARATION } from '../../constants.mjs'
 import { importTypeStatement } from '../../output-handler.mjs'
-import { isParsedResultEntry, ParsedResult } from '../../types.mjs'
+import { isParsedResultEntry, type ParsedResult } from '../../types.mjs'
 
 const BASE_TYPES = [
 	'boolean',

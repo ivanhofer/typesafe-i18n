@@ -17,7 +17,7 @@ import { generateSyncUtil } from './files/generate-util-sync.mjs'
 import { generateUtil } from './files/generate-util.mjs'
 import { configureOutputHandler } from './output-handler.mjs'
 import type { TypescriptVersion } from './utils/generator.utils.mjs'
-import { logger as defaultLogger, Logger } from './utils/logger.mjs'
+import { logger as defaultLogger, type Logger } from './utils/logger.mjs'
 import { findAllNamespacesForLocale } from './utils/namespaces.utils.mjs'
 
 export const generateNamespaceFiles = async (

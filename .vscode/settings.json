@@ -9,4 +9,5 @@
 		"*.mts": "${capture}.test.ts, ${capture}.test.types.ts"
 	},
 	"explorer.fileNesting.enabled": true,
+	"typescript.tsdk": "node_modules/typescript/lib",
 }

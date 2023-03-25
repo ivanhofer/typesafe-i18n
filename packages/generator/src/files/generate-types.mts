@@ -2,23 +2,23 @@ import { isPropertyTrue, isTruthy } from 'typesafe-utils'
 import type { GeneratorConfigWithDefaultValues } from '../../../config/src/types.mjs'
 import type { BaseTranslation, Locale } from '../../../runtime/src/core.mjs'
 import {
+	OVERRIDE_WARNING,
 	fileEndingForTypesFile,
 	importTypeStatement,
-	OVERRIDE_WARNING,
 	supportsTemplateLiteralTypes,
 } from '../output-handler.mjs'
-import { isParsedResultEntry, JsDocInfos, ParsedResult } from '../types.mjs'
+import { isParsedResultEntry, type JsDocInfos, type ParsedResult } from '../types.mjs'
 import { writeFileIfContainsChanges } from '../utils/file.utils.mjs'
 import { prettify, wrapObjectKeyIfNeeded } from '../utils/generator.utils.mjs'
 import type { Logger } from '../utils/logger.mjs'
 import { getTypeNameForNamespace } from '../utils/namespaces.utils.mjs'
+import { flattenToParsedResultEntry, getNestedKey, wrapUnionType } from './generate-types/_utils.mjs'
 import { createTypeImports } from './generate-types/external-type-imports.mjs'
 import { createFormattersType } from './generate-types/formatters-type.mjs'
 import { createNamespacesTypes, validateNamespaces } from './generate-types/namespaces.mjs'
 import { parseDictionary } from './generate-types/parse-dictionary.mjs'
 import { createTranslationFunctionsType } from './generate-types/translation-functions.mjs'
 import { createTranslationType } from './generate-types/translations.mjs'
-import { flattenToParsedResultEntry, getNestedKey, wrapUnionType } from './generate-types/_utils.mjs'
 
 // --------------------------------------------------------------------------------------------------------------------
 

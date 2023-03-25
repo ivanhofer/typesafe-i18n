@@ -1,12 +1,12 @@
 import { isNotUndefined, isString, pick, uniqueArray } from 'typesafe-utils'
 import {
-	BasicArgumentPart,
-	BasicPart,
-	BasicPluralPart,
+	REGEX_SWITCH_CASE,
 	isBasicPluralPart,
 	parseCases,
 	parseRawText,
-	REGEX_SWITCH_CASE,
+	type BasicArgumentPart,
+	type BasicPart,
+	type BasicPluralPart,
 } from '../basic.mjs'
 import type {
 	ParameterPart,

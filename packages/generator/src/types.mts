@@ -1,4 +1,4 @@
-import { isArray, isObject, TypeGuard } from 'typesafe-utils'
+import { isArray, isObject, type TypeGuard } from 'typesafe-utils'
 import type { TransformParameterPart } from '../../parser/src/advanced/types.mjs'
 
 export type Arg = {

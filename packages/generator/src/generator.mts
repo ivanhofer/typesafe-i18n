@@ -10,8 +10,8 @@ import { generate } from './generate-files.mjs'
 import { configureOutputHandler, shouldGenerateJsDoc } from './output-handler.mjs'
 import { parseLanguageFile } from './parse-language-file.mjs'
 import { createPathIfNotExits } from './utils/file.utils.mjs'
-import { parseTypescriptVersion, runCommandAfterGenerator, TypescriptVersion } from './utils/generator.utils.mjs'
-import { createLogger, Logger } from './utils/logger.mjs'
+import { parseTypescriptVersion, runCommandAfterGenerator, type TypescriptVersion } from './utils/generator.utils.mjs'
+import { createLogger, type Logger } from './utils/logger.mjs'
 import { findAllNamespacesForLocale } from './utils/namespaces.utils.mjs'
 
 let logger: Logger

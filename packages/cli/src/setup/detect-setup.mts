@@ -2,7 +2,7 @@ import { resolve } from 'path'
 import { getConfigWithDefaultValues } from '../../../config/src/config.mjs'
 import type { Adapters, GeneratorConfig } from '../../../config/src/types.mjs'
 import { doesPathExist } from '../../../generator/src/utils/file.utils.mjs'
-import { getRuntimeObject, RuntimeObject } from './runtimes/index.mjs'
+import { getRuntimeObject, type RuntimeObject } from './runtimes/index.mjs'
 
 const useAdapterWhenDependenciesContain =
 	(shouldContain: string[]) =>

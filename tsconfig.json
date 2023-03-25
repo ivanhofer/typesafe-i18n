@@ -15,7 +15,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,
 		"jsx": "react",
-		"importsNotUsedAsValues": "error",
+		"verbatimModuleSyntax": true,
 		"removeComments": false,
 		// strict options
 		"strict": true,

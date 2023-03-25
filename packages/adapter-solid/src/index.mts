@@ -1,4 +1,4 @@
-import { Accessor, batch, Component, createComponent, createContext, createSignal, JSX, useContext } from 'solid-js'
+import { batch, createComponent, createContext, createSignal, useContext, type Accessor, type Component, type JSX } from 'solid-js'
 import { getFallbackProxy } from '../../runtime/src/core-utils.mjs'
 import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from '../../runtime/src/core.mjs'
 import { i18nObject } from '../../runtime/src/util.object.mjs'

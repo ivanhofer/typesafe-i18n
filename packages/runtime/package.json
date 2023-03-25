@@ -2,7 +2,7 @@
   "name": "@typesafe-i18n/runtime",
   "scripts": {
     "build": "pnpm build:cjs && pnpm build:esm",
-    "build:cjs": "tsc -p tsconfig-cjs.json && tsx ./rename-cjs.ts",
+    "build:cjs": "tsc -p tsconfig-cjs.json --verbatimModuleSyntax false && tsx ./rename-cjs.ts",
     "build:esm": "tsc -p tsconfig-esm.json && tsx ./rename-esm.ts",
     "test": "pnpm test:unit && pnpm test:tsc",
     "test:unit": "uvu -r @esbuild-kit/cjs-loader src",
