@@ -5,7 +5,7 @@
 ## 5.24.3 (2023-03-26)
 
 Fix:
- - correctly inject `typesafe-i18n` script in `package.json` if block contains brackets [#632](https://github.com/ivanhofer/typesafe-i18n/pull/632)
+ - correctly inject `typesafe-i18n` script in `package.json` if block contains brackets [#631](https://github.com/ivanhofer/typesafe-i18n/issues/631)
 
 ## 5.24.2 (2023-03-02)
 
