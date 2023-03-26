@@ -84,7 +84,7 @@ const installDependencies = async () => {
 // --------------------------------------------------------------------------------------------------------------------
 
 // detects the amount of whitespace before and after the current scripts
-const REGEX_DETECT_SCRIPT_SECTION = /"scripts":\s*{(?<begin>\s*)("([^"]|\\")*":\s*"([^"]|\\")*"(,\s*)?)*(?<end>\s+)}/gm
+const REGEX_DETECT_SCRIPT_SECTION = /"scripts":\s*{(?<begin>\s*)(".*(?<!\\)":\s*".*(?<!\\)"(,\s*)?)*(?<end>\s+)}/gm
 
 // TODO: use `npm add script` command (only works with npm > 7)
 // https://docs.npmjs.com/cli/v7/commands/npm-set-script
