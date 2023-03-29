@@ -10,7 +10,7 @@
     "@types/lodash.merge": "^4.6.7",
     "esbuild": "^0.15.18",
     "lodash.merge": "^4.6.2",
-    "tsx": "^3.12.5",
+    "tsx": "^3.12.6",
     "typescript": "^5.0.2",
     "watchlist": "^0.3.1"
   },

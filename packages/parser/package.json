@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "esbuild": "^0.15.18",
-    "tsx": "^3.12.5",
+    "tsx": "^3.12.6",
     "typesafe-utils": "^1.16.2",
     "typescript": "^5.0.2",
     "uvu": "^0.5.6",
