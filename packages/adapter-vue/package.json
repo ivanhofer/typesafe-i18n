@@ -9,7 +9,7 @@
     "@vue/runtime-dom": "^3.2.47",
     "esbuild": "^0.15.18",
     "tsx": "^3.12.6",
-    "typescript": "^5.0.2",
+    "typescript": "^5.0.3",
     "vue": "3.2.39"
   },
   "type": "module"
