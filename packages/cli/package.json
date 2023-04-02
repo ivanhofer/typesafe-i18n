@@ -6,7 +6,7 @@
     "test": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/prompts": "^2.4.3",
+    "@types/prompts": "^2.4.4",
     "commander": "^9.5.0",
     "esbuild": "^0.14.54",
     "just-diff": "^5.2.0",
@@ -17,7 +17,7 @@
     "tsx": "^3.12.6",
     "type-fest": "^2.19.0",
     "typesafe-utils": "^1.16.2",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.3"
   },
   "type": "module"
 }
