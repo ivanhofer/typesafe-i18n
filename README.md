@@ -410,8 +410,28 @@ export default en
 <p>
 ```
 
+---
+
+### How can I have translated validation messages?
+
+Validation libraries like `zod`, `yup`, `joi` etc. usually provide a way to define custom error messages. You can use `typesafe-i18n` to translate these messages.
+
+But you need to create the validation schema dynamically, after you have initialized the `LL` object ([]`i18nObject`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#i18nObject)).
+
+You can do that like this by passing the `LL` object to a function that returns the validation schema:
+
+```ts
+import { z } from 'zod'
+import type { TranslationFunctions } from './i18n/i18n-types'
+
+export const createLoginSchema = (LL: TranslationFunctions) => z.object({
+    email: z.string().min(1, LL.validation.emptyField()).email(LL.validation.invalidEmail()),
+    password: z.string().min(1, LL.validation.emptyField()),
+})
+```
 
 ---
+
 ### How do I render a component inside a Translation?
 
 By default `typesafe-i18n` at this time does not provide such a functionality. Basically you will need to write a function that splits the translated message and renders a component between the parts. You can define your split characters yourself but you would always need to make sure you add them in any translation since `typesafe-i18n` doesn't provide any typesafety for these characters (yet).
