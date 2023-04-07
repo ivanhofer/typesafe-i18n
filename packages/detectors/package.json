@@ -7,7 +7,7 @@
     "test:watch": "watchlist src -- pnpm test"
   },
   "devDependencies": {
-    "esbuild": "^0.15.18",
+    "esbuild": "^0.17.15",
     "node-fetch": "^3.3.1",
     "tiny-glob": "^0.2.9",
     "tsx": "^3.12.6",

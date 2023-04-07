@@ -14,7 +14,7 @@
     "require-self": "^0.2.3",
     "tiny-glob": "^0.2.9",
     "tsx": "^3.12.6",
-    "type-fest": "^2.19.0",
+    "type-fest": "^3.8.0",
     "typesafe-utils": "^1.16.2",
     "typescript": "^5.0.3",
     "uvu": "^0.5.6",

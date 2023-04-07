@@ -6,7 +6,7 @@
     "test": "uvu -r @esbuild-kit/cjs-loader tests && tsc --noEmit"
   },
   "devDependencies": {
-    "@types/node": "^16.18.20",
+    "@types/node": "^18.15.11",
     "tsx": "^3.12.6",
     "typescript": "^5.0.2",
     "uvu": "^0.5.6"

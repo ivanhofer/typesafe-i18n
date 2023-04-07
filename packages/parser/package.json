@@ -7,7 +7,7 @@
     "test:watch": "watchlist src -- pnpm test"
   },
   "devDependencies": {
-    "esbuild": "^0.15.18",
+    "esbuild": "^0.17.15",
     "tsx": "^3.12.6",
     "typesafe-utils": "^1.16.2",
     "typescript": "^5.0.3",

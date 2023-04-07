@@ -1,4 +1,5 @@
 import { resolve } from 'path'
+import type { JsonObject } from 'type-fest'
 import { doesPathExist, importFile, writeConfigFile } from '../../generator/src/utils/file.utils.mjs'
 import { version } from '../../version'
 import { applyDefaultValues } from './core.mjs'
@@ -6,7 +7,10 @@ import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './types.
 import { validateConfig } from './validation.mjs'
 
 export const writeConfigToFile = async (config: GeneratorConfig) =>
-	writeConfigFile({ ...config, $schema: `https://unpkg.com/typesafe-i18n@${version}/schema/typesafe-i18n.json` })
+	writeConfigFile({
+		...(config as JsonObject),
+		$schema: `https://unpkg.com/typesafe-i18n@${version}/schema/typesafe-i18n.json`,
+	})
 
 export const doesConfigFileExist = async () => doesPathExist(resolve('.typesafe-i18n.json'))
 
