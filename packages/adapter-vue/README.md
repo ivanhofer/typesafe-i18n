@@ -57,6 +57,7 @@ const app = createApp(App)
 app.use(i18nPlugin, 'en') // activate plugin
 
 // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#loading-locales)
+// e.g. take a look at the example implementation (https://github.com/ivanhofer/typesafe-i18n/blob/main/packages/adapter-vue/examples/vue/src/App.vue#L14)
 
 app.mount('#app')
 ```

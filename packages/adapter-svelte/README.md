@@ -56,8 +56,9 @@ Then inside your root-component, you need to load your locales and call `setLoca
    import { setLocale } from './i18n/i18n-svelte'
 
    // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#loading-locales)
+   // e.g. take a look at the example implementation (https://github.com/ivanhofer/typesafe-i18n-demo-svelte/blob/master/src/App.svelte#L20)
 
-   setLocale()
+   setLocale('en')
 </script>
 
 <!-- HTML markup -->

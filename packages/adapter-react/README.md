@@ -62,7 +62,7 @@ import { loadLocale } from './i18n/i18n-util.sync'
 
 function App() {
    // Detect locale
-   // (Use as advanaced locale detection strategy as you like. 
+   // (Use as advanaced locale detection strategy as you like.
    // More info: https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/detectors)
    const locale = detectLocale(navigatorDetector)
 
@@ -72,15 +72,15 @@ function App() {
    useEffect(() => {
       loadLocale(locale).then(() => setLocalesLoaded(true))
    }, [locale])
-   
+
    if(!localesLoaded) {
       return null
    }
-   
+
    return (
       <TypesafeI18n locale={locale}>
 
-         {/* Your app goes here */} 
+         {/* Your app goes here */}
 
       </TypesafeI18n>
    )
@@ -120,6 +120,7 @@ import TypesafeI18n from './i18n/i18n-react'
 function App() {
 
    // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#loading-locales)
+      // e.g. take a look at the example implementation (https://github.com/ivanhofer/typesafe-i18n/blob/main/packages/adapter-react/examples/react/src/App.tsx#L15)
 
    return (
       <TypesafeI18n locale="en">

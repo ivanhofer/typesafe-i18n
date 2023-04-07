@@ -55,6 +55,7 @@ import TypesafeI18n from './i18n/i18n-solid'
 const App: Component = () => {
 
    // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#loading-locales)
+   // e.g. take a look at the example implementation (https://github.com/ivanhofer/typesafe-i18n/blob/main/packages/adapter-solid/example/src/App.tsx#L14)
 
    return (
       <TypesafeI18n locale="en">
@@ -100,6 +101,9 @@ import TypesafeI18n from './i18n/i18n-solid'
 const App: Component = () => {
 
    // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#loading-locales)
+   // e.g.
+   // const locale = 'en'
+   // loadLocaleAsync(locale).then(() => setLocale(locale))
 
    return (
       <TypesafeI18n locale="en">

@@ -104,6 +104,7 @@ export class LanguageSwitcherComponent {
 
    setLocale(locale: Locales): void {
       // TODO: load locales (https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#loading-locales)
+      // e.g. take a look at the example implementation (https://github.com/ivanhofer/typesafe-i18n/blob/main/packages/adapter-angular/example/src/app/app.component.ts#L37)
 
       this.i18nService.setLocale(locale)
    }
