@@ -99,12 +99,11 @@ const debounce = (callback: () => void) =>
 		++debounceCounter,
 	)
 
-export const startGenerator = async (config?: GeneratorConfig, watchFiles = true): Promise<void> => {
+export const startGenerator = async (configPath: string, watchFiles = true): Promise<void> => {
 	logger = createLogger(console, !watchFiles)
 
 	const parsedConfig = {
-		...(await readConfig()),
-		...config,
+		...(await readConfig(configPath)),
 	} as GeneratorConfig
 
 	const configWithDefaultValues = await getConfigWithDefaultValues(parsedConfig)

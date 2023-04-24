@@ -13,6 +13,7 @@ program.description('CLI to read the base translation file and generate types')
 program.option('--no-watch', 'run the generator only once (CI)')
 program.option('--setup', 'step-by-step setup')
 program.option('--setup-auto', 'auto-guess setup')
+program.option('-p, --project <path>', 'generate translations by configuration file')
 
 program.version(version)
 
@@ -22,12 +23,12 @@ const run = async () => {
 
 	logger.info(`version ${version}`)
 
-	await checkAndUpdateSchemaVersion()
+	await checkAndUpdateSchemaVersion(options.project)
 
 	if (options.setup || options.setupAuto) {
 		await setup(options.setupAuto)
 	} else {
-		startGenerator(undefined, options['watch'])
+		startGenerator(options.project || '.typesafe-i18n.json', options['watch'])
 	}
 }
 

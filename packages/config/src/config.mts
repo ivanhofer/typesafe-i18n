@@ -10,11 +10,11 @@ export const writeConfigToFile = async (config: GeneratorConfig) =>
 
 export const doesConfigFileExist = async () => doesPathExist(resolve('.typesafe-i18n.json'))
 
-export const readRawConfig = async () =>
-	(await importFile<GeneratorConfig & { $schema?: string }>(resolve('.typesafe-i18n.json'), false)) || {}
+export const readRawConfig = async (configPath: string) =>
+	(await importFile<GeneratorConfig & { $schema?: string }>(resolve(configPath), false)) || {}
 
-export const readConfig = async (): Promise<GeneratorConfig> => {
-	const generatorConfig = await readRawConfig()
+export const readConfig = async (configPath = '.typesafe-i18n.json'): Promise<GeneratorConfig> => {
+	const generatorConfig = await readRawConfig(configPath)
 
 	// remove "$schema" property
 	const configWithoutSchemaAttribute = Object.fromEntries(
