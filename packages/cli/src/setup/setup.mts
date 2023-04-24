@@ -81,7 +81,7 @@ export const setup = async (autoSetup: boolean) => {
 
 	const config = await getConfigDiff(options)
 
-	await writeConfigToFile(config)
+	await writeConfigToFile(config, '.typesafe-i18n.json')
 	logger.info(`generated config file: '.typesafe-i18n.json'`)
 
 	const installed = await installDependencies()

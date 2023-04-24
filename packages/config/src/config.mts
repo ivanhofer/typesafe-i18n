@@ -5,8 +5,11 @@ import { applyDefaultValues } from './core.mjs'
 import type { GeneratorConfig, GeneratorConfigWithDefaultValues } from './types.mjs'
 import { validateConfig } from './validation.mjs'
 
-export const writeConfigToFile = async (config: GeneratorConfig) =>
-	writeConfigFile({ ...config, $schema: `https://unpkg.com/typesafe-i18n@${version}/schema/typesafe-i18n.json` })
+export const writeConfigToFile = async (config: GeneratorConfig, configPath: string) =>
+	writeConfigFile(
+		{ ...config, $schema: `https://unpkg.com/typesafe-i18n@${version}/schema/typesafe-i18n.json` },
+		configPath,
+	)
 
 export const doesConfigFileExist = async () => doesPathExist(resolve('.typesafe-i18n.json'))
 

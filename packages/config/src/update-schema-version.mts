@@ -9,7 +9,7 @@ export const checkAndUpdateSchemaVersion = async (configPath = '.typesafe-i18n.j
 
 	if (config.$schema.includes(version)) return
 
-	await writeConfigToFile(config)
+	await writeConfigToFile(config, configPath)
 
 	logger.info(`updated '$schema' version of '${configPath}' to '${version}'`)
 }
