@@ -327,7 +327,7 @@ module.exports = {
 
 Namespaces allows you to split your translations in multiple files and only load them on demand. e.g. you could store all translations that are displayed on the `settings`-page in it's own namespace and only load them when a user visits the settings-page.
 
-To create a namespace, you have to create a folder within your bas translations with the name of your namespace that contains a `index.ts` file.
+To create a namespace, you have to create a folder within your base translations with the name of your namespace that contains a `index.ts` file.
 ```
 src/
    i18n/
