@@ -7,9 +7,9 @@
   },
   "devDependencies": {
     "esbuild": "^0.15.18",
-    "solid-js": "^1.7.1",
-    "tsx": "^3.12.6",
-    "typescript": "^5.0.3"
+    "solid-js": "^1.7.5",
+    "tsx": "^3.12.7",
+    "typescript": "^5.0.4"
   },
   "type": "module"
 }

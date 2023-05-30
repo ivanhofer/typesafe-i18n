@@ -10,8 +10,8 @@
     "@types/lodash.merge": "^4.6.7",
     "esbuild": "^0.15.18",
     "lodash.merge": "^4.6.2",
-    "tsx": "^3.12.6",
-    "typescript": "^5.0.3",
+    "tsx": "^3.12.7",
+    "typescript": "^5.0.4",
     "watchlist": "^0.3.1"
   },
   "type": "module"
