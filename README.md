@@ -291,6 +291,12 @@ If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n 
 Dou you still have some questions? Reach out to us via [Github Discussions](https://github.com/ivanhofer/typesafe-i18n/discussions) or on [Discord](https://discord.gg/T27AHfaADK).
 
 ---
+### calling `LL.key()` renders an empty string
+
+You probably forgot to load the locale first before using it: https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#loading-locales
+Calling `loadLocaleAsync('en')` or `loadAllLocales()` will fix it.
+
+---
 ### Installing `typesafe-i18n` fails
 
 Running the `npx` command with a `npm` version `<7.0.0` will probably fail because it [**will not include** `peerDependencies`](https://github.blog/2020-10-13-presenting-v7-0-0-of-the-npm-cli).
