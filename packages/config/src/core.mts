@@ -23,22 +23,22 @@ export const applyDefaultValues = async (
 	...(config as unknown as any),
 })
 
-const readConfigFromDisk = async (fs: FileSystemUtil) => {
-	const content = await fs.readFile('.typesafe-i18n.json').catch(() => '{}')
+const readConfigFromDisk = async (fs: FileSystemUtil, configPath: string) => {
+	const content = await fs.readFile(configPath).catch(() => '{}')
 
 	return JSON.parse(content.toString()) as GeneratorConfig & { $schema?: string }
 }
 
-export const getConfig = async (fs: FileSystemUtil) => {
-	const config = await readConfigFromDisk(fs)
+export const getConfig = async (fs: FileSystemUtil, configPath = '.typesafe-i18n.json') => {
+	const config = await readConfigFromDisk(fs, configPath)
 
 	return applyDefaultValues(config)
 }
 
 // --------------------------------------------------------------------------------------------------------------------
 
-export const getLocaleInformation = async (fs: FileSystemUtil) => {
-	const config = await getConfig(fs)
+export const getLocaleInformation = async (fs: FileSystemUtil, configPath = '.typesafe-i18n.json') => {
+	const config = await getConfig(fs, configPath)
 
 	return {
 		base: config.baseLocale,
