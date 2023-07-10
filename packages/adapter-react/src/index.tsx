@@ -50,17 +50,18 @@ export const initI18nReact = <
 	const context = React.createContext({} as I18nContextType<L, T, TF>)
 
 	const component: React.FunctionComponent<TypesafeI18nProps<L>> = (props) => {
-		const [locale, _setLocale] = React.useState<L>(null as unknown as L)
-		const [LL, setLL] = React.useState<TF>(getFallbackProxy<TF>())
+		const [locale, setLocale] = React.useState<L>(props.locale)
 
-		const setLocale = (newLocale: L): void => {
-			_setLocale(newLocale)
-			setLL(() => i18nObject<L, T, TF, F>(newLocale, translations[newLocale], formatters[newLocale]))
-		}
-
-		!locale && setLocale(props.locale)
-
-		const ctx = { setLocale, locale, LL } as I18nContextType<L, T, TF>
+		const ctx = React.useMemo<I18nContextType<L, T, TF>>(
+			() => ({
+				setLocale,
+				locale,
+				LL: !locale
+					? getFallbackProxy<TF>()
+					: i18nObject<L, T, TF, F>(locale, translations[locale], formatters[locale]),
+			}),
+			[setLocale, locale, translations, formatters],
+		)
 
 		return <context.Provider value={ctx}>{props.children}</context.Provider>
 	}

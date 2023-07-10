@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.24.4 (2023-07-10)
+
+Fix:
+ - avoid recomputing react context [#684](https://github.com/ivanhofer/typesafe-i18n/issues/684)
+ 
 ## 5.24.3 (2023-03-26)
 
 Fix:
