@@ -233,18 +233,18 @@ The footprint of the `typesafe-i18n` package is smaller compared to other existi
 
 These parts are bundled into the [core functions](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#usage). The sizes of the core functionalities are:
 
-- [i18nString](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#i18nString): 987 bytes gzipped
-- [i18nObject](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#i18nObject): 1128 bytes gzipped
-- [i18n](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#i18n): 1159 bytes gzipped
+- [i18nString](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#i18nString): 945 bytes gzipped
+- [i18nObject](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#i18nObject): 1086 bytes gzipped
+- [i18n](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#i18n): 1117 bytes gzipped
 
 Apart from that there can be a small overhead depending on which utilities and wrappers you use.
 
 There also exists a useful wrapper for some frameworks:
-- [`typesafe-i18n` angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular): 1440 bytes gzipped
-- [`typesafe-i18n` react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react): 1618 bytes gzipped
-- [`typesafe-i18n` solid-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-solid): 1449 bytes gzipped
-- [`typesafe-i18n` svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte): 1381 bytes gzipped
-- [`typesafe-i18n` vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue): 1299 bytes gzipped
+- [`typesafe-i18n` angular-service](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-angular): 1225 bytes gzipped
+- [`typesafe-i18n` react-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-react): 1560 bytes gzipped
+- [`typesafe-i18n` solid-context](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-solid): 1402 bytes gzipped
+- [`typesafe-i18n` svelte-store](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-svelte): 1339 bytes gzipped
+- [`typesafe-i18n` vue-plugin](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/adapter-vue): 1253 bytes gzipped
 
 
 <!-- ------------------------------------------------------------------------------------------ -->
