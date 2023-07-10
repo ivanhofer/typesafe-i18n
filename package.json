@@ -169,8 +169,5 @@
 		"type": "github",
 		"url": "https://github.com/sponsors/ivanhofer"
 	},
-	"volta": {
-		"node": "18.15.0",
-		"npm": "8.5.1"
-	}
+	"packageManager": "pnpm@8.6.7"
 }

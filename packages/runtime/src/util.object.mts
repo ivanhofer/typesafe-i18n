@@ -63,7 +63,7 @@ export function typesafeI18nObject(locale: any, translations: any, formatters: a
 
 const wrap = <T extends BaseTranslation | BaseTranslation[]>(proxyObject: T = {} as T, translateFn: TranslateFn) =>
 	(typeof proxyObject === 'string'
-		? translateFn.bind(null, proxyObject)
+		? translateFn.bind(null, proxyObject as unknown as string)
 		: Object.assign(
 				Object.defineProperty(() => '', 'name', { writable: true }),
 				proxyObject,
