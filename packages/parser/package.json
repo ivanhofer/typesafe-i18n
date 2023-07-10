@@ -7,10 +7,10 @@
     "test:watch": "watchlist src -- pnpm test"
   },
   "devDependencies": {
-    "esbuild": "^0.15.18",
+    "esbuild": "^0.18.11",
     "tsx": "^3.12.7",
     "typesafe-utils": "^1.16.2",
-    "typescript": "^5.0.4",
+    "typescript": "^5.1.6",
     "uvu": "^0.5.6",
     "watchlist": "^0.3.1"
   },

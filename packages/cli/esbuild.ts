@@ -1,4 +1,5 @@
-import { build } from 'esbuild'
+/* eslint-disable no-console */
+import { context } from 'esbuild'
 import { dirname, resolve } from 'path'
 import { fileURLToPath } from 'url'
 import { nativeNodeModulesPlugin } from './native-node-modules-plugin'
@@ -11,7 +12,7 @@ const watch = process.argv.includes('--watch')
 
 const getPath = (file: string) => resolve(__dirname, file)
 
-build({
+const ctx = await context({
 	plugins: [nativeNodeModulesPlugin],
 	entryPoints: [getPath('src/cli.mts')],
 	bundle: true,
@@ -25,6 +26,18 @@ global.require = createRequire(import.meta.url)`,
 	},
 	format: 'esm',
 	sourcemap: watch,
-	watch,
 	tsconfig: './tsconfig.json',
 }).catch(() => process.exit(1))
+
+if (watch) {
+	await ctx.watch()
+	console.info('👀 watching for changes...')
+	process.on('exit', async () => {
+		console.info('🙈 process killed')
+		await ctx.dispose()
+	})
+} else {
+	await ctx.rebuild()
+	console.info('✅ build complete')
+	await ctx.dispose()
+}

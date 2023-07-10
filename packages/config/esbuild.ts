@@ -1,4 +1,5 @@
-import { build } from 'esbuild'
+/* eslint-disable no-console */
+import { context } from 'esbuild'
 import { dirname, resolve } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -12,16 +13,32 @@ const getPath = (file: string) => resolve(__dirname, file)
 
 const formats = ['esm', 'cjs'] as const
 
-formats.forEach((format) => {
-	build({
-		entryPoints: [getPath('src/index.mts')],
-		bundle: true,
-		outfile: getPath(`../../config/index.${format === 'esm' ? 'm' : 'c'}js`),
-		platform: 'neutral',
-		external: ['typescript'],
-		format,
-		sourcemap: watch,
-		watch,
-		tsconfig: './tsconfig.json',
-	}).catch(() => process.exit(1))
-})
+const contexts = await Promise.all(
+	formats.map((format) =>
+		context({
+			entryPoints: [getPath('src/index.mts')],
+			bundle: true,
+			outfile: getPath(`../../config/index.${format === 'esm' ? 'm' : 'c'}js`),
+			platform: 'neutral',
+			external: ['typescript'],
+			format,
+			sourcemap: watch,
+			tsconfig: './tsconfig.json',
+		}),
+	),
+)
+
+for (const ctx of contexts) {
+	if (watch) {
+		await ctx.watch()
+		console.info('👀 watching for changes...')
+		process.on('exit', async () => {
+			console.info('🙈 process killed')
+			await ctx.dispose()
+		})
+	} else {
+		await ctx.rebuild()
+		console.info('✅ build complete')
+		await ctx.dispose()
+	}
+}

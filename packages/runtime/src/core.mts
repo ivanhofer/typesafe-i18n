@@ -351,7 +351,7 @@ export type Args<
 	? // ! currently to resource intensive
 	  // ? TransformArgsArray<DetectArgs<Translation, Formatters>> //
 	  DetectArgs<Translation, Formatters>
-	: never
+	: []
 
 // type TransformArgsArray<A extends Array<Record<string, unknown>>> = keyof A[0] extends `${number}`
 // 	? ToIndexBasedArgs<A>

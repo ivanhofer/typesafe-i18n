@@ -1,5 +1,5 @@
-import type { Readable, Writable } from 'svelte/store'
-import { derived, writable } from 'svelte/store'
+import type { Readable } from 'svelte/store'
+import { writable } from 'svelte/store'
 import { getFallbackProxy } from '../../runtime/src/core-utils.mjs'
 import type { BaseFormatters, BaseTranslation, Locale, TranslationFunctions } from '../../runtime/src/core.mjs'
 import { i18nObject } from '../../runtime/src/util.object.mjs'
@@ -34,7 +34,7 @@ export const initI18nSvelte = <
 	const _locale = writable<L>()
 	const _LL = writable<TF>(getFallbackProxy<TF>())
 
-	const locale = derived<Writable<L>, L>(_locale, (newLocale, set) => set(newLocale))
+	const locale = readonly<L>(_locale)
 
 	const LL = new Proxy({} as Readable<TF> & TF, {
 		get: (_target, key: keyof TF & 'subscribe') => (key === 'subscribe' ? _LL.subscribe : _LL[key]),
@@ -49,5 +49,13 @@ export const initI18nSvelte = <
 		locale,
 		LL,
 		setLocale,
+	}
+}
+
+// copy from "svelte/store" to support older versions than `3.56.0`
+function readonly<T>(store: Readable<T>): Readable<T> {
+	return {
+		// @ts-ignore
+		subscribe: store.subscribe.bind(store),
 	}
 }

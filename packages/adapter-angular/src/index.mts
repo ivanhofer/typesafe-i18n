@@ -22,7 +22,10 @@ export class I18nServiceRoot<
 	#locale: L = null as unknown as L
 	#LL: TF = wrapProxy(getFallbackProxy<TF>())
 
-	constructor(private translations: Record<L, T>, private formatters: Record<L, F>) {}
+	constructor(
+		private translations: Record<L, T>,
+		private formatters: Record<L, F>,
+	) {}
 
 	get locale(): L {
 		return this.#locale

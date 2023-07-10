@@ -17,11 +17,11 @@ import { prettify, sanitizePath, wrapObjectKeyIfNeeded } from '../utils/generato
 
 const combineNamespacesSingleToObject = (sanitizedLocale: string, namespaces: string[]) => `{
 		...${sanitizedLocale}${namespaces
-	.map(
-		(namespace) => `,
+			.map(
+				(namespace) => `,
 		${wrapObjectKeyIfNeeded(namespace)}: ${sanitizedLocale}_${sanitizePath(namespace)}`,
-	)
-	.join('')}
+			)
+			.join('')}
 	}`
 
 const getLocalesTranslationRowSync = (locale: Locale, namespaces: string[]): string => {
