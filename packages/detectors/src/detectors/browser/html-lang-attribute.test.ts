@@ -20,8 +20,8 @@ const mockDocument = () =>
 					//@ts-ignore
 					return this._lang
 				},
-			} as HTMLHtmlElement),
-	} as Document)
+			}) as HTMLHtmlElement,
+	}) as Document
 
 const testDetector = (name: string, htmlLangValue: string | undefined, expected: Locale[]) =>
 	test(`html-lang-attribute ${name}`, () => {
