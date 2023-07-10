@@ -4,7 +4,7 @@ Contributions are welcome. New ideas, improvements and optimizations are collect
 
 This project should keep following values:
 
- - lightweight and performat i18n solution
+ - lightweight and performant i18n solution
  - best possible TypeScript support
  - easy to use (DX)
  - should work well together with other tools and services

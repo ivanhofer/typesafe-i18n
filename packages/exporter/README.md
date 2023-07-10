@@ -2,6 +2,14 @@
 
 In order to export language files to a service or an API, `typesafe-i18n` provides an `exporter` functionality.
 
+### services
+
+There exists an official plugin for [Inlang](https://inlang.com/). It allows you to use `typesafe-i18n` together with the tooling Inlang provides. You can find it [here](https://github.com/ivanhofer/inlang-plugin-typesafe-i18n).
+
+### custom implementation
+
+You have to write your own logic to call the `readTranslationFromDisk` function, then map the dictionary-representation to a specific format and then send it to your translation service of choice. Here is an example how this could look like:
+
 ## Setup
 
 See [here](https://github.com/ivanhofer/typesafe-i18n#get-started) on more information how to set up `typesafe-i18n`.

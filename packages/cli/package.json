@@ -17,7 +17,7 @@
     "tsx": "^3.12.6",
     "type-fest": "^3.8.0",
     "typesafe-utils": "^1.16.2",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.4"
   },
   "type": "module"
 }

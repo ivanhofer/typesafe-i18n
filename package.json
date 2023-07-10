@@ -156,8 +156,8 @@
 		"rimraf": "^4.4.1",
 		"size-limit": "^8.2.4",
 		"tiny-glob": "^0.2.9",
-		"tsx": "^3.12.6",
-		"typescript": "^5.0.3"
+		"tsx": "^3.12.7",
+		"typescript": "^5.0.4"
 	},
 	"peerDependencies": {
 		"typescript": ">=3.5.1"

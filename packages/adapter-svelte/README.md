@@ -166,25 +166,6 @@ If you want to change the locale, you need to call `setLocale` with the locale a
 </div>
 ```
 
-### isLocaleLoading
-
-Svelte store that returns a `boolean`. It can be used to wait for the locale to be loaded.
-
-```html
-<script>
-   import { isLocaleLoading } from './i18n/i18n-svelte'
-</script>
-
-{#if $isLocaleLoading}
-   loading...
-{:else}
-
-   <!-- your app code goes here  -->
-
-{/if}
-```
-
-
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->

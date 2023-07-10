@@ -218,6 +218,8 @@ The `typesafe-i18n` package allows us to be 100% typesafe for our translation fu
 
 `typesafe-i18n` comes with an API that allows other services to read and update translations. You can connect other services by using the [`importer`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/importer) and [`exporter`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/exporter) functionality.
 
+There also exists an official plugin for [Inlang](https://inlang.com/). It allows you to use `typesafe-i18n` together with the tooling Inlang provides. You can find it [here](https://github.com/ivanhofer/inlang-plugin-typesafe-i18n).
+
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -287,6 +289,11 @@ If you use `typesafe-i18n` you will get a smaller bundle compared to other i18n 
 
 ---
 Dou you still have some questions? Reach out to us via [Github Discussions](https://github.com/ivanhofer/typesafe-i18n/discussions) or on [Discord](https://discord.gg/T27AHfaADK).
+
+---
+### Calling `LL.key()` renders an empty string
+
+You probably forgot to [load the locale](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/generator#loading-locales) first before using it. Calling `loadLocaleAsync('en')` or `loadAllLocales()` will fix it.
 
 ---
 ### Installing `typesafe-i18n` fails
@@ -410,8 +417,28 @@ export default en
 <p>
 ```
 
+---
+
+### How can I have translated validation messages?
+
+Validation libraries like `zod`, `yup`, `joi` etc. usually provide a way to define custom error messages. You can use `typesafe-i18n` to translate these messages.
+
+But you need to create the validation schema dynamically, after you have initialized the `LL` object ([]`i18nObject`](https://github.com/ivanhofer/typesafe-i18n/tree/main/packages/runtime#i18nObject)).
+
+You can do that like this by passing the `LL` object to a function that returns the validation schema:
+
+```ts
+import { z } from 'zod'
+import type { TranslationFunctions } from './i18n/i18n-types'
+
+export const createLoginSchema = (LL: TranslationFunctions) => z.object({
+    email: z.string().min(1, LL.validation.emptyField()).email(LL.validation.invalidEmail()),
+    password: z.string().min(1, LL.validation.emptyField()),
+})
+```
 
 ---
+
 ### How do I render a component inside a Translation?
 
 By default `typesafe-i18n` at this time does not provide such a functionality. Basically you will need to write a function that splits the translated message and renders a component between the parts. You can define your split characters yourself but you would always need to make sure you add them in any translation since `typesafe-i18n` doesn't provide any typesafety for these characters (yet).

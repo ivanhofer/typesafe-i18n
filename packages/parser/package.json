@@ -10,7 +10,7 @@
     "esbuild": "^0.17.15",
     "tsx": "^3.12.6",
     "typesafe-utils": "^1.16.2",
-    "typescript": "^5.0.3",
+    "typescript": "^5.0.4",
     "uvu": "^0.5.6",
     "watchlist": "^0.3.1"
   },

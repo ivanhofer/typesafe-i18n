@@ -41,7 +41,7 @@ Detectors can be used either on the [browser](#browser) or the [server](#server)
 import { detectLocale } from 'typesafe-i18n/detectors'
 
 const fallbackLocale = 'de'
-const availableLocales = ['de', 'en' 'it', 'fr']
+const availableLocales = ['de', 'en', 'it', 'fr']
 
 const customDetector = () => {
    const locale = detectRandomLocale() // your custom locale detector
@@ -78,7 +78,7 @@ const detectedLocale = detectLocale(fallbackLocale, availableLocales, customDete
 
 ### Server
 
-This detectors are expected to run on a server-environment e.g. an express server or serverless function. These detectors **all expect** an [`express`](http://expressjs.com/)-compatible [`req`](http://expressjs.com/en/api.html#req) object.
+These detectors are expected to run on a server-environment e.g. an express server or serverless function. These detectors **all expect** an [`express`](http://expressjs.com/)-compatible [`req`](http://expressjs.com/en/api.html#req) object.
 
 #### `accept-language` header
 
