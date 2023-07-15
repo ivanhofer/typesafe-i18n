@@ -157,9 +157,9 @@ const getPlural = (pluralRules: Intl.PluralRules, { z, o, t, f, m, r }: BasicPlu
 		case 'two':
 			return t
 		case 'few':
-			return f
+			return f || r
 		case 'many':
-			return m
+			return m || r
 		default:
 			return r
 	}
