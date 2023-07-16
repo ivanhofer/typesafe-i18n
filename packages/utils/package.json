@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "@types/lodash.merge": "^4.6.7",
-    "esbuild": "^0.18.11",
+    "esbuild": "^0.18.13",
     "lodash.merge": "^4.6.2",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6",
