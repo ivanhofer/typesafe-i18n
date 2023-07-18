@@ -2,11 +2,16 @@
 
 # Version 5
 
+## 5.25.0 (2023-07-18)
+
+Feat:
+ - add support for `TypeScript` `>5.1`
+
 ## 5.24.4 (2023-07-10)
 
 Fix:
  - avoid recomputing react context [#684](https://github.com/ivanhofer/typesafe-i18n/issues/684)
- 
+
 ## 5.24.3 (2023-03-26)
 
 Fix:
