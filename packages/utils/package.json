@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "tsx esbuild.ts --watch",
     "build": "tsx esbuild.ts && tsc -p tsconfig.json --emitDeclarationOnly",
-    "test": "tsc --noEmit",
+    "test": "uvu -r @esbuild-kit/cjs-loader src && tsc --noEmit",
     "test:watch": "watchlist src -- pnpm test"
   },
   "devDependencies": {
