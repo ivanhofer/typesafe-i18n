@@ -29,3 +29,5 @@ test('nested extend with simple', () => {
 	assert.is(LL.simple(), 'Hello extended')
 	assert.is(LL.nested.value(), 'Hello nested extended')
 })
+
+test.run()
