@@ -3,7 +3,7 @@ import * as assert from 'uvu/assert'
 import { i18nObject } from '../../runtime/src/index.mjs'
 import { extendDictionary } from './index.mjs'
 
-const test = suite('formatters')
+const test = suite('utils')
 
 const translation = {
 	simple: 'Hello',
