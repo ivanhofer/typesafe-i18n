@@ -1,4 +1,4 @@
-import merge from 'lodash.merge'
+import extend from 'just-extend'
 import type { BaseTranslation } from '../../runtime/src/core.mjs'
 
 type DeepPartial<T> = T extends BaseTranslation
@@ -21,6 +21,6 @@ export const initExtendDictionary =
 		base: Base,
 		part: DeepPartial<ToGenericString<Translation>>,
 	): Translation =>
-		merge({}, base, part) as Translation
+		extend({}, base, part) as Translation
 
 export const extendDictionary = initExtendDictionary()
