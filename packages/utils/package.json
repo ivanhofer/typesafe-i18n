@@ -3,15 +3,15 @@
   "scripts": {
     "dev": "tsx esbuild.ts --watch",
     "build": "tsx esbuild.ts && tsc -p tsconfig.json --emitDeclarationOnly",
-    "test": "tsc --noEmit",
+    "test": "uvu -r @esbuild-kit/cjs-loader src && tsc --noEmit",
     "test:watch": "watchlist src -- pnpm test"
   },
   "devDependencies": {
-    "@types/lodash.merge": "^4.6.7",
     "esbuild": "^0.18.13",
-    "lodash.merge": "^4.6.2",
+    "just-extend": "^6.2.0",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6",
+    "uvu": "^0.5.6",
     "watchlist": "^0.3.1"
   },
   "type": "module"

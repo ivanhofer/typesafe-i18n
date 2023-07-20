@@ -490,7 +490,7 @@ Your locale translation files can be any kind of JavaScript object. So you can m
    export default en_US
    ```
 
-   > If you are using nested translations, you should use the provided `extendDictionary` function that uses [`lodash/merge`](https://lodash.com/docs/4.17.15#merge) under the hood.
+   > If you are using nested translations, you should use the provided `extendDictionary` function that uses [`just-extend`](https://github.com/angus-c/just#just-extend) under the hood.
    > ```ts
    > import { extendDictionary } from '../i18n-utils'
    > import en from '../en' // import translations from 'en' locale

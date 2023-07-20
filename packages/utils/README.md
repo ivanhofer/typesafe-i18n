@@ -28,4 +28,4 @@ const en_US = extendDictionary(en, {
 
 export default en_US
 ```
-> uses [`lodash/merge`](https://lodash.com/docs/4.17.15#merge) under the hood
+> uses [`just-extend`](https://github.com/angus-c/just#just-extend) under the hood

@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.25.1 (2023-07-20)
+
+Fix:
+ - replace `lodash.merge` with `just-extend"`
+
 ## 5.25.0 (2023-07-18)
 
 Feat:

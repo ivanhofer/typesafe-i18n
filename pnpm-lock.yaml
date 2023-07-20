@@ -394,21 +394,21 @@ importers:
 
   packages/utils:
     devDependencies:
-      '@types/lodash.merge':
-        specifier: ^4.6.7
-        version: 4.6.7
       esbuild:
         specifier: ^0.18.13
         version: 0.18.13
-      lodash.merge:
-        specifier: ^4.6.2
-        version: 4.6.2
+      just-extend:
+        specifier: ^6.2.0
+        version: 6.2.0
       tsx:
         specifier: ^3.12.7
         version: 3.12.7
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
+      uvu:
+        specifier: ^0.5.6
+        version: 0.5.6
       watchlist:
         specifier: ^0.3.1
         version: 0.3.1
@@ -1110,16 +1110,6 @@ packages:
 
   /@types/json-schema@7.0.12:
     resolution: {integrity: sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==}
-    dev: true
-
-  /@types/lodash.merge@4.6.7:
-    resolution: {integrity: sha512-OwxUJ9E50gw3LnAefSHJPHaBLGEKmQBQ7CZe/xflHkyy/wH2zVyEIAKReHvVrrn7zKdF58p16We9kMfh7v0RRQ==}
-    dependencies:
-      '@types/lodash': 4.14.195
-    dev: true
-
-  /@types/lodash@4.14.195:
-    resolution: {integrity: sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==}
     dev: true
 
   /@types/minimatch@5.1.2:
@@ -2586,6 +2576,10 @@ packages:
 
   /just-diff@6.0.2:
     resolution: {integrity: sha512-S59eriX5u3/QhMNq3v/gm8Kd0w8OS6Tz2FS1NG4blv+z0MuQcBRJyFWjdovM0Rad4/P4aUPFtnkNjMjyMlMSYA==}
+    dev: true
+
+  /just-extend@6.2.0:
+    resolution: {integrity: sha512-cYofQu2Xpom82S6qD778jBDpwvvy39s1l/hrYij2u9AMdQcGRpaBu6kY4mVhuno5kJVi1DAz4aiphA2WI1/OAw==}
     dev: true
 
   /kleur@3.0.3:
