@@ -143,7 +143,7 @@
 	"devDependencies": {
 		"@size-limit/preset-small-lib": "^8.2.6",
 		"@types/glob": "^8.1.0",
-		"@types/node": "^18.16.19",
+		"@types/node": "^18.17.0",
 		"@typescript-eslint/eslint-plugin": "^5.62.0",
 		"@typescript-eslint/parser": "^5.62.0",
 		"eslint": "^8.45.0",

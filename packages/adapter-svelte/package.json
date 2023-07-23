@@ -6,8 +6,8 @@
     "test": "tsc --noEmit"
   },
   "devDependencies": {
-    "esbuild": "^0.18.13",
-    "svelte": "^4.0.5",
+    "esbuild": "^0.18.16",
+    "svelte": "^4.1.1",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
   },

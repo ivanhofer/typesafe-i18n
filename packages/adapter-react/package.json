@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
-    "esbuild": "^0.18.13",
+    "esbuild": "^0.18.16",
     "react": "^18.2.0",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
