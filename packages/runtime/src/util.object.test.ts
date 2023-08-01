@@ -276,6 +276,7 @@ test('multiple params plural for language without PluralRule other', () =>
 	assert.is(LL10.MULTIPLE_PARAMS_PLURAL(1, 2), '1 banana and 2 apples'))
 test('plural zero: one for language without PluralRule other', () => assert.is(LL10.SINGULAR_PLURAL(1), 'one item'))
 test('plural zero: ?? for language without PluralRule other', () => assert.is(LL10.SINGULAR_PLURAL(5), '5 items'))
+
 // --------------------------------------------------------------------------------------------------------------------
 
 test.run()
