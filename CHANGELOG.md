@@ -2,6 +2,11 @@
 
 # Version 5
 
+## 5.26.0 (2023-08-01)
+
+Feat:
+ - improved plural rules support for polnish [#672](https://github.com/ivanhofer/typesafe-i18n/issues/672)
+
 ## 5.25.1 (2023-07-20)
 
 Fix:
