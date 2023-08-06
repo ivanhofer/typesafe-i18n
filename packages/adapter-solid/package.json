@@ -6,8 +6,8 @@
     "test": "tsc --noEmit"
   },
   "devDependencies": {
-    "esbuild": "^0.18.16",
-    "solid-js": "^1.7.8",
+    "esbuild": "^0.18.18",
+    "solid-js": "^1.7.9",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
   },
