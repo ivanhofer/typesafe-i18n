@@ -173,8 +173,8 @@ If you want to change the locale, you need to call `setLocale` with the locale a
 
 # SvelteKit
 
-See [here](https://github.com/ivanhofer/typesafe-i18n-demo-sveltekit)
-
+- See SvelteKit with TypeScript example [here](https://github.com/ivanhofer/typesafe-i18n-demo-sveltekit)
+- See SvelteKit with JavaScript + JSDocs example [here](https://github.com/ivanhofer/typesafe-i18n-demo-sveltekit-jsdoc)
 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
