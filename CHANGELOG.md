@@ -2,7 +2,7 @@
 
 # Version 5
 
-## 5.26.1 (2023-08-12)
+## 5.26.1 (2023-08-14)
 
 Fix:
  - recompute `LL` object after calling `setLocale` in adapter-react [#721](https://github.com/ivanhofer/typesafe-i18n/issues/721)
