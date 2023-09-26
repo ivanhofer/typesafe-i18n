@@ -207,11 +207,11 @@ The available options are:
 
 | key                                                       | type                                                                                             | default value                                 |
 | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------- |
-| [adapter](#adapter)                                       | `'angular'  \| 'node'  \| 'react'  \| 'solid'  \| 'svelte'  \| 'vue'  \| undefined` | `undefined`                                   |
-| [adapters](#adapters)                                       | `Array<'angular' \| 'node' \| 'react' \| 'solid' \| 'svelte' \| 'vue'> \| undefined`                           | `undefined`
+| [adapter](#adapter)                                       | `'angular'  \| 'node'  \| 'react'  \| 'solid'  \| 'svelte'  \| 'vue'  \| undefined` | `undefined`| `undefined`                                   |
+| [adapters](#adapters)                                     | `Array<'angular' \| 'node' \| 'react' \| 'solid' \| 'svelte' \| 'vue'> \| undefined`             | `undefined`                                   |
 | [baseLocale](#baselocale)                                 | `string`                                                                                         | `'en'`                                        |
 | [outputFormat](#outputformat)                             | `'TypeScript'` &#124; `'JavaScript'`                                                             | `'TypeScript'`                                |
-| [esmImports](#esmimports)                                 | `boolean | '.js' | 'fileEnding'                                                                                        | `false`                                       |
+| [esmImports](#esmimports)                                 | `boolean` &#124; `'.js'` &#124; `'fileEnding'`                                                   | `false`                                       |
 | [generateOnlyTypes](#generateonlytypes)                   | `boolean`                                                                                        | `false`                                       |
 | [runAfterGenerator](#runaftergenerator)                   | `string` &#124; `undefined`                                                                      | `undefined`                                   |
 | [banner](#banner)                                         | `string`                                                                                         | `'/* eslint-disable */'`                      |
