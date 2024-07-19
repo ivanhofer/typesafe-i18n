@@ -259,11 +259,13 @@ You may run into the error **`Error [ERR_MODULE_NOT_FOUND]: Cannot find package 
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------------------------------------ -->
 
-## recipes
+## Recipes
 
 ### How do I render a component inside a Translation?
 
 By default `typesafe-i18n` at this time does not provide such a functionality. But you could easily write a function like this:
+
+### Wrap Piece of Translation with a component:
 
 ```svelte
 <script lang="ts">
@@ -309,3 +311,134 @@ Use it inside your application
    </WrapTranslation>
 </main>
 ```
+
+
+### Wrapping Multiple Pieces of Translation using snippets:
+
+#### TranslationSnippetWrapper
+_This example uses lodash for the sorting_
+```svelte
+<script context="module" lang="ts">
+	import type { Snippet } from 'svelte';
+	import type { LocalizedString } from 'typesafe-i18n';
+
+	type Props = {
+		message: LocalizedString | string;
+		replacers: Record<string, Snippet<[string]>>;
+	};
+
+	type ReplacerDataEntry = string | { method: Snippet<[string]>; content: string };
+
+	/**
+	 * Get all indices of a substring in a string
+	 * @link https://stackoverflow.com/a/3410557
+	 */
+	function getIndicesOf(searchStr: string, str: string) {
+		const searchStrLen = searchStr.length;
+		if (searchStrLen == 0) {
+			return [];
+		}
+
+		let startIndex = 0;
+		let index;
+		let indices = [];
+
+		while ((index = str.indexOf(searchStr, startIndex)) > -1) {
+			indices.push(index);
+			startIndex = index + searchStrLen;
+		}
+		return indices;
+	}
+</script>
+
+<script lang="ts">
+	import sortBy from 'lodash/sortBy';
+
+	const { message, replacers }: Props = $props();
+
+	const replacerData: ReplacerDataEntry[] = $derived.by(() => {
+		const replacerKeys = Object.keys(replacers);
+		// First get the index of the replacer keys
+		const allReplacerKeyIndexes = replacerKeys.reduce(
+			(previous, key) => {
+				const indeces = getIndicesOf(`<${key}>`, message);
+				indeces.forEach((index) => {
+					previous[index] = key;
+				});
+				return previous;
+			},
+			{} as Record<number, string>,
+		);
+
+		// Sort the replacer keys by their index
+		const sorted = sortBy(Object.entries(allReplacerKeyIndexes), ([index]) => index);
+
+		let cuttableMessage = message as string;
+
+		const finalRenderArray = sorted.reduce((current, [, key], index) => {
+			// Split the message into two parts: before and after the current replacer key
+			const [before, infixRaw] = cuttableMessage.split(`<${key}>`);
+			const [infix, after] = infixRaw.split(`</${key}>`);
+
+			// Get the remaining part of the message after the current replacer key
+			const subMessage = cuttableMessage.substring(cuttableMessage.indexOf(after));
+
+			// Push the before part and the current replacer data to the final render array
+			current.push(before, {
+				method: replacers[key],
+				content: infix,
+			});
+
+			// If it's the last replacer key, push the after part to the final render array
+			if (index === sorted.length - 1) {
+				current.push(after);
+			}
+
+			// Update the cuttableMessage to the remaining part
+			cuttableMessage = subMessage;
+
+			return current;
+		}, [] as ReplacerDataEntry[]);
+
+		return finalRenderArray;
+	});
+</script>
+
+{#each replacerData as part}
+	{#if typeof part === 'string'}
+		{part}
+	{:else}
+		{@render part.method(part.content)}
+	{/if}
+{/each}
+```
+
+Your translations would look something like this:
+```ts
+const en = {
+   'Hi {name:string}, click <someSnippet>here</someSnippet> to create your <anotherSnippet>first</anotherSnippet> project':
+	'Hi {name:string}, click <someSnippet>here</someSnippet> to create your <anotherSnippet>first</anotherSnippet> project'
+}
+```
+_(By using the same value for the translation as the key you have an easy overview of what snippets can be used)_
+
+Use it inside your application
+
+```svelte
+{#snippet someSnippet(text: string)}
+	<p class="bold">
+		{text}
+	</p>
+{/snippet}
+
+{#snippet anotherSnippet(text: string)}
+	<p class="italic">
+		{text}
+	</p>
+{/snippet}
+<TranslationSnippetWrapper
+	message={$LL["Hi {name:string}, click <someSnippet>here</someSnippet> to create your <anotherSnippet>first</anotherSnippet> project"]("SanCoca")}
+	replacers={{ someSnippet, anotherSnippet }}
+/>
+```
+
