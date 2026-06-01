@@ -38,5 +38,8 @@ export const getAllLocales = async (
 	const fileEnding = outputFormat === 'JavaScript' ? '.js' : '.ts'
 	const files = await getFiles(fs, path, 1)
 
-	return files.filter(({ folder, name }) => folder && name === `index${fileEnding}`).map(({ folder }) => folder)
+	return files
+		.filter(({ folder, name }) => folder && name === `index${fileEnding}`)
+		.map(({ folder }) => folder)
+		.sort()
 }
