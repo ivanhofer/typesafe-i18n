@@ -7,7 +7,7 @@ const test = suite('utils')
 
 const translation = {
 	simple: 'Hello',
-	nested: { value: 'Hello nested' },
+	nested: { value: 'Hello nested', otherValue: 'Hello nested again' },
 }
 
 test('does no mutation', () => {
@@ -37,6 +37,7 @@ test('simple extend', () => {
 		simple: 'Hello extended',
 		nested: {
 			value: 'Hello nested',
+			otherValue: 'Hello nested again',
 		},
 	})
 })
@@ -47,6 +48,7 @@ test('nested extend', () => {
 		simple: 'Hello',
 		nested: {
 			value: 'Hello nested extended',
+			otherValue: 'Hello nested again',
 		},
 	})
 })
@@ -60,6 +62,7 @@ test('nested extend with simple', () => {
 		simple: 'Hello extended',
 		nested: {
 			value: 'Hello nested extended',
+			otherValue: 'Hello nested again',
 		},
 	})
 })
@@ -74,6 +77,7 @@ test('add prop', () => {
 		add: 'test',
 		nested: {
 			value: 'Hello nested',
+			otherValue: 'Hello nested again',
 		},
 	})
 })
@@ -92,6 +96,7 @@ test('add nested prop', () => {
 		},
 		nested: {
 			value: 'Hello nested',
+			otherValue: 'Hello nested again',
 		},
 	})
 })

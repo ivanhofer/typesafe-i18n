@@ -21,6 +21,6 @@ export const initExtendDictionary =
 		base: Base,
 		part: DeepPartial<ToGenericString<Translation>>,
 	): Translation =>
-		extend({}, base, part) as Translation
+		extend(true, {}, base, part) as Translation
 
 export const extendDictionary = initExtendDictionary()
