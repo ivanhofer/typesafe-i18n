@@ -147,6 +147,7 @@
 	},
 	"devDependencies": {
 		"@size-limit/preset-small-lib": "^8.2.6",
+		"@types/bun": "^1.3.14",
 		"@types/glob": "^8.1.0",
 		"@types/node": "^18.17.3",
 		"@typescript-eslint/eslint-plugin": "^5.62.0",
@@ -166,6 +167,11 @@
 	},
 	"peerDependencies": {
 		"typescript": ">=3.5.1"
+	},
+	"peerDependenciesMeta": {
+		"typescript": {
+			"optional": true
+		}
 	},
 	"bin": {
 		"typesafe-i18n": "cli/typesafe-i18n.mjs"

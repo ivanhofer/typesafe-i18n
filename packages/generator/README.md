@@ -20,6 +20,10 @@ Make sure you have installed `node` version `> 12.x` and are using a `typescript
 
  > The generator will create a different output depending on your TypeScript version. Older versions don't support all the features `typesafe-i18n` need to provide you with the best types. Make sure to use a TypeScript version `> 4.1.x` to benefit from all the typechecking features.
 
+TypeScript 7 (the Go-based compiler) is supported as well: since it no longer ships the JavaScript compiler API, the generator automatically falls back to invoking the `tsc` CLI of your installed `typescript` package.
+
+The generator also runs on [Bun](https://bun.sh) without needing `typescript` installed at all — when started via `bunx --bun typesafe-i18n` (or `bun --bun run typesafe-i18n`), your locale files get transpiled with Bun's native bundler. Running `bunx typesafe-i18n` without the `--bun` flag executes the generator with `node` (because of the shebang in the CLI entry point), which works too as long as `typescript` is installed.
+
 Start the generator process in your terminal:
 
 ```bash
