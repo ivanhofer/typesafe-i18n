@@ -133,6 +133,10 @@ const transpileWithTscCli = async (languageFilePath: string, tempPath: string): 
 		[
 			tscPath,
 			languageFilePath,
+			// a 'tsconfig.json' next to the project would otherwise abort the compilation with
+			// 'error TS5112'; the flag only exists in TypeScript >= 7, which is the only version
+			// this code path runs for (older versions provide the compiler API instead)
+			'--ignoreConfig',
 			'--outDir',
 			tempPath,
 			'--allowJs',
