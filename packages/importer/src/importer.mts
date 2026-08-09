@@ -1,13 +1,13 @@
 import fs from 'fs/promises'
-import ts from 'typescript'
 import { getConfigWithDefaultValues } from '../../config/src/config.mjs'
 import { generateLocaleTemplate } from '../../generator/src/files/generate-template-locale.mjs'
 import { generateNamespaceTemplate } from '../../generator/src/files/generate-template-namespace.mjs'
 import { generate } from '../../generator/src/generate-files.mjs'
 import { configureOutputHandler } from '../../generator/src/output-handler.mjs'
 import { parseLanguageFile } from '../../generator/src/parse-language-file.mjs'
-import { parseTypescriptVersion, runCommandAfterGenerator } from '../../generator/src/utils/generator.utils.mjs'
+import { runCommandAfterGenerator } from '../../generator/src/utils/generator.utils.mjs'
 import { createLogger } from '../../generator/src/utils/logger.mjs'
+import { getTypescriptVersion } from '../../generator/src/utils/typescript.utils.mjs'
 import type { BaseTranslation, ImportLocaleMapping, Locale } from '../../runtime/src/core.mjs'
 import { getAllLocales } from '../../shared/src/file.utils.mjs'
 
@@ -28,7 +28,7 @@ export const storeTranslationsToDisk = async (
 ): Promise<Locale[]> => {
 	const config = await getConfigWithDefaultValues()
 
-	const version = parseTypescriptVersion(ts.versionMajorMinor)
+	const version = await getTypescriptVersion()
 	configureOutputHandler(config, version)
 
 	const createdLocales: Locale[] = []

@@ -7,8 +7,8 @@ export type TypescriptVersion = {
 	minor: number
 }
 
-export const parseTypescriptVersion = (versionMajorMinor: `${number}.${number}`): TypescriptVersion => {
-	const [major, minor] = versionMajorMinor.split('.').map((item) => +item) as [number, number]
+export const parseTypescriptVersion = (version: `${number}.${number}` | string): TypescriptVersion => {
+	const [major = 0, minor = 0] = version.split('.').map((item) => parseInt(item, 10) || 0)
 
 	return {
 		major,

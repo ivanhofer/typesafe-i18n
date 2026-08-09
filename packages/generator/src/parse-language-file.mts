@@ -1,6 +1,9 @@
-import { resolve, sep } from 'path'
+/// <reference types="bun" />
+import { execFile } from 'child_process'
+import { readdir } from 'fs/promises'
+import { dirname, resolve, sep } from 'path'
 import { isTruthy } from 'typesafe-utils'
-import ts from 'typescript'
+import { promisify } from 'util'
 import type { OutputFormats } from '../../config/src/types.mjs'
 import type { Locale } from '../../runtime/src/core.mjs'
 import type { BaseTranslation } from '../../runtime/src/index.mjs'
@@ -14,6 +17,7 @@ import {
 	importFile,
 } from './utils/file.utils.mjs'
 import { logger } from './utils/logger.mjs'
+import { createRequireFromProject, getTypescriptCompiler } from './utils/typescript.utils.mjs'
 
 /**
  * looks for the location of the compiled 'index.js' file
@@ -26,7 +30,7 @@ const detectLocationOfCompiledBaseTranslation = async (
 	tempPath: string,
 	typesFileName: string,
 ): Promise<string> => {
-	if (!containsFolders(tempPath)) return ''
+	if (!(await containsFolders(tempPath))) return ''
 
 	const directory = await getDirectoryStructure(tempPath)
 
@@ -74,6 +78,90 @@ See the example in the official docs: https://github.com/ivanhofer/typesafe-i18n
 	return ''
 }
 
+const getBunRuntime = (): typeof Bun | undefined => (process.versions.bun ? globalThis.Bun : undefined)
+
+const transpileWithBun = async (bun: typeof Bun, languageFilePath: string, tempPath: string): Promise<string> => {
+	try {
+		const result = await bun.build({
+			entrypoints: [languageFilePath],
+			outdir: tempPath,
+			target: 'bun',
+			format: 'esm',
+			// npm imports stay external; Bun resolves them when the bundle gets imported
+			packages: 'external',
+			sourcemap: 'none',
+		})
+
+		const outputPath = result.outputs[0]?.path
+		if (!result.success || !outputPath) {
+			logger.error(`could not transpile file '${languageFilePath}'`, ...result.logs)
+			return ''
+		}
+
+		return outputPath
+	} catch (error) {
+		// Bun >= 1.2 throws an 'AggregateError' instead of returning 'success: false'
+		logger.error(`could not transpile file '${languageFilePath}'`, error)
+		return ''
+	}
+}
+
+const execFileAsync = promisify(execFile)
+
+const findTscExecutable = (): string | undefined => {
+	try {
+		const require = createRequireFromProject()
+		const packageJsonPath = require.resolve('typescript/package.json')
+		const { bin } = require('typescript/package.json') as { bin?: Record<string, string> }
+		const binEntry = bin?.['tsc']
+
+		return binEntry ? resolve(dirname(packageJsonPath), binEntry) : undefined
+	} catch (ignore) {
+		return undefined
+	}
+}
+
+const transpileWithTscCli = async (languageFilePath: string, tempPath: string): Promise<boolean> => {
+	const tscPath = findTscExecutable()
+	if (!tscPath) return false
+
+	// 'tsc' emits even when it reports type-errors (guaranteed because of '--noLib'),
+	// so a non-zero exit code gets ignored; the output is only kept for the failure log
+	let output = ''
+	await execFileAsync(
+		process.execPath,
+		[
+			tscPath,
+			languageFilePath,
+			// a 'tsconfig.json' next to the project would otherwise abort the compilation with
+			// 'error TS5112'; the flag only exists in TypeScript >= 7, which is the only version
+			// this code path runs for (older versions provide the compiler API instead)
+			'--ignoreConfig',
+			'--outDir',
+			tempPath,
+			'--allowJs',
+			'--resolveJsonModule',
+			'--skipLibCheck',
+			'--noLib',
+			'--module',
+			'commonjs',
+			'--target',
+			'es2018',
+			'--pretty',
+			'false',
+		],
+		{ cwd: resolve() },
+	).catch((error: { stdout?: string; stderr?: string }) => (output = `${error.stdout || ''}${error.stderr || ''}`))
+
+	const emittedFiles = await readdir(tempPath).catch(() => [])
+	if (!emittedFiles.length) {
+		output && logger.error(`running 'tsc' failed with: ${output}`)
+		return false
+	}
+
+	return true
+}
+
 const transpileTypescriptFiles = async (
 	outputPath: string,
 	outputFormat: OutputFormats,
@@ -82,16 +170,31 @@ const transpileTypescriptFiles = async (
 	tempPath: string,
 	typesFileName: string,
 ): Promise<string> => {
-	const program = ts.createProgram([languageFilePath], {
-		outDir: tempPath,
-		allowJs: true,
-		resolveJsonModule: true,
-		skipLibCheck: true,
-		sourceMap: false,
-		noLib: true,
-	})
+	const bun = getBunRuntime()
+	if (bun) {
+		// Bun bundles the file and its imports natively; no 'typescript' installation needed
+		return transpileWithBun(bun, languageFilePath, tempPath)
+	}
 
-	program.emit()
+	const ts = await getTypescriptCompiler()
+	if (ts) {
+		const program = ts.createProgram([languageFilePath], {
+			outDir: tempPath,
+			allowJs: true,
+			resolveJsonModule: true,
+			skipLibCheck: true,
+			sourceMap: false,
+			noLib: true,
+		})
+
+		program.emit()
+	} else if (!(await transpileWithTscCli(languageFilePath, tempPath))) {
+		logger.error(`could not transpile file '${languageFilePath}'.
+No usable TypeScript compiler was found: either no 'typescript' package is installed, or the installed version does not provide the compiler API (TypeScript >= 7 removed it) and running its 'tsc' CLI failed.
+Make sure 'typescript' is installed in your project, or run typesafe-i18n with Bun ('bunx --bun typesafe-i18n').
+`)
+		return ''
+	}
 
 	const baseTranslationPath = await detectLocationOfCompiledBaseTranslation(
 		outputPath,
