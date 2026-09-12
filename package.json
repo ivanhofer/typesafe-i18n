@@ -165,7 +165,13 @@
 		"typescript": "^5.1.6"
 	},
 	"peerDependencies": {
+		"solid-js": ">=1.0.0",
 		"typescript": ">=3.5.1"
+	},
+	"peerDependenciesMeta": {
+		"solid-js": {
+			"optional": true
+		}
 	},
 	"bin": {
 		"typesafe-i18n": "cli/typesafe-i18n.mjs"
